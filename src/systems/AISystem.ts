@@ -15,6 +15,14 @@ import type { ThrowSystem } from './ThrowSystem';
 type AiAction = 'retreat' | 'takeCover' | 'attack' | 'advance' | 'wander';
 export type AiDifficulty = 'easy' | 'normal' | 'hard';
 
+/** Roles an AI squad can play; defaults to the classic red-vs-blue game. */
+export interface AiSquad {
+  controlled: Team;
+  target: Team;
+}
+
+const CLASSIC_SQUAD: AiSquad = { controlled: Team.Enemy, target: Team.Player };
+
 interface AiTuning {
   aimErrorScale: number;
   decisionIntervalScale: number;
@@ -82,8 +90,10 @@ const AI_TUNING: Record<AiDifficulty, AiTuning> = {
 };
 
 /**
- * Utility-scored enemy squad AI. Runs before movement and mutates only
- * simulation orders: enemy move targets, facing, and throws.
+ * Utility-scored squad AI. Runs before movement and mutates only simulation
+ * orders: controlled-team move targets, facing, and throws. By default it
+ * drives the classic red squad against blue; SnowGym may pass a custom squad
+ * to run it behind the TeamController boundary instead.
  */
 export class AISystem implements System {
   readonly name = 'ai';
@@ -95,22 +105,25 @@ export class AISystem implements System {
   private readonly peekCandidate = { x: 0, y: 0 };
   private focusTargetId: EntityId | null = null;
   private readonly tuning: AiTuning;
+  private readonly squad: AiSquad;
 
   constructor(
     private readonly world: World,
-    events: EventBus,
+    events: EventBus | null,
     private readonly throwSystem: ThrowSystem,
     difficulty: AiDifficulty = 'normal',
+    squad: AiSquad = CLASSIC_SQUAD,
   ) {
     void events;
     this.tuning = AI_TUNING[difficulty];
+    this.squad = squad;
   }
 
   update(dt: number): void {
     this.focusTargetId = this.chooseFocusTarget();
 
     for (const unit of this.world.players) {
-      if (unit.team !== Team.Enemy || !unit.alive || !canAcceptOrders(unit)) continue;
+      if (unit.team !== this.squad.controlled || !unit.alive || !canAcceptOrders(unit)) continue;
 
       if (this.tryReactiveDodge(unit, dt)) {
         continue;
@@ -190,7 +203,7 @@ export class AISystem implements System {
     let exposed = false;
 
     for (const target of this.world.players) {
-      if (target.team !== Team.Player || !target.alive) continue;
+      if (target.team !== this.squad.target || !target.alive) continue;
 
       const distanceSq = unit.position.distanceToSq(target.position);
       if (distanceSq < nearestDistanceSq) {
@@ -411,7 +424,7 @@ export class AISystem implements System {
   private resolveTarget(targetId: EntityId | null): Player | null {
     if (targetId === null) return null;
     const target = this.world.getPlayer(targetId);
-    return target && target.alive && target.team === Team.Player ? target : null;
+    return target && target.alive && target.team === this.squad.target ? target : null;
   }
 
   private findNearestTarget(unit: Player): Player | null {
@@ -419,7 +432,7 @@ export class AISystem implements System {
     let bestDistanceSq = Number.POSITIVE_INFINITY;
 
     for (const target of this.world.players) {
-      if (target.team !== Team.Player || !target.alive) continue;
+      if (target.team !== this.squad.target || !target.alive) continue;
       const distanceSq = unit.position.distanceToSq(target.position);
       if (distanceSq < bestDistanceSq) {
         bestDistanceSq = distanceSq;
@@ -433,16 +446,16 @@ export class AISystem implements System {
   private chooseFocusTarget(): EntityId | null {
     let bestTarget: Player | null = null;
     let bestScore = Number.NEGATIVE_INFINITY;
-    const enemyCount = Math.max(1, this.world.countLiving(Team.Enemy));
+    const enemyCount = Math.max(1, this.world.countLiving(this.squad.controlled));
 
     for (const target of this.world.players) {
-      if (target.team !== Team.Player || !target.alive) continue;
+      if (target.team !== this.squad.target || !target.alive) continue;
 
       let visibleEnemies = 0;
       let proximityScore = 0;
 
       for (const enemy of this.world.players) {
-        if (enemy.team !== Team.Enemy || !enemy.alive) continue;
+        if (enemy.team !== this.squad.controlled || !enemy.alive) continue;
 
         const distance = enemy.position.distanceTo(target.position);
         proximityScore += 1 - clamp(distance / (ENGAGE_RANGE * 1.5), 0, 1);

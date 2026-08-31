@@ -42,7 +42,10 @@ retrieve the result from the server without a renderer.
 - [x] Advance a configurable integer number of physics ticks per policy decision.
 - [x] Return terminal-only reward (`+1`, `-1`, `0`), `terminated`, `truncated`, and
       structured `info`; keep diagnostic event rewards separate.
-- Migrate the existing red behavior behind the same `TeamController` boundary.
+- [x] Migrate the existing red behavior behind the same `TeamController` boundary.
+      The scripted red squad now runs through `ScriptedAiAgent`, which re-runs
+      the classic `AISystem` per-tick logic and reports its orders as semantic
+      actions; full-episode traces are bit-identical to direct AI registration.
 - Record scenario, seed, action trace, simulation version, and upstream commit.
 - Add same-seed/action-sequence state-hash tests and max-tick truncation tests.
 
@@ -81,10 +84,14 @@ checker and deterministic cross-language fixtures.
       registered Gym environment's spaces never change after construction.
 - [x] Extend reset/server configuration, replay metadata, reward/termination logic,
       and observations without breaking `SnowGym/Squad-v0` 3v3 recordings.
+- [x] Load the bundled SnowCraft maps as scenario terrain: obstacles affect
+      line-of-sight, cover, and collision, spawn points come from the map, and
+      obstacles are exposed to policies as a fixed-capacity masked tensor.
 - [x] Add a deterministic matrix covering 1v1, 1v3, 3v1, 3v3, and maximum-size
       fights, plus invalid counts/spawns and same-seed replay checks.
-- Migrate red behavior to the common `TeamController` boundary, then add
-  independently selectable scripted, random, learned, or external opponents.
+- [x] Migrate red behavior to the common `TeamController` boundary, then add
+  independently selectable scripted, random, learned, or external opponents
+  (scripted and random shipped; learned/external remain future).
 - Benchmark episode throughput and balance by N/M configuration before training.
 
 Exit criterion: one versioned environment can reset into multiple validated

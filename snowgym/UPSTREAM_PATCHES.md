@@ -1,12 +1,31 @@
 # Upstream patch ledger
 
+## `src/systems/AISystem.ts`
+
+Reason: the red squad had to run behind SnowGym's `TeamController` boundary
+without changing its behavior in the browser game.
+
+Change: added an optional `AiSquad` parameter (`{ controlled, target }`) to the
+constructor, defaulting to the classic `{ Enemy, Player }` pairing, and widened
+the `events` parameter to accept `null` (it was already unused). The three
+hardcoded `Team.Enemy`-drives-`Team.Player` checks now read from the squad.
+
+Upstream behavior: unchanged; the browser game constructs `AISystem` with the
+default squad and identical difficulty tuning.
+
+SnowGym dependency: `ScriptedAiAgent` re-runs the classic AI per-tick inside a
+`TeamController` and reports its orders as semantic actions; full-episode
+traces are bit-identical to direct registration.
+
 ## `src/systems/MovementSystem.ts`
 
 Reason: semantic controllers need to order one known unit without selection or
 UI commands.
 
 Change: added public `tryMove(player, x, y)`, routed the existing group move
-command through it, and made rejected state-incompatible orders atomic.
+command through it, and made rejected state-incompatible orders atomic. Later
+added public `tryHold(player)` so a controller that reports orders on behalf of
+a unit can cancel a stale move target without disturbing other states.
 
 Upstream behavior: unchanged; group formation, clamping, state transitions, and
 movement integration use the same logic as before.

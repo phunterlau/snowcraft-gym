@@ -1,9 +1,9 @@
 import { EventBus } from '../../src/core/EventBus';
-import { createEmptyArena } from '../../src/game/Arena';
+import { IdAllocator } from '../../src/ecs/Entity';
 import { SIM } from '../../src/game/config';
 import { Team } from '../../src/game/types';
 import { World } from '../../src/game/World';
-import { AISystem, type AiDifficulty } from '../../src/systems/AISystem';
+import type { AiDifficulty } from '../../src/systems/AISystem';
 import { CollisionSystem } from '../../src/systems/CollisionSystem';
 import { DamageSystem } from '../../src/systems/DamageSystem';
 import { MovementSystem } from '../../src/systems/MovementSystem';
@@ -13,13 +13,20 @@ import { ThrowSystem } from '../../src/systems/ThrowSystem';
 import type { ActionResult } from '../adapters/SnowCraftActionAdapter';
 import { SnowCraftActionAdapter } from '../adapters/SnowCraftActionAdapter';
 import type { TeamAction } from '../actions/UnitAction';
+import {
+  createRedController,
+  DEFAULT_RED_CONTROLLER,
+  type RedControllerType,
+} from '../agents/opponents';
+import type { TeamController } from '../agents/TeamController';
 import { observeWorld, type Observation } from '../observations/Observation';
-import { THREE_VS_THREE_OPEN, type Scenario } from '../scenarios/Scenario';
+import { buildArena, THREE_VS_THREE_OPEN, type Scenario } from '../scenarios/Scenario';
 
 export interface EnvironmentConfig {
   scenario?: Scenario;
   decisionHz?: number;
   redDifficulty?: AiDifficulty;
+  redController?: RedControllerType;
 }
 
 export interface EnvironmentStatus {
@@ -37,6 +44,8 @@ export interface EnvironmentStatus {
     arenaHeight: number;
     maxTicks: number;
     redDifficulty: AiDifficulty;
+    redController: RedControllerType;
+    map: string | null;
   };
   blueAlive: number;
   redAlive: number;
@@ -59,8 +68,8 @@ export interface StepResult {
 
 /**
  * DOM-free, Gym-like simulation host. One call to {@link step} applies a blue
- * team action and advances several fixed physics ticks while the existing red
- * AI controls the opposing team.
+ * team action and advances several fixed physics ticks while the red team is
+ * driven by a TeamController (scripted squad AI by default).
  */
 export class SnowEnvironment {
   readonly scenario: Scenario;
@@ -74,19 +83,21 @@ export class SnowEnvironment {
   private events!: EventBus;
   private throwing!: ThrowSystem;
   private movement!: MovementSystem;
-  private redAI!: AISystem;
+  private redController!: TeamController;
   private projectile!: ProjectileSystem;
   private collision!: CollisionSystem;
   private damage!: DamageSystem;
   private round!: RoundSystem;
   private actionAdapter!: SnowCraftActionAdapter;
   private readonly redDifficulty: AiDifficulty;
+  private readonly redControllerType: RedControllerType;
 
   constructor(config: EnvironmentConfig = {}) {
     this.scenario = config.scenario ?? THREE_VS_THREE_OPEN;
     this.decisionHz = config.decisionHz ?? 10;
     this.ticksPerDecision = validateDecisionFrequency(this.decisionHz);
     this.redDifficulty = config.redDifficulty ?? 'normal';
+    this.redControllerType = config.redController ?? DEFAULT_RED_CONTROLLER;
     this.seed = this.scenario.seed;
     this.reset(this.seed);
   }
@@ -98,10 +109,7 @@ export class SnowEnvironment {
     this.tick = 0;
     this.truncated = false;
     this.events = new EventBus();
-    this.world = new World(
-      createEmptyArena(this.scenario.arena.width, this.scenario.arena.height),
-      seed,
-    );
+    this.world = new World(buildArena(this.scenario, new IdAllocator()), seed);
     // No reserve lives means blue elimination is terminal without registering
     // the browser game's single-hero RespawnSystem.
     this.world.playerLives = 0;
@@ -115,7 +123,14 @@ export class SnowEnvironment {
 
     this.throwing = new ThrowSystem(this.world, this.events);
     this.movement = new MovementSystem(this.world);
-    this.redAI = new AISystem(this.world, this.events, this.throwing, this.redDifficulty);
+    this.redController = createRedController(
+      { type: this.redControllerType, difficulty: this.redDifficulty },
+      this.world,
+      this.throwing,
+      Team.Enemy,
+      Team.Player,
+      this.redDifficulty,
+    );
     this.projectile = new ProjectileSystem(this.world, this.events);
     this.collision = new CollisionSystem(this.world, this.events);
     this.damage = new DamageSystem(this.world, this.events);
@@ -169,6 +184,8 @@ export class SnowEnvironment {
         arenaHeight: this.scenario.arena.height,
         maxTicks: this.scenario.maxTicks,
         redDifficulty: this.redDifficulty,
+        redController: this.redControllerType,
+        map: this.scenario.map ?? null,
       },
       blueAlive: this.world.countLiving(Team.Player),
       redAlive: this.world.countLiving(Team.Enemy),
@@ -180,7 +197,14 @@ export class SnowEnvironment {
 
   private physicsStep(): void {
     this.world.time += SIM.dt;
-    this.redAI.update(SIM.dt);
+    // The red TeamController holds internal per-tick state (decision timers,
+    // dodges), so physicsStep delegates to the composed red behavior rather
+    // than calling controller.act once per decision. The reported semantic
+    // actions stay on the controller for inspection; applying them through the
+    // adapter is unnecessary for the scripted bridge (its orders already
+    // reached the world) and tryThrow cannot be re-issued without
+    // double-firing a snowball.
+    this.redController.act(observeWorld(this.world, Team.Enemy, this.tick), SIM.dt);
     this.movement.update(SIM.dt);
     this.throwing.update(SIM.dt);
     this.projectile.update(SIM.dt);

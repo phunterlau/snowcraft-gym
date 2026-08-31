@@ -3,9 +3,21 @@ import { createEmptyArena } from '../../src/game/Arena';
 import { createPlayer } from '../../src/game/Player';
 import { createSnowball } from '../../src/game/Snowball';
 import { PLAYER, SNOWBALL } from '../../src/game/config';
-import { PlayerState, Team, type Player, type Snowball } from '../../src/game/types';
+import {
+  PlayerState,
+  Team,
+  type Obstacle,
+  type Player,
+  type Snowball,
+} from '../../src/game/types';
+import { circle, rect } from '../../src/physics/shapes';
 import { World } from '../../src/game/World';
-import type { ProjectileObservation, UnitObservation } from '../observations/Observation';
+import { Vector2 } from '../../src/utils/Vector2';
+import type {
+  ObstacleObservation,
+  ProjectileObservation,
+  UnitObservation,
+} from '../observations/Observation';
 import type { ReplayRecording } from './ReplayRecording';
 
 export interface ReplayWorld {
@@ -16,11 +28,30 @@ export interface ReplayWorld {
 export function createReplayWorld(recording: ReplayRecording): ReplayWorld {
   const arena = recording.frames[0].arena;
   const world = new World(createEmptyArena(arena.width, arena.height), recording.seed);
+  // Terrain is static over an episode; rebuild render obstacles from the first frame.
+  world.arena.obstacles = (recording.frames[0].obstacles ?? []).map(buildReplayObstacle);
   world.playerLives = 0;
   world.playerLivesMax = 0;
   const events = new EventBus();
   applyReplayTick(world, recording, recording.frames[0].tick);
   return { world, events };
+}
+
+function buildReplayObstacle(observation: ObstacleObservation): Obstacle {
+  const round = observation.halfWidth === observation.halfHeight;
+  const collision = round
+    ? circle(observation.x, observation.y, observation.halfWidth)
+    : rect(observation.x, observation.y, observation.halfWidth, observation.halfHeight);
+  return {
+    id: observation.id,
+    type: observation.type,
+    position: new Vector2(observation.x, observation.y),
+    collision,
+    cover: null,
+    blocksSight: observation.blocksSight,
+    blocksProjectiles: observation.blocksProjectiles,
+    blocksMovement: observation.blocksMovement,
+  };
 }
 
 /** Applies an interpolated, render-only snapshot without advancing simulation. */

@@ -1,0 +1,2607 @@
+{
+  "format": "snowgym.replay.v0",
+  "apiVersion": "snowgym.v0",
+  "scenario": "1-vs-3-open",
+  "seed": 42,
+  "simulationHz": 60,
+  "decisionHz": 10,
+  "ticksPerDecision": 6,
+  "frames": [
+    {
+      "tick": 0,
+      "selfTeam": "blue",
+      "simulationHz": 60,
+      "arena": {
+        "width": 40,
+        "height": 30
+      },
+      "allies": [
+        {
+          "id": 1,
+          "team": "blue",
+          "x": -12,
+          "y": 0,
+          "vx": 0,
+          "vy": 0,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "idle",
+          "throwCooldown": 0,
+          "charge": 0
+        }
+      ],
+      "enemies": [
+        {
+          "id": 2,
+          "team": "red",
+          "x": 12,
+          "y": -5,
+          "vx": 0,
+          "vy": 0,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "idle",
+          "throwCooldown": 0,
+          "charge": 0
+        },
+        {
+          "id": 3,
+          "team": "red",
+          "x": 12,
+          "y": 0,
+          "vx": 0,
+          "vy": 0,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "idle",
+          "throwCooldown": 0,
+          "charge": 0
+        },
+        {
+          "id": 4,
+          "team": "red",
+          "x": 12,
+          "y": 5,
+          "vx": 0,
+          "vy": 0,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "idle",
+          "throwCooldown": 0,
+          "charge": 0
+        }
+      ],
+      "projectiles": [],
+      "obstacles": [],
+      "match": {
+        "blueAlive": 1,
+        "redAlive": 3
+      }
+    },
+    {
+      "tick": 6,
+      "selfTeam": "blue",
+      "simulationHz": 60,
+      "arena": {
+        "width": 40,
+        "height": 30
+      },
+      "allies": [
+        {
+          "id": 1,
+          "team": "blue",
+          "x": -11.766666666666667,
+          "y": 0,
+          "vx": 3.9999999999999996,
+          "vy": 0,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        }
+      ],
+      "enemies": [
+        {
+          "id": 2,
+          "team": "red",
+          "x": 11.766666666666667,
+          "y": -4.905462530127432,
+          "vx": -3.9999999999999996,
+          "vy": 1.0018170867211549,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        },
+        {
+          "id": 3,
+          "team": "red",
+          "x": 11.766666666666667,
+          "y": 0,
+          "vx": -3.9999999999999996,
+          "vy": 0,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        },
+        {
+          "id": 4,
+          "team": "red",
+          "x": 11.766666666666667,
+          "y": 4.905462530127432,
+          "vx": -3.9999999999999996,
+          "vy": -1.0018170867211549,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        }
+      ],
+      "projectiles": [],
+      "obstacles": [],
+      "match": {
+        "blueAlive": 1,
+        "redAlive": 3
+      }
+    },
+    {
+      "tick": 12,
+      "selfTeam": "blue",
+      "simulationHz": 60,
+      "arena": {
+        "width": 40,
+        "height": 30
+      },
+      "allies": [
+        {
+          "id": 1,
+          "team": "blue",
+          "x": -11.200000000000003,
+          "y": 0,
+          "vx": 6,
+          "vy": 0,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        }
+      ],
+      "enemies": [
+        {
+          "id": 2,
+          "team": "red",
+          "x": 11.287710937689626,
+          "y": -4.804136341917395,
+          "vx": -4.8123574659480335,
+          "vy": 1.0235309569984778,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        },
+        {
+          "id": 3,
+          "team": "red",
+          "x": 11.278888888888886,
+          "y": 0,
+          "vx": -4.92,
+          "vy": 0,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        },
+        {
+          "id": 4,
+          "team": "red",
+          "x": 11.287710937689626,
+          "y": 4.804136341917395,
+          "vx": -4.8123574659480335,
+          "vy": -1.0235309569984778,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        }
+      ],
+      "projectiles": [],
+      "obstacles": [],
+      "match": {
+        "blueAlive": 1,
+        "redAlive": 3
+      }
+    },
+    {
+      "tick": 18,
+      "selfTeam": "blue",
+      "simulationHz": 60,
+      "arena": {
+        "width": 40,
+        "height": 30
+      },
+      "allies": [
+        {
+          "id": 1,
+          "team": "blue",
+          "x": -10.600000000000005,
+          "y": 0,
+          "vx": 6,
+          "vy": 0,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        }
+      ],
+      "enemies": [
+        {
+          "id": 2,
+          "team": "red",
+          "x": 10.806809119992245,
+          "y": -4.700228595586643,
+          "vx": -4.806552622382039,
+          "vy": 1.0504531823324315,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        },
+        {
+          "id": 3,
+          "team": "red",
+          "x": 10.786888888888882,
+          "y": 0,
+          "vx": -4.92,
+          "vy": 0,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        },
+        {
+          "id": 4,
+          "team": "red",
+          "x": 10.806809119992245,
+          "y": 4.700228595586643,
+          "vx": -4.806552622382039,
+          "vy": -1.0504531823324315,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        }
+      ],
+      "projectiles": [],
+      "obstacles": [],
+      "match": {
+        "blueAlive": 1,
+        "redAlive": 3
+      }
+    },
+    {
+      "tick": 24,
+      "selfTeam": "blue",
+      "simulationHz": 60,
+      "arena": {
+        "width": 40,
+        "height": 30
+      },
+      "allies": [
+        {
+          "id": 1,
+          "team": "blue",
+          "x": -10.000000000000007,
+          "y": 0,
+          "vx": 6,
+          "vy": 0,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        }
+      ],
+      "enemies": [
+        {
+          "id": 2,
+          "team": "red",
+          "x": 10.326523433948728,
+          "y": -4.593509637697889,
+          "vx": -4.800123676708078,
+          "vy": 1.0794501787051254,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        },
+        {
+          "id": 3,
+          "team": "red",
+          "x": 10.294888888888877,
+          "y": 0,
+          "vx": -4.92,
+          "vy": 0,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        },
+        {
+          "id": 4,
+          "team": "red",
+          "x": 10.326523433948728,
+          "y": 4.593509637697889,
+          "vx": -4.800123676708078,
+          "vy": -1.0794501787051254,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        }
+      ],
+      "projectiles": [],
+      "obstacles": [],
+      "match": {
+        "blueAlive": 1,
+        "redAlive": 3
+      }
+    },
+    {
+      "tick": 30,
+      "selfTeam": "blue",
+      "simulationHz": 60,
+      "arena": {
+        "width": 40,
+        "height": 30
+      },
+      "allies": [
+        {
+          "id": 1,
+          "team": "blue",
+          "x": -9.40000000000001,
+          "y": 0,
+          "vx": 6,
+          "vy": 0,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        }
+      ],
+      "enemies": [
+        {
+          "id": 2,
+          "team": "red",
+          "x": 9.846922174976584,
+          "y": -4.483756352548158,
+          "vx": -4.792966816987607,
+          "vy": 1.1107966021084548,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        },
+        {
+          "id": 3,
+          "team": "red",
+          "x": 9.802888888888873,
+          "y": 0,
+          "vx": -4.92,
+          "vy": 0,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        },
+        {
+          "id": 4,
+          "team": "red",
+          "x": 9.846922174976584,
+          "y": 4.483756352548158,
+          "vx": -4.792966816987607,
+          "vy": -1.1107966021084548,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        }
+      ],
+      "projectiles": [],
+      "obstacles": [],
+      "match": {
+        "blueAlive": 1,
+        "redAlive": 3
+      }
+    },
+    {
+      "tick": 36,
+      "selfTeam": "blue",
+      "simulationHz": 60,
+      "arena": {
+        "width": 40,
+        "height": 30
+      },
+      "allies": [
+        {
+          "id": 1,
+          "team": "blue",
+          "x": -8.800000000000011,
+          "y": 0,
+          "vx": 6,
+          "vy": 0,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        }
+      ],
+      "enemies": [
+        {
+          "id": 2,
+          "team": "red",
+          "x": 9.368085370331864,
+          "y": -4.370715162374856,
+          "vx": -4.784954217124492,
+          "vy": 1.1448201343541016,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        },
+        {
+          "id": 3,
+          "team": "red",
+          "x": 9.310888888888869,
+          "y": 0,
+          "vx": -4.92,
+          "vy": 0,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        },
+        {
+          "id": 4,
+          "team": "red",
+          "x": 9.368085370331864,
+          "y": 4.370715162374856,
+          "vx": -4.784954217124492,
+          "vy": -1.1448201343541016,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        }
+      ],
+      "projectiles": [],
+      "obstacles": [],
+      "match": {
+        "blueAlive": 1,
+        "redAlive": 3
+      }
+    },
+    {
+      "tick": 42,
+      "selfTeam": "blue",
+      "simulationHz": 60,
+      "arena": {
+        "width": 40,
+        "height": 30
+      },
+      "allies": [
+        {
+          "id": 1,
+          "team": "blue",
+          "x": -8.200000000000014,
+          "y": 0,
+          "vx": 6,
+          "vy": 0,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        }
+      ],
+      "enemies": [
+        {
+          "id": 2,
+          "team": "red",
+          "x": 8.890107587088238,
+          "y": -4.254095951896836,
+          "vx": -4.775926747304788,
+          "vy": 1.1819152695429154,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        },
+        {
+          "id": 3,
+          "team": "red",
+          "x": 8.818888888888864,
+          "y": 0,
+          "vx": -4.92,
+          "vy": 0,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        },
+        {
+          "id": 4,
+          "team": "red",
+          "x": 8.890107587088238,
+          "y": 4.254095951896836,
+          "vx": -4.775926747304788,
+          "vy": -1.1819152695429154,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        }
+      ],
+      "projectiles": [],
+      "obstacles": [],
+      "match": {
+        "blueAlive": 1,
+        "redAlive": 3
+      }
+    },
+    {
+      "tick": 48,
+      "selfTeam": "blue",
+      "simulationHz": 60,
+      "arena": {
+        "width": 40,
+        "height": 30
+      },
+      "allies": [
+        {
+          "id": 1,
+          "team": "blue",
+          "x": -7.600000000000016,
+          "y": 0,
+          "vx": 6,
+          "vy": 0,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        }
+      ],
+      "enemies": [
+        {
+          "id": 2,
+          "team": "red",
+          "x": 8.413101623940982,
+          "y": -4.133564358087081,
+          "vx": -4.765683882776449,
+          "vy": 1.2225617078269668,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        },
+        {
+          "id": 3,
+          "team": "red",
+          "x": 8.32688888888886,
+          "y": 0,
+          "vx": -4.92,
+          "vy": 0,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        },
+        {
+          "id": 4,
+          "team": "red",
+          "x": 8.413101623940982,
+          "y": 4.133564358087081,
+          "vx": -4.765683882776449,
+          "vy": -1.2225617078269668,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        }
+      ],
+      "projectiles": [],
+      "obstacles": [],
+      "match": {
+        "blueAlive": 1,
+        "redAlive": 3
+      }
+    },
+    {
+      "tick": 54,
+      "selfTeam": "blue",
+      "simulationHz": 60,
+      "arena": {
+        "width": 40,
+        "height": 30
+      },
+      "allies": [
+        {
+          "id": 1,
+          "team": "blue",
+          "x": -7.000000000000018,
+          "y": 0,
+          "vx": 6,
+          "vy": 0,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        }
+      ],
+      "enemies": [
+        {
+          "id": 2,
+          "team": "red",
+          "x": 7.937203439914328,
+          "y": -4.0087318586345315,
+          "vx": -4.7539694793142875,
+          "vy": 1.2673492769352301,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        },
+        {
+          "id": 3,
+          "team": "red",
+          "x": 7.834888888888858,
+          "y": 0,
+          "vx": -4.92,
+          "vy": 0,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        },
+        {
+          "id": 4,
+          "team": "red",
+          "x": 7.937203439914328,
+          "y": 4.0087318586345315,
+          "vx": -4.7539694793142875,
+          "vy": -1.2673492769352301,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        }
+      ],
+      "projectiles": [],
+      "obstacles": [],
+      "match": {
+        "blueAlive": 1,
+        "redAlive": 3
+      }
+    },
+    {
+      "tick": 60,
+      "selfTeam": "blue",
+      "simulationHz": 60,
+      "arena": {
+        "width": 40,
+        "height": 30
+      },
+      "allies": [
+        {
+          "id": 1,
+          "team": "blue",
+          "x": -6.40000000000002,
+          "y": 0,
+          "vx": 6,
+          "vy": 0,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        }
+      ],
+      "enemies": [
+        {
+          "id": 2,
+          "team": "red",
+          "x": 7.462578847968425,
+          "y": -3.8791428471183282,
+          "vx": -4.740451313339138,
+          "vy": 1.3170122800723008,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        },
+        {
+          "id": 3,
+          "team": "red",
+          "x": 7.342888888888859,
+          "y": 0,
+          "vx": -4.92,
+          "vy": 0,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        },
+        {
+          "id": 4,
+          "team": "red",
+          "x": 7.462578847968425,
+          "y": 3.8791428471183282,
+          "vx": -4.740451313339138,
+          "vy": -1.3170122800723008,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        }
+      ],
+      "projectiles": [],
+      "obstacles": [],
+      "match": {
+        "blueAlive": 1,
+        "redAlive": 3
+      }
+    },
+    {
+      "tick": 66,
+      "selfTeam": "blue",
+      "simulationHz": 60,
+      "arena": {
+        "width": 40,
+        "height": 30
+      },
+      "allies": [
+        {
+          "id": 1,
+          "team": "blue",
+          "x": -5.800000000000022,
+          "y": 0,
+          "vx": 6,
+          "vy": 0,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        }
+      ],
+      "enemies": [
+        {
+          "id": 2,
+          "team": "red",
+          "x": 6.9894327822227655,
+          "y": -3.7442575072538937,
+          "vx": -4.724690977673595,
+          "vy": 1.3724777468103895,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        },
+        {
+          "id": 3,
+          "team": "red",
+          "x": 6.85088888888886,
+          "y": 0,
+          "vx": -4.92,
+          "vy": 0,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        },
+        {
+          "id": 4,
+          "team": "red",
+          "x": 6.9894327822227655,
+          "y": 3.7442575072538937,
+          "vx": -4.724690977673595,
+          "vy": -1.3724777468103895,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        }
+      ],
+      "projectiles": [],
+      "obstacles": [],
+      "match": {
+        "blueAlive": 1,
+        "redAlive": 3
+      }
+    },
+    {
+      "tick": 72,
+      "selfTeam": "blue",
+      "simulationHz": 60,
+      "arena": {
+        "width": 40,
+        "height": 30
+      },
+      "allies": [
+        {
+          "id": 1,
+          "team": "blue",
+          "x": -5.200000000000024,
+          "y": 0,
+          "vx": 6,
+          "vy": 0,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        }
+      ],
+      "enemies": [
+        {
+          "id": 2,
+          "team": "red",
+          "x": 6.518022411371793,
+          "y": -3.6034287092578103,
+          "vx": -4.706098433415033,
+          "vy": 1.4349346797009899,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        },
+        {
+          "id": 3,
+          "team": "red",
+          "x": 6.358888888888861,
+          "y": 0,
+          "vx": -4.92,
+          "vy": 0,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        },
+        {
+          "id": 4,
+          "team": "red",
+          "x": 6.518022411371793,
+          "y": 3.6034287092578103,
+          "vx": -4.706098433415033,
+          "vy": -1.4349346797009899,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        }
+      ],
+      "projectiles": [],
+      "obstacles": [],
+      "match": {
+        "blueAlive": 1,
+        "redAlive": 3
+      }
+    },
+    {
+      "tick": 78,
+      "selfTeam": "blue",
+      "simulationHz": 60,
+      "arena": {
+        "width": 40,
+        "height": 30
+      },
+      "allies": [
+        {
+          "id": 1,
+          "team": "blue",
+          "x": -4.600000000000026,
+          "y": 0,
+          "vx": 6,
+          "vy": 0,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        }
+      ],
+      "enemies": [
+        {
+          "id": 2,
+          "team": "red",
+          "x": 6.048676163070294,
+          "y": -3.455870201179795,
+          "vx": -4.683861354247803,
+          "vy": 1.505935859916996,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        },
+        {
+          "id": 3,
+          "team": "red",
+          "x": 5.8668888888888615,
+          "y": 0,
+          "vx": -4.92,
+          "vy": 0,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        },
+        {
+          "id": 4,
+          "team": "red",
+          "x": 6.048676163070294,
+          "y": 3.455870201179795,
+          "vx": -4.683861354247803,
+          "vy": -1.505935859916996,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        }
+      ],
+      "projectiles": [],
+      "obstacles": [],
+      "match": {
+        "blueAlive": 1,
+        "redAlive": 3
+      }
+    },
+    {
+      "tick": 84,
+      "selfTeam": "blue",
+      "simulationHz": 60,
+      "arena": {
+        "width": 40,
+        "height": 30
+      },
+      "allies": [
+        {
+          "id": 1,
+          "team": "blue",
+          "x": -4.000000000000028,
+          "y": 0,
+          "vx": 6,
+          "vy": 0,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        }
+      ],
+      "enemies": [
+        {
+          "id": 2,
+          "team": "red",
+          "x": 5.581822128967193,
+          "y": -3.300611788089632,
+          "vx": -4.656831505559262,
+          "vy": 1.5875516775307332,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        },
+        {
+          "id": 3,
+          "team": "red",
+          "x": 5.374888888888862,
+          "y": 0,
+          "vx": -4.92,
+          "vy": 0,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        },
+        {
+          "id": 4,
+          "team": "red",
+          "x": 5.581822128967193,
+          "y": 3.300611788089632,
+          "vx": -4.656831505559262,
+          "vy": -1.5875516775307332,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        }
+      ],
+      "projectiles": [],
+      "obstacles": [],
+      "match": {
+        "blueAlive": 1,
+        "redAlive": 3
+      }
+    },
+    {
+      "tick": 90,
+      "selfTeam": "blue",
+      "simulationHz": 60,
+      "arena": {
+        "width": 40,
+        "height": 30
+      },
+      "allies": [
+        {
+          "id": 1,
+          "team": "blue",
+          "x": -3.400000000000028,
+          "y": 0,
+          "vx": 6,
+          "vy": 0,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        }
+      ],
+      "enemies": [
+        {
+          "id": 2,
+          "team": "red",
+          "x": 5.11803192199379,
+          "y": -3.1364344724065822,
+          "vx": -4.6233346981778505,
+          "vy": 1.6826099573652624,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        },
+        {
+          "id": 3,
+          "team": "red",
+          "x": 5.046888888888863,
+          "y": 0,
+          "vx": -4.92,
+          "vy": 0,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "throwing",
+          "throwCooldown": 0.5666666666666665,
+          "charge": 0
+        },
+        {
+          "id": 4,
+          "team": "red",
+          "x": 5.11803192199379,
+          "y": 3.1364344724065822,
+          "vx": -4.6233346981778505,
+          "vy": -1.6826099573652624,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        }
+      ],
+      "projectiles": [
+        {
+          "id": 5,
+          "ownerId": 3,
+          "team": "red",
+          "x": 3.297181462601076,
+          "y": -0.00588803536676829,
+          "vx": -19.491409637387292,
+          "vy": -0.06559159981197236,
+          "height": 1.1324576,
+          "heightVelocity": 3.823728000000001
+        }
+      ],
+      "obstacles": [],
+      "match": {
+        "blueAlive": 1,
+        "redAlive": 3
+      }
+    },
+    {
+      "tick": 96,
+      "selfTeam": "blue",
+      "simulationHz": 60,
+      "arena": {
+        "width": 40,
+        "height": 30
+      },
+      "allies": [
+        {
+          "id": 1,
+          "team": "blue",
+          "x": -2.832127334918206,
+          "y": 0,
+          "vx": 5.121048671421202,
+          "vy": 0,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "throwing",
+          "throwCooldown": 0.4999999999999997,
+          "charge": 0
+        }
+      ],
+      "enemies": [
+        {
+          "id": 2,
+          "team": "red",
+          "x": 4.681311536958641,
+          "y": -2.97090016885485,
+          "vx": -3.7668606995413185,
+          "vy": 1.472730205082192,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        },
+        {
+          "id": 3,
+          "team": "red",
+          "x": 5.046888888888863,
+          "y": 0,
+          "vx": -4.92,
+          "vy": 0,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "throwing",
+          "throwCooldown": 0.4666666666666664,
+          "charge": 0
+        },
+        {
+          "id": 4,
+          "team": "red",
+          "x": 4.681311536958641,
+          "y": 2.97090016885485,
+          "vx": -3.7668606995413185,
+          "vy": -1.472730205082192,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        }
+      ],
+      "projectiles": [
+        {
+          "id": 5,
+          "ownerId": 3,
+          "team": "red",
+          "x": 1.3480404988623462,
+          "y": -0.012447195347965524,
+          "vx": -19.491409637387292,
+          "vy": -0.06559159981197236,
+          "height": 1.4098304000000002,
+          "heightVelocity": 2.023728000000002
+        },
+        {
+          "id": 6,
+          "ownerId": 1,
+          "team": "blue",
+          "x": -0.3796480000000275,
+          "y": 0,
+          "vx": 19.203520000000005,
+          "vy": 0,
+          "height": 1.3330528000000001,
+          "heightVelocity": 2.580528000000002
+        }
+      ],
+      "obstacles": [],
+      "match": {
+        "blueAlive": 1,
+        "redAlive": 3
+      }
+    },
+    {
+      "tick": 102,
+      "selfTeam": "blue",
+      "simulationHz": 60,
+      "arena": {
+        "width": 40,
+        "height": 30
+      },
+      "allies": [
+        {
+          "id": 1,
+          "team": "blue",
+          "x": -2.3989128996244875,
+          "y": 0,
+          "vx": 3.8214053655400475,
+          "vy": 0,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "recovering",
+          "throwCooldown": 0.39999999999999974,
+          "charge": 0
+        }
+      ],
+      "enemies": [
+        {
+          "id": 2,
+          "team": "red",
+          "x": 4.524087445738509,
+          "y": -2.9080934599113784,
+          "vx": -2.8545981799145776,
+          "vy": 1.1533760019892463,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "throwing",
+          "throwCooldown": 0.5499999999999998,
+          "charge": 0
+        },
+        {
+          "id": 3,
+          "team": "red",
+          "x": 4.86755555555553,
+          "y": 0.06666666666666665,
+          "vx": -2.92,
+          "vy": 2,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0.3666666666666664,
+          "charge": 0
+        },
+        {
+          "id": 4,
+          "team": "red",
+          "x": 4.524087445738509,
+          "y": 2.9080934599113784,
+          "vx": -2.8545981799145776,
+          "vy": -1.1533760019892463,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "throwing",
+          "throwCooldown": 0.5499999999999998,
+          "charge": 0
+        }
+      ],
+      "projectiles": [
+        {
+          "id": 5,
+          "ownerId": 3,
+          "team": "red",
+          "x": -0.6011004648763831,
+          "y": -0.019006355329162762,
+          "vx": -19.491409637387292,
+          "vy": -0.06559159981197236,
+          "height": 1.5072032000000004,
+          "heightVelocity": 0.22372800000000176
+        },
+        {
+          "id": 6,
+          "ownerId": 1,
+          "team": "blue",
+          "x": 1.5407039999999728,
+          "y": 0,
+          "vx": 19.203520000000005,
+          "vy": 0,
+          "height": 1.4861056000000001,
+          "heightVelocity": 0.7805280000000019
+        },
+        {
+          "id": 7,
+          "ownerId": 2,
+          "team": "red",
+          "x": 2.68090497047167,
+          "y": -2.1164307896983523,
+          "vx": -16.649324101507723,
+          "vy": 7.151027395447396,
+          "height": 1.1809005765400613,
+          "heightVelocity": 3.3180115308012246
+        },
+        {
+          "id": 8,
+          "ownerId": 4,
+          "team": "red",
+          "x": 2.7067087633954263,
+          "y": 2.058866667173106,
+          "vx": -16.41624044473434,
+          "vy": -7.670999642038424,
+          "height": 1.1809005765400613,
+          "heightVelocity": 3.3180115308012246
+        }
+      ],
+      "obstacles": [],
+      "match": {
+        "blueAlive": 1,
+        "redAlive": 3
+      }
+    },
+    {
+      "tick": 108,
+      "selfTeam": "blue",
+      "simulationHz": 60,
+      "arena": {
+        "width": 40,
+        "height": 30
+      },
+      "allies": [
+        {
+          "id": 1,
+          "team": "blue",
+          "x": -2.3580799513411526,
+          "y": 0.19030445857005204,
+          "vx": -0.7416540259655475,
+          "vy": 1.0972328500034556,
+          "health": 80,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "hit",
+          "throwCooldown": 0.29999999999999977,
+          "charge": 0
+        }
+      ],
+      "enemies": [
+        {
+          "id": 2,
+          "team": "red",
+          "x": 4.462267506408024,
+          "y": -2.902980926511737,
+          "vx": -1.5212648465812446,
+          "vy": -0.17995733134408698,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "throwing",
+          "throwCooldown": 0.44999999999999973,
+          "charge": 0
+        },
+        {
+          "id": 3,
+          "team": "red",
+          "x": 4.783999999999974,
+          "y": 0.4751111111111111,
+          "vx": 0,
+          "vy": 4.92,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0.26666666666666644,
+          "charge": 0
+        },
+        {
+          "id": 4,
+          "team": "red",
+          "x": 4.462267506408024,
+          "y": 2.902980926511737,
+          "vx": -1.5212648465812446,
+          "vy": 0.17995733134408698,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "throwing",
+          "throwCooldown": 0.44999999999999973,
+          "charge": 0
+        }
+      ],
+      "projectiles": [
+        {
+          "id": 6,
+          "ownerId": 1,
+          "team": "blue",
+          "x": 3.461055999999973,
+          "y": 0,
+          "vx": 19.203520000000005,
+          "vy": 0,
+          "height": 1.4591584000000004,
+          "heightVelocity": -1.0194719999999982
+        },
+        {
+          "id": 7,
+          "ownerId": 2,
+          "team": "red",
+          "x": 1.0159725603208978,
+          "y": -1.4013280501536127,
+          "vx": -16.649324101507723,
+          "vy": 7.151027395447396,
+          "height": 1.4077017296201837,
+          "heightVelocity": 1.5180115308012252
+        },
+        {
+          "id": 8,
+          "ownerId": 4,
+          "team": "red",
+          "x": 1.0650847189219923,
+          "y": 1.291766702969264,
+          "vx": -16.41624044473434,
+          "vy": -7.670999642038424,
+          "height": 1.4077017296201837,
+          "heightVelocity": 1.5180115308012252
+        }
+      ],
+      "obstacles": [],
+      "match": {
+        "blueAlive": 1,
+        "redAlive": 3
+      }
+    },
+    {
+      "tick": 114,
+      "selfTeam": "blue",
+      "simulationHz": 60,
+      "arena": {
+        "width": 40,
+        "height": 30
+      },
+      "allies": [
+        {
+          "id": 1,
+          "team": "blue",
+          "x": -2.4057320981617605,
+          "y": 0.26080296465810177,
+          "vx": -0.22338189986220489,
+          "vy": 0.33048018354097014,
+          "health": 80,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "hit",
+          "throwCooldown": 0.1999999999999998,
+          "charge": 0
+        }
+      ],
+      "enemies": [
+        {
+          "id": 2,
+          "team": "red",
+          "x": 4.444892011521983,
+          "y": -3.1543099929794787,
+          "vx": 0,
+          "vy": -4.179957331344086,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0.34999999999999976,
+          "charge": 0
+        },
+        {
+          "id": 3,
+          "team": "red",
+          "x": 4.783999999999974,
+          "y": 0.9671111111111109,
+          "vx": 0,
+          "vy": 4.92,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0.16666666666666646,
+          "charge": 0
+        },
+        {
+          "id": 4,
+          "team": "red",
+          "x": 4.444892011521983,
+          "y": 3.1543099929794787,
+          "vx": 0,
+          "vy": 4.179957331344086,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0.34999999999999976,
+          "charge": 0
+        }
+      ],
+      "projectiles": [
+        {
+          "id": 6,
+          "ownerId": 1,
+          "team": "blue",
+          "x": 5.381407999999972,
+          "y": 0,
+          "vx": 19.203520000000005,
+          "vy": 0,
+          "height": 1.2522112000000007,
+          "heightVelocity": -2.819471999999998
+        },
+        {
+          "id": 7,
+          "ownerId": 2,
+          "team": "red",
+          "x": -0.6489598498298745,
+          "y": -0.6862253106088732,
+          "vx": -16.649324101507723,
+          "vy": 7.151027395447396,
+          "height": 1.454502882700306,
+          "heightVelocity": -0.2819884691987749
+        },
+        {
+          "id": 8,
+          "ownerId": 4,
+          "team": "red",
+          "x": -0.5765393255514415,
+          "y": 0.524666738765422,
+          "vx": -16.41624044473434,
+          "vy": -7.670999642038424,
+          "height": 1.454502882700306,
+          "heightVelocity": -0.2819884691987749
+        }
+      ],
+      "obstacles": [],
+      "match": {
+        "blueAlive": 1,
+        "redAlive": 3
+      }
+    },
+    {
+      "tick": 120,
+      "selfTeam": "blue",
+      "simulationHz": 60,
+      "arena": {
+        "width": 40,
+        "height": 30
+      },
+      "allies": [
+        {
+          "id": 1,
+          "team": "blue",
+          "x": -2.578014759644337,
+          "y": 0.4235159772099233,
+          "vx": -3.5597296444890074,
+          "vy": 3.228195041009728,
+          "health": 40,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "hit",
+          "throwCooldown": 0.09999999999999981,
+          "charge": 0
+        }
+      ],
+      "enemies": [
+        {
+          "id": 2,
+          "team": "red",
+          "x": 4.444892011521983,
+          "y": -3.620709254193366,
+          "vx": 0,
+          "vy": -4.285949519978707,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0.24999999999999978,
+          "charge": 0
+        },
+        {
+          "id": 3,
+          "team": "red",
+          "x": 4.783999999999974,
+          "y": 1.436271123619157,
+          "vx": 0,
+          "vy": 4.30765745216076,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0.06666666666666649,
+          "charge": 0
+        },
+        {
+          "id": 4,
+          "team": "red",
+          "x": 4.444892011521983,
+          "y": 3.620709254193366,
+          "vx": 0,
+          "vy": 4.285949519978707,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0.24999999999999978,
+          "charge": 0
+        }
+      ],
+      "projectiles": [
+        {
+          "id": 6,
+          "ownerId": 1,
+          "team": "blue",
+          "x": 7.30175999999997,
+          "y": 0,
+          "vx": 19.203520000000005,
+          "vy": 0,
+          "height": 0.865264000000001,
+          "heightVelocity": -4.619471999999997
+        }
+      ],
+      "obstacles": [],
+      "match": {
+        "blueAlive": 1,
+        "redAlive": 3
+      }
+    },
+    {
+      "tick": 126,
+      "selfTeam": "blue",
+      "simulationHz": 60,
+      "arena": {
+        "width": 40,
+        "height": 30
+      },
+      "allies": [
+        {
+          "id": 1,
+          "team": "blue",
+          "x": -2.8067315921863347,
+          "y": 0.6309313200437798,
+          "vx": -1.0721699648923695,
+          "vy": 0.9723136612758035,
+          "health": 40,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "hit",
+          "throwCooldown": 0,
+          "charge": 0
+        }
+      ],
+      "enemies": [
+        {
+          "id": 2,
+          "team": "red",
+          "x": 4.444892011521983,
+          "y": -3.9381481664561973,
+          "vx": 0,
+          "vy": -3.5120152046500994,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0.1499999999999998,
+          "charge": 0
+        },
+        {
+          "id": 3,
+          "team": "red",
+          "x": 4.783999999999974,
+          "y": 1.8118507145253273,
+          "vx": 0,
+          "vy": 3.391972820219056,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0,
+          "charge": 0
+        },
+        {
+          "id": 4,
+          "team": "red",
+          "x": 4.444892011521983,
+          "y": 3.9381481664561973,
+          "vx": 0,
+          "vy": 3.5120152046500994,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0.1499999999999998,
+          "charge": 0
+        }
+      ],
+      "projectiles": [
+        {
+          "id": 6,
+          "ownerId": 1,
+          "team": "blue",
+          "x": 9.222111999999967,
+          "y": 0,
+          "vx": 19.203520000000005,
+          "vy": 0,
+          "height": 0.2983168000000014,
+          "heightVelocity": -6.419471999999996
+        }
+      ],
+      "obstacles": [],
+      "match": {
+        "blueAlive": 1,
+        "redAlive": 3
+      }
+    },
+    {
+      "tick": 132,
+      "selfTeam": "blue",
+      "simulationHz": 60,
+      "arena": {
+        "width": 40,
+        "height": 30
+      },
+      "allies": [
+        {
+          "id": 1,
+          "team": "blue",
+          "x": -2.8756197783148765,
+          "y": 0.6934036207671225,
+          "vx": -0.32293138761169055,
+          "vy": 0.2928552469394333,
+          "health": 40,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "hit",
+          "throwCooldown": 0,
+          "charge": 0
+        }
+      ],
+      "enemies": [
+        {
+          "id": 2,
+          "team": "red",
+          "x": 4.422669789299761,
+          "y": -4.134410958860033,
+          "vx": -0.6666666666666666,
+          "vy": -4.123518886671573,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0.04999999999999982,
+          "charge": 0
+        },
+        {
+          "id": 3,
+          "team": "red",
+          "x": 4.822097042983483,
+          "y": 2.038959560654693,
+          "vx": 0.1429112895052731,
+          "vy": 2.7253061535523897,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "throwing",
+          "throwCooldown": 0.4999999999999997,
+          "charge": 0
+        },
+        {
+          "id": 4,
+          "team": "red",
+          "x": 4.4004475670775385,
+          "y": 4.145890681012271,
+          "vx": -0.6666666666666666,
+          "vy": 3.8096011676905053,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0.04999999999999982,
+          "charge": 0
+        }
+      ],
+      "projectiles": [
+        {
+          "id": 9,
+          "ownerId": 3,
+          "team": "red",
+          "x": 1.8928422344484968,
+          "y": 1.479355623959894,
+          "vx": -17.98360667626362,
+          "vy": -2.068189083890013,
+          "height": 1.3165321176472262,
+          "heightVelocity": 2.4153211764722604
+        }
+      ],
+      "obstacles": [],
+      "match": {
+        "blueAlive": 1,
+        "redAlive": 3
+      }
+    },
+    {
+      "tick": 138,
+      "selfTeam": "blue",
+      "simulationHz": 60,
+      "arena": {
+        "width": 40,
+        "height": 30
+      },
+      "allies": [
+        {
+          "id": 1,
+          "team": "blue",
+          "x": -2.8963685012459237,
+          "y": 0.7122199161498317,
+          "vx": -0.09726506479341697,
+          "vy": 0.08820630530627593,
+          "health": 40,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "hit",
+          "throwCooldown": 0,
+          "charge": 0
+        }
+      ],
+      "enemies": [
+        {
+          "id": 2,
+          "team": "red",
+          "x": 4.4004475670775385,
+          "y": -4.387476011889034,
+          "vx": 0,
+          "vy": -2.770113969681354,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "throwing",
+          "throwCooldown": 0.5499999999999998,
+          "charge": 0
+        },
+        {
+          "id": 3,
+          "team": "red",
+          "x": 4.8252770608228985,
+          "y": 2.322601287121044,
+          "vx": 0.1429112895052731,
+          "vy": 2.7253061535523897,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0.39999999999999974,
+          "charge": 0
+        },
+        {
+          "id": 4,
+          "team": "red",
+          "x": 4.31155867818865,
+          "y": 4.448413228368197,
+          "vx": -2.220446049250313e-16,
+          "vy": 2.4265912287198828,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "throwing",
+          "throwCooldown": 0.5499999999999998,
+          "charge": 0
+        }
+      ],
+      "projectiles": [
+        {
+          "id": 9,
+          "ownerId": 3,
+          "team": "red",
+          "x": 0.09448156682213449,
+          "y": 1.2725367155708929,
+          "vx": -17.98360667626362,
+          "vy": -2.068189083890013,
+          "height": 1.4530642352944523,
+          "heightVelocity": 0.6153211764722604
+        },
+        {
+          "id": 10,
+          "ownerId": 2,
+          "team": "red",
+          "x": 2.6795094754426407,
+          "y": -3.107359473779107,
+          "vx": -16.18339925489797,
+          "vy": 11.347419428328935,
+          "height": 1.1932396086605366,
+          "heightVelocity": 3.564792173210731
+        },
+        {
+          "id": 11,
+          "ownerId": 4,
+          "team": "red",
+          "x": 2.4789208737171493,
+          "y": 3.497526622379489,
+          "vx": -16.93262442715531,
+          "vy": -7.887867366621721,
+          "height": 1.185097956673639,
+          "heightVelocity": 3.401959133472782
+        }
+      ],
+      "obstacles": [],
+      "match": {
+        "blueAlive": 1,
+        "redAlive": 3
+      }
+    },
+    {
+      "tick": 144,
+      "selfTeam": "blue",
+      "simulationHz": 60,
+      "arena": {
+        "width": 40,
+        "height": 30
+      },
+      "allies": [
+        {
+          "id": 1,
+          "team": "blue",
+          "x": -2.823310548259335,
+          "y": 0.8260047525955413,
+          "vx": 1.2489639725537636,
+          "vy": 2.6666666666666665,
+          "health": 40,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "idle",
+          "throwCooldown": 0,
+          "charge": 0
+        }
+      ],
+      "enemies": [
+        {
+          "id": 2,
+          "team": "red",
+          "x": 4.500447567077538,
+          "y": -4.564487408857169,
+          "vx": 1.3333333333333333,
+          "vy": -1.4367806363480211,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "throwing",
+          "throwCooldown": 0.44999999999999973,
+          "charge": 0
+        },
+        {
+          "id": 3,
+          "team": "red",
+          "x": 4.789660380362321,
+          "y": 2.650687458031839,
+          "vx": -1.077467120939044,
+          "vy": 4.058639486885723,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0.29999999999999977,
+          "charge": 0
+        },
+        {
+          "id": 4,
+          "team": "red",
+          "x": 4.2560031226330945,
+          "y": 4.746627906795738,
+          "vx": -2.220446049250313e-16,
+          "vy": 2.4265912287198828,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "throwing",
+          "throwCooldown": 0.44999999999999973,
+          "charge": 0
+        }
+      ],
+      "projectiles": [
+        {
+          "id": 9,
+          "ownerId": 3,
+          "team": "red",
+          "x": -1.7038791008042278,
+          "y": 1.0657178071818918,
+          "vx": -17.98360667626362,
+          "vy": -2.068189083890013,
+          "height": 1.4095963529416782,
+          "heightVelocity": -1.1846788235277397
+        },
+        {
+          "id": 10,
+          "ownerId": 2,
+          "team": "red",
+          "x": 1.0611695499528442,
+          "y": -1.9726175309462126,
+          "vx": -16.18339925489797,
+          "vy": 11.347419428328935,
+          "height": 1.4447188259816097,
+          "heightVelocity": 1.7647921732107317
+        },
+        {
+          "id": 11,
+          "ownerId": 4,
+          "team": "red",
+          "x": 0.7856584310016178,
+          "y": 2.708739885717316,
+          "vx": -16.93262442715531,
+          "vy": -7.887867366621721,
+          "height": 1.4202938700209173,
+          "heightVelocity": 1.6019591334727825
+        }
+      ],
+      "obstacles": [],
+      "match": {
+        "blueAlive": 1,
+        "redAlive": 3
+      }
+    },
+    {
+      "tick": 150,
+      "selfTeam": "blue",
+      "simulationHz": 60,
+      "arena": {
+        "width": 40,
+        "height": 30
+      },
+      "allies": [
+        {
+          "id": 1,
+          "team": "blue",
+          "x": -3.0224251907733595,
+          "y": 1.1614910409694879,
+          "vx": -1.3128583822794455,
+          "vy": 1.3498908977528743,
+          "health": 20,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "hit",
+          "throwCooldown": 0,
+          "charge": 0
+        }
+      ],
+      "enemies": [
+        {
+          "id": 2,
+          "team": "red",
+          "x": 4.762932293736247,
+          "y": -4.519276583603083,
+          "vx": 2.9161108832923253,
+          "vy": 1.2298860303186454,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0.34999999999999976,
+          "charge": 0
+        },
+        {
+          "id": 3,
+          "team": "red",
+          "x": 4.774985311603464,
+          "y": 3.023218073387079,
+          "vx": -0.48008402092187874,
+          "vy": 4.058639486885723,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0.1999999999999998,
+          "charge": 0
+        },
+        {
+          "id": 4,
+          "team": "red",
+          "x": 4.111558678188651,
+          "y": 5.126707073024506,
+          "vx": -1.3333333333333335,
+          "vy": 3.6514979437358446,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0.34999999999999976,
+          "charge": 0
+        }
+      ],
+      "projectiles": [
+        {
+          "id": 10,
+          "ownerId": 2,
+          "team": "red",
+          "x": -0.557170375536953,
+          "y": -0.8378755881133194,
+          "vx": -16.18339925489797,
+          "vy": 11.347419428328935,
+          "height": 1.5161980433026827,
+          "heightVelocity": -0.03520782678926848
+        },
+        {
+          "id": 11,
+          "ownerId": 4,
+          "team": "red",
+          "x": -0.9076040117139131,
+          "y": 1.9199531490551431,
+          "vx": -16.93262442715531,
+          "vy": -7.887867366621721,
+          "height": 1.4754897833681957,
+          "heightVelocity": -0.19804086652721758
+        }
+      ],
+      "obstacles": [],
+      "match": {
+        "blueAlive": 1,
+        "redAlive": 3
+      }
+    },
+    {
+      "tick": 156,
+      "selfTeam": "blue",
+      "simulationHz": 60,
+      "arena": {
+        "width": 40,
+        "height": 30
+      },
+      "allies": [
+        {
+          "id": 1,
+          "team": "blue",
+          "x": -3.0987283317603005,
+          "y": 1.2399465064473336,
+          "vx": 0,
+          "vy": 0,
+          "health": 0,
+          "maxHealth": 100,
+          "alive": false,
+          "state": "defeated",
+          "throwCooldown": 0,
+          "charge": 0
+        }
+      ],
+      "enemies": [
+        {
+          "id": 2,
+          "team": "red",
+          "x": 5.036207119715721,
+          "y": -4.207399091682331,
+          "vx": 2.7706653014100735,
+          "vy": 3.8965526969853115,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0.24999999999999978,
+          "charge": 0
+        },
+        {
+          "id": 3,
+          "team": "red",
+          "x": 4.702488692361328,
+          "y": 3.454844182830926,
+          "vx": 0.15855924092337648,
+          "vy": 3.427850136204437,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0.09999999999999981,
+          "charge": 0
+        },
+        {
+          "id": 4,
+          "team": "red",
+          "x": 3.9671142337442067,
+          "y": 5.499611292247567,
+          "vx": -1.3333333333333335,
+          "vy": 3.5855356096201567,
+          "health": 100,
+          "maxHealth": 100,
+          "alive": true,
+          "state": "moving",
+          "throwCooldown": 0.24999999999999978,
+          "charge": 0
+        }
+      ],
+      "projectiles": [
+        {
+          "id": 10,
+          "ownerId": 2,
+          "team": "red",
+          "x": -2.17551030102675,
+          "y": 0.29686635471957423,
+          "vx": -16.18339925489797,
+          "vy": 11.347419428328935,
+          "height": 1.407677260623756,
+          "heightVelocity": -1.8352078267892686
+        }
+      ],
+      "obstacles": [],
+      "match": {
+        "blueAlive": 0,
+        "redAlive": 3
+      }
+    }
+  ],
+  "actions": [
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -8,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -7.7666666666666675,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -7.200000000000003,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -6.600000000000005,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -6.000000000000007,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -5.400000000000009,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -4.800000000000011,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -4.2000000000000135,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -3.6000000000000156,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -3.0000000000000178,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -2.40000000000002,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -1.800000000000022,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -1.2000000000000242,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -0.6331111111111376,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -1.1251111111111385,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "throw",
+          "unitId": 1,
+          "x": 4.161288888888863,
+          "y": 0,
+          "power": 0.9336266666666669
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -1.453111111111137,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -2.4069892240747475,
+          "y": 2.3999864109997318
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -1.710838016387018,
+          "y": 0.2161147001431487
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -3.4217542304592534,
+          "y": 2.43513022307199
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -1.655356010934626,
+          "y": 0.5504414760906685
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "throw",
+          "unitId": 1,
+          "x": 4.783999999999974,
+          "y": 2.4224058221647575,
+          "power": 0.8418450980401438
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "throw",
+          "unitId": 1,
+          "x": 4.847821075094432,
+          "y": 2.529514668294123,
+          "power": 0.8577319748707712
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -3.1705710805399576,
+          "y": 3.096504493440994
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -3.097513127553369,
+          "y": 3.2102893298867037
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -4.035870468422483,
+          "y": 3.337020555641879
+        }
+      ]
+    }
+  ],
+  "outcome": {
+    "decisions": 26,
+    "terminated": true,
+    "truncated": false,
+    "winner": "red",
+    "blueAlive": 0,
+    "redAlive": 3,
+    "finalTick": 156
+  },
+  "configuration": {
+    "blueUnits": 1,
+    "redUnits": 3,
+    "arenaWidth": 40,
+    "arenaHeight": 30,
+    "maxTicks": 10800,
+    "redDifficulty": "hard",
+    "redController": "scripted",
+    "map": null
+  }
+}

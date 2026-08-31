@@ -26,6 +26,9 @@ def main() -> None:
         "--red-difficulty", choices=("easy", "normal", "hard"), default="normal"
     )
     parser.add_argument(
+        "--red-controller", choices=("scripted", "random"), default="scripted"
+    )
+    parser.add_argument(
         "--record",
         metavar="PATH",
         help="write detached server observations to a SnowGym replay JSON file",
@@ -43,6 +46,7 @@ def main() -> None:
         max_ticks=args.max_ticks,
         decision_hz=args.decision_hz,
         red_difficulty=args.red_difficulty,
+        red_controller=args.red_controller,
     ).unwrapped
     if not isinstance(environment, SnowGymEnv):
         raise TypeError(f"{CONFIGURABLE_ENV_ID} resolved to an unexpected environment")

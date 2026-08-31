@@ -49,7 +49,8 @@ curl -X POST http://127.0.0.1:8787/reset \
       "arenaHeight": 24,
       "decisionHz": 20,
       "maxTicks": 3600,
-      "redDifficulty": "hard"
+      "redDifficulty": "hard",
+      "redController": "random"
     }
   }'
 ```
@@ -57,6 +58,24 @@ curl -X POST http://127.0.0.1:8787/reset \
 Optional `blueSpawns` and `redSpawns` arrays accept explicit `{ "x", "y" }`
 positions. The server rejects unknown fields, invalid counts, out-of-arena
 positions, overlaps, and decision rates that do not divide 60 Hz.
+
+The red team is controlled through the same `TeamController` boundary as blue.
+`redController` selects the opponent: `"scripted"` (default) is the classic
+utility-scored squad AI with per-tick dodges, aim error, and cover play —
+behaviorally identical to the browser game's AI at the same `redDifficulty` —
+while `"random"` is a seeded baseline that wanders and throws at random.
+
+A scenario can instead target a bundled SnowCraft map by id
+(`arena1.json`–`arena5.json`). A map fixes the terrain and the spawn layout, so
+roster/arena fields must be omitted; obstacles then affect line-of-sight,
+cover, and collision, and are exposed to the policy as a fixed-capacity masked
+`obstacles` tensor:
+
+```bash
+curl -X POST http://127.0.0.1:8787/reset \
+  -H 'Content-Type: application/json' \
+  -d '{ "seed": 42, "scenario": { "map": "arena4.json", "redDifficulty": "hard" } }'
+```
 
 Example externally supplied action:
 
@@ -124,6 +143,31 @@ versioned `snowgym.replay.v0` JSON is a visual record at the 10 Hz policy
 decision cadence, with interpolation for smooth playback. It is not a video and
 does not feed rendered pixels back into the agent.
 
+### Example replays
+
+Ready-made recordings live in [`public/replays/`](../public/replays/). With the
+Vite server running (`npm run dev -- --host 127.0.0.1`), open the viewer and
+either pick a file with **Open recording**, or load one directly:
+
+```text
+http://127.0.0.1:5173/replay.html?recording=/replays/<file>
+```
+
+| File | Scenario | Result |
+| --- | --- | --- |
+| `blue-seed-42.json` | Open 3v3, normal scripted red (acceptance run) | blue 3–0 |
+| `blue-5v2-hard.json` | Open 5v2, hard scripted red | blue win |
+| `example-open-3v3.json` | Open 3v3, scripted red | blue 3–0 |
+| `example-open-1v3-hard.json` | Open 1 blue vs 3 hard red | red win |
+| `example-open-2v5-normal.json` | Open 2 blue vs 5 red | red win |
+| `example-open-8v8.json` | Open 8v8 on a large arena | blue 7–0 |
+| `example-forest-3v3.json` | Pine Forest (`arena4`) 3v3 — dense tree cover | blue 3–0 |
+| `example-pond-5v2-hard.json` | Frozen Pond (`arena2`), hard red | blue win |
+| `example-village-random.json` | Village Skirmish (`arena3`) vs `random` red | blue win |
+
+Map recordings render the terrain (trees, rocks, forts) and show units using
+cover. Record your own with `--record PATH` on `snowgym-demo` (see below).
+
 The browser acceptance command is self-contained:
 
 ```bash
@@ -177,6 +221,9 @@ Configurable command-line examples:
 # 5 blue vs 2 hard red, with a replay artifact
 .venv/bin/snowgym-demo --blue-units 5 --red-units 2 --red-difficulty hard \
   --record ../../public/replays/blue-5v2-hard.json
+
+# scripted blue vs the seeded random red baseline
+.venv/bin/snowgym-demo --red-controller random
 ```
 
 ## Layout

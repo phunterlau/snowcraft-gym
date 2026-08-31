@@ -216,6 +216,21 @@ export class MovementSystem implements System {
     return true;
   }
 
+  /**
+   * Cancels a pending move order without disturbing other states. Used by
+   * non-UI controllers that report orders on behalf of a unit: if a movement
+   * goal is rejected while re-issued, the unit must hold position rather than
+   * keep walking toward the stale target.
+   */
+  tryHold(player: Player): boolean {
+    if (!canAcceptOrders(player) || !canTransition(player.state, PlayerState.Idle)) {
+      return false;
+    }
+    player.moveTarget = null;
+    transitionTo(player, PlayerState.Idle);
+    return true;
+  }
+
   update(dt: number): void {
     this.applyKeyboardMovement(dt);
 

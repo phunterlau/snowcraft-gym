@@ -1,13 +1,16 @@
 import { Team } from '../../src/game/types';
 import type { AiDifficulty } from '../../src/systems/AISystem';
 import type { TeamAction, UnitAction } from '../actions/UnitAction';
+import { parseRedControllerType, type RedControllerType } from '../agents/opponents';
 import { SimpleBlueAgent } from '../agents/SimpleBlueAgent';
 import { EpisodeCompleteError, SnowEnvironment, type StepResult } from '../core/SnowEnvironment';
 import {
+  createMapScenario,
   createOpenScenario,
   type OpenScenarioOptions,
   type SpawnPosition,
 } from '../scenarios/Scenario';
+import { isMapId, MAP_IDS } from '../scenarios/maps';
 
 export interface ServiceResponse {
   status: number;
@@ -33,7 +36,14 @@ export class SnowGymService {
       }
       if (method === 'POST' && path === '/reset') {
         const request = parseReset(body);
-        if (request.scenario) {
+        if (request.map !== undefined) {
+          this.environment = new SnowEnvironment({
+            scenario: createMapScenario(request.map, { seed: request.seed }),
+            decisionHz: request.decisionHz,
+            redDifficulty: request.redDifficulty,
+            redController: request.redController,
+          });
+        } else if (request.scenario) {
           const scenario = createOpenScenario({
             ...request.scenario,
             seed: request.seed,
@@ -42,6 +52,7 @@ export class SnowGymService {
             scenario,
             decisionHz: request.decisionHz,
             redDifficulty: request.redDifficulty,
+            redController: request.redController,
           });
         } else {
           this.environment.reset(request.seed);
@@ -97,8 +108,10 @@ class RequestValidationError extends Error {}
 interface ResetRequest {
   seed?: number;
   scenario?: OpenScenarioOptions;
+  map?: string;
   decisionHz?: number;
   redDifficulty?: AiDifficulty;
+  redController?: RedControllerType;
 }
 
 function parseReset(body: unknown): ResetRequest {
@@ -118,6 +131,8 @@ function parseReset(body: unknown): ResetRequest {
     'maxTicks',
     'decisionHz',
     'redDifficulty',
+    'redController',
+    'map',
   ]);
   const unknown = Object.keys(scenario).filter((key) => !allowed.has(key));
   if (unknown.length > 0) {
@@ -125,10 +140,44 @@ function parseReset(body: unknown): ResetRequest {
   }
 
   const redDifficulty = optionalDifficulty(scenario.redDifficulty);
+  let redController: RedControllerType | undefined;
+  try {
+    redController = parseRedControllerType(scenario.redController);
+  } catch (error) {
+    throw new RequestValidationError((error as RangeError).message);
+  }
+
+  if (scenario.map !== undefined) {
+    if (!isMapId(scenario.map)) {
+      throw new RequestValidationError(`scenario.map must be one of: ${MAP_IDS.join(', ')}`);
+    }
+    const conflicting = [
+      'blueUnits',
+      'redUnits',
+      'arenaWidth',
+      'arenaHeight',
+      'blueSpawns',
+      'redSpawns',
+    ].filter((key) => scenario[key] !== undefined);
+    if (conflicting.length > 0) {
+      throw new RequestValidationError(
+        `scenario.map fixes the terrain and rosters; remove: ${conflicting.sort().join(', ')}`,
+      );
+    }
+    return {
+      seed,
+      map: scenario.map,
+      decisionHz: optionalSafeInteger(scenario.decisionHz, 'scenario.decisionHz'),
+      redDifficulty,
+      redController,
+    };
+  }
+
   return {
     seed,
     decisionHz: optionalSafeInteger(scenario.decisionHz, 'scenario.decisionHz'),
     redDifficulty,
+    redController: scenario.redController === undefined ? undefined : redController,
     scenario: {
       blueUnits: optionalSafeInteger(scenario.blueUnits, 'scenario.blueUnits'),
       redUnits: optionalSafeInteger(scenario.redUnits, 'scenario.redUnits'),
