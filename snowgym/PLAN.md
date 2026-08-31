@@ -63,6 +63,8 @@ WebGL, Three.js rendering, browser timing, or input state.
 - [x] Pass Gymnasium's environment checker against the live server.
 - [x] Add a terminal-only scripted-blue demo command.
 - [x] Record versioned visual-replay JSON from detached server state.
+- [x] Add a renderer-free CLI/function that builds reproducible M-vs-N examples
+      for open arenas or bounded native map spawn pools.
 - [x] Replay recordings through the existing Three.js rendering engine without
       coupling the Gym environment to rendering.
 - Let the initial Python adapter consume the JSON server for correctness, then

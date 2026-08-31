@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { SimpleBlueAgent } from '../agents/SimpleBlueAgent';
 import { SnowEnvironment } from '../core/SnowEnvironment';
-import { createOpenScenario, MAX_TEAM_SIZE } from '../scenarios/Scenario';
+import { createMapScenario, createOpenScenario, MAX_TEAM_SIZE } from '../scenarios/Scenario';
 
 describe('configurable SnowGym scenarios', () => {
   it.each([
@@ -38,6 +38,26 @@ describe('configurable SnowGym scenarios', () => {
     expect(summary).toEqual(replay);
     expect(summary.tick).toBeLessThanOrEqual(1_200);
     expect(summary.terminated || summary.truncated).toBe(true);
+  });
+
+  it('selects smaller map rosters evenly from native spawn points', () => {
+    const scenario = createMapScenario('arena6.json', { blueUnits: 3, redUnits: 2 });
+
+    expect(scenario.blueSpawns).toEqual([
+      { x: -29, y: -18 },
+      { x: -28, y: 2 },
+      { x: -28, y: 18 },
+    ]);
+    expect(scenario.redSpawns).toEqual([
+      { x: 29, y: -18 },
+      { x: 28, y: 18 },
+    ]);
+  });
+
+  it('rejects a map roster above its native spawn capacity', () => {
+    expect(() => createMapScenario('arena1.json', { blueUnits: 4 })).toThrow(
+      'blueUnits must be at most 3 on map "arena1.json"',
+    );
   });
 
   it.each([

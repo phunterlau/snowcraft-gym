@@ -74,8 +74,8 @@ SnowGym dependency: covers the new server and environment sources.
 Reason: the TypeScript server needs a direct Node execution entry point and Node
 type declarations.
 
-Change: added `npm run snowgym:server`, the SnowGym replay browser-smoke
-command, `tsx`, and `@types/node`.
+Change: added `npm run snowgym:server`, `npm run snowgym:example`, the SnowGym
+replay browser-smoke command, `tsx`, and `@types/node`.
 
 Upstream behavior: existing browser scripts and runtime dependencies are
 unchanged.

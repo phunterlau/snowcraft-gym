@@ -31,8 +31,8 @@ class SnowGymEnv(gym.Env[GymObservation, GymAction]):
         client: SnowGymClient | None = None,
         max_team_units: int = MAX_TEAM_UNITS,
         configurable: bool = False,
-        blue_units: int = 3,
-        red_units: int = 3,
+        blue_units: int | None = None,
+        red_units: int | None = None,
         arena_width: float = 40.0,
         arena_height: float = 30.0,
         max_ticks: int = 60 * 180,
@@ -48,10 +48,15 @@ class SnowGymEnv(gym.Env[GymObservation, GymAction]):
         self._max_team_units = validate_capacity(max_team_units)
         self._configurable = configurable
         self._map = map
+        self._map_roster = {}
+        if blue_units is not None:
+            self._map_roster["blueUnits"] = blue_units
+        if red_units is not None:
+            self._map_roster["redUnits"] = red_units
         self._scenario_config = validate_scenario_config(
             {
-                "blueUnits": blue_units,
-                "redUnits": red_units,
+                "blueUnits": blue_units if blue_units is not None else 3,
+                "redUnits": red_units if red_units is not None else 3,
                 "arenaWidth": arena_width,
                 "arenaHeight": arena_height,
                 "maxTicks": max_ticks,
@@ -100,11 +105,16 @@ class SnowGymEnv(gym.Env[GymObservation, GymAction]):
             if map_id is not None:
                 if not isinstance(map_id, str):
                     raise ValueError("scenario.map must be a string map id")
-                # Map fixes terrain + rosters; only tuning knobs ride along.
+                # Map fixes terrain/native spawns; counts select a bounded subset.
                 scenario = {
                     key: scenario.get(key, self._scenario_config[key])
                     for key in ("decisionHz", "redDifficulty", "redController", "maxTicks")
                 }
+                for key in ("blueUnits", "redUnits"):
+                    if isinstance(scenario_override, dict) and key in scenario_override:
+                        scenario[key] = scenario_override[key]
+                    elif key in self._map_roster:
+                        scenario[key] = self._map_roster[key]
                 scenario["map"] = map_id
             else:
                 scenario = validate_scenario_config(

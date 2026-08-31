@@ -188,6 +188,22 @@ describe('SnowGymService', () => {
     expect(body.observation.obstacles).toHaveLength(27);
   });
 
+  it('selects an asymmetric roster from a map native spawn pool', () => {
+    const service = new SnowGymService();
+    const response = service.handle('POST', '/reset', {
+      seed: 17,
+      scenario: { map: 'arena6.json', blueUnits: 5, redUnits: 2 },
+    });
+    const body = response.body as { status: EnvironmentStatus };
+
+    expect(response.status).toBe(200);
+    expect(body.status.configuration).toMatchObject({
+      map: 'arena6.json',
+      blueUnits: 5,
+      redUnits: 2,
+    });
+  });
+
   it('rejects an unknown map and a map with a conflicting roster', () => {
     const service = new SnowGymService();
     expect(service.handle('POST', '/reset', { scenario: { map: 'arena99.json' } })).toMatchObject({
@@ -195,7 +211,7 @@ describe('SnowGymService', () => {
       body: { error: 'invalid_request' },
     });
     expect(
-      service.handle('POST', '/reset', { scenario: { map: 'arena1.json', blueUnits: 5 } }),
+      service.handle('POST', '/reset', { scenario: { map: 'arena1.json', arenaWidth: 50 } }),
     ).toMatchObject({ status: 400, body: { error: 'invalid_request' } });
   });
 });

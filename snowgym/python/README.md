@@ -22,4 +22,7 @@ For example:
 # Winter Front defines ten spawn points per team, producing a map-backed 10v10.
 .venv/bin/snowgym-demo --map arena6.json \
   --record ../../public/replays/example-winter-front-10v10.json
+
+# Select smaller M/N rosters from evenly distributed native map spawns.
+.venv/bin/snowgym-demo --map arena6.json --blue-units 5 --red-units 2
 ```

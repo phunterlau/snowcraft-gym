@@ -41,6 +41,8 @@ export class SnowGymService {
             scenario: createMapScenario(request.map, {
               seed: request.seed,
               maxTicks: request.maxTicks,
+              blueUnits: request.blueUnits,
+              redUnits: request.redUnits,
             }),
             decisionHz: request.decisionHz,
             redDifficulty: request.redDifficulty,
@@ -113,6 +115,8 @@ interface ResetRequest {
   scenario?: OpenScenarioOptions;
   map?: string;
   maxTicks?: number;
+  blueUnits?: number;
+  redUnits?: number;
   decisionHz?: number;
   redDifficulty?: AiDifficulty;
   redController?: RedControllerType;
@@ -155,23 +159,20 @@ function parseReset(body: unknown): ResetRequest {
     if (!isMapId(scenario.map)) {
       throw new RequestValidationError(`scenario.map must be one of: ${MAP_IDS.join(', ')}`);
     }
-    const conflicting = [
-      'blueUnits',
-      'redUnits',
-      'arenaWidth',
-      'arenaHeight',
-      'blueSpawns',
-      'redSpawns',
-    ].filter((key) => scenario[key] !== undefined);
+    const conflicting = ['arenaWidth', 'arenaHeight', 'blueSpawns', 'redSpawns'].filter(
+      (key) => scenario[key] !== undefined,
+    );
     if (conflicting.length > 0) {
       throw new RequestValidationError(
-        `scenario.map fixes the terrain and rosters; remove: ${conflicting.sort().join(', ')}`,
+        `scenario.map fixes terrain and native spawn positions; remove: ${conflicting.sort().join(', ')}`,
       );
     }
     return {
       seed,
       map: scenario.map,
       maxTicks: optionalSafeInteger(scenario.maxTicks, 'scenario.maxTicks'),
+      blueUnits: optionalSafeInteger(scenario.blueUnits, 'scenario.blueUnits'),
+      redUnits: optionalSafeInteger(scenario.redUnits, 'scenario.redUnits'),
       decisionHz: optionalSafeInteger(scenario.decisionHz, 'scenario.decisionHz'),
       redDifficulty,
       redController,

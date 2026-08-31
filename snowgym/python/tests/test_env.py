@@ -147,7 +147,7 @@ def test_map_reset_loads_terrain_with_obstacle_tensor() -> None:
 
     assert client.scenario is not None
     assert client.scenario["map"] == "arena1.json"
-    # Map fixes terrain/rosters; configurable tuning still reaches the server.
+    # Map fixes terrain/native spawns; configurable tuning still reaches the server.
     assert "blueUnits" not in client.scenario
     assert client.scenario["decisionHz"] == 10
     assert client.scenario["redDifficulty"] == "normal"
@@ -157,6 +157,26 @@ def test_map_reset_loads_terrain_with_obstacle_tensor() -> None:
     assert observation["obstacles"].shape == (64, 9)
     assert int(observation["obstacle_mask"].sum()) == 2
     assert info["configuration"]["map"] == "arena1.json"
+
+
+def test_map_reset_can_select_a_smaller_native_roster() -> None:
+    client = FakeClient()
+    environment = gym.make(
+        snowgym_client.TEN_UNIT_ENV_ID,
+        client=client,
+        map="arena6.json",
+        blue_units=5,
+        red_units=2,
+    ).unwrapped
+    observation, info = environment.reset(seed=42)
+
+    assert client.scenario is not None
+    assert client.scenario["map"] == "arena6.json"
+    assert client.scenario["blueUnits"] == 5
+    assert client.scenario["redUnits"] == 2
+    assert int(observation["ally_mask"].sum()) == 5
+    assert int(observation["enemy_mask"].sum()) == 2
+    assert info["configuration"]["map"] == "arena6.json"
 
 
 def test_open_arena_has_empty_obstacle_tensor() -> None:

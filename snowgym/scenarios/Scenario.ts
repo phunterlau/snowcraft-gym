@@ -81,21 +81,21 @@ export interface MapScenarioOptions {
   name?: string;
   seed?: number;
   maxTicks?: number;
+  blueUnits?: number;
+  redUnits?: number;
 }
 
 /**
- * Builds a scenario on a bundled map. Team sizes come from the map's spawn
- * lists; obstacles are loaded through the same MapLoader as the browser game.
+ * Builds a scenario on a bundled map. By default every native map spawn is
+ * used; smaller rosters deterministically select evenly distributed native
+ * spawns. Obstacles use the same MapLoader as the browser game.
  */
 export function createMapScenario(mapId: string, options: MapScenarioOptions = {}): Scenario {
   const data = getMapData(mapId);
   const seed = safeInteger(options.seed ?? DEFAULT_SEED, 'seed');
   const maxTicks = positiveInteger(options.maxTicks ?? DEFAULT_MAX_TICKS, 'maxTicks');
-  const blue = mapSpawns(mapId, Team.Player).map((s) => ({ x: s.x, y: s.y }));
-  const red = mapSpawns(mapId, Team.Enemy).map((s) => ({ x: s.x, y: s.y }));
-  if (blue.length === 0 || red.length === 0) {
-    throw new RangeError(`map "${mapId}" must define both player and enemy spawns`);
-  }
+  const blue = selectMapSpawns(mapId, Team.Player, options.blueUnits, 'blueUnits');
+  const red = selectMapSpawns(mapId, Team.Enemy, options.redUnits, 'redUnits');
   return {
     name: options.name ?? `${data.name ?? mapId}`,
     seed,
@@ -108,6 +108,31 @@ export function createMapScenario(mapId: string, options: MapScenarioOptions = {
     map: mapId,
     mapData: data,
   };
+}
+
+function selectMapSpawns(
+  mapId: string,
+  team: Team,
+  requested: number | undefined,
+  name: string,
+): SpawnPosition[] {
+  const available = mapSpawns(mapId, team);
+  if (available.length === 0) {
+    throw new RangeError(`map "${mapId}" must define both player and enemy spawns`);
+  }
+  const count = teamSize(requested ?? available.length, name);
+  if (count > available.length) {
+    throw new RangeError(`${name} must be at most ${available.length} on map "${mapId}"`);
+  }
+  if (count === available.length) return available.map(({ x, y }) => ({ x, y }));
+  if (count === 1) {
+    const { x, y } = available[Math.floor((available.length - 1) / 2)];
+    return [{ x, y }];
+  }
+  return Array.from({ length: count }, (_, index) => {
+    const spawn = available[Math.round((index * (available.length - 1)) / (count - 1))];
+    return { x: spawn.x, y: spawn.y };
+  });
 }
 
 /** Builds the collision/LoS arena for a scenario (empty for open scenarios). */

@@ -14,6 +14,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "snowgym:server": "tsx snowgym/server/main.ts",
+    "snowgym:example": "tsx snowgym/examples/main.ts",
     "snowgym:replay:smoke": "node snowgym/replay/smoke.mjs",
     "smoke": "node scripts/smoke.mjs",
     "smoke:interaction": "node scripts/interaction.mjs",

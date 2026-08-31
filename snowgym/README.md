@@ -66,10 +66,11 @@ behaviorally identical to the browser game's AI at the same `redDifficulty` —
 while `"random"` is a seeded baseline that wanders and throws at random.
 
 A scenario can instead target a bundled SnowCraft map by id
-(`arena1.json`–`arena6.json`). A map fixes the terrain and the spawn layout, so
-roster/arena fields must be omitted; obstacles then affect line-of-sight,
-cover, and collision, and are exposed to the policy as a fixed-capacity masked
-`obstacles` tensor:
+(`arena1.json`–`arena6.json`). A map fixes the terrain and native spawn pool;
+optional `blueUnits` and `redUnits` select evenly distributed native spawns up
+to that map's capacity, while arena dimensions and custom spawn arrays must be
+omitted. Obstacles affect line-of-sight, cover, and collision, and are exposed
+to the policy as a fixed-capacity masked `obstacles` tensor:
 
 ```bash
 curl -X POST http://127.0.0.1:8787/reset \
@@ -186,6 +187,30 @@ It reuses a reachable replay server or starts a temporary Vite server on port
 5173, verifies WebGL rendering, seeking, the terminal winner, and rewind/play,
 writes `/tmp/snowgym-replay.png`, and then stops the server it started.
 
+## Build configurable examples
+
+`snowgym:example` builds a complete replay directly from the headless simulator;
+it does not require the HTTP server, Python, a browser, or WebGL:
+
+```bash
+# Open arena: arbitrary rosters through 10v10
+npm run snowgym:example -- \
+  --blue-units 4 --red-units 7 --map open \
+  --arena-width 54 --arena-height 40 --seed 11
+
+# Terrain map: roster must fit the map's native spawn capacity
+npm run snowgym:example -- \
+  --blue-units 5 --red-units 2 --map arena6.json \
+  --red-difficulty hard --seed 17 \
+  --output public/replays/example-arena6-5v2.json
+```
+
+Run `npm run snowgym:example -- --help` to list map capacities and all inputs,
+including decision rate, tick/decision limits, red controller, and output path.
+The builder records the scenario, semantic actions, provenance, observations,
+and verified frame hashes. It refuses to replace an existing output unless
+`--force` is supplied.
+
 ## Gymnasium client
 
 Importing `snowgym_client` registers legacy fixed-3v3 `SnowGym/Squad-v0`,
@@ -252,6 +277,7 @@ scenarios/      deterministic scenario metadata
 server/         local JSON status/reset/step/autoplay API
 python/         Gymnasium package, checker, tests, and demo CLI
 replay/         versioned replay validation and existing-engine visual playback
+examples/       renderer-free configurable replay builder and CLI
 reproducibility/ versioned public-observation canonicalization and hashing
 fixtures/       cross-language TypeScript/Python contract fixtures
 tests/          SnowGym-owned unit and integration tests

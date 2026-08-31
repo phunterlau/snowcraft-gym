@@ -34,6 +34,7 @@ export interface ReplayRecording {
     maxTicks: number;
     redDifficulty: 'easy' | 'normal' | 'hard';
     redController?: 'scripted' | 'random';
+    map?: string | null;
   };
   frames: Observation[];
   actions: TeamAction[];
@@ -107,6 +108,13 @@ export function parseReplayRecording(value: unknown): ReplayRecording {
     positive(configuration.maxTicks, 'configuration.maxTicks');
     if (!['easy', 'normal', 'hard'].includes(String(configuration.redDifficulty))) {
       throw new ReplayFormatError('configuration.redDifficulty is invalid');
+    }
+    if (
+      configuration.map !== undefined &&
+      configuration.map !== null &&
+      (typeof configuration.map !== 'string' || configuration.map.length === 0)
+    ) {
+      throw new ReplayFormatError('configuration.map is invalid');
     }
   }
   integer(replay.seed, 'seed');
