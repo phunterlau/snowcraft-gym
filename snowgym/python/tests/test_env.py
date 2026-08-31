@@ -25,7 +25,11 @@ class FakeClient:
         return make_snapshot(self.seed, self.tick)
 
     def reset(
-        self, seed: int, scenario: dict[str, Any] | None = None
+        self,
+        seed: int,
+        scenario: dict[str, Any] | None = None,
+        *,
+        idempotency_key: str | None = None,
     ) -> dict[str, Any]:
         self.seed = seed
         self.tick = 0
@@ -33,7 +37,16 @@ class FakeClient:
         self.scenario = scenario
         return make_snapshot(seed, 0, scenario)
 
-    def step(self, action: dict[str, Any]) -> dict[str, Any]:
+    def step(
+        self,
+        action: dict[str, Any],
+        *,
+        expected_state_hash: str | None = None,
+        idempotency_key: str | None = None,
+    ) -> dict[str, Any]:
+        assert expected_state_hash == make_snapshot(
+            self.seed, self.tick, self.scenario
+        )["status"]["stateHash"]
         self.last_action = action
         self.tick += 6
         snapshot = make_snapshot(self.seed, self.tick, self.scenario)
@@ -45,10 +58,25 @@ class FakeClient:
             "info": snapshot["status"] | {"actionResults": [], "action": action},
         }
 
-    def step_scripted(self) -> dict[str, Any]:
-        return self.step({"actions": []})
+    def step_scripted(
+        self,
+        *,
+        expected_state_hash: str | None = None,
+        idempotency_key: str | None = None,
+    ) -> dict[str, Any]:
+        return self.step(
+            {"actions": []},
+            expected_state_hash=expected_state_hash,
+            idempotency_key=idempotency_key,
+        )
 
-    def autoplay(self, max_decisions: int) -> dict[str, Any]:
+    def autoplay(
+        self,
+        max_decisions: int,
+        *,
+        expected_state_hash: str | None = None,
+        idempotency_key: str | None = None,
+    ) -> dict[str, Any]:
         return make_snapshot(self.seed, min(max_decisions, 1) * 6)
 
 

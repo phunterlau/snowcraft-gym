@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 
 import gymnasium as gym
 
@@ -34,6 +35,7 @@ def main() -> None:
         metavar="PATH",
         help="write detached server observations to a SnowGym replay JSON file",
     )
+    parser.add_argument("--json", action="store_true", help="emit one JSON summary")
     args = parser.parse_args()
 
     environment = gym.make(
@@ -71,22 +73,43 @@ def main() -> None:
     finally:
         environment.close()
 
-    print("SnowGym blue-team demo")
-    print(f"  API:       {status['apiVersion']}")
-    print(f"  seed:      {status['seed']}")
     configuration = status["configuration"]
-    print(
-        f"  matchup:   {configuration['blueUnits']} blue vs "
-        f"{configuration['redUnits']} red"
-    )
-    print(f"  map:       {configuration.get('map') or 'open'}")
-    print(f"  decisions: {decisions}")
-    print(f"  ticks:     {status['tick']}")
-    print(f"  survivors: blue={status['blueAlive']} red={status['redAlive']}")
-    print(f"  winner:    {status['winner']}")
+    destination = None
     if recorder is not None:
         destination = write_replay(args.record, recorder.finish(decisions))
-        print(f"  recording: {destination}")
+    summary = {
+        "ok": terminated or truncated,
+        "apiVersion": status["apiVersion"],
+        "seed": status["seed"],
+        "blueUnits": configuration["blueUnits"],
+        "redUnits": configuration["redUnits"],
+        "map": configuration.get("map") or "open",
+        "decisions": decisions,
+        "ticks": status["tick"],
+        "blueAlive": status["blueAlive"],
+        "redAlive": status["redAlive"],
+        "winner": status["winner"],
+        "recording": str(destination) if destination is not None else None,
+    }
+    if args.json:
+        print(json.dumps(summary, sort_keys=True))
+    else:
+        print("SnowGym blue-team demo")
+        print(f"  API:       {summary['apiVersion']}")
+        print(f"  seed:      {summary['seed']}")
+        print(
+            f"  matchup:   {summary['blueUnits']} blue vs "
+            f"{summary['redUnits']} red"
+        )
+        print(f"  map:       {summary['map']}")
+        print(f"  decisions: {summary['decisions']}")
+        print(f"  ticks:     {summary['ticks']}")
+        print(
+            f"  survivors: blue={summary['blueAlive']} red={summary['redAlive']}"
+        )
+        print(f"  winner:    {summary['winner']}")
+        if destination is not None:
+            print(f"  recording: {destination}")
     if not terminated and not truncated:
         raise SystemExit("demo stopped before the episode completed")
 

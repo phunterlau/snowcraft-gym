@@ -97,3 +97,19 @@ the browser continues to cap spawned units according to its match settings.
 SnowGym dependency: the headless mirror in `snowgym/scenarios/maps.ts` feeds the
 same JSON data to `MapLoader.build`, so server physics and browser rendering use
 identical terrain and spawn definitions.
+
+## `AGENTS.md` and `.agents/skills/snowgym/`
+
+Reason: coding agents and LLM policy operators need one discoverable source for
+the repository boundary, safe mutation workflow, environment versions, and
+verification commands.
+
+Change: added a concise root agent guide plus a repo-local SnowGym skill with
+guarded HTTP contract, troubleshooting, and a state-hash/idempotency-aware step
+wrapper.
+
+Upstream behavior: unchanged; these files are operational documentation and a
+local command wrapper only.
+
+SnowGym dependency: directs agents to the renderer-free interfaces, capability
+endpoint, safe artifact workflow, and required verification gates.

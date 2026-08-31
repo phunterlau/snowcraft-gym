@@ -62,6 +62,12 @@ WebGL, Three.js rendering, browser timing, or input state.
 - [x] Add a project-local Python environment and locked dependencies.
 - [x] Pass Gymnasium's environment checker against the live server.
 - [x] Add a terminal-only scripted-blue demo command.
+- [x] Strictly validate mutating request fields and isolate scripted stepping
+      from explicit external actions.
+- [x] Add optimistic state-hash guards, step idempotency, and machine-readable
+      server capability discovery.
+- [x] Check all three registered Gym environments, including map-backed v2,
+      and support JSON CLI summaries.
 - [x] Record versioned visual-replay JSON from detached server state.
 - [x] Add a renderer-free CLI/function that builds reproducible M-vs-N examples
       for open arenas or bounded native map spawn pools.
@@ -123,3 +129,5 @@ team elimination, and renderer-free server status.
 - Every change outside `snowgym/` is recorded in `UPSTREAM_PATCHES.md`.
 - Human browser behavior must continue to pass the existing test/build/smoke
   suite after each milestone.
+- Repository agents should follow the root `AGENTS.md` and the repo-local
+  `.agents/skills/snowgym/SKILL.md` guarded workflows.

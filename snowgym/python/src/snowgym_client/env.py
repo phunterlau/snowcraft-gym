@@ -75,6 +75,7 @@ class SnowGymEnv(gym.Env[GymObservation, GymAction]):
         )
         self._client = client or SnowGymHttpClient(server_url, timeout)
         self._raw_observation: dict[str, Any] | None = None
+        self._state_hash: str | None = None
 
     def reset(
         self,
@@ -126,6 +127,7 @@ class SnowGymEnv(gym.Env[GymObservation, GymAction]):
         raw = require_payload_observation(payload)
         status = require_payload_info(payload, "status")
         self._raw_observation = raw
+        self._state_hash = require_state_hash(status)
         return self._encode_observation(raw), dict(status)
 
     def step(
@@ -137,7 +139,9 @@ class SnowGymEnv(gym.Env[GymObservation, GymAction]):
             raise ValueError(f"action is outside SnowGym action_space: {action!r}")
 
         semantic_action = encode_action(action, self._raw_observation, self._max_team_units)
-        return self._consume_step(self._client.step(semantic_action))
+        return self._consume_step(
+            self._client.step(semantic_action, expected_state_hash=self._state_hash)
+        )
 
     def step_scripted(
         self,
@@ -145,7 +149,9 @@ class SnowGymEnv(gym.Env[GymObservation, GymAction]):
         """Advance one decision using the server's reference blue policy."""
         if self._raw_observation is None:
             raise RuntimeError("reset() must be called before step_scripted()")
-        return self._consume_step(self._client.step_scripted())
+        return self._consume_step(
+            self._client.step_scripted(expected_state_hash=self._state_hash)
+        )
 
     def _consume_step(
         self, payload: dict[str, Any]
@@ -153,6 +159,7 @@ class SnowGymEnv(gym.Env[GymObservation, GymAction]):
         raw = require_payload_observation(payload)
         info = require_payload_info(payload, "info")
         self._raw_observation = raw
+        self._state_hash = require_state_hash(info)
         return (
             self._encode_observation(raw),
             float(payload.get("reward", 0.0)),
@@ -168,6 +175,7 @@ class SnowGymEnv(gym.Env[GymObservation, GymAction]):
 
     def close(self) -> None:
         self._raw_observation = None
+        self._state_hash = None
 
     def _encode_observation(self, raw: dict[str, Any]) -> GymObservation:
         return encode_observation(
@@ -189,6 +197,13 @@ def require_payload_info(payload: dict[str, Any], key: str) -> dict[str, Any]:
     if not isinstance(info, dict):
         raise ValueError(f"SnowGym response is missing {key}")
     return info
+
+
+def require_state_hash(info: dict[str, Any]) -> str:
+    state_hash = info.get("stateHash")
+    if not isinstance(state_hash, str):
+        raise ValueError("SnowGym response is missing stateHash")
+    return state_hash
 
 
 def default_scenario_config() -> dict[str, Any]:

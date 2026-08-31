@@ -22,6 +22,7 @@ const { values } = parseArgs({
     'red-controller': { type: 'string', default: 'scripted' },
     output: { type: 'string' },
     force: { type: 'boolean', default: false },
+    json: { type: 'boolean', default: false },
     help: { type: 'boolean', short: 'h', default: false },
   },
   strict: true,
@@ -62,17 +63,32 @@ const replay = buildReplayExample({
 mkdirSync(dirname(output), { recursive: true });
 writeFileSync(output, `${JSON.stringify(replay, null, 2)}\n`, 'utf8');
 
-console.log('SnowGym example built');
-console.log(
-  `  matchup:   ${replay.configuration?.blueUnits} blue vs ${replay.configuration?.redUnits} red`,
-);
-console.log(`  map:       ${replay.configuration?.map ?? 'open'}`);
-console.log(`  seed:      ${replay.seed}`);
-console.log(`  decisions: ${replay.outcome.decisions}`);
-console.log(`  ticks:     ${replay.outcome.finalTick}`);
-console.log(`  survivors: blue=${replay.outcome.blueAlive} red=${replay.outcome.redAlive}`);
-console.log(`  winner:    ${replay.outcome.winner}`);
-console.log(`  output:    ${output}`);
+const summary = {
+  ok: true,
+  blueUnits: replay.configuration?.blueUnits,
+  redUnits: replay.configuration?.redUnits,
+  map: replay.configuration?.map ?? 'open',
+  seed: replay.seed,
+  decisions: replay.outcome.decisions,
+  ticks: replay.outcome.finalTick,
+  blueAlive: replay.outcome.blueAlive,
+  redAlive: replay.outcome.redAlive,
+  winner: replay.outcome.winner,
+  output,
+};
+if (values.json) {
+  console.log(JSON.stringify(summary));
+} else {
+  console.log('SnowGym example built');
+  console.log(`  matchup:   ${summary.blueUnits} blue vs ${summary.redUnits} red`);
+  console.log(`  map:       ${summary.map}`);
+  console.log(`  seed:      ${summary.seed}`);
+  console.log(`  decisions: ${summary.decisions}`);
+  console.log(`  ticks:     ${summary.ticks}`);
+  console.log(`  survivors: blue=${summary.blueAlive} red=${summary.redAlive}`);
+  console.log(`  winner:    ${summary.winner}`);
+  console.log(`  output:    ${summary.output}`);
+}
 
 function printHelp(): void {
   console.log(`Build a deterministic SnowGym visual replay without starting a server.
@@ -92,6 +108,7 @@ Options:
   --red-controller TYPE     ${RED_CONTROLLER_TYPES.join(', ')}
   --output PATH             Replay JSON destination
   --force                   Replace an existing destination
+  --json                    Emit one machine-readable JSON summary
 
 Bundled maps and native capacities:
 ${MAP_IDS.map((id) => `  ${id.padEnd(12)} ${mapSpawns(id, Team.Player).length}v${mapSpawns(id, Team.Enemy).length} maximum`).join('\n')}

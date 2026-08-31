@@ -18,8 +18,16 @@ const server = createServer(async (request, response) => {
     const result = service.handle(request.method ?? 'GET', url.pathname, body);
     writeJson(response, result.status, result.body);
   } catch (error) {
-    const message = error instanceof Error ? error.message : 'unknown server error';
-    writeJson(response, 400, { error: 'invalid_json', message });
+    if (error instanceof HttpRequestError) {
+      writeJson(response, 400, { error: error.code, message: error.message });
+      return;
+    }
+    if (error instanceof SyntaxError) {
+      writeJson(response, 400, { error: 'invalid_json', message: error.message });
+      return;
+    }
+    console.error('SnowGym request failed', error);
+    writeJson(response, 500, { error: 'internal_error', message: 'internal server error' });
   }
 });
 
@@ -47,11 +55,22 @@ async function readJson(request: IncomingMessage): Promise<unknown> {
   for await (const chunk of request) {
     const buffer = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk);
     bytes += buffer.length;
-    if (bytes > MAX_BODY_BYTES) throw new RangeError('request body is too large');
+    if (bytes > MAX_BODY_BYTES) {
+      throw new HttpRequestError('request_too_large', 'request body is too large');
+    }
     chunks.push(buffer);
   }
   if (chunks.length === 0) return undefined;
   return JSON.parse(Buffer.concat(chunks).toString('utf8')) as unknown;
+}
+
+class HttpRequestError extends Error {
+  constructor(
+    readonly code: 'request_too_large',
+    message: string,
+  ) {
+    super(message);
+  }
 }
 
 function writeJson(response: ServerResponse, status: number, body: unknown): void {

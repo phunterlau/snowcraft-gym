@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import uuid
 from typing import Any, Protocol
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
@@ -16,13 +17,36 @@ class SnowGymClient(Protocol):
 
     def status(self) -> JsonObject: ...
 
-    def reset(self, seed: int, scenario: JsonObject | None = None) -> JsonObject: ...
+    def reset(
+        self,
+        seed: int,
+        scenario: JsonObject | None = None,
+        *,
+        idempotency_key: str | None = None,
+    ) -> JsonObject: ...
 
-    def step(self, action: JsonObject) -> JsonObject: ...
+    def step(
+        self,
+        action: JsonObject,
+        *,
+        expected_state_hash: str | None = None,
+        idempotency_key: str | None = None,
+    ) -> JsonObject: ...
 
-    def step_scripted(self) -> JsonObject: ...
+    def step_scripted(
+        self,
+        *,
+        expected_state_hash: str | None = None,
+        idempotency_key: str | None = None,
+    ) -> JsonObject: ...
 
-    def autoplay(self, max_decisions: int) -> JsonObject: ...
+    def autoplay(
+        self,
+        max_decisions: int,
+        *,
+        expected_state_hash: str | None = None,
+        idempotency_key: str | None = None,
+    ) -> JsonObject: ...
 
 
 class SnowGymHttpClient:
@@ -40,28 +64,76 @@ class SnowGymHttpClient:
         self._check_version(payload)
         return payload
 
-    def reset(self, seed: int, scenario: JsonObject | None = None) -> JsonObject:
-        body: JsonObject = {"seed": int(seed)}
+    def capabilities(self) -> JsonObject:
+        return self._request("GET", "/capabilities")
+
+    def reset(
+        self,
+        seed: int,
+        scenario: JsonObject | None = None,
+        *,
+        idempotency_key: str | None = None,
+    ) -> JsonObject:
+        body: JsonObject = {
+            "seed": int(seed),
+            "idempotencyKey": idempotency_key or f"python-{uuid.uuid4()}",
+        }
         if scenario is not None:
             body["scenario"] = scenario
         payload = self._request("POST", "/reset", body)
         self._check_version(payload)
         return payload
 
-    def step(self, action: JsonObject) -> JsonObject:
-        payload = self._request("POST", "/step", {"action": action})
+    def step(
+        self,
+        action: JsonObject,
+        *,
+        expected_state_hash: str | None = None,
+        idempotency_key: str | None = None,
+    ) -> JsonObject:
+        body = self._guarded_body(expected_state_hash, idempotency_key)
+        body["action"] = action
+        payload = self._request("POST", "/step", body)
         self._check_version({"status": payload.get("info")})
         return payload
 
-    def step_scripted(self) -> JsonObject:
-        payload = self._request("POST", "/step", {})
+    def step_scripted(
+        self,
+        *,
+        expected_state_hash: str | None = None,
+        idempotency_key: str | None = None,
+    ) -> JsonObject:
+        payload = self._request(
+            "POST",
+            "/step-scripted",
+            self._guarded_body(expected_state_hash, idempotency_key),
+        )
         self._check_version({"status": payload.get("info")})
         return payload
 
-    def autoplay(self, max_decisions: int = 10_000) -> JsonObject:
-        payload = self._request("POST", "/autoplay", {"maxDecisions": int(max_decisions)})
+    def autoplay(
+        self,
+        max_decisions: int = 10_000,
+        *,
+        expected_state_hash: str | None = None,
+        idempotency_key: str | None = None,
+    ) -> JsonObject:
+        body = self._guarded_body(expected_state_hash, idempotency_key)
+        body["maxDecisions"] = int(max_decisions)
+        payload = self._request("POST", "/autoplay", body)
         self._check_version(payload)
         return payload
+
+    @staticmethod
+    def _guarded_body(
+        expected_state_hash: str | None, idempotency_key: str | None
+    ) -> JsonObject:
+        body: JsonObject = {
+            "idempotencyKey": idempotency_key or f"python-{uuid.uuid4()}"
+        }
+        if expected_state_hash is not None:
+            body["expectedStateHash"] = expected_state_hash
+        return body
 
     def _request(self, method: str, path: str, body: JsonObject | None = None) -> JsonObject:
         data = None if body is None else json.dumps(body).encode("utf-8")

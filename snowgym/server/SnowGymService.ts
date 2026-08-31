@@ -11,6 +11,7 @@ import {
   type SpawnPosition,
 } from '../scenarios/Scenario';
 import { isMapId, MAP_IDS } from '../scenarios/maps';
+import { snowGymCapabilities } from '../protocol/Capabilities';
 
 export interface ServiceResponse {
   status: number;
@@ -20,6 +21,7 @@ export interface ServiceResponse {
 /** Transport-independent request handler used by the HTTP server and tests. */
 export class SnowGymService {
   private readonly bluePolicy = new SimpleBlueAgent();
+  private readonly mutationCache = new Map<string, CachedMutation>();
   private environment: SnowEnvironment;
 
   constructor(environment = new SnowEnvironment()) {
@@ -31,51 +33,38 @@ export class SnowGymService {
       if (method === 'GET' && path === '/health') {
         return { status: 200, body: { ok: true } };
       }
+      if (method === 'GET' && path === '/capabilities') {
+        return { status: 200, body: snowGymCapabilities() };
+      }
       if (method === 'GET' && path === '/status') {
         return { status: 200, body: this.snapshot() };
       }
       if (method === 'POST' && path === '/reset') {
         const request = parseReset(body);
-        if (request.map !== undefined) {
-          this.environment = new SnowEnvironment({
-            scenario: createMapScenario(request.map, {
-              seed: request.seed,
-              maxTicks: request.maxTicks,
-              blueUnits: request.blueUnits,
-              redUnits: request.redUnits,
-            }),
-            decisionHz: request.decisionHz,
-            redDifficulty: request.redDifficulty,
-            redController: request.redController,
-          });
-        } else if (request.scenario) {
-          const scenario = createOpenScenario({
-            ...request.scenario,
-            seed: request.seed,
-          });
-          this.environment = new SnowEnvironment({
-            scenario,
-            decisionHz: request.decisionHz,
-            redDifficulty: request.redDifficulty,
-            redController: request.redController,
-          });
-        } else {
-          this.environment.reset(request.seed);
-        }
-        return { status: 200, body: this.snapshot() };
+        return this.mutate('reset', request, () => this.reset(request));
       }
       if (method === 'POST' && path === '/step') {
-        const action = parseOptionalAction(body) ?? this.defaultBlueAction();
-        const result = this.environment.step(action);
-        return { status: 200, body: { ...result, info: { ...result.info, action } } };
+        const request = parseStep(body);
+        return this.mutate('step', request, () => this.step(request.action));
+      }
+      if (method === 'POST' && path === '/step-scripted') {
+        const request = parseGuardedRequest(body, []);
+        return this.mutate('step-scripted', request, () => this.step(this.defaultBlueAction()));
       }
       if (method === 'POST' && path === '/autoplay') {
-        return { status: 200, body: this.autoplay(parseMaxDecisions(body)) };
+        const request = parseAutoplay(body);
+        return this.mutate('autoplay', request, () => this.autoplay(request.maxDecisions));
       }
       return { status: 404, body: { error: 'not_found' } };
     } catch (error) {
       if (error instanceof EpisodeCompleteError) {
         return { status: 409, body: { error: 'episode_complete', message: error.message } };
+      }
+      if (error instanceof StateConflictError) {
+        return {
+          status: 409,
+          body: { error: error.code, message: error.message, ...error.detail },
+        };
       }
       if (error instanceof RequestValidationError || error instanceof RangeError) {
         return { status: 400, body: { error: 'invalid_request', message: error.message } };
@@ -95,6 +84,87 @@ export class SnowGymService {
     return this.bluePolicy.act(this.environment.observe(Team.Player));
   }
 
+  private step(action: TeamAction): object {
+    const result = this.environment.step(action);
+    return { ...result, info: { ...result.info, action } };
+  }
+
+  private reset(request: ResetRequest): object {
+    if (request.map !== undefined) {
+      this.environment = new SnowEnvironment({
+        scenario: createMapScenario(request.map, {
+          seed: request.seed,
+          maxTicks: request.maxTicks,
+          blueUnits: request.blueUnits,
+          redUnits: request.redUnits,
+        }),
+        decisionHz: request.decisionHz,
+        redDifficulty: request.redDifficulty,
+        redController: request.redController,
+      });
+    } else if (request.scenario) {
+      const scenario = createOpenScenario({
+        ...request.scenario,
+        seed: request.seed,
+      });
+      this.environment = new SnowEnvironment({
+        scenario,
+        decisionHz: request.decisionHz,
+        redDifficulty: request.redDifficulty,
+        redController: request.redController,
+      });
+    } else {
+      this.environment.reset(request.seed);
+    }
+    this.mutationCache.clear();
+    return this.snapshot();
+  }
+
+  private mutate(
+    operation: string,
+    request: GuardedRequest,
+    mutation: () => object,
+  ): ServiceResponse {
+    const fingerprint = JSON.stringify({ operation, ...request, idempotencyKey: undefined });
+    if (request.idempotencyKey) {
+      const cached = this.mutationCache.get(request.idempotencyKey);
+      if (cached) {
+        if (cached.fingerprint !== fingerprint) {
+          throw new StateConflictError(
+            'idempotency_conflict',
+            `idempotencyKey ${request.idempotencyKey} was already used for a different mutation`,
+          );
+        }
+        return cached.response;
+      }
+    }
+
+    const actualStateHash = this.environment.status().stateHash;
+    if (request.expectedStateHash && request.expectedStateHash !== actualStateHash) {
+      throw new StateConflictError(
+        'stale_state',
+        'expectedStateHash does not match current state',
+        {
+          expectedStateHash: request.expectedStateHash,
+          actualStateHash,
+        },
+      );
+    }
+
+    const response = { status: 200, body: mutation() };
+    if (request.idempotencyKey)
+      this.rememberMutation(request.idempotencyKey, fingerprint, response);
+    return response;
+  }
+
+  private rememberMutation(key: string, fingerprint: string, response: ServiceResponse): void {
+    this.mutationCache.set(key, { fingerprint, response });
+    if (this.mutationCache.size > 256) {
+      const oldest = this.mutationCache.keys().next().value as string | undefined;
+      if (oldest) this.mutationCache.delete(oldest);
+    }
+  }
+
   private autoplay(maxDecisions: number): object {
     let decisions = 0;
     let result: StepResult | null = null;
@@ -110,7 +180,35 @@ export class SnowGymService {
 
 class RequestValidationError extends Error {}
 
-interface ResetRequest {
+class StateConflictError extends Error {
+  constructor(
+    readonly code: 'stale_state' | 'idempotency_conflict',
+    message: string,
+    readonly detail: Record<string, unknown> = {},
+  ) {
+    super(message);
+  }
+}
+
+interface CachedMutation {
+  fingerprint: string;
+  response: ServiceResponse;
+}
+
+interface GuardedRequest {
+  expectedStateHash?: string;
+  idempotencyKey?: string;
+}
+
+interface StepRequest extends GuardedRequest {
+  action: TeamAction;
+}
+
+interface AutoplayRequest extends GuardedRequest {
+  maxDecisions: number;
+}
+
+interface ResetRequest extends GuardedRequest {
   seed?: number;
   scenario?: OpenScenarioOptions;
   map?: string;
@@ -125,8 +223,10 @@ interface ResetRequest {
 function parseReset(body: unknown): ResetRequest {
   if (body === undefined || body === null) return {};
   const record = asRecord(body);
+  assertAllowedKeys(record, ['seed', 'scenario', 'expectedStateHash', 'idempotencyKey'], 'request');
+  const guards = parseGuards(record);
   const seed = optionalSafeInteger(record.seed, 'seed');
-  if (record.scenario === undefined) return { seed };
+  if (record.scenario === undefined) return { ...guards, seed };
 
   const scenario = asRecord(record.scenario);
   const allowed = new Set([
@@ -168,6 +268,7 @@ function parseReset(body: unknown): ResetRequest {
       );
     }
     return {
+      ...guards,
       seed,
       map: scenario.map,
       maxTicks: optionalSafeInteger(scenario.maxTicks, 'scenario.maxTicks'),
@@ -180,6 +281,7 @@ function parseReset(body: unknown): ResetRequest {
   }
 
   return {
+    ...guards,
     seed,
     decisionHz: optionalSafeInteger(scenario.decisionHz, 'scenario.decisionHz'),
     redDifficulty,
@@ -196,15 +298,23 @@ function parseReset(body: unknown): ResetRequest {
   };
 }
 
-function parseOptionalAction(body: unknown): TeamAction | null {
-  if (body === undefined || body === null) return null;
+function parseStep(body: unknown): StepRequest {
   const record = asRecord(body);
-  if (record.action === undefined) return null;
+  assertAllowedKeys(record, ['action', 'expectedStateHash', 'idempotencyKey'], 'request');
+  if (record.action === undefined) {
+    throw new RequestValidationError(
+      'action is required; use /step-scripted for the built-in policy',
+    );
+  }
   const actionRecord = asRecord(record.action);
+  assertAllowedKeys(actionRecord, ['actions'], 'action');
   if (!Array.isArray(actionRecord.actions)) {
     throw new RequestValidationError('action.actions must be an array');
   }
-  return { actions: actionRecord.actions.map(parseUnitAction) };
+  return {
+    ...parseGuards(record),
+    action: { actions: actionRecord.actions.map(parseUnitAction) },
+  };
 }
 
 function parseUnitAction(value: unknown): UnitAction {
@@ -213,24 +323,66 @@ function parseUnitAction(value: unknown): UnitAction {
     throw new RequestValidationError('unitId must be a safe integer');
   }
   const unitId = action.unitId as number;
-  if (action.type === 'noop') return { type: 'noop', unitId };
+  if (action.type === 'noop') {
+    assertAllowedKeys(action, ['type', 'unitId'], 'unit action');
+    return { type: 'noop', unitId };
+  }
   if (action.type !== 'move' && action.type !== 'throw') {
     throw new RequestValidationError('action type must be noop, move, or throw');
   }
+  assertAllowedKeys(
+    action,
+    action.type === 'move' ? ['type', 'unitId', 'x', 'y'] : ['type', 'unitId', 'x', 'y', 'power'],
+    'unit action',
+  );
   const x = finiteNumber(action.x, 'x');
   const y = finiteNumber(action.y, 'y');
   if (action.type === 'move') return { type: 'move', unitId, x, y };
   return { type: 'throw', unitId, x, y, power: finiteNumber(action.power, 'power') };
 }
 
-function parseMaxDecisions(body: unknown): number {
-  if (body === undefined || body === null) return 10_000;
-  const record = asRecord(body);
-  if (record.maxDecisions === undefined) return 10_000;
-  if (!Number.isSafeInteger(record.maxDecisions) || (record.maxDecisions as number) <= 0) {
+function parseAutoplay(body: unknown): AutoplayRequest {
+  const record = body === undefined || body === null ? {} : asRecord(body);
+  assertAllowedKeys(record, ['maxDecisions', 'expectedStateHash', 'idempotencyKey'], 'request');
+  const maxDecisions = record.maxDecisions ?? 10_000;
+  if (!Number.isSafeInteger(maxDecisions) || (maxDecisions as number) <= 0) {
     throw new RequestValidationError('maxDecisions must be a positive safe integer');
   }
-  return Math.min(record.maxDecisions as number, 10_000);
+  return { ...parseGuards(record), maxDecisions: Math.min(maxDecisions as number, 10_000) };
+}
+
+function parseGuardedRequest(body: unknown, extraAllowed: string[]): GuardedRequest {
+  const record = body === undefined || body === null ? {} : asRecord(body);
+  assertAllowedKeys(record, [...extraAllowed, 'expectedStateHash', 'idempotencyKey'], 'request');
+  return parseGuards(record);
+}
+
+function parseGuards(record: Record<string, unknown>): GuardedRequest {
+  let expectedStateHash: string | undefined;
+  if (record.expectedStateHash !== undefined) {
+    if (
+      typeof record.expectedStateHash !== 'string' ||
+      !/^fnv1a64:[0-9a-f]{16}$/.test(record.expectedStateHash)
+    ) {
+      throw new RequestValidationError(
+        'expectedStateHash must use the fnv1a64: plus 16 lowercase hex format',
+      );
+    }
+    expectedStateHash = record.expectedStateHash;
+  }
+  let idempotencyKey: string | undefined;
+  if (record.idempotencyKey !== undefined) {
+    if (
+      typeof record.idempotencyKey !== 'string' ||
+      !/^[A-Za-z0-9._:-]{1,128}$/.test(record.idempotencyKey)
+    ) {
+      throw new RequestValidationError(
+        'idempotencyKey must be 1-128 letters, digits, dots, underscores, colons, or hyphens',
+      );
+    }
+    idempotencyKey = record.idempotencyKey;
+  }
+  return { expectedStateHash, idempotencyKey };
 }
 
 function finiteNumber(value: unknown, name: string): number {
@@ -265,11 +417,24 @@ function parseOptionalSpawns(value: unknown, name: string): SpawnPosition[] | un
   if (!Array.isArray(value)) throw new RequestValidationError(`${name} must be an array`);
   return value.map((item, index) => {
     const spawn = asRecord(item);
+    assertAllowedKeys(spawn, ['x', 'y'], `${name}[${index}]`);
     return {
       x: finiteNumber(spawn.x, `${name}[${index}].x`),
       y: finiteNumber(spawn.y, `${name}[${index}].y`),
     };
   });
+}
+
+function assertAllowedKeys(
+  record: Record<string, unknown>,
+  allowedKeys: readonly string[],
+  name: string,
+): void {
+  const allowed = new Set(allowedKeys);
+  const unknown = Object.keys(record).filter((key) => !allowed.has(key));
+  if (unknown.length > 0) {
+    throw new RequestValidationError(`unknown ${name} fields: ${unknown.sort().join(', ')}`);
+  }
 }
 
 function asRecord(value: unknown): Record<string, unknown> {

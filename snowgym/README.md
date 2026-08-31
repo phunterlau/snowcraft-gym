@@ -20,19 +20,28 @@ rendering dependency:
 
 ```bash
 curl http://127.0.0.1:8787/status
+curl http://127.0.0.1:8787/capabilities
 curl -X POST http://127.0.0.1:8787/reset \
   -H 'Content-Type: application/json' -d '{"seed":42}'
-curl -X POST http://127.0.0.1:8787/step \
+curl -X POST http://127.0.0.1:8787/step-scripted \
   -H 'Content-Type: application/json' -d '{}'
 curl -X POST http://127.0.0.1:8787/autoplay \
   -H 'Content-Type: application/json' -d '{"maxDecisions":2000}'
 ```
 
 `GET /status` returns environment metadata plus the current blue-team
-observation. `POST /step` accepts an optional canonical action under `action`;
-when omitted, it runs the scripted blue policy for one decision. `POST
-/autoplay` runs that policy until termination, truncation, or the supplied
-decision limit. `POST /reset` starts a seeded episode.
+observation. `GET /capabilities` publishes versions, endpoint and action
+constraints, decision rates, map capacities, and Gym IDs. `POST /step` requires
+an explicit canonical action under `action`; `POST /step-scripted` runs the
+built-in blue policy for one decision. `POST /autoplay` runs that policy until
+termination, truncation, or the supplied decision limit. `POST /reset` starts a
+seeded episode. Unknown request and action fields are rejected.
+
+The reference server owns one shared episode. Mutating calls accept an optional
+`expectedStateHash` from the latest `/status` and an `idempotencyKey`. A stale
+hash returns HTTP 409 without advancing; an exact retry using the same key
+returns the cached response, while reuse with different input returns HTTP 409.
+The Python Gym client supplies both guards automatically.
 
 `POST /reset` also accepts an optional configurable fight. Team sizes are in
 `[1, 10]`; omitted spawn arrays are generated deterministically:
@@ -92,6 +101,10 @@ Example externally supplied action:
 }
 ```
 
+`noop` means "issue no new order": it does not cancel an existing movement
+target. A live unit omitted from `actions` also retains its prior movement
+order.
+
 The JSON contract reports `apiVersion: "snowgym.v0"` and uses canonical
 `"blue"` / `"red"` team names rather than SnowCraft's internal player/enemy
 labels. Status and step info also report `simulationVersion`,
@@ -126,6 +139,9 @@ uv sync --extra dev
 
 The seed-42 acceptance run should report a completed blue win and the surviving
 team counts directly in the terminal, then write a portable visual recording.
+Both `snowgym-check` and `snowgym-demo` accept `--json` for agent-friendly
+machine-readable output; the checker validates Squad-v0, Squad-v1, and
+Squad-v2.
 
 To replay it through SnowCraft's existing Three.js arena, character, snowball,
 particle, camera, lighting, and asset renderers, start the normal Vite server
