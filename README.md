@@ -1,5 +1,10 @@
 # SnowCraft
 
+> **SnowGym has been added.** The repository now includes a headless,
+> Gymnasium-ready environment with autonomous blue-team control, configurable
+> N-blue versus M-red fights, and visual recording/replay. See the
+> [SnowGym README](./snowgym/README.md) for setup and demo commands.
+
 A faithful browser remake of the 1999 Flash game **SnowCraft** — command a lone
 snowball fighter (who respawns while you have lives left) in a fast, cartoony
 snowball fight against an AI squad. Built with **Three.js + TypeScript + Vite**
