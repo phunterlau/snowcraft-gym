@@ -252,6 +252,17 @@ function validateGroupGraph(
   const supportEdges = new Map<GroupRole, GroupRole>();
   for (let index = 0; index < groups.length; index++) {
     const group = groups[index];
+    if (
+      group.selection === 'nearest_objective' &&
+      (group.order.objective.kind === 'ally_group' ||
+        group.order.objective.kind === 'current_position')
+    ) {
+      issue(
+        issues,
+        `$.groups[${index}].selection`,
+        `nearest_objective cannot be used with ${group.order.objective.kind}`,
+      );
+    }
     if (group.order.mission !== 'support') continue;
     const target = group.order.objective.role;
     if (!roles.has(target)) {

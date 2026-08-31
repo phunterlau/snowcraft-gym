@@ -101,6 +101,24 @@ describe('CommandPlan validator', () => {
     });
   });
 
+  it('rejects circular nearest-objective allocation inputs', () => {
+    const support = supportGroup('reserve', 'main');
+    const result = validateCommandPlan({
+      schemaVersion: COMMAND_PLAN_VERSION,
+      intentSummary: null,
+      groups: [group('main', 1), { ...support, selection: 'nearest_objective' }],
+    });
+    expect(result).toMatchObject({
+      ok: false,
+      issues: expect.arrayContaining([
+        {
+          path: '$.groups[1].selection',
+          message: 'nearest_objective cannot be used with ally_group',
+        },
+      ]),
+    });
+  });
+
   it('bounds weights, group count, and trace summary length', () => {
     expect(() =>
       parseCommandPlan({

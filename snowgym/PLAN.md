@@ -122,7 +122,9 @@ team elimination, and renderer-free server status.
 - [x] Add deterministic weighted group allocation for 3v3 through 10v10.
 - [x] Add team-relative region and symbolic enemy-cluster target resolution.
 - [x] Add a trusted host envelope and immutable atomic `PlanStore`.
-- Add a synchronous plan-aware controller and reactive per-unit executor.
+- [x] Add a synchronous plan-aware controller and reactive per-unit executor.
+- [x] Add a deterministic headless 10v10 split-force demonstration whose
+      per-role action traces prove distinct group execution and exact replay.
 - Add plan lifecycle, reconciliation, deterministic fallback, and trace records.
 - Prove non-blocking operation with a delayed mock commander before adding a
   live model provider.

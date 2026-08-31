@@ -77,9 +77,28 @@ grounded host plan, but never in model output.
 atomic synchronous swap. Later asynchronous commander code must continue to
 execute the current snapshot while a replacement request is in flight.
 
-## Next implementation boundary
+## C1 headless executor
 
-C1 may add `PlanAwareTeamController` and reactive per-unit execution over a
-hard-coded command plan. It must not introduce OpenAI calls yet. Mock latency,
-the asynchronous scheduler, and the `gpt-5.6-luna` adapter remain separate
-later milestones.
+`PlanGrounder` combines validation output, stable assignments, and initially
+resolved objectives. `PlanAwareTeamController` rereads symbolic objectives from
+the current observation at each decision while preserving membership for the
+life of the active plan. `ReactiveUnitPolicy` applies this priority order:
+
+```text
+immediate survival -> action legality -> fire doctrine -> mission movement -> cohesion
+```
+
+Run the deterministic renderer-free C1 demonstration with:
+
+```bash
+npx tsx snowgym/orchestration/examples/commanded-10v10.ts --json
+```
+
+It runs a 6:3:1 split on `arena6.json` and reports assignments, missions,
+per-role physical-action counts, terminal status, and survivors. Add
+`--output PATH` to write a normal visual-replay JSON later; the headless run
+does not start a server or browser.
+
+The next boundary is C2 plan lifecycle, reconciliation, deterministic fallback,
+and trace records. Mock latency, the asynchronous scheduler, and the
+`gpt-5.6-luna` adapter remain separate later milestones.
