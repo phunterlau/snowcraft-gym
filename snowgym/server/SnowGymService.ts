@@ -323,12 +323,12 @@ function parseUnitAction(value: unknown): UnitAction {
     throw new RequestValidationError('unitId must be a safe integer');
   }
   const unitId = action.unitId as number;
-  if (action.type === 'noop') {
+  if (action.type === 'noop' || action.type === 'hold') {
     assertAllowedKeys(action, ['type', 'unitId'], 'unit action');
-    return { type: 'noop', unitId };
+    return { type: action.type, unitId };
   }
   if (action.type !== 'move' && action.type !== 'throw') {
-    throw new RequestValidationError('action type must be noop, move, or throw');
+    throw new RequestValidationError('action type must be noop, hold, move, or throw');
   }
   assertAllowedKeys(
     action,

@@ -54,6 +54,26 @@ describe('SnowGymService', () => {
     });
   });
 
+  it('accepts hold as an explicit movement-cancellation action', () => {
+    const service = new SnowGymService();
+    const move = service.handle('POST', '/step', {
+      action: { actions: [{ type: 'move', unitId: 1, x: 8, y: 0 }] },
+    });
+    const moveBody = move.body as StepResult;
+
+    expect(move.status).toBe(200);
+    expect(moveBody.observation.allies[0].state).toBe('moving');
+
+    const hold = service.handle('POST', '/step', {
+      action: { actions: [{ type: 'hold', unitId: 1 }] },
+    });
+    const holdBody = hold.body as StepResult;
+
+    expect(hold.status).toBe(200);
+    expect(holdBody.info.actionResults[0]).toMatchObject({ accepted: true });
+    expect(holdBody.observation.allies[0].state).toBe('idle');
+  });
+
   it('resets into a configurable N-blue versus M-red fight', () => {
     const service = new SnowGymService();
     const response = service.handle('POST', '/reset', {
@@ -221,6 +241,10 @@ describe('SnowGymService', () => {
     const body = response.body as {
       format: string;
       endpoints: { step: { requires: string[] }; stepScripted: { path: string } };
+      actions: {
+        types: { hold: { required: string[] } };
+        semantics: { hold: string; noop: string };
+      };
       scenarios: { maxTeamSize: number; maps: Array<{ id: string; blueCapacity: number }> };
       gymnasium: { environments: Array<{ id: string }> };
     };
@@ -229,6 +253,11 @@ describe('SnowGymService', () => {
     expect(body.format).toBe('snowgym.capabilities.v0');
     expect(body.endpoints.step.requires).toEqual(['action']);
     expect(body.endpoints.stepScripted.path).toBe('/step-scripted');
+    expect(body.actions.types.hold.required).toEqual(['type', 'unitId']);
+    expect(body.actions.semantics).toMatchObject({
+      hold: 'cancels-current-movement-order',
+      noop: 'does-not-cancel-current-movement-order',
+    });
     expect(body.scenarios.maxTeamSize).toBe(10);
     expect(body.scenarios.maps).toContainEqual(
       expect.objectContaining({ id: 'arena6.json', blueCapacity: 10 }),

@@ -8,7 +8,13 @@ import numpy as np
 from gymnasium.utils.env_checker import check_env
 
 import snowgym_client
-from snowgym_client.encoding import ACTION_MOVE, ACTION_NOOP, ACTION_THROW
+from snowgym_client.encoding import (
+    ACTION_HOLD,
+    ACTION_MOVE,
+    ACTION_NOOP,
+    ACTION_THROW,
+    encode_action,
+)
 from snowgym_client.env import SnowGymEnv
 from snowgym_client.recording import REPLAY_FORMAT, ReplayRecorder, write_replay
 from snowgym_client.state_hash import hash_observation
@@ -222,7 +228,7 @@ def test_spaces_contain_encoded_observations_and_translate_actions() -> None:
 
     assert environment.observation_space.contains(observation)
     assert info["seed"] == 42
-    assert observation["unit_action_mask"].tolist() == [[1, 1, 1]] * 3
+    assert observation["unit_action_mask"].tolist() == [[1, 1, 1, 1]] * 3
 
     action = {
         "action_type": np.asarray([ACTION_MOVE, ACTION_THROW, ACTION_NOOP], dtype=np.int64),
@@ -237,6 +243,23 @@ def test_spaces_contain_encoded_observations_and_translate_actions() -> None:
         "actions": [
             {"type": "move", "unitId": 1, "x": 10.0, "y": -7.5},
             {"type": "throw", "unitId": 2, "x": 5.0, "y": 7.5, "power": 0.75},
+            {"type": "noop", "unitId": 3},
+        ]
+    }
+
+
+def test_hold_action_cancels_movement_without_using_target_fields() -> None:
+    raw = make_snapshot(0, 0)["observation"]
+    action = {
+        "action_type": np.asarray([ACTION_HOLD, ACTION_NOOP, ACTION_NOOP], dtype=np.int64),
+        "target": np.full((3, 2), np.nan, dtype=np.float32),
+        "power": np.full(3, np.nan, dtype=np.float32),
+    }
+
+    assert encode_action(action, raw) == {
+        "actions": [
+            {"type": "hold", "unitId": 1},
+            {"type": "noop", "unitId": 2},
             {"type": "noop", "unitId": 3},
         ]
     }

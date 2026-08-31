@@ -37,12 +37,14 @@ export function snowGymCapabilities(): object {
       teamField: 'actions',
       types: {
         noop: { required: ['type', 'unitId'] },
+        hold: { required: ['type', 'unitId'] },
         move: { required: ['type', 'unitId', 'x', 'y'] },
         throw: { required: ['type', 'unitId', 'x', 'y', 'power'] },
       },
       semantics: {
         omittedUnits: 'retain-current-movement-order',
         noop: 'does-not-cancel-current-movement-order',
+        hold: 'cancels-current-movement-order',
         coordinates: 'world-space',
         powerRange: [0, 1],
       },

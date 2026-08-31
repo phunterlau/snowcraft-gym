@@ -25,6 +25,8 @@ HEIGHT_VELOCITY_SCALE = 10.0
 ACTION_NOOP = 0
 ACTION_MOVE = 1
 ACTION_THROW = 2
+ACTION_HOLD = 3
+ACTION_TYPE_COUNT = 4
 
 STATE_INDEX = {
     "idle": 0,
@@ -50,7 +52,9 @@ def make_action_space(max_team_units: int = MAX_TEAM_UNITS) -> spaces.Dict:
     max_team_units = validate_team_capacity(max_team_units)
     return spaces.Dict(
         {
-            "action_type": spaces.MultiDiscrete(np.full(max_team_units, 3, dtype=np.int64)),
+            "action_type": spaces.MultiDiscrete(
+                np.full(max_team_units, ACTION_TYPE_COUNT, dtype=np.int64)
+            ),
             "target": spaces.Box(-1.0, 1.0, shape=(max_team_units, 2), dtype=np.float32),
             "power": spaces.Box(0.0, 1.0, shape=(max_team_units,), dtype=np.float32),
         }
@@ -76,7 +80,7 @@ def make_observation_space(
             "unit_action_mask": spaces.Box(
                 0,
                 1,
-                shape=(max_team_units, 3),
+                shape=(max_team_units, ACTION_TYPE_COUNT),
                 dtype=np.int8,
             ),
             "tick": spaces.Box(0, np.iinfo(np.int64).max, shape=(1,), dtype=np.int64),
@@ -123,7 +127,7 @@ def encode_observation(
     projectile_mask = np.zeros(MAX_PROJECTILES, dtype=np.int8)
     obstacles = np.zeros((MAX_OBSTACLES, OBSTACLE_FEATURES), dtype=np.float32)
     obstacle_mask = np.zeros(MAX_OBSTACLES, dtype=np.int8)
-    action_mask = np.zeros((max_team_units, 3), dtype=np.int8)
+    action_mask = np.zeros((max_team_units, ACTION_TYPE_COUNT), dtype=np.int8)
     ally_mask = np.zeros(max_team_units, dtype=np.int8)
     enemy_mask = np.zeros(max_team_units, dtype=np.int8)
 
@@ -192,7 +196,9 @@ def encode_action(
 
         x = float(np.clip(targets[index, 0], -1.0, 1.0) * half_width)
         y = float(np.clip(targets[index, 1], -1.0, 1.0) * half_height)
-        if action_type == ACTION_MOVE:
+        if action_type == ACTION_HOLD:
+            semantic_actions.append({"type": "hold", "unitId": unit_id})
+        elif action_type == ACTION_MOVE:
             semantic_actions.append({"type": "move", "unitId": unit_id, "x": x, "y": y})
         elif action_type == ACTION_THROW:
             semantic_actions.append(
@@ -257,7 +263,8 @@ def encode_action_mask(unit: JsonObject) -> np.ndarray:
     cooldown_ready = number(unit, "throwCooldown") <= 0.0
     can_move = alive and state in {"idle", "moving", "recovering"}
     can_throw = alive and cooldown_ready and state in {"idle", "moving", "preparingThrow"}
-    return np.asarray([1, int(can_move), int(can_throw)], dtype=np.int8)
+    can_hold = alive and state in {"idle", "moving", "recovering"}
+    return np.asarray([1, int(can_move), int(can_throw), int(can_hold)], dtype=np.int8)
 
 
 def encode_obstacle(obstacle: JsonObject, width: float, height: float) -> np.ndarray:

@@ -49,6 +49,34 @@ describe('SnowCraftActionAdapter', () => {
     expect(world.snowballs[0]).toMatchObject({ ownerId: blue.id, team: Team.Player });
   });
 
+  it('distinguishes noop from an explicit hold order', () => {
+    const world = new World(createEmptyArena(), 3);
+    const blue = world.addPlayer(Team.Player, -3, 0);
+    const adapter = makeAdapter(world);
+
+    expect(
+      adapter.apply(Team.Player, {
+        actions: [{ type: 'move', unitId: blue.id, x: 3, y: 0 }],
+      })[0].accepted,
+    ).toBe(true);
+    expect(blue.moveTarget).toMatchObject({ x: 3, y: 0 });
+
+    expect(
+      adapter.apply(Team.Player, {
+        actions: [{ type: 'noop', unitId: blue.id }],
+      })[0].accepted,
+    ).toBe(true);
+    expect(blue.moveTarget).toMatchObject({ x: 3, y: 0 });
+
+    expect(
+      adapter.apply(Team.Player, {
+        actions: [{ type: 'hold', unitId: blue.id }],
+      })[0].accepted,
+    ).toBe(true);
+    expect(blue.moveTarget).toBeNull();
+    expect(blue.state).toBe(PlayerState.Idle);
+  });
+
   it('rejects state-incompatible actions without partially mutating the unit', () => {
     const world = new World(createEmptyArena(), 3);
     const blue = world.addPlayer(Team.Player, -3, 0);

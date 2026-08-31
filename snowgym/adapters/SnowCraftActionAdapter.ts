@@ -33,6 +33,10 @@ export class SnowCraftActionAdapter {
     if (unit.team !== team) return { action, accepted: false, reason: 'wrong_team' };
 
     if (action.type === 'noop') return { action, accepted: true };
+    if (action.type === 'hold') {
+      const accepted = this.movement.tryHold(unit);
+      return { action, accepted, reason: accepted ? undefined : 'unavailable' };
+    }
     if (!finiteAction(action)) return { action, accepted: false, reason: 'invalid_value' };
 
     const accepted =
@@ -43,7 +47,7 @@ export class SnowCraftActionAdapter {
   }
 }
 
-function finiteAction(action: Exclude<UnitAction, { type: 'noop' }>): boolean {
+function finiteAction(action: Extract<UnitAction, { type: 'move' | 'throw' }>): boolean {
   return (
     Number.isFinite(action.x) &&
     Number.isFinite(action.y) &&

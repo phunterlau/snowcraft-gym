@@ -95,7 +95,7 @@ Example externally supplied action:
     "actions": [
       { "type": "move", "unitId": 1, "x": -8, "y": 0 },
       { "type": "throw", "unitId": 2, "x": 5, "y": 1, "power": 0.7 },
-      { "type": "noop", "unitId": 3 }
+      { "type": "hold", "unitId": 3 }
     ]
   }
 }
@@ -103,7 +103,8 @@ Example externally supplied action:
 
 `noop` means "issue no new order": it does not cancel an existing movement
 target. A live unit omitted from `actions` also retains its prior movement
-order.
+order. `hold` explicitly cancels a pending movement order and leaves the unit
+in place when its current state accepts orders.
 
 The JSON contract reports `apiVersion: "snowgym.v0"` and uses canonical
 `"blue"` / `"red"` team names rather than SnowCraft's internal player/enemy
@@ -114,7 +115,7 @@ intended for deterministic regression and exact-action replay checks; it does
 not cover hidden controller or RNG internals.
 
 The blue policy consumes detached entity observations and emits semantic
-`noop`, `move`, and `throw` actions. `SnowCraftActionAdapter` validates team
+`noop`, `hold`, `move`, and `throw` actions. `SnowCraftActionAdapter` validates team
 ownership and applies accepted actions through the movement and throwing system
 APIs. One environment step advances six 60 Hz physics ticks, giving the policy
 a 10 Hz decision rate.
