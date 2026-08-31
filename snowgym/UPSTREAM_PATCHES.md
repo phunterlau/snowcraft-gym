@@ -82,3 +82,18 @@ unchanged.
 
 SnowGym dependency: runs `snowgym/server/main.ts` without a separate build
 pipeline.
+
+## `public/maps/arena6.json` and `src/main.ts`
+
+Reason: the terrain-backed 10v10 SnowGym acceptance scenario needs a map whose
+native schema contains ten valid spawn points for each team.
+
+Change: added the 64x48 `Winter Front` arena with symmetric cover and 20 spawn
+points, then registered it in the browser map menu.
+
+Upstream behavior: existing maps and the single-player defaults are unchanged;
+the browser continues to cap spawned units according to its match settings.
+
+SnowGym dependency: the headless mirror in `snowgym/scenarios/maps.ts` feeds the
+same JSON data to `MapLoader.build`, so server physics and browser rendering use
+identical terrain and spawn definitions.

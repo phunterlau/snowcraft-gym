@@ -147,8 +147,12 @@ def test_map_reset_loads_terrain_with_obstacle_tensor() -> None:
 
     assert client.scenario is not None
     assert client.scenario["map"] == "arena1.json"
-    # Map fixes terrain; roster/tuning fields are not sent.
+    # Map fixes terrain/rosters; configurable tuning still reaches the server.
     assert "blueUnits" not in client.scenario
+    assert client.scenario["decisionHz"] == 10
+    assert client.scenario["redDifficulty"] == "normal"
+    assert client.scenario["redController"] == "scripted"
+    assert client.scenario["maxTicks"] == 60 * 180
     assert environment.observation_space.contains(observation)
     assert observation["obstacles"].shape == (64, 9)
     assert int(observation["obstacle_mask"].sum()) == 2

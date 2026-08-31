@@ -165,6 +165,29 @@ describe('SnowGymService', () => {
     expect(body.observation.enemies).toHaveLength(3);
   });
 
+  it('loads the ten-spawn Winter Front map as a 10v10 server scenario', () => {
+    const service = new SnowGymService();
+    const response = service.handle('POST', '/reset', {
+      seed: 42,
+      scenario: { map: 'arena6.json', maxTicks: 900 },
+    });
+    const body = response.body as {
+      status: EnvironmentStatus;
+      observation: { obstacles: unknown[]; allies: unknown[]; enemies: unknown[] };
+    };
+
+    expect(response.status).toBe(200);
+    expect(body.status.configuration).toMatchObject({
+      map: 'arena6.json',
+      blueUnits: 10,
+      redUnits: 10,
+      maxTicks: 900,
+    });
+    expect(body.observation.allies).toHaveLength(10);
+    expect(body.observation.enemies).toHaveLength(10);
+    expect(body.observation.obstacles).toHaveLength(27);
+  });
+
   it('rejects an unknown map and a map with a conflicting roster', () => {
     const service = new SnowGymService();
     expect(service.handle('POST', '/reset', { scenario: { map: 'arena99.json' } })).toMatchObject({

@@ -1,9 +1,10 @@
+import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { hasLineOfSight } from '../../src/physics/LineOfSight';
 import { SimpleBlueAgent } from '../agents/SimpleBlueAgent';
 import { SnowEnvironment, type StepResult } from '../core/SnowEnvironment';
 import { buildArena, createMapScenario, createOpenScenario } from '../scenarios/Scenario';
-import { MAP_IDS, MAX_MAP_OBSTACLES } from '../scenarios/maps';
+import { getMapData, MAP_IDS, MAX_MAP_OBSTACLES } from '../scenarios/maps';
 import { IdAllocator } from '../../src/ecs/Entity';
 
 describe('map scenarios', () => {
@@ -16,6 +17,26 @@ describe('map scenarios', () => {
       expect(scenario.mapData?.objects.length).toBeGreaterThan(0);
     }
     expect(MAX_MAP_OBSTACLES).toBeGreaterThan(0);
+  });
+
+  it('keeps the headless map registry identical to the browser JSON assets', () => {
+    for (const mapId of MAP_IDS) {
+      const browserMap = JSON.parse(
+        readFileSync(new URL(`../../public/maps/${mapId}`, import.meta.url), 'utf8'),
+      );
+      expect(getMapData(mapId)).toEqual(browserMap);
+    }
+  });
+
+  it('loads Winter Front as a terrain-backed 10v10 scenario', () => {
+    const scenario = createMapScenario('arena6.json', { seed: 42 });
+    const environment = new SnowEnvironment({ scenario });
+    const observation = environment.reset(42);
+
+    expect(scenario.arena).toEqual({ width: 64, height: 48 });
+    expect(observation.allies).toHaveLength(10);
+    expect(observation.enemies).toHaveLength(10);
+    expect(observation.obstacles).toHaveLength(27);
   });
 
   it('builds an obstacle-bearing arena that blocks line of sight', () => {

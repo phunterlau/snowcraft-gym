@@ -40,6 +40,7 @@ const MAPS = [
   { label: 'Village Skirmish', value: 'arena3.json' },
   { label: 'Pine Forest', value: 'arena4.json' },
   { label: 'Schoolyard Scramble', value: 'arena5.json' },
+  { label: 'Winter Front', value: 'arena6.json' },
 ] as const;
 
 const DIFFICULTIES = [

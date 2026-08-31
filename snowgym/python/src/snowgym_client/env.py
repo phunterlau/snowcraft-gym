@@ -102,9 +102,8 @@ class SnowGymEnv(gym.Env[GymObservation, GymAction]):
                     raise ValueError("scenario.map must be a string map id")
                 # Map fixes terrain + rosters; only tuning knobs ride along.
                 scenario = {
-                    key: scenario[key]
+                    key: scenario.get(key, self._scenario_config[key])
                     for key in ("decisionHz", "redDifficulty", "redController", "maxTicks")
-                    if key in scenario
                 }
                 scenario["map"] = map_id
             else:

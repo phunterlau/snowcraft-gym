@@ -66,7 +66,7 @@ behaviorally identical to the browser game's AI at the same `redDifficulty` —
 while `"random"` is a seeded baseline that wanders and throws at random.
 
 A scenario can instead target a bundled SnowCraft map by id
-(`arena1.json`–`arena5.json`). A map fixes the terrain and the spawn layout, so
+(`arena1.json`–`arena6.json`). A map fixes the terrain and the spawn layout, so
 roster/arena fields must be omitted; obstacles then affect line-of-sight,
 cover, and collision, and are exposed to the policy as a fixed-capacity masked
 `obstacles` tensor:
@@ -160,18 +160,18 @@ either pick a file with **Open recording**, or load one directly:
 http://127.0.0.1:5173/replay.html?recording=/replays/<file>
 ```
 
-| File                           | Scenario                                       | Result   |
-| ------------------------------ | ---------------------------------------------- | -------- |
-| `blue-seed-42.json`            | Open 3v3, normal scripted red (acceptance run) | blue 3–0 |
-| `blue-5v2-hard.json`           | Open 5v2, hard scripted red                    | blue win |
-| `example-open-3v3.json`        | Open 3v3, scripted red                         | blue 3–0 |
-| `example-open-1v3-hard.json`   | Open 1 blue vs 3 hard red                      | red win  |
-| `example-open-2v5-normal.json` | Open 2 blue vs 5 red                           | red win  |
-| `example-open-8v8.json`        | Open 8v8 on a large arena                      | blue 7–0 |
-| `example-open-10v10.json`      | Open 10v10 on a 60×50 arena                    | blue 9–0 |
-| `example-forest-3v3.json`      | Pine Forest (`arena4`) 3v3 — dense tree cover  | blue 3–0 |
-| `example-pond-5v2-hard.json`   | Frozen Pond (`arena2`), hard red               | blue win |
-| `example-village-random.json`  | Village Skirmish (`arena3`) vs `random` red    | blue win |
+| File                              | Scenario                                       | Result   |
+| --------------------------------- | ---------------------------------------------- | -------- |
+| `blue-seed-42.json`               | Open 3v3, normal scripted red (acceptance run) | blue 3–0 |
+| `blue-5v2-hard.json`              | Open 5v2, hard scripted red                    | blue win |
+| `example-open-3v3.json`           | Open 3v3, scripted red                         | blue 3–0 |
+| `example-open-1v3-hard.json`      | Open 1 blue vs 3 hard red                      | red win  |
+| `example-open-2v5-normal.json`    | Open 2 blue vs 5 red                           | red win  |
+| `example-open-8v8.json`           | Open 8v8 on a large arena                      | blue 7–0 |
+| `example-winter-front-10v10.json` | Winter Front (`arena6`) 10v10                  | blue 9–0 |
+| `example-forest-3v3.json`         | Pine Forest (`arena4`) 3v3 — dense tree cover  | blue 3–0 |
+| `example-pond-5v2-hard.json`      | Frozen Pond (`arena2`), hard red               | blue win |
+| `example-village-random.json`     | Village Skirmish (`arena3`) vs `random` red    | blue win |
 
 Map recordings render the terrain (trees, rocks, forts) and show units using
 cover. Record your own with `--record PATH` on `snowgym-demo` (see below).
@@ -235,10 +235,9 @@ Configurable command-line examples:
 # scripted blue vs the seeded random red baseline
 .venv/bin/snowgym-demo --red-controller random
 
-# 10v10 on a larger open arena, with a replay artifact
-.venv/bin/snowgym-demo --blue-units 10 --red-units 10 \
-  --arena-width 60 --arena-height 50 \
-  --record ../../public/replays/example-open-10v10.json
+# 10v10 on the terrain-backed Winter Front map
+.venv/bin/snowgym-demo --map arena6.json \
+  --record ../../public/replays/example-winter-front-10v10.json
 ```
 
 ## Layout

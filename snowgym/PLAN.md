@@ -91,6 +91,8 @@ checker and deterministic cross-language fixtures.
 - [x] Load the bundled SnowCraft maps as scenario terrain: obstacles affect
       line-of-sight, cover, and collision, spawn points come from the map, and
       obstacles are exposed to policies as a fixed-capacity masked tensor.
+- [x] Add a native 10v10 map whose browser JSON and headless registry definitions
+      are contract-tested for exact parity.
 - [x] Add a deterministic matrix covering 1v1, 1v3, 3v1, 3v3, and maximum-size
       fights, plus invalid counts/spawns and same-seed replay checks.
 - [x] Migrate red behavior to the common `TeamController` boundary, then add

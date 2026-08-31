@@ -38,7 +38,10 @@ export class SnowGymService {
         const request = parseReset(body);
         if (request.map !== undefined) {
           this.environment = new SnowEnvironment({
-            scenario: createMapScenario(request.map, { seed: request.seed }),
+            scenario: createMapScenario(request.map, {
+              seed: request.seed,
+              maxTicks: request.maxTicks,
+            }),
             decisionHz: request.decisionHz,
             redDifficulty: request.redDifficulty,
             redController: request.redController,
@@ -109,6 +112,7 @@ interface ResetRequest {
   seed?: number;
   scenario?: OpenScenarioOptions;
   map?: string;
+  maxTicks?: number;
   decisionHz?: number;
   redDifficulty?: AiDifficulty;
   redController?: RedControllerType;
@@ -167,6 +171,7 @@ function parseReset(body: unknown): ResetRequest {
     return {
       seed,
       map: scenario.map,
+      maxTicks: optionalSafeInteger(scenario.maxTicks, 'scenario.maxTicks'),
       decisionHz: optionalSafeInteger(scenario.decisionHz, 'scenario.decisionHz'),
       redDifficulty,
       redController,

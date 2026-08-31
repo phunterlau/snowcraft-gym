@@ -20,6 +20,7 @@ def main() -> None:
     parser.add_argument("--red-units", type=int, default=3)
     parser.add_argument("--arena-width", type=float, default=40.0)
     parser.add_argument("--arena-height", type=float, default=30.0)
+    parser.add_argument("--map", help="bundled map id, for example arena6.json")
     parser.add_argument("--max-ticks", type=int, default=60 * 180)
     parser.add_argument("--decision-hz", type=int, default=10)
     parser.add_argument(
@@ -47,6 +48,7 @@ def main() -> None:
         decision_hz=args.decision_hz,
         red_difficulty=args.red_difficulty,
         red_controller=args.red_controller,
+        map=args.map,
     ).unwrapped
     if not isinstance(environment, SnowGymEnv):
         raise TypeError(f"{TEN_UNIT_ENV_ID} resolved to an unexpected environment")
@@ -72,7 +74,12 @@ def main() -> None:
     print("SnowGym blue-team demo")
     print(f"  API:       {status['apiVersion']}")
     print(f"  seed:      {status['seed']}")
-    print(f"  matchup:   {args.blue_units} blue vs {args.red_units} red")
+    configuration = status["configuration"]
+    print(
+        f"  matchup:   {configuration['blueUnits']} blue vs "
+        f"{configuration['redUnits']} red"
+    )
+    print(f"  map:       {configuration.get('map') or 'open'}")
     print(f"  decisions: {decisions}")
     print(f"  ticks:     {status['tick']}")
     print(f"  survivors: blue={status['blueAlive']} red={status['redAlive']}")

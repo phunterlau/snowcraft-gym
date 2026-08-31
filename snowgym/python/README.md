@@ -18,4 +18,8 @@ For example:
 
 ```bash
 .venv/bin/snowgym-demo --blue-units 5 --red-units 2 --red-difficulty hard
+
+# Winter Front defines ten spawn points per team, producing a map-backed 10v10.
+.venv/bin/snowgym-demo --map arena6.json \
+  --record ../../public/replays/example-winter-front-10v10.json
 ```
