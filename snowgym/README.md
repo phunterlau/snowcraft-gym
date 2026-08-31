@@ -143,6 +143,31 @@ versioned `snowgym.replay.v0` JSON is a visual record at the 10 Hz policy
 decision cadence, with interpolation for smooth playback. It is not a video and
 does not feed rendered pixels back into the agent.
 
+### Example replays
+
+Ready-made recordings live in [`public/replays/`](../public/replays/). With the
+Vite server running (`npm run dev -- --host 127.0.0.1`), open the viewer and
+either pick a file with **Open recording**, or load one directly:
+
+```text
+http://127.0.0.1:5173/replay.html?recording=/replays/<file>
+```
+
+| File | Scenario | Result |
+| --- | --- | --- |
+| `blue-seed-42.json` | Open 3v3, normal scripted red (acceptance run) | blue 3–0 |
+| `blue-5v2-hard.json` | Open 5v2, hard scripted red | blue win |
+| `example-open-3v3.json` | Open 3v3, scripted red | blue 3–0 |
+| `example-open-1v3-hard.json` | Open 1 blue vs 3 hard red | red win |
+| `example-open-2v5-normal.json` | Open 2 blue vs 5 red | red win |
+| `example-open-8v8.json` | Open 8v8 on a large arena | blue 7–0 |
+| `example-forest-3v3.json` | Pine Forest (`arena4`) 3v3 — dense tree cover | blue 3–0 |
+| `example-pond-5v2-hard.json` | Frozen Pond (`arena2`), hard red | blue win |
+| `example-village-random.json` | Village Skirmish (`arena3`) vs `random` red | blue win |
+
+Map recordings render the terrain (trees, rocks, forts) and show units using
+cover. Record your own with `--record PATH` on `snowgym-demo` (see below).
+
 The browser acceptance command is self-contained:
 
 ```bash

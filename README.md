@@ -4,6 +4,9 @@
 > Gymnasium-ready environment with autonomous blue-team control, configurable
 > N-blue versus M-red fights, and visual recording/replay. See the
 > [SnowGym README](./snowgym/README.md) for setup and demo commands.
+> Ready-made example replays live in [`public/replays/`](./public/replays/) —
+> start `npm run dev` and open `/replay.html?recording=/replays/<file>` (see
+> [example replays](./snowgym/README.md#example-replays)).
 
 A faithful browser remake of the 1999 Flash game **SnowCraft** — command a lone
 snowball fighter (who respawns while you have lives left) in a fast, cartoony
