@@ -1,0 +1,71 @@
+.replay-panel {
+  position: absolute;
+  z-index: 20;
+  left: 20px;
+  right: 20px;
+  bottom: 18px;
+  display: grid;
+  grid-template-columns: auto auto minmax(180px, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 14px;
+  border: 1px solid rgb(255 255 255 / 18%);
+  border-radius: 14px;
+  background: rgb(11 16 32 / 88%);
+  box-shadow: 0 12px 35px rgb(0 0 0 / 28%);
+  backdrop-filter: blur(12px);
+}
+
+.replay-panel button,
+.replay-panel select,
+.file-button {
+  min-height: 34px;
+  padding: 7px 12px;
+  border: 1px solid rgb(255 255 255 / 22%);
+  border-radius: 9px;
+  background: #243451;
+  color: #fff;
+  font: inherit;
+  cursor: pointer;
+}
+
+.file-button input {
+  display: none;
+}
+
+#replay-scrubber {
+  width: 100%;
+}
+
+.replay-meta {
+  position: absolute;
+  z-index: 20;
+  top: 18px;
+  left: 20px;
+  padding: 10px 13px;
+  border-radius: 10px;
+  background: rgb(11 16 32 / 78%);
+  font-size: 14px;
+  backdrop-filter: blur(10px);
+}
+
+#replay-error {
+  margin-top: 6px;
+  color: #ff9d9d;
+}
+
+#replay-viewport {
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 720px) {
+  .replay-panel {
+    grid-template-columns: auto auto 1fr;
+  }
+
+  #replay-scrubber {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+}

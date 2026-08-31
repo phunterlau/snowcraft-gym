@@ -13,6 +13,8 @@
     "format": "prettier --write .",
     "test": "vitest run",
     "test:watch": "vitest",
+    "snowgym:server": "tsx snowgym/server/main.ts",
+    "snowgym:replay:smoke": "node snowgym/replay/smoke.mjs",
     "smoke": "node scripts/smoke.mjs",
     "smoke:interaction": "node scripts/interaction.mjs",
     "smoke:combat": "node scripts/combat.mjs"
@@ -23,11 +25,13 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@types/node": "^26.4.0",
     "@types/three": "^0.185.0",
     "eslint": "^10.6.0",
     "eslint-config-prettier": "^10.1.8",
     "prettier": "^4.0.0-alpha.13",
     "puppeteer-core": "^25.3.0",
+    "tsx": "^4.23.13",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.62.2-alpha.11",
     "vite": "^8.1.3",

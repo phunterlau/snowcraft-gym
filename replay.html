@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="data:," />
+    <title>SnowGym Replay</title>
+  </head>
+  <body>
+    <main id="app">
+      <div id="replay-viewport" aria-label="SnowGym replay viewport"></div>
+      <section class="replay-meta" aria-live="polite">
+        <strong>SnowGym visual replay</strong>
+        <div id="replay-status">Loading…</div>
+        <div id="replay-error" role="alert" hidden></div>
+      </section>
+      <section class="replay-panel" aria-label="Replay controls">
+        <label class="file-button">
+          Open recording
+          <input id="recording-file" type="file" accept="application/json,.json" />
+        </label>
+        <button id="play-toggle" type="button">Play</button>
+        <input
+          id="replay-scrubber"
+          type="range"
+          min="0"
+          max="1"
+          step="0.1"
+          value="0"
+          aria-label="Replay position"
+        />
+        <select id="replay-speed" aria-label="Playback speed">
+          <option value="0.5">0.5×</option>
+          <option value="1" selected>1×</option>
+          <option value="2">2×</option>
+          <option value="4">4×</option>
+        </select>
+      </section>
+    </main>
+    <script type="module" src="/snowgym/replay/main.ts"></script>
+  </body>
+</html>

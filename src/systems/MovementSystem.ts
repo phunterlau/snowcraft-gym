@@ -2,7 +2,7 @@ import type { Command } from '../core/commands';
 import type { System } from '../ecs/System';
 import { clampToArena } from '../game/Arena';
 import { BUFF, ENEMY, PLAYER } from '../game/config';
-import { canAcceptOrders, transitionTo } from '../game/Player';
+import { canAcceptOrders, canTransition, transitionTo } from '../game/Player';
 import { PlayerState, Team, type Arena, type Player } from '../game/types';
 import type { World } from '../game/World';
 import { segmentVsShape } from '../physics/Collision';
@@ -187,14 +187,33 @@ export class MovementSystem implements System {
       const x = command.x + (column - (columns - 1) / 2) * PLAYER.spacing;
       const y = command.y + (row - (rows - 1) / 2) * PLAYER.spacing;
 
-      clampToArena(this.world.arena, x, y, player.radius, this.arenaClamp);
-      if (player.moveTarget) {
-        player.moveTarget.set(this.arenaClamp.x, this.arenaClamp.y);
-      } else {
-        player.moveTarget = new Vector2(this.arenaClamp.x, this.arenaClamp.y);
-      }
-      transitionTo(player, PlayerState.Moving);
+      this.tryMove(player, x, y);
     }
+  }
+
+  /**
+   * Issues a semantic move order to one unit. This is the engine-facing seam
+   * used by non-UI controllers; normal mouse control is translated through the
+   * same method by {@link handleCommand}.
+   */
+  tryMove(player: Player, x: number, y: number): boolean {
+    if (
+      !canAcceptOrders(player) ||
+      !canTransition(player.state, PlayerState.Moving) ||
+      !Number.isFinite(x) ||
+      !Number.isFinite(y)
+    ) {
+      return false;
+    }
+
+    clampToArena(this.world.arena, x, y, player.radius, this.arenaClamp);
+    if (player.moveTarget) {
+      player.moveTarget.set(this.arenaClamp.x, this.arenaClamp.y);
+    } else {
+      player.moveTarget = new Vector2(this.arenaClamp.x, this.arenaClamp.y);
+    }
+    transitionTo(player, PlayerState.Moving);
+    return true;
   }
 
   update(dt: number): void {

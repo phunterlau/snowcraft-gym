@@ -2,7 +2,7 @@ import type { Command } from '../core/commands';
 import type { EventBus } from '../core/EventBus';
 import type { System } from '../ecs/System';
 import { AIM, THROW } from '../game/config';
-import { canAcceptOrders, transitionTo } from '../game/Player';
+import { canAcceptOrders, canTransition, transitionTo } from '../game/Player';
 import { launchSnowball } from '../game/Snowball';
 import { computeThrowKinematics, throwSpawnDistance } from '../game/trajectory';
 import { PlayerState, Team, type Player } from '../game/types';
@@ -79,7 +79,10 @@ export class ThrowSystem implements System {
 
   /** Public API used by the AI system to make an enemy unit throw. Returns true if a snowball was launched. */
   tryThrow(player: Player, aimX: number, aimY: number, charge01: number): boolean {
-    if (!canAcceptOrders(player) || player.throwCooldown > 0) return false;
+    const canPrepare =
+      player.state === PlayerState.PreparingThrow ||
+      canTransition(player.state, PlayerState.PreparingThrow);
+    if (!canAcceptOrders(player) || !canPrepare || player.throwCooldown > 0) return false;
 
     const charge = clamp(charge01, 0, 1);
     const dir = Vec2Pool.acquire();

@@ -6,10 +6,16 @@ export default defineConfig({
   build: {
     target: 'es2022',
     outDir: 'dist',
+    rollupOptions: {
+      input: {
+        game: 'index.html',
+        replay: 'replay.html',
+      },
+    },
   },
   test: {
     environment: 'node',
-    include: ['src/**/*.test.ts'],
+    include: ['src/**/*.test.ts', 'snowgym/tests/**/*.test.ts'],
     globals: true,
   },
 });
