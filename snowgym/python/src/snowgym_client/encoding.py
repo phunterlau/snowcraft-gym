@@ -14,8 +14,10 @@ GymObservation = dict[str, np.ndarray]
 MAX_TEAM_UNITS = 3
 MAX_CONFIGURABLE_TEAM_UNITS = 8
 MAX_PROJECTILES = 64
+MAX_OBSTACLES = 64
 UNIT_FEATURES = 10
 PROJECTILE_FEATURES = 8
+OBSTACLE_FEATURES = 9
 VELOCITY_SCALE = 20.0
 HEIGHT_SCALE = 3.0
 HEIGHT_VELOCITY_SCALE = 10.0
@@ -33,6 +35,14 @@ STATE_INDEX = {
     "hit": 5,
     "frozen": 6,
     "defeated": 7,
+}
+
+OBSTACLE_TYPE_INDEX = {
+    "tree": 0,
+    "rock": 1,
+    "fort": 2,
+    "fence": 3,
+    "prop": 4,
 }
 
 
@@ -71,6 +81,13 @@ def make_observation_space(
             ),
             "tick": spaces.Box(0, np.iinfo(np.int64).max, shape=(1,), dtype=np.int64),
             "team_alive": spaces.Box(0, max_team_units, shape=(2,), dtype=np.int32),
+            "obstacles": spaces.Box(
+                -1.0,
+                1.0,
+                shape=(MAX_OBSTACLES, OBSTACLE_FEATURES),
+                dtype=np.float32,
+            ),
+            "obstacle_mask": spaces.Box(0, 1, shape=(MAX_OBSTACLES,), dtype=np.int8),
     }
     if include_unit_masks:
         definitions["ally_mask"] = spaces.Box(0, 1, shape=(max_team_units,), dtype=np.int8)
@@ -91,6 +108,7 @@ def encode_observation(
     allies_raw = require_list(raw, "allies")
     enemies_raw = require_list(raw, "enemies")
     projectiles_raw = require_list(raw, "projectiles")
+    obstacles_raw = require_list(raw, "obstacles")
     match = require_dict(raw, "match")
 
     if len(allies_raw) > max_team_units or len(enemies_raw) > max_team_units:
@@ -103,6 +121,8 @@ def encode_observation(
     enemies = np.zeros((max_team_units, UNIT_FEATURES), dtype=np.float32)
     projectiles = np.zeros((MAX_PROJECTILES, PROJECTILE_FEATURES), dtype=np.float32)
     projectile_mask = np.zeros(MAX_PROJECTILES, dtype=np.int8)
+    obstacles = np.zeros((MAX_OBSTACLES, OBSTACLE_FEATURES), dtype=np.float32)
+    obstacle_mask = np.zeros(MAX_OBSTACLES, dtype=np.int8)
     action_mask = np.zeros((max_team_units, 3), dtype=np.int8)
     ally_mask = np.zeros(max_team_units, dtype=np.int8)
     enemy_mask = np.zeros(max_team_units, dtype=np.int8)
@@ -120,6 +140,11 @@ def encode_observation(
             require_object(projectile, "projectile"), width, height
         )
         projectile_mask[index] = 1
+    for index, obstacle in enumerate(obstacles_raw[:MAX_OBSTACLES]):
+        obstacles[index] = encode_obstacle(
+            require_object(obstacle, "obstacle"), width, height
+        )
+        obstacle_mask[index] = 1
 
     encoded = {
         "allies": allies,
@@ -131,6 +156,8 @@ def encode_observation(
         "team_alive": np.asarray(
             [integer(match, "blueAlive"), integer(match, "redAlive")], dtype=np.int32
         ),
+        "obstacles": obstacles,
+        "obstacle_mask": obstacle_mask,
     }
     if include_unit_masks:
         encoded["ally_mask"] = ally_mask
@@ -231,6 +258,26 @@ def encode_action_mask(unit: JsonObject) -> np.ndarray:
     can_move = alive and state in {"idle", "moving", "recovering"}
     can_throw = alive and cooldown_ready and state in {"idle", "moving", "preparingThrow"}
     return np.asarray([1, int(can_move), int(can_throw)], dtype=np.int8)
+
+
+def encode_obstacle(obstacle: JsonObject, width: float, height: float) -> np.ndarray:
+    obstacle_type = obstacle.get("type")
+    if obstacle_type not in OBSTACLE_TYPE_INDEX:
+        raise ValueError(f"unknown obstacle type {obstacle_type!r}")
+    return np.asarray(
+        [
+            OBSTACLE_TYPE_INDEX[obstacle_type] / (len(OBSTACLE_TYPE_INDEX) - 1),
+            normalize(number(obstacle, "x"), width / 2.0),
+            normalize(number(obstacle, "y"), height / 2.0),
+            normalize(number(obstacle, "halfWidth"), width / 2.0),
+            normalize(number(obstacle, "halfHeight"), height / 2.0),
+            float(bool(obstacle.get("blocksSight", False))),
+            float(bool(obstacle.get("blocksProjectiles", False))),
+            float(bool(obstacle.get("blocksMovement", False))),
+            1.0,  # presence flag (padding rows are all-zero)
+        ],
+        dtype=np.float32,
+    )
 
 
 def normalize(value: float, scale: float) -> float:

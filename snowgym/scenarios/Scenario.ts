@@ -1,3 +1,8 @@
+import { MapLoader } from '../../src/game/MapLoader';
+import { Team, type Arena, type MapData } from '../../src/game/types';
+import { IdAllocator } from '../../src/ecs/Entity';
+import { getMapData, mapSpawns } from './maps';
+
 export const MAX_TEAM_SIZE = 8;
 export const DEFAULT_MAX_TICKS = 60 * 180;
 const DEFAULT_SEED = 0x5a17c0de;
@@ -20,6 +25,10 @@ export interface Scenario {
   respawn: boolean;
   buffs: boolean;
   maxTicks: number;
+  /** Bundled map id when the fight runs on real terrain; undefined = open arena. */
+  map?: string;
+  /** Obstacle-bearing map data; present iff {@link map} is set. */
+  mapData?: MapData;
 }
 
 export interface OpenScenarioOptions {
@@ -66,6 +75,53 @@ export function createOpenScenario(options: OpenScenarioOptions = {}): Scenario 
 export const THREE_VS_THREE_OPEN: Scenario = createOpenScenario({
   name: 'three-vs-three-open',
 });
+
+/** Options for a fight on a bundled map (real terrain + map spawn points). */
+export interface MapScenarioOptions {
+  name?: string;
+  seed?: number;
+  maxTicks?: number;
+}
+
+/**
+ * Builds a scenario on a bundled map. Team sizes come from the map's spawn
+ * lists; obstacles are loaded through the same MapLoader as the browser game.
+ */
+export function createMapScenario(mapId: string, options: MapScenarioOptions = {}): Scenario {
+  const data = getMapData(mapId);
+  const seed = safeInteger(options.seed ?? DEFAULT_SEED, 'seed');
+  const maxTicks = positiveInteger(options.maxTicks ?? DEFAULT_MAX_TICKS, 'maxTicks');
+  const blue = mapSpawns(mapId, Team.Player).map((s) => ({ x: s.x, y: s.y }));
+  const red = mapSpawns(mapId, Team.Enemy).map((s) => ({ x: s.x, y: s.y }));
+  if (blue.length === 0 || red.length === 0) {
+    throw new RangeError(`map "${mapId}" must define both player and enemy spawns`);
+  }
+  return {
+    name: options.name ?? `${data.name ?? mapId}`,
+    seed,
+    arena: { width: data.width, height: data.height },
+    blueSpawns: blue,
+    redSpawns: red,
+    respawn: false,
+    buffs: false,
+    maxTicks,
+    map: mapId,
+    mapData: data,
+  };
+}
+
+/** Builds the collision/LoS arena for a scenario (empty for open scenarios). */
+export function buildArena(scenario: Scenario, ids: IdAllocator): Arena {
+  if (!scenario.mapData) {
+    return {
+      width: scenario.arena.width,
+      height: scenario.arena.height,
+      obstacles: [],
+      spawns: [],
+    };
+  }
+  return new MapLoader(ids).build(scenario.mapData);
+}
 
 function generatedSpawns(count: number, x: number, height: number): SpawnPosition[] {
   if (count === 1) return [{ x, y: 0 }];

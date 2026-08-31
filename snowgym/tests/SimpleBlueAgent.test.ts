@@ -42,6 +42,7 @@ function makeObservation(): Observation {
     allies: [unit(10, 'blue', 0, 0)],
     enemies: [],
     projectiles: [],
+    obstacles: [],
     match: { blueAlive: 1, redAlive: 0 },
   };
 }

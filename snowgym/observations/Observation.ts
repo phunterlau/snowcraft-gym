@@ -1,6 +1,7 @@
 import { SIM } from '../../src/game/config';
-import { Team } from '../../src/game/types';
+import { Team, type ObstacleType } from '../../src/game/types';
 import type { World } from '../../src/game/World';
+import type { Shape } from '../../src/physics/shapes';
 
 export type SnowTeam = 'blue' | 'red';
 export type UnitState =
@@ -40,6 +41,21 @@ export interface ProjectileObservation {
   heightVelocity: number;
 }
 
+/** Static terrain obstacle, normalized to a center + half-extents footprint. */
+export interface ObstacleObservation {
+  id: number;
+  type: ObstacleType;
+  x: number;
+  y: number;
+  /** Half-width (circle radius, or half the rect width). */
+  halfWidth: number;
+  /** Half-height (equals halfWidth for circles). */
+  halfHeight: number;
+  blocksSight: boolean;
+  blocksProjectiles: boolean;
+  blocksMovement: boolean;
+}
+
 export interface Observation {
   tick: number;
   selfTeam: SnowTeam;
@@ -48,6 +64,8 @@ export interface Observation {
   allies: UnitObservation[];
   enemies: UnitObservation[];
   projectiles: ProjectileObservation[];
+  /** Terrain obstacles in deterministic id order; empty on open arenas. */
+  obstacles: ObstacleObservation[];
   match: {
     blueAlive: number;
     redAlive: number;
@@ -92,6 +110,19 @@ export function observeWorld(world: World, selfTeam: Team, tick: number): Observ
     )
     .sort((a, b) => a.id - b.id);
 
+  const obstacles = world.arena.obstacles
+    .map(
+      (obstacle): ObstacleObservation => ({
+        id: obstacle.id,
+        type: obstacle.type,
+        ...footprint(obstacle.collision),
+        blocksSight: obstacle.blocksSight,
+        blocksProjectiles: obstacle.blocksProjectiles,
+        blocksMovement: obstacle.blocksMovement,
+      }),
+    )
+    .sort((a, b) => a.id - b.id);
+
   return {
     tick,
     selfTeam: snowTeam(selfTeam),
@@ -100,6 +131,7 @@ export function observeWorld(world: World, selfTeam: Team, tick: number): Observ
     allies: units.filter((unit) => unit.team === snowTeam(selfTeam)),
     enemies: units.filter((unit) => unit.team !== snowTeam(selfTeam)),
     projectiles,
+    obstacles,
     match: {
       blueAlive: world.countLiving(Team.Player),
       redAlive: world.countLiving(Team.Enemy),
@@ -109,4 +141,21 @@ export function observeWorld(world: World, selfTeam: Team, tick: number): Observ
 
 function snowTeam(team: Team): SnowTeam {
   return team === Team.Player ? 'blue' : 'red';
+}
+
+/** Normalizes a collision shape to a center + half-extents footprint. */
+function footprint(shape: Shape): { x: number; y: number; halfWidth: number; halfHeight: number } {
+  if (shape.kind === 'circle') {
+    return { x: shape.x, y: shape.y, halfWidth: shape.radius, halfHeight: shape.radius };
+  }
+  if (shape.kind === 'rect') {
+    return { x: shape.x, y: shape.y, halfWidth: shape.halfW, halfHeight: shape.halfH };
+  }
+  // Capsule: use the segment midpoint and its axis-aligned bounding box.
+  return {
+    x: (shape.x1 + shape.x2) / 2,
+    y: (shape.y1 + shape.y2) / 2,
+    halfWidth: Math.abs(shape.x2 - shape.x1) / 2 + shape.radius,
+    halfHeight: Math.abs(shape.y2 - shape.y1) / 2 + shape.radius,
+  };
 }
