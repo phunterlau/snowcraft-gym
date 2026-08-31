@@ -1,0 +1,198 @@
+# SnowGym
+
+SnowGym is an extension layer over SnowCraft for autonomous teams and future RL
+environments. Code in this directory may import the upstream engine in `src/`;
+the upstream engine must not import SnowGym.
+
+## First runnable milestone
+
+The headless server runs three policy-controlled blue units against the
+existing three-unit red AI with a fixed seed, fixed spawns, no obstacles, no
+buffs, no respawns, and no human input:
+
+```bash
+npm install
+npm run snowgym:server
+```
+
+The server binds only to `127.0.0.1` and exposes JSON—there is no chart or
+rendering dependency:
+
+```bash
+curl http://127.0.0.1:8787/status
+curl -X POST http://127.0.0.1:8787/reset \
+  -H 'Content-Type: application/json' -d '{"seed":42}'
+curl -X POST http://127.0.0.1:8787/step \
+  -H 'Content-Type: application/json' -d '{}'
+curl -X POST http://127.0.0.1:8787/autoplay \
+  -H 'Content-Type: application/json' -d '{"maxDecisions":2000}'
+```
+
+`GET /status` returns environment metadata plus the current blue-team
+observation. `POST /step` accepts an optional canonical action under `action`;
+when omitted, it runs the scripted blue policy for one decision. `POST
+/autoplay` runs that policy until termination, truncation, or the supplied
+decision limit. `POST /reset` starts a seeded episode.
+
+`POST /reset` also accepts an optional configurable fight. Team sizes are in
+`[1, 8]`; omitted spawn arrays are generated deterministically:
+
+```bash
+curl -X POST http://127.0.0.1:8787/reset \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "seed": 42,
+    "scenario": {
+      "blueUnits": 5,
+      "redUnits": 2,
+      "arenaWidth": 50,
+      "arenaHeight": 24,
+      "decisionHz": 20,
+      "maxTicks": 3600,
+      "redDifficulty": "hard"
+    }
+  }'
+```
+
+Optional `blueSpawns` and `redSpawns` arrays accept explicit `{ "x", "y" }`
+positions. The server rejects unknown fields, invalid counts, out-of-arena
+positions, overlaps, and decision rates that do not divide 60 Hz.
+
+Example externally supplied action:
+
+```json
+{
+  "action": {
+    "actions": [
+      { "type": "move", "unitId": 1, "x": -8, "y": 0 },
+      { "type": "throw", "unitId": 2, "x": 5, "y": 1, "power": 0.7 },
+      { "type": "noop", "unitId": 3 }
+    ]
+  }
+}
+```
+
+The JSON contract reports `apiVersion: "snowgym.v0"` and uses canonical
+`"blue"` / `"red"` team names rather than SnowCraft's internal player/enemy
+labels.
+
+The blue policy consumes detached entity observations and emits semantic
+`noop`, `move`, and `throw` actions. `SnowCraftActionAdapter` validates team
+ownership and applies accepted actions through the movement and throwing system
+APIs. One environment step advances six 60 Hz physics ticks, giving the policy
+a 10 Hz decision rate.
+
+## Blue-team demo
+
+Terminal 1, from the repository root:
+
+```bash
+npm run snowgym:server
+```
+
+Terminal 2:
+
+```bash
+cd snowgym/python
+uv sync --extra dev
+.venv/bin/snowgym-check
+.venv/bin/snowgym-demo --seed 42 --max-decisions 2000 \
+  --record ../../public/replays/blue-seed-42.json
+```
+
+The seed-42 acceptance run should report a completed blue win and the surviving
+team counts directly in the terminal, then write a portable visual recording.
+
+To replay it through SnowCraft's existing Three.js arena, character, snowball,
+particle, camera, lighting, and asset renderers, start the normal Vite server
+from the repository root:
+
+```bash
+npm run dev -- --host 127.0.0.1
+```
+
+Open:
+
+```text
+http://127.0.0.1:5173/replay.html?recording=/replays/blue-seed-42.json
+```
+
+The replay viewer has play/pause, scrubbing, 0.5x-4x speed, and a local JSON
+file picker. Recording is based only on detached server observations and
+semantic actions; training remains headless and does not depend on WebGL. The
+versioned `snowgym.replay.v0` JSON is a visual record at the 10 Hz policy
+decision cadence, with interpolation for smooth playback. It is not a video and
+does not feed rendered pixels back into the agent.
+
+The browser acceptance command is self-contained:
+
+```bash
+npm run snowgym:replay:smoke
+```
+
+It reuses a reachable replay server or starts a temporary Vite server on port
+5173, verifies WebGL rendering, seeking, the terminal winner, and rewind/play,
+writes `/tmp/snowgym-replay.png`, and then stops the server it started.
+
+## Gymnasium client
+
+Importing `snowgym_client` registers legacy fixed-3v3 `SnowGym/Squad-v0` and
+configurable `SnowGym/Squad-v1`:
+
+```python
+import gymnasium as gym
+import snowgym_client
+
+env = gym.make(
+    "SnowGym/Squad-v1",
+    server_url="http://127.0.0.1:8787",
+    blue_units=5,
+    red_units=2,
+    arena_width=50,
+    arena_height=24,
+    decision_hz=20,
+    red_difficulty="hard",
+)
+observation, info = env.reset(seed=42)
+
+action = env.action_space.sample()
+observation, reward, terminated, truncated, info = env.step(action)
+env.close()
+```
+
+`Squad-v1` always exposes eight ally and eight enemy slots regardless of the
+active matchup. `ally_mask`, `enemy_mask`, and `unit_action_mask` identify
+present and actionable slots, so changing N/M at construction or through
+`reset(options={"scenario": ...})` never changes tensor shapes. The action
+space contains one action type, normalized target, and throw power per blue
+slot. The HTTP adapter is the correctness/reference transport; a direct batched
+transport remains planned for high-throughput training.
+
+Configurable command-line examples:
+
+```bash
+# 1 blue vs 3 easy red
+.venv/bin/snowgym-demo --blue-units 1 --red-units 3 --red-difficulty easy
+
+# 5 blue vs 2 hard red, with a replay artifact
+.venv/bin/snowgym-demo --blue-units 5 --red-units 2 --red-difficulty hard \
+  --record ../../public/replays/blue-5v2-hard.json
+```
+
+## Layout
+
+```text
+actions/        canonical semantic action types
+observations/   detached entity-state observations
+agents/         policy interface and scripted blue baseline
+adapters/       SnowCraft action application boundary
+core/           decision controller and DOM-free environment lifecycle
+scenarios/      deterministic scenario metadata
+server/         local JSON status/reset/step/autoplay API
+python/         Gymnasium package, checker, tests, and demo CLI
+replay/         versioned replay validation and existing-engine visual playback
+tests/          SnowGym-owned unit and integration tests
+```
+
+See [PLAN.md](./PLAN.md) for the repository audit and staged RL roadmap, and
+[UPSTREAM_PATCHES.md](./UPSTREAM_PATCHES.md) for the small upstream change ledger.
