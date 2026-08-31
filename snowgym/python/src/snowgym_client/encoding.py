@@ -12,7 +12,7 @@ GymAction = dict[str, np.ndarray]
 GymObservation = dict[str, np.ndarray]
 
 MAX_TEAM_UNITS = 3
-MAX_CONFIGURABLE_TEAM_UNITS = 8
+MAX_CONFIGURABLE_TEAM_UNITS = 10
 MAX_PROJECTILES = 64
 MAX_OBSTACLES = 64
 UNIT_FEATURES = 10

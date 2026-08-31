@@ -1,5 +1,7 @@
 import type { TeamAction } from '../actions/UnitAction';
 import type { Observation } from '../observations/Observation';
+import { STATE_HASH_VERSION } from '../protocol/Version';
+import { hashObservation } from '../reproducibility/StateHash';
 
 export const REPLAY_FORMAT = 'snowgym.replay.v0' as const;
 
@@ -16,6 +18,9 @@ export interface ReplayOutcome {
 export interface ReplayRecording {
   format: typeof REPLAY_FORMAT;
   apiVersion: 'snowgym.v0';
+  simulationVersion?: string;
+  stateHashVersion?: typeof STATE_HASH_VERSION;
+  upstreamBaseCommit?: string;
   scenario: string;
   seed: number;
   simulationHz: number;
@@ -32,6 +37,7 @@ export interface ReplayRecording {
   };
   frames: Observation[];
   actions: TeamAction[];
+  stateHashes?: string[];
   outcome: ReplayOutcome;
 }
 
@@ -66,6 +72,20 @@ export function parseReplayRecording(value: unknown): ReplayRecording {
   if (actions.length !== frames.length - 1) {
     throw new ReplayFormatError('actions must contain one entry per frame transition');
   }
+  if (replay.stateHashes !== undefined) {
+    const stateHashes = array(replay.stateHashes, 'stateHashes');
+    if (stateHashes.length !== frames.length) {
+      throw new ReplayFormatError('stateHashes must contain one entry per frame');
+    }
+    for (const [index, hash] of stateHashes.entries()) {
+      if (typeof hash !== 'string' || !/^fnv1a64:[0-9a-f]{16}$/.test(hash)) {
+        throw new ReplayFormatError(`stateHashes[${index}] is invalid`);
+      }
+      if (hash !== hashObservation(frames[index] as Observation)) {
+        throw new ReplayFormatError(`stateHashes[${index}] does not match its frame`);
+      }
+    }
+  }
   const outcome = record(replay.outcome, 'outcome');
   if (integer(outcome.finalTick, 'outcome.finalTick') !== previousTick) {
     throw new ReplayFormatError('outcome.finalTick must match the final frame');
@@ -73,6 +93,11 @@ export function parseReplayRecording(value: unknown): ReplayRecording {
   positive(replay.simulationHz, 'simulationHz');
   positive(replay.decisionHz, 'decisionHz');
   positive(replay.ticksPerDecision, 'ticksPerDecision');
+  optionalNonEmptyString(replay.simulationVersion, 'simulationVersion');
+  optionalNonEmptyString(replay.upstreamBaseCommit, 'upstreamBaseCommit');
+  if (replay.stateHashVersion !== undefined && replay.stateHashVersion !== STATE_HASH_VERSION) {
+    throw new ReplayFormatError(`expected state hash version ${STATE_HASH_VERSION}`);
+  }
   if (replay.configuration !== undefined) {
     const configuration = record(replay.configuration, 'configuration');
     positive(configuration.blueUnits, 'configuration.blueUnits');
@@ -116,4 +141,10 @@ function positive(value: unknown, name: string): number {
     throw new ReplayFormatError(`${name} must be positive`);
   }
   return value;
+}
+
+function optionalNonEmptyString(value: unknown, name: string): void {
+  if (value !== undefined && (typeof value !== 'string' || value.length === 0)) {
+    throw new ReplayFormatError(`${name} must be a non-empty string`);
+  }
 }

@@ -1,0 +1,89 @@
+{
+  "format": "snowgym.state-hash-fixture.v1",
+  "expected": "fnv1a64:469537d7ed1fa19d",
+  "observation": {
+    "tick": 6,
+    "selfTeam": "blue",
+    "simulationHz": 60,
+    "arena": {
+      "width": 40,
+      "height": 30
+    },
+    "allies": [
+      {
+        "id": 2,
+        "team": "blue",
+        "x": -11.125,
+        "y": 2.5,
+        "vx": 1.25,
+        "vy": -0.5,
+        "health": 75,
+        "maxHealth": 100,
+        "alive": true,
+        "state": "moving",
+        "throwCooldown": 0.25,
+        "charge": 0
+      },
+      {
+        "id": 1,
+        "team": "blue",
+        "x": -12,
+        "y": -2.5,
+        "vx": 0,
+        "vy": 0,
+        "health": 100,
+        "maxHealth": 100,
+        "alive": true,
+        "state": "idle",
+        "throwCooldown": 0,
+        "charge": 0.3333333333
+      }
+    ],
+    "enemies": [
+      {
+        "id": 3,
+        "team": "red",
+        "x": 10.75,
+        "y": 0,
+        "vx": -2,
+        "vy": 0.125,
+        "health": 50,
+        "maxHealth": 100,
+        "alive": true,
+        "state": "preparingThrow",
+        "throwCooldown": 0,
+        "charge": 0.9
+      }
+    ],
+    "projectiles": [
+      {
+        "id": 8,
+        "ownerId": 3,
+        "team": "red",
+        "x": 4.25,
+        "y": -1.75,
+        "vx": -7.5,
+        "vy": 1.25,
+        "height": 1.125,
+        "heightVelocity": -0.75
+      }
+    ],
+    "obstacles": [
+      {
+        "id": 7,
+        "type": "rock",
+        "x": 0.5,
+        "y": -3.25,
+        "halfWidth": 0.75,
+        "halfHeight": 0.5,
+        "blocksSight": true,
+        "blocksProjectiles": true,
+        "blocksMovement": true
+      }
+    ],
+    "match": {
+      "blueAlive": 2,
+      "redAlive": 1
+    }
+  }
+}

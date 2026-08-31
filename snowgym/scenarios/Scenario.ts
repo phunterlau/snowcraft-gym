@@ -3,7 +3,7 @@ import { Team, type Arena, type MapData } from '../../src/game/types';
 import { IdAllocator } from '../../src/ecs/Entity';
 import { getMapData, mapSpawns } from './maps';
 
-export const MAX_TEAM_SIZE = 8;
+export const MAX_TEAM_SIZE = 10;
 export const DEFAULT_MAX_TICKS = 60 * 180;
 const DEFAULT_SEED = 0x5a17c0de;
 const MIN_ARENA_SIZE = 12;

@@ -7,6 +7,7 @@ from .env import SnowGymEnv
 
 ENV_ID = "SnowGym/Squad-v0"
 CONFIGURABLE_ENV_ID = "SnowGym/Squad-v1"
+TEN_UNIT_ENV_ID = "SnowGym/Squad-v2"
 
 if ENV_ID not in registry:
     register(
@@ -23,9 +24,18 @@ if CONFIGURABLE_ENV_ID not in registry:
         nondeterministic=False,
     )
 
+if TEN_UNIT_ENV_ID not in registry:
+    register(
+        id=TEN_UNIT_ENV_ID,
+        entry_point="snowgym_client.env:SnowGymEnv",
+        kwargs={"max_team_units": 10, "configurable": True},
+        nondeterministic=False,
+    )
+
 __all__ = [
     "CONFIGURABLE_ENV_ID",
     "ENV_ID",
+    "TEN_UNIT_ENV_ID",
     "SnowGymEnv",
     "SnowGymHttpClient",
     "SnowGymProtocolError",

@@ -6,7 +6,7 @@ import argparse
 
 import gymnasium as gym
 
-from . import CONFIGURABLE_ENV_ID
+from . import TEN_UNIT_ENV_ID
 from .env import SnowGymEnv
 from .recording import ReplayRecorder, write_replay
 
@@ -36,7 +36,7 @@ def main() -> None:
     args = parser.parse_args()
 
     environment = gym.make(
-        CONFIGURABLE_ENV_ID,
+        TEN_UNIT_ENV_ID,
         server_url=args.server,
         timeout=30.0,
         blue_units=args.blue_units,
@@ -49,7 +49,7 @@ def main() -> None:
         red_controller=args.red_controller,
     ).unwrapped
     if not isinstance(environment, SnowGymEnv):
-        raise TypeError(f"{CONFIGURABLE_ENV_ID} resolved to an unexpected environment")
+        raise TypeError(f"{TEN_UNIT_ENV_ID} resolved to an unexpected environment")
 
     _, status = environment.reset(seed=args.seed)
     raw = environment.raw_observation

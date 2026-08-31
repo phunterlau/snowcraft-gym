@@ -2,7 +2,8 @@
 
 This package maps the versioned SnowGym JSON server contract to a fixed-shape
 Gymnasium environments registered as fixed-3v3 `SnowGym/Squad-v0` and
-configurable `SnowGym/Squad-v1` with fixed eight-slot roster tensors and
+configurable `SnowGym/Squad-v1` with fixed eight-slot roster tensors,
+`SnowGym/Squad-v2` with fixed ten-slot roster tensors, and
 presence masks.
 
 The TypeScript server remains authoritative for physics, reward, termination,

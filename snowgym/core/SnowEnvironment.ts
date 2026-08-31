@@ -20,6 +20,8 @@ import {
 } from '../agents/opponents';
 import type { TeamController } from '../agents/TeamController';
 import { observeWorld, type Observation } from '../observations/Observation';
+import { SIMULATION_VERSION, STATE_HASH_VERSION, UPSTREAM_BASE_COMMIT } from '../protocol/Version';
+import { hashObservation } from '../reproducibility/StateHash';
 import { buildArena, THREE_VS_THREE_OPEN, type Scenario } from '../scenarios/Scenario';
 
 export interface EnvironmentConfig {
@@ -31,6 +33,10 @@ export interface EnvironmentConfig {
 
 export interface EnvironmentStatus {
   apiVersion: 'snowgym.v0';
+  simulationVersion: typeof SIMULATION_VERSION;
+  stateHashVersion: typeof STATE_HASH_VERSION;
+  upstreamBaseCommit: typeof UPSTREAM_BASE_COMMIT;
+  stateHash: string;
   scenario: string;
   seed: number;
   tick: number;
@@ -169,8 +175,13 @@ export class SnowEnvironment {
   }
 
   status(): EnvironmentStatus {
+    const observation = this.observe(Team.Player);
     return {
       apiVersion: 'snowgym.v0',
+      simulationVersion: SIMULATION_VERSION,
+      stateHashVersion: STATE_HASH_VERSION,
+      upstreamBaseCommit: UPSTREAM_BASE_COMMIT,
+      stateHash: hashObservation(observation),
       scenario: this.scenario.name,
       seed: this.seed,
       tick: this.tick,

@@ -11,6 +11,7 @@ import snowgym_client
 from snowgym_client.encoding import ACTION_MOVE, ACTION_NOOP, ACTION_THROW
 from snowgym_client.env import SnowGymEnv
 from snowgym_client.recording import REPLAY_FORMAT, ReplayRecorder, write_replay
+from snowgym_client.state_hash import hash_observation
 
 
 class FakeClient:
@@ -76,6 +77,28 @@ def test_configurable_environment_has_fixed_capacity_and_presence_masks() -> Non
     assert info["configuration"]["blueUnits"] == 5
     assert client.scenario is not None
     assert client.scenario["redUnits"] == 2
+
+
+def test_ten_unit_environment_supports_a_10v10_roster() -> None:
+    client = FakeClient()
+    environment = gym.make(
+        snowgym_client.TEN_UNIT_ENV_ID,
+        client=client,
+        blue_units=10,
+        red_units=10,
+        arena_width=60,
+        arena_height=50,
+    ).unwrapped
+    observation, info = environment.reset(seed=42)
+
+    assert environment.observation_space.contains(observation)
+    assert environment.action_space["action_type"].shape == (10,)
+    assert observation["allies"].shape == (10, 10)
+    assert observation["enemies"].shape == (10, 10)
+    assert observation["ally_mask"].tolist() == [1] * 10
+    assert observation["enemy_mask"].tolist() == [1] * 10
+    assert info["configuration"]["blueUnits"] == 10
+    assert info["configuration"]["redUnits"] == 10
 
 
 def test_configurable_reset_can_change_rosters_without_changing_spaces() -> None:
@@ -207,6 +230,13 @@ def test_visual_recording_contains_frames_actions_and_outcome(tmp_path: Any) -> 
     assert replay["actions"] == [{"actions": []}]
     assert replay["outcome"]["finalTick"] == 6
     assert replay["configuration"]["blueUnits"] == 3
+    assert replay["simulationVersion"] == "snowgym.sim.v1"
+    assert replay["stateHashVersion"] == "snowgym.state.v1"
+    assert replay["upstreamBaseCommit"] == "7d9fca5"
+    assert replay["stateHashes"] == [
+        hash_observation(replay["frames"][0]),
+        hash_observation(replay["frames"][1]),
+    ]
 
 
 def make_snapshot(
@@ -230,8 +260,23 @@ def make_snapshot(
         make_unit(index + blue_units + 1, "red", width * 0.3, spawn_y(index, red_units))
         for index in range(red_units)
     ]
+    observation = {
+        "tick": tick,
+        "selfTeam": "blue",
+        "simulationHz": 60,
+        "arena": {"width": width, "height": height},
+        "allies": allies,
+        "enemies": enemies,
+        "projectiles": [],
+        "obstacles": make_obstacles(config.get("map")),
+        "match": {"blueAlive": blue_units, "redAlive": red_units},
+    }
     status = {
         "apiVersion": "snowgym.v0",
+        "simulationVersion": "snowgym.sim.v1",
+        "stateHashVersion": "snowgym.state.v1",
+        "upstreamBaseCommit": "7d9fca5",
+        "stateHash": hash_observation(observation),
         "scenario": f"{blue_units}-vs-{red_units}-open",
         "seed": seed,
         "tick": tick,
@@ -247,17 +292,7 @@ def make_snapshot(
     }
     return {
         "status": status,
-        "observation": {
-            "tick": tick,
-            "selfTeam": "blue",
-            "simulationHz": 60,
-            "arena": {"width": width, "height": height},
-            "allies": allies,
-            "enemies": enemies,
-            "projectiles": [],
-            "obstacles": make_obstacles(config.get("map")),
-            "match": {"blueAlive": blue_units, "redAlive": red_units},
-        },
+        "observation": observation,
     }
 
 

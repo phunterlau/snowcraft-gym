@@ -62,7 +62,7 @@ class SnowGymEnv(gym.Env[GymObservation, GymAction]):
             self._max_team_units,
         )
         if not configurable and self._scenario_config != default_scenario_config():
-            raise ValueError("custom squad configuration requires SnowGym/Squad-v1")
+            raise ValueError("custom squad configuration requires a configurable SnowGym squad environment")
         self.action_space = make_action_space(self._max_team_units)
         self.observation_space = make_observation_space(
             self._max_team_units,
@@ -90,7 +90,7 @@ class SnowGymEnv(gym.Env[GymObservation, GymAction]):
 
         scenario_override = options.get("scenario") if options else None
         if scenario_override is not None and not self._configurable:
-            raise ValueError("scenario reset options require SnowGym/Squad-v1")
+            raise ValueError("scenario reset options require a configurable SnowGym squad environment")
         scenario = None
         if self._configurable:
             if scenario_override is not None and not isinstance(scenario_override, dict):

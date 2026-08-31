@@ -95,7 +95,7 @@ describe('SnowGymService', () => {
     const service = new SnowGymService();
     expect(
       service.handle('POST', '/reset', {
-        scenario: { blueUnits: 9 },
+        scenario: { blueUnits: 11 },
       }),
     ).toMatchObject({ status: 400, body: { error: 'invalid_request' } });
     expect(

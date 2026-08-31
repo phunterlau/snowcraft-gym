@@ -17,6 +17,10 @@ class ReplayRecorder:
         self._frames = [observation]
         self._actions: list[JsonObject] = []
         self._status = status
+        state_hash = status.get("stateHash")
+        self._state_hashes: list[str] | None = (
+            [state_hash] if isinstance(state_hash, str) else None
+        )
 
     def append(self, observation: JsonObject, info: JsonObject) -> None:
         action = info.get("action")
@@ -25,6 +29,12 @@ class ReplayRecorder:
         self._actions.append(action)
         self._frames.append(observation)
         self._status = info
+        if self._state_hashes is not None:
+            state_hash = info.get("stateHash")
+            if isinstance(state_hash, str):
+                self._state_hashes.append(state_hash)
+            else:
+                self._state_hashes = None
 
     def finish(self, decisions: int) -> JsonObject:
         status = self._status
@@ -51,6 +61,12 @@ class ReplayRecorder:
         configuration = status.get("configuration")
         if isinstance(configuration, dict):
             replay["configuration"] = configuration
+        for key in ("simulationVersion", "stateHashVersion", "upstreamBaseCommit"):
+            value = status.get(key)
+            if isinstance(value, str):
+                replay[key] = value
+        if self._state_hashes is not None and len(self._state_hashes) == len(self._frames):
+            replay["stateHashes"] = self._state_hashes
         return replay
 
 

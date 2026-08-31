@@ -3,18 +3,18 @@
 ## Validated repository state
 
 This plan was reconciled against `refs/snowgym_implementation_note.md`, the
-current systems, browser wiring, tests, and build configuration on 2026-08-30.
+current systems, browser wiring, tests, and build configuration on 2026-08-31.
 
 | Capability             | Current engine state                                                                                                     | SnowGym decision                                                                                            |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------- |
 | Multiple blue units    | `Game.spawnSquads` already honors `maxPlayers`; bundled maps have three blue spawns, while normal `main.ts` requests one | Reuse it; do not patch spawning                                                                             |
 | Projectile attribution | `Snowball` and `SnowballThrown` already carry owner and team; collision rejects same-team hits                           | Reuse it; friendly fire stays disabled                                                                      |
 | Blue action submission | Throwing has generic `tryThrow`; movement only accepted selected-unit UI commands                                        | Add one generic per-unit `tryMove` seam                                                                     |
-| Red control            | `AISystem` is hard-coded to red units and blue targets                                                                   | Keep it unchanged for the first server milestone; migrate it behind `TeamController` later                  |
+| Red control            | The classic `AISystem` behavior is available through `ScriptedAiAgent`; seeded random is a second opponent               | Select both through the common `TeamController` boundary                                                    |
 | Round termination      | Team counts are generic, but blue loss waits for single-hero lives                                                       | Configure the no-respawn scenario with zero reserve lives; redesign only if a later environment requires it |
-| Determinism            | `World` owns a seeded RNG and physics uses a fixed 60 Hz step                                                            | Fix scenario seed and decision cadence; add replay assertions before publishing a benchmark                 |
+| Determinism            | `World` owns a seeded RNG, physics uses fixed 60 Hz steps, and status exposes versioned public-state hashes              | Record provenance and exact actions; keep cross-language golden and replay assertions before benchmarking   |
 | Headless use           | Most systems are DOM-free, but `Game` constructs renderer/input and owns the private step loop                           | Compose the systems directly in a DOM-free `SnowEnvironment`                                                |
-| RL contract            | No canonical action, observation, reset, or step API existed                                                             | Provide reset/observe/step now and stabilize the schema before Python                                       |
+| RL contract            | Canonical reset/step, masked fixed-shape Gym spaces, configurable rosters, and terrain observations are implemented      | Keep HTTP as the reference transport; add a direct batched transport before high-throughput training        |
 
 ## Milestones
 
@@ -46,8 +46,10 @@ retrieve the result from the server without a renderer.
       The scripted red squad now runs through `ScriptedAiAgent`, which re-runs
       the classic `AISystem` per-tick logic and reports its orders as semantic
       actions; full-episode traces are bit-identical to direct AI registration.
-- Record scenario, seed, action trace, simulation version, and upstream commit.
-- Add same-seed/action-sequence state-hash tests and max-tick truncation tests.
+- [x] Record scenario, seed, action trace, simulation version, upstream base
+      commit, and one public-state hash per replay frame.
+- [x] Add exact same-seed/action-sequence state-hash tests and max-tick
+      truncation tests.
 
 Exit criterion: a Node test can run and exactly replay 3v3 without DOM, Canvas,
 WebGL, Three.js rendering, browser timing, or input state.
@@ -66,7 +68,8 @@ WebGL, Three.js rendering, browser timing, or input state.
 - Let the initial Python adapter consume the JSON server for correctness, then
   add a long-lived batch host/direct transport for training throughput.
 - Add vectorized environment support over the future batch transport.
-- Expand contract tests to shared TypeScript/Python golden fixtures.
+- [x] Add a shared TypeScript/Python golden fixture for the versioned public-state
+      canonicalization and hash contract.
 - Benchmark throughput at 1, 2, 5, 10, 20, and 60 Hz decision rates.
 
 Exit criterion: `gym.make("SnowGym/Squad-v0")` passes Gymnasium's environment
@@ -79,9 +82,10 @@ checker and deterministic cross-language fixtures.
       difficulty, decision rate, seed, and max ticks.
 - [x] Generate deterministic non-overlapping spawn layouts when explicit spawns are
       omitted; reject counts that cannot fit the arena.
-- [x] Choose and publish fixed roster maxima for `SnowGym/Squad-v1`; represent
-      smaller N/M configurations with unit-presence and legal-action masks so a
-      registered Gym environment's spaces never change after construction.
+- [x] Publish fixed roster maxima for `SnowGym/Squad-v1` (eight slots) and
+      `SnowGym/Squad-v2` (ten slots); represent smaller N/M configurations with
+      unit-presence and legal-action masks so a registered Gym environment's
+      spaces never change after construction.
 - [x] Extend reset/server configuration, replay metadata, reward/termination logic,
       and observations without breaking `SnowGym/Squad-v0` 3v3 recordings.
 - [x] Load the bundled SnowCraft maps as scenario terrain: obstacles affect
@@ -90,8 +94,8 @@ checker and deterministic cross-language fixtures.
 - [x] Add a deterministic matrix covering 1v1, 1v3, 3v1, 3v3, and maximum-size
       fights, plus invalid counts/spawns and same-seed replay checks.
 - [x] Migrate red behavior to the common `TeamController` boundary, then add
-  independently selectable scripted, random, learned, or external opponents
-  (scripted and random shipped; learned/external remain future).
+      independently selectable scripted, random, learned, or external opponents
+      (scripted and random shipped; learned/external remain future).
 - Benchmark episode throughput and balance by N/M configuration before training.
 
 Exit criterion: one versioned environment can reset into multiple validated

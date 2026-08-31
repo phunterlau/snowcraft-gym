@@ -35,7 +35,7 @@ when omitted, it runs the scripted blue policy for one decision. `POST
 decision limit. `POST /reset` starts a seeded episode.
 
 `POST /reset` also accepts an optional configurable fight. Team sizes are in
-`[1, 8]`; omitted spawn arrays are generated deterministically:
+`[1, 10]`; omitted spawn arrays are generated deterministically:
 
 ```bash
 curl -X POST http://127.0.0.1:8787/reset \
@@ -93,7 +93,11 @@ Example externally supplied action:
 
 The JSON contract reports `apiVersion: "snowgym.v0"` and uses canonical
 `"blue"` / `"red"` team names rather than SnowCraft's internal player/enemy
-labels.
+labels. Status and step info also report `simulationVersion`,
+`upstreamBaseCommit`, `stateHashVersion`, and `stateHash`. The hash is a
+versioned, non-cryptographic checksum of the detached public observation. It is
+intended for deterministic regression and exact-action replay checks; it does
+not cover hidden controller or RNG internals.
 
 The blue policy consumes detached entity observations and emits semantic
 `noop`, `move`, and `throw` actions. `SnowCraftActionAdapter` validates team
@@ -141,7 +145,10 @@ file picker. Recording is based only on detached server observations and
 semantic actions; training remains headless and does not depend on WebGL. The
 versioned `snowgym.replay.v0` JSON is a visual record at the 10 Hz policy
 decision cadence, with interpolation for smooth playback. It is not a video and
-does not feed rendered pixels back into the agent.
+does not feed rendered pixels back into the agent. New recordings include
+simulation provenance and one public-state hash per frame. The replay parser
+remains backward compatible with earlier `snowgym.replay.v0` artifacts that do
+not contain these optional fields.
 
 ### Example replays
 
@@ -153,17 +160,18 @@ either pick a file with **Open recording**, or load one directly:
 http://127.0.0.1:5173/replay.html?recording=/replays/<file>
 ```
 
-| File | Scenario | Result |
-| --- | --- | --- |
-| `blue-seed-42.json` | Open 3v3, normal scripted red (acceptance run) | blue 3–0 |
-| `blue-5v2-hard.json` | Open 5v2, hard scripted red | blue win |
-| `example-open-3v3.json` | Open 3v3, scripted red | blue 3–0 |
-| `example-open-1v3-hard.json` | Open 1 blue vs 3 hard red | red win |
-| `example-open-2v5-normal.json` | Open 2 blue vs 5 red | red win |
-| `example-open-8v8.json` | Open 8v8 on a large arena | blue 7–0 |
-| `example-forest-3v3.json` | Pine Forest (`arena4`) 3v3 — dense tree cover | blue 3–0 |
-| `example-pond-5v2-hard.json` | Frozen Pond (`arena2`), hard red | blue win |
-| `example-village-random.json` | Village Skirmish (`arena3`) vs `random` red | blue win |
+| File                           | Scenario                                       | Result   |
+| ------------------------------ | ---------------------------------------------- | -------- |
+| `blue-seed-42.json`            | Open 3v3, normal scripted red (acceptance run) | blue 3–0 |
+| `blue-5v2-hard.json`           | Open 5v2, hard scripted red                    | blue win |
+| `example-open-3v3.json`        | Open 3v3, scripted red                         | blue 3–0 |
+| `example-open-1v3-hard.json`   | Open 1 blue vs 3 hard red                      | red win  |
+| `example-open-2v5-normal.json` | Open 2 blue vs 5 red                           | red win  |
+| `example-open-8v8.json`        | Open 8v8 on a large arena                      | blue 7–0 |
+| `example-open-10v10.json`      | Open 10v10 on a 60×50 arena                    | blue 9–0 |
+| `example-forest-3v3.json`      | Pine Forest (`arena4`) 3v3 — dense tree cover  | blue 3–0 |
+| `example-pond-5v2-hard.json`   | Frozen Pond (`arena2`), hard red               | blue win |
+| `example-village-random.json`  | Village Skirmish (`arena3`) vs `random` red    | blue win |
 
 Map recordings render the terrain (trees, rocks, forts) and show units using
 cover. Record your own with `--record PATH` on `snowgym-demo` (see below).
@@ -180,15 +188,16 @@ writes `/tmp/snowgym-replay.png`, and then stops the server it started.
 
 ## Gymnasium client
 
-Importing `snowgym_client` registers legacy fixed-3v3 `SnowGym/Squad-v0` and
-configurable `SnowGym/Squad-v1`:
+Importing `snowgym_client` registers legacy fixed-3v3 `SnowGym/Squad-v0`,
+eight-slot configurable `SnowGym/Squad-v1`, and ten-slot configurable
+`SnowGym/Squad-v2`:
 
 ```python
 import gymnasium as gym
 import snowgym_client
 
 env = gym.make(
-    "SnowGym/Squad-v1",
+    "SnowGym/Squad-v2",
     server_url="http://127.0.0.1:8787",
     blue_units=5,
     red_units=2,
@@ -204,13 +213,14 @@ observation, reward, terminated, truncated, info = env.step(action)
 env.close()
 ```
 
-`Squad-v1` always exposes eight ally and eight enemy slots regardless of the
-active matchup. `ally_mask`, `enemy_mask`, and `unit_action_mask` identify
-present and actionable slots, so changing N/M at construction or through
-`reset(options={"scenario": ...})` never changes tensor shapes. The action
-space contains one action type, normalized target, and throw power per blue
-slot. The HTTP adapter is the correctness/reference transport; a direct batched
-transport remains planned for high-throughput training.
+`Squad-v1` retains its original eight ally/enemy slots. `Squad-v2` exposes ten
+slots per team and supports fights through 10v10. `ally_mask`, `enemy_mask`, and
+`unit_action_mask` identify present and actionable slots, so changing N/M at
+construction or through `reset(options={"scenario": ...})` never changes an
+environment version's tensor shapes. The action space contains one action type,
+normalized target, and throw power per blue slot. The HTTP adapter is the
+correctness/reference transport; a direct batched transport remains planned for
+high-throughput training.
 
 Configurable command-line examples:
 
@@ -224,6 +234,11 @@ Configurable command-line examples:
 
 # scripted blue vs the seeded random red baseline
 .venv/bin/snowgym-demo --red-controller random
+
+# 10v10 on a larger open arena, with a replay artifact
+.venv/bin/snowgym-demo --blue-units 10 --red-units 10 \
+  --arena-width 60 --arena-height 50 \
+  --record ../../public/replays/example-open-10v10.json
 ```
 
 ## Layout
@@ -238,6 +253,8 @@ scenarios/      deterministic scenario metadata
 server/         local JSON status/reset/step/autoplay API
 python/         Gymnasium package, checker, tests, and demo CLI
 replay/         versioned replay validation and existing-engine visual playback
+reproducibility/ versioned public-observation canonicalization and hashing
+fixtures/       cross-language TypeScript/Python contract fixtures
 tests/          SnowGym-owned unit and integration tests
 ```
 
