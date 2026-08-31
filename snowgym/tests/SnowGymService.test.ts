@@ -107,4 +107,72 @@ describe('SnowGymService', () => {
       body: { error: 'invalid_request', message: 'unknown scenario fields: blueUnit' },
     });
   });
+
+  it('accepts a selectable red controller and reports it in status', () => {
+    const service = new SnowGymService();
+    const response = service.handle('POST', '/reset', {
+      seed: 11,
+      scenario: { redController: 'random' },
+    });
+    const body = response.body as { status: EnvironmentStatus };
+
+    expect(response.status).toBe(200);
+    expect(body.status.configuration.redController).toBe('random');
+
+    const step = service.handle('POST', '/step', {});
+    expect(step.status).toBe(200);
+  });
+
+  it('rejects an unknown red controller', () => {
+    const service = new SnowGymService();
+    expect(
+      service.handle('POST', '/reset', {
+        scenario: { redController: 'skynet' },
+      }),
+    ).toMatchObject({
+      status: 400,
+      body: { error: 'invalid_request', message: 'redController must be one of: scripted, random' },
+    });
+  });
+
+  it('runs a full autoplay episode against the random red controller', () => {
+    const service = new SnowGymService();
+    service.handle('POST', '/reset', { seed: 21, scenario: { redController: 'random' } });
+    const response = service.handle('POST', '/autoplay', { maxDecisions: 2_000 });
+    const body = response.body as { decisions: number; status: EnvironmentStatus };
+
+    expect(response.status).toBe(200);
+    expect(body.decisions).toBeGreaterThan(0);
+    expect(body.status.terminated || body.status.truncated).toBe(true);
+    expect(body.status.configuration.redController).toBe('random');
+  });
+
+  it('resets onto a bundled map with terrain and reports it in status', () => {
+    const service = new SnowGymService();
+    const response = service.handle('POST', '/reset', {
+      seed: 5,
+      scenario: { map: 'arena4.json' },
+    });
+    const body = response.body as {
+      status: EnvironmentStatus;
+      observation: { obstacles: unknown[]; allies: unknown[]; enemies: unknown[] };
+    };
+
+    expect(response.status).toBe(200);
+    expect(body.status.configuration.map).toBe('arena4.json');
+    expect(body.observation.obstacles.length).toBeGreaterThan(0);
+    expect(body.observation.allies).toHaveLength(3);
+    expect(body.observation.enemies).toHaveLength(3);
+  });
+
+  it('rejects an unknown map and a map with a conflicting roster', () => {
+    const service = new SnowGymService();
+    expect(service.handle('POST', '/reset', { scenario: { map: 'arena99.json' } })).toMatchObject({
+      status: 400,
+      body: { error: 'invalid_request' },
+    });
+    expect(
+      service.handle('POST', '/reset', { scenario: { map: 'arena1.json', blueUnits: 5 } }),
+    ).toMatchObject({ status: 400, body: { error: 'invalid_request' } });
+  });
 });

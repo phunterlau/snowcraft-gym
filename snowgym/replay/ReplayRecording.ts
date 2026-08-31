@@ -28,6 +28,7 @@ export interface ReplayRecording {
     arenaHeight: number;
     maxTicks: number;
     redDifficulty: 'easy' | 'normal' | 'hard';
+    redController?: 'scripted' | 'random';
   };
   frames: Observation[];
   actions: TeamAction[];
@@ -58,6 +59,7 @@ export function parseReplayRecording(value: unknown): ReplayRecording {
     array(frame.allies, `frames[${index}].allies`);
     array(frame.enemies, `frames[${index}].enemies`);
     array(frame.projectiles, `frames[${index}].projectiles`);
+    array(frame.obstacles ?? [], `frames[${index}].obstacles`);
   }
 
   const actions = array(replay.actions, 'actions');

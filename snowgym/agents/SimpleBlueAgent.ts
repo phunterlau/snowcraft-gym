@@ -18,7 +18,8 @@ const EPSILON = 1e-9;
  * throw at the nearest opponent in range or close the distance.
  */
 export class SimpleBlueAgent implements TeamController {
-  act(observation: Observation): { actions: UnitAction[] } {
+  act(observation: Observation, _dt?: number): { actions: UnitAction[] } {
+    void _dt; // The baseline re-decides every call.
     const actions = observation.allies
       .filter((ally) => ally.alive)
       .map((ally) => this.actionFor(ally, observation));

@@ -38,6 +38,8 @@ class SnowGymEnv(gym.Env[GymObservation, GymAction]):
         max_ticks: int = 60 * 180,
         decision_hz: int = 10,
         red_difficulty: str = "normal",
+        red_controller: str = "scripted",
+        map: str | None = None,
         render_mode: None = None,
     ):
         if render_mode is not None:
@@ -45,6 +47,7 @@ class SnowGymEnv(gym.Env[GymObservation, GymAction]):
         self.render_mode = render_mode
         self._max_team_units = validate_capacity(max_team_units)
         self._configurable = configurable
+        self._map = map
         self._scenario_config = validate_scenario_config(
             {
                 "blueUnits": blue_units,
@@ -54,6 +57,7 @@ class SnowGymEnv(gym.Env[GymObservation, GymAction]):
                 "maxTicks": max_ticks,
                 "decisionHz": decision_hz,
                 "redDifficulty": red_difficulty,
+                "redController": red_controller,
             },
             self._max_team_units,
         )
@@ -91,10 +95,23 @@ class SnowGymEnv(gym.Env[GymObservation, GymAction]):
         if self._configurable:
             if scenario_override is not None and not isinstance(scenario_override, dict):
                 raise ValueError("reset option scenario must be an object")
-            scenario = validate_scenario_config(
-                self._scenario_config | (scenario_override or {}),
-                self._max_team_units,
-            )
+            scenario = dict(scenario_override or {})
+            map_id = scenario.pop("map", self._map)
+            if map_id is not None:
+                if not isinstance(map_id, str):
+                    raise ValueError("scenario.map must be a string map id")
+                # Map fixes terrain + rosters; only tuning knobs ride along.
+                scenario = {
+                    key: scenario[key]
+                    for key in ("decisionHz", "redDifficulty", "redController", "maxTicks")
+                    if key in scenario
+                }
+                scenario["map"] = map_id
+            else:
+                scenario = validate_scenario_config(
+                    self._scenario_config | scenario,
+                    self._max_team_units,
+                )
 
         payload = self._client.reset(int(server_seed), scenario)
         raw = require_payload_observation(payload)
@@ -174,6 +191,7 @@ def default_scenario_config() -> dict[str, Any]:
         "maxTicks": 60 * 180,
         "decisionHz": 10,
         "redDifficulty": "normal",
+        "redController": "scripted",
     }
 
 
@@ -218,6 +236,8 @@ def validate_scenario_config(
         raise ValueError("decisionHz must be a positive divisor of 60")
     if result.get("redDifficulty") not in {"easy", "normal", "hard"}:
         raise ValueError("redDifficulty must be easy, normal, or hard")
+    if result.get("redController") not in {"scripted", "random"}:
+        raise ValueError("redController must be scripted or random")
     for key, count_key in (("blueSpawns", "blueUnits"), ("redSpawns", "redUnits")):
         if key in result:
             spawns = result[key]

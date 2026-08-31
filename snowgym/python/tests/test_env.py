@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import Any
 
 import gymnasium as gym
+import pytest
 import numpy as np
 from gymnasium.utils.env_checker import check_env
 
@@ -88,6 +89,55 @@ def test_configurable_reset_can_change_rosters_without_changing_spaces() -> None
     assert first["allies"].shape == second["allies"].shape == (8, 10)
     assert int(first["ally_mask"].sum()) == 1
     assert int(second["ally_mask"].sum()) == 8
+
+
+def test_red_controller_is_configurable_and_validated() -> None:
+    client = FakeClient()
+    environment = gym.make(
+        snowgym_client.CONFIGURABLE_ENV_ID,
+        client=client,
+        red_controller="random",
+    ).unwrapped
+    environment.reset(seed=42)
+
+    assert client.scenario is not None
+    assert client.scenario["redController"] == "random"
+
+    with pytest.raises(ValueError, match="redController"):
+        gym.make(
+            snowgym_client.CONFIGURABLE_ENV_ID,
+            client=FakeClient(),
+            red_controller="skynet",
+        )
+
+    with pytest.raises(ValueError, match="redController"):
+        environment.reset(seed=1, options={"scenario": {"redController": "skynet"}})
+
+
+def test_map_reset_loads_terrain_with_obstacle_tensor() -> None:
+    client = FakeClient()
+    environment = gym.make(
+        snowgym_client.CONFIGURABLE_ENV_ID,
+        client=client,
+    ).unwrapped
+    observation, info = environment.reset(seed=42, options={"scenario": {"map": "arena1.json"}})
+
+    assert client.scenario is not None
+    assert client.scenario["map"] == "arena1.json"
+    # Map fixes terrain; roster/tuning fields are not sent.
+    assert "blueUnits" not in client.scenario
+    assert environment.observation_space.contains(observation)
+    assert observation["obstacles"].shape == (64, 9)
+    assert int(observation["obstacle_mask"].sum()) == 2
+    assert info["configuration"]["map"] == "arena1.json"
+
+
+def test_open_arena_has_empty_obstacle_tensor() -> None:
+    environment = SnowGymEnv(client=FakeClient())
+    observation, _ = environment.reset(seed=42)
+
+    assert observation["obstacles"].shape == (64, 9)
+    assert int(observation["obstacle_mask"].sum()) == 0
 
 
 def test_spaces_contain_encoded_observations_and_translate_actions() -> None:
@@ -205,9 +255,39 @@ def make_snapshot(
             "allies": allies,
             "enemies": enemies,
             "projectiles": [],
+            "obstacles": make_obstacles(config.get("map")),
             "match": {"blueAlive": blue_units, "redAlive": red_units},
         },
     }
+
+
+def make_obstacles(map_id: Any) -> list[dict[str, Any]]:
+    if not map_id:
+        return []
+    return [
+        {
+            "id": 1,
+            "type": "tree",
+            "x": -5.0,
+            "y": 0.0,
+            "halfWidth": 0.35,
+            "halfHeight": 0.35,
+            "blocksSight": True,
+            "blocksProjectiles": True,
+            "blocksMovement": True,
+        },
+        {
+            "id": 2,
+            "type": "fort",
+            "x": 0.0,
+            "y": 0.0,
+            "halfWidth": 2.5,
+            "halfHeight": 0.6,
+            "blocksSight": True,
+            "blocksProjectiles": True,
+            "blocksMovement": True,
+        },
+    ]
 
 
 def make_unit(unit_id: int, team: str, x: float, y: float) -> dict[str, Any]:

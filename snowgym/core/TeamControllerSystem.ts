@@ -36,7 +36,7 @@ export class TeamControllerSystem implements System {
     }
 
     const observation = observeWorld(this.world, this.team, this.ticks);
-    this.lastResults = this.adapter.apply(this.team, this.controller.act(observation));
+    this.lastResults = this.adapter.apply(this.team, this.controller.act(observation, SIM.dt));
     this.ticksUntilDecision = this.ticksPerDecision - 1;
   }
 }

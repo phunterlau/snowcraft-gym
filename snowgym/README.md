@@ -49,7 +49,8 @@ curl -X POST http://127.0.0.1:8787/reset \
       "arenaHeight": 24,
       "decisionHz": 20,
       "maxTicks": 3600,
-      "redDifficulty": "hard"
+      "redDifficulty": "hard",
+      "redController": "random"
     }
   }'
 ```
@@ -57,6 +58,24 @@ curl -X POST http://127.0.0.1:8787/reset \
 Optional `blueSpawns` and `redSpawns` arrays accept explicit `{ "x", "y" }`
 positions. The server rejects unknown fields, invalid counts, out-of-arena
 positions, overlaps, and decision rates that do not divide 60 Hz.
+
+The red team is controlled through the same `TeamController` boundary as blue.
+`redController` selects the opponent: `"scripted"` (default) is the classic
+utility-scored squad AI with per-tick dodges, aim error, and cover play —
+behaviorally identical to the browser game's AI at the same `redDifficulty` —
+while `"random"` is a seeded baseline that wanders and throws at random.
+
+A scenario can instead target a bundled SnowCraft map by id
+(`arena1.json`–`arena5.json`). A map fixes the terrain and the spawn layout, so
+roster/arena fields must be omitted; obstacles then affect line-of-sight,
+cover, and collision, and are exposed to the policy as a fixed-capacity masked
+`obstacles` tensor:
+
+```bash
+curl -X POST http://127.0.0.1:8787/reset \
+  -H 'Content-Type: application/json' \
+  -d '{ "seed": 42, "scenario": { "map": "arena4.json", "redDifficulty": "hard" } }'
+```
 
 Example externally supplied action:
 
@@ -177,6 +196,9 @@ Configurable command-line examples:
 # 5 blue vs 2 hard red, with a replay artifact
 .venv/bin/snowgym-demo --blue-units 5 --red-units 2 --red-difficulty hard \
   --record ../../public/replays/blue-5v2-hard.json
+
+# scripted blue vs the seeded random red baseline
+.venv/bin/snowgym-demo --red-controller random
 ```
 
 ## Layout
