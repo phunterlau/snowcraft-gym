@@ -21,6 +21,7 @@ current systems, browser wiring, tests, and build configuration on 2026-08-31.
 ### M0 — autonomous blue control and server status (current)
 
 - [x] Canonical `UnitAction` / `TeamAction` types, free of UI inputs
+- [x] Explicit `hold` action that cancels stale movement without changing `noop`
 - [x] Detached entity observation with deterministic ID ordering
 - [x] `TeamController` policy contract
 - [x] Simple blue dodge / approach / throw policy
@@ -112,7 +113,27 @@ Exit criterion: one versioned environment can reset into multiple validated
 N-vs-M configurations while retaining fixed Gym spaces, deterministic replay,
 team elimination, and renderer-free server status.
 
-### M4 — multi-agent and research adapters
+### M4 — hierarchical commander (C0 complete)
+
+- [x] Define the bounded `snowgym.command-plan.v0` group action space and strict
+      JSON schema without unit IDs, enemy IDs, coordinates, or physical actions.
+- [x] Add strict runtime validation for mission/objective compatibility, unique
+      fixed roles, allocation bounds, and acyclic support relationships.
+- [x] Add deterministic weighted group allocation for 3v3 through 10v10.
+- [x] Add team-relative region and symbolic enemy-cluster target resolution.
+- [x] Add a trusted host envelope and immutable atomic `PlanStore`.
+- Add a synchronous plan-aware controller and reactive per-unit executor.
+- Add plan lifecycle, reconciliation, deterministic fallback, and trace records.
+- Prove non-blocking operation with a delayed mock commander before adding a
+  live model provider.
+- Add a server-only `gpt-5.6-luna` Responses API adapter using strict structured
+  output and `OPENAI_API_KEY` after the latency architecture passes tests.
+
+Exit criterion: a slow commander can replace validated symbolic group plans
+without blocking the 10 Hz physical controller or exposing transient unit
+control to the model.
+
+### M5 — multi-agent and research adapters
 
 - PettingZoo adapter over the same simulator, not a second implementation.
 - Optional partial observations, semantic raster/pixels, latency injection, and
