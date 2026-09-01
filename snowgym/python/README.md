@@ -23,6 +23,17 @@ The TypeScript server remains authoritative for physics, reward, termination,
 and seeded state. Python only translates numeric Gymnasium arrays to semantic
 team actions and encodes returned entity observations.
 
+`SnowGymBatchEnv` removes per-decision HTTP overhead without adding another
+simulator. Its persistent newline-delimited subprocess owns independent
+`SnowEnvironment` instances and returns fixed tensors with a leading batch
+dimension. It supports per-slot seeds/scenarios, selective reset, guarded
+single-team steps, raw joint-step requests, and explicit per-world failures.
+Run the live golden transport check while the HTTP server is available:
+
+```bash
+.venv/bin/snowgym-batch-check --worlds 8 --json
+```
+
 See the parent [SnowGym README](../README.md) for setup, recording, and replay
 commands. Pass `--record PATH` to `snowgym-demo` to write a portable
 `snowgym.replay.v0` JSON artifact from detached server observations.

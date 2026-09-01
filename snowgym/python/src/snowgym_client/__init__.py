@@ -2,6 +2,7 @@
 
 from gymnasium.envs.registration import register, registry
 
+from .batch import BatchOperationError, SnowGymBatchClient, SnowGymBatchEnv
 from .client import SnowGymHttpClient, SnowGymProtocolError
 from .env import SnowGymEnv
 from .opponents import (
@@ -46,6 +47,9 @@ __all__ = [
     "ENV_ID",
     "TEN_UNIT_ENV_ID",
     "SnowGymEnv",
+    "SnowGymBatchClient",
+    "SnowGymBatchEnv",
+    "BatchOperationError",
     "SnowGymHttpClient",
     "SnowGymSingleTeamEnv",
     "SnowGymParallelEnv",

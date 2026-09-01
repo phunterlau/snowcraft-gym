@@ -23,6 +23,7 @@ snowgym-export-trajectories = "snowgym_training.export_scripted:main"
 snowgym-teacher-baseline = "snowgym_training.baseline:main"
 snowgym-train-bc = "snowgym_training.trainer:main"
 snowgym-evaluate-checkpoint = "snowgym_training.evaluate:main"
+snowgym-benchmark-batch = "snowgym_training.benchmarks.throughput:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/snowgym_training"]

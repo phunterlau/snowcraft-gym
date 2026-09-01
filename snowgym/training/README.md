@@ -85,5 +85,23 @@ http://127.0.0.1:5173/replay.html?recording=/replays/bc_1v1_v0/learned-seed-201.
 http://127.0.0.1:5173/replay.html?recording=/replays/bc_1v1_v0/learned-seed-202.json
 ```
 
-This is a narrow 1v1 imitation-learning proof. M6.1 adds exact-parity batched
-simulation before scaling data collection; M6.2 adds reward-driven PPO.
+This is a narrow 1v1 imitation-learning proof. M6.2 adds reward-driven PPO.
+
+## Persistent batch simulation
+
+The training package can drive the authoritative TypeScript simulation in one
+persistent subprocess at 1, 8, 32, or 64 worlds. Run the versioned benchmark:
+
+```bash
+uv run snowgym-benchmark-batch \
+  --worlds 1 8 32 64 \
+  --decisions 20 \
+  --output artifacts/batch-throughput.json \
+  --json
+```
+
+The report separates decisions/s, simulation ticks/s, aggregate real-time
+factor, parent-plus-child CPU use, protocol payload bytes, Python JSON
+serialization, and transport-plus-simulation time. The committed short-run
+[M6.1 result](./benchmarks/batch_throughput_v0.json) reached all 64 worlds; it
+is local acceptance evidence rather than a portable performance guarantee.

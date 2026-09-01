@@ -353,32 +353,42 @@ masked-random blue won 0/2 and timed out at 200. The committed checkpoint is
 Goal: remove one-request-per-decision HTTP overhead without creating a second
 simulator.
 
-- [ ] Add `snowgym/batch/` with a persistent subprocess host that owns multiple
+- [x] Add `snowgym/batch/` with a persistent subprocess host that owns multiple
       independent `SnowEnvironment` instances and exposes a versioned handshake,
       batched reset, batched joint/single-team step, close, and error messages.
-- [ ] Begin with compact framed or newline-delimited messages over stdin/stdout.
+- [x] Begin with compact framed or newline-delimited messages over stdin/stdout.
       Keep protocol logging on stderr so stdout remains machine-readable; do not
       require native bindings for the first implementation.
-- [ ] Add a Python `SnowGymBatchEnv`/client with fixed leading batch dimension,
+- [x] Add a Python `SnowGymBatchEnv`/client with fixed leading batch dimension,
       per-slot seeds/scenarios, independent terminal state, selective reset, and
       explicit failure semantics. Start with 8, then 32, then 64 worlds.
-- [ ] Preserve per-world deterministic RNG, ID allocation, controller state,
+- [x] Preserve per-world deterministic RNG, ID allocation, controller state,
       masks, rewards, termination, and public-state hashes. One failed world
       must not silently advance any other world.
-- [ ] Add golden HTTP/batch parity over the same version, scenario, seed, and
+- [x] Add golden HTTP/batch parity over the same version, scenario, seed, and
       exact semantic action sequence. Compare every state hash, reward,
       termination flag, truncation flag, and action result.
-- [ ] Add `snowgym/training/benchmarks/throughput.py`. Report environment count,
+- [x] Add `snowgym/training/benchmarks/throughput.py`. Report environment count,
       decision rate, ticks per decision, decisions/sec, simulation ticks/sec,
       wall-clock real-time factor, CPU utilization, payload bytes, and measured
       serialization share for 1, 8, 32, and 64 worlds.
-- [ ] Document the 64-world limitation if the target machine cannot sustain it;
+- [x] Document the 64-world limitation if the target machine cannot sustain it;
       never weaken parity or silently omit failed slots to reach a throughput
       number.
 
 M6.1 exit: the trainer directly consumes at least 32 persistent worlds; 8/32
 parity is exact against HTTP, 64 works or has an evidence-backed limitation,
 and benchmark results clearly separate simulation from serialization cost.
+
+M6.1 acceptance (2026-09-01): the training benchmark consumed 1, 8, 32, and 64
+persistent worlds through `SnowGymBatchEnv`; 8/32 direct-service golden tests
+and an eight-world live HTTP check matched complete reset/step payloads exactly.
+The 20-decision smoke measured approximately 218, 1,544, 4,707, and 6,964
+decisions/s respectively. At 64 worlds it measured 41,783 simulation ticks/s,
+696x aggregate real time, 1.34 CPU cores, 1.89 MB of protocol payload, and 4.3%
+Python JSON serialization share. These are local short-run measurements, not a
+cross-machine performance guarantee. The committed machine-readable report is
+`training/benchmarks/batch_throughput_v0.json`.
 
 After this gate, scale the versioned teacher corpus toward 100k–1M transitions
 only if learning curves or scenario coverage require it.

@@ -1,0 +1,62 @@
+{
+  "decisionsPerWorld": 20,
+  "format": "snowgym.batch-throughput.v0",
+  "results": [
+    {
+      "cpuUtilization": 1.1996584248215139,
+      "decisions": 20,
+      "decisionsPerSecond": 217.91368611885378,
+      "elapsedSeconds": 0.09177945798728615,
+      "payloadBytes": 36316,
+      "realTimeFactor": 21.791368611885375,
+      "serializationSeconds": 0.00048487004823982716,
+      "serializationShare": 0.005282990975028359,
+      "simulationTicksPerSecond": 1307.4821167131227,
+      "ticks": 120,
+      "transportAndSimulationSeconds": 0.0832460419042036,
+      "worlds": 1
+    },
+    {
+      "cpuUtilization": 1.2601551309353325,
+      "decisions": 160,
+      "decisionsPerSecond": 1543.7874869808984,
+      "elapsedSeconds": 0.10364120797021315,
+      "payloadBytes": 241808,
+      "realTimeFactor": 154.37874869808982,
+      "serializationSeconds": 0.0013726672041229904,
+      "serializationShare": 0.013244415334463295,
+      "simulationTicksPerSecond": 9262.72492188539,
+      "ticks": 960,
+      "transportAndSimulationSeconds": 0.08938541694078594,
+      "worlds": 8
+    },
+    {
+      "cpuUtilization": 1.2921308483064762,
+      "decisions": 640,
+      "decisionsPerSecond": 4706.707169170825,
+      "elapsedSeconds": 0.13597616698825732,
+      "payloadBytes": 946352,
+      "realTimeFactor": 470.67071691708253,
+      "serializationSeconds": 0.004213212814647704,
+      "serializationShare": 0.030984935874913657,
+      "simulationTicksPerSecond": 28240.24301502495,
+      "ticks": 3840,
+      "transportAndSimulationSeconds": 0.10206495999591425,
+      "worlds": 32
+    },
+    {
+      "cpuUtilization": 1.3418086340101376,
+      "decisions": 1280,
+      "decisionsPerSecond": 6963.764622897615,
+      "elapsedSeconds": 0.18380862497724593,
+      "payloadBytes": 1885744,
+      "realTimeFactor": 696.3764622897614,
+      "serializationSeconds": 0.007937750720884651,
+      "serializationShare": 0.04318486535584107,
+      "simulationTicksPerSecond": 41782.587737385686,
+      "ticks": 7680,
+      "transportAndSimulationSeconds": 0.12389941705623642,
+      "worlds": 64
+    }
+  ]
+}
