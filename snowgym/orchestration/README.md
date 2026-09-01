@@ -115,6 +115,43 @@ after elimination. Any other invalid plan is rejected while the previous
 snapshot remains active. Lifecycle events are returned as detached trace data.
 
 The monitoring ownership and escalation rules are specified in
-`snowgym/PLAN.md`. Mock latency and the asynchronous request scheduler are C3;
-the server-only `gpt-5.6-luna` adapter remains a later milestone after C3 proves
-that commander latency cannot block the 10 Hz controller.
+`snowgym/PLAN.md`.
+
+## C3 asynchronous mock commander
+
+`summarizeStrategy` converts the current observation and plan snapshot into a
+compact, versioned summary without unit IDs, enemy IDs, or raw projectile
+trajectories. `CommanderClient` is provider-neutral and returns untrusted plan
+data. `CommanderScheduler.tick(observation)` is synchronous: it polls completed
+provider work, evaluates lifecycle triggers, and starts requests without ever
+awaiting them.
+
+The scheduler permits one request in flight, coalesces newer triggers, enforces
+a minimum request interval, aborts on a simulation-tick deadline, and ignores a
+response that arrives after timeout. A response can be held until a configured
+simulation tick even if the mock finished earlier, which makes headless latency
+experiments exactly replayable. Real provider latency is still asynchronous
+wall-clock behavior and is recorded separately as response metadata.
+
+Use this order in a runner:
+
+```ts
+const action = controller.act(observation, dt); // always synchronous
+const result = environment.step(action);
+scheduler.tick(result.observation); // never await this
+```
+
+Run the renderer-free delayed-commander demonstration with:
+
+```bash
+npx tsx snowgym/orchestration/examples/delayed-mock-10v10.ts --json
+```
+
+The default request is captured at tick 0, becomes eligible after 90 simulation
+ticks (1.5 simulated seconds), and is reconciled/activated against the then
+current battle. `--latency-ticks` changes this deterministic delay.
+
+The next boundary is the server-only `gpt-5.6-luna` adapter using
+`OPENAI_API_KEY` and strict structured output. The provider must plug into
+`CommanderClient`; it must not change the synchronous controller or scheduler
+contract.

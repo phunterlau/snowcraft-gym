@@ -113,7 +113,7 @@ Exit criterion: one versioned environment can reset into multiple validated
 N-vs-M configurations while retaining fixed Gym spaces, deterministic replay,
 team elimination, and renderer-free server status.
 
-### M4 — hierarchical commander (C2 complete)
+### M4 — hierarchical commander (C3 complete)
 
 - [x] Define the bounded `snowgym.command-plan.v0` group action space and strict
       JSON schema without unit IDs, enemy IDs, coordinates, or physical actions.
@@ -132,8 +132,13 @@ team elimination, and renderer-free server status.
       the active plan, and atomically activate accepted plans.
 - [x] Keep a deterministic one-group fallback and detached lifecycle trace for
       every accepted, repaired, rejected, and fallback activation.
-- Prove non-blocking operation with a delayed mock commander before adding a
-  live model provider.
+- [x] Add an ID-free, versioned strategic summary and a provider-neutral async
+      `CommanderClient` boundary.
+- [x] Prove non-blocking operation with a delayed mock commander: one request in
+      flight, cooldown-governed trigger coalescing, simulation-tick timeout,
+      stale-response reconciliation, and ignored late responses.
+- [x] Add deterministic simulated-latency scheduling and a headless 10v10 C3
+      demonstration with exact action/state/trace replay coverage.
 - Add a server-only `gpt-5.6-luna` Responses API adapter using strict structured
   output and `OPENAI_API_KEY` after the latency architecture passes tests.
 
@@ -151,7 +156,7 @@ units, waits inside `step`, or corrects physical actions directly.
 | Simulation and action adapter | 60 Hz                                            | collision, legality, cooldown, alive state                                          | reject illegal physical actions and advance authoritative state                                                | report action results to the controller trace                                                 |
 | Reactive unit policy          | each team decision, normally 10 Hz               | assigned group, live position/health/state, projectiles, current symbolic objective | dodge, choose a legal throw, reacquire targets, restore range/cohesion, or continue mission movement           | never waits for the LLM; future stuck/repeated-rejection summaries go to lifecycle monitoring |
 | Plan-aware team controller    | each team decision                               | immutable active-plan snapshot plus current detached observation                    | late-bind enemy clusters, ally-group positions, and map-region objectives while keeping plan membership stable | continue the last valid snapshot during any commander request                                 |
-| Plan lifecycle monitor        | each team decision                               | plan age, living assigned units, whole-team loss fraction, and objective progress   | activate deterministic fallback on expiry, major loss, group elimination, or completion                        | schedule a commander request in C3; coalesce duplicate triggers while one is in flight        |
+| Plan lifecycle monitor        | each team decision                               | plan age, living assigned units, whole-team loss fraction, and objective progress   | activate deterministic fallback on expiry, major loss, group elimination, or completion                        | schedule a commander request; coalesce duplicate triggers while one is in flight              |
 | Plan reconciler               | only when a candidate arrives                    | candidate provenance plus the newest detached observation                           | validate, shrink infeasible groups, repair missing support/enemy objectives, ground, then atomically activate  | reject unsafe drift and retain the old plan or fallback                                       |
 | LLM commander                 | event-driven and rate-limited, target 0.1–0.5 Hz | a compact strategic summary captured with source tick/hash, never engine entities   | propose only a strict symbolic `CommandPlan`                                                                   | timeout/error cannot block control; host fallback and later retry policy remain authoritative |
 
@@ -163,11 +168,12 @@ observe -> execute current plan -> detect/coalesce trigger -> request asynchrono
         -> reconcile against newest observation -> atomic activate or reject
 ```
 
-Before a live provider is added, C3 must also cover request timeout, duplicate
-trigger coalescing, late response after fallback, invalid response, and
-deterministic replay of the same mock-latency schedule. Stuck detection and
-repeated action-rejection thresholds should be added there as explicit,
-debounced lifecycle signals rather than inferred by the model.
+C3 tests cover request timeout, duplicate-trigger coalescing, late response
+after fallback, invalid response, provider failure, uninterrupted synchronous
+control, and deterministic replay of the same mock-latency schedule. Stuck
+detection and repeated action-rejection thresholds remain planned explicit,
+debounced lifecycle signals; they must be host-computed rather than inferred by
+the model.
 
 ### M5 — multi-agent and research adapters
 

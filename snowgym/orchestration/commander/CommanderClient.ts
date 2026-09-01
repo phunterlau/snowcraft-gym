@@ -1,0 +1,27 @@
+import type { CommandPlan } from '../command/CommandPlan';
+import type { LifecycleTrigger } from '../lifecycle/PlanLifecycle';
+import type { StrategicSummary } from './StrategicSummary';
+
+export interface CommanderRequest {
+  readonly requestId: string;
+  readonly triggers: readonly LifecycleTrigger[];
+  readonly summary: StrategicSummary;
+  readonly currentPlan: CommandPlan;
+}
+
+export interface CommanderResponseMetadata {
+  readonly model?: string;
+  readonly latencyMs?: number;
+  readonly tokensIn?: number;
+  readonly tokensOut?: number;
+}
+
+export interface CommanderResponse {
+  /** Untrusted provider output. PlanLifecycle validates it before activation. */
+  readonly decision: unknown;
+  readonly metadata?: CommanderResponseMetadata;
+}
+
+export interface CommanderClient {
+  plan(request: CommanderRequest, signal?: AbortSignal): Promise<CommanderResponse>;
+}

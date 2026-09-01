@@ -168,6 +168,10 @@ export class PlanLifecycle {
     return structuredClone(this.trace);
   }
 
+  current(): PlanSnapshot {
+    return this.store.current();
+  }
+
   private groupCompleted(role: GroupRole, observation: Observation): boolean {
     const snapshot = this.store.current();
     const group = snapshot.plan.groups.find((candidate) => candidate.role === role);
