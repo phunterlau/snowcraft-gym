@@ -7,11 +7,15 @@ import { PlanStore, type PlanSnapshot } from '../runtime/PlanStore';
 import { createFallbackEnvelope } from './FallbackPlan';
 import { PlanReconciler, type CandidatePlanEnvelope, type PlanRepair } from './PlanReconciler';
 
-export type LifecycleTrigger =
+export type HardLifecycleTrigger =
   | 'plan_expired'
   | 'own_force_loss_major'
   | 'group_eliminated'
   | 'objective_completed';
+
+export type SoftLifecycleTrigger = 'plan_stalled' | 'action_rejection_repeated';
+
+export type LifecycleTrigger = HardLifecycleTrigger | SoftLifecycleTrigger;
 
 export interface PlanLifecycleOptions {
   readonly maxPlanAgeTicks?: number;
@@ -50,7 +54,7 @@ export type PlanLifecycleEvent =
   | {
       readonly type: 'fallback_activated';
       readonly tick: number;
-      readonly trigger: LifecycleTrigger;
+      readonly trigger: HardLifecycleTrigger;
       readonly previousPlanId: string;
       readonly activePlanId: string;
       readonly version: number;
@@ -115,13 +119,13 @@ export class PlanLifecycle {
     }
   }
 
-  evaluate(observation: Observation): readonly LifecycleTrigger[] {
+  evaluate(observation: Observation): readonly HardLifecycleTrigger[] {
     if (observation.match.blueAlive === 0 || observation.match.redAlive === 0) return [];
     const snapshot = this.store.current();
     if (observation.tick < snapshot.activatedAtTick) {
       throw new RangeError('observation tick cannot precede plan activation');
     }
-    const triggers: LifecycleTrigger[] = [];
+    const triggers: HardLifecycleTrigger[] = [];
     if (observation.tick - snapshot.activatedAtTick >= this.maxPlanAgeTicks) {
       triggers.push('plan_expired');
     }

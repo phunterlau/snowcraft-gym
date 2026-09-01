@@ -12,6 +12,8 @@ import {
   type PlanActivationOutcome,
 } from '../lifecycle/PlanLifecycle';
 import type { CandidatePlanEnvelope } from '../lifecycle/PlanReconciler';
+import type { TrajectoryDigest } from '../trajectory/TrajectoryMonitor';
+import { TrajectorySignalDetector, type TrajectorySignal } from '../trajectory/TrajectorySignals';
 
 export interface CommanderSchedulerOptions {
   readonly minimumRequestIntervalTicks?: number;
@@ -20,9 +22,26 @@ export interface CommanderSchedulerOptions {
   readonly minimumResponseLatencyTicks?: number;
   /** Disable only for bounded one-request demos whose external-call count must be fixed. */
   readonly automaticLifecycleMonitoring?: boolean;
+  /** Enables host-computed soft replanning from bounded execution evidence. */
+  readonly trajectorySignalDetector?: TrajectorySignalDetector;
+  /** Counts every provider attempt, including failures and timeouts. */
+  readonly maximumRequests?: number;
 }
 
 export type CommanderSchedulerEvent =
+  | {
+      readonly type: 'request_limit_reached';
+      readonly tick: number;
+      readonly maximumRequests: number;
+      readonly droppedTriggers: readonly LifecycleTrigger[];
+    }
+  | {
+      readonly type: 'trajectory_signal';
+      readonly tick: number;
+      readonly trigger: TrajectorySignal['trigger'];
+      readonly planVersion: number;
+      readonly roles: TrajectorySignal['roles'];
+    }
   | {
       readonly type: 'request_started';
       readonly tick: number;
@@ -83,13 +102,17 @@ export class CommanderScheduler {
   private readonly responseTimeoutTicks: number;
   private readonly minimumResponseLatencyTicks: number;
   private readonly automaticLifecycleMonitoring: boolean;
+  private readonly trajectorySignalDetector: TrajectorySignalDetector | null;
+  private readonly maximumRequests: number;
   private readonly pendingTriggers = new Set<LifecycleTrigger>();
+  private pendingTrajectory: TrajectoryDigest | null = null;
   private readonly completions: Completion[] = [];
   private readonly trace: CommanderSchedulerEvent[] = [];
   private inFlight: InFlightRequest | null = null;
   private lastRequestTick: number | null = null;
   private lastTimedOutSequence = 0;
   private sequence = 0;
+  private requestLimitReported = false;
 
   constructor(
     private readonly client: CommanderClient,
@@ -109,24 +132,37 @@ export class CommanderScheduler {
       'minimumResponseLatencyTicks',
     );
     this.automaticLifecycleMonitoring = options.automaticLifecycleMonitoring ?? true;
+    this.trajectorySignalDetector = options.trajectorySignalDetector ?? null;
+    this.maximumRequests = positiveInteger(
+      options.maximumRequests ?? Number.MAX_SAFE_INTEGER,
+      'maximumRequests',
+    );
     if (this.minimumResponseLatencyTicks >= this.responseTimeoutTicks) {
       throw new RangeError('minimumResponseLatencyTicks must be less than responseTimeoutTicks');
     }
   }
 
   /** Poll once per team decision. This method never awaits provider work. */
-  tick(observation: Observation): void {
+  tick(observation: Observation, trajectory?: TrajectoryDigest): void {
     this.processTimeout(observation);
     this.processCompletions(observation);
-    if (this.automaticLifecycleMonitoring) this.monitorLifecycle(observation);
+    if (this.automaticLifecycleMonitoring) this.monitorLifecycle(observation, trajectory);
+    if (trajectory && this.trajectorySignalDetector) {
+      this.monitorTrajectory(observation, trajectory);
+    }
     this.startPendingIfEligible(observation);
   }
 
   /** Adds an external lifecycle signal without blocking or duplicating in-flight work. */
-  notify(trigger: LifecycleTrigger, observation: Observation): void {
+  notify(trigger: LifecycleTrigger, observation: Observation, trajectory?: TrajectoryDigest): void {
+    if (this.sequence >= this.maximumRequests) {
+      this.reportRequestLimit(observation.tick, [trigger]);
+      return;
+    }
     if (this.inFlight || !this.requestIntervalElapsed(observation.tick)) {
       const wasPending = this.pendingTriggers.has(trigger);
       this.pendingTriggers.add(trigger);
+      if (trajectory) this.pendingTrajectory = structuredClone(trajectory);
       if (!wasPending) {
         this.trace.push({
           type: 'trigger_coalesced',
@@ -137,16 +173,20 @@ export class CommanderScheduler {
       }
       return;
     }
-    this.startRequest([trigger], observation);
+    this.startRequest([trigger], observation, trajectory);
   }
 
   status(): {
     readonly inFlightRequestId: string | null;
     readonly pendingTriggers: readonly LifecycleTrigger[];
+    readonly requestsStarted: number;
+    readonly maximumRequests: number;
   } {
     return {
       inFlightRequestId: this.inFlight?.request.requestId ?? null,
       pendingTriggers: orderedTriggers(this.pendingTriggers),
+      requestsStarted: this.sequence,
+      maximumRequests: this.maximumRequests,
     };
   }
 
@@ -154,11 +194,25 @@ export class CommanderScheduler {
     return structuredClone(this.trace);
   }
 
-  private monitorLifecycle(observation: Observation): void {
+  private monitorLifecycle(observation: Observation, trajectory?: TrajectoryDigest): void {
     const triggers = this.lifecycle.evaluate(observation);
     if (triggers.length === 0) return;
     this.lifecycle.maintain(observation);
-    for (const trigger of triggers) this.notify(trigger, observation);
+    for (const trigger of triggers) this.notify(trigger, observation, trajectory);
+  }
+
+  private monitorTrajectory(observation: Observation, trajectory: TrajectoryDigest): void {
+    const signals = this.trajectorySignalDetector!.evaluate(trajectory, this.lifecycle.current());
+    for (const signal of signals) {
+      this.trace.push({
+        type: 'trajectory_signal',
+        tick: signal.tick,
+        trigger: signal.trigger,
+        planVersion: signal.planVersion,
+        roles: [...signal.roles],
+      });
+      this.notify(signal.trigger, observation, signal.digest);
+    }
   }
 
   private startPendingIfEligible(observation: Observation): void {
@@ -170,11 +224,21 @@ export class CommanderScheduler {
       return;
     }
     const triggers = orderedTriggers(this.pendingTriggers);
+    const trajectory = this.pendingTrajectory;
     this.pendingTriggers.clear();
-    this.startRequest(triggers, observation);
+    this.pendingTrajectory = null;
+    if (this.sequence >= this.maximumRequests) {
+      this.reportRequestLimit(observation.tick, triggers);
+      return;
+    }
+    this.startRequest(triggers, observation, trajectory ?? undefined);
   }
 
-  private startRequest(triggers: readonly LifecycleTrigger[], observation: Observation): void {
+  private startRequest(
+    triggers: readonly LifecycleTrigger[],
+    observation: Observation,
+    trajectory?: TrajectoryDigest,
+  ): void {
     const sequence = ++this.sequence;
     const requestId = `commander-request-${sequence}`;
     const snapshot = this.lifecycle.current();
@@ -184,6 +248,7 @@ export class CommanderScheduler {
       triggers: [...triggers],
       summary,
       currentPlan: snapshot.plan.envelope.decision,
+      ...(trajectory ? { trajectory: structuredClone(trajectory) } : {}),
     };
     const abortController = new AbortController();
     const inFlight: InFlightRequest = {
@@ -292,6 +357,17 @@ export class CommanderScheduler {
       tick - this.lastRequestTick >= this.minimumRequestIntervalTicks
     );
   }
+
+  private reportRequestLimit(tick: number, triggers: readonly LifecycleTrigger[]): void {
+    if (this.requestLimitReported) return;
+    this.requestLimitReported = true;
+    this.trace.push({
+      type: 'request_limit_reached',
+      tick,
+      maximumRequests: this.maximumRequests,
+      droppedTriggers: [...triggers],
+    });
+  }
 }
 
 const TRIGGER_ORDER: readonly LifecycleTrigger[] = [
@@ -299,6 +375,8 @@ const TRIGGER_ORDER: readonly LifecycleTrigger[] = [
   'own_force_loss_major',
   'group_eliminated',
   'objective_completed',
+  'plan_stalled',
+  'action_rejection_repeated',
 ];
 
 function orderedTriggers(triggers: ReadonlySet<LifecycleTrigger>): LifecycleTrigger[] {

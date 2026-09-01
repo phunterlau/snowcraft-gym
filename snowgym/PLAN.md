@@ -192,13 +192,13 @@ the model.
       host-computed stuck fraction.
 - [x] Prove that enabling telemetry cannot change physical actions, public-state
       hashes, plan activation, or replay results.
-- [ ] Add debounced `plan_stalled` and `action_rejection_repeated` signals with
+- [x] Add debounced `plan_stalled` and `action_rejection_repeated` signals with
       activation grace periods and recovery hysteresis.
-- [ ] Separate soft signals, which retain the current plan while replanning,
+- [x] Separate soft signals, which retain the current plan while replanning,
       from hard lifecycle failures, which activate deterministic fallback.
 - [ ] Pass the bounded trajectory digest and preceding plan outcome to each
       stateless commander request without exposing unit IDs or raw trajectories.
-- [ ] Run deterministic multi-request mock battles with exact state, plan, signal,
+- [x] Run deterministic multi-request mock battles with exact state, plan, signal,
       latency, and scheduler-trace replay coverage.
 - [ ] Add an opt-in, wall-clock-paced Luna battle with one in-flight request, a
       code-enforced per-episode call limit, explicit token/latency accounting,

@@ -73,6 +73,7 @@ export interface TrajectoryMonitorOptions {
   readonly progressEpsilon?: number;
   readonly displacementEpsilon?: number;
   readonly stalledFraction?: number;
+  readonly movementIntentFraction?: number;
 }
 
 interface UnitMovement {
@@ -117,6 +118,7 @@ export class TrajectoryMonitor {
   private readonly progressEpsilon: number;
   private readonly displacementEpsilon: number;
   private readonly stalledFraction: number;
+  private readonly movementIntentFraction: number;
   private readonly samples: DecisionSample[] = [];
   private planVersion: number | null = null;
 
@@ -138,6 +140,10 @@ export class TrajectoryMonitor {
       'displacementEpsilon',
     );
     this.stalledFraction = fraction(options.stalledFraction ?? 0.5, 'stalledFraction');
+    this.movementIntentFraction = fraction(
+      options.movementIntentFraction ?? 0.5,
+      'movementIntentFraction',
+    );
   }
 
   record(record: TrajectoryRecord): TrajectoryDigest {
@@ -351,7 +357,15 @@ export class TrajectoryMonitor {
     if (objectiveDistanceDelta !== null && objectiveDistanceDelta <= -this.progressEpsilon) {
       return 'progressing';
     }
-    if (issuedActions.move > 0 && stuckFraction >= this.stalledFraction) return 'stalled';
+    const issuedActionable = issuedActions.hold + issuedActions.move + issuedActions.throw;
+    const acceptedMoveFraction =
+      (issuedActions.move - rejectedActions.move) / Math.max(issuedActionable, 1);
+    if (
+      issuedActions.move > 0 &&
+      (stuckFraction >= this.stalledFraction || acceptedMoveFraction >= this.movementIntentFraction)
+    ) {
+      return 'stalled';
+    }
     return 'stable';
   }
 }

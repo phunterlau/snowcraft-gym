@@ -214,3 +214,16 @@ telemetry-only: it cannot change the controller, environment, scheduler, or
 plan store. Later C5 slices debounce trajectory signals, distinguish soft
 replanning from hard fallback, and pass the same bounded digest to the existing
 stateless commander request.
+
+`TrajectorySignalDetector` now emits latched `plan_stalled` and
+`action_rejection_repeated` signals only after an activation grace period. Soft
+signals keep the current plan active while `CommanderScheduler` makes an
+asynchronous request. Existing loss, elimination, completion, and expiry
+conditions remain hard fallback triggers. The scheduler counts every provider
+attempt and can enforce a per-episode maximum even when calls fail or time out.
+
+Run the exact-replay multi-request mock demonstration with:
+
+```bash
+npx tsx snowgym/orchestration/examples/trajectory-mock-10v10.ts --json
+```
