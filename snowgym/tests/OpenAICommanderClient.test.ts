@@ -2,6 +2,11 @@ import { describe, expect, it } from 'vitest';
 import { COMMAND_PLAN_VERSION, type CommandPlan } from '../orchestration/command/CommandPlan';
 import type { CommanderRequest } from '../orchestration/commander/CommanderClient';
 import { STRATEGIC_SUMMARY_VERSION } from '../orchestration/commander/StrategicSummary';
+import { PLAN_OUTCOME_VERSION } from '../orchestration/trajectory/PlanOutcome';
+import {
+  TRAJECTORY_DIGEST_VERSION,
+  type TrajectoryGroupDigest,
+} from '../orchestration/trajectory/TrajectoryMonitor';
 import {
   OPENAI_COMMANDER_MODEL,
   OpenAICommanderClient,
@@ -67,6 +72,8 @@ describe('OpenAICommanderClient', () => {
       requestId: 'commander-request-1',
       triggers: ['plan_expired'],
       strategicSummary: { schemaVersion: STRATEGIC_SUMMARY_VERSION, sourceTick: 60 },
+      trajectory: { schemaVersion: TRAJECTORY_DIGEST_VERSION, planVersion: 1 },
+      previousPlanOutcome: { schemaVersion: PLAN_OUTCOME_VERSION, planVersion: 0 },
     });
     expect(body.input[0].content[0].text).not.toContain('"unitIds"');
     expect(body.input[0].content[0].text).not.toContain('"enemyIds"');
@@ -194,6 +201,44 @@ function commanderRequest(): CommanderRequest {
       ],
     },
     currentPlan: oneGroupPlan(),
+    trajectory: {
+      schemaVersion: TRAJECTORY_DIGEST_VERSION,
+      planVersion: 1,
+      startTick: 30,
+      endTick: 60,
+      decisions: 5,
+      groups: [trajectoryGroup()],
+    },
+    previousPlanOutcome: {
+      schemaVersion: PLAN_OUTCOME_VERSION,
+      planVersion: 0,
+      startTick: 0,
+      endTick: 30,
+      decisions: 5,
+      outcome: 'superseded',
+      ownCasualties: 0,
+      enemyHealthDelta: -20,
+      rejectedActions: 0,
+      stalledRoles: [],
+    },
+  };
+}
+
+function trajectoryGroup(): TrajectoryGroupDigest {
+  return {
+    role: 'main' as const,
+    mission: 'engage' as const,
+    assigned: 10,
+    livingStart: 10,
+    livingEnd: 10,
+    progress: 'engaging' as const,
+    objectiveDistanceDelta: -1,
+    enemyHealthDelta: -20,
+    ownHealthDelta: 0,
+    cohesionDelta: 0.2,
+    issuedActions: { noop: 0, hold: 0, move: 30, throw: 20 },
+    rejectedActions: { noop: 0, hold: 0, move: 0, throw: 0 },
+    stuckFraction: 0,
   };
 }
 

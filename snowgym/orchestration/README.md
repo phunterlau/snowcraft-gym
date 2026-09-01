@@ -227,3 +227,23 @@ Run the exact-replay multi-request mock demonstration with:
 ```bash
 npx tsx snowgym/orchestration/examples/trajectory-mock-10v10.ts --json
 ```
+
+Each later request can include the current `snowgym.trajectory-digest.v0` plus
+one `snowgym.plan-outcome.v0` summary for the preceding plan. This explicit,
+host-owned history keeps `store: false`, deterministic capture, provider
+replacement, and stale-plan reconciliation intact. The OpenAI adapter forwards
+those aggregates but continues to return only `snowgym.command-plan.v0`.
+
+After the deterministic gates pass, run the capped, wall-clock-paced Luna
+battle headlessly with:
+
+```bash
+OPENAI_API_KEY=... npx tsx \
+  snowgym/orchestration/examples/openai-trajectory-10v10.ts \
+  --reasoning medium --max-requests 3 --json
+```
+
+The hard request limit counts failures and timeouts as provider attempts. The
+runner aborts any outstanding request when the episode ends and never requires
+a server, renderer, or browser. The deterministic and mocked gates have passed;
+the first live C5 acceptance run remains separately approval-gated.

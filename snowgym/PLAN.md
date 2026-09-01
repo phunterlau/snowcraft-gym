@@ -196,11 +196,11 @@ the model.
       activation grace periods and recovery hysteresis.
 - [x] Separate soft signals, which retain the current plan while replanning,
       from hard lifecycle failures, which activate deterministic fallback.
-- [ ] Pass the bounded trajectory digest and preceding plan outcome to each
+- [x] Pass the bounded trajectory digest and preceding plan outcome to each
       stateless commander request without exposing unit IDs or raw trajectories.
 - [x] Run deterministic multi-request mock battles with exact state, plan, signal,
       latency, and scheduler-trace replay coverage.
-- [ ] Add an opt-in, wall-clock-paced Luna battle with one in-flight request, a
+- [x] Add an opt-in, wall-clock-paced Luna battle with one in-flight request, a
       code-enforced per-episode call limit, explicit token/latency accounting,
       and uninterrupted fallback on provider failure.
 - [ ] Record a versioned commander trace sidecar; add the optional replay overlay

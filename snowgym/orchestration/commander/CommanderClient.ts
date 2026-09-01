@@ -2,6 +2,7 @@ import type { CommandPlan } from '../command/CommandPlan';
 import type { LifecycleTrigger } from '../lifecycle/PlanLifecycle';
 import type { StrategicSummary } from './StrategicSummary';
 import type { TrajectoryDigest } from '../trajectory/TrajectoryMonitor';
+import type { PlanOutcomeSummary } from '../trajectory/PlanOutcome';
 
 export interface CommanderRequest {
   readonly requestId: string;
@@ -10,6 +11,8 @@ export interface CommanderRequest {
   readonly currentPlan: CommandPlan;
   /** Optional bounded execution evidence for the plan active at sourceTick. */
   readonly trajectory?: TrajectoryDigest;
+  /** Explicit host-owned history; no provider conversation state is required. */
+  readonly previousPlanOutcome?: PlanOutcomeSummary;
 }
 
 export interface CommanderResponseMetadata {

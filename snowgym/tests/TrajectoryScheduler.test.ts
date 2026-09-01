@@ -75,6 +75,12 @@ describe('trajectory-aware CommanderScheduler', () => {
       triggers: ['action_rejection_repeated'],
       summary: { sourceTick: 72 },
       trajectory: { endTick: 66 },
+      previousPlanOutcome: {
+        schemaVersion: 'snowgym.plan-outcome.v0',
+        planVersion: 1,
+        outcome: 'superseded',
+        stalledRoles: ['main'],
+      },
     });
   });
 

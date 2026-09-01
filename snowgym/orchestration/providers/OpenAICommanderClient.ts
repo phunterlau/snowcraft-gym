@@ -112,6 +112,10 @@ export function openAIRequestBody(
               triggers: request.triggers,
               strategicSummary: request.summary,
               currentPlan: request.currentPlan,
+              ...(request.trajectory ? { trajectory: request.trajectory } : {}),
+              ...(request.previousPlanOutcome
+                ? { previousPlanOutcome: request.previousPlanOutcome }
+                : {}),
             }),
           },
         ],
@@ -133,7 +137,9 @@ Return one strict command plan for the next several seconds. Use only the bounde
 missions, objectives, approaches, and engagement policies in the response schema. Never invent unit
 IDs, enemy IDs, coordinates, timings, physical moves, throws, or fields outside the schema. Account
 for the stated replan triggers and current strategic summary. The host will assign units, resolve
-symbolic objectives against newer state, validate the plan again, and control all physical actions.`;
+symbolic objectives against newer state, validate the plan again, and control all physical actions.
+When trajectory or previous-plan outcome evidence is present, use its bounded group-level trends to
+correct strategy without trying to correct individual physical actions.`;
 
 function structuredOutputSchema(): Record<string, unknown> {
   const { $schema: _schema, $id: _id, title: _title, ...schema } = commandPlanSchema;

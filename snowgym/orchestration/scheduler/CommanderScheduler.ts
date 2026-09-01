@@ -13,6 +13,7 @@ import {
 } from '../lifecycle/PlanLifecycle';
 import type { CandidatePlanEnvelope } from '../lifecycle/PlanReconciler';
 import type { TrajectoryDigest } from '../trajectory/TrajectoryMonitor';
+import { summarizePlanOutcome, type PlanOutcomeSummary } from '../trajectory/PlanOutcome';
 import { TrajectorySignalDetector, type TrajectorySignal } from '../trajectory/TrajectorySignals';
 
 export interface CommanderSchedulerOptions {
@@ -29,6 +30,11 @@ export interface CommanderSchedulerOptions {
 }
 
 export type CommanderSchedulerEvent =
+  | {
+      readonly type: 'request_cancelled';
+      readonly tick: number;
+      readonly requestId: string;
+    }
   | {
       readonly type: 'request_limit_reached';
       readonly tick: number;
@@ -106,6 +112,7 @@ export class CommanderScheduler {
   private readonly maximumRequests: number;
   private readonly pendingTriggers = new Set<LifecycleTrigger>();
   private pendingTrajectory: TrajectoryDigest | null = null;
+  private previousPlanOutcome: PlanOutcomeSummary | null = null;
   private readonly completions: Completion[] = [];
   private readonly trace: CommanderSchedulerEvent[] = [];
   private inFlight: InFlightRequest | null = null;
@@ -194,9 +201,31 @@ export class CommanderScheduler {
     return structuredClone(this.trace);
   }
 
+  /** Aborts only provider work owned by this scheduler; physical control is unaffected. */
+  close(tick: number): void {
+    if (!Number.isSafeInteger(tick) || tick < 0) {
+      throw new RangeError('close tick must be a non-negative safe integer');
+    }
+    this.pendingTriggers.clear();
+    this.pendingTrajectory = null;
+    if (!this.inFlight) return;
+    const cancelled = this.inFlight;
+    this.inFlight = null;
+    this.lastTimedOutSequence = Math.max(this.lastTimedOutSequence, cancelled.sequence);
+    cancelled.abortController.abort();
+    this.trace.push({
+      type: 'request_cancelled',
+      tick,
+      requestId: cancelled.request.requestId,
+    });
+  }
+
   private monitorLifecycle(observation: Observation, trajectory?: TrajectoryDigest): void {
     const triggers = this.lifecycle.evaluate(observation);
     if (triggers.length === 0) return;
+    if (trajectory && trajectory.planVersion === this.lifecycle.current().version) {
+      this.previousPlanOutcome = summarizePlanOutcome(trajectory, 'fallback', triggers[0]);
+    }
     this.lifecycle.maintain(observation);
     for (const trigger of triggers) this.notify(trigger, observation, trajectory);
   }
@@ -249,6 +278,9 @@ export class CommanderScheduler {
       summary,
       currentPlan: snapshot.plan.envelope.decision,
       ...(trajectory ? { trajectory: structuredClone(trajectory) } : {}),
+      ...(this.previousPlanOutcome
+        ? { previousPlanOutcome: structuredClone(this.previousPlanOutcome) }
+        : {}),
     };
     const abortController = new AbortController();
     const inFlight: InFlightRequest = {
@@ -338,6 +370,9 @@ export class CommanderScheduler {
       decision: response.decision,
     };
     const outcome = this.lifecycle.activateCandidate(candidate, observation);
+    if (outcome.status !== 'rejected' && request.request.trajectory) {
+      this.previousPlanOutcome = summarizePlanOutcome(request.request.trajectory, 'superseded');
+    }
     this.trace.push({
       type: 'response_processed',
       tick: observation.tick,
