@@ -245,5 +245,12 @@ OPENAI_API_KEY=... npx tsx \
 
 The hard request limit counts failures and timeouts as provider attempts. The
 runner aborts any outstanding request when the episode ends and never requires
-a server, renderer, or browser. The deterministic and mocked gates have passed;
-the first live C5 acceptance run remains separately approval-gated.
+a server, renderer, or browser.
+
+The explicitly authorized seed-42 C5 acceptance run passed on 2026-09-01. The
+host detected `plan_stalled` at ticks 498, 966, and 1125 while continuing the
+10 Hz executor. It made two of the three permitted Luna requests: the first
+returned an accepted split-force plan after 7.13 seconds (1,392 input tokens,
+430 output tokens, including 241 reasoning tokens), and the outstanding second
+request was aborted when the episode ended. The battle completed at tick 1125
+with a 4-0 blue victory and zero rejected physical actions.

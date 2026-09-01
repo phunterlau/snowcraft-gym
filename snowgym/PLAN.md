@@ -203,6 +203,10 @@ the model.
 - [x] Add an opt-in, wall-clock-paced Luna battle with one in-flight request, a
       code-enforced per-episode call limit, explicit token/latency accounting,
       and uninterrupted fallback on provider failure.
+- [x] Pass an explicitly authorized live C5 acceptance battle: host-computed
+      trajectory stalls triggered bounded Luna replanning while the executor
+      continued at 10 Hz, used two of three permitted requests, activated a
+      valid plan, and finished with zero rejected physical actions.
 - [ ] Record a versioned commander trace sidecar; add the optional replay overlay
       only after the renderer-free trajectory gates pass.
 
