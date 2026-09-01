@@ -18,6 +18,7 @@ def main() -> None:
     parser.add_argument("--visibility-radius", type=float)
     parser.add_argument("--action-delay-steps", type=int, default=0)
     parser.add_argument("--observation-delay-steps", type=int, default=0)
+    parser.add_argument("--semantic-raster-size", type=int)
     parser.add_argument("--json", action="store_true", help="emit one JSON result")
     args = parser.parse_args()
     if args.cycles <= 0:
@@ -26,12 +27,15 @@ def main() -> None:
         parser.error("--visibility-radius must be positive")
     if args.action_delay_steps < 0 or args.observation_delay_steps < 0:
         parser.error("latency steps must be non-negative")
+    if args.semantic_raster_size is not None and not 8 <= args.semantic_raster_size <= 128:
+        parser.error("--semantic-raster-size must be in [8, 128]")
 
     base_environment = SnowGymParallelEnv(server_url=args.server)
     profile_enabled = (
         args.visibility_radius is not None
         or args.action_delay_steps > 0
         or args.observation_delay_steps > 0
+        or args.semantic_raster_size is not None
     )
     environment = (
         SnowGymResearchParallelEnv(
@@ -39,6 +43,7 @@ def main() -> None:
             visibility_radius=args.visibility_radius,
             action_delay_steps=args.action_delay_steps,
             observation_delay_steps=args.observation_delay_steps,
+            semantic_raster_size=args.semantic_raster_size,
         )
         if profile_enabled
         else base_environment
@@ -56,6 +61,7 @@ def main() -> None:
             "visibilityRadius": args.visibility_radius,
             "actionDelaySteps": args.action_delay_steps,
             "observationDelaySteps": args.observation_delay_steps,
+            "semanticRasterSize": args.semantic_raster_size,
         },
     }
     if args.json:

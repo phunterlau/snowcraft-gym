@@ -224,8 +224,10 @@ trajectory digests, plans, and lifecycle traces.
 - [x] Add deterministic local-visibility, action-delay, and observation-delay
       research profiles around the parallel environment, with authoritative and
       observation-source ticks reported separately.
-- [ ] Add optional semantic raster/pixels and scripted/random/learned/remote
-      opponent adapters.
+- [x] Add an optional, fixed-shape, renderer-free semantic raster that respects
+      local visibility and retains the entity-tensor observation contract.
+- [ ] Add optional rendered pixels and scripted/random/learned/remote opponent
+      adapters.
 - Batched training benchmarks and versioned evaluation scenarios.
 
 ## Guardrails

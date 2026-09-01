@@ -178,6 +178,7 @@ tick separately from `research.observationSourceTick` and
   --visibility-radius 8 \
   --action-delay-steps 2 \
   --observation-delay-steps 2 \
+  --semantic-raster-size 32 \
   --json
 ```
 
@@ -185,6 +186,13 @@ Initial action-delay slots issue semantic no-ops, and initial delayed
 observations repeat the reset observation. Profiles are deterministic and keep
 the standard fixed-capacity spaces, so the official Parallel API checker still
 applies.
+
+When `semantic_raster_size` is enabled, each observation retains all existing
+entity tensors and adds a float32 `semantic_raster` with five channels in this
+order: allies, enemies, friendly projectiles, hostile projectiles, and
+obstacles. The square grid is derived directly from detached world-space
+semantics and never starts WebGL or feeds rendered pixels into training. Enemy
+and hostile-projectile channels respect the configured local visibility.
 
 To replay it through SnowCraft's existing Three.js arena, character, snowball,
 particle, camera, lighting, and asset renderers, start the normal Vite server

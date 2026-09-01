@@ -90,7 +90,12 @@ export function snowGymCapabilities(): object {
         id: 'SnowGym/ResearchParallelSquad-v0',
         visibilityRadiusUnits: 'world',
         latencyUnits: 'team-decisions',
-        transforms: ['local-visibility', 'action-delay', 'observation-delay'],
+        transforms: [
+          'local-visibility',
+          'action-delay',
+          'observation-delay',
+          'semantic-raster',
+        ],
       },
     },
   };

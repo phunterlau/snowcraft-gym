@@ -334,7 +334,12 @@ describe('SnowGymService', () => {
     });
     expect(body.pettingZoo.researchEnvironment).toMatchObject({
       id: 'SnowGym/ResearchParallelSquad-v0',
-      transforms: ['local-visibility', 'action-delay', 'observation-delay'],
+      transforms: [
+        'local-visibility',
+        'action-delay',
+        'observation-delay',
+        'semantic-raster',
+      ],
     });
   });
 

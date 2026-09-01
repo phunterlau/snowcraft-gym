@@ -18,7 +18,10 @@ from snowgym_client.encoding import (
 )
 from snowgym_client.env import SnowGymEnv
 from snowgym_client.parallel_env import SnowGymParallelEnv
-from snowgym_client.research_env import SnowGymResearchParallelEnv
+from snowgym_client.research_env import (
+    SEMANTIC_RASTER_CHANNELS,
+    SnowGymResearchParallelEnv,
+)
 from snowgym_client.recording import REPLAY_FORMAT, ReplayRecorder, write_replay
 from snowgym_client.state_hash import hash_observation
 
@@ -164,6 +167,7 @@ def test_research_environment_passes_parallel_checker_with_delays_and_local_view
         visibility_radius=5,
         action_delay_steps=2,
         observation_delay_steps=2,
+        semantic_raster_size=16,
     )
     parallel_api_test(environment, num_cycles=25)
 
@@ -184,6 +188,7 @@ def test_research_profile_masks_remote_enemies_and_reports_source_tick() -> None
         "observationDelaySteps": 2,
         "observationSourceTick": 0,
         "appliedActionSourceTick": None,
+        "semanticRasterSize": None,
     }
 
 
@@ -224,14 +229,39 @@ def test_research_profile_applies_and_observes_exact_decision_delays() -> None:
     assert infos["blue"]["research"]["appliedActionSourceTick"] == 0
 
 
+def test_semantic_raster_respects_local_visibility_and_fixed_space() -> None:
+    environment = SnowGymResearchParallelEnv(
+        SnowGymParallelEnv(
+            client=FakeClient(),
+            max_team_units=3,
+            map="arena1.json",
+        ),
+        visibility_radius=5,
+        semantic_raster_size=16,
+    )
+    observations, infos = environment.reset(seed=42)
+    raster = observations["blue"]["semantic_raster"]
+    channels = {name: index for index, name in enumerate(SEMANTIC_RASTER_CHANNELS)}
+
+    assert environment.observation_space("blue").contains(observations["blue"])
+    assert raster.shape == (5, 16, 16)
+    assert raster[channels["allies"]].sum() == 3
+    assert raster[channels["enemies"]].sum() == 0
+    assert raster[channels["obstacles"]].sum() > 0
+    assert infos["blue"]["research"]["semanticRasterSize"] == 16
+
+
 def test_research_profile_exactly_replays_actions_and_delayed_observations() -> None:
-    def rollout() -> tuple[list[dict[str, Any]], list[tuple[int, int]]]:
+    def rollout() -> tuple[
+        list[dict[str, Any]], list[tuple[int, int]], list[bytes]
+    ]:
         client = FakeClient()
         environment = SnowGymResearchParallelEnv(
             SnowGymParallelEnv(client=client, max_team_units=3),
             visibility_radius=5,
             action_delay_steps=2,
             observation_delay_steps=1,
+            semantic_raster_size=16,
         )
         environment.reset(seed=17)
         action = {
@@ -244,6 +274,7 @@ def test_research_profile_exactly_replays_actions_and_delayed_observations() -> 
             "power": np.zeros(3, dtype=np.float32),
         }
         ticks = []
+        rasters = []
         for _ in range(5):
             observations, _, _, _, infos = environment.step(
                 {"blue": action, "red": action}
@@ -254,7 +285,8 @@ def test_research_profile_exactly_replays_actions_and_delayed_observations() -> 
                     int(observations["blue"]["tick"][0]),
                 )
             )
-        return client.joint_actions, ticks
+            rasters.append(observations["blue"]["semantic_raster"].tobytes())
+        return client.joint_actions, ticks, rasters
 
     assert rollout() == rollout()
 
