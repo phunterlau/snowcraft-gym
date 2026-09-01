@@ -37,6 +37,12 @@ built-in blue policy for one decision. `POST /autoplay` runs that policy until
 termination, truncation, or the supplied decision limit. `POST /reset` starts a
 seeded episode. Unknown request and action fields are rejected.
 
+`POST /step-joint` accepts explicit `actions.blue` and `actions.red` team
+actions, applies both before advancing the same physics decision, and returns
+mirrored detached observations plus zero-sum rewards. It is the transport used
+by the PettingZoo adapter; the built-in red controller is not run during a
+joint decision.
+
 The reference server owns one shared episode. Mutating calls accept an optional
 `expectedStateHash` from the latest `/status` and an `idempotencyKey`. A stale
 hash returns HTTP 409 without advancing; an exact retry using the same key
@@ -143,6 +149,22 @@ team counts directly in the terminal, then write a portable visual recording.
 Both `snowgym-check` and `snowgym-demo` accept `--json` for agent-friendly
 machine-readable output; the checker validates Squad-v0, Squad-v1, and
 Squad-v2.
+
+## PettingZoo two-team environment
+
+`SnowGymParallelEnv` exposes `blue` and `red` as simultaneous team-level agents
+through PettingZoo's Parallel API. Both sides receive the same fixed-capacity
+numeric schema from their own ally/enemy perspective, and both actions are
+translated back to the server's semantic action contract:
+
+```bash
+# With npm run snowgym:server running in another terminal:
+cd snowgym/python
+.venv/bin/snowgym-parallel-check --cycles 100 --json
+```
+
+The checker runs PettingZoo's official `parallel_api_test` against the live
+server. Training and correctness remain renderer-free.
 
 To replay it through SnowCraft's existing Three.js arena, character, snowball,
 particle, camera, lighting, and asset renderers, start the normal Vite server

@@ -30,6 +30,12 @@ export function snowGymCapabilities(): object {
       status: { method: 'GET', path: '/status', mutates: false },
       reset: { method: 'POST', path: '/reset', mutates: true, guarded: true },
       step: { method: 'POST', path: '/step', mutates: true, requires: ['action'] },
+      stepJoint: {
+        method: 'POST',
+        path: '/step-joint',
+        mutates: true,
+        requires: ['actions.blue', 'actions.red'],
+      },
       stepScripted: { method: 'POST', path: '/step-scripted', mutates: true },
       autoplay: { method: 'POST', path: '/autoplay', mutates: true },
     },
@@ -72,6 +78,14 @@ export function snowGymCapabilities(): object {
         { id: 'SnowGym/Squad-v1', maxTeamUnits: 8, configurable: true },
         { id: 'SnowGym/Squad-v2', maxTeamUnits: 10, configurable: true },
       ],
+    },
+    pettingZoo: {
+      environment: {
+        id: 'SnowGym/ParallelSquad-v0',
+        api: 'parallel',
+        agents: ['blue', 'red'],
+        maxTeamUnits: MAX_TEAM_SIZE,
+      },
     },
   };
 }

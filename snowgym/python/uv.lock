@@ -136,6 +136,20 @@ wheels = [
 ]
 
 [[package]]
+name = "pettingzoo"
+version = "1.27.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "gymnasium" },
+    { name = "numpy" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/e5/14/2c089f488135e699db7d473490b6ceb84df5b470b4bc64f435d9b42041e9/pettingzoo-1.27.0.tar.gz", hash = "sha256:d61210fff2ba59f54e191796dc8b16b37d201137b28882f4c96dd7121a749033", size = 472105 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/7b/1f/ff1bebbe1fc168b6435b482a34d9757249c9da1b14ebc61868cc19998cca/pettingzoo-1.27.0-py3-none-any.whl", hash = "sha256:075a6ab7c32d32d9a674f1af395010198bf09c172341aa38fa5415461601ac61", size = 668492 },
+]
+
+[[package]]
 name = "pluggy"
 version = "1.6.0"
 source = { registry = "https://pypi.org/simple" }
@@ -178,6 +192,7 @@ source = { editable = "." }
 dependencies = [
     { name = "gymnasium" },
     { name = "numpy" },
+    { name = "pettingzoo" },
 ]
 
 [package.optional-dependencies]
@@ -189,6 +204,7 @@ dev = [
 requires-dist = [
     { name = "gymnasium", specifier = "==1.3.0" },
     { name = "numpy", specifier = ">=2.0,<3" },
+    { name = "pettingzoo", specifier = ">=1.25,<2" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8,<10" },
 ]
 

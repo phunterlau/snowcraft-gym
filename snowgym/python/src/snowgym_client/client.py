@@ -40,6 +40,14 @@ class SnowGymClient(Protocol):
         idempotency_key: str | None = None,
     ) -> JsonObject: ...
 
+    def step_joint(
+        self,
+        actions: JsonObject,
+        *,
+        expected_state_hash: str | None = None,
+        idempotency_key: str | None = None,
+    ) -> JsonObject: ...
+
     def autoplay(
         self,
         max_decisions: int,
@@ -108,6 +116,19 @@ class SnowGymHttpClient:
             "/step-scripted",
             self._guarded_body(expected_state_hash, idempotency_key),
         )
+        self._check_version({"status": payload.get("info")})
+        return payload
+
+    def step_joint(
+        self,
+        actions: JsonObject,
+        *,
+        expected_state_hash: str | None = None,
+        idempotency_key: str | None = None,
+    ) -> JsonObject:
+        body = self._guarded_body(expected_state_hash, idempotency_key)
+        body["actions"] = actions
+        payload = self._request("POST", "/step-joint", body)
         self._check_version({"status": payload.get("info")})
         return payload
 

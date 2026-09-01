@@ -218,7 +218,9 @@ trajectory digests, plans, and lifecycle traces.
 
 ### M5 — multi-agent and research adapters
 
-- PettingZoo adapter over the same simulator, not a second implementation.
+- [x] Add a two-team PettingZoo ParallelEnv over the same server and simulator,
+      with mirrored fixed-capacity observations, simultaneous guarded joint
+      actions, zero-sum terminal rewards, and the official Parallel API gate.
 - Optional partial observations, semantic raster/pixels, latency injection, and
   scripted/random/learned/remote opponent adapters.
 - Batched training benchmarks and versioned evaluation scenarios.

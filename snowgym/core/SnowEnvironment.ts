@@ -72,6 +72,16 @@ export interface StepResult {
   info: StepInfo;
 }
 
+export interface JointStepResult {
+  observations: { blue: Observation; red: Observation };
+  rewards: { blue: number; red: number };
+  terminations: { blue: boolean; red: boolean };
+  truncations: { blue: boolean; red: boolean };
+  info: EnvironmentStatus & {
+    actionResults: { blue: ActionResult[]; red: ActionResult[] };
+  };
+}
+
 /**
  * DOM-free, Gym-like simulation host. One call to {@link step} applies a blue
  * team action and advances several fixed physics ticks while the red team is
@@ -156,13 +166,7 @@ export class SnowEnvironment {
     }
 
     const actionResults = this.actionAdapter.apply(Team.Player, blueAction);
-    for (let i = 0; i < this.ticksPerDecision && !this.round.isOver; i++) {
-      this.physicsStep();
-      if (this.tick >= this.scenario.maxTicks) {
-        this.truncated = !this.round.isOver;
-        break;
-      }
-    }
+    this.advanceDecision(true);
 
     const status = this.status();
     return {
@@ -171,6 +175,32 @@ export class SnowEnvironment {
       terminated: status.terminated,
       truncated: status.truncated,
       info: { ...status, actionResults },
+    };
+  }
+
+  /** Applies both teams' semantic actions before advancing the same physics decision. */
+  stepJoint(blueAction: TeamAction, redAction: TeamAction): JointStepResult {
+    if (this.round.isOver || this.truncated) {
+      throw new EpisodeCompleteError('reset the environment before stepping a completed episode');
+    }
+    const blueResults = this.actionAdapter.apply(Team.Player, blueAction);
+    const redResults = this.actionAdapter.apply(Team.Enemy, redAction);
+    // A joint decision replaces the built-in red controller for this interval.
+    this.advanceDecision(false);
+    const status = this.status();
+    const blueReward = terminalReward(status.winner, status.terminated);
+    return {
+      observations: {
+        blue: this.observe(Team.Player),
+        red: this.observe(Team.Enemy),
+      },
+      rewards: { blue: blueReward, red: -blueReward },
+      terminations: { blue: status.terminated, red: status.terminated },
+      truncations: { blue: status.truncated, red: status.truncated },
+      info: {
+        ...status,
+        actionResults: { blue: blueResults, red: redResults },
+      },
     };
   }
 
@@ -206,7 +236,17 @@ export class SnowEnvironment {
     };
   }
 
-  private physicsStep(): void {
+  private advanceDecision(runRedController: boolean): void {
+    for (let i = 0; i < this.ticksPerDecision && !this.round.isOver; i++) {
+      this.physicsStep(runRedController);
+      if (this.tick >= this.scenario.maxTicks) {
+        this.truncated = !this.round.isOver;
+        break;
+      }
+    }
+  }
+
+  private physicsStep(runRedController: boolean): void {
     this.world.time += SIM.dt;
     // The red TeamController holds internal per-tick state (decision timers,
     // dodges), so physicsStep delegates to the composed red behavior rather
@@ -215,7 +255,9 @@ export class SnowEnvironment {
     // adapter is unnecessary for the scripted bridge (its orders already
     // reached the world) and tryThrow cannot be re-issued without
     // double-firing a snowball.
-    this.redController.act(observeWorld(this.world, Team.Enemy, this.tick), SIM.dt);
+    if (runRedController) {
+      this.redController.act(observeWorld(this.world, Team.Enemy, this.tick), SIM.dt);
+    }
     this.movement.update(SIM.dt);
     this.throwing.update(SIM.dt);
     this.projectile.update(SIM.dt);

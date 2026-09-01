@@ -54,6 +54,53 @@ describe('SnowGymService', () => {
     });
   });
 
+  it('steps both teams together and returns mirrored detached observations', () => {
+    const service = new SnowGymService();
+    const status = service.handle('GET', '/status').body as {
+      status: EnvironmentStatus;
+      observations: {
+        blue: { allies: { id: number }[] };
+        red: { allies: { id: number }[] };
+      };
+    };
+    const response = service.handle('POST', '/step-joint', {
+      expectedStateHash: status.status.stateHash,
+      idempotencyKey: 'joint-step-1',
+      actions: {
+        blue: {
+          actions: status.observations.blue.allies.map(({ id }) => ({ type: 'hold', unitId: id })),
+        },
+        red: {
+          actions: status.observations.red.allies.map(({ id }) => ({ type: 'hold', unitId: id })),
+        },
+      },
+    });
+    const body = response.body as {
+      observations: { blue: { tick: number }; red: { tick: number } };
+      rewards: { blue: number; red: number };
+      info: { actionResults: { blue: unknown[]; red: unknown[] } };
+    };
+
+    expect(response.status).toBe(200);
+    expect(body.observations.blue.tick).toBe(6);
+    expect(body.observations.red.tick).toBe(6);
+    expect(body.rewards.red).toBe(-body.rewards.blue);
+    expect(body.info.actionResults.blue).toHaveLength(3);
+    expect(body.info.actionResults.red).toHaveLength(3);
+  });
+
+  it('requires both team actions for a joint step', () => {
+    const service = new SnowGymService();
+    expect(
+      service.handle('POST', '/step-joint', {
+        actions: { blue: { actions: [] } },
+      }),
+    ).toMatchObject({
+      status: 400,
+      body: { error: 'invalid_request', message: 'actions.blue and actions.red are required' },
+    });
+  });
+
   it('accepts hold as an explicit movement-cancellation action', () => {
     const service = new SnowGymService();
     const move = service.handle('POST', '/step', {
@@ -240,18 +287,27 @@ describe('SnowGymService', () => {
     const response = service.handle('GET', '/capabilities');
     const body = response.body as {
       format: string;
-      endpoints: { step: { requires: string[] }; stepScripted: { path: string } };
+      endpoints: {
+        step: { requires: string[] };
+        stepJoint: { path: string; requires: string[] };
+        stepScripted: { path: string };
+      };
       actions: {
         types: { hold: { required: string[] } };
         semantics: { hold: string; noop: string };
       };
       scenarios: { maxTeamSize: number; maps: Array<{ id: string; blueCapacity: number }> };
       gymnasium: { environments: Array<{ id: string }> };
+      pettingZoo: { environment: { id: string; agents: string[] } };
     };
 
     expect(response.status).toBe(200);
     expect(body.format).toBe('snowgym.capabilities.v0');
     expect(body.endpoints.step.requires).toEqual(['action']);
+    expect(body.endpoints.stepJoint).toMatchObject({
+      path: '/step-joint',
+      requires: ['actions.blue', 'actions.red'],
+    });
     expect(body.endpoints.stepScripted.path).toBe('/step-scripted');
     expect(body.actions.types.hold.required).toEqual(['type', 'unitId']);
     expect(body.actions.semantics).toMatchObject({
@@ -267,6 +323,12 @@ describe('SnowGymService', () => {
       'SnowGym/Squad-v1',
       'SnowGym/Squad-v2',
     ]);
+    expect(body.pettingZoo.environment).toEqual({
+      id: 'SnowGym/ParallelSquad-v0',
+      api: 'parallel',
+      agents: ['blue', 'red'],
+      maxTeamUnits: 10,
+    });
   });
 
   it('rejects misspelled top-level fields without changing state', () => {

@@ -6,6 +6,7 @@ import gymnasium as gym
 import pytest
 import numpy as np
 from gymnasium.utils.env_checker import check_env
+from pettingzoo.test import parallel_api_test
 
 import snowgym_client
 from snowgym_client.encoding import (
@@ -16,6 +17,7 @@ from snowgym_client.encoding import (
     encode_action,
 )
 from snowgym_client.env import SnowGymEnv
+from snowgym_client.parallel_env import SnowGymParallelEnv
 from snowgym_client.recording import REPLAY_FORMAT, ReplayRecorder, write_replay
 from snowgym_client.state_hash import hash_observation
 
@@ -76,6 +78,27 @@ class FakeClient:
             idempotency_key=idempotency_key,
         )
 
+    def step_joint(
+        self,
+        actions: dict[str, Any],
+        *,
+        expected_state_hash: str | None = None,
+        idempotency_key: str | None = None,
+    ) -> dict[str, Any]:
+        assert expected_state_hash == make_snapshot(
+            self.seed, self.tick, self.scenario
+        )["status"]["stateHash"]
+        self.last_action = actions
+        self.tick += 6
+        snapshot = make_snapshot(self.seed, self.tick, self.scenario)
+        return {
+            "observations": snapshot["observations"],
+            "rewards": {"blue": 0.0, "red": 0.0},
+            "terminations": {"blue": False, "red": False},
+            "truncations": {"blue": False, "red": False},
+            "info": snapshot["status"] | {"actionResults": {"blue": [], "red": []}},
+        }
+
     def autoplay(
         self,
         max_decisions: int,
@@ -91,6 +114,44 @@ def test_registered_environment_passes_gymnasium_checker() -> None:
         snowgym_client.CONFIGURABLE_ENV_ID, client=FakeClient()
     ).unwrapped
     check_env(environment, skip_render_check=True)
+
+
+def test_parallel_environment_passes_pettingzoo_checker() -> None:
+    parallel_api_test(SnowGymParallelEnv(client=FakeClient()), num_cycles=25)
+
+
+def test_parallel_environment_encodes_each_team_from_its_own_perspective() -> None:
+    client = FakeClient()
+    environment = SnowGymParallelEnv(client=client, max_team_units=3)
+    observations, infos = environment.reset(seed=42)
+    actions = {
+        agent: environment.action_space(agent).sample()
+        for agent in environment.agents
+    }
+    next_observations, rewards, terminations, truncations, next_infos = (
+        environment.step(actions)
+    )
+
+    assert set(observations) == {"blue", "red"}
+    assert observations["blue"]["allies"].shape == (3, 10)
+    assert observations["red"]["allies"].shape == (3, 10)
+    assert infos["blue"]["stateHash"] == infos["red"]["stateHash"]
+    assert set(next_observations) == set(rewards) == {"blue", "red"}
+    assert rewards["red"] == -rewards["blue"]
+    assert not any(terminations.values())
+    assert not any(truncations.values())
+    assert next_infos["blue"]["tick"] == 6
+    assert client.last_action is not None
+    assert {action["unitId"] for action in client.last_action["blue"]["actions"]} == {
+        1,
+        2,
+        3,
+    }
+    assert {action["unitId"] for action in client.last_action["red"]["actions"]} == {
+        4,
+        5,
+        6,
+    }
 
 
 def test_configurable_environment_has_fixed_capacity_and_presence_masks() -> None:
@@ -368,6 +429,15 @@ def make_snapshot(
     return {
         "status": status,
         "observation": observation,
+        "observations": {
+            "blue": observation,
+            "red": {
+                **observation,
+                "selfTeam": "red",
+                "allies": enemies,
+                "enemies": allies,
+            },
+        },
     }
 
 

@@ -73,6 +73,29 @@ describe('SnowEnvironment', () => {
     expect(blue.enemies.map((unit) => unit.id)).toEqual(red.allies.map((unit) => unit.id));
     expect(environment.status().tick).toBe(0);
   });
+
+  it('applies simultaneous blue and red actions through one authoritative decision', () => {
+    const environment = new SnowEnvironment({ decisionHz: 10 });
+    const blue = environment.observe(Team.Player);
+    const red = environment.observe(Team.Enemy);
+    const result = environment.stepJoint(
+      { actions: blue.allies.map(({ id }) => ({ type: 'hold', unitId: id })) },
+      { actions: red.allies.map(({ id }) => ({ type: 'hold', unitId: id })) },
+    );
+
+    expect(result.observations.blue.tick).toBe(6);
+    expect(result.observations.red.tick).toBe(6);
+    expect(result.observations.blue.allies.map(({ id }) => id)).toEqual(
+      result.observations.red.enemies.map(({ id }) => id),
+    );
+    expect(result.info.actionResults.blue).toHaveLength(3);
+    expect(result.info.actionResults.red).toHaveLength(3);
+    expect(result.rewards.red).toBe(-result.rewards.blue);
+  });
+
+  it('replays simultaneous team policies to identical public state hashes', () => {
+    expect(recordJointHashes(17, 30)).toEqual(recordJointHashes(17, 30));
+  });
 });
 
 function runBattle(): BattleSummary {
@@ -133,5 +156,22 @@ function replayActionTrace(actions: readonly TeamAction[]): string[] {
     hashes.push(environment.status().stateHash);
   }
 
+  return hashes;
+}
+
+function recordJointHashes(seed: number, decisions: number): string[] {
+  const environment = new SnowEnvironment();
+  const policy = new SimpleBlueAgent();
+  environment.reset(seed);
+  const hashes = [environment.status().stateHash];
+  for (let decision = 0; decision < decisions; decision++) {
+    const status = environment.status();
+    if (status.terminated || status.truncated) break;
+    environment.stepJoint(
+      policy.act(environment.observe(Team.Player)),
+      policy.act(environment.observe(Team.Enemy)),
+    );
+    hashes.push(environment.status().stateHash);
+  }
   return hashes;
 }

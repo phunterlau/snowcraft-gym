@@ -47,6 +47,12 @@ export class SnowGymService {
         const request = parseStep(body);
         return this.mutate('step', request, () => this.step(request.action));
       }
+      if (method === 'POST' && path === '/step-joint') {
+        const request = parseJointStep(body);
+        return this.mutate('step-joint', request, () =>
+          this.stepJoint(request.actions.blue, request.actions.red),
+        );
+      }
       if (method === 'POST' && path === '/step-scripted') {
         const request = parseGuardedRequest(body, []);
         return this.mutate('step-scripted', request, () => this.step(this.defaultBlueAction()));
@@ -74,9 +80,12 @@ export class SnowGymService {
   }
 
   private snapshot(): object {
+    const blue = this.environment.observe(Team.Player);
+    const red = this.environment.observe(Team.Enemy);
     return {
       status: this.environment.status(),
-      observation: this.environment.observe(Team.Player),
+      observation: blue,
+      observations: { blue, red },
     };
   }
 
@@ -87,6 +96,11 @@ export class SnowGymService {
   private step(action: TeamAction): object {
     const result = this.environment.step(action);
     return { ...result, info: { ...result.info, action } };
+  }
+
+  private stepJoint(blue: TeamAction, red: TeamAction): object {
+    const result = this.environment.stepJoint(blue, red);
+    return { ...result, info: { ...result.info, actions: { blue, red } } };
   }
 
   private reset(request: ResetRequest): object {
@@ -204,6 +218,10 @@ interface StepRequest extends GuardedRequest {
   action: TeamAction;
 }
 
+interface JointStepRequest extends GuardedRequest {
+  actions: { blue: TeamAction; red: TeamAction };
+}
+
 interface AutoplayRequest extends GuardedRequest {
   maxDecisions: number;
 }
@@ -306,15 +324,33 @@ function parseStep(body: unknown): StepRequest {
       'action is required; use /step-scripted for the built-in policy',
     );
   }
-  const actionRecord = asRecord(record.action);
-  assertAllowedKeys(actionRecord, ['actions'], 'action');
-  if (!Array.isArray(actionRecord.actions)) {
-    throw new RequestValidationError('action.actions must be an array');
+  return { ...parseGuards(record), action: parseTeamAction(record.action, 'action') };
+}
+
+function parseJointStep(body: unknown): JointStepRequest {
+  const record = asRecord(body);
+  assertAllowedKeys(record, ['actions', 'expectedStateHash', 'idempotencyKey'], 'request');
+  const actions = asRecord(record.actions);
+  assertAllowedKeys(actions, ['blue', 'red'], 'actions');
+  if (actions.blue === undefined || actions.red === undefined) {
+    throw new RequestValidationError('actions.blue and actions.red are required');
   }
   return {
     ...parseGuards(record),
-    action: { actions: actionRecord.actions.map(parseUnitAction) },
+    actions: {
+      blue: parseTeamAction(actions.blue, 'actions.blue'),
+      red: parseTeamAction(actions.red, 'actions.red'),
+    },
   };
+}
+
+function parseTeamAction(value: unknown, name: string): TeamAction {
+  const actionRecord = asRecord(value);
+  assertAllowedKeys(actionRecord, ['actions'], name);
+  if (!Array.isArray(actionRecord.actions)) {
+    throw new RequestValidationError(`${name}.actions must be an array`);
+  }
+  return { actions: actionRecord.actions.map(parseUnitAction) };
 }
 
 function parseUnitAction(value: unknown): UnitAction {

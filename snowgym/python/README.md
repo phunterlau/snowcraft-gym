@@ -6,6 +6,11 @@ configurable `SnowGym/Squad-v1` with fixed eight-slot roster tensors,
 `SnowGym/Squad-v2` with fixed ten-slot roster tensors, and
 presence masks.
 
+The package also exports `SnowGymParallelEnv`, a PettingZoo Parallel API
+environment with simultaneous team-level `blue` and `red` agents. It uses the
+same server episode and physics as the Gymnasium environments; there is no
+second simulator implementation.
+
 The TypeScript server remains authoritative for physics, reward, termination,
 and seeded state. Python only translates numeric Gymnasium arrays to semantic
 team actions and encodes returned entity observations.
@@ -25,4 +30,7 @@ For example:
 
 # Select smaller M/N rosters from evenly distributed native map spawns.
 .venv/bin/snowgym-demo --map arena6.json --blue-units 5 --red-units 2
+
+# Official PettingZoo Parallel API check against the live server.
+.venv/bin/snowgym-parallel-check --cycles 100 --json
 ```
