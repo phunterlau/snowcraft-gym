@@ -113,7 +113,7 @@ Exit criterion: one versioned environment can reset into multiple validated
 N-vs-M configurations while retaining fixed Gym spaces, deterministic replay,
 team elimination, and renderer-free server status.
 
-### M4 — hierarchical commander (C4 adapter complete)
+### M4 — hierarchical commander (C4 complete)
 
 - [x] Define the bounded `snowgym.command-plan.v0` group action space and strict
       JSON schema without unit IDs, enemy IDs, coordinates, or physical actions.
@@ -145,9 +145,10 @@ team elimination, and renderer-free server status.
 - [x] Gate the provider adapter on mocked error/refusal/timeout tests plus one
       explicitly authorized live headless schema smoke; never include it in the
       deterministic default test suite.
-- Run a separately authorized, wall-clock-paced live battle before presenting
-  real-provider mid-battle activation as an end-to-end demo. The deterministic
-  mock already proves uninterrupted simulation and stale-plan activation.
+- [x] Run a separately authorized, wall-clock-paced live battle with automatic
+      lifecycle requests disabled and a code-enforced limit of exactly one
+      external request. The battle continued at 10 Hz, activated Luna's stale
+      symbolic plan mid-battle, and completed without rejected physical actions.
 
 Exit criterion: a slow commander can replace validated symbolic group plans
 without blocking the 10 Hz physical controller or exposing transient unit

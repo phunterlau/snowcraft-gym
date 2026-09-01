@@ -213,6 +213,26 @@ describe('CommanderScheduler', () => {
     });
   });
 
+  it('can enforce a manually triggered single-request mode for bounded live demos', () => {
+    const initial = observationWith();
+    const store = storeWith(oneGroupPlan(), initial);
+    const client = new DeferredCommander();
+    const lifecycle = new PlanLifecycle(store, undefined, undefined, undefined, {
+      maxPlanAgeTicks: 10,
+    });
+    const scheduler = new CommanderScheduler(client, lifecycle, {
+      automaticLifecycleMonitoring: false,
+      responseTimeoutTicks: 100,
+    });
+    scheduler.notify('plan_expired', initial);
+
+    for (const tick of [10, 20, 30, 40]) scheduler.tick(atTick(initial, tick));
+
+    expect(client.requests).toHaveLength(1);
+    expect(store.current().plan.envelope.planId).toBe('initial-plan');
+    expect(scheduler.events().filter(({ type }) => type === 'request_started')).toHaveLength(1);
+  });
+
   it('replays the same simulated-latency schedule with exact states and traces', async () => {
     const first = await scheduledRun();
     const second = await scheduledRun();

@@ -182,7 +182,19 @@ start a server or browser. Live API access is deliberately excluded from
 `npm test`. The adapter smoke passed against `gpt-5.6-luna` on 2026-08-31;
 availability and latency remain account/runtime-dependent.
 
-The live smoke and the deterministic C3 battle test establish separate provider
-and non-blocking-control guarantees. Do not claim a real-provider mid-battle
-demo until a separately authorized wall-clock-paced battle has been run; such a
-runner may make additional external requests and is not part of this milestone.
+## Single-request live battle
+
+The bounded live runner disables automatic lifecycle monitoring, manually
+starts one request at tick 0, and fails if its trace contains anything other
+than exactly one `request_started` event. The simulator remains renderer-free
+and is paced at 100 ms per 10 Hz decision so real inference overlaps play:
+
+```bash
+npx tsx snowgym/orchestration/examples/openai-commanded-10v10.ts --json
+```
+
+The authorized seed-42 acceptance run made one Luna request, continued control
+during 3.51 seconds of inference, activated the reconciled response at tick
+204, and reached a 9–0 blue victory with zero rejected physical actions. The
+single-request mode is for bounded provider demos only; normal orchestration
+keeps automatic lifecycle monitoring enabled.

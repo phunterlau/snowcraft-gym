@@ -18,6 +18,8 @@ export interface CommanderSchedulerOptions {
   readonly responseTimeoutTicks?: number;
   /** Reproducible simulated inference latency; zero uses provider completion immediately. */
   readonly minimumResponseLatencyTicks?: number;
+  /** Disable only for bounded one-request demos whose external-call count must be fixed. */
+  readonly automaticLifecycleMonitoring?: boolean;
 }
 
 export type CommanderSchedulerEvent =
@@ -80,6 +82,7 @@ export class CommanderScheduler {
   private readonly minimumRequestIntervalTicks: number;
   private readonly responseTimeoutTicks: number;
   private readonly minimumResponseLatencyTicks: number;
+  private readonly automaticLifecycleMonitoring: boolean;
   private readonly pendingTriggers = new Set<LifecycleTrigger>();
   private readonly completions: Completion[] = [];
   private readonly trace: CommanderSchedulerEvent[] = [];
@@ -105,6 +108,7 @@ export class CommanderScheduler {
       options.minimumResponseLatencyTicks ?? 0,
       'minimumResponseLatencyTicks',
     );
+    this.automaticLifecycleMonitoring = options.automaticLifecycleMonitoring ?? true;
     if (this.minimumResponseLatencyTicks >= this.responseTimeoutTicks) {
       throw new RangeError('minimumResponseLatencyTicks must be less than responseTimeoutTicks');
     }
@@ -114,7 +118,7 @@ export class CommanderScheduler {
   tick(observation: Observation): void {
     this.processTimeout(observation);
     this.processCompletions(observation);
-    this.monitorLifecycle(observation);
+    if (this.automaticLifecycleMonitoring) this.monitorLifecycle(observation);
     this.startPendingIfEligible(observation);
   }
 

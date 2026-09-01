@@ -8,6 +8,7 @@ export * from './execution/ReactiveUnitPolicy';
 export * from './execution/UnitPolicy';
 export * from './examples/CommandedReplayExample';
 export * from './examples/DelayedMockCommanderExample';
+export * from './examples/OpenAICommandedBattle';
 export * from './grounding/GroupAllocator';
 export * from './grounding/PlanGrounder';
 export * from './grounding/TacticalFrame';
