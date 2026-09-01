@@ -21,9 +21,14 @@ learn = ["torch>=2.7,<3"]
 snowgym-audit-dataset = "snowgym_training.trajectory:main"
 snowgym-export-trajectories = "snowgym_training.export_scripted:main"
 snowgym-teacher-baseline = "snowgym_training.baseline:main"
+snowgym-train-bc = "snowgym_training.trainer:main"
+snowgym-evaluate-checkpoint = "snowgym_training.evaluate:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/snowgym_training"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"baselines/teacher_1v1_v0.json" = "snowgym_training/baselines/teacher_1v1_v0.json"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
