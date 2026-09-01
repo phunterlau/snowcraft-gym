@@ -21,6 +21,7 @@ dev = ["pytest>=8,<10"]
 snowgym-check = "snowgym_client.check:main"
 snowgym-demo = "snowgym_client.demo:main"
 snowgym-parallel-check = "snowgym_client.parallel_check:main"
+snowgym-benchmark = "snowgym_client.evaluation:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/snowgym_client"]

@@ -226,9 +226,13 @@ trajectory digests, plans, and lifecycle traces.
       observation-source ticks reported separately.
 - [x] Add an optional, fixed-shape, renderer-free semantic raster that respects
       local visibility and retains the entity-tensor observation contract.
+- [x] Add a versioned baseline evaluation suite and sequential multi-episode
+      benchmark over the reference HTTP transport, separating deterministic
+      results from wall-clock performance.
 - [ ] Add optional rendered pixels and scripted/random/learned/remote opponent
       adapters.
-- Batched training benchmarks and versioned evaluation scenarios.
+- [ ] Add a long-lived direct/vectorized batch host and benchmark its scaling
+      independently from the correctness/reference HTTP transport.
 
 ## Guardrails
 

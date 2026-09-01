@@ -65,11 +65,12 @@ class SnowGymParallelEnv(ParallelEnv[AgentId, GymObservation, GymAction]):
             },
             max_team_units,
         )
-        action_space = make_action_space(max_team_units)
-        observation_space = make_observation_space(max_team_units, include_unit_masks=True)
-        self.action_spaces = {agent: action_space for agent in self.possible_agents}
+        self.action_spaces = {
+            agent: make_action_space(max_team_units) for agent in self.possible_agents
+        }
         self.observation_spaces = {
-            agent: observation_space for agent in self.possible_agents
+            agent: make_observation_space(max_team_units, include_unit_masks=True)
+            for agent in self.possible_agents
         }
         self._client = client or SnowGymHttpClient(server_url, timeout)
         self._raw_observations: dict[AgentId, dict[str, Any]] = {}

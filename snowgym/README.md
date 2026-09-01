@@ -194,6 +194,29 @@ obstacles. The square grid is derived directly from detached world-space
 semantics and never starts WebGL or feeds rendered pixels into training. Enemy
 and hostile-projectile channels respect the configured local visibility.
 
+### Versioned evaluation benchmark
+
+The Python package includes a versioned `baseline-v0` evaluation suite with an
+open 3v3, map-backed Winter Front 10v10, and a 5v5 partial-information latency
+profile. Start the server, then run:
+
+```bash
+cd snowgym/python
+.venv/bin/snowgym-benchmark --repeat 1 --output benchmark.json
+```
+
+The runner uses independently seeded, action-mask-aware random policies for
+both team agents. Exact episode inputs and deterministic outputs—including the
+final public-state hash, outcome, rewards, and action rejection counts—live in
+`results`; wall-clock measurements live separately in `performance`. This
+makes two runs directly comparable without treating throughput noise as
+simulation drift. The reference HTTP server owns one episode, so this runner is
+sequential; a long-lived direct/vectorized batch transport is still required
+for high-throughput training. Use `--suite PATH` to supply another
+`snowgym.evaluation-suite.v0` file, `--json` for stdout JSON, and `--force` to
+replace an existing `--output` artifact. Repeats replay the same declared seed
+and policy stream; varied trials belong in the suite as explicit seeds.
+
 To replay it through SnowCraft's existing Three.js arena, character, snowball,
 particle, camera, lighting, and asset renderers, start the normal Vite server
 from the repository root:
@@ -350,7 +373,7 @@ adapters/       SnowCraft action application boundary
 core/           decision controller and DOM-free environment lifecycle
 scenarios/      deterministic scenario metadata
 server/         local JSON status/reset/step/autoplay API
-python/         Gymnasium package, checker, tests, and demo CLI
+python/         Gymnasium package, checker, tests, demo, and benchmark CLI
 replay/         versioned replay validation and existing-engine visual playback
 examples/       renderer-free configurable replay builder and CLI
 reproducibility/ versioned public-observation canonicalization and hashing

@@ -46,4 +46,18 @@ For example:
 .venv/bin/snowgym-parallel-check --cycles 100 --visibility-radius 8 \
   --action-delay-steps 2 --observation-delay-steps 2 \
   --semantic-raster-size 32 --json
+
+# Run the bundled versioned 3v3, map-backed 10v10, and research-profile suite.
+.venv/bin/snowgym-benchmark --repeat 1 --output benchmark.json
 ```
+
+`snowgym-benchmark` runs episodes sequentially because the reference HTTP
+server owns one shared episode. The `results` and `summary` sections are
+deterministic for a fixed suite, while the separate `performance` section is a
+wall-clock measurement. The bundled `baseline-v0` suite uses independently
+seeded, action-mask-aware random policies for both teams and includes the
+scenario, policy, profile, final state hash, outcome, and rejected-action count
+in every result. Pass `--suite PATH` for another
+`snowgym.evaluation-suite.v0` document. Existing output is never overwritten
+unless `--force` is supplied. Repeats replay the same declared seed and policy
+stream; add explicit suite episodes with different seeds for varied trials.

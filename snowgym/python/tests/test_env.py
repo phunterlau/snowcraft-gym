@@ -16,6 +16,15 @@ from snowgym_client.encoding import (
     ACTION_THROW,
     encode_action,
 )
+from snowgym_client.evaluation import (
+    BENCHMARK_RESULT_FORMAT,
+    EVALUATION_SUITE_FORMAT,
+    load_evaluation_suite,
+    policy_action,
+    run_evaluation_suite,
+    validate_evaluation_suite,
+    write_benchmark,
+)
 from snowgym_client.env import SnowGymEnv
 from snowgym_client.parallel_env import SnowGymParallelEnv
 from snowgym_client.research_env import (
@@ -125,6 +134,143 @@ def test_registered_environment_passes_gymnasium_checker() -> None:
 
 def test_parallel_environment_passes_pettingzoo_checker() -> None:
     parallel_api_test(SnowGymParallelEnv(client=FakeClient()), num_cycles=25)
+
+
+def test_parallel_agents_have_independently_seedable_spaces() -> None:
+    environment = SnowGymParallelEnv(client=FakeClient())
+
+    assert environment.action_space("blue") is not environment.action_space("red")
+    assert environment.observation_space("blue") is not environment.observation_space(
+        "red"
+    )
+
+
+def test_bundled_evaluation_suite_is_versioned_and_valid() -> None:
+    suite = load_evaluation_suite()
+
+    assert suite["format"] == EVALUATION_SUITE_FORMAT
+    assert suite["name"] == "baseline-v0"
+    assert [episode["id"] for episode in suite["episodes"]] == [
+        "open-balanced-3v3",
+        "winter-front-10v10",
+        "winter-front-partial-latency-5v5",
+    ]
+
+
+def test_evaluation_suite_rejects_duplicate_ids_and_unknown_profile_fields() -> None:
+    episode = {
+        "id": "duplicate",
+        "seed": 1,
+        "scenario": {},
+        "policies": {"blue": "noop", "red": "noop"},
+        "profile": {},
+    }
+    with pytest.raises(ValueError, match="duplicate evaluation episode id"):
+        validate_evaluation_suite(
+            {
+                "format": EVALUATION_SUITE_FORMAT,
+                "name": "invalid",
+                "episodes": [episode, dict(episode)],
+            }
+        )
+    with pytest.raises(ValueError, match="unknown fields"):
+        validate_evaluation_suite(
+            {
+                "format": EVALUATION_SUITE_FORMAT,
+                "name": "invalid",
+                "episodes": [{**episode, "profile": {"renderedPixels": True}}],
+            }
+        )
+
+
+def test_masked_random_policy_is_seeded_and_respects_action_mask() -> None:
+    environment = SnowGymParallelEnv(client=FakeClient(), max_team_units=3)
+    observations, _ = environment.reset(seed=42)
+    observations["blue"]["unit_action_mask"][1] = 0
+
+    first = policy_action(
+        "masked_random", observations["blue"], np.random.default_rng(123)
+    )
+    second = policy_action(
+        "masked_random", observations["blue"], np.random.default_rng(123)
+    )
+
+    assert all(np.array_equal(first[key], second[key]) for key in first)
+    assert first["action_type"][1] == ACTION_NOOP
+    for index, action_type in enumerate(first["action_type"]):
+        if observations["blue"]["unit_action_mask"][index].any():
+            assert observations["blue"]["unit_action_mask"][index, action_type] == 1
+
+
+def test_evaluation_runner_exactly_replays_deterministic_fields() -> None:
+    suite = {
+        "format": EVALUATION_SUITE_FORMAT,
+        "name": "unit-test-v0",
+        "episodes": [
+            {
+                "id": "latency-3v3",
+                "seed": 17,
+                "scenario": {
+                    "blueUnits": 3,
+                    "redUnits": 3,
+                    "arenaWidth": 40,
+                    "arenaHeight": 30,
+                    "maxTicks": 1200,
+                    "decisionHz": 10,
+                    "redDifficulty": "normal",
+                    "redController": "scripted",
+                },
+                "policies": {"blue": "masked_random", "red": "masked_random"},
+                "profile": {
+                    "visibilityRadius": 8,
+                    "actionDelaySteps": 1,
+                    "observationDelaySteps": 1,
+                    "semanticRasterSize": 16,
+                },
+            }
+        ],
+    }
+
+    def rollout() -> dict[str, Any]:
+        return run_evaluation_suite(
+            suite,
+            repeat=2,
+            max_decisions=5,
+            environment_factory=lambda: SnowGymParallelEnv(
+                client=FakeClient(), max_team_units=3
+            ),
+            clock=lambda: 1.0,
+        )
+
+    first = rollout()
+    second = rollout()
+    assert first == second
+    assert first["format"] == BENCHMARK_RESULT_FORMAT
+    assert first["summary"] == {
+        "episodes": 2,
+        "decisions": 10,
+        "winners": {"blue": 0, "red": 0, "draw": 0, "none": 2},
+        "terminated": 0,
+        "truncated": 0,
+        "decisionLimited": 2,
+    }
+    assert first["results"][0]["tick"] == 30
+    assert first["results"][0]["rejectedActions"] == {"blue": 0, "red": 0}
+    repeated = [
+        {key: value for key, value in result.items() if key != "repeatIndex"}
+        for result in first["results"]
+    ]
+    assert repeated[0] == repeated[1]
+
+
+def test_benchmark_writer_refuses_implicit_overwrite(tmp_path) -> None:
+    output = tmp_path / "benchmark.json"
+    write_benchmark(output, {"format": BENCHMARK_RESULT_FORMAT}, force=False)
+
+    with pytest.raises(FileExistsError, match="refusing to overwrite"):
+        write_benchmark(output, {"format": BENCHMARK_RESULT_FORMAT}, force=False)
+    write_benchmark(output, {"replaced": True}, force=True)
+    assert output.read_text(encoding="utf-8") == '{\n  "replaced": true\n}\n'
 
 
 def test_parallel_environment_encodes_each_team_from_its_own_perspective() -> None:

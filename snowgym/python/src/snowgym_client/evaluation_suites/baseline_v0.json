@@ -1,0 +1,54 @@
+{
+  "format": "snowgym.evaluation-suite.v0",
+  "name": "baseline-v0",
+  "description": "Deterministic reference scenarios for correctness and HTTP throughput comparisons.",
+  "episodes": [
+    {
+      "id": "open-balanced-3v3",
+      "seed": 42,
+      "scenario": {
+        "blueUnits": 3,
+        "redUnits": 3,
+        "arenaWidth": 40,
+        "arenaHeight": 30,
+        "maxTicks": 1200,
+        "decisionHz": 10,
+        "redDifficulty": "normal",
+        "redController": "scripted"
+      },
+      "policies": {"blue": "masked_random", "red": "masked_random"},
+      "profile": {}
+    },
+    {
+      "id": "winter-front-10v10",
+      "seed": 42,
+      "scenario": {
+        "map": "arena6.json",
+        "blueUnits": 10,
+        "redUnits": 10,
+        "maxTicks": 1800,
+        "decisionHz": 10
+      },
+      "policies": {"blue": "masked_random", "red": "masked_random"},
+      "profile": {}
+    },
+    {
+      "id": "winter-front-partial-latency-5v5",
+      "seed": 7,
+      "scenario": {
+        "map": "arena6.json",
+        "blueUnits": 5,
+        "redUnits": 5,
+        "maxTicks": 1200,
+        "decisionHz": 10
+      },
+      "policies": {"blue": "masked_random", "red": "masked_random"},
+      "profile": {
+        "visibilityRadius": 8,
+        "actionDelaySteps": 1,
+        "observationDelaySteps": 1,
+        "semanticRasterSize": 32
+      }
+    }
+  ]
+}
