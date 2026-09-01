@@ -125,6 +125,34 @@ def test_checkpoint_detects_state_corruption(tmp_path: Path) -> None:
         load_checkpoint(checkpoint)
 
 
+def test_committed_checkpoint_evaluation_and_replays_are_consistent() -> None:
+    training_root = Path(__file__).parents[1]
+    metadata, _ = load_checkpoint(training_root / "checkpoints" / "bc_1v1_v0")
+    evaluation = json.loads(
+        (training_root / "evaluations" / "bc_1v1_v0.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    claimed = evaluation.pop("resultDigest")
+    assert claimed == json_digest(evaluation)
+    assert evaluation["checkpointDigest"] == metadata["checkpointDigest"]
+    assert evaluation["summary"]["learned"]["blueWins"] == 2
+    assert evaluation["summary"]["masked_random"]["blueWins"] == 0
+    assert evaluation["summary"]["learned"]["rejectedActions"] == 0
+    for replay_name in evaluation["replays"]:
+        replay_path = (
+            training_root.parents[1]
+            / "public"
+            / "replays"
+            / "bc_1v1_v0"
+            / replay_name
+        )
+        replay = json.loads(replay_path.read_text(encoding="utf-8"))
+        assert replay["format"] == "snowgym.replay.v0"
+        assert replay["outcome"]["winner"] == "blue"
+        assert len(replay["stateHashes"]) == len(replay["frames"])
+
+
 def test_learned_evaluation_records_normal_replay(tmp_path: Path) -> None:
     checkpoint = tmp_path / "checkpoint"
     train_behavior_clone(

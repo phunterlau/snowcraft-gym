@@ -308,34 +308,45 @@ and both episodes truncated as draws. The committed result is
 
 #### M6.0b — first neural executor
 
-- [ ] Implement small shared MLP entity encoders, masked mean/max aggregation,
+- [x] Implement small shared MLP entity encoders, masked mean/max aggregation,
       global context, and a shared per-ally actor. Do not begin with a
       transformer.
-- [ ] Emit a masked categorical action type, bounded normalized target, and
+- [x] Emit a masked categorical action type, bounded normalized target, and
       bounded throw power per present ally slot. Invalid action types receive no
       probability mass.
-- [ ] Train with masked categorical cross-entropy plus target MSE for move/throw
+- [x] Train with masked categorical cross-entropy plus target MSE for move/throw
       actions and power MSE for throw actions only. Keep all loss weights in a
       versioned configuration.
-- [ ] Add deterministic CPU training acceptance, fixed data-loader ordering,
+- [x] Add deterministic CPU training acceptance, fixed data-loader ordering,
       a one-batch overfit test, finite-gradient checks, and exact checkpoint
       resume. Accelerators may be optional but are not the reproducibility gate.
-- [ ] Define `snowgym.checkpoint.v0` metadata: git commit, dataset manifest hash,
+- [x] Define `snowgym.checkpoint.v0` metadata: git commit, dataset manifest hash,
       SnowGym versions, architecture, optimizer/loss configuration, training
       seed, step, and evaluation suite.
-- [ ] Add a `TorchPolicy`/`LearnedOpponent` bridge with detached NumPy tensors,
+- [x] Add a `TorchPolicy`/`LearnedOpponent` bridge with detached NumPy tensors,
       `eval()`/no-grad inference, action-space validation, and no Torch import in
       simulator code.
-- [ ] Extend the evaluation runner with checkpoint policies and deterministic
+- [x] Extend the evaluation runner with checkpoint policies and deterministic
       metrics: win/draw rate, episode length, survivors, and health lost/dealt
       derived from observations. Preserve terminal-only benchmark reward.
-- [ ] Record learned closed-loop episodes as normal visual replays; browser
+- [x] Record learned closed-loop episodes as normal visual replays; browser
       viewing remains optional validation and never model input.
 
 M6.0 exit: on an explicit held-out 1v1 seed suite, the behavior-cloned policy
 is reproducible, respects every mask, executes closed-loop, and improves over
 the masked-random baseline. Report teacher, random, and learned results together
 rather than claiming teacher parity from training loss alone.
+
+M6.0b acceptance (2026-09-01): a 212-transition scripted corpus from train
+seeds 11–14 trained the versioned entity policy for 5,000 deterministic CPU
+steps. Independent runs produced the same model/optimizer state and checkpoint
+digests. On held-out seeds 201/202, learned blue won 2/2 in 54 decisions with
+zero rejected actions and no health lost; scripted blue won 2/2 in 53, while
+masked-random blue won 0/2 and timed out at 200. The committed checkpoint is
+`training/checkpoints/bc_1v1_v0`, the joined report is
+`training/evaluations/bc_1v1_v0.json`, and both learned episodes are normal
+`snowgym.replay.v0` files under `public/replays/bc_1v1_v0/`. This is a narrow
+1v1 behavior-cloning proof, not evidence of broader scenario generalization.
 
 ### M6.1 — persistent batch simulation
 
