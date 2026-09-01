@@ -1,0 +1,33 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "snowgym-training"
+version = "0.1.0"
+description = "Reproducible imitation and reinforcement learning tools for SnowGym"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=2.0,<3",
+  "snowgym-client",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<10"]
+learn = ["torch>=2.7,<3"]
+
+[project.scripts]
+snowgym-audit-dataset = "snowgym_training.trajectory:main"
+snowgym-export-trajectories = "snowgym_training.export_scripted:main"
+snowgym-teacher-baseline = "snowgym_training.baseline:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/snowgym_training"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.uv.sources]
+snowgym-client = { path = "../python", editable = true }

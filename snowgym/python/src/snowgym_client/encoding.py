@@ -216,6 +216,85 @@ def encode_action(
     return {"actions": semantic_actions}
 
 
+def decode_action(
+    semantic_action: JsonObject,
+    raw_observation: JsonObject,
+    max_team_units: int = MAX_TEAM_UNITS,
+) -> GymAction:
+    """Convert a semantic team action into the fixed Gym tensor action.
+
+    Missing live units are represented as no-ops. Unknown, duplicate, or
+    wrong-team unit ids are rejected so teacher labels cannot silently drift.
+    """
+    max_team_units = validate_team_capacity(max_team_units)
+    arena = require_dict(raw_observation, "arena")
+    half_width = positive_number(arena, "width") / 2.0
+    half_height = positive_number(arena, "height") / 2.0
+    allies_raw = require_list(raw_observation, "allies")
+    actions_raw = require_list(semantic_action, "actions")
+    if len(allies_raw) > max_team_units:
+        raise ValueError(f"server ally roster exceeds Gym capacity {max_team_units}")
+
+    ally_indices: dict[int, int] = {}
+    ally_alive: dict[int, bool] = {}
+    for index, raw_unit in enumerate(allies_raw):
+        unit = require_object(raw_unit, "ally")
+        unit_id = integer(unit, "id")
+        if unit_id in ally_indices:
+            raise ValueError(f"duplicate ally unit id {unit_id}")
+        ally_indices[unit_id] = index
+        ally_alive[unit_id] = bool(unit.get("alive", False))
+
+    action_types = np.full(max_team_units, ACTION_NOOP, dtype=np.int64)
+    targets = np.zeros((max_team_units, 2), dtype=np.float32)
+    powers = np.zeros(max_team_units, dtype=np.float32)
+    seen: set[int] = set()
+    allowed_fields = {
+        "noop": {"type", "unitId"},
+        "hold": {"type", "unitId"},
+        "move": {"type", "unitId", "x", "y"},
+        "throw": {"type", "unitId", "x", "y", "power"},
+    }
+    type_indices = {
+        "noop": ACTION_NOOP,
+        "move": ACTION_MOVE,
+        "throw": ACTION_THROW,
+        "hold": ACTION_HOLD,
+    }
+    for raw_action in actions_raw:
+        action = require_object(raw_action, "action")
+        action_type = action.get("type")
+        if action_type not in allowed_fields:
+            raise ValueError(f"unknown semantic action type {action_type!r}")
+        unknown = set(action) - allowed_fields[str(action_type)]
+        missing = allowed_fields[str(action_type)] - set(action)
+        if unknown or missing:
+            raise ValueError(
+                f"invalid {action_type} fields: missing={sorted(missing)} "
+                f"unknown={sorted(unknown)}"
+            )
+        unit_id = integer(action, "unitId")
+        if unit_id not in ally_indices:
+            raise ValueError(f"semantic action references non-ally unit {unit_id}")
+        if unit_id in seen:
+            raise ValueError(f"duplicate semantic action for unit {unit_id}")
+        seen.add(unit_id)
+        if not ally_alive[unit_id] and action_type != "noop":
+            raise ValueError(f"dead unit {unit_id} must receive noop")
+        index = ally_indices[unit_id]
+        action_types[index] = type_indices[str(action_type)]
+        if action_type in {"move", "throw"}:
+            targets[index, 0] = np.float32(
+                np.clip(number(action, "x") / half_width, -1.0, 1.0)
+            )
+            targets[index, 1] = np.float32(
+                np.clip(number(action, "y") / half_height, -1.0, 1.0)
+            )
+        if action_type == "throw":
+            powers[index] = np.float32(np.clip(number(action, "power"), 0.0, 1.0))
+    return {"action_type": action_types, "target": targets, "power": powers}
+
+
 def encode_unit(unit: JsonObject, width: float, height: float) -> np.ndarray:
     max_health = max(number(unit, "maxHealth"), 1.0)
     state = unit.get("state")

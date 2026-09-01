@@ -28,7 +28,12 @@ export class SimpleBlueAgent implements TeamController {
 
   private actionFor(ally: UnitObservation, observation: Observation): UnitAction {
     const incoming = findIncomingProjectile(ally, observation.projectiles);
-    if (incoming) {
+    const canMove =
+      ally.state === 'idle' || ally.state === 'moving' || ally.state === 'recovering';
+    const canThrow =
+      ally.throwCooldown <= 0 &&
+      (ally.state === 'idle' || ally.state === 'moving' || ally.state === 'preparingThrow');
+    if (incoming && canMove) {
       return dodgeAction(ally, incoming, observation.arena);
     }
 
@@ -36,7 +41,7 @@ export class SimpleBlueAgent implements TeamController {
     if (!target) return { type: 'noop', unitId: ally.id };
 
     const distance = Math.hypot(target.x - ally.x, target.y - ally.y);
-    if (ally.throwCooldown <= 0 && distance <= ENGAGE_RANGE) {
+    if (canThrow && distance <= ENGAGE_RANGE) {
       const leadTime = 0.18;
       return {
         type: 'throw',
@@ -51,7 +56,7 @@ export class SimpleBlueAgent implements TeamController {
     const dy = target.y - ally.y;
     const length = Math.max(distance, EPSILON);
     const travel = Math.min(MOVE_STEP, Math.max(0, distance - HOLD_RANGE));
-    if (travel <= EPSILON) return { type: 'noop', unitId: ally.id };
+    if (!canMove || travel <= EPSILON) return { type: 'noop', unitId: ally.id };
 
     return {
       type: 'move',

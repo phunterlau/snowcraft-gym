@@ -1,0 +1,23 @@
+{
+  "format": "snowgym.trajectory-export.v0",
+  "name": "scripted-blue-1v1-v0",
+  "teacher": "simple-blue.v0",
+  "maxTeamUnits": 10,
+  "shardSize": 256,
+  "splits": {
+    "train": [
+      {"seed": 11, "scenario": {"blueUnits": 1, "redUnits": 1, "arenaWidth": 40, "arenaHeight": 30, "maxTicks": 1200, "decisionHz": 10, "redDifficulty": "normal", "redController": "random"}},
+      {"seed": 12, "scenario": {"blueUnits": 1, "redUnits": 1, "arenaWidth": 40, "arenaHeight": 30, "maxTicks": 1200, "decisionHz": 10, "redDifficulty": "normal", "redController": "random"}},
+      {"seed": 13, "scenario": {"blueUnits": 1, "redUnits": 1, "arenaWidth": 40, "arenaHeight": 30, "maxTicks": 1200, "decisionHz": 10, "redDifficulty": "normal", "redController": "random"}},
+      {"seed": 14, "scenario": {"blueUnits": 1, "redUnits": 1, "arenaWidth": 40, "arenaHeight": 30, "maxTicks": 1200, "decisionHz": 10, "redDifficulty": "normal", "redController": "random"}}
+    ],
+    "validation": [
+      {"seed": 101, "scenario": {"blueUnits": 1, "redUnits": 1, "arenaWidth": 40, "arenaHeight": 30, "maxTicks": 1200, "decisionHz": 10, "redDifficulty": "normal", "redController": "random"}},
+      {"seed": 102, "scenario": {"blueUnits": 1, "redUnits": 1, "arenaWidth": 40, "arenaHeight": 30, "maxTicks": 1200, "decisionHz": 10, "redDifficulty": "normal", "redController": "random"}}
+    ],
+    "evaluation": [
+      {"seed": 201, "scenario": {"blueUnits": 1, "redUnits": 1, "arenaWidth": 40, "arenaHeight": 30, "maxTicks": 1200, "decisionHz": 10, "redDifficulty": "normal", "redController": "random"}},
+      {"seed": 202, "scenario": {"blueUnits": 1, "redUnits": 1, "arenaWidth": 40, "arenaHeight": 30, "maxTicks": 1200, "decisionHz": 10, "redDifficulty": "normal", "redController": "random"}}
+    ]
+  }
+}

@@ -31,6 +31,27 @@ describe('SimpleBlueAgent', () => {
 
     expect(policy.act(observation).actions[0]).toEqual({ type: 'move', unitId: 10, x: 0, y: 2.4 });
   });
+
+  it('uses noop while the observed unit cannot accept move or throw transitions', () => {
+    const policy = new SimpleBlueAgent();
+    const observation = makeObservation();
+    observation.allies[0].state = 'throwing';
+    observation.allies[0].throwCooldown = 0.5;
+    observation.enemies.push(unit(20, 'red', 5, 0));
+    observation.projectiles.push({
+      id: 30,
+      ownerId: 20,
+      team: 'red',
+      x: -2,
+      y: 0,
+      vx: 10,
+      vy: 0,
+      height: 1,
+      heightVelocity: 0,
+    });
+
+    expect(policy.act(observation).actions).toEqual([{ type: 'noop', unitId: 10 }]);
+  });
 });
 
 function makeObservation(): Observation {

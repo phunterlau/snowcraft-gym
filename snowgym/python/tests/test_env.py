@@ -14,6 +14,7 @@ from snowgym_client.encoding import (
     ACTION_MOVE,
     ACTION_NOOP,
     ACTION_THROW,
+    decode_action,
     encode_action,
 )
 from snowgym_client.evaluation import (
@@ -742,6 +743,96 @@ def test_hold_action_cancels_movement_without_using_target_fields() -> None:
             {"type": "noop", "unitId": 3},
         ]
     }
+
+
+def test_semantic_action_round_trips_through_fixed_gym_tensors() -> None:
+    raw = make_snapshot(
+        0,
+        0,
+        {"blueUnits": 4, "redUnits": 2, "arenaWidth": 50, "arenaHeight": 20},
+    )["observation"]
+    semantic = {
+        "actions": [
+            {"type": "noop", "unitId": 1},
+            {"type": "hold", "unitId": 2},
+            {"type": "move", "unitId": 3, "x": 12.5, "y": -5.0},
+            {"type": "throw", "unitId": 4, "x": -6.25, "y": 7.5, "power": 0.7},
+        ]
+    }
+
+    tensor = decode_action(semantic, raw, max_team_units=8)
+    assert tensor["action_type"].tolist() == [
+        ACTION_NOOP,
+        ACTION_HOLD,
+        ACTION_MOVE,
+        ACTION_THROW,
+        ACTION_NOOP,
+        ACTION_NOOP,
+        ACTION_NOOP,
+        ACTION_NOOP,
+    ]
+    assert tensor["target"].shape == (8, 2)
+    assert tensor["power"].shape == (8,)
+    encoded = encode_action(tensor, raw, max_team_units=8)
+    assert [action["type"] for action in encoded["actions"]] == [
+        "noop",
+        "hold",
+        "move",
+        "throw",
+    ]
+    assert encoded["actions"][2]["x"] == pytest.approx(12.5)
+    assert encoded["actions"][2]["y"] == pytest.approx(-5.0)
+    assert encoded["actions"][3]["x"] == pytest.approx(-6.25)
+    assert encoded["actions"][3]["y"] == pytest.approx(7.5)
+    assert encoded["actions"][3]["power"] == pytest.approx(0.7)
+
+
+def test_semantic_action_decoder_defaults_omitted_units_to_noop() -> None:
+    raw = make_snapshot(0, 0)["observation"]
+    tensor = decode_action(
+        {"actions": [{"type": "hold", "unitId": 2}]},
+        raw,
+        max_team_units=3,
+    )
+
+    assert tensor["action_type"].tolist() == [ACTION_NOOP, ACTION_HOLD, ACTION_NOOP]
+
+
+def test_semantic_action_decoder_rejects_non_noop_for_dead_unit() -> None:
+    raw = make_snapshot(0, 0)["observation"]
+    raw["allies"][0]["alive"] = False
+
+    with pytest.raises(ValueError, match="dead unit 1 must receive noop"):
+        decode_action(
+            {"actions": [{"type": "move", "unitId": 1, "x": 0, "y": 0}]},
+            raw,
+        )
+
+
+@pytest.mark.parametrize(
+    ("semantic", "message"),
+    [
+        (
+            {
+                "actions": [
+                    {"type": "noop", "unitId": 1},
+                    {"type": "hold", "unitId": 1},
+                ]
+            },
+            "duplicate semantic action",
+        ),
+        ({"actions": [{"type": "noop", "unitId": 99}]}, "non-ally unit"),
+        (
+            {"actions": [{"type": "move", "unitId": 1, "x": 0, "y": 0, "extra": 1}]},
+            "invalid move fields",
+        ),
+    ],
+)
+def test_semantic_action_decoder_rejects_ambiguous_labels(
+    semantic: dict[str, Any], message: str
+) -> None:
+    with pytest.raises(ValueError, match=message):
+        decode_action(semantic, make_snapshot(0, 0)["observation"])
 
 
 def test_explicit_seed_reproduces_initial_observation() -> None:

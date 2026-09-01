@@ -238,6 +238,26 @@ and seeded-random red controllers remain available through the original
 single-blue-team `SnowGymEnv`; joint-step adapters intentionally replace the
 built-in red controller for that decision interval.
 
+## RL training scaffold
+
+M6 learning tools live in the isolated [training package](./training/README.md),
+whose optional Torch dependency does not enter `snowgym-client` or the
+simulator. M6.0a provides:
+
+- strict semantic-teacher-action to fixed Gym tensor inversion;
+- versioned, compressed, non-pickle `snowgym.trajectory.v0` shards;
+- canonical tensor digests independent of archive metadata;
+- deterministic train/validation/evaluation seed manifests;
+- guarded scripted-teacher export and dataset audit CLIs; and
+- a held-out scripted-teacher versus masked-random baseline.
+
+The first committed 1v1 baseline has zero rejected actions: scripted blue won
+both evaluation seeds against native random red, while masked-random blue won
+neither. See
+[teacher_1v1_v0.json](./training/baselines/teacher_1v1_v0.json) for the exact
+seeds, state hashes, versions, and result digest. This establishes the teacher
+ceiling for behavior cloning; it is not yet a learned-policy result.
+
 To replay it through SnowCraft's existing Three.js arena, character, snowball,
 particle, camera, lighting, and asset renderers, start the normal Vite server
 from the repository root:

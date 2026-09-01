@@ -3,7 +3,8 @@
 ## Validated repository state
 
 This plan was reconciled against `refs/snowgym_implementation_note.md`, the
-current systems, browser wiring, tests, and build configuration on 2026-08-31.
+supplied next-step RL design, current systems, browser wiring, tests, and build
+configuration on 2026-09-01.
 
 | Capability             | Current engine state                                                                                                     | SnowGym decision                                                                                            |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------- |
@@ -232,10 +233,278 @@ trajectory digests, plans, and lifecycle traces.
 - [x] Add a Gymnasium single-team wrapper with deterministic random/no-op,
       detached learned-callable, and versioned remote-client opponent adapters;
       retain the existing native scripted/random server-controller route.
-- [ ] Add optional rendered pixels without making them a correctness or default
-      training input.
-- [ ] Add a long-lived direct/vectorized batch host and benchmark its scaling
-      independently from the correctness/reference HTTP transport.
+- [ ] Deferred: add optional rendered pixels only after learned entity-policy
+      baselines exist; pixels are never a correctness or default training input.
+- [ ] Carried into M6.1: add a long-lived direct/vectorized batch host and
+      benchmark it independently from the correctness/reference HTTP transport.
+
+### Reconciled RL phase boundary
+
+The environment and hierarchical commander are now sufficiently complete to
+test the central open question: can a neural policy learn SnowGym's fast hybrid
+physical control and later execute its slow symbolic plans? Until that is
+answered, pixels, new commander verbs, prompt tuning, map expansion, UI polish,
+large policies, and self-play leagues are explicitly deferred.
+
+The next phase reuses rather than replaces the current contracts:
+
+- `/step-scripted` already returns the exact teacher `TeamAction` under
+  `info.action`; the exporter must convert it back to the fixed Gym tensor
+  action with exact round-trip tests.
+- `snowgym.replay.v0` already stores observations, semantic actions, state
+  hashes, and outcomes; learned rollouts should continue to use it.
+- `snowgym.evaluation-suite.v0` already fixes scenarios, seeds, policies, and
+  research profiles; checkpoint evaluation should extend this runner rather
+  than introduce another scenario format.
+- `SnowGymEnv` and `SnowGymSingleTeamEnv` are the Python closed-loop seams;
+  `LearnedOpponent` supports learned opposing teams. The simulator must remain
+  unaware of Torch.
+- HTTP remains the correctness transport. A batch host must compose the same
+  `SnowEnvironment`, never reimplement physics or reward logic.
+
+Scaled data collection deliberately waits for the batch host. A small HTTP
+corpus is sufficient to validate the trajectory and model contracts first;
+100k–1M transition runs are not an M6.0 prerequisite.
+
+### M6.0 — teacher data and behavior-cloning proof
+
+Goal: prove the observation/action/checkpoint loop can learn and execute the
+existing scripted blue teacher before adding policy-gradient failure modes.
+
+#### M6.0a — training and trajectory contracts
+
+- [x] Add a separate `snowgym/training/` Python package with its own lockfile,
+      tests, and `torch` dependency; keep `snowgym-client` lightweight.
+- [x] Define `snowgym.trajectory.v0` as compressed, non-pickle NumPy shards
+      plus a JSON manifest. Record observation/action tensors, masks, reward,
+      termination/truncation, scenario, seed, tick, teacher name/version,
+      simulation/API/hash versions, and pre/post public-state hashes.
+      Compute content digests over canonical array names, dtypes, shapes, and
+      raw bytes so archive timestamp/compression metadata cannot affect them.
+- [x] Add semantic-`TeamAction` to Gym-action inversion. Prove
+      semantic -> tensor -> semantic equality within explicit float tolerance,
+      including noop/hold, target normalization, power, dead/absent slots, and
+      arbitrary roster sizes.
+- [x] Export a small renderer-free scripted corpus through the guarded HTTP
+      client. Capture the pre-step observation and the exact action returned by
+      `/step-scripted`; never infer labels from post-step motion. Persist action
+      results and reject a qualifying corpus containing illegal teacher labels.
+- [x] Make shard ordering, manifests, split assignment, and content hashes
+      reproducible. Training, validation, and held-out evaluation seed sets must
+      be disjoint and committed as versioned manifests.
+- [x] Measure the scripted teacher and masked-random baseline on the first held-
+      out 1v1 suite before using teacher win rate as a learned-policy ceiling.
+
+M6.0a gate: two exports with the same specification have identical manifests,
+canonical tensor digests, tensors, and state-hash trajectories; a dataset audit
+rejects a changed schema, corrupt shard, illegal label, or seed overlap.
+
+M6.0a acceptance (2026-09-01): two live 20-transition exports produced the
+same manifest and dataset digest; a complete held-out episode produced 53
+audited transitions. On evaluation seeds 201/202, scripted blue beat native
+random red 2/2 with zero rejected actions, while masked-random blue won 0/2
+and both episodes truncated as draws. The committed result is
+`training/baselines/teacher_1v1_v0.json`.
+
+#### M6.0b — first neural executor
+
+- [ ] Implement small shared MLP entity encoders, masked mean/max aggregation,
+      global context, and a shared per-ally actor. Do not begin with a
+      transformer.
+- [ ] Emit a masked categorical action type, bounded normalized target, and
+      bounded throw power per present ally slot. Invalid action types receive no
+      probability mass.
+- [ ] Train with masked categorical cross-entropy plus target MSE for move/throw
+      actions and power MSE for throw actions only. Keep all loss weights in a
+      versioned configuration.
+- [ ] Add deterministic CPU training acceptance, fixed data-loader ordering,
+      a one-batch overfit test, finite-gradient checks, and exact checkpoint
+      resume. Accelerators may be optional but are not the reproducibility gate.
+- [ ] Define `snowgym.checkpoint.v0` metadata: git commit, dataset manifest hash,
+      SnowGym versions, architecture, optimizer/loss configuration, training
+      seed, step, and evaluation suite.
+- [ ] Add a `TorchPolicy`/`LearnedOpponent` bridge with detached NumPy tensors,
+      `eval()`/no-grad inference, action-space validation, and no Torch import in
+      simulator code.
+- [ ] Extend the evaluation runner with checkpoint policies and deterministic
+      metrics: win/draw rate, episode length, survivors, and health lost/dealt
+      derived from observations. Preserve terminal-only benchmark reward.
+- [ ] Record learned closed-loop episodes as normal visual replays; browser
+      viewing remains optional validation and never model input.
+
+M6.0 exit: on an explicit held-out 1v1 seed suite, the behavior-cloned policy
+is reproducible, respects every mask, executes closed-loop, and improves over
+the masked-random baseline. Report teacher, random, and learned results together
+rather than claiming teacher parity from training loss alone.
+
+### M6.1 — persistent batch simulation
+
+Goal: remove one-request-per-decision HTTP overhead without creating a second
+simulator.
+
+- [ ] Add `snowgym/batch/` with a persistent subprocess host that owns multiple
+      independent `SnowEnvironment` instances and exposes a versioned handshake,
+      batched reset, batched joint/single-team step, close, and error messages.
+- [ ] Begin with compact framed or newline-delimited messages over stdin/stdout.
+      Keep protocol logging on stderr so stdout remains machine-readable; do not
+      require native bindings for the first implementation.
+- [ ] Add a Python `SnowGymBatchEnv`/client with fixed leading batch dimension,
+      per-slot seeds/scenarios, independent terminal state, selective reset, and
+      explicit failure semantics. Start with 8, then 32, then 64 worlds.
+- [ ] Preserve per-world deterministic RNG, ID allocation, controller state,
+      masks, rewards, termination, and public-state hashes. One failed world
+      must not silently advance any other world.
+- [ ] Add golden HTTP/batch parity over the same version, scenario, seed, and
+      exact semantic action sequence. Compare every state hash, reward,
+      termination flag, truncation flag, and action result.
+- [ ] Add `snowgym/training/benchmarks/throughput.py`. Report environment count,
+      decision rate, ticks per decision, decisions/sec, simulation ticks/sec,
+      wall-clock real-time factor, CPU utilization, payload bytes, and measured
+      serialization share for 1, 8, 32, and 64 worlds.
+- [ ] Document the 64-world limitation if the target machine cannot sustain it;
+      never weaken parity or silently omit failed slots to reach a throughput
+      number.
+
+M6.1 exit: the trainer directly consumes at least 32 persistent worlds; 8/32
+parity is exact against HTTP, 64 works or has an evidence-backed limitation,
+and benchmark results clearly separate simulation from serialization cost.
+
+After this gate, scale the versioned teacher corpus toward 100k–1M transitions
+only if learning curves or scenario coverage require it.
+
+### M6.2 — centralized hybrid-action PPO
+
+Goal: demonstrate reward-driven improvement without commander, unit-level MARL,
+partial observation, or self-play confounds.
+
+- [ ] Add a custom Torch PPO implementation for the squad-level actor. The
+      joint log probability includes action type for present units, target only
+      for move/throw, and power only for throw; masks also apply to entropy.
+- [ ] Add rollout/GAE buffers with terminal versus time-limit truncation handled
+      separately, advantage normalization, clipped policy/value losses,
+      gradient clipping, KL/entropy diagnostics, and exact resume metadata.
+- [ ] Keep canonical evaluation reward at win `+1`, loss `-1`, draw `0`. If
+      sparse learning blocks the smoke test, add an opt-in training wrapper with
+      potential-based own-minus-enemy health shaping and test that it leaves
+      terminal benchmark results unchanged.
+- [ ] Use a gated curriculum: 1v1 random, 1v1 easy scripted, 3v3 random, 3v3
+      scripted, 3v3 terrain, then 5v5 and 10v10. Do not advance a stage without
+      fixed held-out evaluation evidence.
+- [ ] Keep training and evaluation seeds disjoint. Evaluate checkpoint series,
+      not only the best checkpoint, against masked-random, native random, and
+      scripted baselines using the versioned suite.
+- [ ] Record learning curves, policy/value losses, entropy/KL, rejected actions,
+      throughput, checkpoint provenance, and replay links in a machine-readable
+      run manifest.
+
+M6.2 exit: PPO reproducibly solves the defined 1v1-random gate, shows meaningful
+improvement against easy scripted 1v1, and exceeds the random-policy baseline
+in 3v3-random evaluation. Exact numerical thresholds and seed counts must be
+frozen in the evaluation manifest before the qualifying training run.
+
+### M7 — plan-conditioned learned executor
+
+Goal: train the fast learned controller to follow the existing slow
+`CommandPlan` language without online LLM calls.
+
+- [ ] Add a deterministic synthetic plan curriculum that emits only schema-
+      valid plans and records grounded assignments and source seeds.
+- [ ] Add a fixed-size `PlanTensorEncoder` for mission, approach, posture, fire
+      policy, preferred range, cohesion, relative objective/group geometry,
+      group fractions, support relation, and plan age. JSON remains canonical;
+      the tensor is only an RL adapter.
+- [ ] Train identical executor architectures with and without plan input under
+      the same data and optimization budget.
+- [ ] Evaluate direct versus flank trajectories, focus versus distributed fire,
+      hold/support/withdraw behavior, unseen valid directive combinations, and
+      3v3/5v5 training to 10v10 transfer.
+- [ ] Keep reflexes, late binding, action validation, lifecycle fallback, and
+      target replacement host-owned; a plan never supplies physical actions.
+
+M7 exit: plan-conditioned policies produce reproducibly distinct, intended
+behavior under counterfactual plans for the same initial state and outperform
+the no-plan ablation on frozen objective-completion metrics.
+
+### M8 — unit-level CTDE / MAPPO
+
+Goal: add decentralized execution only after centralized plan-conditioned PPO
+works.
+
+- [ ] Add `SnowGymUnitParallelEnv` as a new PettingZoo environment; retain the
+      existing team-level environment and version.
+- [ ] Begin with global actor observations, then local observations, then local
+      observations plus latency. Change only one observability condition per
+      experiment.
+- [ ] Implement parameter-shared unit actors and a centralized critic over
+      global state, assignments, and active plan. Execution must use actor-local
+      inputs only.
+- [ ] Gate 3v3 before 5v5, and fixed rosters before variable roster transfer.
+
+M8 exit: MAPPO beats its unit-random baseline in frozen 3v3 and 5v5 suites and
+the command-conditioned shared actor remains valid under local observations.
+
+### M9 — slow commander over a learned team
+
+Goal: connect the already-tested asynchronous commander only after freezing a
+competent learned executor.
+
+- [ ] Hold the learned executor checkpoint fixed while comparing no commander,
+      random valid plan, rule commander, high-level RL, online LLM, static
+      LLM-generated doctrine, and distilled commander baselines through the
+      same `CommandPlan` IR.
+- [ ] Reuse scheduler coalescing, timeout, fallback, stale-plan reconciliation,
+      trajectory triggers, token/latency accounting, and replay trace alignment;
+      do not rebuild these inside the trainer.
+- [ ] Prove commander failure or latency cannot block the learned 10 Hz executor
+      and cannot bypass action validation.
+
+M9 exit: real commander plans drive the fixed learned executor with aligned
+replay/trace artifacts, while cheaper baselines and provider cost/latency are
+reported on the same held-out scenarios.
+
+### M10 — latency and generalization benchmark
+
+- [ ] Sweep simulated commander latency at 0, 100, 250, 500 ms and 1, 2, 4,
+      and 8 seconds; run separately authorized real-latency checks only after
+      deterministic sweeps pass.
+- [ ] Compare reject, activate-unchanged, and reconcile/late-bind handling for
+      plans produced from stale state.
+- [ ] Compare exact IDs/coordinates against symbolic late-bound groups without
+      exposing forbidden physical details to the production commander path.
+- [ ] Evaluate 3v3/5v5-trained executors and proportional group plans on 10v10.
+- [ ] Report win/draw rate, objective completion, rejection/repair rate,
+      trajectory quality, plan validity, token count, and end-to-end latency.
+
+M10 exit: the benchmark quantifies where the slow-command/fast-executor
+hierarchy fails and whether late-bound group plans degrade more gracefully than
+individual exact assignments.
+
+### Immediate commit sequence and gates
+
+1. Training scaffold, trajectory schema, semantic-action inversion, and small
+   scripted exporter.
+2. Entity model, hybrid losses, deterministic BC trainer, checkpoint schema,
+   evaluator, and learned replay.
+3. Persistent multi-environment batch host, Python client, exact HTTP parity,
+   and throughput benchmark.
+4. Centralized PPO and frozen 1v1/3v3 curriculum gates.
+5. Synthetic plan generator, directive encoder, and plan-conditioned ablation.
+6. Unit-level PettingZoo adapter and MAPPO.
+7. Fixed learned executor under commander baselines and latency/generalization
+   evaluation.
+
+Each commit is accepted only after targeted tests plus the full milestone gate:
+
+```bash
+npm test
+npm run build
+cd snowgym/python && .venv/bin/python -m pytest -q
+```
+
+Training-package commits additionally run their own unit tests, deterministic
+CPU smoke, dataset audit, and checkpoint/evaluation replay gate. Provider-backed
+LLM calls, large dataset generation, and long training runs are opt-in and are
+never part of the default deterministic suite.
 
 ## Guardrails
 
