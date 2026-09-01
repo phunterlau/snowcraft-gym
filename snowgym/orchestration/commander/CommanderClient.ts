@@ -14,6 +14,10 @@ export interface CommanderResponseMetadata {
   readonly latencyMs?: number;
   readonly tokensIn?: number;
   readonly tokensOut?: number;
+  readonly reasoningTokens?: number;
+  readonly cachedInputTokens?: number;
+  readonly responseId?: string;
+  readonly providerRequestId?: string;
 }
 
 export interface CommanderResponse {

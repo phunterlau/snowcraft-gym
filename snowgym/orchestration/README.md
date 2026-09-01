@@ -155,3 +155,34 @@ The next boundary is the server-only `gpt-5.6-luna` adapter using
 `OPENAI_API_KEY` and strict structured output. The provider must plug into
 `CommanderClient`; it must not change the synchronous controller or scheduler
 contract.
+
+## C4 provider adapter and live-test boundary
+
+`providers/OpenAICommanderClient.ts` is the server-only adapter. It
+uses the exact `gpt-5.6-luna` model, the Responses API, configurable reasoning
+(`medium` by default), `store: false`, and the existing command-plan JSON Schema
+as strict `text.format`. It reads `OPENAI_API_KEY` only at runtime and performs
+defensive response/refusal/incomplete/usage parsing before the normal host-side
+plan validation and reconciliation.
+
+The live request contains only trigger names, state-hash provenance, arena
+dimensions and obstacle count, aggregate force health/centroid/spread, hostile
+projectile count, aggregate group status, and the current symbolic plan. It
+does not contain unit IDs, enemy IDs, raw projectile trajectories, repository
+files, or the API key in the JSON payload.
+
+After explicitly approving that outbound summary, run the headless smoke with:
+
+```bash
+npx tsx snowgym/orchestration/examples/openai-commander-smoke.ts --json
+```
+
+This makes one API request and locally validates the returned plan. It does not
+start a server or browser. Live API access is deliberately excluded from
+`npm test`. The adapter smoke passed against `gpt-5.6-luna` on 2026-08-31;
+availability and latency remain account/runtime-dependent.
+
+The live smoke and the deterministic C3 battle test establish separate provider
+and non-blocking-control guarantees. Do not claim a real-provider mid-battle
+demo until a separately authorized wall-clock-paced battle has been run; such a
+runner may make additional external requests and is not part of this milestone.

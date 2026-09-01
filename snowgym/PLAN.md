@@ -113,7 +113,7 @@ Exit criterion: one versioned environment can reset into multiple validated
 N-vs-M configurations while retaining fixed Gym spaces, deterministic replay,
 team elimination, and renderer-free server status.
 
-### M4 — hierarchical commander (C3 complete)
+### M4 — hierarchical commander (C4 adapter complete)
 
 - [x] Define the bounded `snowgym.command-plan.v0` group action space and strict
       JSON schema without unit IDs, enemy IDs, coordinates, or physical actions.
@@ -139,8 +139,15 @@ team elimination, and renderer-free server status.
       stale-response reconciliation, and ignored late responses.
 - [x] Add deterministic simulated-latency scheduling and a headless 10v10 C3
       demonstration with exact action/state/trace replay coverage.
-- Add a server-only `gpt-5.6-luna` Responses API adapter using strict structured
-  output and `OPENAI_API_KEY` after the latency architecture passes tests.
+- [x] Add a server-only `gpt-5.6-luna` Responses API adapter using strict
+      structured output, reasoning, `store: false`, and environment-only
+      `OPENAI_API_KEY`.
+- [x] Gate the provider adapter on mocked error/refusal/timeout tests plus one
+      explicitly authorized live headless schema smoke; never include it in the
+      deterministic default test suite.
+- Run a separately authorized, wall-clock-paced live battle before presenting
+  real-provider mid-battle activation as an end-to-end demo. The deterministic
+  mock already proves uninterrupted simulation and stale-plan activation.
 
 Exit criterion: a slow commander can replace validated symbolic group plans
 without blocking the 10 Hz physical controller or exposing transient unit
