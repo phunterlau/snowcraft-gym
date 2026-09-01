@@ -13,7 +13,10 @@ export interface RelativePoint {
 }
 
 export interface TacticalFrame {
+  /** Stable arena-center origin used for persistent region anchors. */
   readonly origin: Point;
+  readonly ownCentroid: Point;
+  readonly enemyCentroid: Point;
   readonly forwardAxis: Point;
   /** Positive lateral is the team's left when facing the enemy force. */
   readonly leftAxis: Point;
@@ -30,7 +33,9 @@ export function createTacticalFrame(observation: Observation): TacticalFrame {
   const forwardAxis = distance <= EPSILON ? { x: 1, y: 0 } : { x: dx / distance, y: dy / distance };
   const leftAxis = { x: -forwardAxis.y, y: forwardAxis.x };
   return {
-    origin: own,
+    origin: { x: 0, y: 0 },
+    ownCentroid: own,
+    enemyCentroid: enemy,
     forwardAxis,
     leftAxis,
     forwardExtent: axisExtent(observation.arena.width, observation.arena.height, forwardAxis),

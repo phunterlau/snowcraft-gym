@@ -40,6 +40,21 @@ describe('TargetResolver', () => {
     expect(Math.abs(left.anchor.y - right.anchor.y)).toBeLessThan(1e-9);
   });
 
+  it('keeps region anchors stable as the own force advances', () => {
+    const initial = observationWith({
+      allies: [unit(1, 'blue', -10, 0)],
+      enemies: [unit(10, 'red', 10, 0)],
+    });
+    const advanced = observationWith({
+      allies: [unit(1, 'blue', -3, 0)],
+      enemies: [unit(10, 'red', 10, 0)],
+    });
+    const resolver = new TargetResolver();
+    expect(resolver.resolve(regionGroup('left_lane'), advanced).anchor).toEqual(
+      resolver.resolve(regionGroup('left_lane'), initial).anchor,
+    );
+  });
+
   it('late-binds current-position and ally-group objectives from assignments', () => {
     const observation = observationWith({
       allies: [unit(1, 'blue', -9, 1), unit(2, 'blue', -7, 3)],

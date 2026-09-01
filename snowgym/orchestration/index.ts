@@ -8,4 +8,7 @@ export * from './grounding/GroupAllocator';
 export * from './grounding/PlanGrounder';
 export * from './grounding/TacticalFrame';
 export * from './grounding/TargetResolver';
+export * from './lifecycle/FallbackPlan';
+export * from './lifecycle/PlanLifecycle';
+export * from './lifecycle/PlanReconciler';
 export * from './runtime/PlanStore';

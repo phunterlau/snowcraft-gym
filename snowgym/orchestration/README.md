@@ -99,6 +99,22 @@ per-role physical-action counts, terminal status, and survivors. Add
 `--output PATH` to write a normal visual-replay JSON later; the headless run
 does not start a server or browser.
 
-The next boundary is C2 plan lifecycle, reconciliation, deterministic fallback,
-and trace records. Mock latency, the asynchronous scheduler, and the
-`gpt-5.6-luna` adapter remain separate later milestones.
+## C2 lifecycle and delayed-plan reconciliation
+
+`PlanLifecycle` checks the active snapshot without blocking the physical
+controller. It detects plan expiry, major own-force loss, assigned-group
+elimination, and completed objectives. A trigger atomically installs a
+deterministic one-group fallback, so execution never depends on commander
+availability.
+
+When a candidate plan arrives, `PlanReconciler` validates its strict command
+schema and provenance against the newest detached observation. It can perform
+only bounded repairs: drop optional groups that no longer fit the living
+roster, replace support for a removed group, or replace an enemy objective
+after elimination. Any other invalid plan is rejected while the previous
+snapshot remains active. Lifecycle events are returned as detached trace data.
+
+The monitoring ownership and escalation rules are specified in
+`snowgym/PLAN.md`. Mock latency and the asynchronous request scheduler are C3;
+the server-only `gpt-5.6-luna` adapter remains a later milestone after C3 proves
+that commander latency cannot block the 10 Hz controller.

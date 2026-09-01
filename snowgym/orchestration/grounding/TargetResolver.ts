@@ -135,7 +135,8 @@ function compareClusters(
   switch (selector) {
     case 'nearest':
       delta =
-        distanceSquared(left.anchor, frame.origin) - distanceSquared(right.anchor, frame.origin);
+        distanceSquared(left.anchor, frame.ownCentroid) -
+        distanceSquared(right.anchor, frame.ownCentroid);
       break;
     case 'largest':
       delta = right.units.length - left.units.length;
