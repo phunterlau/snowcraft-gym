@@ -1,4 +1,4 @@
-/* global process, console, setTimeout, fetch, AbortSignal, URL, document, HTMLCanvasElement, HTMLInputElement, Event */
+/* global process, console, setTimeout, fetch, AbortSignal, URL, document, HTMLElement, HTMLCanvasElement, HTMLInputElement, Event */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 // Browser acceptance check for the versioned SnowGym visual replay viewer.
 import { spawn } from 'node:child_process';
@@ -62,6 +62,7 @@ try {
     const status = document.querySelector('#replay-status');
     const play = document.querySelector('#play-toggle');
     const scrubber = document.querySelector('#replay-scrubber');
+    const commander = document.querySelector('#commander-overlay');
     return {
       hasCanvas: canvas instanceof HTMLCanvasElement,
       canvasWidth: canvas instanceof HTMLCanvasElement ? canvas.width : 0,
@@ -70,6 +71,8 @@ try {
       status: status?.textContent ?? '',
       playLabel: play?.textContent ?? '',
       maxTick: scrubber instanceof HTMLInputElement ? Number(scrubber.max) : 0,
+      commanderVisible: commander instanceof HTMLElement && !commander.hidden,
+      commanderText: commander?.textContent ?? '',
     };
   });
 
@@ -85,6 +88,7 @@ try {
     status: document.querySelector('#replay-status')?.textContent ?? '',
     playLabel: document.querySelector('#play-toggle')?.textContent ?? '',
     error: document.querySelector('#replay-error')?.textContent ?? '',
+    commanderText: document.querySelector('#commander-overlay')?.textContent ?? '',
   }));
 
   await page.click('#play-toggle');
@@ -106,6 +110,12 @@ try {
   if (!initial.hasCanvas || initial.canvasWidth <= 0 || initial.canvasHeight <= 0)
     process.exitCode = 2;
   if (!initial.hasWebGl || initial.maxTick !== expected.finalTick) process.exitCode = 3;
+  if (
+    expected.commanderPlanVersion !== null &&
+    (!initial.commanderVisible ||
+      !finalState.commanderText.includes(`plan v${expected.commanderPlanVersion}`))
+  )
+    process.exitCode = 7;
   if (!finalState.status.includes(`winner ${expected.winner}`) || finalState.error)
     process.exitCode = 4;
   if (!(replayedState.tick > 0 && replayedState.tick < initial.maxTick)) process.exitCode = 5;
@@ -169,7 +179,19 @@ async function loadExpectedReplay(target) {
   if (!Number.isSafeInteger(finalTick) || !['blue', 'red'].includes(winner)) {
     throw new Error('Replay metadata is missing a terminal tick or winner');
   }
-  return { finalTick, winner };
+  const tracePath = pageUrl.searchParams.get('trace');
+  let commanderPlanVersion = null;
+  if (tracePath) {
+    const traceResponse = await fetch(new URL(tracePath, pageUrl.origin));
+    if (!traceResponse.ok)
+      throw new Error(`Could not load commander trace: HTTP ${traceResponse.status}`);
+    const trace = await traceResponse.json();
+    commanderPlanVersion = trace?.plans?.at(-1)?.version ?? null;
+    if (!Number.isSafeInteger(commanderPlanVersion)) {
+      throw new Error('Commander trace is missing a final plan version');
+    }
+  }
+  return { finalTick, winner, commanderPlanVersion };
 }
 
 async function reachable(target) {

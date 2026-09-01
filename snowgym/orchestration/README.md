@@ -254,3 +254,34 @@ returned an accepted split-force plan after 7.13 seconds (1,392 input tokens,
 430 output tokens, including 241 reasoning tokens), and the outstanding second
 request was aborted when the episode ended. The battle completed at tick 1125
 with a 4-0 blue victory and zero rejected physical actions.
+
+## Commander trace and replay overlay
+
+Both trajectory runners can write the visual replay and a separate
+`snowgym.commander-trace.v0` sidecar. The deterministic path requires no API
+key:
+
+```bash
+node --import tsx snowgym/orchestration/examples/trajectory-mock-10v10.ts \
+  --output public/replays/trajectory-10v10.json \
+  --trace-output public/replays/trajectory-10v10.commander.json \
+  --json
+```
+
+Use the same `--output`, `--trace-output`, and optional `--force` arguments with
+`openai-trajectory-10v10.ts` to record an explicitly authorized provider run.
+The sidecar is bound to the replay scenario, seed, final tick, and final public
+state hash. Its parser rejects mismatched replays, malformed timelines, unknown
+event kinds, and engine entity-ID fields.
+
+Start the normal Vite UI and load both artifacts through the existing replay
+viewer:
+
+```text
+http://127.0.0.1:5173/replay.html?recording=/replays/trajectory-10v10.json&trace=/replays/trajectory-10v10.commander.json
+```
+
+The optional overlay follows the scrubber and shows the active symbolic plan,
+aggregate group progress and stuck fractions, and recent scheduler/lifecycle
+events. A replay without `trace=` behaves exactly as before. Both files can
+also be selected independently with the viewer's local-file controls.

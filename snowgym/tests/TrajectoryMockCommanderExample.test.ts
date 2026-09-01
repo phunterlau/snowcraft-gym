@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import { runTrajectoryMockCommanderTenVsTen } from '../orchestration/examples/TrajectoryMockCommanderExample';
+import {
+  CommanderTraceFormatError,
+  parseCommanderTrace,
+} from '../orchestration/trace/CommanderTrace';
+import { commanderOverlayAtTick } from '../replay/CommanderOverlay';
 
 describe('trajectory-aware mock commander 10v10 example', () => {
   it('uses real trajectory evidence to make multiple non-blocking commander requests', async () => {
@@ -28,6 +33,30 @@ describe('trajectory-aware mock commander 10v10 example', () => {
       ]),
     );
     expect(result.trajectoryDigests.length).toBe(result.decisions);
+    expect(result.replay.frames).toHaveLength(result.decisions + 1);
+    expect(result.commanderTrace.replay).toMatchObject({
+      format: result.replay.format,
+      scenario: result.replay.scenario,
+      seed: result.replay.seed,
+      finalTick: result.replay.outcome.finalTick,
+      finalStateHash: result.stateHashes.at(-1),
+    });
+    expect(parseCommanderTrace(structuredClone(result.commanderTrace), result.replay)).toEqual(
+      result.commanderTrace,
+    );
+    expect(JSON.stringify(result.commanderTrace)).not.toMatch(/"(?:unitId|unitIds|enemyId)"/);
+
+    const opening = commanderOverlayAtTick(result.commanderTrace, 0);
+    expect(opening.plan.version).toBe(1);
+    expect(opening.trajectory).toBeNull();
+    const ending = commanderOverlayAtTick(result.commanderTrace, result.finalTick);
+    expect(ending.plan.version).toBeGreaterThan(1);
+    expect(ending.trajectory?.endTick).toBe(result.finalTick);
+    expect(ending.events.length).toBeGreaterThan(0);
+
+    const mismatched = structuredClone(result.commanderTrace) as unknown as Record<string, unknown>;
+    (mismatched.replay as Record<string, unknown>).seed = 999;
+    expect(() => parseCommanderTrace(mismatched, result.replay)).toThrow(CommanderTraceFormatError);
   });
 
   it('replays identical actions, states, trajectory digests, and scheduler events', async () => {
@@ -46,5 +75,8 @@ describe('trajectory-aware mock commander 10v10 example', () => {
     expect(second.stateHashes).toEqual(first.stateHashes);
     expect(second.trajectoryDigests).toEqual(first.trajectoryDigests);
     expect(second.schedulerEvents).toEqual(first.schedulerEvents);
+    expect(second.lifecycleEvents).toEqual(first.lifecycleEvents);
+    expect(second.planTraces).toEqual(first.planTraces);
+    expect(second.commanderTrace).toEqual(first.commanderTrace);
   });
 });

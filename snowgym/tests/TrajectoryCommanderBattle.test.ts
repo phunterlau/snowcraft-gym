@@ -25,6 +25,11 @@ describe('trajectory-aware commander battle', () => {
     );
     expect(result.rejectedActions).toBe(0);
     expect(result.decisions).toBeGreaterThan(0);
+    expect(result.replay.frames).toHaveLength(result.decisions + 1);
+    expect(result.commanderTrace.schedulerEvents).toEqual(result.schedulerEvents);
+    expect(result.commanderTrace.plans.length).toBeGreaterThan(1);
+    expect(result.commanderTrace.trajectoryDigests).toHaveLength(result.decisions);
+    expect(JSON.stringify(result.commanderTrace)).not.toMatch(/"(?:unitId|unitIds|enemyId)"/);
   });
 
   it('finishes under provider failure without exceeding the attempt cap', async () => {
@@ -43,5 +48,6 @@ describe('trajectory-aware commander battle', () => {
     expect(result.schedulerEvents.filter(({ type }) => type === 'request_started')).toHaveLength(2);
     expect(result.schedulerEvents.filter(({ type }) => type === 'request_failed')).toHaveLength(2);
     expect(result.rejectedActions).toBe(0);
+    expect(result.commanderTrace.schedulerEvents).toEqual(result.schedulerEvents);
   });
 });

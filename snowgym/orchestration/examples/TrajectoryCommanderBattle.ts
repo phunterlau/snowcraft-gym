@@ -1,6 +1,12 @@
 import type { CommanderClient } from '../commander/CommanderClient';
 import type { CommandPlan } from '../command/CommandPlan';
+import type { TeamAction } from '../../actions/UnitAction';
 import { SnowEnvironment } from '../../core/SnowEnvironment';
+import {
+  parseReplayRecording,
+  REPLAY_FORMAT,
+  type ReplayRecording,
+} from '../../replay/ReplayRecording';
 import { createMapScenario } from '../../scenarios/Scenario';
 import { PlanAwareTeamController } from '../execution/PlanAwareTeamController';
 import { ReactiveUnitPolicy } from '../execution/ReactiveUnitPolicy';
@@ -11,6 +17,11 @@ import { CommanderScheduler, type CommanderSchedulerEvent } from '../scheduler/C
 import { TrajectoryMonitor, type TrajectoryDigest } from '../trajectory/TrajectoryMonitor';
 import { TrajectorySignalDetector } from '../trajectory/TrajectorySignals';
 import { directAdvancePlan } from './TrajectoryMockCommanderExample';
+import {
+  buildCommanderTrace,
+  type CommanderPlanTraceEntry,
+  type CommanderTraceRecording,
+} from '../trace/CommanderTrace';
 
 export interface TrajectoryCommanderBattleOptions {
   readonly seed?: number;
@@ -24,6 +35,8 @@ export interface TrajectoryCommanderBattleResult {
   readonly seed: number;
   readonly paceMs: number;
   readonly maximumRequests: number;
+  readonly replay: ReplayRecording;
+  readonly commanderTrace: CommanderTraceRecording;
   readonly schedulerEvents: readonly CommanderSchedulerEvent[];
   readonly finalTrajectory: TrajectoryDigest;
   readonly activePlan: CommandPlan;
@@ -97,6 +110,11 @@ export async function runTrajectoryCommanderBattle(
   let decisions = 0;
   let rejectedActions = 0;
   let finalTrajectory: TrajectoryDigest | null = null;
+  const frames = [observation];
+  const actions: TeamAction[] = [];
+  const stateHashes = [status.stateHash];
+  const trajectoryDigests: TrajectoryDigest[] = [];
+  const planTraces: CommanderPlanTraceEntry[] = [planTrace(store.current())];
 
   while (!status.terminated && !status.truncated && decisions < maxDecisions) {
     const plan = store.current();
@@ -104,6 +122,8 @@ export async function runTrajectoryCommanderBattle(
     const action = controller.act(before, 1 / environment.decisionHz);
     const result = environment.step(action);
     decisions++;
+    actions.push(structuredClone(action));
+    frames.push(result.observation);
     rejectedActions += result.info.actionResults.filter(({ accepted }) => !accepted).length;
     observation = result.observation;
     finalTrajectory = monitor.record({
@@ -112,9 +132,15 @@ export async function runTrajectoryCommanderBattle(
       plan,
       actionResults: result.info.actionResults,
     });
+    trajectoryDigests.push(finalTrajectory);
     scheduler.tick(observation, finalTrajectory);
     await flushPromises();
+    const currentPlan = store.current();
+    if (currentPlan.version !== planTraces.at(-1)!.version) {
+      planTraces.push(planTrace(currentPlan));
+    }
     status = environment.status();
+    stateHashes.push(status.stateHash);
     if (!status.terminated && !status.truncated && paceMs > 0) await pause(paceMs);
   }
   if (!status.terminated && !status.truncated) {
@@ -129,10 +155,44 @@ export async function runTrajectoryCommanderBattle(
     throw new Error(`trajectory battle exceeded request limit ${maximumRequests}: ${requests}`);
   }
 
+  const replay = parseReplayRecording({
+    format: REPLAY_FORMAT,
+    apiVersion: status.apiVersion,
+    simulationVersion: status.simulationVersion,
+    stateHashVersion: status.stateHashVersion,
+    upstreamBaseCommit: status.upstreamBaseCommit,
+    scenario: status.scenario,
+    seed: status.seed,
+    simulationHz: status.simulationHz,
+    decisionHz: status.decisionHz,
+    ticksPerDecision: status.ticksPerDecision,
+    configuration: status.configuration,
+    frames,
+    actions,
+    stateHashes,
+    outcome: {
+      decisions,
+      terminated: status.terminated,
+      truncated: status.truncated,
+      winner: status.winner,
+      blueAlive: status.blueAlive,
+      redAlive: status.redAlive,
+      finalTick: status.tick,
+    },
+  });
+  const commanderTrace = buildCommanderTrace(replay, {
+    plans: planTraces,
+    schedulerEvents: events,
+    lifecycleEvents: lifecycle.events(),
+    trajectoryDigests,
+  });
+
   return {
     seed,
     paceMs,
     maximumRequests,
+    replay,
+    commanderTrace,
     schedulerEvents: events,
     finalTrajectory,
     activePlan: store.current().plan.envelope.decision,
@@ -146,6 +206,15 @@ export async function runTrajectoryCommanderBattle(
     blueAlive: status.blueAlive,
     redAlive: status.redAlive,
     winner: status.winner,
+  };
+}
+
+function planTrace(snapshot: ReturnType<PlanStore['current']>): CommanderPlanTraceEntry {
+  return {
+    tick: snapshot.activatedAtTick,
+    version: snapshot.version,
+    planId: snapshot.plan.envelope.planId,
+    decision: structuredClone(snapshot.plan.envelope.decision),
   };
 }
 

@@ -1,3 +1,5 @@
+import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
+import { dirname, resolve } from 'node:path';
 import { parseArgs } from 'node:util';
 import {
   OPENAI_COMMANDER_MODEL,
@@ -13,6 +15,9 @@ const { values } = parseArgs({
     'pace-ms': { type: 'string', default: '100' },
     'max-decisions': { type: 'string', default: '10000' },
     'max-requests': { type: 'string', default: '3' },
+    output: { type: 'string' },
+    'trace-output': { type: 'string' },
+    force: { type: 'boolean', default: false },
     json: { type: 'boolean', default: false },
     help: { type: 'boolean', short: 'h', default: false },
   },
@@ -31,6 +36,9 @@ Options:
   --pace-ms INTEGER       Wall-clock delay per 10 Hz decision (default: 100)
   --max-decisions INTEGER
   --max-requests INTEGER  Hard provider-attempt cap (default: 3)
+  --output PATH           Write the visual replay JSON
+  --trace-output PATH     Write the bound commander-trace sidecar JSON
+  --force                 Replace existing output paths
   --json`);
   process.exit(0);
 }
@@ -44,6 +52,18 @@ const result = await runTrajectoryCommanderBattle(
     maximumRequests: positiveInteger(values['max-requests'], 'max-requests'),
   },
 );
+const output = values.output ? resolve(values.output) : null;
+const traceOutput = values['trace-output'] ? resolve(values['trace-output']) : null;
+if (output && traceOutput && output === traceOutput) {
+  throw new Error('replay and commander trace outputs must use different paths');
+}
+for (const path of [output, traceOutput]) {
+  if (path && existsSync(path) && !values.force) {
+    throw new Error(`refusing to overwrite ${path}; pass --force to replace it`);
+  }
+}
+if (output) writeJson(output, result.replay);
+if (traceOutput) writeJson(traceOutput, result.commanderTrace);
 const signals = result.schedulerEvents.filter(({ type }) => type === 'trajectory_signal');
 const responses = result.schedulerEvents.filter(isProcessedResponse);
 const failures = result.schedulerEvents.filter(
@@ -80,6 +100,8 @@ const summary = {
   blueAlive: result.blueAlive,
   redAlive: result.redAlive,
   winner: result.winner,
+  output,
+  traceOutput,
 };
 
 if (values.json) console.log(JSON.stringify(summary));
@@ -92,6 +114,13 @@ else {
   console.log(`  decisions:   ${summary.decisions}`);
   console.log(`  survivors:   blue=${summary.blueAlive} red=${summary.redAlive}`);
   console.log(`  winner:      ${summary.winner}`);
+  if (output) console.log(`  replay:      ${output}`);
+  if (traceOutput) console.log(`  trace:       ${traceOutput}`);
+}
+
+function writeJson(path: string, value: unknown): void {
+  mkdirSync(dirname(path), { recursive: true });
+  writeFileSync(path, `${JSON.stringify(value, null, 2)}\n`, 'utf8');
 }
 
 function isProcessedResponse(

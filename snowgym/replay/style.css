@@ -5,7 +5,7 @@
   right: 20px;
   bottom: 18px;
   display: grid;
-  grid-template-columns: auto auto minmax(180px, 1fr) auto;
+  grid-template-columns: auto auto auto minmax(180px, 1fr) auto;
   gap: 12px;
   align-items: center;
   padding: 12px 14px;
@@ -49,6 +49,45 @@
   backdrop-filter: blur(10px);
 }
 
+.commander-overlay {
+  position: absolute;
+  z-index: 20;
+  top: 18px;
+  right: 20px;
+  width: min(430px, calc(100vw - 40px));
+  max-height: calc(100vh - 120px);
+  overflow: auto;
+  padding: 12px 14px;
+  border: 1px solid rgb(97 178 255 / 28%);
+  border-radius: 12px;
+  background: rgb(11 16 32 / 86%);
+  font-size: 13px;
+  line-height: 1.45;
+  backdrop-filter: blur(10px);
+}
+
+.commander-overlay[hidden] {
+  display: none;
+}
+
+.commander-overlay > div {
+  margin-top: 5px;
+}
+
+.commander-overlay .commander-intent {
+  color: #9bd2ff;
+}
+
+.commander-overlay ol {
+  margin: 9px 0 0;
+  padding-left: 20px;
+}
+
+.commander-overlay li span {
+  color: #8fa8c8;
+  font-variant-numeric: tabular-nums;
+}
+
 #replay-error {
   margin-top: 6px;
   color: #ff9d9d;
@@ -67,5 +106,10 @@
   #replay-scrubber {
     grid-column: 1 / -1;
     grid-row: 1;
+  }
+
+  .commander-overlay {
+    top: 92px;
+    max-height: 42vh;
   }
 }

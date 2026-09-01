@@ -168,6 +168,14 @@ simulation provenance and one public-state hash per frame. The replay parser
 remains backward compatible with earlier `snowgym.replay.v0` artifacts that do
 not contain these optional fields.
 
+Trajectory-aware commander runs can additionally write a separate, versioned
+commander-trace sidecar. Add `&trace=/replays/<trace-file>` to the replay URL,
+or use **Open commander trace** in the viewer. The optional overlay shows the
+symbolic plan and aggregate orchestration evidence at the current scrubber
+position; it is never used as agent input. See
+[`orchestration/README.md`](orchestration/README.md#commander-trace-and-replay-overlay)
+for generation commands and the replay-binding contract.
+
 ### Example replays
 
 Ready-made recordings live in [`public/replays/`](../public/replays/). With the

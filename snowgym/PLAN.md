@@ -207,8 +207,9 @@ the model.
       trajectory stalls triggered bounded Luna replanning while the executor
       continued at 10 Hz, used two of three permitted requests, activated a
       valid plan, and finished with zero rejected physical actions.
-- [ ] Record a versioned commander trace sidecar; add the optional replay overlay
-      only after the renderer-free trajectory gates pass.
+- [x] Record a versioned, ID-free commander trace sidecar bound to the replay's
+      final public-state hash; add an optional scrubber-aware plan, aggregate
+      trajectory, and lifecycle overlay to the existing replay UI.
 
 Exit criterion: host-computed trajectory evidence can trigger bounded Luna
 replanning during an episode while the 10 Hz executor continues synchronously,

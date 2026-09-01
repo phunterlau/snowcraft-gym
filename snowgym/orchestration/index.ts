@@ -20,6 +20,7 @@ export * from './lifecycle/PlanLifecycle';
 export * from './lifecycle/PlanReconciler';
 export * from './runtime/PlanStore';
 export * from './scheduler/CommanderScheduler';
+export * from './trace/CommanderTrace';
 export * from './trajectory/TrajectoryMonitor';
 export * from './trajectory/PlanOutcome';
 export * from './trajectory/TrajectorySignals';
