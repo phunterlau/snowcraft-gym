@@ -4,6 +4,13 @@ from gymnasium.envs.registration import register, registry
 
 from .client import SnowGymHttpClient, SnowGymProtocolError
 from .env import SnowGymEnv
+from .opponents import (
+    LearnedOpponent,
+    MaskedRandomOpponent,
+    NoopOpponent,
+    RemoteOpponent,
+    SnowGymSingleTeamEnv,
+)
 from .parallel_env import SnowGymParallelEnv
 from .research_env import SnowGymResearchParallelEnv
 
@@ -40,7 +47,12 @@ __all__ = [
     "TEN_UNIT_ENV_ID",
     "SnowGymEnv",
     "SnowGymHttpClient",
+    "SnowGymSingleTeamEnv",
     "SnowGymParallelEnv",
     "SnowGymResearchParallelEnv",
     "SnowGymProtocolError",
+    "LearnedOpponent",
+    "MaskedRandomOpponent",
+    "NoopOpponent",
+    "RemoteOpponent",
 ]

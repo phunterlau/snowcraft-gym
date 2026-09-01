@@ -217,6 +217,27 @@ for high-throughput training. Use `--suite PATH` to supply another
 replace an existing `--output` artifact. Repeats replay the same declared seed
 and policy stream; varied trials belong in the suite as explicit seeds.
 
+### Single-team opponent adapters
+
+`SnowGymSingleTeamEnv` turns either team of the simultaneous parallel
+environment into a conventional Gymnasium environment and delegates the other
+team to an explicit policy adapter. It passes the Gymnasium checker, preserves
+the selected blue or red observation/reward perspective, and accepts a base
+parallel environment or a research-profile wrapper.
+
+- `MaskedRandomOpponent` is a deterministic, action-mask-aware baseline.
+- `LearnedOpponent` wraps an in-process policy callable and gives it detached
+  tensor observations and info.
+- `RemoteOpponent` sends versioned, ID-free tensor JSON through an injected
+  client and requires a versioned action response.
+- `NoopOpponent` is a deterministic diagnostic baseline.
+
+An invalid learned or remote action fails before `/step-joint`, so the
+authoritative episode does not partially advance. Native TypeScript scripted
+and seeded-random red controllers remain available through the original
+single-blue-team `SnowGymEnv`; joint-step adapters intentionally replace the
+built-in red controller for that decision interval.
+
 To replay it through SnowCraft's existing Three.js arena, character, snowball,
 particle, camera, lighting, and asset renderers, start the normal Vite server
 from the repository root:

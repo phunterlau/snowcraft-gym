@@ -61,3 +61,13 @@ in every result. Pass `--suite PATH` for another
 `snowgym.evaluation-suite.v0` document. Existing output is never overwritten
 unless `--force` is supplied. Repeats replay the same declared seed and policy
 stream; add explicit suite episodes with different seeds for varied trials.
+
+For single-team learning against a joint-step opponent, wrap
+`SnowGymParallelEnv` (or its research-profile wrapper) in
+`SnowGymSingleTeamEnv`. `MaskedRandomOpponent` is a seeded baseline,
+`LearnedOpponent` adapts an in-process policy callable, and `RemoteOpponent`
+uses the versioned, ID-free `snowgym.opponent-observation.v0` /
+`snowgym.opponent-action.v0` tensor contract behind an injected client. Invalid
+or failed opponent responses raise before the authoritative server advances.
+The original `SnowGymEnv` remains the direct route for the native TypeScript
+scripted and seeded-random red controllers.

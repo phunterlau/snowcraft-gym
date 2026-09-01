@@ -229,8 +229,11 @@ trajectory digests, plans, and lifecycle traces.
 - [x] Add a versioned baseline evaluation suite and sequential multi-episode
       benchmark over the reference HTTP transport, separating deterministic
       results from wall-clock performance.
-- [ ] Add optional rendered pixels and scripted/random/learned/remote opponent
-      adapters.
+- [x] Add a Gymnasium single-team wrapper with deterministic random/no-op,
+      detached learned-callable, and versioned remote-client opponent adapters;
+      retain the existing native scripted/random server-controller route.
+- [ ] Add optional rendered pixels without making them a correctness or default
+      training input.
 - [ ] Add a long-lived direct/vectorized batch host and benchmark its scaling
       independently from the correctness/reference HTTP transport.
 

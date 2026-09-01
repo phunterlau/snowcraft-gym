@@ -12,7 +12,8 @@ from typing import Any
 
 import numpy as np
 
-from .encoding import ACTION_NOOP, GymAction, GymObservation
+from .encoding import GymAction, GymObservation
+from .opponents import masked_random_action, noop_action
 from .parallel_env import SnowGymParallelEnv
 from .research_env import SnowGymResearchParallelEnv
 
@@ -266,23 +267,11 @@ def run_evaluation_episode(
 def policy_action(
     policy: str, observation: GymObservation, generator: np.random.Generator
 ) -> GymAction:
-    capacity = int(observation["ally_mask"].shape[0])
-    action_types = np.full(capacity, ACTION_NOOP, dtype=np.int64)
-    targets = np.zeros((capacity, 2), dtype=np.float32)
-    powers = np.zeros(capacity, dtype=np.float32)
     if policy == "noop":
-        return {"action_type": action_types, "target": targets, "power": powers}
+        return noop_action(len(observation["ally_mask"]))
     if policy != "masked_random":
         raise ValueError(f"unsupported evaluation policy: {policy}")
-    for index in range(capacity):
-        if not observation["ally_mask"][index]:
-            continue
-        valid = np.flatnonzero(observation["unit_action_mask"][index])
-        if valid.size:
-            action_types[index] = int(generator.choice(valid))
-        targets[index] = generator.uniform(-1.0, 1.0, size=2).astype(np.float32)
-        powers[index] = np.float32(generator.random())
-    return {"action_type": action_types, "target": targets, "power": powers}
+    return masked_random_action(observation, generator)
 
 
 def count_rejected_actions(

@@ -26,6 +26,16 @@ from snowgym_client.evaluation import (
     write_benchmark,
 )
 from snowgym_client.env import SnowGymEnv
+from snowgym_client.opponents import (
+    REMOTE_ACTION_FORMAT,
+    REMOTE_OBSERVATION_FORMAT,
+    LearnedOpponent,
+    MaskedRandomOpponent,
+    NoopOpponent,
+    RemoteOpponent,
+    SnowGymSingleTeamEnv,
+    noop_action,
+)
 from snowgym_client.parallel_env import SnowGymParallelEnv
 from snowgym_client.research_env import (
     SEMANTIC_RASTER_CHANNELS,
@@ -134,6 +144,131 @@ def test_registered_environment_passes_gymnasium_checker() -> None:
 
 def test_parallel_environment_passes_pettingzoo_checker() -> None:
     parallel_api_test(SnowGymParallelEnv(client=FakeClient()), num_cycles=25)
+
+
+def test_single_team_environment_passes_gymnasium_checker() -> None:
+    environment = SnowGymSingleTeamEnv(
+        SnowGymParallelEnv(client=FakeClient()), opponent=NoopOpponent()
+    )
+    check_env(environment, skip_render_check=True)
+
+
+def test_single_team_environment_can_control_red_perspective() -> None:
+    client = FakeClient()
+    environment = SnowGymSingleTeamEnv(
+        SnowGymParallelEnv(client=client, max_team_units=3),
+        controlled_agent="red",
+        opponent=NoopOpponent(),
+    )
+    observation, _ = environment.reset(seed=42)
+    environment.step(noop_action(3))
+
+    assert observation["allies"][0, 2] > 0
+    assert observation["enemies"][0, 2] < 0
+    assert client.joint_actions[0].keys() == {"blue", "red"}
+    assert {item["unitId"] for item in client.joint_actions[0]["red"]["actions"]} == {
+        4,
+        5,
+        6,
+    }
+
+
+def test_masked_random_opponent_exactly_replays_joint_actions() -> None:
+    def rollout() -> list[dict[str, Any]]:
+        client = FakeClient()
+        environment = SnowGymSingleTeamEnv(
+            SnowGymParallelEnv(client=client, max_team_units=3),
+            opponent=MaskedRandomOpponent(),
+        )
+        environment.reset(seed=91)
+        for _ in range(5):
+            environment.step(noop_action(3))
+        return client.joint_actions
+
+    assert rollout() == rollout()
+
+
+def test_learned_opponent_receives_detached_observation_and_info() -> None:
+    seen: list[tuple[dict[str, np.ndarray], dict[str, Any]]] = []
+
+    def policy(
+        observation: dict[str, np.ndarray], info: dict[str, Any]
+    ) -> dict[str, np.ndarray]:
+        seen.append((observation, info))
+        observation["tick"][0] = 999
+        info["tick"] = 999
+        return noop_action(3)
+
+    environment = SnowGymSingleTeamEnv(
+        SnowGymParallelEnv(client=FakeClient(), max_team_units=3),
+        opponent=LearnedOpponent(policy),
+    )
+    environment.reset(seed=4)
+    next_observation, _, _, _, info = environment.step(noop_action(3))
+
+    assert len(seen) == 1
+    assert int(next_observation["tick"][0]) == 6
+    assert info["tick"] == 6
+
+
+def test_remote_opponent_uses_versioned_id_free_tensor_contract() -> None:
+    class FakeRemoteClient:
+        def __init__(self) -> None:
+            self.requests: list[dict[str, Any]] = []
+
+        def act(self, request: dict[str, Any]) -> dict[str, Any]:
+            self.requests.append(request)
+            return {
+                "format": REMOTE_ACTION_FORMAT,
+                "action": {
+                    "action_type": [0, 0, 0],
+                    "target": [[0, 0], [0, 0], [0, 0]],
+                    "power": [0, 0, 0],
+                },
+            }
+
+    remote_client = FakeRemoteClient()
+    environment = SnowGymSingleTeamEnv(
+        SnowGymParallelEnv(client=FakeClient(), max_team_units=3),
+        opponent=RemoteOpponent(remote_client),
+    )
+    environment.reset(seed=12)
+    environment.step(noop_action(3))
+    request = remote_client.requests[0]
+
+    assert request["format"] == REMOTE_OBSERVATION_FORMAT
+    assert request["agent"] == "red"
+    assert request["seed"] == 12
+    assert request["decision"] == 0
+    assert request["tick"] == 0
+    assert set(request["observation"]) == set(environment.observation_space.spaces)
+    assert isinstance(request["observation"]["allies"], list)
+    assert "unitId" not in str(request)
+
+
+def test_remote_opponent_rejects_invalid_response_before_server_step() -> None:
+    class InvalidRemoteClient:
+        def __init__(self) -> None:
+            self.decisions: list[int] = []
+
+        def act(self, request: dict[str, Any]) -> dict[str, Any]:
+            self.decisions.append(request["decision"])
+            return {"format": "wrong", "action": {}}
+
+    client = FakeClient()
+    remote_client = InvalidRemoteClient()
+    environment = SnowGymSingleTeamEnv(
+        SnowGymParallelEnv(client=client, max_team_units=3),
+        opponent=RemoteOpponent(remote_client),
+    )
+    environment.reset(seed=12)
+
+    with pytest.raises(ValueError, match="response format"):
+        environment.step(noop_action(3))
+    with pytest.raises(ValueError, match="response format"):
+        environment.step(noop_action(3))
+    assert client.joint_actions == []
+    assert remote_client.decisions == [0, 0]
 
 
 def test_parallel_agents_have_independently_seedable_spaces() -> None:
