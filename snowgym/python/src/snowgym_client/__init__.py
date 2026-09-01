@@ -5,6 +5,7 @@ from gymnasium.envs.registration import register, registry
 from .client import SnowGymHttpClient, SnowGymProtocolError
 from .env import SnowGymEnv
 from .parallel_env import SnowGymParallelEnv
+from .research_env import SnowGymResearchParallelEnv
 
 ENV_ID = "SnowGym/Squad-v0"
 CONFIGURABLE_ENV_ID = "SnowGym/Squad-v1"
@@ -40,5 +41,6 @@ __all__ = [
     "SnowGymEnv",
     "SnowGymHttpClient",
     "SnowGymParallelEnv",
+    "SnowGymResearchParallelEnv",
     "SnowGymProtocolError",
 ]

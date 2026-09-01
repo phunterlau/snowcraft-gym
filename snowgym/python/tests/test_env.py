@@ -18,6 +18,7 @@ from snowgym_client.encoding import (
 )
 from snowgym_client.env import SnowGymEnv
 from snowgym_client.parallel_env import SnowGymParallelEnv
+from snowgym_client.research_env import SnowGymResearchParallelEnv
 from snowgym_client.recording import REPLAY_FORMAT, ReplayRecorder, write_replay
 from snowgym_client.state_hash import hash_observation
 
@@ -28,6 +29,7 @@ class FakeClient:
         self.tick = 0
         self.last_action: dict[str, Any] | None = None
         self.scenario: dict[str, Any] | None = None
+        self.joint_actions: list[dict[str, Any]] = []
 
     def status(self) -> dict[str, Any]:
         return make_snapshot(self.seed, self.tick)
@@ -43,6 +45,7 @@ class FakeClient:
         self.tick = 0
         self.last_action = None
         self.scenario = scenario
+        self.joint_actions = []
         return make_snapshot(seed, 0, scenario)
 
     def step(
@@ -89,6 +92,7 @@ class FakeClient:
             self.seed, self.tick, self.scenario
         )["status"]["stateHash"]
         self.last_action = actions
+        self.joint_actions.append(actions)
         self.tick += 6
         snapshot = make_snapshot(self.seed, self.tick, self.scenario)
         return {
@@ -152,6 +156,107 @@ def test_parallel_environment_encodes_each_team_from_its_own_perspective() -> No
         5,
         6,
     }
+
+
+def test_research_environment_passes_parallel_checker_with_delays_and_local_view() -> None:
+    environment = SnowGymResearchParallelEnv(
+        SnowGymParallelEnv(client=FakeClient()),
+        visibility_radius=5,
+        action_delay_steps=2,
+        observation_delay_steps=2,
+    )
+    parallel_api_test(environment, num_cycles=25)
+
+
+def test_research_profile_masks_remote_enemies_and_reports_source_tick() -> None:
+    environment = SnowGymResearchParallelEnv(
+        SnowGymParallelEnv(client=FakeClient(), max_team_units=3),
+        visibility_radius=5,
+        observation_delay_steps=2,
+    )
+    observations, infos = environment.reset(seed=42)
+
+    assert observations["blue"]["enemy_mask"].tolist() == [0, 0, 0]
+    assert observations["red"]["enemy_mask"].tolist() == [0, 0, 0]
+    assert infos["blue"]["research"] == {
+        "visibilityRadius": 5.0,
+        "actionDelaySteps": 0,
+        "observationDelaySteps": 2,
+        "observationSourceTick": 0,
+        "appliedActionSourceTick": None,
+    }
+
+
+def test_research_profile_applies_and_observes_exact_decision_delays() -> None:
+    client = FakeClient()
+    environment = SnowGymResearchParallelEnv(
+        SnowGymParallelEnv(client=client, max_team_units=3),
+        action_delay_steps=2,
+        observation_delay_steps=2,
+    )
+    observations, _ = environment.reset(seed=42)
+    submitted = {
+        agent: environment.action_space(agent).sample()
+        for agent in environment.agents
+    }
+    expected_blue = encode_action(
+        submitted["blue"],
+        environment.environment.raw_observations["blue"],
+        3,
+    )
+    returned_ticks = []
+    for _ in range(3):
+        observations, _, _, _, infos = environment.step(submitted)
+        returned_ticks.append(int(observations["blue"]["tick"][0]))
+
+    assert returned_ticks == [0, 0, 6]
+    assert all(
+        action["type"] == "noop"
+        for action in client.joint_actions[0]["blue"]["actions"]
+    )
+    assert all(
+        action["type"] == "noop"
+        for action in client.joint_actions[1]["blue"]["actions"]
+    )
+    assert client.joint_actions[2]["blue"] == expected_blue
+    assert infos["blue"]["tick"] == 18
+    assert infos["blue"]["research"]["observationSourceTick"] == 6
+    assert infos["blue"]["research"]["appliedActionSourceTick"] == 0
+
+
+def test_research_profile_exactly_replays_actions_and_delayed_observations() -> None:
+    def rollout() -> tuple[list[dict[str, Any]], list[tuple[int, int]]]:
+        client = FakeClient()
+        environment = SnowGymResearchParallelEnv(
+            SnowGymParallelEnv(client=client, max_team_units=3),
+            visibility_radius=5,
+            action_delay_steps=2,
+            observation_delay_steps=1,
+        )
+        environment.reset(seed=17)
+        action = {
+            "action_type": np.asarray(
+                [ACTION_MOVE, ACTION_HOLD, ACTION_NOOP], dtype=np.int64
+            ),
+            "target": np.asarray(
+                [[0.25, -0.25], [0.0, 0.0], [0.0, 0.0]], dtype=np.float32
+            ),
+            "power": np.zeros(3, dtype=np.float32),
+        }
+        ticks = []
+        for _ in range(5):
+            observations, _, _, _, infos = environment.step(
+                {"blue": action, "red": action}
+            )
+            ticks.append(
+                (
+                    int(infos["blue"]["tick"]),
+                    int(observations["blue"]["tick"][0]),
+                )
+            )
+        return client.joint_actions, ticks
+
+    assert rollout() == rollout()
 
 
 def test_configurable_environment_has_fixed_capacity_and_presence_masks() -> None:

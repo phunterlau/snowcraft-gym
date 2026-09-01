@@ -86,6 +86,12 @@ export function snowGymCapabilities(): object {
         agents: ['blue', 'red'],
         maxTeamUnits: MAX_TEAM_SIZE,
       },
+      researchEnvironment: {
+        id: 'SnowGym/ResearchParallelSquad-v0',
+        visibilityRadiusUnits: 'world',
+        latencyUnits: 'team-decisions',
+        transforms: ['local-visibility', 'action-delay', 'observation-delay'],
+      },
     },
   };
 }

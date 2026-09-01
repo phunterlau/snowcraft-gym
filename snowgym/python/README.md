@@ -11,6 +11,12 @@ environment with simultaneous team-level `blue` and `red` agents. It uses the
 same server episode and physics as the Gymnasium environments; there is no
 second simulator implementation.
 
+`SnowGymResearchParallelEnv` adds optional local visibility plus deterministic
+action and observation delays measured in team decisions. These transforms are
+agent-facing only: the wrapped server continues to own current state, hashes,
+reward, termination, and physics. Each info records the visible observation
+tick and the source tick of the action currently applied by the delay queue.
+
 The TypeScript server remains authoritative for physics, reward, termination,
 and seeded state. Python only translates numeric Gymnasium arrays to semantic
 team actions and encodes returned entity observations.
@@ -33,4 +39,8 @@ For example:
 
 # Official PettingZoo Parallel API check against the live server.
 .venv/bin/snowgym-parallel-check --cycles 100 --json
+
+# Validate a partial-information, two-decision-latency profile.
+.venv/bin/snowgym-parallel-check --cycles 100 --visibility-radius 8 \
+  --action-delay-steps 2 --observation-delay-steps 2 --json
 ```

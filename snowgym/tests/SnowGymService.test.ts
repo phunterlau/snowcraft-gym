@@ -298,7 +298,10 @@ describe('SnowGymService', () => {
       };
       scenarios: { maxTeamSize: number; maps: Array<{ id: string; blueCapacity: number }> };
       gymnasium: { environments: Array<{ id: string }> };
-      pettingZoo: { environment: { id: string; agents: string[] } };
+      pettingZoo: {
+        environment: { id: string; agents: string[] };
+        researchEnvironment: { id: string; transforms: string[] };
+      };
     };
 
     expect(response.status).toBe(200);
@@ -328,6 +331,10 @@ describe('SnowGymService', () => {
       api: 'parallel',
       agents: ['blue', 'red'],
       maxTeamUnits: 10,
+    });
+    expect(body.pettingZoo.researchEnvironment).toMatchObject({
+      id: 'SnowGym/ResearchParallelSquad-v0',
+      transforms: ['local-visibility', 'action-delay', 'observation-delay'],
     });
   });
 

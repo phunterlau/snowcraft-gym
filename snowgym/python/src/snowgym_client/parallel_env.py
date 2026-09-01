@@ -152,6 +152,10 @@ class SnowGymParallelEnv(ParallelEnv[AgentId, GymObservation, GymAction]):
     def raw_observations(self) -> dict[AgentId, dict[str, Any]]:
         return self._raw_observations
 
+    @property
+    def max_team_units(self) -> int:
+        return self._max_team_units
+
     def close(self) -> None:
         self.agents = []
         self._raw_observations = {}

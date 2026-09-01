@@ -166,6 +166,26 @@ cd snowgym/python
 The checker runs PettingZoo's official `parallel_api_test` against the live
 server. Training and correctness remain renderer-free.
 
+For partial-information and latency experiments, `SnowGymResearchParallelEnv`
+wraps the same parallel environment without changing server state or physics.
+Local visibility is measured in world units; action and observation delays are
+integer team decisions. The info dictionary reports the current authoritative
+tick separately from `research.observationSourceTick` and
+`research.appliedActionSourceTick`:
+
+```bash
+.venv/bin/snowgym-parallel-check --cycles 100 \
+  --visibility-radius 8 \
+  --action-delay-steps 2 \
+  --observation-delay-steps 2 \
+  --json
+```
+
+Initial action-delay slots issue semantic no-ops, and initial delayed
+observations repeat the reset observation. Profiles are deterministic and keep
+the standard fixed-capacity spaces, so the official Parallel API checker still
+applies.
+
 To replay it through SnowCraft's existing Three.js arena, character, snowball,
 particle, camera, lighting, and asset renderers, start the normal Vite server
 from the repository root:

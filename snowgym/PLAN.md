@@ -221,8 +221,11 @@ trajectory digests, plans, and lifecycle traces.
 - [x] Add a two-team PettingZoo ParallelEnv over the same server and simulator,
       with mirrored fixed-capacity observations, simultaneous guarded joint
       actions, zero-sum terminal rewards, and the official Parallel API gate.
-- Optional partial observations, semantic raster/pixels, latency injection, and
-  scripted/random/learned/remote opponent adapters.
+- [x] Add deterministic local-visibility, action-delay, and observation-delay
+      research profiles around the parallel environment, with authoritative and
+      observation-source ticks reported separately.
+- [ ] Add optional semantic raster/pixels and scripted/random/learned/remote
+      opponent adapters.
 - Batched training benchmarks and versioned evaluation scenarios.
 
 ## Guardrails
