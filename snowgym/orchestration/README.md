@@ -198,3 +198,19 @@ during 3.51 seconds of inference, activated the reconciled response at tick
 204, and reached a 9–0 blue victory with zero rejected physical actions. The
 single-request mode is for bounded provider demos only; normal orchestration
 keeps automatic lifecycle monitoring enabled.
+
+## C5 trajectory-aware closed loop
+
+`trajectory/TrajectoryMonitor.ts` is the passive first slice of continuous
+orchestration. A runner records the observation before a decision, the immutable
+plan snapshot used by the controller, the adapter's physical action results,
+and the observation after the step. The monitor keeps a bounded rolling window
+for one plan version and emits only group aggregates. Unit IDs remain internal
+to aggregation and never appear in `snowgym.trajectory-digest.v0`.
+
+The digest classifies mission-aware progress and records health, cohesion,
+issued-action, rejected-action, and stuck-fraction evidence. It is initially
+telemetry-only: it cannot change the controller, environment, scheduler, or
+plan store. Later C5 slices debounce trajectory signals, distinguish soft
+replanning from hard fallback, and pass the same bounded digest to the existing
+stateless commander request.

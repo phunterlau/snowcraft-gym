@@ -18,3 +18,4 @@ export * from './lifecycle/PlanLifecycle';
 export * from './lifecycle/PlanReconciler';
 export * from './runtime/PlanStore';
 export * from './scheduler/CommanderScheduler';
+export * from './trajectory/TrajectoryMonitor';

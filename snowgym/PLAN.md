@@ -183,6 +183,34 @@ detection and repeated action-rejection thresholds remain planned explicit,
 debounced lifecycle signals; they must be host-computed rather than inferred by
 the model.
 
+### M4.1 — trajectory-aware closed-loop commander (C5)
+
+- [x] Add a passive, bounded trajectory monitor over pre-step observation,
+      active-plan snapshot, physical action results, and post-step observation.
+- [x] Publish an ID-free, versioned group trajectory digest with mission-aware
+      progress, health/cohesion trends, action counts, rejection counts, and a
+      host-computed stuck fraction.
+- [x] Prove that enabling telemetry cannot change physical actions, public-state
+      hashes, plan activation, or replay results.
+- [ ] Add debounced `plan_stalled` and `action_rejection_repeated` signals with
+      activation grace periods and recovery hysteresis.
+- [ ] Separate soft signals, which retain the current plan while replanning,
+      from hard lifecycle failures, which activate deterministic fallback.
+- [ ] Pass the bounded trajectory digest and preceding plan outcome to each
+      stateless commander request without exposing unit IDs or raw trajectories.
+- [ ] Run deterministic multi-request mock battles with exact state, plan, signal,
+      latency, and scheduler-trace replay coverage.
+- [ ] Add an opt-in, wall-clock-paced Luna battle with one in-flight request, a
+      code-enforced per-episode call limit, explicit token/latency accounting,
+      and uninterrupted fallback on provider failure.
+- [ ] Record a versioned commander trace sidecar; add the optional replay overlay
+      only after the renderer-free trajectory gates pass.
+
+Exit criterion: host-computed trajectory evidence can trigger bounded Luna
+replanning during an episode while the 10 Hz executor continues synchronously,
+and identical mock latency schedules reproduce identical actions, state hashes,
+trajectory digests, plans, and lifecycle traces.
+
 ### M5 — multi-agent and research adapters
 
 - PettingZoo adapter over the same simulator, not a second implementation.
