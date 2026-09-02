@@ -153,6 +153,19 @@ class SnowGymEnv(gym.Env[GymObservation, GymAction]):
             self._client.step_scripted(expected_state_hash=self._state_hash)
         )
 
+    def teacher_action(self) -> dict[str, Any]:
+        """Read the reference blue action for the current state without stepping."""
+        if self._raw_observation is None:
+            raise RuntimeError("reset() must be called before teacher_action()")
+        payload = self._client.teacher_action()
+        status = require_payload_info(payload, "status")
+        if require_state_hash(status) != self._state_hash:
+            raise RuntimeError("teacher action state hash does not match the Gym state")
+        action = payload.get("action")
+        if not isinstance(action, dict):
+            raise ValueError("teacher action response is missing action")
+        return dict(action)
+
     def _consume_step(
         self, payload: dict[str, Any]
     ) -> tuple[GymObservation, float, bool, bool, dict[str, Any]]:

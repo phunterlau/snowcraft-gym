@@ -39,6 +39,12 @@ export class SnowGymService {
       if (method === 'GET' && path === '/status') {
         return { status: 200, body: this.snapshot() };
       }
+      if (method === 'GET' && path === '/teacher-action') {
+        return {
+          status: 200,
+          body: { status: this.environment.status(), action: this.defaultBlueAction() },
+        };
+      }
       if (method === 'POST' && path === '/reset') {
         const request = parseReset(body);
         return this.mutate('reset', request, () => this.reset(request));

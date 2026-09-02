@@ -13,6 +13,7 @@
 - Prefer `npm run snowgym:example -- ...` for deterministic, single-process replay generation.
 - The HTTP server owns one shared episode. Before a mutation, read `/status`; send its `stateHash` as `expectedStateHash` and a unique `idempotencyKey`.
 - `POST /step` requires an explicit action. Use `POST /step-scripted` only when the built-in blue policy is intended.
+- `GET /teacher-action` labels the current state without advancing it; guard the learner's following `POST /step` with the returned state hash.
 - A `noop` or omitted unit issues no new order; it does not cancel a previous movement order.
 - Do not overwrite replay artifacts unless the task explicitly authorizes replacement; the example builder requires `--force`.
 - Training and correctness must use detached server state. Visual replay is optional verification, never agent input.

@@ -14,6 +14,7 @@ as authoritative over historical notes in `refs/`.
 - Build a deterministic replay without a server: use `npm run snowgym:example`.
 - Exercise Gymnasium: start `npm run snowgym:server`, then use the Python package.
 - Read live state: use `GET /status`; no browser or graph is required.
+- Label a learner-visited state: use `GET /teacher-action`; it is read-only and returns the current state hash with the scripted blue action.
 - Mutate live state: use `scripts/strict-step.mjs` or follow
   [the guarded contract](references/contract.md).
 - Visualize only after producing a replay: use the existing `/replay.html` UI.

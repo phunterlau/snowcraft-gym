@@ -17,6 +17,22 @@ describe('SnowGymService', () => {
     expect(body.observation.enemies).toHaveLength(3);
   });
 
+  it('returns the current teacher action without advancing state', () => {
+    const service = new SnowGymService();
+    const before = service.handle('GET', '/status').body as { status: EnvironmentStatus };
+    const response = service.handle('GET', '/teacher-action');
+    const body = response.body as {
+      status: EnvironmentStatus;
+      action: { actions: Array<{ unitId: number }> };
+    };
+    const after = service.handle('GET', '/status').body as { status: EnvironmentStatus };
+
+    expect(response.status).toBe(200);
+    expect(body.status.stateHash).toBe(before.status.stateHash);
+    expect(body.action.actions).toHaveLength(3);
+    expect(after.status).toEqual(before.status);
+  });
+
   it('resets by seed and advances through the explicit scripted-policy endpoint', () => {
     const service = new SnowGymService();
     const reset = service.handle('POST', '/reset', { seed: 42 });
@@ -291,6 +307,7 @@ describe('SnowGymService', () => {
         step: { requires: string[] };
         stepJoint: { path: string; requires: string[] };
         stepScripted: { path: string };
+        teacherAction: { path: string; mutates: boolean };
       };
       actions: {
         types: { hold: { required: string[] } };
@@ -312,6 +329,11 @@ describe('SnowGymService', () => {
       requires: ['actions.blue', 'actions.red'],
     });
     expect(body.endpoints.stepScripted.path).toBe('/step-scripted');
+    expect(body.endpoints.teacherAction).toEqual({
+      path: '/teacher-action',
+      method: 'GET',
+      mutates: false,
+    });
     expect(body.actions.types.hold.required).toEqual(['type', 'unitId']);
     expect(body.actions.semantics).toMatchObject({
       hold: 'cancels-current-movement-order',

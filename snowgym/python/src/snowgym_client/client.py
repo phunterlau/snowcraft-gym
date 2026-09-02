@@ -17,6 +17,8 @@ class SnowGymClient(Protocol):
 
     def status(self) -> JsonObject: ...
 
+    def teacher_action(self) -> JsonObject: ...
+
     def reset(
         self,
         seed: int,
@@ -74,6 +76,13 @@ class SnowGymHttpClient:
 
     def capabilities(self) -> JsonObject:
         return self._request("GET", "/capabilities")
+
+    def teacher_action(self) -> JsonObject:
+        payload = self._request("GET", "/teacher-action")
+        self._check_version(payload)
+        if not isinstance(payload.get("action"), dict):
+            raise SnowGymProtocolError("SnowGym teacher action response is missing action")
+        return payload
 
     def reset(
         self,

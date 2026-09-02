@@ -37,6 +37,12 @@ built-in blue policy for one decision. `POST /autoplay` runs that policy until
 termination, truncation, or the supplied decision limit. `POST /reset` starts a
 seeded episode. Unknown request and action fields are rejected.
 
+`GET /teacher-action` returns the built-in blue policy's action plus the current
+status without advancing the simulation. For closed-loop oracle labeling, read
+the label and then submit the learner action to `POST /step` with the returned
+`stateHash` as `expectedStateHash`; a concurrent mutation is rejected instead
+of silently pairing a label with the wrong state.
+
 `POST /step-joint` accepts explicit `actions.blue` and `actions.red` team
 actions, applies both before advancing the same physics decision, and returns
 mirrored detached observations plus zero-sum rewards. It is the transport used

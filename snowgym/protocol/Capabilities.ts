@@ -28,6 +28,7 @@ export function snowGymCapabilities(): object {
       health: { method: 'GET', path: '/health', mutates: false },
       capabilities: { method: 'GET', path: '/capabilities', mutates: false },
       status: { method: 'GET', path: '/status', mutates: false },
+      teacherAction: { method: 'GET', path: '/teacher-action', mutates: false },
       reset: { method: 'POST', path: '/reset', mutates: true, guarded: true },
       step: { method: 'POST', path: '/step', mutates: true, requires: ['action'] },
       stepJoint: {

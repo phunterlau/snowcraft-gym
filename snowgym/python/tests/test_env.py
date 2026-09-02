@@ -57,6 +57,13 @@ class FakeClient:
     def status(self) -> dict[str, Any]:
         return make_snapshot(self.seed, self.tick)
 
+    def teacher_action(self) -> dict[str, Any]:
+        snapshot = make_snapshot(self.seed, self.tick, self.scenario)
+        return {
+            "status": snapshot["status"],
+            "action": {"actions": [{"type": "hold", "unitId": 1}]},
+        }
+
     def reset(
         self,
         seed: int,
@@ -854,6 +861,17 @@ def test_scripted_step_uses_server_policy_path() -> None:
     assert environment.observation_space.contains(observation)
     assert client.last_action == {"actions": []}
     assert (reward, terminated, truncated) == (0.0, False, False)
+
+
+def test_teacher_action_labels_current_state_without_stepping() -> None:
+    client = FakeClient()
+    environment = SnowGymEnv(client=client)
+    environment.reset(seed=7)
+
+    action = environment.teacher_action()
+
+    assert action == {"actions": [{"type": "hold", "unitId": 1}]}
+    assert client.tick == 0
 
 
 def test_visual_recording_contains_frames_actions_and_outcome(tmp_path: Any) -> None:
