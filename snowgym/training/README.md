@@ -136,6 +136,36 @@ is local acceptance evidence rather than a portable performance guarantee.
 
 ## PPO foundation
 
+Run a short end-to-end infrastructure smoke against the first frozen curriculum
+gate without starting the HTTP server:
+
+```bash
+uv run snowgym-train-ppo \
+  --output artifacts/ppo-smoke-1v1-random \
+  --worlds 8 \
+  --rollout-steps 32 \
+  --target-updates 1 \
+  --json
+```
+
+The command drives the persistent batch subprocess, performs a real PPO update,
+and atomically writes `manifest.json` plus a restricted-load exact-resume
+checkpoint. It refuses to overwrite an existing run. Resume into a new output
+directory by passing the prior `checkpoint` directory and a larger target:
+
+```bash
+uv run snowgym-train-ppo \
+  --output artifacts/ppo-smoke-1v1-random-update-2 \
+  --resume artifacts/ppo-smoke-1v1-random/checkpoint \
+  --worlds 8 \
+  --rollout-steps 32 \
+  --target-updates 2 \
+  --json
+```
+
+These commands validate training plumbing only. Their manifest is labeled
+`infrastructure-smoke`; it is not evidence that a curriculum gate was solved.
+
 `ppo.py` defines the centralized hybrid actor-critic used by the next training
 stage. Action masks apply before categorical sampling; target terms contribute
 to joint log probability only for move/throw and power only for throw. GAE
@@ -166,7 +196,8 @@ sample-weighted policy/value/entropy/KL/clip diagnostics.
 `snowgym.ppo-checkpoint.v0` persists model and optimizer tensors, Torch RNG
 state, architecture and PPO configuration, training seed, curriculum digest,
 episode-seed schedule and cursor, update index, environment-step count, and
-semantic state/metadata digests.
+semantic state/metadata digests. Resume compatibility also binds the curriculum
+gate, persistent-world count, and rollout horizon.
 Loading uses restricted Torch deserialization and rejects incompatible
 training provenance before restoring state. The deterministic acceptance test
 matches uninterrupted training exactly across a save/restore boundary. This is
@@ -175,5 +206,5 @@ restart at each collection boundary.
 
 The frozen `ppo_curriculum_v0.json` keeps training ranges disjoint from eight
 evaluation seeds per gate and sets thresholds before qualifying runs. The
-current foundation does not yet claim a PPO result; the smoke trainer and
-qualifying checkpoint series remain next.
+current foundation does not yet claim a PPO result; qualifying checkpoint
+series and held-out evaluation remain next.

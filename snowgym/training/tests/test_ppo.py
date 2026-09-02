@@ -346,6 +346,7 @@ def test_ppo_checkpoint_resume_matches_uninterrupted_updates(tmp_path) -> None:
         environment_steps=4,
         git_commit="test",
         seed_schedule={"minimum": 10_000, "maximum": 10_099, "nextSeed": 10_004},
+        collector_config={"gateId": "test", "worlds": 2, "rolloutSteps": 2},
     )
     assert metadata["updateIndex"] == 1
     assert metadata["environmentSteps"] == 4
@@ -361,6 +362,7 @@ def test_ppo_checkpoint_resume_matches_uninterrupted_updates(tmp_path) -> None:
         config=config,
         curriculum_digest="sha256:test-curriculum",
         training_seed=73,
+        collector_config={"gateId": "test", "worlds": 2, "rolloutSteps": 2},
     )
     assert restored["checkpointDigest"] == metadata["checkpointDigest"]
     uninterrupted_metrics = ppo_update(
@@ -410,6 +412,7 @@ def test_ppo_checkpoint_rejects_incompatible_resume(tmp_path) -> None:
         environment_steps=0,
         git_commit="test",
         seed_schedule={"minimum": 10_000, "maximum": 10_099, "nextSeed": 10_000},
+        collector_config={"gateId": "test", "worlds": 2, "rolloutSteps": 2},
     )
     try:
         restore_ppo_checkpoint(
@@ -419,8 +422,24 @@ def test_ppo_checkpoint_rejects_incompatible_resume(tmp_path) -> None:
             config=config,
             curriculum_digest="sha256:other",
             training_seed=5,
+            collector_config={"gateId": "test", "worlds": 2, "rolloutSteps": 2},
         )
     except ValueError as error:
         assert "curriculumDigest" in str(error)
     else:
         raise AssertionError("incompatible PPO checkpoint was accepted")
+
+    try:
+        restore_ppo_checkpoint(
+            checkpoint,
+            model=model,
+            optimizer=optimizer,
+            config=config,
+            curriculum_digest="sha256:first",
+            training_seed=5,
+            collector_config={"gateId": "test", "worlds": 3, "rolloutSteps": 2},
+        )
+    except ValueError as error:
+        assert "collectorConfig" in str(error)
+    else:
+        raise AssertionError("checkpoint accepted changed rollout geometry")

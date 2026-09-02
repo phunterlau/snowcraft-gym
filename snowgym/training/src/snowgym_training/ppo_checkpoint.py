@@ -29,6 +29,7 @@ def save_ppo_checkpoint(
     environment_steps: int,
     git_commit: str,
     seed_schedule: dict[str, int],
+    collector_config: dict[str, Any],
 ) -> dict[str, Any]:
     destination = Path(path)
     if destination.exists():
@@ -41,6 +42,7 @@ def save_ppo_checkpoint(
         if not isinstance(value, str) or not value:
             raise ValueError(f"{name} must be a non-empty string")
     validate_seed_schedule(seed_schedule)
+    validate_collector_config(collector_config)
     state = {
         "model": model.state_dict(),
         "optimizer": optimizer.state_dict(),
@@ -56,6 +58,7 @@ def save_ppo_checkpoint(
         "updateIndex": update_index,
         "environmentSteps": environment_steps,
         "seedSchedule": dict(seed_schedule),
+        "collectorConfig": dict(collector_config),
         "stateDigest": semantic_state_digest(state),
     }
     metadata["checkpointDigest"] = json_digest(metadata)
@@ -97,6 +100,7 @@ def restore_ppo_checkpoint(
     config: PPOConfig,
     curriculum_digest: str,
     training_seed: int,
+    collector_config: dict[str, Any],
 ) -> dict[str, Any]:
     metadata, state = load_ppo_checkpoint(path)
     expected = {
@@ -104,6 +108,7 @@ def restore_ppo_checkpoint(
         "ppoConfig": asdict(config),
         "curriculumDigest": curriculum_digest,
         "trainingSeed": training_seed,
+        "collectorConfig": collector_config,
     }
     for name, value in expected.items():
         if metadata[name] != value:
@@ -128,6 +133,7 @@ def validate_ppo_checkpoint_metadata(value: Any) -> None:
         "updateIndex",
         "environmentSteps",
         "seedSchedule",
+        "collectorConfig",
         "stateDigest",
         "checkpointDigest",
     }
@@ -147,6 +153,7 @@ def validate_ppo_checkpoint_metadata(value: Any) -> None:
         value["trainingSeed"], value["updateIndex"], value["environmentSteps"]
     )
     validate_seed_schedule(value["seedSchedule"])
+    validate_collector_config(value["collectorConfig"])
     source = {name: item for name, item in value.items() if name != "checkpointDigest"}
     if value["checkpointDigest"] != json_digest(source):
         raise ValueError("PPO checkpoint metadata digest mismatch")
@@ -176,3 +183,15 @@ def validate_seed_schedule(value: Any) -> None:
         raise ValueError("PPO seed schedule minimum must not exceed maximum")
     if not value["minimum"] <= value["nextSeed"] <= value["maximum"] + 1:
         raise ValueError("PPO seed schedule cursor is outside its range")
+
+
+def validate_collector_config(value: Any) -> None:
+    required = {"gateId", "worlds", "rolloutSteps"}
+    if not isinstance(value, dict) or set(value) != required:
+        raise ValueError(f"PPO collector config must contain exactly {sorted(required)}")
+    if not isinstance(value["gateId"], str) or not value["gateId"]:
+        raise ValueError("PPO collector gateId must be non-empty")
+    for name in ("worlds", "rolloutSteps"):
+        item = value[name]
+        if not isinstance(item, int) or isinstance(item, bool) or item <= 0:
+            raise ValueError(f"PPO collector {name} must be a positive integer")

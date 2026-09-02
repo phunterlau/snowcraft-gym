@@ -25,6 +25,7 @@ snowgym-train-bc = "snowgym_training.trainer:main"
 snowgym-evaluate-checkpoint = "snowgym_training.evaluate:main"
 snowgym-benchmark-batch = "snowgym_training.benchmarks.throughput:main"
 snowgym-demo-learned = "snowgym_training.demo:main"
+snowgym-train-ppo = "snowgym_training.ppo_train:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/snowgym_training"]

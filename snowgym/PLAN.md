@@ -433,6 +433,10 @@ partial observation, or self-play confounds.
 - [x] Collect directly from persistent `SnowGymBatchEnv` worlds with a bounded,
       non-reusing episode-seed schedule, selective terminal resets, explicit
       horizon truncation/value bootstrap, and restartable rollout boundaries.
+- [x] Add an atomic headless PPO smoke runner that binds a frozen gate, rollout
+      geometry, seed cursor, update metrics, and final checkpoint in a hashed
+      machine-readable run manifest; prove resumed and uninterrupted updates
+      reach the same semantic state.
 - [ ] Keep canonical evaluation reward at win `+1`, loss `-1`, draw `0`. If
       sparse learning blocks the smoke test, add an opt-in training wrapper with
       potential-based own-minus-enemy health shaping and test that it leaves
@@ -470,7 +474,10 @@ state and weights. The live collector now drives persistent batch worlds within
 each rollout, selectively resets completed slots, and checkpoints its monotonic
 episode-seed cursor. Collection boundaries deliberately truncate and bootstrap
 unfinished worlds so exact resume does not depend on unserialized simulator
-state. A smoke training runner and qualifying runs remain open.
+state. The headless smoke runner now exercises collection, optimization,
+manifest writing, and exact resume end to end, while labeling its output as
+infrastructure-only evidence. Qualifying training and held-out evaluation runs
+remain open.
 
 ### M7 — plan-conditioned learned executor
 
