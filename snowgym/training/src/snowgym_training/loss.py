@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass
+from dataclasses import dataclass
 import math
 from typing import Any
 
@@ -20,9 +20,17 @@ class LossConfig:
     action_weight: float = 1.0
     target_weight: float = 1.0
     power_weight: float = 0.25
+    throw_action_weight: float = 1.0
 
     def as_dict(self) -> dict[str, float]:
-        return asdict(self)
+        value = {
+            "action_weight": self.action_weight,
+            "target_weight": self.target_weight,
+            "power_weight": self.power_weight,
+        }
+        if self.throw_action_weight != 1.0:
+            value["throw_action_weight"] = self.throw_action_weight
+        return value
 
 
 def behavior_clone_loss(
@@ -35,7 +43,17 @@ def behavior_clone_loss(
     labels = action["action_type"].long()
     if not bool(present.any()):
         raise ValueError("batch has no present ally labels")
-    action_loss = F.cross_entropy(prediction["action_logits"][present], labels[present])
+    action_class_weights = torch.ones(
+        prediction["action_logits"].shape[-1],
+        dtype=prediction["action_logits"].dtype,
+        device=prediction["action_logits"].device,
+    )
+    action_class_weights[ACTION_THROW] = config.throw_action_weight
+    action_loss = F.cross_entropy(
+        prediction["action_logits"][present],
+        labels[present],
+        weight=action_class_weights,
+    )
     target_mask = present & ((labels == ACTION_MOVE) | (labels == ACTION_THROW))
     throw_mask = present & (labels == ACTION_THROW)
     predicted_target = (
@@ -66,8 +84,11 @@ def masked_mse(prediction: Tensor, target: Tensor, mask: Tensor) -> Tensor:
 
 def loss_config(value: Any) -> LossConfig:
     keys = {"action_weight", "target_weight", "power_weight"}
-    if not isinstance(value, dict) or set(value) != keys:
-        raise ValueError(f"loss must define {', '.join(sorted(keys))}")
+    optional = {"throw_action_weight"}
+    if not isinstance(value, dict) or set(value) - optional != keys:
+        raise ValueError(
+            f"loss must define {', '.join(sorted(keys))} and may set throw_action_weight"
+        )
     if not all(
         isinstance(item, int | float)
         and not isinstance(item, bool)
@@ -76,7 +97,9 @@ def loss_config(value: Any) -> LossConfig:
         for item in value.values()
     ):
         raise ValueError("loss weights must be finite non-negative numbers")
-    config = LossConfig(**{key: float(value[key]) for key in keys})
-    if sum(config.as_dict().values()) <= 0:
+    config = LossConfig(**{key: float(item) for key, item in value.items()})
+    if sum(getattr(config, key) for key in keys) <= 0:
         raise ValueError("at least one loss weight must be positive")
+    if config.throw_action_weight <= 0:
+        raise ValueError("throw_action_weight must be positive")
     return config
