@@ -3,6 +3,7 @@ from pathlib import Path
 
 from snowgym_training.checkpoint import load_checkpoint
 from snowgym_training.curriculum import load_curriculum
+from snowgym_training.ppo_series_config import load_series_config
 from snowgym_training.trainer import load_training_config
 from snowgym_training.trajectory import json_digest, load_export_spec
 
@@ -13,6 +14,9 @@ def test_gate7_teacher_config_is_valid_terrain_and_seed_disjoint() -> None:
     learner = load_training_config(config_root / "bc_10v10_terrain_v0.json")
     relational = load_training_config(
         config_root / "bc_10v10_terrain_relational_v0.json"
+    )
+    ppo = load_series_config(
+        config_root / "ppo_10v10_terrain_relational_bc_v0.json"
     )
     curriculum = load_curriculum()
     gate = next(
@@ -30,6 +34,13 @@ def test_gate7_teacher_config_is_valid_terrain_and_seed_disjoint() -> None:
     assert relational["architecture"]["nearest_enemy_throw_target"] is True
     assert relational["architecture"]["nearest_enemy_features"] is True
     assert relational["evaluationSuite"] == "teacher_10v10_terrain_v0/evaluation"
+    assert ppo["gateId"] == "10v10-random-terrain"
+    assert ppo["checkpointUpdates"] == [1, 5, 10]
+    assert ppo["rolloutSteps"] == 600
+    assert ppo["architecture"] == relational["architecture"]
+    assert ppo["warmStart"]["checkpointDigest"] == (
+        "sha256:a7f1362cf163fbf23ebc3c8290bb0f772e57fb3a763b6dcf97b21135aa47bc08"
+    )
     scenarios = [
         episode["scenario"]
         for episodes in teacher["splits"].values()
