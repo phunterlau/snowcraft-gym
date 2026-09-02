@@ -7,11 +7,13 @@ from snowgym_training.curriculum import load_curriculum, validate_curriculum
 from snowgym_training.ppo import (
     HybridActorCritic,
     PPOConfig,
+    PPORollout,
     RolloutBuffer,
     generalized_advantage_estimate,
     health_potential,
     potential_shaped_reward,
     ppo_loss,
+    ppo_update,
 )
 
 def synthetic_observation(batch: int = 3, units: int = 2) -> dict[str, torch.Tensor]:
@@ -30,6 +32,26 @@ def synthetic_observation(batch: int = 3, units: int = 2) -> dict[str, torch.Ten
         "obstacles": torch.zeros((batch, 64, 9)),
         "obstacle_mask": torch.zeros((batch, 64), dtype=torch.int8),
     }
+
+
+def synthetic_rollout(model: HybridActorCritic, config: PPOConfig) -> PPORollout:
+    buffer = RolloutBuffer(steps=2, batch_size=2)
+    for step in range(2):
+        observation = synthetic_observation(batch=2)
+        observation["allies"][:, 0, 0] = float(step)
+        with torch.no_grad():
+            action, log_probability, value = model.act(observation, deterministic=True)
+        buffer.add(
+            observation=observation,
+            action=action,
+            log_probability=log_probability,
+            value=value,
+            reward=torch.tensor([0.0, 1.0 if step == 1 else -0.25]),
+            terminated=torch.tensor([False, step == 1]),
+            truncated=torch.tensor([step == 1, False]),
+            next_value=torch.tensor([0.1, 0.2]),
+        )
+    return buffer.finish(config)
 
 
 def test_hybrid_policy_respects_masks_and_recomputes_log_probability() -> None:
@@ -230,3 +252,46 @@ def test_rollout_buffer_rejects_incomplete_or_inconsistent_transitions() -> None
         assert "action.target" in str(error)
     else:
         raise AssertionError("invalid rollout action shape was accepted")
+
+
+def test_ppo_update_is_deterministic_and_reports_clipping_diagnostics() -> None:
+    torch.manual_seed(27)
+    config = PPOConfig(update_epochs=2, minibatch_size=3, learning_rate=0.001)
+    reference = HybridActorCritic(ModelConfig(16, 12, 24))
+    rollout = synthetic_rollout(reference, config)
+    first = HybridActorCritic(ModelConfig(16, 12, 24))
+    second = HybridActorCritic(ModelConfig(16, 12, 24))
+    first.load_state_dict(reference.state_dict())
+    second.load_state_dict(reference.state_dict())
+    first_optimizer = torch.optim.Adam(first.parameters(), lr=config.learning_rate)
+    second_optimizer = torch.optim.Adam(second.parameters(), lr=config.learning_rate)
+
+    first_metrics = ppo_update(
+        first,
+        first_optimizer,
+        rollout,
+        config,
+        training_seed=91,
+        update_index=0,
+    )
+    second_metrics = ppo_update(
+        second,
+        second_optimizer,
+        rollout,
+        config,
+        training_seed=91,
+        update_index=0,
+    )
+
+    assert first_metrics == second_metrics
+    assert first_metrics["samples"] == 4
+    assert first_metrics["minibatches"] == 4
+    assert first_metrics["maximumGradientNormAfterClip"] <= config.max_grad_norm
+    assert all(
+        torch.equal(first.state_dict()[name], second.state_dict()[name])
+        for name in first.state_dict()
+    )
+    assert any(
+        not torch.equal(first.state_dict()[name], reference.state_dict()[name])
+        for name in first.state_dict()
+    )

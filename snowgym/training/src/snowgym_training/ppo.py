@@ -24,6 +24,28 @@ class PPOConfig:
     value_weight: float = 0.5
     entropy_weight: float = 0.01
     max_grad_norm: float = 0.5
+    learning_rate: float = 3e-4
+    update_epochs: int = 4
+    minibatch_size: int = 256
+
+    def __post_init__(self) -> None:
+        unit_interval = {
+            "gamma": self.gamma,
+            "gae_lambda": self.gae_lambda,
+            "clip_ratio": self.clip_ratio,
+        }
+        for name, value in unit_interval.items():
+            if not 0 < value <= 1:
+                raise ValueError(f"PPO {name} must be in (0, 1]")
+        for name in ("value_weight", "entropy_weight"):
+            if getattr(self, name) < 0:
+                raise ValueError(f"PPO {name} must be non-negative")
+        if self.max_grad_norm <= 0 or self.learning_rate <= 0:
+            raise ValueError("PPO max_grad_norm and learning_rate must be positive")
+        for name in ("update_epochs", "minibatch_size"):
+            value = getattr(self, name)
+            if not isinstance(value, int) or isinstance(value, bool) or value <= 0:
+                raise ValueError(f"PPO {name} must be a positive integer")
 
 
 @dataclass(frozen=True)
@@ -333,10 +355,14 @@ def ppo_loss(
     returns: Tensor,
     entropy: Tensor,
     config: PPOConfig,
+    *,
+    normalize_advantages: bool = True,
 ) -> dict[str, Tensor]:
-    normalized = (advantages - advantages.mean()) / advantages.std(
-        unbiased=False
-    ).clamp_min(1e-8)
+    normalized = advantages
+    if normalize_advantages:
+        normalized = (advantages - advantages.mean()) / advantages.std(
+            unbiased=False
+        ).clamp_min(1e-8)
     ratio = (new_log_probability - old_log_probability).exp()
     policy = -torch.minimum(
         ratio * normalized,
@@ -354,6 +380,95 @@ def ppo_loss(
         "entropy": entropy_loss,
         "approximate_kl": approximate_kl,
         "clip_fraction": clip_fraction,
+    }
+
+
+def ppo_update(
+    model: HybridActorCritic,
+    optimizer: torch.optim.Optimizer,
+    rollout: PPORollout,
+    config: PPOConfig,
+    *,
+    training_seed: int,
+    update_index: int,
+) -> dict[str, float | int]:
+    """Run one reproducibly ordered PPO update over a completed rollout."""
+    if not isinstance(training_seed, int) or isinstance(training_seed, bool):
+        raise ValueError("training_seed must be an integer")
+    if not isinstance(update_index, int) or isinstance(update_index, bool) or update_index < 0:
+        raise ValueError("update_index must be a non-negative integer")
+    flat = rollout.flatten()
+    sample_count = int(flat["advantages"].shape[0])
+    if sample_count == 0:
+        raise ValueError("PPO rollout must contain samples")
+    advantages = flat["advantages"]
+    normalized_advantages = (advantages - advantages.mean()) / advantages.std(
+        unbiased=False
+    ).clamp_min(1e-8)
+    generator = torch.Generator(device="cpu")
+    generator.manual_seed(training_seed + update_index * 1_000_003)
+    metric_names = (
+        "total",
+        "policy",
+        "value",
+        "entropy",
+        "approximate_kl",
+        "clip_fraction",
+    )
+    totals = {name: 0.0 for name in metric_names}
+    observations = flat["observations"]
+    actions = flat["actions"]
+    seen = 0
+    minibatches = 0
+    maximum_gradient_norm = 0.0
+    model.train()
+    for _ in range(config.update_epochs):
+        permutation = torch.randperm(sample_count, generator=generator)
+        for start in range(0, sample_count, config.minibatch_size):
+            indices = permutation[start : start + config.minibatch_size]
+            batch_observation = {name: value[indices] for name, value in observations.items()}
+            batch_action = {name: value[indices] for name, value in actions.items()}
+            prediction = model(batch_observation)
+            log_probability, entropy = model.evaluate_actions(
+                batch_observation, batch_action, prediction=prediction
+            )
+            losses = ppo_loss(
+                log_probability,
+                flat["old_log_probability"][indices],
+                normalized_advantages[indices],
+                prediction["value"],
+                flat["returns"][indices],
+                entropy,
+                config,
+                normalize_advantages=False,
+            )
+            if not all(bool(torch.isfinite(value)) for value in losses.values()):
+                raise ValueError("non-finite PPO loss")
+            optimizer.zero_grad(set_to_none=True)
+            losses["total"].backward()
+            if not all(
+                parameter.grad is None or bool(torch.isfinite(parameter.grad).all())
+                for parameter in model.parameters()
+            ):
+                raise ValueError("non-finite PPO gradient")
+            gradient_norm = nn.utils.clip_grad_norm_(model.parameters(), config.max_grad_norm)
+            if not bool(torch.isfinite(gradient_norm)):
+                raise ValueError("non-finite PPO gradient norm")
+            optimizer.step()
+            count = int(indices.numel())
+            for name in metric_names:
+                totals[name] += float(losses[name].detach()) * count
+            maximum_gradient_norm = max(maximum_gradient_norm, float(gradient_norm))
+            minibatches += 1
+            seen += count
+    return {
+        "updateIndex": update_index,
+        "samples": sample_count,
+        "epochs": config.update_epochs,
+        "minibatches": minibatches,
+        **{name: value / seen for name, value in totals.items()},
+        "maximumGradientNormBeforeClip": maximum_gradient_norm,
+        "maximumGradientNormAfterClip": min(maximum_gradient_norm, config.max_grad_norm),
     }
 
 

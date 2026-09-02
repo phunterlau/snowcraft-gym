@@ -423,9 +423,11 @@ partial observation, or self-play confounds.
 - [x] Add detached fixed-horizon rollout/GAE buffers with terminal versus
       time-limit truncation handled separately, strict fixed-world tensor
       validation, immutable snapshots, and deterministic time/world flattening.
-- [ ] Add the deterministic minibatch optimizer loop with advantage
-      normalization, clipped policy/value losses, gradient clipping,
-      KL/entropy diagnostics, and exact resume metadata.
+- [x] Add the deterministic minibatch optimizer loop with global advantage
+      normalization, clipped policy/value losses, finite-gradient enforcement,
+      gradient clipping, and aggregated KL/entropy/clip diagnostics.
+- [ ] Add exact PPO checkpoint/resume metadata, including optimizer and random
+      state plus rollout/update counters and curriculum provenance.
 - [ ] Keep canonical evaluation reward at win `+1`, loss `-1`, draw `0`. If
       sparse learning blocks the smoke test, add an opt-in training wrapper with
       potential-based own-minus-enemy health shaping and test that it leaves
@@ -455,7 +457,10 @@ potential shaping. Rollout storage, optimizer/resume, and qualifying runs remain
 open; the M6.2 exit gate is not yet claimed. The fixed-horizon rollout buffer
 now snapshots vector-world tensors, rejects inconsistent transitions, computes
 terminal-aware GAE only when complete, and flattens time/world axes for the
-upcoming optimizer without collapsing entity features.
+optimizer without collapsing entity features. PPO updates use a reproducible
+seed/update-index permutation and report sample-weighted diagnostics across
+every epoch and minibatch; exact checkpoint resume and live collection remain
+open.
 
 ### M7 — plan-conditioned learned executor
 

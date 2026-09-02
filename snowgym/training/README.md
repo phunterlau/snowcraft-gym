@@ -150,6 +150,13 @@ flattens only the first two axes for optimization. Terminal transitions do not
 bootstrap, time-limit truncations bootstrap once but stop recurrence, and an
 incomplete rollout cannot be consumed.
 
+`ppo_update` normalizes advantages once over the complete rollout, derives
+epoch permutations from the training seed and update index, and applies the
+hybrid clipped objective in deterministic minibatches. It rejects non-finite
+losses or gradients, clips the aggregate gradient norm, and returns
+sample-weighted policy/value/entropy/KL/clip diagnostics. Exact PPO checkpoint
+resume is the next gate.
+
 The frozen `ppo_curriculum_v0.json` keeps training ranges disjoint from eight
 evaluation seeds per gate and sets thresholds before qualifying runs. The
 current foundation does not yet claim a PPO result; live batch collection,
