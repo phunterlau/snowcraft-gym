@@ -1,0 +1,27 @@
+{
+  "format": "snowgym.trajectory-export.v0",
+  "name": "scripted-blue-3v3-scripted-v0",
+  "teacher": "simple-blue.v0",
+  "maxTeamUnits": 10,
+  "shardSize": 256,
+  "splits": {
+    "train": [
+      {"seed": 41, "scenario": {"blueUnits": 3, "redUnits": 3, "arenaWidth": 40, "arenaHeight": 30, "maxTicks": 2400, "decisionHz": 10, "redDifficulty": "easy", "redController": "scripted"}},
+      {"seed": 42, "scenario": {"blueUnits": 3, "redUnits": 3, "arenaWidth": 40, "arenaHeight": 30, "maxTicks": 2400, "decisionHz": 10, "redDifficulty": "easy", "redController": "scripted"}},
+      {"seed": 43, "scenario": {"blueUnits": 3, "redUnits": 3, "arenaWidth": 40, "arenaHeight": 30, "maxTicks": 2400, "decisionHz": 10, "redDifficulty": "easy", "redController": "scripted"}},
+      {"seed": 44, "scenario": {"blueUnits": 3, "redUnits": 3, "arenaWidth": 40, "arenaHeight": 30, "maxTicks": 2400, "decisionHz": 10, "redDifficulty": "easy", "redController": "scripted"}},
+      {"seed": 45, "scenario": {"blueUnits": 3, "redUnits": 3, "arenaWidth": 40, "arenaHeight": 30, "maxTicks": 2400, "decisionHz": 10, "redDifficulty": "easy", "redController": "scripted"}},
+      {"seed": 46, "scenario": {"blueUnits": 3, "redUnits": 3, "arenaWidth": 40, "arenaHeight": 30, "maxTicks": 2400, "decisionHz": 10, "redDifficulty": "easy", "redController": "scripted"}},
+      {"seed": 47, "scenario": {"blueUnits": 3, "redUnits": 3, "arenaWidth": 40, "arenaHeight": 30, "maxTicks": 2400, "decisionHz": 10, "redDifficulty": "easy", "redController": "scripted"}},
+      {"seed": 48, "scenario": {"blueUnits": 3, "redUnits": 3, "arenaWidth": 40, "arenaHeight": 30, "maxTicks": 2400, "decisionHz": 10, "redDifficulty": "easy", "redController": "scripted"}}
+    ],
+    "validation": [
+      {"seed": 141, "scenario": {"blueUnits": 3, "redUnits": 3, "arenaWidth": 40, "arenaHeight": 30, "maxTicks": 2400, "decisionHz": 10, "redDifficulty": "easy", "redController": "scripted"}},
+      {"seed": 142, "scenario": {"blueUnits": 3, "redUnits": 3, "arenaWidth": 40, "arenaHeight": 30, "maxTicks": 2400, "decisionHz": 10, "redDifficulty": "easy", "redController": "scripted"}}
+    ],
+    "evaluation": [
+      {"seed": 241, "scenario": {"blueUnits": 3, "redUnits": 3, "arenaWidth": 40, "arenaHeight": 30, "maxTicks": 2400, "decisionHz": 10, "redDifficulty": "easy", "redController": "scripted"}},
+      {"seed": 242, "scenario": {"blueUnits": 3, "redUnits": 3, "arenaWidth": 40, "arenaHeight": 30, "maxTicks": 2400, "decisionHz": 10, "redDifficulty": "easy", "redController": "scripted"}}
+    ]
+  }
+}
