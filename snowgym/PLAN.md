@@ -1072,6 +1072,13 @@ plan/target path. Tests prove zero-init invariance, compatible initialization,
 frozen action-head identity, and adapter learning. A matched frozen experiment
 and action-accuracy gate remain next.
 
+M7 single-checkpoint offline gate foundation (2026-09-02):
+`plan_checkpoint_evaluate.py` applies the existing action, target, and same-state
+counterfactual metrics to one checkpoint on any audited aligned plan dataset.
+Its semantic result binds checkpoint/state and dataset digests and is independently
+auditable. This supplies the action-accuracy safety measurement needed before a
+residual adapter can be judged on closed-loop outcomes.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO

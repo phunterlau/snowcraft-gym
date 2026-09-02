@@ -407,6 +407,12 @@ so loading a target-only checkpoint preserves every initial action logit. The
 inherited entity encoders, actor, and action head remain frozen; only the new
 adapter and existing plan/target path train.
 
+Measure any conditioned checkpoint on an audited held-out plan corpus with
+`snowgym-evaluate-plan-checkpoint`. It reports the same action accuracy, target
+error, and counterfactual plan-swap metrics as the matched ablation evaluator,
+and binds checkpoint/state plus dataset digests in an audited result. Use this
+to enforce action-regression limits before interpreting closed-loop outcomes.
+
 ## PPO foundation
 
 Run a short end-to-end infrastructure smoke against the first frozen curriculum
