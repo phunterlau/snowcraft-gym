@@ -732,3 +732,24 @@ exactly zero. Its overall action-type accuracy was lower (`0.95503` versus
 `0.97309`), and first-decision action types were identical across the sampled
 plans. This is positive target-following development evidence, not a passed M7
 gate or closed-loop objective-completion result.
+
+The first qualification is predeclared in
+`configs/plan_qualification_v0.json`, bound to
+`configs/plan_bc_ablation_qual_v0.json`. After generating exactly the rollout
+seeds/counts named there, converting, training, and evaluating, apply the gate:
+
+```bash
+cd snowgym/training
+.venv/bin/python -m snowgym_training.plan_qualification \
+  --evaluation evaluations/plan_bc_ablation_qual_v0.json \
+  --spec src/snowgym_training/configs/plan_qualification_v0.json \
+  --config src/snowgym_training/configs/plan_bc_ablation_qual_v0.json \
+  --output evaluations/plan_qualification_v0.json \
+  --json
+```
+
+The spec enforces disjoint environment and plan-seed ranges and binds the exact
+ablation-config digest. The gate is conjunctive: target accuracy, degradation
+under plan swapping, target sensitivity, bounded action-accuracy regression,
+and exact no-plan invariance must all pass. A failed check remains visible; the
+runner never selects or silently substitutes a checkpoint.

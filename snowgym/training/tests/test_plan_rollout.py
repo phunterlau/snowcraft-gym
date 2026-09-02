@@ -15,12 +15,16 @@ from snowgym_training.plan_evaluate import (
     audit_plan_evaluation,
     evaluate_plan_ablation,
 )
+from snowgym_training.plan_qualification import (
+    qualify_plan_evaluation,
+    validate_plan_qualification_spec,
+)
 from snowgym_training.plan_rollout import (
     audit_plan_rollouts,
     convert_plan_rollouts,
     load_plan_rollouts,
 )
-from snowgym_training.trajectory import audit_dataset
+from snowgym_training.trajectory import audit_dataset, json_digest
 
 
 def test_javascript_digest_matches_json_stringify_number_forms() -> None:
@@ -129,6 +133,41 @@ def test_counterfactual_evaluation_swaps_only_plan_input(tmp_path: Path) -> None
     output.write_text(json.dumps(corrupt), encoding="utf-8")
     with pytest.raises(ValueError, match="digest mismatch"):
         audit_plan_evaluation(output, ablation, dataset)
+
+
+def test_predeclared_plan_qualification_gate_and_seed_separation(tmp_path: Path) -> None:
+    config = ablation_config()
+    config_path = tmp_path / "config.json"
+    config_path.write_text(json.dumps(config), encoding="utf-8")
+    spec = qualification_spec(config)
+    validate_plan_qualification_spec(spec)
+    spec_path = tmp_path / "spec.json"
+    spec_path.write_text(json.dumps(spec), encoding="utf-8")
+    evaluation_body = {
+        "format": "snowgym.plan-counterfactual-evaluation.v0",
+        "ablationResultDigest": "sha256:" + "1" * 64,
+        "evaluationDatasetDigest": "sha256:" + "2" * 64,
+        "episodes": 2,
+        "transitions": 2,
+        "metrics": qualification_metrics(),
+    }
+    evaluation = {**evaluation_body, "evaluationDigest": json_digest(evaluation_body)}
+    evaluation_path = tmp_path / "evaluation.json"
+    evaluation_path.write_text(json.dumps(evaluation), encoding="utf-8")
+
+    result = qualify_plan_evaluation(
+        evaluation_path=evaluation_path,
+        spec_path=spec_path,
+        config_path=config_path,
+        output=tmp_path / "qualification.json",
+    )
+    assert result["passed"] is True
+    assert all(result["checks"].values())
+
+    overlap = json.loads(json.dumps(spec))
+    overlap["evaluationRollout"]["planSeed"] = 120
+    with pytest.raises(ValueError, match="plan seed ranges must be disjoint"):
+        validate_plan_qualification_spec(overlap)
 
 
 def rollout_value() -> dict:
@@ -293,4 +332,59 @@ def ablation_config() -> dict:
             "power_weight": 1.0,
         },
         "evaluationSuite": "plan-smoke",
+    }
+
+
+def qualification_spec(config: dict) -> dict:
+    rollout = {
+        "map": "arena6.json",
+        "blueUnits": 6,
+        "redUnits": 6,
+        "samples": 6,
+        "maxDecisions": 80,
+        "redDifficulty": "easy",
+    }
+    return {
+        "format": "snowgym.plan-qualification-spec.v0",
+        "name": "test-qualification",
+        "trainingRollout": {**rollout, "environmentSeed": 1, "planSeed": 120},
+        "evaluationRollout": {**rollout, "environmentSeed": 2, "planSeed": 600},
+        "ablationConfigDigest": json_digest(config),
+        "thresholds": {
+            "maxConditionedTargetMse": 0.1,
+            "maxTargetMseRatio": 0.5,
+            "minTargetMseSwapDelta": 0.1,
+            "minTargetMeanAbsoluteDelta": 0.2,
+            "maxActionAccuracyDeficit": 0.03,
+            "noPlanMaxAbsoluteSensitivity": 1e-12,
+        },
+    }
+
+
+def qualification_metrics() -> dict:
+    common = {
+        "firstDecisionActionAccuracy": 1.0,
+        "correctPlanActionNll": 0.1,
+        "shuffledPlanActionNll": 0.1,
+        "counterfactualNllDelta": 0.0,
+    }
+    return {
+        "noPlan": {
+            **common,
+            "actionAccuracy": 0.97,
+            "correctPlanTargetMse": 0.3,
+            "shuffledPlanTargetMse": 0.3,
+            "counterfactualTargetMseDelta": 0.0,
+            "counterfactualActionChangeRate": 0.0,
+            "counterfactualTargetMeanAbsoluteDelta": 0.0,
+        },
+        "planConditioned": {
+            **common,
+            "actionAccuracy": 0.95,
+            "correctPlanTargetMse": 0.05,
+            "shuffledPlanTargetMse": 0.35,
+            "counterfactualTargetMseDelta": 0.3,
+            "counterfactualActionChangeRate": 0.0,
+            "counterfactualTargetMeanAbsoluteDelta": 0.4,
+        },
     }

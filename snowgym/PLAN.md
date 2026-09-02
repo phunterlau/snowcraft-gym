@@ -815,6 +815,20 @@ shuffled target MSE. These are strong target-following development results, not
 an M7 exit: a disjoint predeclared qualification suite and closed-loop
 directive/objective metrics remain open.
 
+M7 qualification freeze (2026-09-02): before collecting qualification data,
+`configs/plan_qualification_v0.json` fixes Winter Front 6v6 training at
+environment seed 6200 / plan seeds 1200-1223 and evaluation at disjoint
+environment seed 7200 / plan seeds 1800-1811, both with 80-decision horizons.
+It binds the exact 3,000-step `plan_bc_ablation_qual_v0` config digest and
+requires every check: conditioned target MSE at most `0.10` and half the
+no-plan MSE, shuffled-plan target-MSE increase at least `0.10`, mean target
+change at least `0.20`, action-accuracy deficit at most `0.03`, and all no-plan
+sensitivity measures at most `1e-12`. The qualification tool validates seed
+separation and config binding, verifies the evaluation digest, records every
+check, and never performs checkpoint selection. Qualification execution is
+next; even a pass advances only the paired offline target-following evidence,
+not the closed-loop M7 exit.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO
