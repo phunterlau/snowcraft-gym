@@ -1,0 +1,71 @@
+{
+  "architecture": {
+    "action_conditioned_targets": true,
+    "actor_hidden": 64,
+    "entity_embedding": 24,
+    "entity_hidden": 32,
+    "plan_conditioned": true
+  },
+  "checkpointDigest": "sha256:a38df3533accc07ba9b23b212440eba3b015deb28641162fd216cbd22289f81e",
+  "datasetManifestHash": "sha256:d241e366a465b5920e3257896ec0b8c2c6fd0292e4920226cf109ee2f90b7e4f",
+  "evaluationSuite": "plan-counterfactual-6v6-terrain-dev-v0",
+  "format": "snowgym.checkpoint.v0",
+  "gitCommit": "4cb37e2cf8f09288014be6bf5d77b1b610276a72",
+  "loss": {
+    "action_weight": 1.0,
+    "power_weight": 0.5,
+    "target_weight": 5.0,
+    "throw_action_weight": 5.0
+  },
+  "optimizer": {
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "epsilon": 1e-08,
+    "learningRate": 0.003,
+    "name": "Adam",
+    "weightDecay": 0.0
+  },
+  "stateDigest": "sha256:b409457aa6a7a2691199d6ade903237e7eed1abd5c3c060b0b71ce471746584b",
+  "step": 3000,
+  "trainingConfig": {
+    "architecture": {
+      "action_conditioned_targets": true,
+      "actor_hidden": 64,
+      "entity_embedding": 24,
+      "entity_hidden": 32,
+      "plan_conditioned": true
+    },
+    "batchSize": 64,
+    "evaluationSuite": "plan-counterfactual-6v6-terrain-dev-v0",
+    "format": "snowgym.bc-training-config.v0",
+    "learningRate": 0.003,
+    "loss": {
+      "action_weight": 1.0,
+      "power_weight": 0.5,
+      "target_weight": 5.0,
+      "throw_action_weight": 5.0
+    },
+    "name": "plan-aware-blue-6v6-terrain-dev-v0-plan-conditioned",
+    "seed": 83001,
+    "steps": 3000
+  },
+  "trainingMetrics": {
+    "final": {
+      "action": 0.09738046675920486,
+      "power": 0.005747323390096426,
+      "target": 0.004361316096037626,
+      "total": 0.12206070870161057
+    },
+    "firstLoss": 2.461210012435913,
+    "startStep": 0
+  },
+  "trainingSeed": 83001,
+  "versions": {
+    "apiVersion": "snowgym.v0",
+    "simulationVersion": "snowgym.sim.v1",
+    "stateHashVersion": "snowgym.state.v1",
+    "upstreamBaseCommit": "7d9fca5"
+  }
+}

@@ -117,6 +117,7 @@ def test_counterfactual_evaluation_swaps_only_plan_input(tmp_path: Path) -> None
     assert result["episodes"] == 2
     assert result["metrics"]["noPlan"]["counterfactualActionChangeRate"] == 0.0
     assert result["metrics"]["noPlan"]["counterfactualTargetMeanAbsoluteDelta"] == 0.0
+    assert result["metrics"]["noPlan"]["counterfactualTargetMseDelta"] == 0.0
     assert (
         result["metrics"]["planConditioned"]["counterfactualTargetMeanAbsoluteDelta"]
         > 0.0

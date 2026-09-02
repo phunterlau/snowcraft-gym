@@ -112,6 +112,15 @@ def _metrics(
     shuffled_nll = _masked_nll(
         counterfactual["action_logits"], action["action_type"], first_mask
     )
+    target_mask = first_mask & (
+        (action["action_type"] == 1) | (action["action_type"] == 2)
+    )
+    correct_target_mse = _masked_target_mse(
+        correct["target"], action["target"], target_mask
+    )
+    shuffled_target_mse = _masked_target_mse(
+        counterfactual["target"], action["target"], target_mask
+    )
     changed = (correct["action_logits"].argmax(dim=-1) != counterfactual["action_logits"].argmax(dim=-1))
     sensitivity = float(changed[first_mask].float().mean())
     target_sensitivity = float(
@@ -125,6 +134,9 @@ def _metrics(
         "correctPlanActionNll": correct_nll,
         "shuffledPlanActionNll": shuffled_nll,
         "counterfactualNllDelta": shuffled_nll - correct_nll,
+        "correctPlanTargetMse": correct_target_mse,
+        "shuffledPlanTargetMse": shuffled_target_mse,
+        "counterfactualTargetMseDelta": shuffled_target_mse - correct_target_mse,
         "counterfactualActionChangeRate": sensitivity,
         "counterfactualTargetMeanAbsoluteDelta": target_sensitivity,
     }
@@ -139,6 +151,14 @@ def _masked_nll(logits: torch.Tensor, target: torch.Tensor, mask: torch.Tensor) 
         -1, target.long().unsqueeze(-1)
     ).squeeze(-1)
     return float(selected[mask].mean())
+
+
+def _masked_target_mse(
+    predicted: torch.Tensor, target: torch.Tensor, mask: torch.Tensor
+) -> float:
+    if not bool(mask.any()):
+        return 0.0
+    return float(torch.square(predicted.float() - target.float())[mask].mean())
 
 
 def _first_transition_indices(episode_index: np.ndarray) -> np.ndarray:

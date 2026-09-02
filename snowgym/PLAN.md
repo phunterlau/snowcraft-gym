@@ -797,6 +797,24 @@ threshold. Its outcome will determine whether data balance, model capacity, or
 metrics need a separately documented development revision before freezing a
 disjoint qualification configuration.
 
+M7 development outcome (2026-09-02): the post-freeze run collected 1,920
+Winter Front training transitions and 960 disjoint evaluation transitions.
+Their dataset digests are respectively
+`sha256:d241e366a465b5920e3257896ec0b8c2c6fd0292e4920226cf109ee2f90b7e4f`
+and
+`sha256:1ebef435923485f7b26c22d892bd1d5147d31f35bab7d98396bd2d2d636c7069`.
+The matched result digest is
+`sha256:f838b542ab94c1b37ef763afbfc670afd6bb057844882e12bfe30c865845d8df`.
+On held-out first decisions, plan conditioning reduced correct-plan target MSE
+from `0.272753` to `0.048208`; swapping only plans raised conditioned target
+MSE by `0.306098`, while the no-plan target/action deltas were exactly zero.
+Overall conditioned action-type accuracy was lower (`0.955035` versus
+`0.973090`), and first-decision action types did not vary, making action NLL
+non-discriminative there. The evaluator now explicitly records correct and
+shuffled target MSE. These are strong target-following development results, not
+an M7 exit: a disjoint predeclared qualification suite and closed-loop
+directive/objective metrics remain open.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO

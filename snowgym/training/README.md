@@ -715,8 +715,20 @@ The evaluator reports overall and first-decision action accuracy and, at the
 first decision of each episode, cyclically swaps only the plan tensors while
 holding the physical observation fixed. It measures correct versus shuffled
 action negative log-likelihood, predicted action changes, and target movement.
+For move/throw labels it also reports correct-versus-shuffled target MSE, which
+is essential when plans alter destinations without changing the action type.
 The no-plan model should have exactly zero counterfactual sensitivity by
 construction. Nonzero sensitivity from the conditioned model shows influence,
 but acceptance additionally requires better correct-plan fit and later
 closed-loop objective-completion metrics; arbitrary sensitivity is not plan
 following.
+
+The frozen 6v6 development run is retained under
+`runs/plan_bc_ablation_dev_v0`, with held-out metrics in
+`evaluations/plan_bc_ablation_dev_v0.json`. The conditioned model reduced
+correct-plan first-decision target MSE from `0.27275` to `0.04821`; cyclic plan
+swapping raised its target MSE by `0.30610`, while both no-plan swap deltas were
+exactly zero. Its overall action-type accuracy was lower (`0.95503` versus
+`0.97309`), and first-decision action types were identical across the sampled
+plans. This is positive target-following development evidence, not a passed M7
+gate or closed-loop objective-completion result.

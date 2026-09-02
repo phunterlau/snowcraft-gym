@@ -1,0 +1,64 @@
+{
+  "datasetManifestHash": "sha256:d241e366a465b5920e3257896ec0b8c2c6fd0292e4920226cf109ee2f90b7e4f",
+  "format": "snowgym.plan-bc-ablation-result.v0",
+  "matchedBudget": {
+    "batchSize": 64,
+    "learningRate": 0.003,
+    "loss": {
+      "action_weight": 1.0,
+      "power_weight": 0.5,
+      "target_weight": 5.0,
+      "throw_action_weight": 5.0
+    },
+    "seed": 83001,
+    "steps": 3000
+  },
+  "name": "plan-aware-blue-6v6-terrain-dev-v0",
+  "resultDigest": "sha256:f838b542ab94c1b37ef763afbfc670afd6bb057844882e12bfe30c865845d8df",
+  "runs": {
+    "noPlan": {
+      "architecture": {
+        "action_conditioned_targets": true,
+        "actor_hidden": 64,
+        "entity_embedding": 24,
+        "entity_hidden": 32
+      },
+      "checkpointDigest": "sha256:a37d965e6586a6b9317a6b72c35ab5011ddab4d3a4dba1fcd9dc3051035fca73",
+      "path": "no-plan",
+      "stateDigest": "sha256:e54e87fefb4fee517be3b558f56db7141a6686577114d6f5ae77953a8013df72",
+      "trainingMetrics": {
+        "final": {
+          "action": 0.09540680795907974,
+          "power": 0.005995521321892738,
+          "target": 0.01234003808349371,
+          "total": 0.16010475158691406
+        },
+        "firstLoss": 2.4049577713012695,
+        "startStep": 0
+      }
+    },
+    "planConditioned": {
+      "architecture": {
+        "action_conditioned_targets": true,
+        "actor_hidden": 64,
+        "entity_embedding": 24,
+        "entity_hidden": 32,
+        "plan_conditioned": true
+      },
+      "checkpointDigest": "sha256:a38df3533accc07ba9b23b212440eba3b015deb28641162fd216cbd22289f81e",
+      "path": "plan-conditioned",
+      "stateDigest": "sha256:b409457aa6a7a2691199d6ade903237e7eed1abd5c3c060b0b71ce471746584b",
+      "trainingMetrics": {
+        "final": {
+          "action": 0.09738046675920486,
+          "power": 0.005747323390096426,
+          "target": 0.004361316096037626,
+          "total": 0.12206070870161057
+        },
+        "firstLoss": 2.461210012435913,
+        "startStep": 0
+      }
+    }
+  },
+  "sourceConfigDigest": "sha256:a3652c96fdcc9236fdd9d26c7d5abf76fbf1c90de5250a2033f5025234f50032"
+}
