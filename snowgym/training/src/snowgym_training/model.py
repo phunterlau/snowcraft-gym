@@ -44,6 +44,24 @@ class EntityPolicy(nn.Module):
         self.power_head = nn.Linear(config.actor_hidden, 1)
 
     def forward(self, observation: dict[str, Tensor]) -> dict[str, Tensor]:
+        hidden, action_mask, _ = self.features(observation)
+        target_raw = self.target_head(hidden)
+        power_raw = self.power_head(hidden).squeeze(-1)
+        logits = self.action_head(hidden).masked_fill(
+            ~action_mask, torch.finfo(hidden.dtype).min
+        )
+        return {
+            "action_logits": logits,
+            "target": torch.tanh(target_raw),
+            "power": torch.sigmoid(power_raw),
+            "target_raw": target_raw,
+            "power_raw": power_raw,
+            "hidden": hidden,
+        }
+
+    def features(
+        self, observation: dict[str, Tensor]
+    ) -> tuple[Tensor, Tensor, Tensor]:
         allies = self.ally_encoder(observation["allies"].float())
         enemies = self.enemy_encoder(observation["enemies"].float())
         projectiles = self.projectile_encoder(observation["projectiles"].float())
@@ -65,15 +83,9 @@ class EntityPolicy(nn.Module):
         )
         expanded = global_context[:, None, :].expand(-1, allies.shape[1], -1)
         hidden = self.actor(torch.cat([allies, expanded], dim=-1))
-        logits = self.action_head(hidden)
         action_mask = observation["unit_action_mask"].bool().clone()
         action_mask[..., 0] |= ~ally_mask
-        logits = logits.masked_fill(~action_mask, torch.finfo(logits.dtype).min)
-        return {
-            "action_logits": logits,
-            "target": torch.tanh(self.target_head(hidden)),
-            "power": torch.sigmoid(self.power_head(hidden).squeeze(-1)),
-        }
+        return hidden, action_mask, ally_mask
 
 
 def entity_encoder(features: int, config: ModelConfig) -> nn.Sequential:

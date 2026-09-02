@@ -105,3 +105,17 @@ factor, parent-plus-child CPU use, protocol payload bytes, Python JSON
 serialization, and transport-plus-simulation time. The committed short-run
 [M6.1 result](./benchmarks/batch_throughput_v0.json) reached all 64 worlds; it
 is local acceptance evidence rather than a portable performance guarantee.
+
+## PPO foundation
+
+`ppo.py` defines the centralized hybrid actor-critic used by the next training
+stage. Action masks apply before categorical sampling; target terms contribute
+to joint log probability only for move/throw and power only for throw. GAE
+bootstraps time-limit truncation but not true terminal states. The optional
+health potential is a training signal only and never replaces terminal-only
+benchmark reward.
+
+The frozen `ppo_curriculum_v0.json` keeps training ranges disjoint from eight
+evaluation seeds per gate and sets thresholds before qualifying runs. The
+current foundation does not yet claim a PPO result; rollout collection, exact
+optimizer resume, and the checkpoint series remain next.

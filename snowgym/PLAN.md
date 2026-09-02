@@ -398,7 +398,7 @@ only if learning curves or scenario coverage require it.
 Goal: demonstrate reward-driven improvement without commander, unit-level MARL,
 partial observation, or self-play confounds.
 
-- [ ] Add a custom Torch PPO implementation for the squad-level actor. The
+- [x] Add a custom Torch PPO implementation for the squad-level actor. The
       joint log probability includes action type for present units, target only
       for move/throw, and power only for throw; masks also apply to entropy.
 - [ ] Add rollout/GAE buffers with terminal versus time-limit truncation handled
@@ -422,6 +422,15 @@ M6.2 exit: PPO reproducibly solves the defined 1v1-random gate, shows meaningful
 improvement against easy scripted 1v1, and exceeds the random-policy baseline
 in 3v3-random evaluation. Exact numerical thresholds and seed counts must be
 frozen in the evaluation manifest before the qualifying training run.
+
+M6.2 foundation (2026-09-01): the versioned curriculum freezes disjoint
+training ranges and eight evaluation seeds for each 1v1-random,
+1v1-easy-scripted, and 3v3-random gate before training. The actor-critic now
+implements mask-aware categorical actions, tanh/sigmoid continuous heads,
+conditional joint log probability and entropy, a centralized value head,
+terminal-aware GAE, clipped PPO loss, KL/clip diagnostics, and opt-in health
+potential shaping. Rollout storage, optimizer/resume, and qualifying runs remain
+open; the M6.2 exit gate is not yet claimed.
 
 ### M7 — plan-conditioned learned executor
 

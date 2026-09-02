@@ -1,0 +1,32 @@
+{
+  "format": "snowgym.ppo-curriculum.v0",
+  "name": "centralized-hybrid-ppo-v0",
+  "trainingSeedRanges": {
+    "1v1-random": [10000, 19999],
+    "1v1-easy-scripted": [20000, 29999],
+    "3v3-random": [30000, 39999]
+  },
+  "gates": [
+    {
+      "id": "1v1-random",
+      "evaluationSeeds": [3101, 3102, 3103, 3104, 3105, 3106, 3107, 3108],
+      "scenario": {"blueUnits": 1, "redUnits": 1, "arenaWidth": 40, "arenaHeight": 30, "maxTicks": 1200, "decisionHz": 10, "redDifficulty": "normal", "redController": "random"},
+      "minimumWinRate": 0.75,
+      "minimumImprovementOverMaskedRandom": 0.50
+    },
+    {
+      "id": "1v1-easy-scripted",
+      "evaluationSeeds": [4101, 4102, 4103, 4104, 4105, 4106, 4107, 4108],
+      "scenario": {"blueUnits": 1, "redUnits": 1, "arenaWidth": 40, "arenaHeight": 30, "maxTicks": 1800, "decisionHz": 10, "redDifficulty": "easy", "redController": "scripted"},
+      "minimumWinRate": 0.50,
+      "minimumImprovementOverMaskedRandom": 0.25
+    },
+    {
+      "id": "3v3-random",
+      "evaluationSeeds": [5101, 5102, 5103, 5104, 5105, 5106, 5107, 5108],
+      "scenario": {"blueUnits": 3, "redUnits": 3, "arenaWidth": 40, "arenaHeight": 30, "maxTicks": 2400, "decisionHz": 10, "redDifficulty": "normal", "redController": "random"},
+      "minimumWinRate": 0.50,
+      "minimumImprovementOverMaskedRandom": 0.20
+    }
+  ]
+}
