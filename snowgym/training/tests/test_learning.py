@@ -13,7 +13,12 @@ from snowgym_training.data import TrajectoryDataset
 from snowgym_training.demo import run_learned_demo
 from snowgym_training.evaluate import EVALUATION_FORMAT, run_checkpoint_evaluation
 from snowgym_training.loss import LossConfig, behavior_clone_loss
-from snowgym_training.model import EntityPolicy, ModelConfig, model_config
+from snowgym_training.model import (
+    EntityPolicy,
+    ModelConfig,
+    model_config,
+    nearest_enemy_target,
+)
 from snowgym_training.policy import TorchPolicy
 from snowgym_training.trainer import TRAINING_CONFIG_FORMAT, train_behavior_clone
 from snowgym_training.trajectory import (
@@ -93,6 +98,23 @@ def test_action_conditioned_target_heads_select_distinct_means(tmp_path: Path) -
     loss["total"].backward()
     assert model.move_target_head.weight.grad is not None
     assert model.throw_target_head.weight.grad is not None
+
+
+def test_nearest_enemy_throw_prior_uses_live_relative_geometry() -> None:
+    allies = torch.tensor([[[0.0, 0.0], [0.8, 0.8]]])
+    enemies = torch.tensor([[[0.2, 0.1], [0.9, 0.7], [-0.9, -0.9]]])
+    mask = torch.tensor([[1, 1, 0]], dtype=torch.int8)
+    target = nearest_enemy_target(allies, enemies, mask.bool())
+    torch.testing.assert_close(target, torch.tensor([[[0.2, 0.1], [0.9, 0.7]]]))
+
+    no_enemies = nearest_enemy_target(allies, enemies, torch.zeros_like(mask).bool())
+    torch.testing.assert_close(no_enemies, torch.zeros_like(allies))
+
+
+def test_nearest_enemy_throw_prior_requires_conditioned_targets() -> None:
+    legacy = {"entity_hidden": 16, "entity_embedding": 12, "actor_hidden": 24}
+    with pytest.raises(ValueError, match="requires action_conditioned_targets"):
+        model_config({**legacy, "nearest_enemy_throw_target": True})
 
 
 def test_one_batch_overfit_reduces_hybrid_loss(tmp_path: Path) -> None:

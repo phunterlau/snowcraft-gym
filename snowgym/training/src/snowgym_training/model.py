@@ -19,6 +19,7 @@ class ModelConfig:
     actor_hidden: int = 64
     pairwise_enemy_attention: bool = False
     action_conditioned_targets: bool = False
+    nearest_enemy_throw_target: bool = False
 
     def as_dict(self) -> dict[str, int | bool]:
         value: dict[str, int | bool] = {
@@ -30,6 +31,8 @@ class ModelConfig:
             value["pairwise_enemy_attention"] = True
         if self.action_conditioned_targets:
             value["action_conditioned_targets"] = True
+        if self.nearest_enemy_throw_target:
+            value["nearest_enemy_throw_target"] = True
         return value
 
 
@@ -61,7 +64,9 @@ class EntityPolicy(nn.Module):
         self.action_conditioned_targets = config.action_conditioned_targets
         if self.action_conditioned_targets:
             self.move_target_head = nn.Linear(config.actor_hidden, 2)
-            self.throw_target_head = nn.Linear(config.actor_hidden, 2)
+            self.nearest_enemy_throw_target = config.nearest_enemy_throw_target
+            if not self.nearest_enemy_throw_target:
+                self.throw_target_head = nn.Linear(config.actor_hidden, 2)
         else:
             self.target_head = nn.Linear(config.actor_hidden, 2)
         self.power_head = nn.Linear(config.actor_hidden, 1)
@@ -80,11 +85,22 @@ class EntityPolicy(nn.Module):
         }
         if self.action_conditioned_targets:
             zeros = torch.zeros_like(self.move_target_head(hidden))
+            throw_target = (
+                torch.atanh(
+                    nearest_enemy_target(
+                        observation["allies"][..., 2:4].float(),
+                        observation["enemies"][..., 2:4].float(),
+                        observation["enemy_mask"].bool(),
+                    ).clamp(-1 + 1e-6, 1 - 1e-6)
+                )
+                if self.nearest_enemy_throw_target
+                else self.throw_target_head(hidden)
+            )
             target_raw_by_action = torch.stack(
                 [
                     zeros,
                     self.move_target_head(hidden),
-                    self.throw_target_head(hidden),
+                    throw_target,
                     zeros,
                 ],
                 dim=-2,
@@ -189,17 +205,38 @@ def select_action_target(targets: Tensor, action_type: Tensor) -> Tensor:
     return targets.gather(-2, index).squeeze(-2)
 
 
+def nearest_enemy_target(
+    ally_position: Tensor, enemy_position: Tensor, enemy_mask: Tensor
+) -> Tensor:
+    distance = (
+        ally_position[:, :, None, :] - enemy_position[:, None, :, :]
+    ).square().sum(dim=-1)
+    distance = distance.masked_fill(~enemy_mask[:, None, :], torch.inf)
+    nearest = distance.argmin(dim=-1)
+    index = nearest.unsqueeze(-1).unsqueeze(-1).expand(*nearest.shape, 1, 2)
+    selected = enemy_position[:, None, :, :].expand(
+        -1, ally_position.shape[1], -1, -1
+    ).gather(-2, index).squeeze(-2)
+    return torch.where(
+        enemy_mask.any(dim=-1)[:, None, None], selected, torch.zeros_like(selected)
+    )
+
+
 def model_config(value: Any) -> ModelConfig:
     required = {
         "entity_hidden",
         "entity_embedding",
         "actor_hidden",
     }
-    optional = {"pairwise_enemy_attention", "action_conditioned_targets"}
+    optional = {
+        "pairwise_enemy_attention",
+        "action_conditioned_targets",
+        "nearest_enemy_throw_target",
+    }
     if not isinstance(value, dict) or set(value) - optional != required:
         raise ValueError(
             "architecture must define entity_hidden, entity_embedding, actor_hidden "
-            "and may enable pairwise_enemy_attention or action_conditioned_targets"
+            "and may enable relational or action-conditioned target features"
         )
     if not all(
         isinstance(item, int) and not isinstance(item, bool) and item > 0
@@ -210,4 +247,10 @@ def model_config(value: Any) -> ModelConfig:
     for name in optional:
         if not isinstance(value.get(name, False), bool):
             raise ValueError(f"architecture {name} must be boolean")
+    if value.get("nearest_enemy_throw_target", False) and not value.get(
+        "action_conditioned_targets", False
+    ):
+        raise ValueError(
+            "architecture nearest_enemy_throw_target requires action_conditioned_targets"
+        )
     return ModelConfig(**value)
