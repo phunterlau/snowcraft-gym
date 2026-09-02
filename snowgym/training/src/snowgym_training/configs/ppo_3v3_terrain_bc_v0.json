@@ -1,0 +1,14 @@
+{
+  "format": "snowgym.ppo-series-config.v0",
+  "name": "ppo-3v3-terrain-bc-v0",
+  "gateId": "3v3-terrain",
+  "worlds": 8,
+  "rolloutSteps": 400,
+  "trainingSeed": 77,
+  "rewardMode": "health-potential",
+  "checkpointUpdates": [1, 5, 10],
+  "maxEvaluationDecisions": 400,
+  "architecture": {"entity_hidden": 32, "entity_embedding": 24, "actor_hidden": 64},
+  "ppoConfig": {"gamma": 0.99, "gae_lambda": 0.95, "clip_ratio": 0.2, "value_weight": 0.5, "entropy_weight": 0.001, "max_grad_norm": 0.5, "learning_rate": 0.00000001, "update_epochs": 1, "minibatch_size": 3200, "initial_target_log_std": -3.0, "initial_power_log_std": -3.0},
+  "warmStart": {"path": "checkpoints/bc_3v3_terrain_v0", "checkpointDigest": "sha256:757f46ca1d2c361814c15f11327ffcc88bf73b4218e633bbc8d16b2424cd9cbd"}
+}

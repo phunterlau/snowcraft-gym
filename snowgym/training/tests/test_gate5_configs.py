@@ -3,6 +3,7 @@ from pathlib import Path
 
 from snowgym_training.checkpoint import load_checkpoint
 from snowgym_training.curriculum import load_curriculum
+from snowgym_training.ppo_series_config import load_series_config
 from snowgym_training.trainer import load_training_config
 from snowgym_training.trajectory import json_digest, load_export_spec
 
@@ -77,3 +78,17 @@ def test_committed_gate5_initializer_is_digest_bound_and_wins() -> None:
     )
     assert evaluation["summary"]["learned"]["blueWins"] == 2
     assert evaluation["summary"]["learned"]["rejectedActions"] == 0
+
+
+def test_gate5_ppo_config_is_frozen_to_accepted_initializer() -> None:
+    training_root = Path(__file__).parents[1]
+    config = load_series_config(
+        training_root / "src/snowgym_training/configs/ppo_3v3_terrain_bc_v0.json"
+    )
+    assert config["gateId"] == "3v3-terrain"
+    assert config["checkpointUpdates"] == [1, 5, 10]
+    assert config["trainingSeed"] == 77
+    assert config["warmStart"] == {
+        "path": "checkpoints/bc_3v3_terrain_v0",
+        "checkpointDigest": "sha256:757f46ca1d2c361814c15f11327ffcc88bf73b4218e633bbc8d16b2424cd9cbd",
+    }
