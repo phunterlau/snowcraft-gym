@@ -70,6 +70,12 @@ ACTION_ADAPTER_V1_CLOSED_LOOP = (
 ACTION_ADAPTER_V1_BEHAVIORS = (
     ROOT / "training" / "evaluations" / "plan_action_adapter_v1_behaviors.json"
 )
+ACTION_ADAPTER_V2_DEV_EVALUATION = (
+    ROOT / "training" / "evaluations" / "plan_action_adapter_v2_dev_evaluation.json"
+)
+ACTION_ADAPTER_V2_DEV_BEHAVIORS = (
+    ROOT / "training" / "evaluations" / "plan_action_adapter_v2_dev_behaviors.json"
+)
 ACTION_ADAPTER_QUALIFICATION = (
     ROOT / "training" / "src" / "snowgym_training" / "configs"
     / "plan_action_adapter_qualification_v0.json"
@@ -177,6 +183,22 @@ def test_counterfactual_adapter_v1_gate_retains_partial_closed_loop_progress(
     assert result["checks"]["flankBlueAlive"] is True
     assert result["checks"]["supportRedAlive"] is True
     assert result["observed"]["closedLoop"]["supportRedAlive"] == 0
+
+
+def test_changed_action_v2_development_retains_measured_tradeoff() -> None:
+    paired = json.loads(ACTION_ADAPTER_V2_DEV_EVALUATION.read_text(encoding="utf-8"))
+    behaviors = json.loads(ACTION_ADAPTER_V2_DEV_BEHAVIORS.read_text(encoding="utf-8"))
+    metrics = paired["metrics"]
+    assert metrics["changedTeacherPredictionRecall"] > 0.75
+    assert metrics["changedTeacherPairAccuracy"] > 0.69
+    assert metrics["predictedActionChangeRate"] > 0.39
+    conditioned = {
+        item["caseId"]: item
+        for item in behaviors["results"] if item["policy"] == "planConditioned"
+    }
+    assert conditioned["withdraw-backfield"]["decisions"] == 600
+    assert conditioned["withdraw-backfield"]["blueAlive"] == 2
+    assert conditioned["main-with-reserve-support"]["winner"] == "red"
 
 
 def test_plan_dagger_labels_learner_visited_states_headlessly(tmp_path: Path) -> None:

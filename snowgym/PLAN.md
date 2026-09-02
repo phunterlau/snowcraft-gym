@@ -1207,6 +1207,18 @@ closed-loop suites, not a qualification retry. If it materially improves
 changed-teacher alignment without losing v1's support/flank progress, a new
 counterfactual corpus with fresh seeds and a separately frozen gate is required.
 
+M7 changed-action-v2 development outcome (2026-09-02): the fixed weight-5 run
+produced checkpoint digest
+`sha256:00b63d2e8f99e3557211b90b38694bf0a6dbc0333bcd9d587125e6e69148013d`.
+On the reused evaluation split, changed-teacher recall rose from v1's `0.165899`
+to `0.761905` and strict pair accuracy from `0.084485` to `0.697389`, but
+predicted change increased to `0.395417` versus teacher change `0.090417`.
+Closed loop preserved five blue on flank and kept withdraw alive for all 600
+decisions at 2 blue / 1 red, while direct preserved two, hold lost after 205,
+and support lost 0–3 rather than v1's 6–0 win. All actions remained accepted.
+The loss fixes alignment but is overweighted. A predeclared intermediate-weight
+development sweep is required before spending fresh qualification seeds.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO

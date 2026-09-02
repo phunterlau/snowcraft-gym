@@ -458,6 +458,12 @@ action types differ. It requires audited same-state labels and is bounded to
 `[0,100]`. Keep the full primary/counterfactual objectives enabled; this term
 does not replace their accuracy and target-regression constraints.
 
+The weight-5 v2 development run is retained under
+`runs/plan_action_adapter_v2_dev`. It strongly improves changed-teacher recall
+and pair accuracy and makes withdraw survive the full 600-decision horizon, but
+over-changes action types and regresses the v1 support win and hold duration.
+It is diagnostic evidence only; do not promote it over v1 or call it qualified.
+
 ## PPO foundation
 
 Run a short end-to-end infrastructure smoke against the first frozen curriculum
