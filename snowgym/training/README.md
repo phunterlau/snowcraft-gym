@@ -365,6 +365,23 @@ each visited state with the read-only production plan teacher. Output shards
 carry aligned plan tensors and bind the rollout checkpoint, source spec, split
 seeds, simulator versions, and per-episode plan.
 
+Combine independently seeded expert-state and DAgger corpora with:
+
+```bash
+.venv/bin/snowgym-merge-trajectories \
+  --input path/to/expert-plan-dataset \
+  --input artifacts/plan-dagger-v0-train \
+  --output artifacts/plan-dagger-v0-aggregate \
+  --independent-sources \
+  --json
+```
+
+Independent-source mode requires matching split, capacity, simulator versions,
+and plan-conditioning status, plus globally disjoint declared seeds. It retains
+the intersection of audited tensor fields, records dropped source-specific
+auxiliaries, and preserves the plan-conditioned marker. Default merging remains
+strict and requires identical source specifications.
+
 ## PPO foundation
 
 Run a short end-to-end infrastructure smoke against the first frozen curriculum

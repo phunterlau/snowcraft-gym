@@ -214,6 +214,36 @@ def test_merge_datasets_preserves_ordered_source_provenance(tmp_path: Path) -> N
     assert audit_dataset(tmp_path / "merged")["datasetDigest"] == result["datasetDigest"]
 
 
+def test_merge_independent_sources_unions_disjoint_seed_provenance(tmp_path: Path) -> None:
+    first_spec = export_spec()
+    second_spec = export_spec()
+    for episodes in second_spec["splits"].values():
+        for episode in episodes:
+            episode["seed"] += 1_000
+    first_path = tmp_path / "first-spec.json"
+    second_path = tmp_path / "second-spec.json"
+    first_path.write_text(json.dumps(first_spec), encoding="utf-8")
+    second_path.write_text(json.dumps(second_spec), encoding="utf-8")
+    first = tmp_path / "first"
+    second = tmp_path / "second"
+    export_scripted_dataset(
+        output=first, split="train", spec_path=first_path, client=FakeScriptedClient()
+    )
+    export_scripted_dataset(
+        output=second, split="train", spec_path=second_path, client=FakeScriptedClient()
+    )
+
+    result = merge_datasets(
+        output=tmp_path / "merged-independent",
+        inputs=[first, second],
+        independent_sources=True,
+    )
+    assert result["independentSources"] is True
+    assert result["splitSeeds"]["train"] == [11, 12, 1011, 1012]
+    assert len(result["sources"]) == 2
+    assert all(source["sourceSpecDigest"] for source in result["sources"])
+
+
 def test_dataset_audit_detects_tensor_corruption(tmp_path: Path) -> None:
     spec_path = tmp_path / "spec.json"
     spec_path.write_text(json.dumps(export_spec()), encoding="utf-8")

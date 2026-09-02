@@ -1013,6 +1013,15 @@ evidence. Before combining them with expert-state data, the aggregate writer
 must retain plan-conditioning metadata and explicitly support independently
 seeded source specs.
 
+M7 plan-aware aggregate foundation (2026-09-02): trajectory merging now has an
+explicit independent-source mode for combining expert-state and learner-state
+corpora. It requires matching split, capacity, simulator versions, and plan-
+conditioning status; rejects any seed overlap; retains only common audited
+tensor fields; records dropped auxiliaries per source; and preserves plan tensor
+visibility for training. A real qualification-plus-DAgger smoke retained 4,232
+transitions and both required plan arrays while dropping only the original
+`plan_source_seed` auxiliary. Default same-spec merging remains strict.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO

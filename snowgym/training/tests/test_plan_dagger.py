@@ -10,6 +10,7 @@ from snowgym_training.export_plan_dagger import (
     export_plan_dagger_dataset,
     load_plan_dagger_spec,
 )
+from snowgym_training.merge_trajectory import merge_datasets
 from snowgym_training.trajectory import audit_dataset
 
 
@@ -73,3 +74,5 @@ def test_plan_dagger_labels_learner_visited_states_headlessly(tmp_path: Path) ->
     assert dataset.arrays["observation__plan_groups"].shape == (2, 3, 38)
     with np.load(output / manifest["shards"][0]["path"], allow_pickle=False) as shard:
         assert np.all(shard["teacher_accepted"])
+    merged = merge_datasets(output=tmp_path / "merged", inputs=[output, output])
+    assert merged["planConditioned"] is True
