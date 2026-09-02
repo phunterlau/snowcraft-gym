@@ -511,6 +511,13 @@ maneuver assignment—the flank plan is a main group with a flank approach—so 
 absent role receives zero weight and must be added through a separately frozen
 curriculum, not synthesized during training.
 
+The balanced v1 checkpoint under `runs/plan_unit_directive_balanced_v1_dev`
+improves direct, hold, and withdraw (five blue survive direct and withdraw;
+withdraw leaves one red), but flank retains only one blue and support still
+loses 0–6. Offline plan-change calibration also regresses. Keep this as a
+partial result; the next dataset must contain true maneuver assignments and
+more multi-group support states before another training comparison.
+
 ## PPO foundation
 
 Run a short end-to-end infrastructure smoke against the first frozen curriculum

@@ -1329,6 +1329,17 @@ fixed. Its only changes are `sampling: plan-mission-uniform` and
 `roleBalancedLoss: true`. The run may inspect the retained train/validation
 corpora and existing closed-loop suites only; evaluation seeds remain sealed.
 
+M7 balanced-unit-directive-v1 development outcome (2026-09-02): the frozen run
+produced checkpoint `3106db06...`. Direct improved to five blue versus four red,
+hold extended to 317 decisions, and withdraw again reached 600 decisions with
+five blue while reducing red to one. However flank fell to one blue versus five
+red and support remained a 0–6 loss. Validation primary/counterfactual accuracy
+regressed to `0.826678`/`0.798177`, predicted changes rose to `0.280961`, and
+strict changed-pair accuracy fell to `0.447398`. The result is retained but not
+promoted, and sealed evaluation remains untouched. The next collection must add
+real maneuver-group assignments and more multi-group support supervision before
+another controlled training run.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO
