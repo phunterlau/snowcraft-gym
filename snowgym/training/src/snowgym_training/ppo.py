@@ -11,7 +11,7 @@ from torch.distributions import Categorical, Normal
 
 from snowgym_client.encoding import ACTION_MOVE, ACTION_THROW
 
-from .model import EntityPolicy, ModelConfig
+from .model import EntityPolicy, ModelConfig, select_action_target
 
 EPSILON = 1e-6
 
@@ -264,13 +264,12 @@ class HybridActorCritic(nn.Module):
             if deterministic
             else categorical.sample()
         )
-        target_normal = Normal(
-            prediction["target_raw"], self.target_log_std.exp().view(1, 1, 2)
-        )
+        target_mean = conditioned_target_mean(prediction, action_type)
+        target_normal = Normal(target_mean, self.target_log_std.exp().view(1, 1, 2))
         power_normal = Normal(
             prediction["power_raw"], self.power_log_std.exp().view(1, 1)
         )
-        target_raw = prediction["target_raw"] if deterministic else target_normal.sample()
+        target_raw = target_mean if deterministic else target_normal.sample()
         power_raw = prediction["power_raw"] if deterministic else power_normal.sample()
         action = {
             "action_type": action_type,
@@ -299,7 +298,8 @@ class HybridActorCritic(nn.Module):
         target_value = action["target"].clamp(-1 + EPSILON, 1 - EPSILON)
         target_raw = torch.atanh(target_value)
         target_normal = Normal(
-            output["target_raw"], self.target_log_std.exp().view(1, 1, 2)
+            conditioned_target_mean(output, action_type),
+            self.target_log_std.exp().view(1, 1, 2),
         )
         target_log_prob = target_normal.log_prob(target_raw) - torch.log(
             1 - target_value.square() + EPSILON
@@ -330,6 +330,14 @@ class HybridActorCritic(nn.Module):
             + power_normal.entropy() * throw_mask
         ).sum(dim=-1)
         return joint_log_prob, entropy
+
+
+def conditioned_target_mean(
+    prediction: dict[str, Tensor], action_type: Tensor
+) -> Tensor:
+    if "target_raw_by_action" in prediction:
+        return select_action_target(prediction["target_raw_by_action"], action_type)
+    return prediction["target_raw"]
 
 
 def generalized_advantage_estimate(

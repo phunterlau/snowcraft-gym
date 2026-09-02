@@ -18,6 +18,7 @@ class ModelConfig:
     entity_embedding: int = 24
     actor_hidden: int = 64
     pairwise_enemy_attention: bool = False
+    action_conditioned_targets: bool = False
 
     def as_dict(self) -> dict[str, int | bool]:
         value: dict[str, int | bool] = {
@@ -27,6 +28,8 @@ class ModelConfig:
         }
         if self.pairwise_enemy_attention:
             value["pairwise_enemy_attention"] = True
+        if self.action_conditioned_targets:
+            value["action_conditioned_targets"] = True
         return value
 
 
@@ -55,24 +58,51 @@ class EntityPolicy(nn.Module):
             nn.ReLU(),
         )
         self.action_head = nn.Linear(config.actor_hidden, ACTION_TYPE_COUNT)
-        self.target_head = nn.Linear(config.actor_hidden, 2)
+        self.action_conditioned_targets = config.action_conditioned_targets
+        if self.action_conditioned_targets:
+            self.move_target_head = nn.Linear(config.actor_hidden, 2)
+            self.throw_target_head = nn.Linear(config.actor_hidden, 2)
+        else:
+            self.target_head = nn.Linear(config.actor_hidden, 2)
         self.power_head = nn.Linear(config.actor_hidden, 1)
 
     def forward(self, observation: dict[str, Tensor]) -> dict[str, Tensor]:
         hidden, action_mask, _ = self.features(observation)
-        target_raw = self.target_head(hidden)
         power_raw = self.power_head(hidden).squeeze(-1)
         logits = self.action_head(hidden).masked_fill(
             ~action_mask, torch.finfo(hidden.dtype).min
         )
-        return {
+        result = {
             "action_logits": logits,
-            "target": torch.tanh(target_raw),
             "power": torch.sigmoid(power_raw),
-            "target_raw": target_raw,
             "power_raw": power_raw,
             "hidden": hidden,
         }
+        if self.action_conditioned_targets:
+            zeros = torch.zeros_like(self.move_target_head(hidden))
+            target_raw_by_action = torch.stack(
+                [
+                    zeros,
+                    self.move_target_head(hidden),
+                    self.throw_target_head(hidden),
+                    zeros,
+                ],
+                dim=-2,
+            )
+            selected = logits.argmax(dim=-1)
+            target_raw = select_action_target(target_raw_by_action, selected)
+            result.update(
+                {
+                    "target": torch.tanh(target_raw),
+                    "target_raw": target_raw,
+                    "target_by_action": torch.tanh(target_raw_by_action),
+                    "target_raw_by_action": target_raw_by_action,
+                }
+            )
+        else:
+            target_raw = self.target_head(hidden)
+            result.update({"target": torch.tanh(target_raw), "target_raw": target_raw})
+        return result
 
     def features(
         self, observation: dict[str, Tensor]
@@ -154,17 +184,22 @@ def masked_enemy_attention(
     return torch.matmul(weights, value)
 
 
+def select_action_target(targets: Tensor, action_type: Tensor) -> Tensor:
+    index = action_type.long().unsqueeze(-1).unsqueeze(-1).expand(*action_type.shape, 1, 2)
+    return targets.gather(-2, index).squeeze(-2)
+
+
 def model_config(value: Any) -> ModelConfig:
     required = {
         "entity_hidden",
         "entity_embedding",
         "actor_hidden",
     }
-    optional = {"pairwise_enemy_attention"}
+    optional = {"pairwise_enemy_attention", "action_conditioned_targets"}
     if not isinstance(value, dict) or set(value) - optional != required:
         raise ValueError(
             "architecture must define entity_hidden, entity_embedding, actor_hidden "
-            "and may enable pairwise_enemy_attention"
+            "and may enable pairwise_enemy_attention or action_conditioned_targets"
         )
     if not all(
         isinstance(item, int) and not isinstance(item, bool) and item > 0
@@ -172,7 +207,7 @@ def model_config(value: Any) -> ModelConfig:
         if name in required
     ):
         raise ValueError("architecture dimensions must be positive integers")
-    attention = value.get("pairwise_enemy_attention", False)
-    if not isinstance(attention, bool):
-        raise ValueError("architecture pairwise_enemy_attention must be boolean")
+    for name in optional:
+        if not isinstance(value.get(name, False), bool):
+            raise ValueError(f"architecture {name} must be boolean")
     return ModelConfig(**value)

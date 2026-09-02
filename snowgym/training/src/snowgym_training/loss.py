@@ -12,6 +12,8 @@ from torch.nn import functional as F
 
 from snowgym_client.encoding import ACTION_MOVE, ACTION_THROW
 
+from .model import select_action_target
+
 
 @dataclass(frozen=True)
 class LossConfig:
@@ -36,7 +38,12 @@ def behavior_clone_loss(
     action_loss = F.cross_entropy(prediction["action_logits"][present], labels[present])
     target_mask = present & ((labels == ACTION_MOVE) | (labels == ACTION_THROW))
     throw_mask = present & (labels == ACTION_THROW)
-    target_loss = masked_mse(prediction["target"], action["target"].float(), target_mask)
+    predicted_target = (
+        select_action_target(prediction["target_by_action"], labels)
+        if "target_by_action" in prediction
+        else prediction["target"]
+    )
+    target_loss = masked_mse(predicted_target, action["target"].float(), target_mask)
     power_loss = masked_mse(prediction["power"], action["power"].float(), throw_mask)
     total = (
         config.action_weight * action_loss

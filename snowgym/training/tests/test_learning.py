@@ -70,6 +70,29 @@ def test_model_config_preserves_legacy_checkpoint_shape() -> None:
         **legacy,
         "pairwise_enemy_attention": True,
     }
+    assert model_config({**legacy, "action_conditioned_targets": True}).as_dict() == {
+        **legacy,
+        "action_conditioned_targets": True,
+    }
+
+
+def test_action_conditioned_target_heads_select_distinct_means(tmp_path: Path) -> None:
+    dataset = TrajectoryDataset(make_dataset(tmp_path / "dataset"))
+    observation, action = dataset.batch(np.asarray([0, 1]))
+    model = EntityPolicy(
+        ModelConfig(16, 12, 24, action_conditioned_targets=True)
+    )
+    prediction = model(observation)
+
+    assert prediction["target_by_action"].shape == (2, 2, 4, 2)
+    assert not torch.equal(
+        prediction["target_by_action"][..., 1, :],
+        prediction["target_by_action"][..., 2, :],
+    )
+    loss = behavior_clone_loss(prediction, action, observation, LossConfig())
+    loss["total"].backward()
+    assert model.move_target_head.weight.grad is not None
+    assert model.throw_target_head.weight.grad is not None
 
 
 def test_one_batch_overfit_reduces_hybrid_loss(tmp_path: Path) -> None:

@@ -74,6 +74,21 @@ def test_hybrid_policy_respects_masks_and_recomputes_log_probability() -> None:
     assert value.shape == (3,)
 
 
+def test_action_conditioned_hybrid_policy_recomputes_log_probability() -> None:
+    torch.manual_seed(5)
+    observation = synthetic_observation()
+    observation["unit_action_mask"][:, 0, 2] = 1
+    model = HybridActorCritic(
+        ModelConfig(16, 12, 24, action_conditioned_targets=True)
+    )
+    action, sampled_log_probability, _ = model.act(observation)
+    recomputed, entropy = model.evaluate_actions(observation, action)
+
+    assert torch.allclose(sampled_log_probability, recomputed, atol=2e-5)
+    assert torch.isfinite(recomputed).all()
+    assert torch.isfinite(entropy).all()
+
+
 def test_hybrid_policy_uses_configured_initial_exploration_scale() -> None:
     model = HybridActorCritic(
         ModelConfig(16, 12, 24),
