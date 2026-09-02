@@ -81,6 +81,8 @@ def train_behavior_clone(
     torch.set_num_threads(1)
     torch.manual_seed(int(config["seed"]))
     architecture = model_config(config["architecture"])
+    if architecture.plan_conditioned and "plan_groups" not in dataset.observation_fields:
+        raise ValueError("plan-conditioned training requires an aligned plan dataset")
     losses = loss_config(config["loss"])
     model = EntityPolicy(architecture).cpu()
     optimizer_config = {

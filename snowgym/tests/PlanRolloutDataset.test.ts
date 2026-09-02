@@ -27,6 +27,7 @@ describe('PlanRolloutDataset', () => {
 
     expect(first).toEqual(second);
     expect(auditPlanRolloutDataset(first)).toBe(first);
+    expect(auditPlanRolloutDataset(JSON.parse(JSON.stringify(first)))).toEqual(first);
     expect(new Set(first.episodes.map(({ initialStateHash }) => initialStateHash))).toEqual(
       new Set([first.sourceStateHash]),
     );

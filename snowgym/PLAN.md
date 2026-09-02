@@ -744,6 +744,22 @@ repeatability, same-state restarts, plan/action diversity, zero rejected actions
 and rejection of state, tensor, result, or digest corruption. A portable CLI,
 Python trajectory conversion, and the paired training ablation remain next.
 
+M7 portable rollout bridge (2026-09-02): `export-plan-rollouts.ts` exposes the
+plan-caused collector for configurable map/open arenas, rosters, environment and
+plan seeds, decision horizon/frequency, and red difficulty, with guarded
+overwrite and machine-readable outcome summaries. Two independent exports were
+byte-identical. `snowgym-convert-plan-rollouts` independently verifies the
+ECMAScript canonical digest, public observation hashes, continuity, tensor
+bounds, and action acceptance before using the shared Gym encoders to emit
+audited `snowgym.trajectory.v0` shards. Each transition carries aligned
+`plan_groups [3,38]`, `plan_group_mask [3]`, and the plan source seed. The
+training loader exposes these arrays only for provenance-marked datasets, and
+conditioned training fails closed when they are absent; the no-plan ablation can
+consume the exact same shards and ignore the extras. The canonicalizer now also
+matches `JSON.stringify` object semantics for omitted `undefined` fields, with
+a write/read digest regression test. Paired training configurations and frozen
+behavior metrics remain next.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO

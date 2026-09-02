@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import json
+import hashlib
+import math
 from pathlib import Path
 from typing import Any
 
@@ -14,6 +16,66 @@ PLAN_TENSOR_DATASET_FORMAT = "snowgym.plan-tensor-dataset.v0"
 SYNTHETIC_PLAN_CURRICULUM_FORMAT = "snowgym.synthetic-plan-curriculum.v0"
 PLAN_GROUP_SLOTS = 3
 PLAN_FEATURE_VECTOR_SIZE = 38
+
+
+def javascript_json_digest(value: Any) -> str:
+    """Match the sorted-key JSON.stringify digest used by TypeScript artifacts."""
+    payload = _javascript_json(value).encode("utf-8")
+    return "sha256:" + hashlib.sha256(payload).hexdigest()
+
+
+def _javascript_json(value: Any) -> str:
+    if value is None:
+        return "null"
+    if value is True:
+        return "true"
+    if value is False:
+        return "false"
+    if isinstance(value, str):
+        return json.dumps(value, ensure_ascii=False, separators=(",", ":"))
+    if isinstance(value, int):
+        return str(value)
+    if isinstance(value, float):
+        return _javascript_number(value)
+    if isinstance(value, list):
+        return "[" + ",".join(_javascript_json(item) for item in value) + "]"
+    if isinstance(value, dict):
+        return "{" + ",".join(
+            _javascript_json(str(key)) + ":" + _javascript_json(value[key])
+            for key in sorted(value)
+        ) + "}"
+    raise ValueError(f"unsupported canonical JSON value: {type(value).__name__}")
+
+
+def _javascript_number(value: float) -> str:
+    if not math.isfinite(value):
+        raise ValueError("canonical JSON numbers must be finite")
+    if value == 0:
+        return "0"
+    negative = value < 0
+    text = repr(abs(value)).lower()
+    if "e" not in text:
+        if text.endswith(".0"):
+            text = text[:-2]
+        return ("-" if negative else "") + text
+    mantissa, exponent_text = text.split("e")
+    exponent = int(exponent_text)
+    digits = mantissa.replace(".", "").rstrip("0")
+    decimal_position = 1 + exponent
+    absolute = abs(value)
+    if 1e-6 <= absolute < 1e21:
+        if decimal_position <= 0:
+            rendered = "0." + "0" * (-decimal_position) + digits
+        elif decimal_position >= len(digits):
+            rendered = digits + "0" * (decimal_position - len(digits))
+        else:
+            rendered = digits[:decimal_position] + "." + digits[decimal_position:]
+    else:
+        rendered = digits[0]
+        if len(digits) > 1:
+            rendered += "." + digits[1:]
+        rendered += "e" + ("+" if exponent >= 0 else "-") + str(abs(exponent))
+    return ("-" if negative else "") + rendered
 
 
 class PlanTensorDataset:

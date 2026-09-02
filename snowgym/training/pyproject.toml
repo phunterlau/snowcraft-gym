@@ -19,6 +19,7 @@ learn = ["torch>=2.7,<3"]
 
 [project.scripts]
 snowgym-audit-dataset = "snowgym_training.trajectory:main"
+snowgym-convert-plan-rollouts = "snowgym_training.plan_rollout:main"
 snowgym-export-trajectories = "snowgym_training.export_scripted:main"
 snowgym-export-dagger = "snowgym_training.export_dagger:main"
 snowgym-merge-trajectories = "snowgym_training.merge_trajectory:main"

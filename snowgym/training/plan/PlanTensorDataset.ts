@@ -161,6 +161,7 @@ export function canonicalPlanJson(value: unknown): string {
   if (isRecord(value)) {
     return `{${Object.keys(value)
       .sort()
+      .filter((key) => value[key] !== undefined)
       .map((key) => `${JSON.stringify(key)}:${canonicalPlanJson(value[key])}`)
       .join(',')}}`;
   }

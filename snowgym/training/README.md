@@ -656,3 +656,26 @@ acceptance at every decision. The exporter refuses to replace an artifact
 unless `--force` is explicit. Episodes that do not reach a simulator terminal
 state within the requested horizon are labeled `decisionLimited`; this is
 distinct from the environment's own truncation signal.
+
+Convert the exported JSON to the existing sharded training format without a
+server:
+
+```bash
+cd snowgym/training
+.venv/bin/snowgym-convert-plan-rollouts \
+  artifacts/plan-rollouts-10v10.json \
+  artifacts/plan-training-10v10 \
+  --max-team-units 10 \
+  --shard-size 1024 \
+  --json
+```
+
+The converter independently verifies the TypeScript artifact's canonical
+digest, public observation hashes, episode continuity, tensor shapes and
+bounds, and accepted action results. It then uses the shared Gym encoders for
+observations/actions and emits ordinary `snowgym.trajectory.v0` shards with
+aligned `observation__plan_groups [3,38]`,
+`observation__plan_group_mask [3]`, and `plan_source_seed` arrays. The same
+shards can train the no-plan ablation (extra arrays are ignored by that model)
+or a `plan_conditioned` architecture; conditioned training fails closed if
+those aligned arrays are absent.

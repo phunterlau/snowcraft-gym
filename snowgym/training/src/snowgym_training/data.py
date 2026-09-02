@@ -25,6 +25,7 @@ OBSERVATION_FIELDS = (
     "unit_action_mask",
 )
 ACTION_FIELDS = ("action_type", "target", "power")
+PLAN_OBSERVATION_FIELDS = ("plan_groups", "plan_group_mask")
 
 
 class TrajectoryDataset:
@@ -34,8 +35,11 @@ class TrajectoryDataset:
         self.manifest = json.loads(
             (self.path / "manifest.json").read_text(encoding="utf-8")
         )
+        self.observation_fields = OBSERVATION_FIELDS + (
+            PLAN_OBSERVATION_FIELDS if self.manifest.get("planConditioned") is True else ()
+        )
         chunks: dict[str, list[np.ndarray]] = {
-            **{f"observation__{name}": [] for name in OBSERVATION_FIELDS},
+            **{f"observation__{name}": [] for name in self.observation_fields},
             **{f"action__{name}": [] for name in ACTION_FIELDS},
         }
         for shard in self.manifest["shards"]:
@@ -56,7 +60,7 @@ class TrajectoryDataset:
     ) -> tuple[dict[str, torch.Tensor], dict[str, torch.Tensor]]:
         observation = {
             name: torch.from_numpy(self.arrays[f"observation__{name}"][indices])
-            for name in OBSERVATION_FIELDS
+            for name in self.observation_fields
         }
         action = {
             name: torch.from_numpy(self.arrays[f"action__{name}"][indices])
