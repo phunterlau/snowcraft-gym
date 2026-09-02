@@ -217,6 +217,26 @@ def test_plan_target_only_shared_action_modules_start_identically() -> None:
             torch.testing.assert_close(left[name], right[name], rtol=0, atol=0)
 
 
+def test_zero_initialized_plan_action_adapter_preserves_base_logits(tmp_path: Path) -> None:
+    dataset = TrajectoryDataset(make_dataset(tmp_path / "dataset"))
+    observation, _ = dataset.batch(np.asarray([0, 0]))
+    observation["plan_groups"] = torch.zeros((2, 3, 38), dtype=torch.float32)
+    observation["plan_group_mask"] = torch.tensor([[1, 0, 0], [1, 0, 0]], dtype=torch.int8)
+    base_config = ModelConfig(
+        16, 12, 24, action_conditioned_targets=True, plan_conditioned=True,
+        plan_target_only=True, separate_target_actor=True,
+    )
+    torch.manual_seed(41)
+    base = EntityPolicy(base_config)
+    adapted = EntityPolicy(ModelConfig(**{**base_config.__dict__, "plan_action_adapter": True}))
+    missing, unexpected = adapted.load_state_dict(base.state_dict(), strict=False)
+    assert not unexpected
+    assert missing and all(name.startswith("plan_action_adapter.") for name in missing)
+    torch.testing.assert_close(
+        base(observation)["action_logits"], adapted(observation)["action_logits"], rtol=0, atol=0
+    )
+
+
 def test_action_conditioned_target_heads_select_distinct_means(tmp_path: Path) -> None:
     dataset = TrajectoryDataset(make_dataset(tmp_path / "dataset"))
     observation, action = dataset.batch(np.asarray([0, 1]))

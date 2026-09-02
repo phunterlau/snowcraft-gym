@@ -62,8 +62,8 @@ def validate_training_config(value: Any) -> None:
     loss_config(value["loss"])
     if not isinstance(value["evaluationSuite"], str) or not value["evaluationSuite"]:
         raise ValueError("evaluationSuite must be non-empty")
-    if value.get("trainable", "all") not in {"all", "plan-target-path"}:
-        raise ValueError("trainable must be all or plan-target-path")
+    if value.get("trainable", "all") not in {"all", "plan-target-path", "plan-action-target-path"}:
+        raise ValueError("trainable must be all, plan-target-path, or plan-action-target-path")
 
 
 def train_behavior_clone(
@@ -94,18 +94,27 @@ def train_behavior_clone(
     initialization: dict[str, Any] | None = None
     if initialize is not None:
         initial_metadata, initial_state = load_checkpoint(initialize)
-        if initial_metadata.get("architecture") != architecture.as_dict():
+        initial_architecture = initial_metadata.get("architecture")
+        compatible_architecture = architecture.as_dict()
+        compatible_architecture.pop("plan_action_adapter", None)
+        if initial_architecture not in (architecture.as_dict(), compatible_architecture):
             raise ValueError("initializer architecture does not match training config")
-        model.load_state_dict(initial_state["model"])
+        missing, unexpected = model.load_state_dict(initial_state["model"], strict=False)
+        if unexpected or any(not name.startswith("plan_action_adapter.") for name in missing):
+            raise ValueError("initializer state is incompatible with training architecture")
         initialization = {
             "checkpointDigest": initial_metadata["checkpointDigest"],
             "stateDigest": initial_metadata["stateDigest"],
         }
     trainable_mode = config.get("trainable", "all")
-    if trainable_mode == "plan-target-path":
+    if trainable_mode in {"plan-target-path", "plan-action-target-path"}:
         if not (architecture.plan_conditioned and architecture.plan_target_only and architecture.separate_target_actor):
             raise ValueError("plan-target-path requires plan target-only separate-target architecture")
         prefixes = ("plan_encoder.", "target_actor.", "move_target_head.", "throw_target_head.", "power_head.")
+        if trainable_mode == "plan-action-target-path":
+            if not architecture.plan_action_adapter:
+                raise ValueError("plan-action-target-path requires plan_action_adapter")
+            prefixes += ("plan_action_adapter.",)
         for name, parameter in model.named_parameters():
             parameter.requires_grad_(name.startswith(prefixes))
     optimizer_config = {

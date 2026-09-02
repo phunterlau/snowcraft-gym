@@ -1061,6 +1061,17 @@ v1. Target-only learner-state correction cannot fix mission-dependent action
 timing; the next architecture must condition action decisions while preserving
 a matched no-plan control and explicit action-accuracy bounds.
 
+M7 residual action-adapter foundation (2026-09-02): the optional
+`plan_action_adapter` adds a plan-conditioned residual to action logits without
+changing the inherited physical actor shape. Its output layer starts at exact
+zero; a target-only qualification checkpoint therefore produces bit-identical
+initial logits when loaded into the expanded model. The corresponding
+`plan-action-target-path` training mode freezes all inherited entity encoders,
+the actor, and action head while updating only the new adapter plus the existing
+plan/target path. Tests prove zero-init invariance, compatible initialization,
+frozen action-head identity, and adapter learning. A matched frozen experiment
+and action-accuracy gate remain next.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO

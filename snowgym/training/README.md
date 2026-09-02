@@ -400,6 +400,13 @@ but resets optimizer and step state for the new dataset; only the plan encoder,
 target actor, target heads, and power head receive gradients. Initialization
 checkpoint/state digests are retained in checkpoint metadata.
 
+For a later action-timing correction, enable `architecture.plan_action_adapter`
+with `trainable: "plan-action-target-path"`. This adds a residual plan/action-
+context adapter to action logits. Its final layer is initialized to exactly zero,
+so loading a target-only checkpoint preserves every initial action logit. The
+inherited entity encoders, actor, and action head remain frozen; only the new
+adapter and existing plan/target path train.
+
 ## PPO foundation
 
 Run a short end-to-end infrastructure smoke against the first frozen curriculum

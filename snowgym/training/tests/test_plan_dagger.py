@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 
 import numpy as np
+import torch
 
 from snowgym_training.data import TrajectoryDataset
 from snowgym_training.checkpoint import load_checkpoint
@@ -115,3 +116,22 @@ def test_plan_dagger_labels_learner_visited_states_headlessly(tmp_path: Path) ->
     assert not trained_state["model"]["plan_encoder.0.weight"].equal(
         initial_state["model"]["plan_encoder.0.weight"]
     )
+
+    adapter_config = {
+        **config,
+        "name": "plan-action-adapter-transfer-smoke",
+        "architecture": {**config["architecture"], "plan_action_adapter": True},
+        "trainable": "plan-action-target-path",
+    }
+    train_behavior_clone(
+        dataset_path=tmp_path / "merged",
+        output=tmp_path / "adapted",
+        config=adapter_config,
+        initialize=CHECKPOINT,
+        git_commit="test",
+    )
+    _, adapted_state = load_checkpoint(tmp_path / "adapted")
+    assert adapted_state["model"]["action_head.weight"].equal(
+        initial_state["model"]["action_head.weight"]
+    )
+    assert bool(torch.count_nonzero(adapted_state["model"]["plan_action_adapter.2.weight"]))

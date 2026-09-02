@@ -27,6 +27,7 @@ class ModelConfig:
     plan_conditioned: bool = False
     plan_target_only: bool = False
     separate_target_actor: bool = False
+    plan_action_adapter: bool = False
 
     def as_dict(self) -> dict[str, int | bool]:
         value: dict[str, int | bool] = {
@@ -50,6 +51,8 @@ class ModelConfig:
             value["plan_target_only"] = True
         if self.separate_target_actor:
             value["separate_target_actor"] = True
+        if self.plan_action_adapter:
+            value["plan_action_adapter"] = True
         return value
 
 
@@ -68,6 +71,7 @@ class EntityPolicy(nn.Module):
         self.plan_conditioned = config.plan_conditioned
         self.plan_target_only = config.plan_target_only
         self.separate_target_actor = config.separate_target_actor
+        self.plan_action_adapter_enabled = config.plan_action_adapter
         if self.plan_conditioned:
             if not self.plan_target_only:
                 global_features += embedding
@@ -117,6 +121,14 @@ class EntityPolicy(nn.Module):
         else:
             self.target_head = nn.Linear(config.actor_hidden, 2)
         self.power_head = nn.Linear(config.actor_hidden, 1)
+        if self.plan_action_adapter_enabled:
+            self.plan_action_adapter = nn.Sequential(
+                nn.Linear(config.actor_hidden + embedding, config.actor_hidden),
+                nn.ReLU(),
+                nn.Linear(config.actor_hidden, ACTION_TYPE_COUNT),
+            )
+            nn.init.zeros_(self.plan_action_adapter[-1].weight)
+            nn.init.zeros_(self.plan_action_adapter[-1].bias)
 
     def forward(self, observation: dict[str, Tensor]) -> dict[str, Tensor]:
         action_hidden, target_hidden, action_mask = self.features(observation)
@@ -124,6 +136,12 @@ class EntityPolicy(nn.Module):
         logits = self.action_head(action_hidden).masked_fill(
             ~action_mask, torch.finfo(action_hidden.dtype).min
         )
+        if self.plan_action_adapter_enabled:
+            plan_embedding = self.encode_plan(observation, action_hidden.shape[0])
+            expanded_plan = plan_embedding[:, None, :].expand(-1, action_hidden.shape[1], -1)
+            logits = logits + self.plan_action_adapter(
+                torch.cat([action_hidden.detach(), expanded_plan], dim=-1)
+            ).masked_fill(~action_mask, 0)
         result = {
             "action_logits": logits,
             "power": torch.sigmoid(power_raw),
@@ -364,6 +382,7 @@ def model_config(value: Any) -> ModelConfig:
         "plan_conditioned",
         "plan_target_only",
         "separate_target_actor",
+        "plan_action_adapter",
     }
     if not isinstance(value, dict) or set(value) - optional != required:
         raise ValueError(
@@ -399,6 +418,14 @@ def model_config(value: Any) -> ModelConfig:
         "separate_target_actor", False
     ):
         raise ValueError("architecture plan_target_only requires separate_target_actor")
+    if value.get("plan_action_adapter", False) and not (
+        value.get("plan_conditioned", False)
+        and value.get("plan_target_only", False)
+        and value.get("separate_target_actor", False)
+    ):
+        raise ValueError(
+            "architecture plan_action_adapter requires plan target-only separate-target architecture"
+        )
     if (
         value.get("separate_target_actor", False)
         and value.get("plan_conditioned", False)
