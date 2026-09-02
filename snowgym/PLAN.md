@@ -526,6 +526,13 @@ curriculum, gate, and update provenance. A gate-2 development transfer from the
 accepted gate-1 final checkpoint remained at 0/8 versus easy scripted red
 through update 25, while its teacher baseline won 8/8; gate 2 therefore remains
 closed and requires a gate-specific training configuration.
+The gate-specific `bc_1v1_easy_v0` initializer was regenerated after its source
+specification commit and binds 184 audited teacher transitions. It won both
+disjoint BC evaluation episodes against easy scripted red, versus 0/2
+masked-random, with zero rejected actions. Conservative PPO development from
+this initializer passed the frozen eight-seed gate at updates 1, 5, and 10 but
+regressed by update 25, so the gate-2 candidate must stop at a predeclared
+update 10; no qualifying gate-2 result is claimed yet.
 
 ### M7 — plan-conditioned learned executor
 

@@ -105,6 +105,14 @@ episodes in 54 decisions with zero rejected actions. The teacher won both in
 [checkpoint metadata](./checkpoints/bc_1v1_v0/metadata.json) and
 [joined evaluation](./evaluations/bc_1v1_v0.json).
 
+`bc_1v1_easy_v0` is the separate gate-2 initializer trained on 184 audited
+native-teacher transitions against easy scripted red. Its checkpoint binds
+source commit `fe0d19d`, dataset digest
+`sha256:0448fdfa4661645b695bcbc4759f2e40cb2e2bca2aa30fb350e4e215d02722ea`,
+and its full training configuration. It won both disjoint BC evaluation seeds,
+versus 0/2 masked-random and 2/2 teacher, with zero rejected actions. This is an
+initializer result, not the eight-seed PPO gate acceptance.
+
 Replay either learned episode through the existing UI after starting
 `npm run dev` from the repository root:
 

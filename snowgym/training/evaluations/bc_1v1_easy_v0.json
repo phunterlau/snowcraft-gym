@@ -1,0 +1,93 @@
+{
+  "checkpointDigest": "sha256:773ee667201fd57fd54b08ef3cc9b6c3ae5e78e6a1ec5b975658f7e9a75d9c69",
+  "format": "snowgym.learned-evaluation.v0",
+  "maxDecisions": 400,
+  "replays": [],
+  "resultDigest": "sha256:f1d4d544822fa9358a3e6d9b147de43131d10bf9ed801ad3a9210ba841bf93a5",
+  "results": [
+    {
+      "blueAlive": 1,
+      "blueHealthLost": 0.5999999940395355,
+      "decisionLimited": false,
+      "decisions": 93,
+      "policy": "learned",
+      "redAlive": 0,
+      "redHealthDealt": 1.0,
+      "rejectedActions": 0,
+      "reward": 1.0,
+      "scenario": {
+        "arenaHeight": 30,
+        "arenaWidth": 40,
+        "blueUnits": 1,
+        "decisionHz": 10,
+        "maxTicks": 1800,
+        "redController": "scripted",
+        "redDifficulty": "easy",
+        "redUnits": 1
+      },
+      "seed": 211,
+      "stateHash": "fnv1a64:49267d3ce5419767",
+      "terminated": true,
+      "tick": 553,
+      "truncated": false,
+      "winner": "blue"
+    },
+    {
+      "blueAlive": 1,
+      "blueHealthLost": 0.19999998807907104,
+      "decisionLimited": false,
+      "decisions": 55,
+      "policy": "learned",
+      "redAlive": 0,
+      "redHealthDealt": 1.0,
+      "rejectedActions": 0,
+      "reward": 1.0,
+      "scenario": {
+        "arenaHeight": 30,
+        "arenaWidth": 40,
+        "blueUnits": 1,
+        "decisionHz": 10,
+        "maxTicks": 1800,
+        "redController": "scripted",
+        "redDifficulty": "easy",
+        "redUnits": 1
+      },
+      "seed": 212,
+      "stateHash": "fnv1a64:0f3f353166de9e05",
+      "terminated": true,
+      "tick": 329,
+      "truncated": false,
+      "winner": "blue"
+    }
+  ],
+  "sourceSpecDigest": "sha256:54d11a7278279d2795a1cac98116f01c7c7861759c3e0fbe2bad1aebc13cfb53",
+  "split": "evaluation",
+  "summary": {
+    "learned": {
+      "blueWins": 2,
+      "draws": 0,
+      "episodes": 2,
+      "meanBlueHealthLost": 0.3999999910593033,
+      "meanDecisions": 74.0,
+      "meanRedHealthDealt": 1.0,
+      "redWins": 0,
+      "rejectedActions": 0
+    },
+    "masked_random": {
+      "blueWins": 0,
+      "draws": 0,
+      "episodes": 2,
+      "meanDecisions": 113.0,
+      "redWins": 2,
+      "rejectedActions": 0
+    },
+    "scripted_teacher": {
+      "blueWins": 2,
+      "draws": 0,
+      "episodes": 2,
+      "meanDecisions": 46.0,
+      "redWins": 0,
+      "rejectedActions": 0
+    }
+  }
+}
