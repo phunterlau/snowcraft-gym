@@ -1147,6 +1147,20 @@ to contrast offensive timing, defensive posture, or group support. Training
 teacher-diversity diagnostics may inform a separately committed optimization
 freeze; validation/evaluation metrics must remain unseen until that freeze.
 
+M7 counterfactual DAgger-v1 collection (2026-09-02): the post-freeze run
+produced 2,393 training, 1,238 validation, and 1,200 evaluation transitions
+with respective digests
+`sha256:c3bd756af35908cfe972c43e11f0292ab5cab3dca0e3375e2bed436725749df5`,
+`sha256:d0ec0683697f159e2e14983ee4f19c329fd4ae6778f29f3084185d4ebe237576`,
+and `sha256:f5598b7fa17f03fce5e2b7af2814504796e7eea8ea16b36c847ebc955efd22fb`.
+One training and one validation episode ended when attrition made their
+two-group alternate plan inapplicable; both manifests record the bounded stop,
+and evaluation completed all episodes. The permitted training-only diagnostic
+found 1,538 teacher-changed unit decisions out of 14,358 (`0.107118`), while
+the inherited target-only checkpoint remained exactly action-invariant. This
+establishes identifiable supervision without inspecting validation/evaluation
+metrics. Optimization and acceptance thresholds must be frozen next.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO

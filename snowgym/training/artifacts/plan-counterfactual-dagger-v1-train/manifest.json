@@ -1,0 +1,577 @@
+{
+  "counterfactualPlanLabels": {
+    "pairing": "same-physical-state",
+    "teacher": "plan-teacher-action.v0"
+  },
+  "datasetDigest": "sha256:c3bd756af35908cfe972c43e11f0292ab5cab3dca0e3375e2bed436725749df5",
+  "episodes": [
+    {
+      "counterfactualLimited": false,
+      "counterfactualPlanName": "withdraw",
+      "decisionLimited": false,
+      "finalStateHash": "fnv1a64:9fef72b33c4050fe",
+      "index": 0,
+      "plan": {
+        "groups": [
+          {
+            "allocationWeight": 1,
+            "order": {
+              "approach": "direct",
+              "engagement": {
+                "cohesion": "normal",
+                "fire": "focus",
+                "posture": "balanced",
+                "preferredRange": "medium"
+              },
+              "mission": "engage",
+              "objective": {
+                "kind": "enemy_cluster",
+                "select": "nearest"
+              }
+            },
+            "role": "main",
+            "selection": "balanced"
+          }
+        ],
+        "intentSummary": "Engage the nearest cluster directly with focused fire.",
+        "schemaVersion": "snowgym.command-plan.v0"
+      },
+      "planId": "direct-14201",
+      "planName": "direct",
+      "rolloutWinner": "red",
+      "scenario": {
+        "blueUnits": 6,
+        "map": "arena6.json",
+        "maxTicks": 1800,
+        "redDifficulty": "easy",
+        "redUnits": 6
+      },
+      "seed": 14201,
+      "startTransition": 0,
+      "terminated": true,
+      "transitions": 184,
+      "truncated": false
+    },
+    {
+      "counterfactualLimited": false,
+      "counterfactualPlanName": "hold",
+      "decisionLimited": false,
+      "finalStateHash": "fnv1a64:211ea76cc063d5c2",
+      "index": 1,
+      "plan": {
+        "groups": [
+          {
+            "allocationWeight": 1,
+            "order": {
+              "approach": "left_flank",
+              "engagement": {
+                "cohesion": "normal",
+                "fire": "distributed",
+                "posture": "balanced",
+                "preferredRange": "medium"
+              },
+              "mission": "engage",
+              "objective": {
+                "kind": "enemy_cluster",
+                "select": "nearest"
+              }
+            },
+            "role": "main",
+            "selection": "balanced"
+          }
+        ],
+        "intentSummary": "Engage the nearest cluster from the left flank with distributed fire.",
+        "schemaVersion": "snowgym.command-plan.v0"
+      },
+      "planId": "flank-14202",
+      "planName": "flank",
+      "rolloutWinner": "red",
+      "scenario": {
+        "blueUnits": 6,
+        "map": "arena6.json",
+        "maxTicks": 1800,
+        "redDifficulty": "easy",
+        "redUnits": 6
+      },
+      "seed": 14202,
+      "startTransition": 184,
+      "terminated": true,
+      "transitions": 216,
+      "truncated": false
+    },
+    {
+      "counterfactualLimited": false,
+      "counterfactualPlanName": "direct",
+      "decisionLimited": false,
+      "finalStateHash": "fnv1a64:cd0f39673370a6b0",
+      "index": 2,
+      "plan": {
+        "groups": [
+          {
+            "allocationWeight": 1,
+            "order": {
+              "approach": "direct",
+              "engagement": {
+                "cohesion": "tight",
+                "fire": "opportunistic",
+                "posture": "conservative",
+                "preferredRange": "long"
+              },
+              "mission": "hold",
+              "objective": {
+                "kind": "current_position"
+              }
+            },
+            "role": "main",
+            "selection": "balanced"
+          }
+        ],
+        "intentSummary": "Hold the current line conservatively.",
+        "schemaVersion": "snowgym.command-plan.v0"
+      },
+      "planId": "hold-14203",
+      "planName": "hold",
+      "rolloutWinner": "red",
+      "scenario": {
+        "blueUnits": 6,
+        "map": "arena6.json",
+        "maxTicks": 1800,
+        "redDifficulty": "easy",
+        "redUnits": 6
+      },
+      "seed": 14203,
+      "startTransition": 400,
+      "terminated": true,
+      "transitions": 256,
+      "truncated": false
+    },
+    {
+      "counterfactualLimited": false,
+      "counterfactualPlanName": "support",
+      "decisionLimited": false,
+      "finalStateHash": "fnv1a64:135cf28d22a4672e",
+      "index": 3,
+      "plan": {
+        "groups": [
+          {
+            "allocationWeight": 1,
+            "order": {
+              "approach": "direct",
+              "engagement": {
+                "cohesion": "tight",
+                "fire": "opportunistic",
+                "posture": "conservative",
+                "preferredRange": "long"
+              },
+              "mission": "withdraw",
+              "objective": {
+                "kind": "region",
+                "region": "own_backfield"
+              }
+            },
+            "role": "main",
+            "selection": "balanced"
+          }
+        ],
+        "intentSummary": "Withdraw together into the own backfield.",
+        "schemaVersion": "snowgym.command-plan.v0"
+      },
+      "planId": "withdraw-14204",
+      "planName": "withdraw",
+      "rolloutWinner": null,
+      "scenario": {
+        "blueUnits": 6,
+        "map": "arena6.json",
+        "maxTicks": 1800,
+        "redDifficulty": "easy",
+        "redUnits": 6
+      },
+      "seed": 14204,
+      "startTransition": 656,
+      "terminated": false,
+      "transitions": 300,
+      "truncated": true
+    },
+    {
+      "counterfactualLimited": false,
+      "counterfactualPlanName": "withdraw",
+      "decisionLimited": false,
+      "finalStateHash": "fnv1a64:78db0ee8550dd7fe",
+      "index": 4,
+      "plan": {
+        "groups": [
+          {
+            "allocationWeight": 4,
+            "order": {
+              "approach": "direct",
+              "engagement": {
+                "cohesion": "normal",
+                "fire": "focus",
+                "posture": "balanced",
+                "preferredRange": "medium"
+              },
+              "mission": "engage",
+              "objective": {
+                "kind": "enemy_cluster",
+                "select": "nearest"
+              }
+            },
+            "role": "main",
+            "selection": "balanced"
+          },
+          {
+            "allocationWeight": 2,
+            "order": {
+              "approach": "direct",
+              "engagement": {
+                "cohesion": "tight",
+                "fire": "opportunistic",
+                "posture": "conservative",
+                "preferredRange": "long"
+              },
+              "mission": "support",
+              "objective": {
+                "kind": "ally_group",
+                "role": "main"
+              }
+            },
+            "role": "reserve",
+            "selection": "rearline"
+          }
+        ],
+        "intentSummary": "Engage with the main body while a compact reserve supports it.",
+        "schemaVersion": "snowgym.command-plan.v0"
+      },
+      "planId": "support-14205",
+      "planName": "support",
+      "rolloutWinner": "red",
+      "scenario": {
+        "blueUnits": 6,
+        "map": "arena6.json",
+        "maxTicks": 1800,
+        "redDifficulty": "easy",
+        "redUnits": 6
+      },
+      "seed": 14205,
+      "startTransition": 956,
+      "terminated": true,
+      "transitions": 237,
+      "truncated": false
+    },
+    {
+      "counterfactualLimited": false,
+      "counterfactualPlanName": "hold",
+      "decisionLimited": false,
+      "finalStateHash": "fnv1a64:737f8e6321c0071e",
+      "index": 5,
+      "plan": {
+        "groups": [
+          {
+            "allocationWeight": 1,
+            "order": {
+              "approach": "direct",
+              "engagement": {
+                "cohesion": "normal",
+                "fire": "focus",
+                "posture": "balanced",
+                "preferredRange": "medium"
+              },
+              "mission": "engage",
+              "objective": {
+                "kind": "enemy_cluster",
+                "select": "nearest"
+              }
+            },
+            "role": "main",
+            "selection": "balanced"
+          }
+        ],
+        "intentSummary": "Engage the nearest cluster directly with focused fire.",
+        "schemaVersion": "snowgym.command-plan.v0"
+      },
+      "planId": "direct-14206",
+      "planName": "direct",
+      "rolloutWinner": "red",
+      "scenario": {
+        "blueUnits": 6,
+        "map": "arena6.json",
+        "maxTicks": 1800,
+        "redDifficulty": "easy",
+        "redUnits": 6
+      },
+      "seed": 14206,
+      "startTransition": 1193,
+      "terminated": true,
+      "transitions": 196,
+      "truncated": false
+    },
+    {
+      "counterfactualLimited": false,
+      "counterfactualPlanName": "withdraw",
+      "decisionLimited": false,
+      "finalStateHash": "fnv1a64:97ec4c5807f59271",
+      "index": 6,
+      "plan": {
+        "groups": [
+          {
+            "allocationWeight": 1,
+            "order": {
+              "approach": "left_flank",
+              "engagement": {
+                "cohesion": "normal",
+                "fire": "distributed",
+                "posture": "balanced",
+                "preferredRange": "medium"
+              },
+              "mission": "engage",
+              "objective": {
+                "kind": "enemy_cluster",
+                "select": "nearest"
+              }
+            },
+            "role": "main",
+            "selection": "balanced"
+          }
+        ],
+        "intentSummary": "Engage the nearest cluster from the left flank with distributed fire.",
+        "schemaVersion": "snowgym.command-plan.v0"
+      },
+      "planId": "flank-14207",
+      "planName": "flank",
+      "rolloutWinner": "red",
+      "scenario": {
+        "blueUnits": 6,
+        "map": "arena6.json",
+        "maxTicks": 1800,
+        "redDifficulty": "easy",
+        "redUnits": 6
+      },
+      "seed": 14207,
+      "startTransition": 1389,
+      "terminated": true,
+      "transitions": 196,
+      "truncated": false
+    },
+    {
+      "counterfactualLimited": true,
+      "counterfactualPlanName": "support",
+      "decisionLimited": true,
+      "finalStateHash": "fnv1a64:0e52e347307244af",
+      "index": 7,
+      "plan": {
+        "groups": [
+          {
+            "allocationWeight": 1,
+            "order": {
+              "approach": "direct",
+              "engagement": {
+                "cohesion": "tight",
+                "fire": "opportunistic",
+                "posture": "conservative",
+                "preferredRange": "long"
+              },
+              "mission": "hold",
+              "objective": {
+                "kind": "current_position"
+              }
+            },
+            "role": "main",
+            "selection": "balanced"
+          }
+        ],
+        "intentSummary": "Hold the current line conservatively.",
+        "schemaVersion": "snowgym.command-plan.v0"
+      },
+      "planId": "hold-14208",
+      "planName": "hold",
+      "rolloutWinner": null,
+      "scenario": {
+        "blueUnits": 6,
+        "map": "arena6.json",
+        "maxTicks": 1800,
+        "redDifficulty": "easy",
+        "redUnits": 6
+      },
+      "seed": 14208,
+      "startTransition": 1585,
+      "terminated": false,
+      "transitions": 244,
+      "truncated": false
+    },
+    {
+      "counterfactualLimited": false,
+      "counterfactualPlanName": "direct",
+      "decisionLimited": false,
+      "finalStateHash": "fnv1a64:0e568710aa0062b0",
+      "index": 8,
+      "plan": {
+        "groups": [
+          {
+            "allocationWeight": 1,
+            "order": {
+              "approach": "direct",
+              "engagement": {
+                "cohesion": "tight",
+                "fire": "opportunistic",
+                "posture": "conservative",
+                "preferredRange": "long"
+              },
+              "mission": "withdraw",
+              "objective": {
+                "kind": "region",
+                "region": "own_backfield"
+              }
+            },
+            "role": "main",
+            "selection": "balanced"
+          }
+        ],
+        "intentSummary": "Withdraw together into the own backfield.",
+        "schemaVersion": "snowgym.command-plan.v0"
+      },
+      "planId": "withdraw-14209",
+      "planName": "withdraw",
+      "rolloutWinner": null,
+      "scenario": {
+        "blueUnits": 6,
+        "map": "arena6.json",
+        "maxTicks": 1800,
+        "redDifficulty": "easy",
+        "redUnits": 6
+      },
+      "seed": 14209,
+      "startTransition": 1829,
+      "terminated": false,
+      "transitions": 300,
+      "truncated": true
+    },
+    {
+      "counterfactualLimited": false,
+      "counterfactualPlanName": "hold",
+      "decisionLimited": false,
+      "finalStateHash": "fnv1a64:edb0dec0132d16f5",
+      "index": 9,
+      "plan": {
+        "groups": [
+          {
+            "allocationWeight": 4,
+            "order": {
+              "approach": "direct",
+              "engagement": {
+                "cohesion": "normal",
+                "fire": "focus",
+                "posture": "balanced",
+                "preferredRange": "medium"
+              },
+              "mission": "engage",
+              "objective": {
+                "kind": "enemy_cluster",
+                "select": "nearest"
+              }
+            },
+            "role": "main",
+            "selection": "balanced"
+          },
+          {
+            "allocationWeight": 2,
+            "order": {
+              "approach": "direct",
+              "engagement": {
+                "cohesion": "tight",
+                "fire": "opportunistic",
+                "posture": "conservative",
+                "preferredRange": "long"
+              },
+              "mission": "support",
+              "objective": {
+                "kind": "ally_group",
+                "role": "main"
+              }
+            },
+            "role": "reserve",
+            "selection": "rearline"
+          }
+        ],
+        "intentSummary": "Engage with the main body while a compact reserve supports it.",
+        "schemaVersion": "snowgym.command-plan.v0"
+      },
+      "planId": "support-14210",
+      "planName": "support",
+      "rolloutWinner": "red",
+      "scenario": {
+        "blueUnits": 6,
+        "map": "arena6.json",
+        "maxTicks": 1800,
+        "redDifficulty": "easy",
+        "redUnits": 6
+      },
+      "seed": 14210,
+      "startTransition": 2129,
+      "terminated": true,
+      "transitions": 264,
+      "truncated": false
+    }
+  ],
+  "format": "snowgym.trajectory.v0",
+  "maxTeamUnits": 10,
+  "name": "plan-counterfactual-dagger-6v6-v1-plan-dagger",
+  "planConditioned": true,
+  "rolloutCheckpointDigest": "sha256:4119b9a3f8c0d3df69b704a8f3f813a1b38ab11ca56faffb4c4cebc2cb235133",
+  "rolloutCheckpointStateDigest": "sha256:34de1e9e5882b0c764aa8dd6596ed6ba87e395d7eb9e455036fc10a721d8c50d",
+  "rolloutPolicy": "plan-conditioned-checkpoint",
+  "shards": [
+    {
+      "path": "shard-00000.npz",
+      "tensorDigest": "sha256:374aa258174ac94806eb3b34fb47d79f7cc45d6b97e4820da88afa9dae9945b5",
+      "transitions": 1024
+    },
+    {
+      "path": "shard-00001.npz",
+      "tensorDigest": "sha256:eb62f0e6cab423d47504d230188901226ed637ccc8562b1e2ba90ce0e90f484f",
+      "transitions": 1024
+    },
+    {
+      "path": "shard-00002.npz",
+      "tensorDigest": "sha256:2fc9af86a8628785a250c93c93857276747ec42e687c248eb0dd8008be6701fa",
+      "transitions": 345
+    }
+  ],
+  "sourceSpecDigest": "sha256:db62d96ed4174caaee66b39131f02df09e70f21574025a5e13a0a17d92937ec4",
+  "split": "train",
+  "splitSeeds": {
+    "evaluation": [
+      14401,
+      14402,
+      14403,
+      14404,
+      14405
+    ],
+    "train": [
+      14201,
+      14202,
+      14203,
+      14204,
+      14205,
+      14206,
+      14207,
+      14208,
+      14209,
+      14210
+    ],
+    "validation": [
+      14301,
+      14302,
+      14303,
+      14304,
+      14305
+    ]
+  },
+  "teacher": "plan-teacher-action.v0",
+  "transitions": 2393,
+  "versions": {
+    "apiVersion": "snowgym.v0",
+    "simulationVersion": "snowgym.sim.v1",
+    "stateHashVersion": "snowgym.state.v1",
+    "upstreamBaseCommit": "7d9fca5"
+  }
+}
