@@ -1,0 +1,26 @@
+{
+  "format": "snowgym.plan-action-adapter-weight-sweep.v0",
+  "name": "plan-action-adapter-weight-sweep-v0",
+  "trainingDatasetDigest": "sha256:c3bd756af35908cfe972c43e11f0292ab5cab3dca0e3375e2bed436725749df5",
+  "validationDatasetDigest": "sha256:d0ec0683697f159e2e14983ee4f19c329fd4ae6778f29f3084185d4ebe237576",
+  "initializationCheckpointDigest": "sha256:4119b9a3f8c0d3df69b704a8f3f813a1b38ab11ca56faffb4c4cebc2cb235133",
+  "trainingConfigs": [
+    "plan_action_adapter_weight1_dev.json",
+    "plan_action_adapter_weight2_dev.json",
+    "plan_action_adapter_weight3_dev.json"
+  ],
+  "developmentChecks": {
+    "minimumPrimaryActionAccuracy": 0.75,
+    "minimumCounterfactualActionAccuracy": 0.75,
+    "minimumChangedTeacherPredictionRecall": 0.4,
+    "minimumChangedTeacherPairAccuracy": 0.3,
+    "minimumPredictedActionChangeRate": 0.05,
+    "maximumPredictedActionChangeRate": 0.2,
+    "minimumDirectBlueAlive": 4,
+    "minimumFlankBlueAlive": 4,
+    "minimumHoldDecisions": 267,
+    "minimumWithdrawDecisions": 341,
+    "maximumSupportRedAlive": 4
+  },
+  "selection": "most-checks-then-pair-accuracy-then-lower-weight"
+}

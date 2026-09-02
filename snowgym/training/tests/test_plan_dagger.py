@@ -121,6 +121,27 @@ def test_frozen_plan_dagger_spec_balances_missions_and_disjoins_seeds() -> None:
     gate_v1 = load_cf_gate(ACTION_ADAPTER_V1_QUALIFICATION)
     assert gate_v1["paired"]["minimumChangedTeacherPredictionRecall"] == 0.5
     assert gate_v1["evaluationDatasetDigest"].endswith("c955efd22fb")
+    sweep_configs = [
+        load_training_config(
+            ROOT / "training" / "src" / "snowgym_training" / "configs"
+            / f"plan_action_adapter_weight{weight}_dev.json"
+        )
+        for weight in (1, 2, 3)
+    ]
+    assert [item["counterfactualChangedActionWeight"] for item in sweep_configs] == [
+        1.0, 2.0, 3.0
+    ]
+    assert len({item["seed"] for item in sweep_configs}) == 1
+    sweep = json.loads(
+        (ROOT / "training" / "src" / "snowgym_training" / "configs"
+         / "plan_action_adapter_weight_sweep_v0.json").read_text(encoding="utf-8")
+    )
+    assert sweep["format"] == "snowgym.plan-action-adapter-weight-sweep.v0"
+    assert sweep["trainingConfigs"] == [
+        "plan_action_adapter_weight1_dev.json",
+        "plan_action_adapter_weight2_dev.json",
+        "plan_action_adapter_weight3_dev.json",
+    ]
     counterfactual = load_plan_dagger_spec(PLAN_COUNTERFACTUAL_SPEC)
     assert counterfactual["format"] == "snowgym.plan-dagger-export.v1"
     episodes = sum(counterfactual["splits"].values(), [])

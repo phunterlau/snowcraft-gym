@@ -1219,6 +1219,15 @@ and support lost 0–3 rather than v1's 6–0 win. All actions remained accepted
 The loss fixes alignment but is overweighted. A predeclared intermediate-weight
 development sweep is required before spending fresh qualification seeds.
 
+M7 changed-action weight-sweep-v0 freeze (2026-09-02): before running any new
+checkpoints, three configs fix weights `1`, `2`, and `3` with identical seed
+88001, 2,000-step budget, data, initializer, model, and other losses. The frozen
+development checks require paired accuracy at least `0.75`, changed recall/pair
+accuracy at least `0.40`/`0.30`, predicted change in `[0.05,0.20]`, and the
+existing five mission thresholds. Selection maximizes checks passed, then
+changed-pair accuracy, then prefers lower weight. These reused suites select a
+development candidate only; fresh data and a new gate remain mandatory.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO
