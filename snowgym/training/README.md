@@ -806,6 +806,10 @@ decision. The result records canonical outcomes, action rejection, normalized
 group-to-objective progress, first-action target divergence, and final group
 trajectory separation. This evaluator measures real covariate-shifted execution;
 it does not infer plan following from offline target loss alone.
+Pass `--conditioned-checkpoint PATH` to compare a correction checkpoint against
+the original ablation's no-plan control. The result binds both checkpoint and
+state digests; the auditor reloads the override rather than treating it as part
+of the original matched training run.
 
 The frozen 6v6 development run is retained under
 `runs/plan_bc_ablation_dev_v0`, with held-out metrics in

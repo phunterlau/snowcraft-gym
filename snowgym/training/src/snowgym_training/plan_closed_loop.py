@@ -60,7 +60,8 @@ def load_suite(path: str | Path) -> dict[str, Any]:
 
 
 def evaluate_closed_loop(
-    *, ablation_path: str | Path, suite_path: str | Path, output: str | Path
+    *, ablation_path: str | Path, suite_path: str | Path, output: str | Path,
+    conditioned_checkpoint: str | Path | None = None,
 ) -> dict[str, Any]:
     destination = Path(output)
     if destination.exists():
@@ -68,10 +69,14 @@ def evaluate_closed_loop(
     ablation_root = Path(ablation_path)
     ablation = audit_plan_ablation(ablation_root)
     suite = load_suite(suite_path)
-    policies = {
-        name: TorchPolicy(ablation_root / ablation["runs"][name]["path"])
-        for name in POLICIES
+    policy_paths = {
+        "noPlan": ablation_root / ablation["runs"]["noPlan"]["path"],
+        "planConditioned": (
+            Path(conditioned_checkpoint) if conditioned_checkpoint is not None
+            else ablation_root / ablation["runs"]["planConditioned"]["path"]
+        ),
     }
+    policies = {name: TorchPolicy(path) for name, path in policy_paths.items()}
     results: list[dict[str, Any]] = []
     with SnowGymBatchClient() as client:
         environment = SnowGymBatchEnv(
@@ -86,6 +91,13 @@ def evaluate_closed_loop(
         "ablationResultDigest": ablation["resultDigest"],
         "suiteDigest": json_digest(suite),
         "suite": suite,
+        "policyCheckpoints": {
+            name: {
+                "checkpointDigest": policy.metadata["checkpointDigest"],
+                "stateDigest": policy.metadata["stateDigest"],
+            }
+            for name, policy in policies.items()
+        },
         "results": results,
         "comparisons": comparisons,
         "summary": {
@@ -96,12 +108,13 @@ def evaluate_closed_loop(
     result = {**body, "evaluationDigest": json_digest(body)}
     destination.parent.mkdir(parents=True, exist_ok=True)
     destination.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    audit_closed_loop(destination, ablation_root, suite_path)
+    audit_closed_loop(destination, ablation_root, suite_path, conditioned_checkpoint)
     return result
 
 
 def audit_closed_loop(
-    path: str | Path, ablation_path: str | Path, suite_path: str | Path
+    path: str | Path, ablation_path: str | Path, suite_path: str | Path,
+    conditioned_checkpoint: str | Path | None = None,
 ) -> dict[str, Any]:
     source = Path(path)
     try:
@@ -117,6 +130,25 @@ def audit_closed_loop(
         raise ValueError("closed-loop evaluation ablation provenance differs")
     if value.get("suiteDigest") != json_digest(load_suite(suite_path)):
         raise ValueError("closed-loop evaluation suite provenance differs")
+    checkpoints = value.get("policyCheckpoints")
+    if checkpoints is not None:
+        ablation = audit_plan_ablation(ablation_path)
+        expected_paths = {
+            "noPlan": Path(ablation_path) / ablation["runs"]["noPlan"]["path"],
+            "planConditioned": (
+                Path(conditioned_checkpoint) if conditioned_checkpoint is not None
+                else Path(ablation_path) / ablation["runs"]["planConditioned"]["path"]
+            ),
+        }
+        expected = {
+            name: {
+                key: TorchPolicy(checkpoint).metadata[key]
+                for key in ("checkpointDigest", "stateDigest")
+            }
+            for name, checkpoint in expected_paths.items()
+        }
+        if checkpoints != expected:
+            raise ValueError("closed-loop evaluation checkpoint provenance differs")
     results = value.get("results")
     if not isinstance(results, list) or not results:
         raise ValueError("closed-loop evaluation results are invalid")
@@ -259,11 +291,13 @@ def main() -> None:
     parser.add_argument("--ablation", type=Path, required=True)
     parser.add_argument("--suite", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--conditioned-checkpoint", type=Path)
     parser.add_argument("--json", action="store_true")
     args = parser.parse_args()
     try:
         result = evaluate_closed_loop(
             ablation_path=args.ablation, suite_path=args.suite, output=args.output
+            , conditioned_checkpoint=args.conditioned_checkpoint
         )
     except (FileExistsError, RuntimeError, ValueError) as error:
         parser.error(str(error))

@@ -1039,6 +1039,12 @@ initialization, plan-target-path-only training, seed 84001, 1,500 steps, batch
 64, learning rate `0.001`, and the existing matched loss weights. The physical
 action path is frozen. Training and closed-loop outcomes remain unseen.
 
+M7 correction-evaluation bridge (2026-09-02): closed-loop evaluation can now
+accept an explicit conditioned checkpoint while retaining the original matched
+ablation's no-plan control. Results bind both checkpoint and state digests, and
+the semantic auditor reloads the supplied override. This avoids copying a
+checkpoint or manufacturing a new ablation manifest for post-DAgger evaluation.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO
