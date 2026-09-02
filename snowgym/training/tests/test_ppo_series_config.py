@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from pathlib import Path
+
 from snowgym_training.ppo_series_config import load_series_config, validate_series_config
 
 
@@ -22,3 +24,14 @@ def test_ppo_series_config_rejects_unsorted_checkpoints() -> None:
         assert "checkpointUpdates" in str(error)
     else:
         raise AssertionError("series config accepted unsorted checkpoints")
+
+
+def test_gate2_series_config_stops_before_observed_regression() -> None:
+    config_path = Path(__file__).resolve().parents[1] / (
+        "src/snowgym_training/configs/ppo_1v1_easy_bc_v0.json"
+    )
+    config = load_series_config(config_path)
+    assert config["gateId"] == "1v1-easy-scripted"
+    assert config["checkpointUpdates"] == [1, 5, 10]
+    assert config["rolloutSteps"] == 300
+    assert config["ppoConfig"]["minibatch_size"] == 2400

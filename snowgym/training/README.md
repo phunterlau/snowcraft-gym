@@ -113,6 +113,20 @@ and its full training configuration. It won both disjoint BC evaluation seeds,
 versus 0/2 masked-random and 2/2 teacher, with zero rejected actions. This is an
 initializer result, not the eight-seed PPO gate acceptance.
 
+The gate-2 PPO candidate is frozen in `ppo_1v1_easy_bc_v0.json`. Run it with:
+
+```bash
+uv run snowgym-run-ppo-config \
+  --config src/snowgym_training/configs/ppo_1v1_easy_bc_v0.json \
+  --output artifacts/ppo-1v1-easy-bc-v0-development \
+  --json
+```
+
+Its predeclared checkpoints stop at update 10 because the earlier development
+sweep passed at updates 1/5/10 but regressed at update 25. This is a frozen
+tuning decision made before the qualifying run, not post-hoc checkpoint
+selection inside a qualifying artifact.
+
 Replay either learned episode through the existing UI after starting
 `npm run dev` from the repository root:
 

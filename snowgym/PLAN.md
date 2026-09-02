@@ -532,7 +532,9 @@ disjoint BC evaluation episodes against easy scripted red, versus 0/2
 masked-random, with zero rejected actions. Conservative PPO development from
 this initializer passed the frozen eight-seed gate at updates 1, 5, and 10 but
 regressed by update 25, so the gate-2 candidate must stop at a predeclared
-update 10; no qualifying gate-2 result is claimed yet.
+update 10. `ppo_1v1_easy_bc_v0` now freezes that checkpoint schedule and all
+hyperparameters before qualification; no qualifying gate-2 result is claimed
+yet.
 
 ### M7 — plan-conditioned learned executor
 
