@@ -117,6 +117,21 @@ ROLE_ADAPTER_CLOSED_LOOP = (
 ROLE_ADAPTER_BEHAVIORS = (
     ROOT / "training" / "evaluations" / "plan_role_adapter_v0_dev_behaviors.json"
 )
+DIRECTIVE_ADAPTER_CHECKPOINT = (
+    ROOT / "training" / "runs" / "plan_unit_directive_adapter_v0_dev"
+)
+DIRECTIVE_ADAPTER_VALIDATION = (
+    ROOT / "training" / "evaluations"
+    / "plan_unit_directive_adapter_v0_dev_validation.json"
+)
+DIRECTIVE_ADAPTER_CLOSED_LOOP = (
+    ROOT / "training" / "evaluations"
+    / "plan_unit_directive_adapter_v0_dev_closed_loop.json"
+)
+DIRECTIVE_ADAPTER_BEHAVIORS = (
+    ROOT / "training" / "evaluations"
+    / "plan_unit_directive_adapter_v0_dev_behaviors.json"
+)
 
 
 def test_frozen_plan_dagger_spec_balances_missions_and_disjoins_seeds() -> None:
@@ -318,6 +333,43 @@ def test_role_adapter_v0_retains_failed_development_outcome() -> None:
         if item["policy"] == "planConditioned"
     }
     assert all(item["winner"] == "red" for item in missions.values())
+    assert missions["main-with-reserve-support"]["redAlive"] == 6
+
+
+def test_unit_directive_adapter_v0_retains_partial_development_outcome() -> None:
+    paired = audit_plan_counterfactual_evaluation(
+        DIRECTIVE_ADAPTER_VALIDATION,
+        DIRECTIVE_ADAPTER_CHECKPOINT,
+        ROLE_ADAPTER_VALIDATION_DATA,
+    )
+    assert paired["metrics"]["changedTeacherPairAccuracy"] > 0.50
+    closed_loop = audit_closed_loop(
+        DIRECTIVE_ADAPTER_CLOSED_LOOP,
+        ROOT / "training" / "runs" / "plan_bc_ablation_qual_v1",
+        ROOT / "training" / "src" / "snowgym_training" / "configs"
+        / "plan_closed_loop_v0.json",
+        DIRECTIVE_ADAPTER_CHECKPOINT,
+    )
+    behaviors = audit_closed_loop(
+        DIRECTIVE_ADAPTER_BEHAVIORS,
+        ROOT / "training" / "runs" / "plan_bc_ablation_qual_v1",
+        PLAN_SUITE,
+        DIRECTIVE_ADAPTER_CHECKPOINT,
+    )
+    approaches = {
+        item["caseId"]: item
+        for item in closed_loop["results"]
+        if item["policy"] == "planConditioned"
+    }
+    assert approaches["direct-focus"]["blueAlive"] == 3
+    assert approaches["left-flank-distributed"]["blueAlive"] == 2
+    missions = {
+        item["caseId"]: item
+        for item in behaviors["results"]
+        if item["policy"] == "planConditioned"
+    }
+    assert missions["withdraw-backfield"]["decisions"] == 600
+    assert missions["withdraw-backfield"]["blueAlive"] == 5
     assert missions["main-with-reserve-support"]["redAlive"] == 6
 
 

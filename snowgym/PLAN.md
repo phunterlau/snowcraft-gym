@@ -1298,6 +1298,17 @@ change is `plan_unit_directive_conditioned: true`. Only validation and the
 existing closed-loop suites may be inspected; evaluation seeds 15401–15405
 remain sealed.
 
+M7 per-unit-directive-v0 development outcome (2026-09-02): the frozen run
+produced checkpoint `3855cc78...`. Validation changed-teacher recall/pair
+accuracy improved over role-aware-v0 to `0.599114`/`0.503876`, while primary
+accuracy fell slightly to `0.855758` and predicted plan changes remained high
+at `0.239873`. The withdraw case improved materially to the full 600-decision
+horizon with five blue versus four red, but direct/flank retained only three/two
+blue and support still lost 0–6. This is retained partial evidence, not a
+qualification candidate; evaluation seeds remain sealed. Richer directive
+features alone do not resolve the mission tradeoff. The next revision must
+balance correction supervision across primary missions and assigned roles.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO

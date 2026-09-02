@@ -494,6 +494,14 @@ zero-initialized action and target residuals without changing the v2 dataset
 format. It is intended for the next development experiment, not a claim that
 the retained role-aware-v0 checkpoint passed.
 
+The controlled per-unit-directive-v0 run is retained under
+`runs/plan_unit_directive_adapter_v0_dev`. It improves withdraw to 600 decisions
+with five blue alive and raises validation changed-pair accuracy to `0.503876`,
+but direct/flank retain only three/two blue and support still loses 0–6. Treat
+it as partial development evidence. The next experiment must rebalance
+supervision by mission and assigned role; do not open the sealed evaluation
+split on the strength of the withdraw result alone.
+
 ## PPO foundation
 
 Run a short end-to-end infrastructure smoke against the first frozen curriculum
