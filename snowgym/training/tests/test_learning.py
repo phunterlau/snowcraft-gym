@@ -401,6 +401,32 @@ def test_throw_class_weight_increases_rare_throw_penalty(tmp_path: Path) -> None
     assert weighted > ordinary
 
 
+def test_unit_weights_rebalance_hybrid_loss(tmp_path: Path) -> None:
+    dataset = TrajectoryDataset(make_dataset(tmp_path / "dataset"))
+    observation, action = dataset.batch(np.asarray([0, 1]))
+    model = EntityPolicy(ModelConfig(16, 12, 24))
+    prediction = model(observation)
+    action["action_type"][0, 0] = 1
+    action["action_type"][1, 0] = 2
+    with torch.no_grad():
+        prediction["action_logits"][:, 0] = torch.tensor(
+            [[0.0, 3.0, 0.0, 0.0], [0.0, 3.0, 0.0, 0.0]]
+        )
+    ordinary = behavior_clone_loss(
+        prediction, action, observation, LossConfig()
+    )["action"]
+    unit_weights = torch.ones_like(observation["ally_mask"], dtype=torch.float32)
+    unit_weights[1, 0] = 10.0
+    rebalanced = behavior_clone_loss(
+        prediction, action, observation, LossConfig(), unit_weights
+    )["action"]
+    assert rebalanced > ordinary
+    with pytest.raises(ValueError, match="must match ally_mask"):
+        behavior_clone_loss(
+            prediction, action, observation, LossConfig(), torch.ones(1)
+        )
+
+
 def test_checkpoint_resume_is_exact_and_policy_respects_masks(tmp_path: Path) -> None:
     dataset_path = make_dataset(tmp_path / "dataset")
     config = training_config(steps=8)

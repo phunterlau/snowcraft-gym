@@ -38,6 +38,7 @@ def behavior_clone_loss(
     action: dict[str, Tensor],
     observation: dict[str, Tensor],
     config: LossConfig,
+    unit_weights: Tensor | None = None,
 ) -> dict[str, Tensor]:
     present = observation["ally_mask"].bool()
     labels = action["action_type"].long()
@@ -49,11 +50,26 @@ def behavior_clone_loss(
         device=prediction["action_logits"].device,
     )
     action_class_weights[ACTION_THROW] = config.throw_action_weight
-    action_loss = F.cross_entropy(
-        prediction["action_logits"][present],
-        labels[present],
-        weight=action_class_weights,
-    )
+    if unit_weights is not None and unit_weights.shape != present.shape:
+        raise ValueError("unit_weights must match ally_mask shape")
+    if unit_weights is None:
+        action_loss = F.cross_entropy(
+            prediction["action_logits"][present],
+            labels[present],
+            weight=action_class_weights,
+        )
+    else:
+        sample_weights = unit_weights[present].float()
+        raw_action = F.cross_entropy(
+            prediction["action_logits"][present],
+            labels[present],
+            weight=action_class_weights,
+            reduction="none",
+        )
+        denominator = (
+            action_class_weights[labels[present]] * sample_weights
+        ).sum().clamp_min(torch.finfo(raw_action.dtype).eps)
+        action_loss = (raw_action * sample_weights).sum() / denominator
     target_mask = present & ((labels == ACTION_MOVE) | (labels == ACTION_THROW))
     throw_mask = present & (labels == ACTION_THROW)
     predicted_target = (
@@ -64,8 +80,12 @@ def behavior_clone_loss(
         if "target_by_action" in prediction
         else prediction["target"]
     )
-    target_loss = masked_mse(predicted_target, action["target"].float(), target_mask)
-    power_loss = masked_mse(prediction["power"], action["power"].float(), throw_mask)
+    target_loss = masked_mse(
+        predicted_target, action["target"].float(), target_mask, unit_weights
+    )
+    power_loss = masked_mse(
+        prediction["power"], action["power"].float(), throw_mask, unit_weights
+    )
     total = (
         config.action_weight * action_loss
         + config.target_weight * target_loss
@@ -79,10 +99,20 @@ def behavior_clone_loss(
     }
 
 
-def masked_mse(prediction: Tensor, target: Tensor, mask: Tensor) -> Tensor:
+def masked_mse(
+    prediction: Tensor, target: Tensor, mask: Tensor, weights: Tensor | None = None
+) -> Tensor:
     if not bool(mask.any()):
         return prediction.sum() * 0.0
-    return F.mse_loss(prediction[mask], target[mask])
+    if weights is None:
+        return F.mse_loss(prediction[mask], target[mask])
+    error = (prediction[mask] - target[mask]).square()
+    selected = weights[mask].float()
+    if error.ndim > selected.ndim:
+        selected = selected.unsqueeze(-1).expand_as(error)
+    return (error * selected).sum() / selected.sum().clamp_min(
+        torch.finfo(error.dtype).eps
+    )
 
 
 def loss_config(value: Any) -> LossConfig:

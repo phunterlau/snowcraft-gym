@@ -49,7 +49,8 @@ def validate_training_config(value: Any) -> None:
         "evaluationSuite",
     }
     optional = {
-        "trainable", "counterfactualLossWeight", "counterfactualChangedActionWeight"
+        "trainable", "counterfactualLossWeight", "counterfactualChangedActionWeight",
+        "sampling", "roleBalancedLoss",
     }
     if not isinstance(value, dict) or not required <= set(value) or set(value) - required - optional:
         raise ValueError(f"training config must contain {sorted(required)} and optional trainable")
@@ -83,6 +84,12 @@ def validate_training_config(value: Any) -> None:
         or not 0 <= changed_weight <= 100
     ):
         raise ValueError("counterfactualChangedActionWeight must be in [0, 100]")
+    if value.get("sampling", "transition-uniform") not in {
+        "transition-uniform", "plan-mission-uniform"
+    }:
+        raise ValueError("sampling must be transition-uniform or plan-mission-uniform")
+    if not isinstance(value.get("roleBalancedLoss", False), bool):
+        raise ValueError("roleBalancedLoss must be boolean")
 
 
 def train_behavior_clone(
@@ -108,6 +115,10 @@ def train_behavior_clone(
         raise ValueError("plan-conditioned training requires an aligned plan dataset")
     if architecture.plan_role_conditioned and "plan_unit_roles" not in dataset.observation_fields:
         raise ValueError("plan role-conditioned training requires aligned unit roles")
+    role_class_weights = (
+        dataset.inverse_plan_role_weights()
+        if config.get("roleBalancedLoss", False) else None
+    )
     counterfactual_weight = float(config.get("counterfactualLossWeight", 0))
     changed_action_weight = float(config.get("counterfactualChangedActionWeight", 0))
     if (
@@ -179,13 +190,25 @@ def train_behavior_clone(
     first_loss: float | None = None
     final_components: dict[str, float] = {}
     for step in range(start_step, target):
-        indices = deterministic_batch_indices(
-            len(dataset), int(config["batchSize"]), int(config["seed"]), step
+        indices = (
+            dataset.plan_mission_batch_indices(
+                int(config["batchSize"]), int(config["seed"]), step
+            )
+            if config.get("sampling") == "plan-mission-uniform"
+            else deterministic_batch_indices(
+                len(dataset), int(config["batchSize"]), int(config["seed"]), step
+            )
         )
         observation, action = dataset.batch(indices)
+        primary_unit_weights = (
+            observation["plan_unit_roles"].float() @ role_class_weights
+            if role_class_weights is not None else None
+        )
         optimizer.zero_grad(set_to_none=True)
         primary_prediction = model(observation)
-        components = behavior_clone_loss(primary_prediction, action, observation, losses)
+        components = behavior_clone_loss(
+            primary_prediction, action, observation, losses, primary_unit_weights
+        )
         if counterfactual_weight > 0 or changed_action_weight > 0:
             counterfactual_observation = {
                 **observation,
@@ -205,11 +228,17 @@ def train_behavior_clone(
                 for field in ("action_type", "target", "power")
             }
             counterfactual_prediction = model(counterfactual_observation)
+            counterfactual_unit_weights = (
+                counterfactual_observation["plan_unit_roles"].float()
+                @ role_class_weights
+                if role_class_weights is not None else None
+            )
             counterfactual = behavior_clone_loss(
                 counterfactual_prediction,
                 counterfactual_action,
                 counterfactual_observation,
                 losses,
+                counterfactual_unit_weights,
             )
             components["total"] = components["total"] + (
                 counterfactual_weight * counterfactual["total"]
@@ -226,16 +255,32 @@ def train_behavior_clone(
                         dtype=primary_prediction["action_logits"].dtype,
                     )
                     class_weights[ACTION_THROW] = losses.throw_action_weight
-                    changed_loss = 0.5 * (
-                        F.cross_entropy(
-                            primary_prediction["action_logits"][changed],
-                            primary_labels[changed],
-                            weight=class_weights,
+                    def changed_ce(
+                        logits: torch.Tensor, labels: torch.Tensor,
+                        unit_weights: torch.Tensor | None,
+                    ) -> torch.Tensor:
+                        if unit_weights is None:
+                            return F.cross_entropy(
+                                logits[changed], labels[changed], weight=class_weights
+                            )
+                        selected = unit_weights[changed]
+                        raw = F.cross_entropy(
+                            logits[changed], labels[changed], weight=class_weights,
+                            reduction="none",
                         )
-                        + F.cross_entropy(
-                            counterfactual_prediction["action_logits"][changed],
-                            counterfactual_labels[changed],
-                            weight=class_weights,
+                        denominator = (
+                            class_weights[labels[changed]] * selected
+                        ).sum().clamp_min(torch.finfo(raw.dtype).eps)
+                        return (raw * selected).sum() / denominator
+
+                    changed_loss = 0.5 * (
+                        changed_ce(
+                            primary_prediction["action_logits"], primary_labels,
+                            primary_unit_weights,
+                        )
+                        + changed_ce(
+                            counterfactual_prediction["action_logits"],
+                            counterfactual_labels, counterfactual_unit_weights,
                         )
                     )
                 else:

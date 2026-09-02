@@ -85,6 +85,52 @@ class TrajectoryDataset:
         }
         return observation, action
 
+    def plan_mission_batch_indices(
+        self, batch_size: int, seed: int, step: int
+    ) -> np.ndarray:
+        """Sample missions uniformly, then sample a transition within each mission."""
+        if batch_size <= 0 or step < 0:
+            raise ValueError("batch_size must be positive and step non-negative")
+        episodes = self.manifest.get("episodes")
+        if not isinstance(episodes, list) or not episodes:
+            raise ValueError("plan-mission sampling requires episode metadata")
+        by_mission: dict[str, list[np.ndarray]] = {}
+        for episode in episodes:
+            if not isinstance(episode, dict) or not isinstance(episode.get("planName"), str):
+                raise ValueError("plan-mission sampling requires episode planName")
+            start = episode.get("startTransition")
+            count = episode.get("transitions")
+            if not isinstance(start, int) or not isinstance(count, int) or count <= 0:
+                raise ValueError("plan-mission sampling requires valid transition ranges")
+            by_mission.setdefault(episode["planName"], []).append(
+                np.arange(start, start + count, dtype=np.int64)
+            )
+        missions = sorted(by_mission)
+        pools = {name: np.concatenate(by_mission[name]) for name in missions}
+        generator = np.random.default_rng(np.random.SeedSequence([seed, step]))
+        offset = (step * batch_size) % len(missions)
+        return np.asarray(
+            [
+                generator.choice(pools[missions[(offset + slot) % len(missions)]])
+                for slot in range(batch_size)
+            ],
+            dtype=np.int64,
+        )
+
+    def inverse_plan_role_weights(self) -> torch.Tensor:
+        """Return mean-one inverse-frequency weights for assigned unit roles."""
+        if "plan_unit_roles" not in self.observation_fields:
+            raise ValueError("role-balanced loss requires plan unit roles")
+        roles = self.arrays["observation__plan_unit_roles"]
+        counts = roles.sum(axis=(0, 1), dtype=np.float64)
+        observed = counts > 0
+        if not np.any(observed):
+            raise ValueError("role-balanced loss requires at least one assigned role")
+        inverse = np.zeros_like(counts)
+        inverse[observed] = 1.0 / counts[observed]
+        normalized = inverse / np.mean(inverse[observed])
+        return torch.from_numpy(normalized.astype(np.float32))
+
 
 def deterministic_batch_indices(
     size: int, batch_size: int, seed: int, step: int

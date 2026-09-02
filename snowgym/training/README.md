@@ -502,6 +502,15 @@ it as partial development evidence. The next experiment must rebalance
 supervision by mission and assigned role; do not open the sealed evaluation
 split on the strength of the withdraw result alone.
 
+For controlled imbalance experiments, set `sampling` to
+`plan-mission-uniform` and `roleBalancedLoss` to `true`. The sampler gives each
+named plan equal batch representation regardless of episode length. The loss
+uses inverse-frequency weights so observed assignment roles contribute equal
+aggregate mass. The current v2 corpus has main and reserve labels but no true
+maneuver assignment—the flank plan is a main group with a flank approach—so an
+absent role receives zero weight and must be added through a separately frozen
+curriculum, not synthesized during training.
+
 ## PPO foundation
 
 Run a short end-to-end infrastructure smoke against the first frozen curriculum

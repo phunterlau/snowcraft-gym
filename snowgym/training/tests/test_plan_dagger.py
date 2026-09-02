@@ -336,6 +336,56 @@ def test_role_adapter_v0_retains_failed_development_outcome() -> None:
     assert missions["main-with-reserve-support"]["redAlive"] == 6
 
 
+def test_plan_mission_sampler_and_role_weights_are_balanced_and_deterministic() -> None:
+    dataset = TrajectoryDataset(ROLE_ADAPTER_VALIDATION_DATA)
+    first = dataset.plan_mission_batch_indices(50, seed=991, step=3)
+    second = dataset.plan_mission_batch_indices(50, seed=991, step=3)
+    assert np.array_equal(first, second)
+    missions: list[str] = []
+    for index in first:
+        episode = next(
+            item for item in dataset.manifest["episodes"]
+            if item["startTransition"] <= index
+            < item["startTransition"] + item["transitions"]
+        )
+        missions.append(episode["planName"])
+    assert {name: missions.count(name) for name in set(missions)} == {
+        name: 10 for name in {"direct", "flank", "hold", "withdraw", "support"}
+    }
+    roles = dataset.arrays["observation__plan_unit_roles"]
+    counts = roles.sum(axis=(0, 1))
+    weights = dataset.inverse_plan_role_weights().numpy()
+    observed = counts > 0
+    np.testing.assert_allclose(
+        (counts * weights)[observed],
+        np.full(int(observed.sum()), counts[0] * weights[0]),
+    )
+    assert weights[~observed].tolist() == [0.0]
+
+
+def test_mission_and_role_balanced_training_step(tmp_path: Path) -> None:
+    config = load_training_config(
+        ROOT / "training" / "src" / "snowgym_training" / "configs"
+        / "plan_unit_directive_adapter_v0_dev.json"
+    )
+    config = {
+        **config,
+        "name": "mission-role-balanced-smoke",
+        "steps": 1,
+        "sampling": "plan-mission-uniform",
+        "roleBalancedLoss": True,
+    }
+    result = train_behavior_clone(
+        dataset_path=ROLE_ADAPTER_VALIDATION_DATA,
+        output=tmp_path / "balanced",
+        config=config,
+        initialize=CHECKPOINT,
+        git_commit="test",
+    )
+    assert result["trainingConfig"]["sampling"] == "plan-mission-uniform"
+    assert result["trainingConfig"]["roleBalancedLoss"] is True
+
+
 def test_unit_directive_adapter_v0_retains_partial_development_outcome() -> None:
     paired = audit_plan_counterfactual_evaluation(
         DIRECTIVE_ADAPTER_VALIDATION,

@@ -1309,6 +1309,19 @@ qualification candidate; evaluation seeds remain sealed. Richer directive
 features alone do not resolve the mission tradeoff. The next revision must
 balance correction supervision across primary missions and assigned roles.
 
+M7 mission/role balancing foundation (2026-09-02): behavior-cloning configs may
+now opt into deterministic `plan-mission-uniform` sampling, which selects plan
+names uniformly before choosing transitions, and `roleBalancedLoss`, which
+applies mean-one inverse-frequency unit weights to action, target, power, and
+teacher-changed losses. Defaults preserve every prior run. Weighting covers
+observed roles and gives absent roles zero weight; auditing the retained corpus
+revealed 11,488 main, 790 reserve, and zero maneuver labels in train (5,754,
+335, and zero in validation). Thus balancing can correct main/reserve skew, but
+a future curriculum must add a genuine maneuver-group plan before claiming
+three-role transfer. Tests cover deterministic mission balance, equal aggregate
+weight across observed roles, malformed loss weights, and a real balanced
+training step.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO
