@@ -143,7 +143,14 @@ bootstraps time-limit truncation but not true terminal states. The optional
 health potential is a training signal only and never replaces terminal-only
 benchmark reward.
 
+`RolloutBuffer` owns a fixed number of decisions from a fixed number of
+persistent worlds. Every transition is validated and detached on insertion;
+the completed `PPORollout` retains `[time, world, ...]` tensors for audit and
+flattens only the first two axes for optimization. Terminal transitions do not
+bootstrap, time-limit truncations bootstrap once but stop recurrence, and an
+incomplete rollout cannot be consumed.
+
 The frozen `ppo_curriculum_v0.json` keeps training ranges disjoint from eight
 evaluation seeds per gate and sets thresholds before qualifying runs. The
-current foundation does not yet claim a PPO result; rollout collection, exact
-optimizer resume, and the checkpoint series remain next.
+current foundation does not yet claim a PPO result; live batch collection,
+deterministic optimizer/resume, and the checkpoint series remain next.

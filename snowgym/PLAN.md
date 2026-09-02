@@ -420,9 +420,12 @@ partial observation, or self-play confounds.
 - [x] Add a custom Torch PPO implementation for the squad-level actor. The
       joint log probability includes action type for present units, target only
       for move/throw, and power only for throw; masks also apply to entropy.
-- [ ] Add rollout/GAE buffers with terminal versus time-limit truncation handled
-      separately, advantage normalization, clipped policy/value losses,
-      gradient clipping, KL/entropy diagnostics, and exact resume metadata.
+- [x] Add detached fixed-horizon rollout/GAE buffers with terminal versus
+      time-limit truncation handled separately, strict fixed-world tensor
+      validation, immutable snapshots, and deterministic time/world flattening.
+- [ ] Add the deterministic minibatch optimizer loop with advantage
+      normalization, clipped policy/value losses, gradient clipping,
+      KL/entropy diagnostics, and exact resume metadata.
 - [ ] Keep canonical evaluation reward at win `+1`, loss `-1`, draw `0`. If
       sparse learning blocks the smoke test, add an opt-in training wrapper with
       potential-based own-minus-enemy health shaping and test that it leaves
@@ -449,7 +452,10 @@ implements mask-aware categorical actions, tanh/sigmoid continuous heads,
 conditional joint log probability and entropy, a centralized value head,
 terminal-aware GAE, clipped PPO loss, KL/clip diagnostics, and opt-in health
 potential shaping. Rollout storage, optimizer/resume, and qualifying runs remain
-open; the M6.2 exit gate is not yet claimed.
+open; the M6.2 exit gate is not yet claimed. The fixed-horizon rollout buffer
+now snapshots vector-world tensors, rejects inconsistent transitions, computes
+terminal-aware GAE only when complete, and flattens time/world axes for the
+upcoming optimizer without collapsing entity features.
 
 ### M7 — plan-conditioned learned executor
 

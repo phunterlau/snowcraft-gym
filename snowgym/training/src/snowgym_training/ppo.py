@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Any
 
 import torch
 from torch import Tensor, nn
@@ -23,6 +24,180 @@ class PPOConfig:
     value_weight: float = 0.5
     entropy_weight: float = 0.01
     max_grad_norm: float = 0.5
+
+
+@dataclass(frozen=True)
+class PPORollout:
+    observations: dict[str, Tensor]
+    actions: dict[str, Tensor]
+    old_log_probability: Tensor
+    old_values: Tensor
+    rewards: Tensor
+    terminated: Tensor
+    truncated: Tensor
+    next_values: Tensor
+    advantages: Tensor
+    returns: Tensor
+
+    @property
+    def steps(self) -> int:
+        return int(self.rewards.shape[0])
+
+    @property
+    def batch_size(self) -> int:
+        return int(self.rewards.shape[1])
+
+    def flatten(self) -> dict[str, Any]:
+        """Flatten time and world dimensions without changing feature axes."""
+        return {
+            "observations": {
+                name: value.flatten(0, 1) for name, value in self.observations.items()
+            },
+            "actions": {
+                name: value.flatten(0, 1) for name, value in self.actions.items()
+            },
+            "old_log_probability": self.old_log_probability.flatten(0, 1),
+            "old_values": self.old_values.flatten(0, 1),
+            "rewards": self.rewards.flatten(0, 1),
+            "terminated": self.terminated.flatten(0, 1),
+            "truncated": self.truncated.flatten(0, 1),
+            "next_values": self.next_values.flatten(0, 1),
+            "advantages": self.advantages.flatten(0, 1),
+            "returns": self.returns.flatten(0, 1),
+        }
+
+
+class RolloutBuffer:
+    """Detached fixed-horizon storage for persistent vector SnowGym worlds."""
+
+    def __init__(self, steps: int, batch_size: int) -> None:
+        if not isinstance(steps, int) or isinstance(steps, bool) or steps <= 0:
+            raise ValueError("rollout steps must be a positive integer")
+        if not isinstance(batch_size, int) or isinstance(batch_size, bool) or batch_size <= 0:
+            raise ValueError("rollout batch_size must be a positive integer")
+        self.steps = steps
+        self.batch_size = batch_size
+        self._transitions: list[dict[str, Any]] = []
+        self._observation_keys: tuple[str, ...] | None = None
+
+    def __len__(self) -> int:
+        return len(self._transitions)
+
+    @property
+    def full(self) -> bool:
+        return len(self) == self.steps
+
+    def add(
+        self,
+        *,
+        observation: dict[str, Tensor],
+        action: dict[str, Tensor],
+        log_probability: Tensor,
+        value: Tensor,
+        reward: Tensor,
+        terminated: Tensor,
+        truncated: Tensor,
+        next_value: Tensor,
+    ) -> None:
+        if self.full:
+            raise RuntimeError("rollout buffer is full")
+        keys = tuple(sorted(observation))
+        if self._observation_keys is None:
+            self._observation_keys = keys
+        elif keys != self._observation_keys:
+            raise ValueError("rollout observation keys changed")
+        if set(action) != {"action_type", "target", "power"}:
+            raise ValueError("rollout action must contain action_type, target, and power")
+        for name, tensor in observation.items():
+            self._batch_tensor(tensor, f"observation.{name}")
+        unit_shape = action["action_type"].shape
+        self._batch_tensor(action["action_type"], "action.action_type")
+        self._batch_tensor(action["target"], "action.target")
+        self._batch_tensor(action["power"], "action.power")
+        if len(unit_shape) != 2:
+            raise ValueError("action.action_type must have shape [batch, units]")
+        if action["target"].shape != (*unit_shape, 2):
+            raise ValueError("action.target must have shape [batch, units, 2]")
+        if action["power"].shape != unit_shape:
+            raise ValueError("action.power must have shape [batch, units]")
+        scalars = {
+            "log_probability": log_probability,
+            "value": value,
+            "reward": reward,
+            "terminated": terminated,
+            "truncated": truncated,
+            "next_value": next_value,
+        }
+        for name, tensor in scalars.items():
+            if tensor.shape != (self.batch_size,):
+                raise ValueError(f"{name} must have shape [batch]")
+            if tensor.is_floating_point() and not bool(torch.isfinite(tensor).all()):
+                raise ValueError(f"{name} must be finite")
+        self._transitions.append(
+            {
+                "observation": snapshot(observation),
+                "action": snapshot(action),
+                **{name: tensor.detach().clone() for name, tensor in scalars.items()},
+            }
+        )
+
+    def finish(self, config: PPOConfig) -> PPORollout:
+        if not self.full:
+            raise RuntimeError(
+                f"rollout buffer is incomplete: expected {self.steps}, got {len(self)}"
+            )
+        observations = stack_dict(self._transitions, "observation")
+        actions = stack_dict(self._transitions, "action")
+        values = stack_field(self._transitions, "value")
+        rewards = stack_field(self._transitions, "reward")
+        terminated = stack_field(self._transitions, "terminated").bool()
+        truncated = stack_field(self._transitions, "truncated").bool()
+        next_values = stack_field(self._transitions, "next_value")
+        advantages, returns = generalized_advantage_estimate(
+            rewards,
+            values,
+            next_values,
+            terminated,
+            truncated,
+            gamma=config.gamma,
+            gae_lambda=config.gae_lambda,
+        )
+        return PPORollout(
+            observations=observations,
+            actions=actions,
+            old_log_probability=stack_field(self._transitions, "log_probability"),
+            old_values=values,
+            rewards=rewards,
+            terminated=terminated,
+            truncated=truncated,
+            next_values=next_values,
+            advantages=advantages,
+            returns=returns,
+        )
+
+    def _batch_tensor(self, tensor: Tensor, name: str) -> None:
+        if not isinstance(tensor, Tensor) or tensor.ndim == 0:
+            raise ValueError(f"{name} must be a batched tensor")
+        if tensor.shape[0] != self.batch_size:
+            raise ValueError(f"{name} leading dimension must equal batch_size")
+        if tensor.is_floating_point() and not bool(torch.isfinite(tensor).all()):
+            raise ValueError(f"{name} must be finite")
+
+
+def snapshot(values: dict[str, Tensor]) -> dict[str, Tensor]:
+    return {name: value.detach().clone() for name, value in values.items()}
+
+
+def stack_dict(transitions: list[dict[str, Any]], field: str) -> dict[str, Tensor]:
+    first = transitions[0][field]
+    return {
+        name: torch.stack([transition[field][name] for transition in transitions])
+        for name in first
+    }
+
+
+def stack_field(transitions: list[dict[str, Any]], field: str) -> Tensor:
+    return torch.stack([transition[field] for transition in transitions])
 
 
 class HybridActorCritic(nn.Module):

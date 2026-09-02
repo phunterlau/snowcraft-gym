@@ -7,6 +7,7 @@ from snowgym_training.curriculum import load_curriculum, validate_curriculum
 from snowgym_training.ppo import (
     HybridActorCritic,
     PPOConfig,
+    RolloutBuffer,
     generalized_advantage_estimate,
     health_potential,
     potential_shaped_reward,
@@ -154,3 +155,78 @@ def test_potential_shaping_is_opt_in_and_zeroes_terminal_bootstrap() -> None:
     )
     torch.testing.assert_close(canonical, torch.tensor([1.0]))
     torch.testing.assert_close(shaped, torch.tensor([0.6]))
+
+
+def test_rollout_buffer_snapshots_computes_gae_and_flattens() -> None:
+    buffer = RolloutBuffer(steps=2, batch_size=2)
+    observation = synthetic_observation(batch=2)
+    action = {
+        "action_type": torch.zeros((2, 2), dtype=torch.int64),
+        "target": torch.zeros((2, 2, 2)),
+        "power": torch.full((2, 2), 0.5),
+    }
+    buffer.add(
+        observation=observation,
+        action=action,
+        log_probability=torch.tensor([-0.1, -0.2]),
+        value=torch.tensor([0.2, 0.4]),
+        reward=torch.tensor([0.0, 0.0]),
+        terminated=torch.tensor([False, False]),
+        truncated=torch.tensor([False, False]),
+        next_value=torch.tensor([0.3, 0.5]),
+    )
+    observation["allies"].fill_(99)
+    buffer.add(
+        observation=synthetic_observation(batch=2),
+        action=action,
+        log_probability=torch.tensor([-0.3, -0.4]),
+        value=torch.tensor([0.3, 0.5]),
+        reward=torch.tensor([1.0, -1.0]),
+        terminated=torch.tensor([True, False]),
+        truncated=torch.tensor([False, True]),
+        next_value=torch.tensor([10.0, 0.7]),
+    )
+
+    rollout = buffer.finish(PPOConfig(gamma=0.9, gae_lambda=1.0))
+    assert rollout.steps == 2
+    assert rollout.batch_size == 2
+    assert rollout.observations["allies"].shape == (2, 2, 2, 10)
+    assert rollout.observations["allies"][0].max().item() == 0
+    torch.testing.assert_close(rollout.advantages[1], torch.tensor([0.7, -0.87]))
+    torch.testing.assert_close(rollout.advantages[0], torch.tensor([0.7, -0.733]))
+    flattened = rollout.flatten()
+    assert flattened["observations"]["allies"].shape == (4, 2, 10)
+    assert flattened["actions"]["target"].shape == (4, 2, 2)
+    assert flattened["advantages"].shape == (4,)
+
+
+def test_rollout_buffer_rejects_incomplete_or_inconsistent_transitions() -> None:
+    buffer = RolloutBuffer(steps=1, batch_size=2)
+    try:
+        buffer.finish(PPOConfig())
+    except RuntimeError as error:
+        assert "incomplete" in str(error)
+    else:
+        raise AssertionError("incomplete rollout was accepted")
+
+    observation = synthetic_observation(batch=2)
+    action = {
+        "action_type": torch.zeros((2, 2), dtype=torch.int64),
+        "target": torch.zeros((2, 2, 2)),
+        "power": torch.zeros((2, 2)),
+    }
+    try:
+        buffer.add(
+            observation=observation,
+            action={**action, "target": torch.zeros((2, 2, 3))},
+            log_probability=torch.zeros(2),
+            value=torch.zeros(2),
+            reward=torch.zeros(2),
+            terminated=torch.zeros(2, dtype=torch.bool),
+            truncated=torch.zeros(2, dtype=torch.bool),
+            next_value=torch.zeros(2),
+        )
+    except ValueError as error:
+        assert "action.target" in str(error)
+    else:
+        raise AssertionError("invalid rollout action shape was accepted")
