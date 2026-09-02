@@ -366,24 +366,30 @@ either pick a file with **Open recording**, or load one directly:
 http://127.0.0.1:5173/replay.html?recording=/replays/<file>
 ```
 
-| File                                    | Scenario                                       | Result   |
-| --------------------------------------- | ---------------------------------------------- | -------- |
-| `demo-learned-blue-seed-42.json`        | Learned BC blue vs seeded-random red, 1v1      | blue 1–0 |
-| `blue-seed-42.json`                     | Open 3v3, normal scripted red (acceptance run) | blue 3–0 |
-| `blue-5v2-hard.json`                    | Open 5v2, hard scripted red                    | blue win |
-| `example-open-3v3.json`                 | Open 3v3, scripted red                         | blue 3–0 |
-| `example-open-1v3-hard.json`            | Open 1 blue vs 3 hard red                      | red win  |
-| `example-open-2v5-normal.json`          | Open 2 blue vs 5 red                           | red win  |
-| `example-open-8v8.json`                 | Open 8v8 on a large arena                      | blue 7–0 |
-| `example-winter-front-10v10.json`       | Winter Front (`arena6`) 10v10                  | blue 9–0 |
-| `trajectory-10v10-blue-win-seed-2.json` | Mock commander blue on Winter Front, 10v10     | blue 7–0 |
-| `trajectory-10v10.json`                 | Mock commander blue on Winter Front, 10v10     | red 4–0  |
-| `example-forest-3v3.json`               | Pine Forest (`arena4`) 3v3 — dense tree cover  | blue 3–0 |
-| `example-pond-5v2-hard.json`            | Frozen Pond (`arena2`), hard red               | blue win |
-| `example-village-random.json`           | Village Skirmish (`arena3`) vs `random` red    | blue win |
+| File                                           | Scenario                                       | Result   |
+| ---------------------------------------------- | ---------------------------------------------- | -------- |
+| `demo-learned-blue-seed-42.json`               | Learned BC blue vs seeded-random red, 1v1      | blue 1–0 |
+| `blue-seed-42.json`                            | Open 3v3, normal scripted red (acceptance run) | blue 3–0 |
+| `blue-5v2-hard.json`                           | Open 5v2, hard scripted red                    | blue win |
+| `example-open-3v3.json`                        | Open 3v3, scripted red                         | blue 3–0 |
+| `example-open-1v3-hard.json`                   | Open 1 blue vs 3 hard red                      | red win  |
+| `example-open-2v5-normal.json`                 | Open 2 blue vs 5 red                           | red win  |
+| `example-open-8v8.json`                        | Open 8v8 on a large arena                      | blue 7–0 |
+| `example-winter-front-10v10.json`              | Winter Front (`arena6`) 10v10                  | blue 9–0 |
+| `example-winter-front-6v10-easy-seed-13.json`  | Scripted blue, easy red, understrength 6v10    | blue 6–0 |
+| `example-winter-front-6v10-normal-seed-9.json` | Scripted blue, normal red, understrength 6v10  | blue 1–0 |
+| `trajectory-10v10-blue-win-seed-2.json`        | Mock commander blue on Winter Front, 10v10     | blue 7–0 |
+| `trajectory-10v10.json`                        | Mock commander blue on Winter Front, 10v10     | red 4–0  |
+| `example-forest-3v3.json`                      | Pine Forest (`arena4`) 3v3 — dense tree cover  | blue 3–0 |
+| `example-pond-5v2-hard.json`                   | Frozen Pond (`arena2`), hard red               | blue win |
+| `example-village-random.json`                  | Village Skirmish (`arena3`) vs `random` red    | blue win |
 
 Map recordings render the terrain (trees, rocks, forts) and show units using
 cover. Record your own with `--record PATH` on `snowgym-demo` (see below).
+The two 6v10 recordings are seeded possibility examples for the built-in blue
+policy, not balance claims: the easy case preserves all six blue units, while
+the normal case is a narrow one-survivor win. Recreate either with the
+configurable builder by supplying the recorded roster, difficulty, and seed.
 
 The browser acceptance command is self-contained:
 
