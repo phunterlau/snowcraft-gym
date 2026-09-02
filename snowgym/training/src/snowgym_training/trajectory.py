@@ -362,13 +362,14 @@ def _audit_counterfactual_actions(arrays: dict[str, np.ndarray], shard: str) -> 
 
 def _audit_plan_roles(arrays: dict[str, np.ndarray], shard: str) -> None:
     ally_mask = arrays["observation__ally_mask"].astype(bool)
+    living = ally_mask & (arrays["observation__allies"][..., 1] > 0.5)
     for name in PLAN_ROLE_ARRAYS:
         roles = arrays[name]
         if roles.shape != (*ally_mask.shape, 3):
             raise ValueError(f"plan unit-role tensor shape mismatch: {shard}")
         if np.any((roles != 0) & (roles != 1)) or np.any(roles.sum(axis=-1) > 1):
             raise ValueError(f"plan unit-role tensor is not one-hot: {shard}")
-        if np.any(roles[~ally_mask] != 0) or np.any(roles[ally_mask].sum(axis=-1) != 1):
+        if np.any(roles[~living] != 0) or np.any(roles[living].sum(axis=-1) != 1):
             raise ValueError(f"plan unit-role tensor does not cover living allies: {shard}")
 
 

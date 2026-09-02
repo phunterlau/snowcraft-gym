@@ -364,7 +364,7 @@ class SnowGymBatchEnv:
             slots = {
                 ally.get("id"): slot
                 for slot, ally in enumerate(raw["allies"][: self.max_team_units])
-                if isinstance(ally, dict)
+                if isinstance(ally, dict) and ally.get("alive") is True
             }
             assignments = body.get("assignments")
             if not isinstance(assignments, list):
