@@ -935,6 +935,19 @@ final group-position separation. The one-decision real-subprocess smoke proves
 the complete checkpoint-to-authoritative-world path; the frozen full run is
 next and thresholds have not been retrofitted.
 
+M7 closed-loop development outcome (2026-09-02): the frozen v0 run completed
+four real executions with zero rejected actions. Both policies truncated at the
+predeclared 900-tick horizon and neither won, so this is not an M7 exit. In both
+direct and flank cases, the conditioned policy finished with four blue survivors
+versus two for no-plan. Its objective-progress advantage was `0.194498` and
+`0.214476`; first-action target mean absolute deltas were `0.230875` and
+`0.235246`, and final group-position distances were `0.270414` and `0.219296`.
+The retained result digest is
+`sha256:707864e8d39522f1c1f051d9090f104d956ce10bf8e42b657a2fadefe3a2e767`.
+The next revision needs longer terminal evaluation plus explicit hold/support/
+withdraw and multi-group objective metrics; this v0 result must not be tuned or
+reinterpreted as a win-rate qualification.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO

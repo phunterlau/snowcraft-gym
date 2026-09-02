@@ -95,7 +95,33 @@ def evaluate_closed_loop(
     result = {**body, "evaluationDigest": json_digest(body)}
     destination.parent.mkdir(parents=True, exist_ok=True)
     destination.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    audit_closed_loop(destination, ablation_root, suite_path)
     return result
+
+
+def audit_closed_loop(
+    path: str | Path, ablation_path: str | Path, suite_path: str | Path
+) -> dict[str, Any]:
+    source = Path(path)
+    try:
+        value = json.loads(source.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as error:
+        raise ValueError(f"cannot load closed-loop evaluation {source}: {error}") from error
+    if not isinstance(value, dict) or value.get("format") != RESULT_FORMAT:
+        raise ValueError(f"closed-loop evaluation format must be {RESULT_FORMAT}")
+    body = {key: item for key, item in value.items() if key != "evaluationDigest"}
+    if value.get("evaluationDigest") != json_digest(body):
+        raise ValueError("closed-loop evaluation digest mismatch")
+    if value.get("ablationResultDigest") != audit_plan_ablation(ablation_path)["resultDigest"]:
+        raise ValueError("closed-loop evaluation ablation provenance differs")
+    if value.get("suiteDigest") != json_digest(load_suite(suite_path)):
+        raise ValueError("closed-loop evaluation suite provenance differs")
+    results = value.get("results")
+    if not isinstance(results, list) or not results:
+        raise ValueError("closed-loop evaluation results are invalid")
+    if any(not isinstance(item, dict) or item.get("policy") not in POLICIES for item in results):
+        raise ValueError("closed-loop evaluation policy is invalid")
+    return value
 
 
 def _run_case(

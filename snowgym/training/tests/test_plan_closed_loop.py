@@ -5,7 +5,11 @@ from pathlib import Path
 
 import pytest
 
-from snowgym_training.plan_closed_loop import evaluate_closed_loop, load_suite
+from snowgym_training.plan_closed_loop import (
+    audit_closed_loop,
+    evaluate_closed_loop,
+    load_suite,
+)
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -45,3 +49,9 @@ def test_closed_loop_evaluator_runs_matched_real_worlds(tmp_path: Path) -> None:
     assert all(item["decisions"] == 1 for item in result["results"])
     assert all(item["rejectedActions"] == 0 for item in result["results"])
     assert all(item["firstTargetMeanAbsoluteDelta"] > 0 for item in result["comparisons"])
+    assert audit_closed_loop(tmp_path / "result.json", ABLATION, suite) == result
+
+    result["summary"]["noPlan"]["blueWins"] = 99
+    (tmp_path / "result.json").write_text(json.dumps(result), encoding="utf-8")
+    with pytest.raises(ValueError, match="digest mismatch"):
+        audit_closed_loop(tmp_path / "result.json", ABLATION, suite)
