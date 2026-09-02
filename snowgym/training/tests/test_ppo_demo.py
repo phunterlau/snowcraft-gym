@@ -18,6 +18,12 @@ from snowgym_training.ppo_demo import run_ppo_demo
             4103,
             43,
         ),
+        (
+            "runs/ppo_3v3_random_bc_v0/checkpoints/update-000010/checkpoint",
+            "3v3-random",
+            5101,
+            105,
+        ),
     ],
 )
 def test_qualified_ppo_checkpoint_records_blue_win(

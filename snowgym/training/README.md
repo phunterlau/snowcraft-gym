@@ -199,6 +199,21 @@ Updates 1/5/10 each won 8/8 in 105 decisions against 0/8 masked-random and
 8/8 teacher, with zero rejected actions. This advances `3v3-random` and meets
 the frozen M6.2 exit comparison, subject to the BC-retention caveat above.
 
+Record and replay the final checkpoint's held-out seed-5101 blue win:
+
+```bash
+uv run snowgym-demo-ppo \
+  --checkpoint runs/ppo_3v3_random_bc_v0/checkpoints/update-000010/checkpoint \
+  --gate 3v3-random \
+  --seed 5101 \
+  --record ../../public/replays/ppo_3v3_random_bc_v0-seed-5101.json \
+  --json
+```
+
+```text
+http://127.0.0.1:5173/replay.html?recording=/replays/ppo_3v3_random_bc_v0-seed-5101.json
+```
+
 Replay either learned episode through the existing UI after starting
 `npm run dev` from the repository root:
 
