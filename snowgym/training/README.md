@@ -610,5 +610,14 @@ The exporter refuses an existing output unless `--force` is explicit. The
 versions, scenario and environment seed, the complete validated curriculum,
 aligned fixed-size tensors, and a canonical semantic SHA-256 digest. The
 auditor rejects plan, seed, shape, bounds, mask, or digest corruption. This is
-the portable TypeScript-to-Python boundary; the Python loader and trajectory
-join remain the next M7 step.
+the portable TypeScript-to-Python boundary; model integration and the paired
+ablation remain the next M7 step.
+
+Python consumes that artifact with `PlanTensorDataset` from
+`snowgym_training.plan_data`. Loading re-verifies the semantic digest and
+materializes immutable `plan_groups` (`float32 [samples,3,38]`),
+`plan_group_mask` (`int8 [samples,3]`), and `source_seeds` (`int64`). Call
+`batch_for_transitions(plan_indices)` to align plan rows with arbitrary
+trajectory transitions; the returned arrays are detached copies, so training
+augmentation cannot mutate the audited source. Indices must be a one-dimensional
+integer array and are range checked before selection.

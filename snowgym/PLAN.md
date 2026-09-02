@@ -709,8 +709,16 @@ computes a canonical SHA-256 dataset digest. Its auditor rejects plan, seed,
 shape, value, or digest corruption. The `export-plan-tensors.ts` CLI supports
 configurable maps, rosters, environment/plan seeds, counts, safe overwrite, and
 machine-readable summaries. Two independent Winter Front 10v10 exports were
-byte-identical. The Python loader/data join and paired model ablation remain
-next.
+byte-identical. The Python data join and paired model ablation remain next.
+
+M7 Python plan-data bridge (2026-09-02): `training/plan_data.py` verifies the
+TypeScript semantic digest, converts aligned samples to immutable NumPy
+`float32 [samples,3,38]` tensors plus `int8` masks and `int64` source seeds, and
+returns detached copies when plan indices are joined to trajectory transitions.
+Unit tests cover dtypes, shapes, repeated-plan alignment, immutability, index
+validation, bounds and corruption. A live cross-language load reproduced the
+exported 10v10 digest exactly. Adding plan inputs to the model and running the
+paired with/without-plan ablation remain next.
 
 ### M8 — unit-level CTDE / MAPPO
 
