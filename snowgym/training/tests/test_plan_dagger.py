@@ -95,6 +95,12 @@ PLAN_MULTIGROUP_SPEC = (
     ROOT / "training" / "src" / "snowgym_training" / "configs"
     / "plan_multigroup_dagger_v3.json"
 )
+PLAN_MULTIGROUP_TRAIN = (
+    ROOT / "training" / "artifacts" / "plan-multigroup-dagger-v3-train"
+)
+PLAN_MULTIGROUP_VALIDATION = (
+    ROOT / "training" / "artifacts" / "plan-multigroup-dagger-v3-validation"
+)
 ACTION_ADAPTER_CHECKPOINT = ROOT / "training" / "runs" / "plan_action_adapter_v0"
 ACTION_ADAPTER_OFFLINE = (
     ROOT / "training" / "evaluations" / "plan_action_adapter_offline_v0.json"
@@ -410,6 +416,27 @@ def test_plan_mission_sampler_and_role_weights_are_balanced_and_deterministic() 
         np.full(int(observed.sum()), counts[0] * weights[0]),
     )
     assert weights[~observed].tolist() == [0.0]
+
+
+def test_multigroup_v3_corpus_is_audited_and_covers_every_role() -> None:
+    train = TrajectoryDataset(PLAN_MULTIGROUP_TRAIN)
+    validation = TrajectoryDataset(PLAN_MULTIGROUP_VALIDATION)
+    assert [len(train), len(validation)] == [2763, 1396]
+    assert train.manifest["datasetDigest"] == (
+        "sha256:5bf6a6a2a7d2fac2a559761fd00e95969c933a180f6e1e74e01b0f576de8cc3e"
+    )
+    assert validation.manifest["datasetDigest"] == (
+        "sha256:ed8dcedaf21eb9e2225cf1d142636c17c9c100a297f16e08108a46e84c01134e"
+    )
+    for dataset in (train, validation):
+        assert np.all(
+            dataset.arrays["observation__plan_unit_roles"].sum(axis=(0, 1)) > 0
+        )
+        assert np.all(
+            dataset.arrays["observation__counterfactual_plan_unit_roles"].sum(
+                axis=(0, 1)
+            ) > 0
+        )
 
 
 def test_mission_and_role_balanced_training_step(tmp_path: Path) -> None:

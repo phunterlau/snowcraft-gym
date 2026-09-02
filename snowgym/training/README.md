@@ -518,6 +518,13 @@ loses 0–6. Offline plan-change calibration also regresses. Keep this as a
 partial result; the next dataset must contain true maneuver assignments and
 more multi-group support states before another training comparison.
 
+The audited v3 development corpus is retained under
+`artifacts/plan-multigroup-dagger-v3-{train,validation}`. It contains 2,763 and
+1,396 transitions and, unlike v2, includes main, maneuver, and reserve labels
+in both primary and counterfactual plans. The `157xx` evaluation split remains
+uncollected. Some episodes terminate before every counterfactual can be labeled
+after attrition; those bounds are explicit in each manifest.
+
 ## PPO foundation
 
 Run a short end-to-end infrastructure smoke against the first frozen curriculum

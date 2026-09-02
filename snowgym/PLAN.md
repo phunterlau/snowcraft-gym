@@ -1349,6 +1349,14 @@ validation seeds 15601–15606 are disjoint from sealed evaluation seeds
 all pairs use a distinct same-state counterfactual. Only train/validation may be
 collected until a later gate is frozen.
 
+M7 multi-group DAgger-v3 collection outcome (2026-09-02): the audited train
+and validation splits contain 2,763 and 1,396 transitions with digests
+`5bf6a6a2...` and `ed8dceda...`. Primary role counts are 11,838 main, 1,512
+maneuver, 952 reserve in train and 5,852/839/439 in validation; counterfactual
+roles also cover all three categories. Attrition-bounded episodes are retained
+and explicitly marked. No evaluation artifact exists. A training freeze on
+this immutable corpus is next.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO
