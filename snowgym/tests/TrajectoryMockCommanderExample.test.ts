@@ -36,6 +36,7 @@ describe('trajectory-aware mock commander 10v10 example', () => {
       ]),
     );
     expect(result.trajectoryDigests.length).toBe(result.decisions);
+    expect(result.planTraces[0].planId).toBe('trajectory-initial-direct');
     expect(result.replay.frames).toHaveLength(result.decisions + 1);
     expect(result.commanderTrace.replay).toMatchObject({
       format: result.replay.format,
@@ -83,9 +84,9 @@ describe('trajectory-aware mock commander 10v10 example', () => {
     expect(second.commanderTrace).toEqual(first.commanderTrace);
   });
 
-  it('supports a smaller blue roster against ten red units with a bound trace', async () => {
+  it('uses the understrength opening to win a bound 6v10 commander trace', async () => {
     const result = await runTrajectoryMockCommanderBattle({
-      seed: 13,
+      seed: 14,
       blueUnits: 6,
       redUnits: 10,
       map: 'arena6.json',
@@ -100,8 +101,13 @@ describe('trajectory-aware mock commander 10v10 example', () => {
       map: 'arena6.json',
       redDifficulty: 'easy',
     });
-    expect(result.commanderRequests).toBe(3);
+    expect(result.winner).toBe('blue');
+    expect(result.blueAlive).toBe(1);
+    expect(result.redAlive).toBe(0);
+    expect(result.commanderRequests).toBe(2);
     expect(result.rejectedActions).toBe(0);
+    expect(result.planTraces[0].planId).toBe('trajectory-initial-economy-of-force');
+    expect(result.planTraces[0].decision.intentSummary).toContain('outnumbered force');
     expect(result.commanderTrace.replay.finalStateHash).toBe(result.stateHashes.at(-1));
   });
 

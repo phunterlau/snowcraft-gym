@@ -80,9 +80,10 @@ export async function runTrajectoryMockCommanderBattle(
   const environment = new SnowEnvironment({ scenario, decisionHz: 10, redDifficulty });
   let observation = environment.reset(seed);
   let status = environment.status();
-  const initialDecision = directAdvancePlan();
+  const initialDecision = openingPlan(blueUnits, redUnits);
   const initialEnvelope: CommandPlanEnvelope = {
-    planId: 'trajectory-initial-direct',
+    planId:
+      blueUnits < redUnits ? 'trajectory-initial-economy-of-force' : 'trajectory-initial-direct',
     source: {
       requestId: 'trajectory-initial-request',
       sourceTick: observation.tick,
@@ -99,7 +100,12 @@ export async function runTrajectoryMockCommanderBattle(
     (_request, callIndex) => {
       commanderRequests++;
       return {
-        decision: callIndex === 0 ? directAdvancePlan() : commandedTenVsTenPlan(),
+        decision:
+          blueUnits < redUnits
+            ? economyOfForcePlan()
+            : callIndex === 0
+              ? directAdvancePlan()
+              : commandedTenVsTenPlan(),
         metadata: { model: 'deterministic-trajectory-mock', latencyMs: 0 },
       };
     },
@@ -251,6 +257,36 @@ export function directAdvancePlan(): CommandPlan {
       },
     ],
   };
+}
+
+/** Host-owned safe opening while an outnumbered force waits for commander advice. */
+export function economyOfForcePlan(): CommandPlan {
+  return {
+    schemaVersion: COMMAND_PLAN_VERSION,
+    intentSummary: 'Preserve the outnumbered force, distribute fire, and fight at medium range.',
+    groups: [
+      {
+        role: 'main',
+        allocationWeight: 1,
+        selection: 'balanced',
+        order: {
+          mission: 'engage',
+          objective: { kind: 'enemy_cluster', select: 'largest' },
+          approach: 'direct',
+          engagement: {
+            posture: 'balanced',
+            fire: 'distributed',
+            preferredRange: 'medium',
+            cohesion: 'loose',
+          },
+        },
+      },
+    ],
+  };
+}
+
+function openingPlan(blueUnits: number, redUnits: number): CommandPlan {
+  return blueUnits < redUnits ? economyOfForcePlan() : directAdvancePlan();
 }
 
 async function flushPromises(): Promise<void> {

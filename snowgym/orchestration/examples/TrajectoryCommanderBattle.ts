@@ -17,7 +17,7 @@ import { PlanStore } from '../runtime/PlanStore';
 import { CommanderScheduler, type CommanderSchedulerEvent } from '../scheduler/CommanderScheduler';
 import { TrajectoryMonitor, type TrajectoryDigest } from '../trajectory/TrajectoryMonitor';
 import { TrajectorySignalDetector } from '../trajectory/TrajectorySignals';
-import { directAdvancePlan } from './TrajectoryMockCommanderExample';
+import { directAdvancePlan, economyOfForcePlan } from './TrajectoryMockCommanderExample';
 import {
   buildCommanderTrace,
   type CommanderPlanTraceEntry,
@@ -78,10 +78,13 @@ export async function runTrajectoryCommanderBattle(
   const environment = new SnowEnvironment({ scenario, decisionHz: 10, redDifficulty });
   let observation = environment.reset(seed);
   let status = environment.status();
-  const initialPlan = directAdvancePlan();
+  const initialPlan = blueUnits < redUnits ? economyOfForcePlan() : directAdvancePlan();
   const grounded = new PlanGrounder().ground(
     {
-      planId: 'trajectory-live-initial',
+      planId:
+        blueUnits < redUnits
+          ? 'trajectory-live-initial-economy-of-force'
+          : 'trajectory-live-initial-direct',
       source: {
         requestId: 'trajectory-live-initial-request',
         sourceTick: observation.tick,

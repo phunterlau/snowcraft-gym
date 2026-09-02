@@ -245,6 +245,22 @@ loop starts. Configurability does not imply that the default doctrine is
 effective for every roster imbalance; qualifying strategy claims require
 paired baseline results over frozen seeds.
 
+When blue starts outnumbered, the host now keeps one aggregate group at medium
+range with distributed fire and loose cohesion while commander advice is
+pending. This deterministic economy-of-force opening replaces the parity
+default that advances into the enemy backfield; it does not constrain later
+valid mock or Luna plans. A committed seed-14 6v10 example survives two
+major-loss fallbacks and delayed mock responses before blue wins 1–0:
+
+```text
+http://127.0.0.1:5173/replay.html?recording=/replays/trajectory-6v10-blue-win-seed-14.json&trace=/replays/trajectory-6v10-blue-win-seed-14.commander.json
+```
+
+This is a deterministic possibility proof, not an LLM result or balance
+claim. In a 40-seed easy-red development sweep the opening won 11 episodes;
+future evaluation should freeze a separate seed suite before comparing it with
+online commanders.
+
 Each later request can include the current `snowgym.trajectory-digest.v0` plus
 one `snowgym.plan-outcome.v0` summary for the preceding plan. This explicit,
 host-owned history keeps `store: false`, deterministic capture, provider

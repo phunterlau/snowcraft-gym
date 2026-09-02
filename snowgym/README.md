@@ -308,10 +308,11 @@ mock, so these examples exercise scheduling, simulated response latency,
 validation, plan activation, fallback, trajectory monitoring, and replay
 binding without making an OpenAI API request.
 
-| Replay                                  | Seed | Result               | What it demonstrates                                                         |
-| --------------------------------------- | ---: | -------------------- | ---------------------------------------------------------------------------- |
-| `trajectory-10v10-blue-win-seed-2.json` |    2 | blue 7–0 at tick 869 | Three commander requests lead to a split-force plan and a decisive blue win. |
-| `trajectory-10v10.json`                 |   42 | red 4–0 at tick 1519 | Replanning and fallbacks remain observable even when blue cannot recover.    |
+| Replay                                  | Seed | Result                | What it demonstrates                                                               |
+| --------------------------------------- | ---: | --------------------- | ---------------------------------------------------------------------------------- |
+| `trajectory-10v10-blue-win-seed-2.json` |    2 | blue 7–0 at tick 869  | Three commander requests lead to a split-force plan and a decisive blue win.       |
+| `trajectory-10v10.json`                 |   42 | red 4–0 at tick 1519  | Replanning and fallbacks remain observable even when blue cannot recover.          |
+| `trajectory-6v10-blue-win-seed-14.json` |   14 | blue 1–0 at tick 1493 | An economy-of-force opening survives two major-loss corrections while outnumbered. |
 
 Recreate either pair from the repository root. Outputs refuse to overwrite
 existing files unless `--force` is supplied:
@@ -339,6 +340,8 @@ then open one of these URLs:
 http://127.0.0.1:5173/replay.html?recording=/replays/trajectory-10v10-blue-win-seed-2.json&trace=/replays/trajectory-10v10-blue-win-seed-2.commander.json
 
 http://127.0.0.1:5173/replay.html?recording=/replays/trajectory-10v10.json&trace=/replays/trajectory-10v10.commander.json
+
+http://127.0.0.1:5173/replay.html?recording=/replays/trajectory-6v10-blue-win-seed-14.json&trace=/replays/trajectory-6v10-blue-win-seed-14.commander.json
 ```
 
 Use **Pause**, the tick scrubber, and the speed selector to inspect decisions.
@@ -387,6 +390,7 @@ http://127.0.0.1:5173/replay.html?recording=/replays/<file>
 | `example-winter-front-6v10-normal-seed-9.json` | Scripted blue, normal red, understrength 6v10  | blue 1–0 |
 | `trajectory-10v10-blue-win-seed-2.json`        | Mock commander blue on Winter Front, 10v10     | blue 7–0 |
 | `trajectory-10v10.json`                        | Mock commander blue on Winter Front, 10v10     | red 4–0  |
+| `trajectory-6v10-blue-win-seed-14.json`        | Mock commander blue on Winter Front, 6v10      | blue 1–0 |
 | `example-forest-3v3.json`                      | Pine Forest (`arena4`) 3v3 — dense tree cover  | blue 3–0 |
 | `example-pond-5v2-hard.json`                   | Frozen Pond (`arena2`), hard red               | blue win |
 | `example-village-random.json`                  | Village Skirmish (`arena3`) vs `random` red    | blue win |

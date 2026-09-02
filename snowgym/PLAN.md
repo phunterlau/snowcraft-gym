@@ -215,6 +215,10 @@ the model.
       bundled-map blue/red rosters and red difficulties while preserving the
       original 10v10 defaults. Reject invalid map capacities before entering
       the commander loop.
+- [x] Add a host-owned economy-of-force opening for outnumbered blue rosters so
+      the synchronous executor does not blindly advance into the enemy
+      backfield while commander advice is pending; retain the direct opening at
+      parity.
 
 Exit criterion: host-computed trajectory evidence can trigger bounded Luna
 replanning during an episode while the 10 Hz executor continues synchronously,
@@ -225,6 +229,12 @@ Configurable-runner acceptance (2026-09-02): targeted tests cover an
 understrength 6v10 trace on `arena6`, a 3v3 provider-neutral run on `arena4`,
 default 10v10 compatibility, deterministic replay, and pre-run rejection of a
 10-unit roster on a three-spawn map. No provider request is part of this gate.
+
+Understrength-opening acceptance (2026-09-02): deterministic seed 14 on
+`arena6` with 6 blue versus 10 easy scripted red completes with a 1–0 blue win,
+two simulated-latency mock responses, zero rejected physical actions, and a
+replay-bound commander trace. The example demonstrates possibility, not a
+held-out win-rate or online-LLM result.
 
 ### M5 — multi-agent and research adapters
 
