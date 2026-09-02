@@ -1,0 +1,18 @@
+{
+  "format": "snowgym.teacher-baseline.v0",
+  "maxDecisions": 500,
+  "resultDigest": "sha256:ecf37855a7e646a55f6df12dddb0a761b4f6b3027ce8d49742d40d261dc007fc",
+  "results": [
+    {"blueAlive": 5, "decisionLimited": false, "decisions": 179, "policy": "scripted_teacher", "redAlive": 0, "rejectedActions": 0, "reward": 1.0, "scenario": {"blueUnits": 5, "decisionHz": 10, "map": "arena6.json", "maxTicks": 3000, "redController": "random", "redDifficulty": "normal", "redUnits": 5}, "seed": 261, "stateHash": "fnv1a64:9f526f14039004f6", "terminated": true, "tick": 1071, "truncated": false, "winner": "blue"},
+    {"blueAlive": 5, "decisionLimited": false, "decisions": 179, "policy": "scripted_teacher", "redAlive": 0, "rejectedActions": 0, "reward": 1.0, "scenario": {"blueUnits": 5, "decisionHz": 10, "map": "arena6.json", "maxTicks": 3000, "redController": "random", "redDifficulty": "normal", "redUnits": 5}, "seed": 262, "stateHash": "fnv1a64:9f526f14039004f6", "terminated": true, "tick": 1071, "truncated": false, "winner": "blue"},
+    {"blueAlive": 5, "decisionLimited": false, "decisions": 500, "policy": "masked_random", "redAlive": 5, "rejectedActions": 0, "reward": 0.0, "scenario": {"blueUnits": 5, "decisionHz": 10, "map": "arena6.json", "maxTicks": 3000, "redController": "random", "redDifficulty": "normal", "redUnits": 5}, "seed": 261, "stateHash": "fnv1a64:01baec0b8722bf9e", "terminated": false, "tick": 3000, "truncated": true, "winner": null},
+    {"blueAlive": 5, "decisionLimited": false, "decisions": 500, "policy": "masked_random", "redAlive": 5, "rejectedActions": 0, "reward": 0.0, "scenario": {"blueUnits": 5, "decisionHz": 10, "map": "arena6.json", "maxTicks": 3000, "redController": "random", "redDifficulty": "normal", "redUnits": 5}, "seed": 262, "stateHash": "fnv1a64:a564b8ffb4ba48c4", "terminated": false, "tick": 3000, "truncated": true, "winner": null}
+  ],
+  "sourceSpecDigest": "sha256:dbd72450ec0adb5b8241fce1d8e83f06f6c98660bcd0f05b28d1a0926fc21e0d",
+  "split": "evaluation",
+  "summary": {
+    "masked_random": {"blueWins": 0, "draws": 2, "episodes": 2, "meanDecisions": 500.0, "redWins": 0, "rejectedActions": 0},
+    "scripted_teacher": {"blueWins": 2, "draws": 0, "episodes": 2, "meanDecisions": 179.0, "redWins": 0, "rejectedActions": 0}
+  },
+  "versions": {"apiVersion": "snowgym.v0", "simulationVersion": "snowgym.sim.v1", "stateHashVersion": "snowgym.state.v1", "upstreamBaseCommit": "7d9fca5"}
+}
