@@ -4,7 +4,11 @@
   "trainingSeedRanges": {
     "1v1-random": [10000, 19999],
     "1v1-easy-scripted": [20000, 29999],
-    "3v3-random": [30000, 39999]
+    "3v3-random": [30000, 39999],
+    "3v3-scripted": [40000, 49999],
+    "3v3-terrain": [50000, 59999],
+    "5v5-random-terrain": [60000, 69999],
+    "10v10-random-terrain": [70000, 79999]
   },
   "gates": [
     {
@@ -25,6 +29,34 @@
       "id": "3v3-random",
       "evaluationSeeds": [5101, 5102, 5103, 5104, 5105, 5106, 5107, 5108],
       "scenario": {"blueUnits": 3, "redUnits": 3, "arenaWidth": 40, "arenaHeight": 30, "maxTicks": 2400, "decisionHz": 10, "redDifficulty": "normal", "redController": "random"},
+      "minimumWinRate": 0.50,
+      "minimumImprovementOverMaskedRandom": 0.20
+    },
+    {
+      "id": "3v3-scripted",
+      "evaluationSeeds": [6101, 6102, 6103, 6104, 6105, 6106, 6107, 6108],
+      "scenario": {"blueUnits": 3, "redUnits": 3, "arenaWidth": 40, "arenaHeight": 30, "maxTicks": 2400, "decisionHz": 10, "redDifficulty": "easy", "redController": "scripted"},
+      "minimumWinRate": 0.50,
+      "minimumImprovementOverMaskedRandom": 0.20
+    },
+    {
+      "id": "3v3-terrain",
+      "evaluationSeeds": [7101, 7102, 7103, 7104, 7105, 7106, 7107, 7108],
+      "scenario": {"blueUnits": 3, "redUnits": 3, "map": "arena4.json", "maxTicks": 2400, "decisionHz": 10, "redDifficulty": "normal", "redController": "random"},
+      "minimumWinRate": 0.50,
+      "minimumImprovementOverMaskedRandom": 0.20
+    },
+    {
+      "id": "5v5-random-terrain",
+      "evaluationSeeds": [8101, 8102, 8103, 8104, 8105, 8106, 8107, 8108],
+      "scenario": {"blueUnits": 5, "redUnits": 5, "map": "arena6.json", "maxTicks": 3000, "decisionHz": 10, "redDifficulty": "normal", "redController": "random"},
+      "minimumWinRate": 0.50,
+      "minimumImprovementOverMaskedRandom": 0.20
+    },
+    {
+      "id": "10v10-random-terrain",
+      "evaluationSeeds": [9101, 9102, 9103, 9104, 9105, 9106, 9107, 9108],
+      "scenario": {"blueUnits": 10, "redUnits": 10, "map": "arena6.json", "maxTicks": 3600, "decisionHz": 10, "redDifficulty": "normal", "redController": "random"},
       "minimumWinRate": 0.50,
       "minimumImprovementOverMaskedRandom": 0.20
     }

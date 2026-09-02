@@ -492,7 +492,11 @@ reports the frozen thresholds but does not turn a threshold miss into hidden
 checkpoint selection. Training can now explicitly opt into potential-based
 health shaping; checkpoints bind the reward mode, manifests retain shaped and
 canonical sums separately, and held-out evaluation remains canonical. A
-qualifying checkpoint series remains open.
+qualifying checkpoint series remains open. The curriculum now freezes all seven
+planned gates through map-backed 10v10, with distinct 10,000-seed training
+ranges and eight held-out seeds per gate. A live batch test proves every frozen
+scenario and roster loads on the authoritative server; no gate is considered
+advanced merely because it is defined.
 
 ### M7 — plan-conditioned learned executor
 

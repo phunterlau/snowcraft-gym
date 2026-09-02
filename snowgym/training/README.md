@@ -245,6 +245,11 @@ rollout-boundary optimizer and sampling resume; simulator worlds intentionally
 restart at each collection boundary.
 
 The frozen `ppo_curriculum_v0.json` keeps training ranges disjoint from eight
-evaluation seeds per gate and sets thresholds before qualifying runs. The
-current foundation does not yet claim a PPO result; a qualifying checkpoint
-series remains next.
+evaluation seeds per gate and sets thresholds before qualifying runs. Its order
+is 1v1 random, 1v1 easy scripted, 3v3 random, 3v3 easy scripted, 3v3 terrain on
+`arena4.json`, then 5v5 and 10v10 random terrain on the ten-spawn
+`arena6.json`. Each gate has a separate 10,000-seed training range. The live
+contract test resets all seven scenarios against the authoritative batch
+server. Defining a gate does not advance it: a qualifying checkpoint series
+must still pass its held-out threshold, and the current foundation does not yet
+claim a PPO result.

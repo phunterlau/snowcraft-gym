@@ -156,6 +156,10 @@ def test_curriculum_freezes_disjoint_training_and_evaluation_seeds() -> None:
         "1v1-random",
         "1v1-easy-scripted",
         "3v3-random",
+        "3v3-scripted",
+        "3v3-terrain",
+        "5v5-random-terrain",
+        "10v10-random-terrain",
     ]
     broken = {**curriculum, "gates": [dict(gate) for gate in curriculum["gates"]]}
     broken["gates"][0]["evaluationSeeds"] = [10000]
