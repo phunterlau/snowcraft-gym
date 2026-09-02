@@ -668,7 +668,7 @@ Goal: train the fast learned controller to follow the existing slow
       policy, preferred range, cohesion, relative objective/group geometry,
       group fractions, support relation, and plan age. JSON remains canonical;
       the tensor is only an RL adapter.
-- [ ] Train identical executor architectures with and without plan input under
+- [x] Train matched executor architectures with and without plan input under
       the same data and optimization budget.
 - [ ] Evaluate direct versus flank trajectories, focus versus distributed fire,
       hold/support/withdraw behavior, unseen valid directive combinations, and
@@ -893,6 +893,26 @@ environment seed 8200 and plan seeds 2400-2423; evaluation uses disjoint seed
 and 80-decision horizon remain unchanged so the architecture fix is the only
 intentional experimental change. Execution is next; v0 remains failed
 regardless of the v1 outcome.
+
+M7 qualification-v1 acceptance (2026-09-02): the post-freeze run passed every
+predeclared check on new seeds. The converted training and evaluation dataset
+digests are
+`sha256:f64e30e6458ca3d9c9a6e110aae7ae3248e6e2715a938ce323732b1e658d61e6`
+and
+`sha256:4e7f90f323ad8b3a660b7c6ff26cb91d286d2c64b685a612dd1c3e0622bc92c1`.
+Both branches produced exactly identical action accuracy (`0.963021`),
+first-decision accuracy (`1.0`), and action NLL (`0.000107431`). Conditioned
+correct-plan target MSE was `0.044480` versus no-plan `0.264987`; plan swapping
+added `0.353375` target MSE and changed targets by `0.372476`, with every
+no-plan sensitivity equal to zero. The matched run, evaluation, and
+qualification digests are respectively
+`sha256:7583be365ffddcb88d40b4bfb3d3c00dca775b4f760fbe5f5453fff44270011b`,
+`sha256:780f7c863baf352ff7de46695457114abb404f16593d879ca237abcf20b86fdf`,
+and
+`sha256:ea93ce6ff71029e932c1ec4bd3493fce83e80f71185fced6f123d5e6e0b3a12d`.
+The matched offline training checklist item is advanced. Direct/flank,
+focus/distributed, hold/support/withdraw, unseen-combination, roster-transfer,
+and closed-loop objective metrics remain open; M7 exit is not yet claimed.
 
 ### M8 — unit-level CTDE / MAPPO
 

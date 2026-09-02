@@ -783,3 +783,13 @@ have exactly identical action accuracy and action NLL, while conditioned target
 MSE is `0.05811` versus `0.24261` without plans and rises by `0.35230` when
 plans are swapped. This is development evidence on reused v0 data; it does not
 repair the failed v0 qualification or substitute for a new-seed v1 gate.
+
+Qualification v1 is retained under `runs/plan_bc_ablation_qual_v1`, with its
+detailed evaluation and gate result in
+`evaluations/plan_bc_ablation_qual_v1.json` and
+`evaluations/plan_qualification_v1.json`. It passed every frozen threshold on
+new seeds: action behavior is exactly matched at `0.96302` accuracy, while
+conditioned target MSE is `0.04448` versus `0.26499` without plans and rises by
+`0.35338` when plans are swapped. This qualifies the offline matched-training
+milestone. It does not yet establish closed-loop mission completion, unseen
+directive combinations, or roster transfer.

@@ -1,0 +1,18 @@
+{
+  "ablationConfigDigest": "sha256:c4cf07e053e50042205b56ac2243650b2ddda99475272ecabadfa6b423c04b0b",
+  "checks": {
+    "actionAccuracyDeficit": true,
+    "conditionedTargetMse": true,
+    "noPlanActionSensitivity": true,
+    "noPlanTargetMseDelta": true,
+    "noPlanTargetSensitivity": true,
+    "targetMeanAbsoluteDelta": true,
+    "targetMseRatio": true,
+    "targetMseSwapDelta": true
+  },
+  "evaluationDigest": "sha256:780f7c863baf352ff7de46695457114abb404f16593d879ca237abcf20b86fdf",
+  "format": "snowgym.plan-qualification-result.v0",
+  "passed": true,
+  "qualificationDigest": "sha256:ea93ce6ff71029e932c1ec4bd3493fce83e80f71185fced6f123d5e6e0b3a12d",
+  "specDigest": "sha256:cbbd534f0e934f33820a607367e1ed2f9f1f1b79dc9c372768fb0072b8dca7cf"
+}
