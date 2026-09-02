@@ -644,6 +644,19 @@ Its provenance-valid checkpoint won both disjoint BC evaluation episodes in
 0/2 masked-random and 2/2 scripted teacher at 146 decisions. Gate-7 PPO
 qualification remains open.
 
+M6.2 gate-7 acceptance (2026-09-02): the committed
+`ppo_10v10_terrain_relational_bc_v0` qualifying series passes all eight
+held-out episodes at updates 1/5/10 in 145 decisions, versus 0/8 masked-random
+and 8/8 scripted teacher, with zero rejected actions. The semantic auditor
+binds source commit `448f8ba`, config digest
+`sha256:39bacab64fca11007617d0698b782a3baf3023e9215a562f851437876525ff47`,
+series digest
+`sha256:e5c1b9b540a54c787208a7a4270698846d136132b2207ca9dafc9f3d422e3034`,
+and every nested checkpoint/evaluation artifact. All seven centralized PPO
+curriculum gates are now advanced. Gate 7 is explicitly BC-initialized PPO
+retention; cold-start learning and material reward-driven improvement are not
+claimed.
+
 ### M7 — plan-conditioned learned executor
 
 Goal: train the fast learned controller to follow the existing slow

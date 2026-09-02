@@ -3,6 +3,7 @@ from pathlib import Path
 
 from snowgym_training.checkpoint import load_checkpoint
 from snowgym_training.curriculum import load_curriculum
+from snowgym_training.ppo_series import audit_ppo_series
 from snowgym_training.ppo_series_config import load_series_config
 from snowgym_training.trainer import load_training_config
 from snowgym_training.trajectory import json_digest, load_export_spec
@@ -126,3 +127,27 @@ def test_committed_gate7_relational_initializer_is_digest_bound_and_wins() -> No
     assert evaluation["summary"]["learned"]["meanDecisions"] == 145.0
     assert evaluation["summary"]["learned"]["meanRedHealthDealt"] == 10.0
     assert evaluation["summary"]["learned"]["rejectedActions"] == 0
+
+
+def test_committed_gate7_ppo_series_is_auditable_and_qualifies() -> None:
+    training_root = Path(__file__).parents[1]
+    audit = audit_ppo_series(
+        training_root / "runs/ppo_10v10_terrain_relational_bc_v0"
+    )
+    assert audit["mode"] == "qualifying"
+    assert audit["gate"] == "10v10-random-terrain"
+    assert audit["updates"] == [1, 5, 10]
+    assert audit["finalThresholdPassed"] is True
+
+    for update in (1, 5, 10):
+        evaluation = json.loads(
+            (
+                training_root
+                / "runs/ppo_10v10_terrain_relational_bc_v0"
+                / f"evaluations/update-{update:06d}.json"
+            ).read_text(encoding="utf-8")
+        )
+        assert evaluation["summary"]["ppo"]["blueWins"] == 8
+        assert evaluation["summary"]["ppo"]["meanDecisions"] == 145.0
+        assert evaluation["summary"]["masked_random"]["blueWins"] == 0
+        assert evaluation["summary"]["ppo"]["rejectedActions"] == 0

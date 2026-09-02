@@ -538,3 +538,15 @@ It won both disjoint BC evaluation episodes in 145 decisions with all ten blue
 units alive and zero rejected actions, versus 0/2 masked-random and 2/2 teacher
 at 146 decisions. This is a behavior-cloned, code/policy hybrid initializer;
 gate-7 PPO qualification remains separate.
+
+The frozen `ppo_10v10_terrain_relational_bc_v0.json` retention configuration
+binds that initializer and preserves checkpoints 1/5/10. Its committed
+qualifying series is `runs/ppo_10v10_terrain_relational_bc_v0`, bound to source
+commit `448f8ba`, config digest
+`sha256:39bacab64fca11007617d0698b782a3baf3023e9215a562f851437876525ff47`,
+and series digest
+`sha256:e5c1b9b540a54c787208a7a4270698846d136132b2207ca9dafc9f3d422e3034`.
+Every retained checkpoint won 8/8 held-out episodes in 145 decisions, versus
+0/8 masked-random and 8/8 teacher, with zero rejected actions. This advances
+the final M6.2 curriculum gate as BC-initialized PPO retention; it does not
+claim cold-start or material reward-driven improvement.

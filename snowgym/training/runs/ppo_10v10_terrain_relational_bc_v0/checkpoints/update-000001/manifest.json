@@ -1,0 +1,136 @@
+{
+  "architecture": {
+    "action_conditioned_targets": true,
+    "actor_hidden": 64,
+    "entity_embedding": 24,
+    "entity_hidden": 32,
+    "last_enemy_move_target": true,
+    "nearest_enemy_features": true,
+    "nearest_enemy_throw_target": true
+  },
+  "checkpoint": {
+    "checkpointDigest": "sha256:d16be4ddc4ab043b49973306dcef43c046b01d1649794c64c4041de8b4d3140d",
+    "path": "checkpoint",
+    "stateDigest": "sha256:3ba99795c02647876a3d8fe45b9f51b7ea22a8122f605295a07ba598be8e8011"
+  },
+  "curriculumDigest": "sha256:6e1e9e33a53f5d47551081f452ddab9d4246f5e9a18027ca03ee5a52ba688829",
+  "environmentSteps": 4800,
+  "format": "snowgym.ppo-run.v0",
+  "gate": {
+    "evaluationSeeds": [
+      9101,
+      9102,
+      9103,
+      9104,
+      9105,
+      9106,
+      9107,
+      9108
+    ],
+    "id": "10v10-random-terrain",
+    "minimumImprovementOverMaskedRandom": 0.2,
+    "minimumWinRate": 0.5,
+    "scenario": {
+      "blueUnits": 10,
+      "decisionHz": 10,
+      "map": "arena6.json",
+      "maxTicks": 3600,
+      "redController": "random",
+      "redDifficulty": "normal",
+      "redUnits": 10
+    }
+  },
+  "gitCommit": "448f8baebf4d25636344dd0e276dfb171a0cb27c",
+  "initialization": {
+    "checkpointDigest": "sha256:a7f1362cf163fbf23ebc3c8290bb0f772e57fb3a763b6dcf97b21135aa47bc08",
+    "datasetManifestHash": "sha256:6f2e7a7ed096d64e980343818d446e721c2bd70468fe25644b47052c0b89df78",
+    "stateDigest": "sha256:77c3ffe88f078fc984ea138fd89f8e67f09c1c2b26ac351fe6131a85a66798ff",
+    "type": "behavior-clone"
+  },
+  "mode": "qualification-candidate",
+  "ppoConfig": {
+    "clip_ratio": 0.2,
+    "entropy_weight": 0.001,
+    "gae_lambda": 0.95,
+    "gamma": 0.99,
+    "initial_power_log_std": -3.0,
+    "initial_target_log_std": -3.0,
+    "learning_rate": 1e-08,
+    "max_grad_norm": 0.5,
+    "minibatch_size": 4800,
+    "update_epochs": 1,
+    "value_weight": 0.5
+  },
+  "rewardMode": "health-potential",
+  "rolloutSteps": 600,
+  "runDigest": "sha256:a73945af7ba5c64c247a393239d8976d8775d4cf304ce8ca70d2750b5714abc3",
+  "seedSchedule": {
+    "maximum": 79999,
+    "minimum": 70000,
+    "nextSeed": 70033
+  },
+  "startUpdate": 0,
+  "targetUpdate": 1,
+  "trainingSeed": 79,
+  "updates": [
+    {
+      "boundaryTruncations": 8,
+      "canonicalRewardSum": 25.0,
+      "completedEpisodes": 25,
+      "environmentSteps": 4800,
+      "episodeSeeds": [
+        70000,
+        70001,
+        70002,
+        70003,
+        70004,
+        70005,
+        70006,
+        70007,
+        70008,
+        70009,
+        70010,
+        70011,
+        70012,
+        70013,
+        70014,
+        70015,
+        70016,
+        70017,
+        70018,
+        70019,
+        70020,
+        70021,
+        70022,
+        70023,
+        70024,
+        70025,
+        70026,
+        70027,
+        70028,
+        70029,
+        70030,
+        70031,
+        70032
+      ],
+      "metrics": {
+        "approximate_kl": 7.132689461286645e-08,
+        "clip_fraction": 0.0,
+        "entropy": -30.748443603515625,
+        "epochs": 1,
+        "maximumGradientNormAfterClip": 0.5,
+        "maximumGradientNormBeforeClip": 10.533670425415039,
+        "minibatches": 1,
+        "policy": -1.7484028447256605e-08,
+        "samples": 4800,
+        "total": 0.9133983850479126,
+        "updateIndex": 0,
+        "value": 1.765299916267395
+      },
+      "rejectedActions": 0,
+      "trainingRewardSum": -13.419890969991684,
+      "updateIndex": 0
+    }
+  ],
+  "worlds": 8
+}
