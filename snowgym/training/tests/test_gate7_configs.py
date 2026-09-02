@@ -11,6 +11,9 @@ def test_gate7_teacher_config_is_valid_terrain_and_seed_disjoint() -> None:
     config_root = Path(__file__).parents[1] / "src/snowgym_training/configs"
     teacher = load_export_spec(config_root / "teacher_10v10_terrain_v0.json")
     learner = load_training_config(config_root / "bc_10v10_terrain_v0.json")
+    relational = load_training_config(
+        config_root / "bc_10v10_terrain_relational_v0.json"
+    )
     curriculum = load_curriculum()
     gate = next(
         item for item in curriculum["gates"] if item["id"] == "10v10-random-terrain"
@@ -22,6 +25,11 @@ def test_gate7_teacher_config_is_valid_terrain_and_seed_disjoint() -> None:
     assert learner["architecture"]["nearest_enemy_throw_target"] is True
     assert learner["loss"]["throw_action_weight"] == 10.0
     assert learner["evaluationSuite"] == "teacher_10v10_terrain_v0/evaluation"
+    assert relational["steps"] == 20_000
+    assert relational["architecture"]["last_enemy_move_target"] is True
+    assert relational["architecture"]["nearest_enemy_throw_target"] is True
+    assert relational["architecture"]["nearest_enemy_features"] is True
+    assert relational["evaluationSuite"] == "teacher_10v10_terrain_v0/evaluation"
     scenarios = [
         episode["scenario"]
         for episodes in teacher["splits"].values()

@@ -57,7 +57,10 @@ def behavior_clone_loss(
     target_mask = present & ((labels == ACTION_MOVE) | (labels == ACTION_THROW))
     throw_mask = present & (labels == ACTION_THROW)
     predicted_target = (
-        select_action_target(prediction["target_by_action"], labels)
+        select_action_target(
+            prediction.get("supervised_target_by_action", prediction["target_by_action"]),
+            labels,
+        )
         if "target_by_action" in prediction
         else prediction["target"]
     )

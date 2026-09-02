@@ -16,6 +16,7 @@ from snowgym_training.loss import LossConfig, behavior_clone_loss
 from snowgym_training.model import (
     EntityPolicy,
     ModelConfig,
+    living_enemy_mask,
     model_config,
     nearest_enemy_target,
 )
@@ -83,6 +84,13 @@ def test_model_config_preserves_legacy_checkpoint_shape() -> None:
         **legacy,
         "nearest_enemy_features": True,
     }
+    assert model_config(
+        {**legacy, "action_conditioned_targets": True, "last_enemy_move_target": True}
+    ).as_dict() == {
+        **legacy,
+        "action_conditioned_targets": True,
+        "last_enemy_move_target": True,
+    }
 
 
 def test_action_conditioned_target_heads_select_distinct_means(tmp_path: Path) -> None:
@@ -115,10 +123,39 @@ def test_nearest_enemy_throw_prior_uses_live_relative_geometry() -> None:
     torch.testing.assert_close(no_enemies, torch.zeros_like(allies))
 
 
+def test_relational_targets_ignore_defeated_roster_slots(tmp_path: Path) -> None:
+    dataset = TrajectoryDataset(make_dataset(tmp_path / "dataset"))
+    observation, _ = dataset.batch(np.asarray([0]))
+    observation["enemy_mask"][0] = torch.tensor([1, 1])
+    observation["enemies"][0, 0, 1] = 0.0
+    observation["enemies"][0, 0, 2:4] = torch.tensor([0.1, 0.1])
+    observation["enemies"][0, 1, 1] = 1.0
+    observation["enemies"][0, 1, 2:4] = torch.tensor([0.8, -0.6])
+    observation["team_alive"][0, 1] = 1
+    model = EntityPolicy(
+        ModelConfig(
+            16,
+            12,
+            24,
+            action_conditioned_targets=True,
+            last_enemy_move_target=True,
+            nearest_enemy_throw_target=True,
+        )
+    )
+
+    assert living_enemy_mask(observation).tolist() == [[False, True]]
+    prediction = model(observation)
+    expected = torch.tensor([0.8, -0.6]).expand(2, -1)
+    torch.testing.assert_close(prediction["target_by_action"][0, :, 1], expected)
+    torch.testing.assert_close(prediction["target_by_action"][0, :, 2], expected)
+
+
 def test_nearest_enemy_throw_prior_requires_conditioned_targets() -> None:
     legacy = {"entity_hidden": 16, "entity_embedding": 12, "actor_hidden": 24}
     with pytest.raises(ValueError, match="requires action_conditioned_targets"):
         model_config({**legacy, "nearest_enemy_throw_target": True})
+    with pytest.raises(ValueError, match="requires action_conditioned_targets"):
+        model_config({**legacy, "last_enemy_move_target": True})
 
 
 def test_one_batch_overfit_reduces_hybrid_loss(tmp_path: Path) -> None:
