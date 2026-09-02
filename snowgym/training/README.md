@@ -186,6 +186,26 @@ actions, policy summaries, frozen gate thresholds, and a result digest. A
 threshold failure is reported as evaluation data rather than a process error,
 so checkpoint series can be audited without selecting only successful runs.
 
+Preserve and evaluate a complete development checkpoint series with one atomic
+command:
+
+```bash
+uv run snowgym-run-ppo-series \
+  --output artifacts/ppo-1v1-random-series \
+  --gate 1v1-random \
+  --checkpoints 10 25 50 \
+  --worlds 8 \
+  --rollout-steps 32 \
+  --reward-mode health-potential \
+  --json
+```
+
+Each listed update is retained under `checkpoints/` and evaluated under
+`evaluations/`; the top-level manifest records every digest and the full update
+curve. Add `--qualifying` only for a predeclared qualifying run. That label does
+not imply success: `finalThresholdPassed` still comes solely from the frozen
+held-out evaluation, and earlier failing checkpoints remain in the artifact.
+
 `ppo.py` defines the centralized hybrid actor-critic used by the next training
 stage. Action masks apply before categorical sampling; target terms contribute
 to joint log probability only for move/throw and power only for throw. GAE

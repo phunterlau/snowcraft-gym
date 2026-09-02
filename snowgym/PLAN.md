@@ -451,6 +451,10 @@ partial observation, or self-play confounds.
       held-out seeds, with deterministic PPO inference, masked-random and native
       scripted-blue comparisons, canonical returns, rejected-action accounting,
       threshold reporting, and a hashed result contract.
+- [x] Add an atomic checkpoint-series runner that retains and evaluates every
+      predeclared update, records its checkpoint/run/evaluation digests and the
+      complete update curve, distinguishes development from qualifying runs,
+      and never selects only the best checkpoint.
 - [ ] Record learning curves, policy/value losses, entropy/KL, rejected actions,
       throughput, checkpoint provenance, and replay links in a machine-readable
       run manifest.

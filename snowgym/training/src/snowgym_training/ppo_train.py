@@ -40,6 +40,7 @@ def train_ppo(
     ppo_config: PPOConfig | None = None,
     git_commit: str | None = None,
     reward_mode: str = "canonical",
+    mode: str = "infrastructure-smoke",
 ) -> dict[str, Any]:
     """Train through a frozen gate and atomically write one final checkpoint."""
     destination = Path(output)
@@ -54,6 +55,8 @@ def train_ppo(
             raise ValueError(f"{name} must be a positive integer")
     if not isinstance(training_seed, int) or isinstance(training_seed, bool):
         raise ValueError("training_seed must be an integer")
+    if mode not in {"infrastructure-smoke", "development-series", "qualification-candidate"}:
+        raise ValueError("PPO run mode is invalid")
 
     curriculum = load_curriculum(curriculum_path)
     gate = next((item for item in curriculum["gates"] if item["id"] == gate_id), None)
@@ -162,7 +165,7 @@ def train_ppo(
         )
         manifest: dict[str, Any] = {
             "format": PPO_RUN_FORMAT,
-            "mode": "infrastructure-smoke",
+            "mode": mode,
             "gitCommit": commit,
             "curriculumDigest": curriculum_digest,
             "gate": gate,
