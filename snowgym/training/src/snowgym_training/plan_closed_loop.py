@@ -18,6 +18,7 @@ from .trajectory import json_digest
 SUITE_FORMAT = "snowgym.plan-closed-loop-suite.v0"
 RESULT_FORMAT = "snowgym.plan-closed-loop-evaluation.v0"
 POLICIES = ("noPlan", "planConditioned")
+GROUP_ROLES = ("main", "maneuver", "reserve")
 
 
 def load_suite(path: str | Path) -> dict[str, Any]:
@@ -133,6 +134,8 @@ def _run_case(
     observation, infos = environment.reset([case["seed"]], [case["scenario"]])
     environment.activate_plans([case["planId"]], [case["plan"]])
     distances: list[float] = []
+    role_distances: dict[str, list[float]] = {}
+    role_positions: dict[str, list[list[float]]] = {}
     first_target: list[list[float]] | None = None
     final_group_position: list[float] | None = None
     decisions = rejected = 0
@@ -146,6 +149,13 @@ def _run_case(
         active = plan_groups[plan_mask]
         distances.append(float(np.linalg.norm(active[:, 28:30] - active[:, 30:32], axis=1).mean()))
         final_group_position = active[:, 30:32].mean(axis=0).astype(float).tolist()
+        for slot in np.flatnonzero(plan_mask):
+            role = GROUP_ROLES[int(slot)]
+            row = plan_groups[slot]
+            role_distances.setdefault(role, []).append(
+                float(np.linalg.norm(row[28:30] - row[30:32]))
+            )
+            role_positions.setdefault(role, []).append(row[30:32].astype(float).tolist())
         single = {name: values[0] for name, values in observation.items()}
         if policy_name == "planConditioned":
             single.update({name: values[0] for name, values in plan_tensors.items()})
@@ -179,6 +189,24 @@ def _run_case(
         "meanObjectiveDistance": float(np.mean(distances)),
         "firstActionTarget": first_target,
         "finalMeanGroupPosition": final_group_position,
+        "roleMetrics": {
+            role: _role_metrics(role_distances[role], role_positions[role])
+            for role in role_distances
+        },
+    }
+
+
+def _role_metrics(distances: list[float], positions: list[list[float]]) -> dict[str, Any]:
+    initial_position = np.asarray(positions[0])
+    final_position = np.asarray(positions[-1])
+    return {
+        "initialObjectiveDistance": distances[0],
+        "finalObjectiveDistance": distances[-1],
+        "objectiveProgress": distances[0] - distances[-1],
+        "meanObjectiveDistance": float(np.mean(distances)),
+        "displacementFromStart": float(np.linalg.norm(final_position - initial_position)),
+        "initialPosition": positions[0],
+        "finalPosition": positions[-1],
     }
 
 
@@ -196,6 +224,23 @@ def _compare_case(results: list[dict[str, Any]], case_id: str) -> dict[str, Any]
             - np.asarray(baseline["finalMeanGroupPosition"])
         )),
         "objectiveProgressDelta": conditioned["objectiveProgress"] - baseline["objectiveProgress"],
+        "roleComparisons": {
+            role: {
+                "objectiveProgressDelta": (
+                    conditioned["roleMetrics"][role]["objectiveProgress"]
+                    - baseline["roleMetrics"][role]["objectiveProgress"]
+                ),
+                "displacementDelta": (
+                    conditioned["roleMetrics"][role]["displacementFromStart"]
+                    - baseline["roleMetrics"][role]["displacementFromStart"]
+                ),
+                "finalPositionDistance": float(np.linalg.norm(
+                    np.asarray(conditioned["roleMetrics"][role]["finalPosition"])
+                    - np.asarray(baseline["roleMetrics"][role]["finalPosition"])
+                )),
+            }
+            for role in conditioned["roleMetrics"]
+        },
     }
 
 

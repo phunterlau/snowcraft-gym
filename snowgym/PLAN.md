@@ -15,7 +15,7 @@ configuration on 2026-09-01.
 | Round termination      | Team counts are generic, but blue loss waits for single-hero lives                                                       | Configure the no-respawn scenario with zero reserve lives; redesign only if a later environment requires it |
 | Determinism            | `World` owns a seeded RNG, physics uses fixed 60 Hz steps, and status exposes versioned public-state hashes              | Record provenance and exact actions; keep cross-language golden and replay assertions before benchmarking   |
 | Headless use           | Most systems are DOM-free, but `Game` constructs renderer/input and owns the private step loop                           | Compose the systems directly in a DOM-free `SnowEnvironment`                                                |
-| RL contract            | Canonical reset/step, masked fixed-shape Gym spaces, configurable rosters, and terrain observations are implemented      | Keep HTTP as the reference transport; add a direct batched transport before high-throughput training        |
+| RL contract            | Canonical reset/step, masked fixed-shape Gym spaces, configurable rosters, terrain observations, and persistent batch worlds are implemented | Keep HTTP as the reference transport and the batch subprocess as the authoritative high-throughput path |
 
 ## Milestones
 
@@ -954,6 +954,14 @@ withdraw-backfield, and main-plus-reserve-support cases at a 3,600-tick / 600-
 decision horizon. This suite is additive to the immutable v0 direct/flank run;
 it tests one-group and multi-group behaviors without changing the qualified
 checkpoints. Terminal outcomes and per-role behavior metrics remain unseen.
+
+M7 mission-metric foundation (2026-09-02): the closed-loop evaluator now
+retains objective distance, progress, start-to-final displacement, and terminal
+position separately for each stable role slot. Case comparisons expose per-role
+progress and displacement deltas, so hold can be judged by movement from its
+activation position and reserve support is no longer averaged into the main
+body. Existing result artifacts remain immutable; a new audited metrics result
+must use a distinct path.
 
 ### M8 — unit-level CTDE / MAPPO
 

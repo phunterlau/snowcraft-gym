@@ -58,6 +58,12 @@ def test_closed_loop_evaluator_runs_matched_real_worlds(tmp_path: Path) -> None:
     assert len(result["results"]) == 4
     assert all(item["decisions"] == 1 for item in result["results"])
     assert all(item["rejectedActions"] == 0 for item in result["results"])
+    assert all("main" in item["roleMetrics"] for item in result["results"])
+    assert all(
+        item["roleMetrics"]["main"]["displacementFromStart"] == 0
+        for item in result["results"]
+    )
+    assert all("main" in item["roleComparisons"] for item in result["comparisons"])
     assert all(item["firstTargetMeanAbsoluteDelta"] > 0 for item in result["comparisons"])
     assert audit_closed_loop(tmp_path / "result.json", ABLATION, suite) == result
 
