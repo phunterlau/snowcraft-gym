@@ -184,6 +184,21 @@ uv run snowgym-run-ppo-config \
   --json
 ```
 
+The committed qualifying artifact is `runs/ppo_3v3_random_bc_v0`. Audit it
+with:
+
+```bash
+uv run snowgym-audit-ppo-series runs/ppo_3v3_random_bc_v0 --json
+```
+
+It is bound to source commit `1829e6a`, config digest
+`sha256:f793476d5297c6ebc0c542dfd9a9bd662c81de43e05b92a1aac531ba9c57e341`,
+and series digest
+`sha256:f54853b4758796fb2cff643d98eeb41787b94c171fffab2de97766367a796adf`.
+Updates 1/5/10 each won 8/8 in 105 decisions against 0/8 masked-random and
+8/8 teacher, with zero rejected actions. This advances `3v3-random` and meets
+the frozen M6.2 exit comparison, subject to the BC-retention caveat above.
+
 Replay either learned episode through the existing UI after starting
 `npm run dev` from the repository root:
 

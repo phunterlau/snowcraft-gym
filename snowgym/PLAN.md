@@ -567,6 +567,17 @@ masked-random. Its deterministic behavior remains 105 decisions, equal to the
 BC initializer. This is an honest retention result through the PPO pipeline,
 not material reward-driven improvement; qualification remains open.
 
+M6.2 gate-3 acceptance (2026-09-02): the post-commit qualifying
+`ppo_3v3_random_bc_v0` series reproduces the frozen development curve. Updates
+1, 5, and 10 each won 8/8 held-out episodes in 105 decisions, versus 0/8
+masked-random and 8/8 scripted teacher, with zero rejected actions. The semantic
+auditor verifies the series and all nested checkpoint/evaluation digests; the
+series is bound to source commit `1829e6a` and config digest
+`sha256:f793476d5297c6ebc0c542dfd9a9bd662c81de43e05b92a1aac531ba9c57e341`.
+The first three gates are advanced and the stated M6.2 held-out comparison is
+met. Later 3v3 scripted/terrain and 5v5/10v10 curriculum gates remain open, and
+the 3v3 result remains explicitly BC retention rather than improvement over BC.
+
 ### M7 — plan-conditioned learned executor
 
 Goal: train the fast learned controller to follow the existing slow

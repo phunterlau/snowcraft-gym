@@ -1,0 +1,241 @@
+{
+  "architecture": {
+    "actor_hidden": 64,
+    "entity_embedding": 24,
+    "entity_hidden": 32
+  },
+  "checkpoint": {
+    "checkpointDigest": "sha256:3085b569b16d26124fcd7c6af6215f481c2dcc2b3940858686924e09a8bf5ebe",
+    "path": "checkpoint",
+    "stateDigest": "sha256:cc02c5d9f38b8ea40f43d137e95ea2bd5bcce2baf7a3afea0bee6933ab865a9d"
+  },
+  "curriculumDigest": "sha256:6e1e9e33a53f5d47551081f452ddab9d4246f5e9a18027ca03ee5a52ba688829",
+  "environmentSteps": 32000,
+  "format": "snowgym.ppo-run.v0",
+  "gate": {
+    "evaluationSeeds": [
+      5101,
+      5102,
+      5103,
+      5104,
+      5105,
+      5106,
+      5107,
+      5108
+    ],
+    "id": "3v3-random",
+    "minimumImprovementOverMaskedRandom": 0.2,
+    "minimumWinRate": 0.5,
+    "scenario": {
+      "arenaHeight": 30,
+      "arenaWidth": 40,
+      "blueUnits": 3,
+      "decisionHz": 10,
+      "maxTicks": 2400,
+      "redController": "random",
+      "redDifficulty": "normal",
+      "redUnits": 3
+    }
+  },
+  "gitCommit": "1829e6a7caa4aa4d56f71eb8cfc41f85e8e20c25",
+  "initialization": {
+    "checkpointDigest": "sha256:d6389cacdd31399ac996ce8492bd1cdd0b876a8063c16f88c8020b5dd9e9bde2",
+    "datasetManifestHash": "sha256:616494b021b437d6b8b641bae03255ffe525607985169b24e218407a4daf5dff",
+    "stateDigest": "sha256:86db4037d32ceb9504978a8efb7d8654c7e52260f3eb5263568a125f1dad4107",
+    "type": "behavior-clone"
+  },
+  "mode": "qualification-candidate",
+  "ppoConfig": {
+    "clip_ratio": 0.2,
+    "entropy_weight": 0.001,
+    "gae_lambda": 0.95,
+    "gamma": 0.99,
+    "initial_power_log_std": -3.0,
+    "initial_target_log_std": -3.0,
+    "learning_rate": 1e-08,
+    "max_grad_norm": 0.5,
+    "minibatch_size": 3200,
+    "update_epochs": 1,
+    "value_weight": 0.5
+  },
+  "rewardMode": "health-potential",
+  "rolloutSteps": 400,
+  "runDigest": "sha256:20fdb2a3a377ad4d94d902ab69e429b53b0d94e2b6e6db0e077247f238661800",
+  "seedSchedule": {
+    "maximum": 39999,
+    "minimum": 30000,
+    "nextSeed": 30083
+  },
+  "startUpdate": 5,
+  "targetUpdate": 10,
+  "trainingSeed": 75,
+  "updates": [
+    {
+      "boundaryTruncations": 0,
+      "canonicalRewardSum": 0.0,
+      "completedEpisodes": 8,
+      "environmentSteps": 19200,
+      "episodeSeeds": [
+        30042,
+        30043,
+        30044,
+        30045,
+        30046,
+        30047,
+        30048,
+        30049
+      ],
+      "metrics": {
+        "approximate_kl": 2.495944428915209e-08,
+        "clip_fraction": 0.0,
+        "entropy": -8.75045108795166,
+        "epochs": 1,
+        "maximumGradientNormAfterClip": 0.5,
+        "maximumGradientNormBeforeClip": 42.43309783935547,
+        "minibatches": 1,
+        "policy": 2.9802322387695312e-08,
+        "samples": 3200,
+        "total": 0.12135104835033417,
+        "updateIndex": 5,
+        "value": 0.22520112991333008
+      },
+      "rejectedActions": 0,
+      "trainingRewardSum": -22.437988311052322,
+      "updateIndex": 5
+    },
+    {
+      "boundaryTruncations": 0,
+      "canonicalRewardSum": 0.0,
+      "completedEpisodes": 8,
+      "environmentSteps": 22400,
+      "episodeSeeds": [
+        30050,
+        30051,
+        30052,
+        30053,
+        30054,
+        30055,
+        30056,
+        30057
+      ],
+      "metrics": {
+        "approximate_kl": 2.846121738286911e-08,
+        "clip_fraction": 0.0,
+        "entropy": -8.745392799377441,
+        "epochs": 1,
+        "maximumGradientNormAfterClip": 0.5,
+        "maximumGradientNormBeforeClip": 17.004690170288086,
+        "minibatches": 1,
+        "policy": 3.6358834165639564e-08,
+        "samples": 3200,
+        "total": 0.11770670115947723,
+        "updateIndex": 6,
+        "value": 0.21792253851890564
+      },
+      "rejectedActions": 0,
+      "trainingRewardSum": -26.091966420412064,
+      "updateIndex": 6
+    },
+    {
+      "boundaryTruncations": 1,
+      "canonicalRewardSum": 1.0,
+      "completedEpisodes": 8,
+      "environmentSteps": 25600,
+      "episodeSeeds": [
+        30058,
+        30059,
+        30060,
+        30061,
+        30062,
+        30063,
+        30064,
+        30065,
+        30066
+      ],
+      "metrics": {
+        "approximate_kl": -6.079673653403006e-08,
+        "clip_fraction": 0.0,
+        "entropy": -8.75887680053711,
+        "epochs": 1,
+        "maximumGradientNormAfterClip": 0.5,
+        "maximumGradientNormBeforeClip": 35.42781066894531,
+        "minibatches": 1,
+        "policy": -1.2516975012033527e-08,
+        "samples": 3200,
+        "total": 0.13360388576984406,
+        "updateIndex": 7,
+        "value": 0.24969005584716797
+      },
+      "rejectedActions": 0,
+      "trainingRewardSum": -23.971944212913513,
+      "updateIndex": 7
+    },
+    {
+      "boundaryTruncations": 0,
+      "canonicalRewardSum": 0.0,
+      "completedEpisodes": 8,
+      "environmentSteps": 28800,
+      "episodeSeeds": [
+        30067,
+        30068,
+        30069,
+        30070,
+        30071,
+        30072,
+        30073,
+        30074
+      ],
+      "metrics": {
+        "approximate_kl": -5.763024191196564e-08,
+        "clip_fraction": 0.0,
+        "entropy": -8.746195793151855,
+        "epochs": 1,
+        "maximumGradientNormAfterClip": 0.5,
+        "maximumGradientNormBeforeClip": 41.30833053588867,
+        "minibatches": 1,
+        "policy": 7.763505038838048e-08,
+        "samples": 3200,
+        "total": 0.1040070429444313,
+        "updateIndex": 8,
+        "value": 0.19052153825759888
+      },
+      "rejectedActions": 0,
+      "trainingRewardSum": -28.561984598636627,
+      "updateIndex": 8
+    },
+    {
+      "boundaryTruncations": 0,
+      "canonicalRewardSum": 0.0,
+      "completedEpisodes": 8,
+      "environmentSteps": 32000,
+      "episodeSeeds": [
+        30075,
+        30076,
+        30077,
+        30078,
+        30079,
+        30080,
+        30081,
+        30082
+      ],
+      "metrics": {
+        "approximate_kl": 2.4288892674917406e-08,
+        "clip_fraction": 0.0,
+        "entropy": -8.753559112548828,
+        "epochs": 1,
+        "maximumGradientNormAfterClip": 0.5,
+        "maximumGradientNormBeforeClip": 32.359867095947266,
+        "minibatches": 1,
+        "policy": 8.642673243741683e-09,
+        "samples": 3200,
+        "total": 0.11359845101833344,
+        "updateIndex": 9,
+        "value": 0.20968976616859436
+      },
+      "rejectedActions": 0,
+      "trainingRewardSum": -25.61393466591835,
+      "updateIndex": 9
+    }
+  ],
+  "worlds": 8
+}
