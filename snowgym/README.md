@@ -57,6 +57,11 @@ fixed `planGroups` (three role slots by 38 features), `planGroupMask`, assignmen
 metadata, tick, and state hash without advancing physics. Reset clears the
 active plan. The persistent batch host exposes the same operations as
 `activatePlan` and `planObservation` for closed-loop training.
+`GET /plan-teacher-action` is the corresponding read-only oracle seam: it runs
+the production plan-aware reactive executor at the current state and returns a
+semantic action plus matching state hash without advancing physics. This allows
+DAgger relabeling on learner-visited states while keeping assignments, target
+replacement, reflexes, and physical action generation host-owned.
 
 The reference server owns one shared episode. Mutating calls accept an optional
 `expectedStateHash` from the latest `/status` and an `idempotencyKey`. A stale

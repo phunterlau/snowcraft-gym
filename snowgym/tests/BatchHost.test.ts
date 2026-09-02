@@ -120,6 +120,16 @@ describe('BatchHost', () => {
       status: 409,
       body: { error: 'plan_not_active' },
     });
+    const teacher = host.handle(request('planTeacherAction', [{ worldId: 'planned' }]));
+    expect(teacher.results[0]).toMatchObject({
+      worldId: 'planned',
+      status: 200,
+      body: {
+        status: { tick: 0, stateHash: planned.status.stateHash },
+        planId: 'batch-plan',
+        action: { actions: [expect.objectContaining({ unitId: 1 })] },
+      },
+    });
   });
 
   it('keeps world state independent and reports failures explicitly', () => {

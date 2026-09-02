@@ -40,6 +40,10 @@ describe('SnowGymService', () => {
       status: 409,
       body: { error: 'plan_not_active' },
     });
+    expect(service.handle('GET', '/plan-teacher-action')).toEqual({
+      status: 409,
+      body: { error: 'plan_not_active' },
+    });
     const reset = service.handle('POST', '/reset', {
       seed: 42,
       scenario: { map: 'arena6.json' },
@@ -77,6 +81,18 @@ describe('SnowGymService', () => {
     );
     expect(service.handle('GET', '/status')).toMatchObject({
       status: 200,
+      body: { status: { tick: 0, stateHash: reset.status.stateHash } },
+    });
+    expect(service.handle('GET', '/plan-teacher-action')).toMatchObject({
+      status: 200,
+      body: {
+        status: { tick: 0, stateHash: reset.status.stateHash },
+        planId: 'test-plan',
+        planVersion: 1,
+        action: { actions: expect.arrayContaining([expect.objectContaining({ unitId: 1 })]) },
+      },
+    });
+    expect(service.handle('GET', '/status')).toMatchObject({
       body: { status: { tick: 0, stateHash: reset.status.stateHash } },
     });
 
@@ -406,6 +422,7 @@ describe('SnowGymService', () => {
       endpoints: {
         activatePlan: { path: string; requires: string[] };
         planObservation: { path: string; mutates: boolean };
+        planTeacherAction: { path: string; mutates: boolean };
         step: { requires: string[] };
         stepJoint: { path: string; requires: string[] };
         stepScripted: { path: string };
@@ -432,6 +449,11 @@ describe('SnowGymService', () => {
     });
     expect(body.endpoints.planObservation).toMatchObject({
       path: '/plan-observation',
+      method: 'GET',
+      mutates: false,
+    });
+    expect(body.endpoints.planTeacherAction).toMatchObject({
+      path: '/plan-teacher-action',
       method: 'GET',
       mutates: false,
     });

@@ -974,6 +974,14 @@ effect, not yet distinct hold/withdraw/support competence. The next training
 revision must balance these missions and qualify per-role behavior rather than
 optimizing the aggregate objective-distance metric.
 
+M7 plan-oracle foundation (2026-09-02): the server and persistent batch host
+now expose a read-only plan-aware teacher action at the exact current state
+hash. It uses the production `PlanAwareTeamController` and reactive unit policy,
+does not advance physics, and fails closed until a plan is active. Python
+validates per-world state-hash alignment before returning semantic labels. This
+is the host-owned oracle seam for the next plan-conditioned DAgger collector;
+learner-state collection and retraining remain open.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO

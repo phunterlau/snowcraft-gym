@@ -341,6 +341,10 @@ after reset and `plan_observations()` before every policy decision. The
 authoritative TypeScript world re-resolves symbolic objectives and updates
 geometry, living assignment fractions, and plan age at the current tick; Python
 only validates and stacks the returned `[B,3,38]` tensors.
+The adjacent `plan_teacher_actions()` call labels the same learner-visited
+states through the production plan-aware executor without advancing them. A
+collector must verify the returned state hashes and submit only the learner
+action; the teacher label never mutates the episode.
 
 ## PPO foundation
 

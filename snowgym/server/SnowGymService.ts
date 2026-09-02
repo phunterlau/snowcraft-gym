@@ -21,6 +21,8 @@ import { PlanGrounder } from '../orchestration/grounding/PlanGrounder';
 import { GroupAllocationError } from '../orchestration/grounding/GroupAllocator';
 import { TargetResolutionError, TargetResolver } from '../orchestration/grounding/TargetResolver';
 import { PlanStore, type PlanSnapshot } from '../orchestration/runtime/PlanStore';
+import { PlanAwareTeamController } from '../orchestration/execution/PlanAwareTeamController';
+import { ReactiveUnitPolicy } from '../orchestration/execution/ReactiveUnitPolicy';
 import { encodePlanTensor } from '../training/plan/PlanTensorEncoder';
 
 export interface ServiceResponse {
@@ -61,6 +63,12 @@ export class SnowGymService {
           return { status: 409, body: { error: 'plan_not_active' } };
         }
         return { status: 200, body: this.planObservation() };
+      }
+      if (method === 'GET' && path === '/plan-teacher-action') {
+        if (this.planStore === null) {
+          return { status: 409, body: { error: 'plan_not_active' } };
+        }
+        return { status: 200, body: this.planTeacherAction() };
       }
       if (method === 'POST' && path === '/reset') {
         const request = parseReset(body);
@@ -172,6 +180,21 @@ export class SnowGymService {
         role,
         unitIds: [...assignment.unitIds],
       })),
+    };
+  }
+
+  private planTeacherAction(): object {
+    if (this.planStore === null) throw new RequestValidationError('plan is not active');
+    const observation = this.environment.observe(Team.Player);
+    const action = new PlanAwareTeamController(this.planStore, new ReactiveUnitPolicy()).act(
+      observation,
+      1 / this.environment.decisionHz,
+    );
+    return {
+      status: this.environment.status(),
+      planId: this.planStore.current().plan.envelope.planId,
+      planVersion: this.planStore.current().version,
+      action,
     };
   }
 

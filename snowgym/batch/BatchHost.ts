@@ -14,6 +14,7 @@ type BatchOperation =
   | 'stepJoint'
   | 'activatePlan'
   | 'planObservation'
+  | 'planTeacherAction'
   | 'close';
 
 interface BatchItem {
@@ -67,6 +68,7 @@ export class BatchHost {
                 'stepJoint',
                 'activatePlan',
                 'planObservation',
+                'planTeacherAction',
                 'close',
               ],
               isolation: 'per-world-explicit-result',
@@ -128,6 +130,7 @@ function batchRoute(operation: Exclude<BatchOperation, 'handshake' | 'close'>): 
   if (operation === 'stepScripted') return { method: 'POST', path: '/step-scripted' };
   if (operation === 'activatePlan') return { method: 'POST', path: '/activate-plan' };
   if (operation === 'planObservation') return { method: 'GET', path: '/plan-observation' };
+  if (operation === 'planTeacherAction') return { method: 'GET', path: '/plan-teacher-action' };
   return { method: 'POST', path: '/step-joint' };
 }
 
@@ -151,6 +154,7 @@ function parseBatchRequest(value: unknown): BatchRequest {
     'stepJoint',
     'activatePlan',
     'planObservation',
+    'planTeacherAction',
     'close',
   ]);
   if (typeof value.operation !== 'string' || !operations.has(value.operation as BatchOperation)) {

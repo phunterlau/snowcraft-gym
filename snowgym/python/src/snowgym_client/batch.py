@@ -293,6 +293,26 @@ class SnowGymBatchEnv:
         }
         return tensors, bodies
 
+    def plan_teacher_actions(self) -> list[dict[str, Any]]:
+        """Read production plan-aware teacher actions at the current world states."""
+        items = [{"worldId": world_id} for world_id in self.world_ids]
+        results = self.client.request("planTeacherAction", items)
+        if len(results) != self.batch_size:
+            raise RuntimeError("batch plan teacher result count mismatch")
+        failures = [result for result in results if result.get("status") != 200]
+        if failures:
+            raise BatchOperationError("one or more batch plan teachers failed", results)
+        actions: list[dict[str, Any]] = []
+        for index, result in enumerate(results):
+            body = result.get("body")
+            if not isinstance(body, dict) or not isinstance(body.get("action"), dict):
+                raise RuntimeError("batch plan teacher payload is missing action")
+            status = body.get("status")
+            if not isinstance(status, dict) or status.get("stateHash") != self.state_hashes[index]:
+                raise RuntimeError("batch plan teacher stateHash does not match world state")
+            actions.append(body["action"])
+        return actions
+
     def close(self) -> None:
         if self._owns_client:
             self.client.close()

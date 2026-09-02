@@ -32,6 +32,9 @@ single-team steps, raw joint-step requests, and explicit per-world failures.
 grounding; `plan_observations()` returns current `plan_groups [B,3,38]` and
 `plan_group_mask [B,3]` plus plan metadata without duplicating target resolution
 or tactical geometry in Python.
+`plan_teacher_actions()` reads the matching production executor labels at those
+same state hashes without stepping, providing the safe oracle boundary for
+plan-conditioned DAgger collection.
 Run the live golden transport check while the HTTP server is available:
 
 ```bash
