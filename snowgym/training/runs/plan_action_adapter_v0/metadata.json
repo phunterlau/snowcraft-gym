@@ -1,0 +1,83 @@
+{
+  "architecture": {
+    "action_conditioned_targets": true,
+    "actor_hidden": 64,
+    "entity_embedding": 24,
+    "entity_hidden": 32,
+    "plan_action_adapter": true,
+    "plan_conditioned": true,
+    "plan_target_only": true,
+    "separate_target_actor": true
+  },
+  "checkpointDigest": "sha256:4079ba7186995f293731887bd99073a70c0c6c1136d6bb853034a828b0ffd1b3",
+  "datasetManifestHash": "sha256:297be4717a9f33a44f374c006e6aca73aed804149c2f781ebd69508b79497bdd",
+  "evaluationSuite": "plan-action-adapter-qualification-v0",
+  "format": "snowgym.checkpoint.v0",
+  "gitCommit": "fc1f09249fb38762b886fc4dbec42cd30e473d21",
+  "initialization": {
+    "checkpointDigest": "sha256:4119b9a3f8c0d3df69b704a8f3f813a1b38ab11ca56faffb4c4cebc2cb235133",
+    "stateDigest": "sha256:34de1e9e5882b0c764aa8dd6596ed6ba87e395d7eb9e455036fc10a721d8c50d"
+  },
+  "loss": {
+    "action_weight": 1.0,
+    "power_weight": 0.5,
+    "target_weight": 5.0,
+    "throw_action_weight": 5.0
+  },
+  "optimizer": {
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "epsilon": 1e-08,
+    "learningRate": 0.0003,
+    "name": "Adam",
+    "weightDecay": 0.0
+  },
+  "stateDigest": "sha256:e46bb48947d2837579cc223880646d9400faa82b420513ee5081539f7d87e322",
+  "step": 1500,
+  "trainable": "plan-action-target-path",
+  "trainingConfig": {
+    "architecture": {
+      "action_conditioned_targets": true,
+      "actor_hidden": 64,
+      "entity_embedding": 24,
+      "entity_hidden": 32,
+      "plan_action_adapter": true,
+      "plan_conditioned": true,
+      "plan_target_only": true,
+      "separate_target_actor": true
+    },
+    "batchSize": 64,
+    "evaluationSuite": "plan-action-adapter-qualification-v0",
+    "format": "snowgym.bc-training-config.v0",
+    "learningRate": 0.0003,
+    "loss": {
+      "action_weight": 1.0,
+      "power_weight": 0.5,
+      "target_weight": 5.0,
+      "throw_action_weight": 5.0
+    },
+    "name": "plan-action-adapter-6v6-v0",
+    "seed": 85001,
+    "steps": 1500,
+    "trainable": "plan-action-target-path"
+  },
+  "trainingMetrics": {
+    "final": {
+      "action": 0.15536250174045563,
+      "power": 0.019532334059476852,
+      "target": 0.004853518679738045,
+      "total": 0.18939626216888428
+    },
+    "firstLoss": 7.966933250427246,
+    "startStep": 0
+  },
+  "trainingSeed": 85001,
+  "versions": {
+    "apiVersion": "snowgym.v0",
+    "simulationVersion": "snowgym.sim.v1",
+    "stateHashVersion": "snowgym.state.v1",
+    "upstreamBaseCommit": "7d9fca5"
+  }
+}

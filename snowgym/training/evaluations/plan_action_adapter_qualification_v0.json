@@ -1,0 +1,44 @@
+{
+  "checkpointDigest": "sha256:4079ba7186995f293731887bd99073a70c0c6c1136d6bb853034a828b0ffd1b3",
+  "checkpointStateDigest": "sha256:e46bb48947d2837579cc223880646d9400faa82b420513ee5081539f7d87e322",
+  "checks": {
+    "actionAccuracy": true,
+    "correctPlanTargetMse": true,
+    "counterfactualActionChangeRate": false,
+    "counterfactualTargetMeanAbsoluteDelta": true,
+    "directBlueAlive": false,
+    "firstDecisionActionAccuracy": true,
+    "flankBlueAlive": false,
+    "holdDecisions": true,
+    "rejectedActions": true,
+    "supportRedAlive": false,
+    "withdrawDecisions": true
+  },
+  "format": "snowgym.plan-action-adapter-qualification-result.v0",
+  "inputEvaluationDigests": {
+    "baseline": "sha256:4e97e2f7686f56559819395d6df9b3b2f09b71bfd4c957664ffb8de0a6440789",
+    "behaviors": "sha256:a93be07a4b48e53d9c204926c5889092e71d3a90bf431fa6074d0b04866733ba",
+    "closedLoop": "sha256:3399b36ea138f88c77a0a982f472e422f0964a7328115e46ac359695f0e897a0",
+    "offline": "sha256:fe637aac493f30fe7a52577a6a8b5e022ac563ec5f549d5843741baecb6d98c6"
+  },
+  "observed": {
+    "closedLoop": {
+      "directBlueAlive": 3.0,
+      "flankBlueAlive": 3.0,
+      "holdDecisions": 270.0,
+      "rejectedActions": 0.0,
+      "supportRedAlive": 6.0,
+      "withdrawDecisions": 364.0
+    },
+    "offline": {
+      "actionAccuracy": 0.8548209071159363,
+      "correctPlanTargetMse": 0.01805274747312069,
+      "counterfactualActionChangeRate": 0.0,
+      "counterfactualTargetMeanAbsoluteDelta": 0.3813230097293854,
+      "firstDecisionActionAccuracy": 1.0
+    }
+  },
+  "passed": false,
+  "qualificationDigest": "sha256:4482dcd8585932e62dcc5d0605cbc3f1d62a4eb76f2edeae45ee76d29dd42777",
+  "specDigest": "sha256:29a2361ca99f580df8ecd48820b757f00799c39f38a514c1c3e48cf4ae2641eb"
+}

@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 
 import numpy as np
+import pytest
 import torch
 
 from snowgym_training.data import TrajectoryDataset
@@ -13,6 +14,10 @@ from snowgym_training.export_plan_dagger import (
     load_plan_dagger_spec,
 )
 from snowgym_training.merge_trajectory import merge_datasets
+from snowgym_training.plan_action_adapter_qualification import (
+    load_spec as load_action_adapter_qualification_spec,
+    qualify_plan_action_adapter,
+)
 from snowgym_training.trainer import train_behavior_clone
 from snowgym_training.trainer import load_training_config
 from snowgym_training.trajectory import audit_dataset
@@ -35,6 +40,23 @@ ACTION_ADAPTER_CONFIG = (
     ROOT / "training" / "src" / "snowgym_training" / "configs"
     / "plan_action_adapter_v0.json"
 )
+ACTION_ADAPTER_QUALIFICATION = (
+    ROOT / "training" / "src" / "snowgym_training" / "configs"
+    / "plan_action_adapter_qualification_v0.json"
+)
+ACTION_ADAPTER_CHECKPOINT = ROOT / "training" / "runs" / "plan_action_adapter_v0"
+ACTION_ADAPTER_OFFLINE = (
+    ROOT / "training" / "evaluations" / "plan_action_adapter_offline_v0.json"
+)
+ACTION_ADAPTER_CLOSED_LOOP = (
+    ROOT / "training" / "evaluations" / "plan_action_adapter_closed_loop_v0.json"
+)
+ACTION_ADAPTER_BEHAVIORS = (
+    ROOT / "training" / "evaluations" / "plan_action_adapter_behaviors_v0.json"
+)
+ACTION_ADAPTER_BASELINE = (
+    ROOT / "training" / "evaluations" / "plan_dagger_baseline_offline_v0.json"
+)
 
 
 def test_frozen_plan_dagger_spec_balances_missions_and_disjoins_seeds() -> None:
@@ -50,6 +72,42 @@ def test_frozen_plan_dagger_spec_balances_missions_and_disjoins_seeds() -> None:
     adapter = load_training_config(ACTION_ADAPTER_CONFIG)
     assert adapter["architecture"]["plan_action_adapter"] is True
     assert adapter["trainable"] == "plan-action-target-path"
+
+
+def test_frozen_plan_action_adapter_gate_is_audited_and_retains_failure(tmp_path: Path) -> None:
+    spec = load_action_adapter_qualification_spec(ACTION_ADAPTER_QUALIFICATION)
+    assert spec["offline"]["minimumCounterfactualActionChangeRate"] == 0.05
+    result = qualify_plan_action_adapter(
+        spec_path=ACTION_ADAPTER_QUALIFICATION,
+        checkpoint=ACTION_ADAPTER_CHECKPOINT,
+        baseline_path=ACTION_ADAPTER_BASELINE,
+        offline_path=ACTION_ADAPTER_OFFLINE,
+        closed_loop_path=ACTION_ADAPTER_CLOSED_LOOP,
+        behaviors_path=ACTION_ADAPTER_BEHAVIORS,
+        output=tmp_path / "qualification.json",
+    )
+    assert result["passed"] is False
+    assert result["checks"]["actionAccuracy"] is True
+    assert result["checks"]["counterfactualActionChangeRate"] is False
+    assert result["checks"]["directBlueAlive"] is False
+    assert result["checks"]["holdDecisions"] is True
+    assert result["checks"]["withdrawDecisions"] is True
+    assert result["checks"]["supportRedAlive"] is False
+
+    tampered = json.loads(ACTION_ADAPTER_OFFLINE.read_text(encoding="utf-8"))
+    tampered["metrics"]["actionAccuracy"] = 1.0
+    tampered_path = tmp_path / "tampered.json"
+    tampered_path.write_text(json.dumps(tampered), encoding="utf-8")
+    with pytest.raises(ValueError, match="digest mismatch"):
+        qualify_plan_action_adapter(
+            spec_path=ACTION_ADAPTER_QUALIFICATION,
+            checkpoint=ACTION_ADAPTER_CHECKPOINT,
+            baseline_path=ACTION_ADAPTER_BASELINE,
+            offline_path=tampered_path,
+            closed_loop_path=ACTION_ADAPTER_CLOSED_LOOP,
+            behaviors_path=ACTION_ADAPTER_BEHAVIORS,
+            output=tmp_path / "tampered-result.json",
+        )
 
 
 def test_plan_dagger_labels_learner_visited_states_headlessly(tmp_path: Path) -> None:
