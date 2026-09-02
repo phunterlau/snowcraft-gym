@@ -16,6 +16,12 @@ def test_gate4_teacher_and_bc_configs_are_valid_and_disjoint() -> None:
 
     assert teacher["name"] == "scripted-blue-3v3-scripted-v0"
     assert learner["evaluationSuite"] == "teacher_3v3_scripted_v0/evaluation"
+    assert learner["steps"] == 10_000
+    assert learner["loss"] == {
+        "action_weight": 1.0,
+        "target_weight": 10.0,
+        "power_weight": 1.0,
+    }
     scenarios = [
         episode["scenario"]
         for episodes in teacher["splits"].values()

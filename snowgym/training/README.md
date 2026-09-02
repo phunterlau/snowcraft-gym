@@ -131,6 +131,16 @@ uv run snowgym-merge-trajectories \
 
 The merge rejects differences in split, split seeds, source specification,
 capacity, or simulator versions and re-audits the complete output.
+
+Gate-4 development uses a 2:1 ordered expert/recovery aggregate: expert dataset
+digest `sha256:3fccaa7f0a10f9111b66514874edb099f3bd6c67c594f17650a8340ea8b2cd05`
+is repeated twice, followed by DAgger digest
+`sha256:116618922841b27d17d21d6371dd0ec05860a6c248071d3ef9f2118c02aa9846`.
+The portable 1,745-transition aggregate digest is
+`sha256:2fc2770ae2385c16adb14cffde01104a5e4165a4f8154d92021d40ae1fa3e7e4`.
+The frozen `bc_3v3_scripted_v0.json` config uses 10,000 steps, target weight 10,
+and power weight 1. Its development checkpoint won both BC held-out episodes;
+post-commit checkpoint generation remains required for accepted provenance.
 The `snowgym.checkpoint.v0` metadata binds the model and optimizer state digest
 to the source commit, audited dataset digest, SnowGym versions, architecture,
 optimizer, loss weights, seed, step, and evaluation suite. Loading uses

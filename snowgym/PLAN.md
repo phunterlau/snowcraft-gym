@@ -596,6 +596,14 @@ ordered aggregation with repeated-input integer weighting, compatibility checks,
 source-digest provenance, episode remapping, and a full output re-audit. A
 mixed expert/recovery gate-4 initializer remains open.
 
+A 2:1 ordered expert/recovery aggregate then succeeded in development. It
+contains 1,745 transitions and has portable digest
+`sha256:2fc2770ae2385c16adb14cffde01104a5e4165a4f8154d92021d40ae1fa3e7e4`;
+the 10,000-step precision-weighted checkpoint won both held-out BC episodes,
+with one and two blue survivors respectively. `bc_3v3_scripted_v0` now freezes
+that optimization contract before provenance-valid regeneration. Gate-4 PPO
+qualification remains open.
+
 ### M7 — plan-conditioned learned executor
 
 Goal: train the fast learned controller to follow the existing slow
