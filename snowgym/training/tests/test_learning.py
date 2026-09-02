@@ -79,6 +79,10 @@ def test_model_config_preserves_legacy_checkpoint_shape() -> None:
         **legacy,
         "action_conditioned_targets": True,
     }
+    assert model_config({**legacy, "nearest_enemy_features": True}).as_dict() == {
+        **legacy,
+        "nearest_enemy_features": True,
+    }
 
 
 def test_action_conditioned_target_heads_select_distinct_means(tmp_path: Path) -> None:

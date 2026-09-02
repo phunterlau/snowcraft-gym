@@ -20,6 +20,7 @@ class ModelConfig:
     pairwise_enemy_attention: bool = False
     action_conditioned_targets: bool = False
     nearest_enemy_throw_target: bool = False
+    nearest_enemy_features: bool = False
 
     def as_dict(self) -> dict[str, int | bool]:
         value: dict[str, int | bool] = {
@@ -33,6 +34,8 @@ class ModelConfig:
             value["action_conditioned_targets"] = True
         if self.nearest_enemy_throw_target:
             value["nearest_enemy_throw_target"] = True
+        if self.nearest_enemy_features:
+            value["nearest_enemy_features"] = True
         return value
 
 
@@ -54,6 +57,9 @@ class EntityPolicy(nn.Module):
             self.enemy_key = nn.Linear(embedding, embedding, bias=False)
             self.enemy_value = nn.Linear(embedding, embedding, bias=False)
             global_features += embedding
+        self.nearest_enemy_features = config.nearest_enemy_features
+        if self.nearest_enemy_features:
+            global_features += 5
         self.actor = nn.Sequential(
             nn.Linear(embedding + global_features, config.actor_hidden),
             nn.ReLU(),
@@ -140,6 +146,22 @@ class EntityPolicy(nn.Module):
                     observation["enemies"][..., 2:4].float(),
                 )
             )
+        if self.nearest_enemy_features:
+            ally_position = observation["allies"][..., 2:4].float()
+            nearest = nearest_enemy_target(
+                ally_position,
+                observation["enemies"][..., 2:4].float(),
+                observation["enemy_mask"].bool(),
+            )
+            relative = nearest - ally_position
+            relational = torch.cat(
+                [nearest, relative, relative.square().sum(dim=-1, keepdim=True).sqrt()],
+                dim=-1,
+            )
+            relational = relational * observation["enemy_mask"].any(dim=-1)[
+                :, None, None
+            ].to(relational.dtype)
+            actor_inputs.append(relational)
         global_context = torch.cat(
             [
                 *masked_mean_max(allies, ally_mask),
@@ -232,6 +254,7 @@ def model_config(value: Any) -> ModelConfig:
         "pairwise_enemy_attention",
         "action_conditioned_targets",
         "nearest_enemy_throw_target",
+        "nearest_enemy_features",
     }
     if not isinstance(value, dict) or set(value) - optional != required:
         raise ValueError(
