@@ -258,6 +258,7 @@ def test_plan_dagger_v1_retains_same_state_counterfactual_labels(tmp_path: Path)
         "pairing": "same-physical-state",
     }
     assert manifest["episodes"][0]["counterfactualPlanName"] == "hold"
+    assert manifest["episodes"][0]["counterfactualLimited"] is False
     assert audit_dataset(output)["datasetDigest"] == manifest["datasetDigest"]
     dataset = TrajectoryDataset(output)
     assert dataset.counterfactual_plan_labels is True

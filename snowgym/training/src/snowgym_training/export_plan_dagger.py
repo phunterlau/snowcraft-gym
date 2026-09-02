@@ -10,7 +10,7 @@ from typing import Any
 
 import numpy as np
 
-from snowgym_client.batch import SnowGymBatchClient, SnowGymBatchEnv
+from snowgym_client.batch import BatchOperationError, SnowGymBatchClient, SnowGymBatchEnv
 from snowgym_client.encoding import decode_action, encode_action
 
 from .checkpoint import load_checkpoint
@@ -133,6 +133,7 @@ def export_plan_dagger_dataset(
             decisions = 0
             start_transition = writer.transition_count
             terminated = truncated = False
+            counterfactual_limited = False
             while not (terminated or truncated):
                 if max_decisions is not None and decisions >= max_decisions:
                     break
@@ -158,10 +159,21 @@ def export_plan_dagger_dataset(
                 learner_action = policy.act(observation_before)
                 transition_extra: dict[str, np.ndarray] = {}
                 if counterfactual_name is not None:
-                    preview_tensors, preview_actions, preview_metadata = environment.preview_plans(
-                        [f"counterfactual-{counterfactual_name}-{episode['seed']}-{decisions}"],
-                        [spec["plans"][counterfactual_name]],
-                    )
+                    try:
+                        preview_tensors, preview_actions, preview_metadata = (
+                            environment.preview_plans(
+                                [
+                                    "counterfactual-"
+                                    f"{counterfactual_name}-{episode['seed']}-{decisions}"
+                                ],
+                                [spec["plans"][counterfactual_name]],
+                            )
+                        )
+                    except BatchOperationError as error:
+                        if _only_plan_not_applicable(error):
+                            counterfactual_limited = True
+                            break
+                        raise
                     if required_string(preview_metadata[0], "stateHash") != pre_hash:
                         raise ValueError("counterfactual plan preview does not match learner state")
                     counterfactual_action = decode_action(
@@ -228,6 +240,10 @@ def export_plan_dagger_dataset(
                     "terminated": terminated,
                     "truncated": truncated,
                     "decisionLimited": not (terminated or truncated),
+                    **(
+                        {"counterfactualLimited": counterfactual_limited}
+                        if counterfactual_name is not None else {}
+                    ),
                     "rolloutWinner": info.get("winner"),
                     "finalStateHash": info.get("stateHash"),
                 }
@@ -266,6 +282,15 @@ def export_plan_dagger_dataset(
     )
     audit_dataset(output)
     return manifest
+
+
+def _only_plan_not_applicable(error: BatchOperationError) -> bool:
+    return bool(error.results) and all(
+        result.get("status") == 409
+        and isinstance(result.get("body"), dict)
+        and result["body"].get("error") == "plan_not_applicable"
+        for result in error.results
+    )
 
 
 def main() -> None:
