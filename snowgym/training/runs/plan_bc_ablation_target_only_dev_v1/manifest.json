@@ -1,0 +1,67 @@
+{
+  "datasetManifestHash": "sha256:e252f624d0b45cf240af1c9c06709c4bf06b268040db48feb03d109611b0a902",
+  "format": "snowgym.plan-bc-ablation-result.v0",
+  "matchedBudget": {
+    "batchSize": 64,
+    "learningRate": 0.003,
+    "loss": {
+      "action_weight": 1.0,
+      "power_weight": 0.5,
+      "target_weight": 5.0,
+      "throw_action_weight": 5.0
+    },
+    "seed": 83002,
+    "steps": 3000
+  },
+  "name": "plan-aware-blue-6v6-target-only-dev-v1",
+  "resultDigest": "sha256:f3925f9512d8339e7aadb790430b5ebee5d7ab7c4cf3fc569fbcaed812a63a10",
+  "runs": {
+    "noPlan": {
+      "architecture": {
+        "action_conditioned_targets": true,
+        "actor_hidden": 64,
+        "entity_embedding": 24,
+        "entity_hidden": 32,
+        "separate_target_actor": true
+      },
+      "checkpointDigest": "sha256:bad899fefeb98b7d1b9523e3d8b158ac2f1fdfd94f25d932cc265e1d74376f22",
+      "path": "no-plan",
+      "stateDigest": "sha256:af57b12f65bd812d7b6dc32fbd97e5e38859d1a43feb2dae3c851bda542bab0f",
+      "trainingMetrics": {
+        "final": {
+          "action": 0.06756418943405151,
+          "power": 0.011386452242732048,
+          "target": 0.04612015187740326,
+          "total": 0.3038581907749176
+        },
+        "firstLoss": 2.800018072128296,
+        "startStep": 0
+      }
+    },
+    "planConditioned": {
+      "architecture": {
+        "action_conditioned_targets": true,
+        "actor_hidden": 64,
+        "entity_embedding": 24,
+        "entity_hidden": 32,
+        "plan_conditioned": true,
+        "plan_target_only": true,
+        "separate_target_actor": true
+      },
+      "checkpointDigest": "sha256:872b9b3a607e2877c361eb6706f9ed180201745d04e705e936211551804c2b8d",
+      "path": "plan-conditioned",
+      "stateDigest": "sha256:01848252d810862b207d0404fab5a851c0b8b7c8b39318d5c7918ca1a82fed48",
+      "trainingMetrics": {
+        "final": {
+          "action": 0.06756418943405151,
+          "power": 0.0016441443003714085,
+          "target": 0.00449938653036952,
+          "total": 0.09088319540023804
+        },
+        "firstLoss": 2.669679641723633,
+        "startStep": 0
+      }
+    }
+  },
+  "sourceConfigDigest": "sha256:eaa3b5dd9a1786cbcae5bec9e55ba8cb854510faca1b0ae508845c9c5463aa57"
+}

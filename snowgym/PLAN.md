@@ -872,6 +872,19 @@ has no pass threshold. If it restores action accuracy while preserving target
 following, a v1 qualification must be frozen with new disjoint environment and
 plan seeds.
 
+M7 target-only development outcome (2026-09-02): the corrected post-commit run
+on retained qualification-v0 data produced bit-identical action behavior for
+both branches: overall accuracy `0.928299`, first-decision accuracy `1.0`, and
+first-decision action NLL `0.00335723`. Conditioned correct-plan target MSE was
+`0.058109` versus no-plan `0.242607`; swapping only the plans added `0.352305`
+target MSE and changed predicted targets by `0.405377`, while every no-plan
+sensitivity stayed zero. The matched result digest is
+`sha256:f3925f9512d8339e7aadb790430b5ebee5d7ab7c4cf3fc569fbcaed812a63a10`
+and evaluation digest is
+`sha256:e4d186c40bf828db756e01a7afccb619a5396a98a50f119697943500f1b231d0`.
+This resolves the observed action-head interference on development data. A v1
+qualification with new seeds must still be frozen and passed.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO

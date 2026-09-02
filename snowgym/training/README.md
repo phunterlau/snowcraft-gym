@@ -775,3 +775,11 @@ boundary, while plans can still change destinations. The paired runner
 removes this plan-only routing flag from the no-plan control, preserving one
 shared separated-target architecture and optimization budget. Existing
 checkpoints and the default fully plan-conditioned pathway are unchanged.
+
+The corrected target-only development checkpoints are retained under
+`runs/plan_bc_ablation_target_only_dev_v1`, with metrics in
+`evaluations/plan_bc_ablation_target_only_dev_v1.json`. The paired branches
+have exactly identical action accuracy and action NLL, while conditioned target
+MSE is `0.05811` versus `0.24261` without plans and rises by `0.35230` when
+plans are swapped. This is development evidence on reused v0 data; it does not
+repair the failed v0 qualification or substitute for a new-seed v1 gate.

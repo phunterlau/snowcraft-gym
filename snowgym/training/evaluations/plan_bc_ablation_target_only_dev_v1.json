@@ -1,0 +1,34 @@
+{
+  "ablationResultDigest": "sha256:f3925f9512d8339e7aadb790430b5ebee5d7ab7c4cf3fc569fbcaed812a63a10",
+  "episodes": 12,
+  "evaluationDatasetDigest": "sha256:b388d20c5f27dbee2984fce34df67d2b391b461b3e81333faf9c7bc8f79a3e78",
+  "evaluationDigest": "sha256:e4d186c40bf828db756e01a7afccb619a5396a98a50f119697943500f1b231d0",
+  "format": "snowgym.plan-counterfactual-evaluation.v0",
+  "metrics": {
+    "noPlan": {
+      "actionAccuracy": 0.9282985925674438,
+      "correctPlanActionNll": 0.0033572299871593714,
+      "correctPlanTargetMse": 0.24260658025741577,
+      "counterfactualActionChangeRate": 0.0,
+      "counterfactualNllDelta": 0.0,
+      "counterfactualTargetMeanAbsoluteDelta": 0.0,
+      "counterfactualTargetMseDelta": 0.0,
+      "firstDecisionActionAccuracy": 1.0,
+      "shuffledPlanActionNll": 0.0033572299871593714,
+      "shuffledPlanTargetMse": 0.24260658025741577
+    },
+    "planConditioned": {
+      "actionAccuracy": 0.9282985925674438,
+      "correctPlanActionNll": 0.0033572299871593714,
+      "correctPlanTargetMse": 0.05810941755771637,
+      "counterfactualActionChangeRate": 0.0,
+      "counterfactualNllDelta": 0.0,
+      "counterfactualTargetMeanAbsoluteDelta": 0.40537744760513306,
+      "counterfactualTargetMseDelta": 0.3523046225309372,
+      "firstDecisionActionAccuracy": 1.0,
+      "shuffledPlanActionNll": 0.0033572299871593714,
+      "shuffledPlanTargetMse": 0.41041404008865356
+    }
+  },
+  "transitions": 960
+}

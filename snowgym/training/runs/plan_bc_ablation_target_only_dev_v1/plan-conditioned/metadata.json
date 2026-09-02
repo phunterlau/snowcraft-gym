@@ -1,0 +1,75 @@
+{
+  "architecture": {
+    "action_conditioned_targets": true,
+    "actor_hidden": 64,
+    "entity_embedding": 24,
+    "entity_hidden": 32,
+    "plan_conditioned": true,
+    "plan_target_only": true,
+    "separate_target_actor": true
+  },
+  "checkpointDigest": "sha256:872b9b3a607e2877c361eb6706f9ed180201745d04e705e936211551804c2b8d",
+  "datasetManifestHash": "sha256:e252f624d0b45cf240af1c9c06709c4bf06b268040db48feb03d109611b0a902",
+  "evaluationSuite": "plan-counterfactual-6v6-target-only-dev-v1",
+  "format": "snowgym.checkpoint.v0",
+  "gitCommit": "f29c1fd3e87d85e53a2fd7df3ca59cfefd36ea10",
+  "loss": {
+    "action_weight": 1.0,
+    "power_weight": 0.5,
+    "target_weight": 5.0,
+    "throw_action_weight": 5.0
+  },
+  "optimizer": {
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "epsilon": 1e-08,
+    "learningRate": 0.003,
+    "name": "Adam",
+    "weightDecay": 0.0
+  },
+  "stateDigest": "sha256:01848252d810862b207d0404fab5a851c0b8b7c8b39318d5c7918ca1a82fed48",
+  "step": 3000,
+  "trainingConfig": {
+    "architecture": {
+      "action_conditioned_targets": true,
+      "actor_hidden": 64,
+      "entity_embedding": 24,
+      "entity_hidden": 32,
+      "plan_conditioned": true,
+      "plan_target_only": true,
+      "separate_target_actor": true
+    },
+    "batchSize": 64,
+    "evaluationSuite": "plan-counterfactual-6v6-target-only-dev-v1",
+    "format": "snowgym.bc-training-config.v0",
+    "learningRate": 0.003,
+    "loss": {
+      "action_weight": 1.0,
+      "power_weight": 0.5,
+      "target_weight": 5.0,
+      "throw_action_weight": 5.0
+    },
+    "name": "plan-aware-blue-6v6-target-only-dev-v1-plan-conditioned",
+    "seed": 83002,
+    "steps": 3000
+  },
+  "trainingMetrics": {
+    "final": {
+      "action": 0.06756418943405151,
+      "power": 0.0016441443003714085,
+      "target": 0.00449938653036952,
+      "total": 0.09088319540023804
+    },
+    "firstLoss": 2.669679641723633,
+    "startStep": 0
+  },
+  "trainingSeed": 83002,
+  "versions": {
+    "apiVersion": "snowgym.v0",
+    "simulationVersion": "snowgym.sim.v1",
+    "stateHashVersion": "snowgym.state.v1",
+    "upstreamBaseCommit": "7d9fca5"
+  }
+}
