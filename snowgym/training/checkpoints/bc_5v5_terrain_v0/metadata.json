@@ -1,0 +1,67 @@
+{
+  "architecture": {
+    "action_conditioned_targets": true,
+    "actor_hidden": 64,
+    "entity_embedding": 24,
+    "entity_hidden": 32
+  },
+  "checkpointDigest": "sha256:8fec9129582ad3709733158d919a544a833caab24d1fa0e744a4b4d5eaa01bcd",
+  "datasetManifestHash": "sha256:4e1a0352ed5d6e21c09e4599b27c783abe14009258214f8e87dc5bdd2f134ac4",
+  "evaluationSuite": "teacher_5v5_terrain_v0/evaluation",
+  "format": "snowgym.checkpoint.v0",
+  "gitCommit": "f7bb43a9d7403484e80e228cdcb6d2d9ce502d91",
+  "loss": {
+    "action_weight": 1.0,
+    "power_weight": 1.0,
+    "target_weight": 10.0
+  },
+  "optimizer": {
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "epsilon": 1e-08,
+    "learningRate": 0.003,
+    "name": "Adam",
+    "weightDecay": 0.0
+  },
+  "stateDigest": "sha256:6a4a4b66a677d9df69d07f057511a5419305b08ae424d9da0ce9a5ecb8758b2a",
+  "step": 20000,
+  "trainingConfig": {
+    "architecture": {
+      "action_conditioned_targets": true,
+      "actor_hidden": 64,
+      "entity_embedding": 24,
+      "entity_hidden": 32
+    },
+    "batchSize": 64,
+    "evaluationSuite": "teacher_5v5_terrain_v0/evaluation",
+    "format": "snowgym.bc-training-config.v0",
+    "learningRate": 0.003,
+    "loss": {
+      "action_weight": 1.0,
+      "power_weight": 1.0,
+      "target_weight": 10.0
+    },
+    "name": "scripted-blue-5v5-terrain-bc-v0",
+    "seed": 73026,
+    "steps": 20000
+  },
+  "trainingMetrics": {
+    "final": {
+      "action": 0.0002331329305889085,
+      "power": 0.0005970296333543956,
+      "target": 9.71723347902298e-05,
+      "total": 0.0018018858972936869
+    },
+    "firstLoss": 4.431177139282227,
+    "startStep": 0
+  },
+  "trainingSeed": 73026,
+  "versions": {
+    "apiVersion": "snowgym.v0",
+    "simulationVersion": "snowgym.sim.v1",
+    "stateHashVersion": "snowgym.state.v1",
+    "upstreamBaseCommit": "7d9fca5"
+  }
+}

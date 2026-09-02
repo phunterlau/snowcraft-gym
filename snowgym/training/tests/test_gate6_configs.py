@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 
+from snowgym_training.checkpoint import load_checkpoint
 from snowgym_training.curriculum import load_curriculum
 from snowgym_training.trainer import load_training_config
 from snowgym_training.trajectory import json_digest, load_export_spec
@@ -60,3 +61,23 @@ def test_committed_gate6_teacher_baseline_is_digest_bound_and_wins() -> None:
     assert baseline["summary"]["scripted_teacher"]["blueWins"] == 2
     assert baseline["summary"]["scripted_teacher"]["rejectedActions"] == 0
     assert baseline["summary"]["masked_random"]["blueWins"] == 0
+
+
+def test_committed_gate6_initializer_is_digest_bound_and_wins() -> None:
+    training_root = Path(__file__).parents[1]
+    metadata, _ = load_checkpoint(training_root / "checkpoints/bc_5v5_terrain_v0")
+    evaluation = json.loads(
+        (training_root / "evaluations/bc_5v5_terrain_v0.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    claimed = evaluation.pop("resultDigest")
+    assert claimed == json_digest(evaluation)
+    assert evaluation["checkpointDigest"] == metadata["checkpointDigest"]
+    assert metadata["gitCommit"].startswith("f7bb43a")
+    assert metadata["datasetManifestHash"] == (
+        "sha256:4e1a0352ed5d6e21c09e4599b27c783abe14009258214f8e87dc5bdd2f134ac4"
+    )
+    assert metadata["architecture"]["action_conditioned_targets"] is True
+    assert evaluation["summary"]["learned"]["blueWins"] == 2
+    assert evaluation["summary"]["learned"]["rejectedActions"] == 0
