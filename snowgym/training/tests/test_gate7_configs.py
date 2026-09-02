@@ -1,18 +1,26 @@
+import json
 from pathlib import Path
 
 from snowgym_training.curriculum import load_curriculum
-from snowgym_training.trajectory import load_export_spec
+from snowgym_training.trainer import load_training_config
+from snowgym_training.trajectory import json_digest, load_export_spec
 
 
 def test_gate7_teacher_config_is_valid_terrain_and_seed_disjoint() -> None:
     config_root = Path(__file__).parents[1] / "src/snowgym_training/configs"
     teacher = load_export_spec(config_root / "teacher_10v10_terrain_v0.json")
+    learner = load_training_config(config_root / "bc_10v10_terrain_v0.json")
     curriculum = load_curriculum()
     gate = next(
         item for item in curriculum["gates"] if item["id"] == "10v10-random-terrain"
     )
 
     assert teacher["name"] == "scripted-blue-10v10-terrain-v0"
+    assert learner["steps"] == 30_000
+    assert learner["architecture"]["action_conditioned_targets"] is True
+    assert learner["architecture"]["nearest_enemy_throw_target"] is True
+    assert learner["loss"]["throw_action_weight"] == 10.0
+    assert learner["evaluationSuite"] == "teacher_10v10_terrain_v0/evaluation"
     scenarios = [
         episode["scenario"]
         for episodes in teacher["splits"].values()
@@ -36,3 +44,21 @@ def test_gate7_teacher_config_is_valid_terrain_and_seed_disjoint() -> None:
         for right in split_seeds[index + 1 :]
     )
     assert set(gate["evaluationSeeds"]).isdisjoint(set().union(*split_seeds))
+
+
+def test_committed_gate7_teacher_baseline_is_digest_bound_and_wins() -> None:
+    training_root = Path(__file__).parents[1]
+    spec = load_export_spec(
+        training_root / "src/snowgym_training/configs/teacher_10v10_terrain_v0.json"
+    )
+    baseline = json.loads(
+        (training_root / "baselines/teacher_10v10_terrain_v0.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    claimed = baseline.pop("resultDigest")
+    assert claimed == json_digest(baseline)
+    assert baseline["sourceSpecDigest"] == json_digest(spec)
+    assert baseline["summary"]["scripted_teacher"]["blueWins"] == 2
+    assert baseline["summary"]["scripted_teacher"]["rejectedActions"] == 0
+    assert baseline["summary"]["masked_random"]["blueWins"] == 0
