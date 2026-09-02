@@ -28,6 +28,7 @@ def save_ppo_checkpoint(
     update_index: int,
     environment_steps: int,
     git_commit: str,
+    seed_schedule: dict[str, int],
 ) -> dict[str, Any]:
     destination = Path(path)
     if destination.exists():
@@ -39,6 +40,7 @@ def save_ppo_checkpoint(
     }.items():
         if not isinstance(value, str) or not value:
             raise ValueError(f"{name} must be a non-empty string")
+    validate_seed_schedule(seed_schedule)
     state = {
         "model": model.state_dict(),
         "optimizer": optimizer.state_dict(),
@@ -53,6 +55,7 @@ def save_ppo_checkpoint(
         "trainingSeed": training_seed,
         "updateIndex": update_index,
         "environmentSteps": environment_steps,
+        "seedSchedule": dict(seed_schedule),
         "stateDigest": semantic_state_digest(state),
     }
     metadata["checkpointDigest"] = json_digest(metadata)
@@ -124,6 +127,7 @@ def validate_ppo_checkpoint_metadata(value: Any) -> None:
         "trainingSeed",
         "updateIndex",
         "environmentSteps",
+        "seedSchedule",
         "stateDigest",
         "checkpointDigest",
     }
@@ -142,6 +146,7 @@ def validate_ppo_checkpoint_metadata(value: Any) -> None:
     validate_counters(
         value["trainingSeed"], value["updateIndex"], value["environmentSteps"]
     )
+    validate_seed_schedule(value["seedSchedule"])
     source = {name: item for name, item in value.items() if name != "checkpointDigest"}
     if value["checkpointDigest"] != json_digest(source):
         raise ValueError("PPO checkpoint metadata digest mismatch")
@@ -156,3 +161,18 @@ def validate_counters(training_seed: Any, update_index: Any, environment_steps: 
     }.items():
         if not isinstance(value, int) or isinstance(value, bool) or value < 0:
             raise ValueError(f"PPO {name} must be a non-negative integer")
+
+
+def validate_seed_schedule(value: Any) -> None:
+    required = {"minimum", "maximum", "nextSeed"}
+    if not isinstance(value, dict) or set(value) != required:
+        raise ValueError(f"PPO seed schedule must contain exactly {sorted(required)}")
+    if not all(
+        isinstance(value[name], int) and not isinstance(value[name], bool)
+        for name in required
+    ):
+        raise ValueError("PPO seed schedule values must be integers")
+    if value["minimum"] > value["maximum"]:
+        raise ValueError("PPO seed schedule minimum must not exceed maximum")
+    if not value["minimum"] <= value["nextSeed"] <= value["maximum"] + 1:
+        raise ValueError("PPO seed schedule cursor is outside its range")

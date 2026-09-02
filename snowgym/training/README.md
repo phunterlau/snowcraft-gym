@@ -150,6 +150,13 @@ flattens only the first two axes for optimization. Terminal transitions do not
 bootstrap, time-limit truncations bootstrap once but stop recurrence, and an
 incomplete rollout cannot be consumed.
 
+`collect_rollout` drives `SnowGymBatchEnv` directly. It assigns every episode a
+monotonic seed from a bounded schedule, selectively resets worlds that finish,
+and refuses to reuse exhausted seeds. Each collection call is a restartable
+rollout boundary: unfinished worlds are recorded as artificial time-limit
+truncations with value bootstrap, and the next call resets every world. This
+keeps resume exact without claiming that hidden live simulator state is stored.
+
 `ppo_update` normalizes advantages once over the complete rollout, derives
 epoch permutations from the training seed and update index, and applies the
 hybrid clipped objective in deterministic minibatches. It rejects non-finite
@@ -158,14 +165,15 @@ sample-weighted policy/value/entropy/KL/clip diagnostics.
 
 `snowgym.ppo-checkpoint.v0` persists model and optimizer tensors, Torch RNG
 state, architecture and PPO configuration, training seed, curriculum digest,
-update index, environment-step count, and semantic state/metadata digests.
+episode-seed schedule and cursor, update index, environment-step count, and
+semantic state/metadata digests.
 Loading uses restricted Torch deserialization and rejects incompatible
 training provenance before restoring state. The deterministic acceptance test
 matches uninterrupted training exactly across a save/restore boundary. This is
-rollout-boundary optimizer resume; persistent-world collection and episode-seed
-scheduling are the next slice.
+rollout-boundary optimizer and sampling resume; simulator worlds intentionally
+restart at each collection boundary.
 
 The frozen `ppo_curriculum_v0.json` keeps training ranges disjoint from eight
 evaluation seeds per gate and sets thresholds before qualifying runs. The
-current foundation does not yet claim a PPO result; live batch collection and
-the qualifying checkpoint series remain next.
+current foundation does not yet claim a PPO result; the smoke trainer and
+qualifying checkpoint series remain next.

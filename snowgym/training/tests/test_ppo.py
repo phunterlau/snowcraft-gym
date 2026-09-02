@@ -345,9 +345,11 @@ def test_ppo_checkpoint_resume_matches_uninterrupted_updates(tmp_path) -> None:
         update_index=1,
         environment_steps=4,
         git_commit="test",
+        seed_schedule={"minimum": 10_000, "maximum": 10_099, "nextSeed": 10_004},
     )
     assert metadata["updateIndex"] == 1
     assert metadata["environmentSteps"] == 4
+    assert metadata["seedSchedule"]["nextSeed"] == 10_004
 
     torch.manual_seed(999)
     resumed = HybridActorCritic(ModelConfig(16, 12, 24))
@@ -407,6 +409,7 @@ def test_ppo_checkpoint_rejects_incompatible_resume(tmp_path) -> None:
         update_index=0,
         environment_steps=0,
         git_commit="test",
+        seed_schedule={"minimum": 10_000, "maximum": 10_099, "nextSeed": 10_000},
     )
     try:
         restore_ppo_checkpoint(

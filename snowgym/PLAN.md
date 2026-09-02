@@ -430,6 +430,9 @@ partial observation, or self-play confounds.
       model, optimizer, Torch random state, update/environment-step counters,
       architecture/configuration, training seed, curriculum provenance, and
       semantic state/metadata digests.
+- [x] Collect directly from persistent `SnowGymBatchEnv` worlds with a bounded,
+      non-reusing episode-seed schedule, selective terminal resets, explicit
+      horizon truncation/value bootstrap, and restartable rollout boundaries.
 - [ ] Keep canonical evaluation reward at win `+1`, loss `-1`, draw `0`. If
       sparse learning blocks the smoke test, add an opt-in training wrapper with
       potential-based own-minus-enemy health shaping and test that it leaves
@@ -463,7 +466,11 @@ optimizer without collapsing entity features. PPO updates use a reproducible
 seed/update-index permutation and report sample-weighted diagnostics across
 every epoch and minibatch. A restricted-load checkpoint test proves that an
 update-save-restore-update sequence exactly matches uninterrupted optimizer
-state and weights. Live batch collection and qualifying runs remain open.
+state and weights. The live collector now drives persistent batch worlds within
+each rollout, selectively resets completed slots, and checkpoints its monotonic
+episode-seed cursor. Collection boundaries deliberately truncate and bootstrap
+unfinished worlds so exact resume does not depend on unserialized simulator
+state. A smoke training runner and qualifying runs remain open.
 
 ### M7 — plan-conditioned learned executor
 
