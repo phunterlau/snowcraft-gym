@@ -31,6 +31,13 @@ export function snowGymCapabilities(): object {
       teacherAction: { method: 'GET', path: '/teacher-action', mutates: false },
       planObservation: { method: 'GET', path: '/plan-observation', mutates: false },
       planTeacherAction: { method: 'GET', path: '/plan-teacher-action', mutates: false },
+      previewPlan: {
+        method: 'POST',
+        path: '/preview-plan',
+        mutates: false,
+        guarded: true,
+        requires: ['planId', 'plan'],
+      },
       reset: { method: 'POST', path: '/reset', mutates: true, guarded: true },
       step: { method: 'POST', path: '/step', mutates: true, requires: ['action'] },
       activatePlan: {

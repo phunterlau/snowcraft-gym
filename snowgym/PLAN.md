@@ -1091,6 +1091,30 @@ least `0.95`, target MSE at most `0.13`, action counterfactual change at least
 blue survivors at least 4 each, hold/withdraw duration at least 267/341, and
 support red survivors at most 4. No adapter training outcome has been observed.
 
+M7 residual action-adapter-v0 outcome (2026-09-02): the frozen run is retained
+as a failed gate with checkpoint digest
+`sha256:4079ba7186995f293731887bd99073a70c0c6c1136d6bb853034a828b0ffd1b3`.
+Offline action accuracy improved to `0.854821` and target MSE to `0.018053`,
+while hold and withdraw exceeded their duration thresholds and all actions were
+accepted. Direct and flank preserved three rather than four blue units, support
+eliminated no red units, and the first-decision counterfactual action-change
+rate remained zero. Seven of eleven frozen checks passed; qualification digest
+`sha256:4482dcd8585932e62dcc5d0605cbc3f1d62a4eb76f2edeae45ee76d29dd42777`
+records the failure. Dataset inspection showed every evaluated plan labels all
+six first-decision units as `move`, so that first-decision-only action-change
+criterion cannot identify correct mission-dependent timing. The next revision
+must collect host-generated counterfactual plan/action labels on the same later
+learner-visited physical states; v0 thresholds and results remain immutable.
+
+M7 counterfactual plan-preview foundation (2026-09-02): the service and batch
+host can now ground an arbitrary schema-valid plan against the current detached
+world, return its host-resolved `[3,38]` tensor and production plan-teacher
+action, and discard the temporary plan without changing the active plan or
+advancing physics. Requests are guarded by the current public-state hash. This
+read-only intervention seam enables paired later-state labels without resetting
+plan age or corrupting the executed learner trajectory. Dataset export,
+counterfactual training loss, and a disjoint v1 gate remain next.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO

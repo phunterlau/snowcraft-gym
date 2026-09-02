@@ -130,6 +130,30 @@ describe('BatchHost', () => {
         action: { actions: [expect.objectContaining({ unitId: 1 })] },
       },
     });
+    const preview = host.handle(
+      request('previewPlan', [
+        {
+          worldId: 'planned',
+          body: {
+            planId: 'preview-plan',
+            plan: oneGroupPlan(),
+            expectedStateHash: planned.status.stateHash,
+          },
+        },
+      ]),
+    );
+    expect(preview.results[0]).toMatchObject({
+      worldId: 'planned',
+      status: 200,
+      body: {
+        planId: 'preview-plan',
+        stateHash: planned.status.stateHash,
+        action: { actions: [expect.objectContaining({ unitId: 1 })] },
+      },
+    });
+    expect(
+      host.handle(request('planObservation', [{ worldId: 'planned' }])).results[0],
+    ).toMatchObject({ body: { planId: 'batch-plan', version: 1 } });
   });
 
   it('keeps world state independent and reports failures explicitly', () => {

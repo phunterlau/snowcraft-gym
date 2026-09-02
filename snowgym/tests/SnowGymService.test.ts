@@ -95,6 +95,32 @@ describe('SnowGymService', () => {
     expect(service.handle('GET', '/status')).toMatchObject({
       body: { status: { tick: 0, stateHash: reset.status.stateHash } },
     });
+    const preview = service.handle('POST', '/preview-plan', {
+      planId: 'preview-plan',
+      plan: commandedTenVsTenPlan(),
+      expectedStateHash: reset.status.stateHash,
+    });
+    expect(preview).toMatchObject({
+      status: 200,
+      body: {
+        planId: 'preview-plan',
+        version: 1,
+        stateHash: reset.status.stateHash,
+        planGroups: expect.any(Array),
+        action: { actions: expect.arrayContaining([expect.objectContaining({ unitId: 1 })]) },
+      },
+    });
+    expect(service.handle('GET', '/plan-observation')).toMatchObject({
+      status: 200,
+      body: { planId: 'test-plan', version: 1, stateHash: reset.status.stateHash },
+    });
+    expect(
+      service.handle('POST', '/preview-plan', {
+        planId: 'stale-preview',
+        plan: commandedTenVsTenPlan(),
+        expectedStateHash: 'fnv1a64:0000000000000000',
+      }),
+    ).toMatchObject({ status: 409, body: { error: 'stale_state' } });
 
     service.handle('POST', '/step-scripted', {
       expectedStateHash: reset.status.stateHash,

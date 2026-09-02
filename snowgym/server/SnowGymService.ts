@@ -20,7 +20,11 @@ import {
 import { PlanGrounder } from '../orchestration/grounding/PlanGrounder';
 import { GroupAllocationError } from '../orchestration/grounding/GroupAllocator';
 import { TargetResolutionError, TargetResolver } from '../orchestration/grounding/TargetResolver';
-import { PlanStore, type PlanSnapshot } from '../orchestration/runtime/PlanStore';
+import {
+  PlanStore,
+  type GroundedPlan,
+  type PlanSnapshot,
+} from '../orchestration/runtime/PlanStore';
 import { PlanAwareTeamController } from '../orchestration/execution/PlanAwareTeamController';
 import { ReactiveUnitPolicy } from '../orchestration/execution/ReactiveUnitPolicy';
 import { encodePlanTensor } from '../training/plan/PlanTensorEncoder';
@@ -69,6 +73,11 @@ export class SnowGymService {
           return { status: 409, body: { error: 'plan_not_active' } };
         }
         return { status: 200, body: this.planTeacherAction() };
+      }
+      if (method === 'POST' && path === '/preview-plan') {
+        const request = parsePreviewPlan(body);
+        this.assertCurrentState(request.expectedStateHash);
+        return { status: 200, body: this.previewPlan(request.planId, request.plan) };
       }
       if (method === 'POST' && path === '/reset') {
         const request = parseReset(body);
@@ -145,8 +154,19 @@ export class SnowGymService {
 
   private activatePlan(planId: string, plan: CommandPlan): object {
     const observation = this.environment.observe(Team.Player);
+    const grounded = this.groundPlan(planId, plan, observation);
+    if (this.planStore === null) this.planStore = new PlanStore(grounded, observation.tick);
+    else this.planStore.activate(grounded, observation.tick);
+    return this.planObservation();
+  }
+
+  private groundPlan(
+    planId: string,
+    plan: CommandPlan,
+    observation: ReturnType<SnowEnvironment['observe']>,
+  ): GroundedPlan {
     const status = this.environment.status();
-    const grounded = new PlanGrounder().ground(
+    return new PlanGrounder().ground(
       {
         planId,
         source: {
@@ -158,15 +178,21 @@ export class SnowGymService {
       },
       observation,
     );
-    if (this.planStore === null) this.planStore = new PlanStore(grounded, observation.tick);
-    else this.planStore.activate(grounded, observation.tick);
-    return this.planObservation();
   }
 
-  private planObservation(): object {
-    if (this.planStore === null) throw new RequestValidationError('plan is not active');
+  private previewPlan(planId: string, plan: CommandPlan): object {
     const observation = this.environment.observe(Team.Player);
-    const snapshot = refreshPlanObjectives(this.planStore.current(), observation);
+    const store = new PlanStore(this.groundPlan(planId, plan, observation), observation.tick);
+    return {
+      ...this.planObservation(store),
+      action: this.planTeacherAction(store).action,
+    };
+  }
+
+  private planObservation(store = this.planStore): object {
+    if (store === null) throw new RequestValidationError('plan is not active');
+    const observation = this.environment.observe(Team.Player);
+    const snapshot = refreshPlanObjectives(store.current(), observation);
     const tensor = encodePlanTensor(snapshot, observation, observation.tick);
     return {
       planId: snapshot.plan.envelope.planId,
@@ -183,17 +209,22 @@ export class SnowGymService {
     };
   }
 
-  private planTeacherAction(): object {
-    if (this.planStore === null) throw new RequestValidationError('plan is not active');
+  private planTeacherAction(store = this.planStore): {
+    status: ReturnType<SnowEnvironment['status']>;
+    planId: string;
+    planVersion: number;
+    action: TeamAction;
+  } {
+    if (store === null) throw new RequestValidationError('plan is not active');
     const observation = this.environment.observe(Team.Player);
-    const action = new PlanAwareTeamController(this.planStore, new ReactiveUnitPolicy()).act(
+    const action = new PlanAwareTeamController(store, new ReactiveUnitPolicy()).act(
       observation,
       1 / this.environment.decisionHz,
     );
     return {
       status: this.environment.status(),
-      planId: this.planStore.current().plan.envelope.planId,
-      planVersion: this.planStore.current().version,
+      planId: store.current().plan.envelope.planId,
+      planVersion: store.current().version,
       action,
     };
   }
@@ -249,22 +280,23 @@ export class SnowGymService {
       }
     }
 
-    const actualStateHash = this.environment.status().stateHash;
-    if (request.expectedStateHash && request.expectedStateHash !== actualStateHash) {
-      throw new StateConflictError(
-        'stale_state',
-        'expectedStateHash does not match current state',
-        {
-          expectedStateHash: request.expectedStateHash,
-          actualStateHash,
-        },
-      );
-    }
+    this.assertCurrentState(request.expectedStateHash);
 
     const response = { status: 200, body: mutation() };
     if (request.idempotencyKey)
       this.rememberMutation(request.idempotencyKey, fingerprint, response);
     return response;
+  }
+
+  private assertCurrentState(expectedStateHash: string | undefined): void {
+    const actualStateHash = this.environment.status().stateHash;
+    if (expectedStateHash && expectedStateHash !== actualStateHash) {
+      throw new StateConflictError(
+        'stale_state',
+        'expectedStateHash does not match current state',
+        { expectedStateHash, actualStateHash },
+      );
+    }
   }
 
   private rememberMutation(key: string, fingerprint: string, response: ServiceResponse): void {
@@ -340,6 +372,12 @@ interface StepRequest extends GuardedRequest {
 }
 
 interface ActivatePlanRequest extends GuardedRequest {
+  planId: string;
+  plan: CommandPlan;
+}
+
+interface PreviewPlanRequest {
+  expectedStateHash?: string;
   planId: string;
   plan: CommandPlan;
 }
@@ -469,6 +507,17 @@ function parseActivatePlan(body: unknown): ActivatePlanRequest {
     throw error;
   }
   return { ...parseGuards(record), planId: record.planId, plan };
+}
+
+function parsePreviewPlan(body: unknown): PreviewPlanRequest {
+  const record = asRecord(body);
+  assertAllowedKeys(record, ['planId', 'plan', 'expectedStateHash'], 'request');
+  const parsed = parseActivatePlan({ ...record, idempotencyKey: undefined });
+  return {
+    planId: parsed.planId,
+    plan: parsed.plan,
+    expectedStateHash: parsed.expectedStateHash,
+  };
 }
 
 function parseJointStep(body: unknown): JointStepRequest {

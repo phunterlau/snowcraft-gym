@@ -413,6 +413,16 @@ error, and counterfactual plan-swap metrics as the matched ablation evaluator,
 and binds checkpoint/state plus dataset digests in an audited result. Use this
 to enforce action-regression limits before interpreting closed-loop outcomes.
 
+The frozen residual-adapter v0 result is retained in
+`evaluations/plan_action_adapter_qualification_v0.json` and does not pass. It
+improves offline action accuracy and target error, but fails direct/flank
+survival, support combat effect, and first-decision action sensitivity. Because
+all five held-out mission cases begin with the same all-unit `move` action, the
+next data revision uses the server's guarded `previewPlan` batch operation to
+label alternate plans on identical later learner-visited physical states. Plan
+preview returns a temporary plan tensor plus the production teacher action
+without changing the active plan or advancing the simulator.
+
 ## PPO foundation
 
 Run a short end-to-end infrastructure smoke against the first frozen curriculum

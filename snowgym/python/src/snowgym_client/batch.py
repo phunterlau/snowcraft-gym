@@ -313,6 +313,42 @@ class SnowGymBatchEnv:
             actions.append(body["action"])
         return actions
 
+    def preview_plans(
+        self, plan_ids: list[str], plans: list[dict[str, Any]]
+    ) -> tuple[dict[str, np.ndarray], list[dict[str, Any]], list[dict[str, Any]]]:
+        """Ground plans and return their tensors/actions without changing active plans."""
+        if len(plan_ids) != self.batch_size or len(plans) != self.batch_size:
+            raise ValueError("plan_ids/plans must match batch_size")
+        items = []
+        for index, world_id in enumerate(self.world_ids):
+            state_hash = self.state_hashes[index]
+            if state_hash is None:
+                raise RuntimeError("reset() must initialize every batch slot before preview_plans()")
+            items.append({
+                "worldId": world_id,
+                "body": {
+                    "planId": plan_ids[index],
+                    "plan": plans[index],
+                    "expectedStateHash": state_hash,
+                },
+            })
+        bodies = self._plan_bodies(self.client.request("previewPlan", items))
+        tensors = {
+            "plan_groups": np.asarray(
+                [body["planGroups"] for body in bodies], dtype=np.float32
+            ).reshape(self.batch_size, PLAN_GROUP_SLOTS, PLAN_FEATURES_PER_GROUP),
+            "plan_group_mask": np.asarray(
+                [body["planGroupMask"] for body in bodies], dtype=np.int8
+            ),
+        }
+        actions = []
+        for body in bodies:
+            action = body.get("action")
+            if not isinstance(action, dict):
+                raise RuntimeError("batch plan preview payload is missing action")
+            actions.append(action)
+        return tensors, actions, bodies
+
     def close(self) -> None:
         if self._owns_client:
             self.client.close()

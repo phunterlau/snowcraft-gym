@@ -94,6 +94,7 @@ def test_batch_plan_tensors_are_host_owned_and_follow_world_ticks() -> None:
         assert "activatePlan" in client.capabilities["operations"]
         assert "planObservation" in client.capabilities["operations"]
         assert "planTeacherAction" in client.capabilities["operations"]
+        assert "previewPlan" in client.capabilities["operations"]
         environment = SnowGymBatchEnv(2, client=client)
         environment.reset([31, 32], [scenario(), scenario()])
 
@@ -111,6 +112,17 @@ def test_batch_plan_tensors_are_host_owned_and_follow_world_ticks() -> None:
         assert len(teachers) == 2
         assert all(len(action["actions"]) == 1 for action in teachers)
         assert environment.plan_observations()[1][0]["tick"] == 0
+        preview_tensors, preview_actions, preview_metadata = environment.preview_plans(
+            ["preview-left", "preview-right"], [one_group_plan(), one_group_plan()]
+        )
+        assert preview_tensors["plan_groups"].shape == (2, 3, 38)
+        assert [body["planId"] for body in preview_metadata] == [
+            "preview-left", "preview-right"
+        ]
+        assert all(len(action["actions"]) == 1 for action in preview_actions)
+        assert [body["planId"] for body in environment.plan_observations()[1]] == [
+            "plan-left", "plan-right"
+        ]
 
         environment.step(noop_actions(2))
         advanced, metadata = environment.plan_observations()
