@@ -170,6 +170,21 @@ and series digest
 Updates 1/5/10 each won 5/8 with mean 119.875 decisions, versus 0/8
 masked-random and 8/8 teacher, with zero rejected actions. This advances
 `3v3-scripted`; the three losing seeds remain visible in every evaluation.
+
+Record the final checkpoint's seed-6108 3–0 blue win:
+
+```bash
+uv run snowgym-demo-ppo \
+  --checkpoint runs/ppo_3v3_scripted_bc_v0/checkpoints/update-000010/checkpoint \
+  --gate 3v3-scripted \
+  --seed 6108 \
+  --record ../../public/replays/ppo_3v3_scripted_bc_v0-seed-6108.json \
+  --json
+```
+
+```text
+http://127.0.0.1:5173/replay.html?recording=/replays/ppo_3v3_scripted_bc_v0-seed-6108.json
+```
 The `snowgym.checkpoint.v0` metadata binds the model and optimizer state digest
 to the source commit, audited dataset digest, SnowGym versions, architecture,
 optimizer, loss weights, seed, step, and evaluation suite. Loading uses
