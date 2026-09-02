@@ -208,6 +208,17 @@ def test_frozen_plan_dagger_spec_balances_missions_and_disjoins_seeds() -> None:
         "counterfactualLossWeight", "counterfactualChangedActionWeight",
     ):
         assert directive_config[field] == role_config[field]
+    balanced_config = load_training_config(
+        ROOT / "training" / "src" / "snowgym_training" / "configs"
+        / "plan_unit_directive_balanced_v1_dev.json"
+    )
+    assert balanced_config["sampling"] == "plan-mission-uniform"
+    assert balanced_config["roleBalancedLoss"] is True
+    for field in (
+        "seed", "steps", "batchSize", "learningRate", "architecture", "loss",
+        "counterfactualLossWeight", "counterfactualChangedActionWeight",
+    ):
+        assert balanced_config[field] == directive_config[field]
 
 
 def test_frozen_plan_action_adapter_gate_is_audited_and_retains_failure(tmp_path: Path) -> None:

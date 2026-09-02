@@ -1322,6 +1322,13 @@ three-role transfer. Tests cover deterministic mission balance, equal aggregate
 weight across observed roles, malformed loss weights, and a real balanced
 training step.
 
+M7 balanced-unit-directive-v1 development freeze (2026-09-02):
+`plan_unit_directive_balanced_v1_dev.json` holds the v0 directive architecture,
+initializer, seed, 2,000-step budget, batch size, optimizer, and loss weights
+fixed. Its only changes are `sampling: plan-mission-uniform` and
+`roleBalancedLoss: true`. The run may inspect the retained train/validation
+corpora and existing closed-loop suites only; evaluation seeds remain sealed.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO
