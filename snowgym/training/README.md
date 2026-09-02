@@ -550,3 +550,22 @@ Every retained checkpoint won 8/8 held-out episodes in 145 decisions, versus
 0/8 masked-random and 8/8 teacher, with zero rejected actions. This advances
 the final M6.2 curriculum gate as BC-initialized PPO retention; it does not
 claim cold-start or material reward-driven improvement.
+
+Record the final checkpoint as a normal SnowCraft replay:
+
+```bash
+uv run snowgym-demo-ppo \
+  --checkpoint runs/ppo_10v10_terrain_relational_bc_v0/checkpoints/update-000010/checkpoint \
+  --gate 10v10-random-terrain \
+  --seed 9101 \
+  --max-decisions 600 \
+  --record ../../public/replays/ppo_10v10_terrain_relational_bc_v0-seed-9101.json \
+  --json
+```
+
+The committed replay is a 145-decision 10–0 blue win with zero rejected
+actions. View it through the existing UI engine at:
+
+```text
+http://127.0.0.1:5173/replay.html?recording=/replays/ppo_10v10_terrain_relational_bc_v0-seed-9101.json
+```

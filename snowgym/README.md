@@ -389,6 +389,7 @@ http://127.0.0.1:5173/replay.html?recording=/replays/<file>
 | `ppo_1v1_easy_bc_v0-seed-4103.json`            | Qualified PPO blue vs easy scripted red, 1v1   | blue 1–0 |
 | `ppo_3v3_random_bc_v0-seed-5101.json`           | Qualified PPO blue vs seeded-random red, 3v3   | blue 3–0 |
 | `ppo_3v3_scripted_bc_v0-seed-6108.json`         | Qualified PPO blue vs easy scripted red, 3v3   | blue 3–0 |
+| `ppo_10v10_terrain_relational_bc_v0-seed-9101.json` | Qualified PPO blue on Winter Front, 10v10   | blue 10–0 |
 | `blue-seed-42.json`                            | Open 3v3, normal scripted red (acceptance run) | blue 3–0 |
 | `blue-5v2-hard.json`                           | Open 5v2, hard scripted red                    | blue win |
 | `example-open-3v3.json`                        | Open 3v3, scripted red                         | blue 3–0 |
@@ -407,6 +408,27 @@ http://127.0.0.1:5173/replay.html?recording=/replays/<file>
 
 Map recordings render the terrain (trees, rocks, forts) and show units using
 cover. Record your own with `--record PATH` on `snowgym-demo` (see below).
+The learned 10v10 replay comes from the final Gate-7 PPO checkpoint. Blue is
+the controlled team; its neural action selector uses the code/policy relational
+target priors documented in the training guide. Recreate it headlessly with:
+
+```bash
+cd snowgym/training
+.venv/bin/snowgym-demo-ppo \
+  --checkpoint runs/ppo_10v10_terrain_relational_bc_v0/checkpoints/update-000010/checkpoint \
+  --gate 10v10-random-terrain \
+  --seed 9101 \
+  --max-decisions 600 \
+  --record ../../public/replays/ppo_10v10_terrain_relational_bc_v0-seed-9101.json \
+  --json
+```
+
+Open the result at:
+
+```text
+http://127.0.0.1:5173/replay.html?recording=/replays/ppo_10v10_terrain_relational_bc_v0-seed-9101.json
+```
+
 The two 6v10 recordings are seeded possibility examples for the built-in blue
 policy, not balance claims: the easy case preserves all six blue units, while
 the normal case is a narrow one-survivor win. Recreate either with the
