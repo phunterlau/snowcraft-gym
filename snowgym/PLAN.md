@@ -786,6 +786,17 @@ the full collect/convert/train/evaluate chain and prove the swap cannot affect
 the no-plan model. Frozen held-out data, thresholds, and closed-loop objective
 metrics remain next.
 
+M7 development experiment freeze (2026-09-02):
+`configs/plan_bc_ablation_dev_v0.json` fixes identical 3,000-step CPU BC
+budgets for the first no-plan/conditioned comparison before its outputs are
+observed. Development data will use Winter Front map-backed 6v6 rollouts with
+environment seed 4200, plan seeds 120-143, and an 80-decision horizon;
+evaluation uses disjoint environment seed 5200 and plan seeds 600-611 under the
+same roster/map/horizon. This run is diagnostic and has no retroactive pass
+threshold. Its outcome will determine whether data balance, model capacity, or
+metrics need a separately documented development revision before freezing a
+disjoint qualification configuration.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO
