@@ -476,6 +476,17 @@ host-resolved `plan_unit_roles` and `counterfactual_plan_unit_roles` as
 features enter zero-initialized action and target residuals, so loading the
 qualified target-only checkpoint still preserves its initial outputs exactly.
 
+The frozen role-aware-v0 development artifacts are retained under
+`artifacts/plan-role-dagger-v2-{train,validation}` and
+`runs/plan_role_adapter_v0_dev`. They validate the complete v2 data and runtime
+path, including role-conditioned closed-loop inference, but do not pass M7:
+direct and flank each retain four blue without completing, and the support case
+loses 0–6. The validation metrics also show over-changing (`0.227865` predicted
+versus `0.130642` teacher). Do not generate the sealed v2 evaluation split or
+promote this checkpoint. A categorical role alone is insufficient because it
+does not carry the unit's resolved group objective, approach, engagement, or
+support directive.
+
 ## PPO foundation
 
 Run a short end-to-end infrastructure smoke against the first frozen curriculum

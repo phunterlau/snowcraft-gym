@@ -26,7 +26,9 @@ from snowgym_training.plan_counterfactual_qualification import (
     load_spec as load_cf_gate,
     qualify as qualify_cf_gate,
 )
+from snowgym_training.plan_closed_loop import audit_closed_loop
 from snowgym_training.plan_weight_sweep import summarize_sweep
+from snowgym_training.policy import TorchPolicy
 from snowgym_training.trainer import train_behavior_clone
 from snowgym_training.trainer import load_training_config
 from snowgym_training.trajectory import audit_dataset
@@ -101,6 +103,19 @@ ACTION_ADAPTER_BEHAVIORS = (
 )
 ACTION_ADAPTER_BASELINE = (
     ROOT / "training" / "evaluations" / "plan_dagger_baseline_offline_v0.json"
+)
+ROLE_ADAPTER_CHECKPOINT = ROOT / "training" / "runs" / "plan_role_adapter_v0_dev"
+ROLE_ADAPTER_VALIDATION_DATA = (
+    ROOT / "training" / "artifacts" / "plan-role-dagger-v2-validation"
+)
+ROLE_ADAPTER_VALIDATION = (
+    ROOT / "training" / "evaluations" / "plan_role_adapter_v0_dev_validation.json"
+)
+ROLE_ADAPTER_CLOSED_LOOP = (
+    ROOT / "training" / "evaluations" / "plan_role_adapter_v0_dev_closed_loop.json"
+)
+ROLE_ADAPTER_BEHAVIORS = (
+    ROOT / "training" / "evaluations" / "plan_role_adapter_v0_dev_behaviors.json"
 )
 
 
@@ -252,6 +267,45 @@ def test_changed_action_weight_sweep_applies_predeclared_selection(tmp_path: Pat
     assert [entry["checksPassed"] for entry in result["entries"]] == [7, 7, 7]
     assert result["entries"][0]["checks"]["maximumPredictedActionChangeRate"] is True
     assert result["entries"][2]["checks"]["maximumPredictedActionChangeRate"] is False
+
+
+def test_role_adapter_v0_retains_failed_development_outcome() -> None:
+    paired = audit_plan_counterfactual_evaluation(
+        ROLE_ADAPTER_VALIDATION,
+        ROLE_ADAPTER_CHECKPOINT,
+        ROLE_ADAPTER_VALIDATION_DATA,
+    )
+    assert paired["metrics"]["primaryActionAccuracy"] > 0.86
+    assert paired["metrics"]["predictedActionChangeRate"] > paired["metrics"][
+        "teacherActionChangeRate"
+    ]
+    closed_loop = audit_closed_loop(
+        ROLE_ADAPTER_CLOSED_LOOP,
+        ROOT / "training" / "runs" / "plan_bc_ablation_qual_v1",
+        ROOT / "training" / "src" / "snowgym_training" / "configs"
+        / "plan_closed_loop_v0.json",
+        ROLE_ADAPTER_CHECKPOINT,
+    )
+    behaviors = audit_closed_loop(
+        ROLE_ADAPTER_BEHAVIORS,
+        ROOT / "training" / "runs" / "plan_bc_ablation_qual_v1",
+        PLAN_SUITE,
+        ROLE_ADAPTER_CHECKPOINT,
+    )
+    approaches = {
+        item["caseId"]: item
+        for item in closed_loop["results"]
+        if item["policy"] == "planConditioned"
+    }
+    assert approaches["direct-focus"]["blueAlive"] == 4
+    assert approaches["left-flank-distributed"]["blueAlive"] == 4
+    missions = {
+        item["caseId"]: item
+        for item in behaviors["results"]
+        if item["policy"] == "planConditioned"
+    }
+    assert all(item["winner"] == "red" for item in missions.values())
+    assert missions["main-with-reserve-support"]["redAlive"] == 6
 
 
 def test_plan_dagger_labels_learner_visited_states_headlessly(tmp_path: Path) -> None:
@@ -430,6 +484,15 @@ def test_plan_dagger_v2_retains_same_state_counterfactual_roles(tmp_path: Path) 
     )
     assert trained["trainingMetrics"]["final"]["counterfactual"] >= 0
     assert trained["trainingMetrics"]["final"]["counterfactualChangedAction"] >= 0
+    policy_observation = {
+        name: tensor[0].numpy()
+        for name, tensor in observation.items()
+        if not name.startswith("counterfactual_")
+    }
+    action_from_policy = TorchPolicy(tmp_path / "counterfactual-trained").act(
+        policy_observation
+    )
+    assert action_from_policy["action_type"].shape == (10,)
     evaluation_path = tmp_path / "counterfactual-evaluation.json"
     evaluation = evaluate_plan_counterfactual(
         checkpoint=tmp_path / "counterfactual-trained",

@@ -53,6 +53,18 @@ class TorchPolicy:
                     ],
                 }
             )
+        if self.model.plan_role_conditioned:
+            if "plan_unit_roles" not in observation:
+                raise ValueError("policy observation missing plan field: plan_unit_roles")
+            plan_unit_roles = np.asarray(observation["plan_unit_roles"])
+            expected = (len(np.asarray(observation["ally_mask"])), PLAN_GROUP_SLOTS)
+            if plan_unit_roles.shape != expected:
+                raise ValueError(
+                    f"policy plan_unit_roles must have shape {expected}"
+                )
+            tensors["plan_unit_roles"] = torch.from_numpy(
+                np.array(plan_unit_roles, copy=True)
+            )[None, ...]
         with torch.no_grad():
             prediction = self.model(tensors)
         action_type = prediction["action_logits"].argmax(dim=-1)[0].cpu().numpy()

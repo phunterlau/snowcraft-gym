@@ -1262,6 +1262,21 @@ changed-action weight `1.0`, and enables only the new unit-role residuals.
 Development may inspect training/validation plus the existing closed-loop
 suites; the v2 evaluation split remains unopened until a new gate is frozen.
 
+M7 role-aware-v0 development outcome (2026-09-02): after correcting role
+encoding to cover living ally slots only, the audited train/validation corpora
+contain 2,358/1,152 transitions with digests `173ad8a4...`/`0ba2ad5e...`.
+The frozen 2,000-step run produced checkpoint `490f88c0...`. Validation primary
+action accuracy improved to `0.863426`, but predicted plan-change rate
+`0.227865` still exceeded the teacher's `0.130642`; changed-teacher recall and
+strict pair accuracy were only `0.559247`/`0.462901`. Closed loop preserved
+four blue in both direct/flank cases but completed neither, while hold,
+withdraw, and support all lost; support regressed to 0 blue versus 6 red.
+The checkpoint is retained as a failed development result and the sealed
+15401–15405 evaluation split remains unopened. The next M7 revision must
+condition each unit on its own resolved group directive, not merely its
+main/maneuver/reserve category, while retaining the qualified initializer and
+same-state counterfactual evaluation.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO
