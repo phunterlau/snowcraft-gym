@@ -1,0 +1,25 @@
+{
+  "format": "snowgym.plan-closed-loop-suite.v0",
+  "name": "plan-target-only-6v6-behaviors-v1",
+  "maxTeamUnits": 10,
+  "cases": [
+    {
+      "id": "hold-current", "seed": 10301, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 3600 },
+      "planId": "behavior-hold", "maxDecisions": 600,
+      "plan": { "schemaVersion": "snowgym.command-plan.v0", "intentSummary": "Hold the current line conservatively.", "groups": [{ "role": "main", "allocationWeight": 1, "selection": "balanced", "order": { "mission": "hold", "objective": { "kind": "current_position" }, "approach": "direct", "engagement": { "posture": "conservative", "fire": "opportunistic", "preferredRange": "long", "cohesion": "tight" } } }] }
+    },
+    {
+      "id": "withdraw-backfield", "seed": 10301, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 3600 },
+      "planId": "behavior-withdraw", "maxDecisions": 600,
+      "plan": { "schemaVersion": "snowgym.command-plan.v0", "intentSummary": "Withdraw together into the own backfield.", "groups": [{ "role": "main", "allocationWeight": 1, "selection": "balanced", "order": { "mission": "withdraw", "objective": { "kind": "region", "region": "own_backfield" }, "approach": "direct", "engagement": { "posture": "conservative", "fire": "opportunistic", "preferredRange": "long", "cohesion": "tight" } } }] }
+    },
+    {
+      "id": "main-with-reserve-support", "seed": 10301, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 3600 },
+      "planId": "behavior-support", "maxDecisions": 600,
+      "plan": { "schemaVersion": "snowgym.command-plan.v0", "intentSummary": "Engage with the main body while a compact reserve supports it.", "groups": [
+        { "role": "main", "allocationWeight": 4, "selection": "balanced", "order": { "mission": "engage", "objective": { "kind": "enemy_cluster", "select": "nearest" }, "approach": "direct", "engagement": { "posture": "balanced", "fire": "focus", "preferredRange": "medium", "cohesion": "normal" } } },
+        { "role": "reserve", "allocationWeight": 2, "selection": "rearline", "order": { "mission": "support", "objective": { "kind": "ally_group", "role": "main" }, "approach": "direct", "engagement": { "posture": "conservative", "fire": "opportunistic", "preferredRange": "long", "cohesion": "tight" } } }
+      ] }
+    }
+  ]
+}

@@ -948,6 +948,13 @@ The next revision needs longer terminal evaluation plus explicit hold/support/
 withdraw and multi-group objective metrics; this v0 result must not be tuned or
 reinterpreted as a win-rate qualification.
 
+M7 behavior-suite-v1 freeze (2026-09-02): before running new episodes,
+`configs/plan_closed_loop_behaviors_v1.json` fixes same-seed 6v6 hold-current,
+withdraw-backfield, and main-plus-reserve-support cases at a 3,600-tick / 600-
+decision horizon. This suite is additive to the immutable v0 direct/flank run;
+it tests one-group and multi-group behaviors without changing the qualified
+checkpoints. Terminal outcomes and per-role behavior metrics remain unseen.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO

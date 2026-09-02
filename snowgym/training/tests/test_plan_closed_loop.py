@@ -15,6 +15,10 @@ from snowgym_training.plan_closed_loop import (
 ROOT = Path(__file__).resolve().parents[2]
 ABLATION = ROOT / "training" / "runs" / "plan_bc_ablation_qual_v1"
 SUITE = ROOT / "training" / "src" / "snowgym_training" / "configs" / "plan_closed_loop_v0.json"
+BEHAVIOR_SUITE = (
+    ROOT / "training" / "src" / "snowgym_training" / "configs"
+    / "plan_closed_loop_behaviors_v1.json"
+)
 
 
 def test_frozen_closed_loop_suite_is_valid() -> None:
@@ -24,6 +28,12 @@ def test_frozen_closed_loop_suite_is_valid() -> None:
         "direct-focus", "left-flank-distributed"
     ]
     assert suite["cases"][0]["seed"] == suite["cases"][1]["seed"]
+
+    behaviors = load_suite(BEHAVIOR_SUITE)
+    assert [case["id"] for case in behaviors["cases"]] == [
+        "hold-current", "withdraw-backfield", "main-with-reserve-support"
+    ]
+    assert all(case["maxDecisions"] == 600 for case in behaviors["cases"])
 
 
 def test_closed_loop_suite_rejects_duplicate_cases(tmp_path: Path) -> None:
