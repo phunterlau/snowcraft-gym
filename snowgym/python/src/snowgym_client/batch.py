@@ -22,6 +22,8 @@ from .encoding import (
 BATCH_REQUEST_FORMAT = "snowgym.batch-request.v0"
 BATCH_RESPONSE_FORMAT = "snowgym.batch-response.v0"
 BATCH_PROTOCOL_VERSION = "snowgym.batch.v0"
+PLAN_GROUP_SLOTS = 3
+PLAN_FEATURES_PER_GROUP = 38
 
 
 class BatchOperationError(RuntimeError):
@@ -149,6 +151,7 @@ class SnowGymBatchEnv:
         self.state_hashes: list[str | None] = [None] * batch_size
         self._observations: list[GymObservation | None] = [None] * batch_size
         self._step_index = 0
+        self._plan_activation_index = 0
 
     def reset(
         self, seeds: list[int], scenarios: list[dict[str, Any]]
@@ -247,6 +250,49 @@ class SnowGymBatchEnv:
             [payload["info"] for payload in payloads],
         )
 
+    def activate_plans(
+        self, plan_ids: list[str], plans: list[dict[str, Any]]
+    ) -> list[dict[str, Any]]:
+        """Atomically ground one symbolic plan in every initialized world."""
+        if len(plan_ids) != self.batch_size or len(plans) != self.batch_size:
+            raise ValueError("plan_ids/plans must match batch_size")
+        self._plan_activation_index += 1
+        items = []
+        for index, world_id in enumerate(self.world_ids):
+            state_hash = self.state_hashes[index]
+            if state_hash is None:
+                raise RuntimeError("reset() must initialize every batch slot before activate_plans()")
+            items.append(
+                {
+                    "worldId": world_id,
+                    "body": {
+                        "planId": plan_ids[index],
+                        "plan": plans[index],
+                        "expectedStateHash": state_hash,
+                        "idempotencyKey": (
+                            f"batch-plan-{self._plan_activation_index}-{world_id}"
+                        ),
+                    },
+                }
+            )
+        return self._plan_bodies(self.client.request("activatePlan", items))
+
+    def plan_observations(
+        self,
+    ) -> tuple[dict[str, np.ndarray], list[dict[str, Any]]]:
+        """Read current host-resolved plan tensors without advancing any world."""
+        items = [{"worldId": world_id} for world_id in self.world_ids]
+        bodies = self._plan_bodies(self.client.request("planObservation", items))
+        tensors = {
+            "plan_groups": np.asarray(
+                [body["planGroups"] for body in bodies], dtype=np.float32
+            ).reshape(self.batch_size, PLAN_GROUP_SLOTS, PLAN_FEATURES_PER_GROUP),
+            "plan_group_mask": np.asarray(
+                [body["planGroupMask"] for body in bodies], dtype=np.int8
+            ),
+        }
+        return tensors, bodies
+
     def close(self) -> None:
         if self._owns_client:
             self.client.close()
@@ -293,6 +339,43 @@ class SnowGymBatchEnv:
         if failures:
             raise BatchOperationError("one or more batch worlds failed", results)
         return payloads
+
+    def _plan_bodies(self, results: list[dict[str, Any]]) -> list[dict[str, Any]]:
+        if len(results) != self.batch_size:
+            raise RuntimeError("batch plan result count mismatch")
+        failures = [result for result in results if result.get("status") != 200]
+        if failures:
+            raise BatchOperationError("one or more batch plan operations failed", results)
+        bodies: list[dict[str, Any]] = []
+        for index, result in enumerate(results):
+            body = result.get("body")
+            if not isinstance(body, dict):
+                raise RuntimeError("batch plan payload is missing its body")
+            if body.get("stateHash") != self.state_hashes[index]:
+                raise RuntimeError("batch plan payload stateHash does not match world state")
+            groups = body.get("planGroups")
+            mask = body.get("planGroupMask")
+            if (
+                not isinstance(groups, list)
+                or len(groups) != PLAN_GROUP_SLOTS * PLAN_FEATURES_PER_GROUP
+                or any(
+                    not isinstance(value, (int, float))
+                    or isinstance(value, bool)
+                    or not np.isfinite(value)
+                    or value < -1
+                    or value > 1
+                    for value in groups
+                )
+            ):
+                raise RuntimeError("batch planGroups tensor is invalid")
+            if (
+                not isinstance(mask, list)
+                or len(mask) != PLAN_GROUP_SLOTS
+                or any(value not in (0, 1) or isinstance(value, bool) for value in mask)
+            ):
+                raise RuntimeError("batch planGroupMask tensor is invalid")
+            bodies.append(body)
+        return bodies
 
     def _stack_observations(
         self, indices: list[int] | None = None

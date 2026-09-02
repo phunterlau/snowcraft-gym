@@ -12,6 +12,16 @@ import {
 } from '../scenarios/Scenario';
 import { isMapId, MAP_IDS } from '../scenarios/maps';
 import { snowGymCapabilities } from '../protocol/Capabilities';
+import type { CommandPlan } from '../orchestration/command/CommandPlan';
+import {
+  CommandPlanValidationError,
+  parseCommandPlan,
+} from '../orchestration/command/PlanValidator';
+import { PlanGrounder } from '../orchestration/grounding/PlanGrounder';
+import { GroupAllocationError } from '../orchestration/grounding/GroupAllocator';
+import { TargetResolutionError, TargetResolver } from '../orchestration/grounding/TargetResolver';
+import { PlanStore, type PlanSnapshot } from '../orchestration/runtime/PlanStore';
+import { encodePlanTensor } from '../training/plan/PlanTensorEncoder';
 
 export interface ServiceResponse {
   status: number;
@@ -23,6 +33,7 @@ export class SnowGymService {
   private readonly bluePolicy = new SimpleBlueAgent();
   private readonly mutationCache = new Map<string, CachedMutation>();
   private environment: SnowEnvironment;
+  private planStore: PlanStore | null = null;
 
   constructor(environment = new SnowEnvironment()) {
     this.environment = environment;
@@ -45,6 +56,12 @@ export class SnowGymService {
           body: { status: this.environment.status(), action: this.defaultBlueAction() },
         };
       }
+      if (method === 'GET' && path === '/plan-observation') {
+        if (this.planStore === null) {
+          return { status: 409, body: { error: 'plan_not_active' } };
+        }
+        return { status: 200, body: this.planObservation() };
+      }
       if (method === 'POST' && path === '/reset') {
         const request = parseReset(body);
         return this.mutate('reset', request, () => this.reset(request));
@@ -52,6 +69,12 @@ export class SnowGymService {
       if (method === 'POST' && path === '/step') {
         const request = parseStep(body);
         return this.mutate('step', request, () => this.step(request.action));
+      }
+      if (method === 'POST' && path === '/activate-plan') {
+        const request = parseActivatePlan(body);
+        return this.mutate('activate-plan', request, () =>
+          this.activatePlan(request.planId, request.plan),
+        );
       }
       if (method === 'POST' && path === '/step-joint') {
         const request = parseJointStep(body);
@@ -77,6 +100,9 @@ export class SnowGymService {
           status: 409,
           body: { error: error.code, message: error.message, ...error.detail },
         };
+      }
+      if (error instanceof GroupAllocationError || error instanceof TargetResolutionError) {
+        return { status: 409, body: { error: 'plan_not_applicable', message: error.message } };
       }
       if (error instanceof RequestValidationError || error instanceof RangeError) {
         return { status: 400, body: { error: 'invalid_request', message: error.message } };
@@ -109,6 +135,46 @@ export class SnowGymService {
     return { ...result, info: { ...result.info, actions: { blue, red } } };
   }
 
+  private activatePlan(planId: string, plan: CommandPlan): object {
+    const observation = this.environment.observe(Team.Player);
+    const status = this.environment.status();
+    const grounded = new PlanGrounder().ground(
+      {
+        planId,
+        source: {
+          requestId: `api-${planId}`,
+          sourceTick: observation.tick,
+          sourceStateHash: status.stateHash,
+        },
+        decision: plan,
+      },
+      observation,
+    );
+    if (this.planStore === null) this.planStore = new PlanStore(grounded, observation.tick);
+    else this.planStore.activate(grounded, observation.tick);
+    return this.planObservation();
+  }
+
+  private planObservation(): object {
+    if (this.planStore === null) throw new RequestValidationError('plan is not active');
+    const observation = this.environment.observe(Team.Player);
+    const snapshot = refreshPlanObjectives(this.planStore.current(), observation);
+    const tensor = encodePlanTensor(snapshot, observation, observation.tick);
+    return {
+      planId: snapshot.plan.envelope.planId,
+      version: snapshot.version,
+      activatedAtTick: snapshot.activatedAtTick,
+      tick: observation.tick,
+      stateHash: this.environment.status().stateHash,
+      planGroups: [...tensor.groups],
+      planGroupMask: [...tensor.groupMask],
+      assignments: snapshot.plan.groups.map(({ role, assignment }) => ({
+        role,
+        unitIds: [...assignment.unitIds],
+      })),
+    };
+  }
+
   private reset(request: ResetRequest): object {
     if (request.map !== undefined) {
       this.environment = new SnowEnvironment({
@@ -137,6 +203,7 @@ export class SnowGymService {
       this.environment.reset(request.seed);
     }
     this.mutationCache.clear();
+    this.planStore = null;
     return this.snapshot();
   }
 
@@ -198,6 +265,31 @@ export class SnowGymService {
   }
 }
 
+function refreshPlanObjectives(
+  snapshot: PlanSnapshot,
+  observation: ReturnType<SnowEnvironment['observe']>,
+): PlanSnapshot {
+  const resolver = new TargetResolver();
+  const assignments = snapshot.plan.groups.map(({ assignment }) => assignment);
+  return {
+    ...snapshot,
+    plan: {
+      ...snapshot.plan,
+      groups: snapshot.plan.groups.map((group) => {
+        try {
+          return {
+            ...group,
+            objective: resolver.resolve(group.command, observation, assignments),
+          };
+        } catch (error) {
+          if (error instanceof TargetResolutionError) return group;
+          throw error;
+        }
+      }),
+    },
+  };
+}
+
 class RequestValidationError extends Error {}
 
 class StateConflictError extends Error {
@@ -222,6 +314,11 @@ interface GuardedRequest {
 
 interface StepRequest extends GuardedRequest {
   action: TeamAction;
+}
+
+interface ActivatePlanRequest extends GuardedRequest {
+  planId: string;
+  plan: CommandPlan;
 }
 
 interface JointStepRequest extends GuardedRequest {
@@ -331,6 +428,24 @@ function parseStep(body: unknown): StepRequest {
     );
   }
   return { ...parseGuards(record), action: parseTeamAction(record.action, 'action') };
+}
+
+function parseActivatePlan(body: unknown): ActivatePlanRequest {
+  const record = asRecord(body);
+  assertAllowedKeys(record, ['planId', 'plan', 'expectedStateHash', 'idempotencyKey'], 'request');
+  if (typeof record.planId !== 'string' || !/^[A-Za-z0-9._:-]{1,128}$/.test(record.planId)) {
+    throw new RequestValidationError('planId is invalid');
+  }
+  let plan: CommandPlan;
+  try {
+    plan = parseCommandPlan(record.plan);
+  } catch (error) {
+    if (error instanceof CommandPlanValidationError) {
+      throw new RequestValidationError(`plan is invalid: ${error.message}`);
+    }
+    throw error;
+  }
+  return { ...parseGuards(record), planId: record.planId, plan };
 }
 
 function parseJointStep(body: unknown): JointStepRequest {

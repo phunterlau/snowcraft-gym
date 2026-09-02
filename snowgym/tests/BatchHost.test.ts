@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { BatchHost, BATCH_REQUEST_FORMAT } from '../batch/BatchHost';
+import { commandedTenVsTenPlan } from '../orchestration/examples/CommandedReplayExample';
 import { SnowGymService } from '../server/SnowGymService';
 
 function request(operation: string, items: unknown[], requestId = 'test-1'): unknown {
@@ -20,6 +21,11 @@ function resetBody(seed: number): object {
       redController: 'random',
     },
   };
+}
+
+function oneGroupPlan(): object {
+  const plan = commandedTenVsTenPlan();
+  return { ...plan, groups: [plan.groups[0]] };
 }
 
 describe('BatchHost', () => {
@@ -71,6 +77,49 @@ describe('BatchHost', () => {
     );
     const directStep = direct.handle('POST', '/step-scripted', body);
     expect(batchStep.results[0]).toEqual({ worldId: 'world-0', ...directStep });
+  });
+
+  it('activates and reads plans independently across persistent worlds', () => {
+    const host = new BatchHost();
+    const reset = host.handle(
+      request('reset', [
+        { worldId: 'planned', body: resetBody(51) },
+        { worldId: 'unplanned', body: resetBody(52) },
+      ]),
+    );
+    const planned = reset.results[0]!.body as { status: { stateHash: string } };
+    const activated = host.handle(
+      request('activatePlan', [
+        {
+          worldId: 'planned',
+          body: {
+            planId: 'batch-plan',
+            plan: oneGroupPlan(),
+            expectedStateHash: planned.status.stateHash,
+            idempotencyKey: 'batch-plan-activation',
+          },
+        },
+      ]),
+    );
+    expect(activated.results[0]).toMatchObject({
+      worldId: 'planned',
+      status: 200,
+      body: { planId: 'batch-plan', planGroupMask: [1, 0, 0] },
+    });
+
+    const observations = host.handle(
+      request('planObservation', [{ worldId: 'planned' }, { worldId: 'unplanned' }]),
+    );
+    expect(observations.results[0]).toMatchObject({
+      worldId: 'planned',
+      status: 200,
+      body: { planId: 'batch-plan', tick: 0 },
+    });
+    expect(observations.results[1]).toEqual({
+      worldId: 'unplanned',
+      status: 409,
+      body: { error: 'plan_not_active' },
+    });
   });
 
   it('keeps world state independent and reports failures explicitly', () => {

@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { EnvironmentStatus, StepResult } from '../core/SnowEnvironment';
+import { commandedTenVsTenPlan } from '../orchestration/examples/CommandedReplayExample';
 import { SnowGymService } from '../server/SnowGymService';
 
 describe('SnowGymService', () => {
@@ -31,6 +32,105 @@ describe('SnowGymService', () => {
     expect(body.status.stateHash).toBe(before.status.stateHash);
     expect(body.action.actions).toHaveLength(3);
     expect(after.status).toEqual(before.status);
+  });
+
+  it('serves a guarded, current plan tensor without advancing simulation state', () => {
+    const service = new SnowGymService();
+    expect(service.handle('GET', '/plan-observation')).toEqual({
+      status: 409,
+      body: { error: 'plan_not_active' },
+    });
+    const reset = service.handle('POST', '/reset', {
+      seed: 42,
+      scenario: { map: 'arena6.json' },
+    }).body as { status: EnvironmentStatus };
+    const activated = service.handle('POST', '/activate-plan', {
+      planId: 'test-plan',
+      plan: commandedTenVsTenPlan(),
+      expectedStateHash: reset.status.stateHash,
+      idempotencyKey: 'activate-test-plan',
+    });
+    const body = activated.body as {
+      planId: string;
+      version: number;
+      tick: number;
+      stateHash: string;
+      planGroups: number[];
+      planGroupMask: number[];
+      assignments: Array<{ role: string; unitIds: number[] }>;
+    };
+
+    expect(activated.status).toBe(200);
+    expect(body).toMatchObject({
+      planId: 'test-plan',
+      version: 1,
+      tick: 0,
+      stateHash: reset.status.stateHash,
+      planGroupMask: [1, 1, 1],
+    });
+    expect(body.planGroups).toHaveLength(114);
+    expect(
+      body.planGroups.every((value) => Number.isFinite(value) && value >= -1 && value <= 1),
+    ).toBe(true);
+    expect(body.assignments.flatMap(({ unitIds }) => unitIds).sort((a, b) => a - b)).toEqual(
+      Array.from({ length: 10 }, (_, index) => index + 1),
+    );
+    expect(service.handle('GET', '/status')).toMatchObject({
+      status: 200,
+      body: { status: { tick: 0, stateHash: reset.status.stateHash } },
+    });
+
+    service.handle('POST', '/step-scripted', {
+      expectedStateHash: reset.status.stateHash,
+      idempotencyKey: 'advance-plan-test',
+    });
+    const current = service.handle('GET', '/plan-observation').body as typeof body;
+    expect(current.tick).toBe(6);
+    expect(current.stateHash).not.toBe(reset.status.stateHash);
+    for (const value of [current.planGroups[37], current.planGroups[75], current.planGroups[113]]) {
+      expect(value).toBeCloseTo(1 / 300);
+    }
+
+    service.handle('POST', '/reset', { seed: 42 });
+    expect(service.handle('GET', '/plan-observation').status).toBe(409);
+
+    const undersized = new SnowGymService();
+    undersized.handle('POST', '/reset', {
+      scenario: { blueUnits: 1, redUnits: 1 },
+    });
+    expect(
+      undersized.handle('POST', '/activate-plan', {
+        planId: 'too-many-groups',
+        plan: commandedTenVsTenPlan(),
+      }),
+    ).toMatchObject({ status: 409, body: { error: 'plan_not_applicable' } });
+  });
+
+  it('validates plan activation and its state guard before changing the active plan', () => {
+    const service = new SnowGymService();
+    expect(
+      service.handle('POST', '/activate-plan', {
+        planId: 'bad plan id',
+        plan: commandedTenVsTenPlan(),
+      }),
+    ).toMatchObject({ status: 400, body: { error: 'invalid_request' } });
+    expect(
+      service.handle('POST', '/activate-plan', {
+        planId: 'invalid-plan',
+        plan: { schemaVersion: 'snowgym.command-plan.v0', groups: [] },
+      }),
+    ).toMatchObject({
+      status: 400,
+      body: { error: 'invalid_request', message: expect.stringContaining('plan is invalid') },
+    });
+    expect(
+      service.handle('POST', '/activate-plan', {
+        planId: 'stale-plan',
+        plan: commandedTenVsTenPlan(),
+        expectedStateHash: 'fnv1a64:0000000000000000',
+      }),
+    ).toMatchObject({ status: 409, body: { error: 'stale_state' } });
+    expect(service.handle('GET', '/plan-observation').status).toBe(409);
   });
 
   it('resets by seed and advances through the explicit scripted-policy endpoint', () => {
@@ -304,6 +404,8 @@ describe('SnowGymService', () => {
     const body = response.body as {
       format: string;
       endpoints: {
+        activatePlan: { path: string; requires: string[] };
+        planObservation: { path: string; mutates: boolean };
         step: { requires: string[] };
         stepJoint: { path: string; requires: string[] };
         stepScripted: { path: string };
@@ -324,6 +426,15 @@ describe('SnowGymService', () => {
     expect(response.status).toBe(200);
     expect(body.format).toBe('snowgym.capabilities.v0');
     expect(body.endpoints.step.requires).toEqual(['action']);
+    expect(body.endpoints.activatePlan).toMatchObject({
+      path: '/activate-plan',
+      requires: ['planId', 'plan'],
+    });
+    expect(body.endpoints.planObservation).toMatchObject({
+      path: '/plan-observation',
+      method: 'GET',
+      mutates: false,
+    });
     expect(body.endpoints.stepJoint).toMatchObject({
       path: '/step-joint',
       requires: ['actions.blue', 'actions.red'],
@@ -356,12 +467,7 @@ describe('SnowGymService', () => {
     });
     expect(body.pettingZoo.researchEnvironment).toMatchObject({
       id: 'SnowGym/ResearchParallelSquad-v0',
-      transforms: [
-        'local-visibility',
-        'action-delay',
-        'observation-delay',
-        'semantic-raster',
-      ],
+      transforms: ['local-visibility', 'action-delay', 'observation-delay', 'semantic-raster'],
     });
   });
 

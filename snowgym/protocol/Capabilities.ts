@@ -29,8 +29,16 @@ export function snowGymCapabilities(): object {
       capabilities: { method: 'GET', path: '/capabilities', mutates: false },
       status: { method: 'GET', path: '/status', mutates: false },
       teacherAction: { method: 'GET', path: '/teacher-action', mutates: false },
+      planObservation: { method: 'GET', path: '/plan-observation', mutates: false },
       reset: { method: 'POST', path: '/reset', mutates: true, guarded: true },
       step: { method: 'POST', path: '/step', mutates: true, requires: ['action'] },
+      activatePlan: {
+        method: 'POST',
+        path: '/activate-plan',
+        mutates: true,
+        guarded: true,
+        requires: ['planId', 'plan'],
+      },
       stepJoint: {
         method: 'POST',
         path: '/step-joint',
@@ -91,12 +99,7 @@ export function snowGymCapabilities(): object {
         id: 'SnowGym/ResearchParallelSquad-v0',
         visibilityRadiusUnits: 'world',
         latencyUnits: 'team-decisions',
-        transforms: [
-          'local-visibility',
-          'action-delay',
-          'observation-delay',
-          'semantic-raster',
-        ],
+        transforms: ['local-visibility', 'action-delay', 'observation-delay', 'semantic-raster'],
       },
     },
   };

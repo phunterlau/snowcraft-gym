@@ -914,6 +914,16 @@ The matched offline training checklist item is advanced. Direct/flank,
 focus/distributed, hold/support/withdraw, unseen-combination, roster-transfer,
 and closed-loop objective metrics remain open; M7 exit is not yet claimed.
 
+M7 authoritative online-plan bridge (2026-09-02): the guarded server API now
+activates schema-valid symbolic plans and emits current fixed-size plan tensors
+without advancing physics. Grounding, stable group assignments, late-bound
+objective resolution, tactical geometry, living fractions, plan age, reset
+invalidation, and state-hash/idempotency protection remain in TypeScript. The
+persistent batch host exposes exact per-world parity, and `SnowGymBatchEnv`
+validates and stacks `[B,3,38]` plan tensors for the next learned closed-loop
+runner. Service, batch-isolation, validation, age, and live subprocess tests
+cover the bridge; closed-loop objective evaluation remains next.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO

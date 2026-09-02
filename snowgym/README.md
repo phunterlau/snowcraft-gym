@@ -49,6 +49,15 @@ mirrored detached observations plus zero-sum rewards. It is the transport used
 by the PettingZoo adapter; the built-in red controller is not run during a
 joint decision.
 
+Plan-conditioned clients activate a validated symbolic `CommandPlan` with
+guarded `POST /activate-plan`, then read `GET /plan-observation` before each
+decision. The server owns group allocation, symbolic target resolution,
+tactical-frame geometry, living-unit fractions, and plan age; the read returns
+fixed `planGroups` (three role slots by 38 features), `planGroupMask`, assignment
+metadata, tick, and state hash without advancing physics. Reset clears the
+active plan. The persistent batch host exposes the same operations as
+`activatePlan` and `planObservation` for closed-loop training.
+
 The reference server owns one shared episode. Mutating calls accept an optional
 `expectedStateHash` from the latest `/status` and an `idempotencyKey`. A stale
 hash returns HTTP 409 without advancing; an exact retry using the same key
@@ -382,29 +391,29 @@ either pick a file with **Open recording**, or load one directly:
 http://127.0.0.1:5173/replay.html?recording=/replays/<file>
 ```
 
-| File                                           | Scenario                                       | Result   |
-| ---------------------------------------------- | ---------------------------------------------- | -------- |
-| `demo-learned-blue-seed-42.json`               | Learned BC blue vs seeded-random red, 1v1      | blue 1–0 |
-| `ppo_1v1_bc_v0-seed-3101.json`                 | Qualified PPO blue vs seeded-random red, 1v1   | blue 1–0 |
-| `ppo_1v1_easy_bc_v0-seed-4103.json`            | Qualified PPO blue vs easy scripted red, 1v1   | blue 1–0 |
-| `ppo_3v3_random_bc_v0-seed-5101.json`           | Qualified PPO blue vs seeded-random red, 3v3   | blue 3–0 |
-| `ppo_3v3_scripted_bc_v0-seed-6108.json`         | Qualified PPO blue vs easy scripted red, 3v3   | blue 3–0 |
-| `ppo_10v10_terrain_relational_bc_v0-seed-9101.json` | Qualified PPO blue on Winter Front, 10v10   | blue 10–0 |
-| `blue-seed-42.json`                            | Open 3v3, normal scripted red (acceptance run) | blue 3–0 |
-| `blue-5v2-hard.json`                           | Open 5v2, hard scripted red                    | blue win |
-| `example-open-3v3.json`                        | Open 3v3, scripted red                         | blue 3–0 |
-| `example-open-1v3-hard.json`                   | Open 1 blue vs 3 hard red                      | red win  |
-| `example-open-2v5-normal.json`                 | Open 2 blue vs 5 red                           | red win  |
-| `example-open-8v8.json`                        | Open 8v8 on a large arena                      | blue 7–0 |
-| `example-winter-front-10v10.json`              | Winter Front (`arena6`) 10v10                  | blue 9–0 |
-| `example-winter-front-6v10-easy-seed-13.json`  | Scripted blue, easy red, understrength 6v10    | blue 6–0 |
-| `example-winter-front-6v10-normal-seed-9.json` | Scripted blue, normal red, understrength 6v10  | blue 1–0 |
-| `trajectory-10v10-blue-win-seed-2.json`        | Mock commander blue on Winter Front, 10v10     | blue 7–0 |
-| `trajectory-10v10.json`                        | Mock commander blue on Winter Front, 10v10     | red 4–0  |
-| `trajectory-6v10-blue-win-seed-14.json`        | Mock commander blue on Winter Front, 6v10      | blue 1–0 |
-| `example-forest-3v3.json`                      | Pine Forest (`arena4`) 3v3 — dense tree cover  | blue 3–0 |
-| `example-pond-5v2-hard.json`                   | Frozen Pond (`arena2`), hard red               | blue win |
-| `example-village-random.json`                  | Village Skirmish (`arena3`) vs `random` red    | blue win |
+| File                                                | Scenario                                       | Result    |
+| --------------------------------------------------- | ---------------------------------------------- | --------- |
+| `demo-learned-blue-seed-42.json`                    | Learned BC blue vs seeded-random red, 1v1      | blue 1–0  |
+| `ppo_1v1_bc_v0-seed-3101.json`                      | Qualified PPO blue vs seeded-random red, 1v1   | blue 1–0  |
+| `ppo_1v1_easy_bc_v0-seed-4103.json`                 | Qualified PPO blue vs easy scripted red, 1v1   | blue 1–0  |
+| `ppo_3v3_random_bc_v0-seed-5101.json`               | Qualified PPO blue vs seeded-random red, 3v3   | blue 3–0  |
+| `ppo_3v3_scripted_bc_v0-seed-6108.json`             | Qualified PPO blue vs easy scripted red, 3v3   | blue 3–0  |
+| `ppo_10v10_terrain_relational_bc_v0-seed-9101.json` | Qualified PPO blue on Winter Front, 10v10      | blue 10–0 |
+| `blue-seed-42.json`                                 | Open 3v3, normal scripted red (acceptance run) | blue 3–0  |
+| `blue-5v2-hard.json`                                | Open 5v2, hard scripted red                    | blue win  |
+| `example-open-3v3.json`                             | Open 3v3, scripted red                         | blue 3–0  |
+| `example-open-1v3-hard.json`                        | Open 1 blue vs 3 hard red                      | red win   |
+| `example-open-2v5-normal.json`                      | Open 2 blue vs 5 red                           | red win   |
+| `example-open-8v8.json`                             | Open 8v8 on a large arena                      | blue 7–0  |
+| `example-winter-front-10v10.json`                   | Winter Front (`arena6`) 10v10                  | blue 9–0  |
+| `example-winter-front-6v10-easy-seed-13.json`       | Scripted blue, easy red, understrength 6v10    | blue 6–0  |
+| `example-winter-front-6v10-normal-seed-9.json`      | Scripted blue, normal red, understrength 6v10  | blue 1–0  |
+| `trajectory-10v10-blue-win-seed-2.json`             | Mock commander blue on Winter Front, 10v10     | blue 7–0  |
+| `trajectory-10v10.json`                             | Mock commander blue on Winter Front, 10v10     | red 4–0   |
+| `trajectory-6v10-blue-win-seed-14.json`             | Mock commander blue on Winter Front, 6v10      | blue 1–0  |
+| `example-forest-3v3.json`                           | Pine Forest (`arena4`) 3v3 — dense tree cover  | blue 3–0  |
+| `example-pond-5v2-hard.json`                        | Frozen Pond (`arena2`), hard red               | blue win  |
+| `example-village-random.json`                       | Village Skirmish (`arena3`) vs `random` red    | blue win  |
 
 Map recordings render the terrain (trees, rocks, forts) and show units using
 cover. Record your own with `--record PATH` on `snowgym-demo` (see below).
@@ -501,8 +510,8 @@ slots per team and supports fights through 10v10. `ally_mask`, `enemy_mask`, and
 construction or through `reset(options={"scenario": ...})` never changes an
 environment version's tensor shapes. The action space contains one action type,
 normalized target, and throw power per blue slot. The HTTP adapter is the
-correctness/reference transport; a direct batched transport remains planned for
-high-throughput training.
+correctness/reference transport; `SnowGymBatchEnv` supplies the persistent
+multi-world transport used for high-throughput training.
 
 Configurable command-line examples:
 
@@ -531,7 +540,7 @@ agents/         policy interface and scripted blue baseline
 adapters/       SnowCraft action application boundary
 core/           decision controller and DOM-free environment lifecycle
 scenarios/      deterministic scenario metadata
-server/         local JSON status/reset/step/autoplay API
+server/         local guarded JSON state/action/plan API
 python/         Gymnasium package, checker, tests, demo, and benchmark CLI
 replay/         versioned replay validation and existing-engine visual playback
 examples/       renderer-free configurable replay builder and CLI

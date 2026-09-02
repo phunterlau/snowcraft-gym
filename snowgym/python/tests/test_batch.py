@@ -26,6 +26,31 @@ def noop_actions(batch_size: int, capacity: int = 10) -> dict[str, np.ndarray]:
     }
 
 
+def one_group_plan() -> dict[str, object]:
+    return {
+        "schemaVersion": "snowgym.command-plan.v0",
+        "intentSummary": "Advance together and engage the nearest enemy.",
+        "groups": [
+            {
+                "role": "main",
+                "allocationWeight": 1,
+                "selection": "balanced",
+                "order": {
+                    "mission": "engage",
+                    "objective": {"kind": "enemy_cluster", "select": "nearest"},
+                    "approach": "direct",
+                    "engagement": {
+                        "posture": "balanced",
+                        "fire": "focus",
+                        "preferredRange": "medium",
+                        "cohesion": "normal",
+                    },
+                },
+            }
+        ],
+    }
+
+
 def test_batch_subprocess_handshake_and_independent_worlds() -> None:
     with SnowGymBatchClient() as client:
         assert client.capabilities["protocolVersion"] == "snowgym.batch.v0"
@@ -62,3 +87,27 @@ def test_batch_scripted_step_uses_native_blue_policy() -> None:
         assert not truncated.any()
         assert infos[0]["tick"] == 6
         assert all(result["accepted"] for result in infos[0]["actionResults"])
+
+
+def test_batch_plan_tensors_are_host_owned_and_follow_world_ticks() -> None:
+    with SnowGymBatchClient() as client:
+        assert "activatePlan" in client.capabilities["operations"]
+        assert "planObservation" in client.capabilities["operations"]
+        environment = SnowGymBatchEnv(2, client=client)
+        environment.reset([31, 32], [scenario(), scenario()])
+
+        activated = environment.activate_plans(
+            ["plan-left", "plan-right"], [one_group_plan(), one_group_plan()]
+        )
+        assert [body["planId"] for body in activated] == ["plan-left", "plan-right"]
+        assert [body["tick"] for body in activated] == [0, 0]
+        tensors, metadata = environment.plan_observations()
+        assert tensors["plan_groups"].shape == (2, 3, 38)
+        assert tensors["plan_group_mask"].tolist() == [[1, 0, 0], [1, 0, 0]]
+        assert [body["stateHash"] for body in metadata] == environment.state_hashes
+        assert np.all(tensors["plan_groups"][:, 0, 37] == 0)
+
+        environment.step(noop_actions(2))
+        advanced, metadata = environment.plan_observations()
+        assert [body["tick"] for body in metadata] == [6, 6]
+        np.testing.assert_allclose(advanced["plan_groups"][:, 0, 37], 1 / 300)

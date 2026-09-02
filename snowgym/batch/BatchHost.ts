@@ -12,6 +12,8 @@ type BatchOperation =
   | 'step'
   | 'stepScripted'
   | 'stepJoint'
+  | 'activatePlan'
+  | 'planObservation'
   | 'close';
 
 interface BatchItem {
@@ -57,7 +59,16 @@ export class BatchHost {
             body: {
               protocolVersion: BATCH_PROTOCOL_VERSION,
               capabilities: snowGymCapabilities(),
-              operations: ['status', 'reset', 'step', 'stepScripted', 'stepJoint', 'close'],
+              operations: [
+                'status',
+                'reset',
+                'step',
+                'stepScripted',
+                'stepJoint',
+                'activatePlan',
+                'planObservation',
+                'close',
+              ],
               isolation: 'per-world-explicit-result',
             },
           },
@@ -115,6 +126,8 @@ function batchRoute(operation: Exclude<BatchOperation, 'handshake' | 'close'>): 
   if (operation === 'reset') return { method: 'POST', path: '/reset' };
   if (operation === 'step') return { method: 'POST', path: '/step' };
   if (operation === 'stepScripted') return { method: 'POST', path: '/step-scripted' };
+  if (operation === 'activatePlan') return { method: 'POST', path: '/activate-plan' };
+  if (operation === 'planObservation') return { method: 'GET', path: '/plan-observation' };
   return { method: 'POST', path: '/step-joint' };
 }
 
@@ -136,6 +149,8 @@ function parseBatchRequest(value: unknown): BatchRequest {
     'step',
     'stepScripted',
     'stepJoint',
+    'activatePlan',
+    'planObservation',
     'close',
   ]);
   if (typeof value.operation !== 'string' || !operations.has(value.operation as BatchOperation)) {

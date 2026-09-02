@@ -185,6 +185,7 @@ uv run snowgym-demo-ppo \
 ```text
 http://127.0.0.1:5173/replay.html?recording=/replays/ppo_3v3_scripted_bc_v0-seed-6108.json
 ```
+
 The `snowgym.checkpoint.v0` metadata binds the model and optimizer state digest
 to the source commit, audited dataset digest, SnowGym versions, architecture,
 optimizer, loss weights, seed, step, and evaluation suite. Loading uses
@@ -334,6 +335,12 @@ factor, parent-plus-child CPU use, protocol payload bytes, Python JSON
 serialization, and transport-plus-simulation time. The committed short-run
 [M6.1 result](./benchmarks/batch_throughput_v0.json) reached all 64 worlds; it
 is local acceptance evidence rather than a portable performance guarantee.
+
+For a plan-conditioned closed loop, call `SnowGymBatchEnv.activate_plans()`
+after reset and `plan_observations()` before every policy decision. The
+authoritative TypeScript world re-resolves symbolic objectives and updates
+geometry, living assignment fractions, and plan age at the current tick; Python
+only validates and stacks the returned `[B,3,38]` tensors.
 
 ## PPO foundation
 

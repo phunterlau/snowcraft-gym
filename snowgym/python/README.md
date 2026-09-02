@@ -28,6 +28,10 @@ simulator. Its persistent newline-delimited subprocess owns independent
 `SnowEnvironment` instances and returns fixed tensors with a leading batch
 dimension. It supports per-slot seeds/scenarios, selective reset, guarded
 single-team steps, raw joint-step requests, and explicit per-world failures.
+`activate_plans()` sends validated symbolic plans through guarded server-side
+grounding; `plan_observations()` returns current `plan_groups [B,3,38]` and
+`plan_group_mask [B,3]` plus plan metadata without duplicating target resolution
+or tactical geometry in Python.
 Run the live golden transport check while the HTTP server is available:
 
 ```bash
