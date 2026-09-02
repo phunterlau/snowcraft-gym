@@ -963,6 +963,17 @@ activation position and reserve support is no longer averaged into the main
 body. Existing result artifacts remain immutable; a new audited metrics result
 must use a distinct path.
 
+M7 behavior metrics-v1 outcome (2026-09-02): the immutable rerun at
+`evaluations/plan_closed_loop_behaviors_metrics_v1.json` has digest
+`sha256:060c33d396221ee3bf4d0b21e93f65462c0ae27c531feaae991585c18128e2d3`.
+Conditioning reduced hold displacement by `0.552726`, which is directionally
+correct, but also reduced withdraw displacement by `0.427437`. In the two-group
+support case, main and reserve objective-progress deltas were `-0.151835` and
+`-0.347228`. The model therefore demonstrates a defensive movement-suppression
+effect, not yet distinct hold/withdraw/support competence. The next training
+revision must balance these missions and qualify per-role behavior rather than
+optimizing the aggregate objective-distance metric.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO
