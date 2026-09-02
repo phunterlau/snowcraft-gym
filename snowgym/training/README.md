@@ -165,6 +165,10 @@ uv run snowgym-train-ppo \
 
 These commands validate training plumbing only. Their manifest is labeled
 `infrastructure-smoke`; it is not evidence that a curriculum gate was solved.
+Canonical rewards are the default. For an explicitly shaped training run, add
+`--reward-mode health-potential`; the manifest and resume contract bind that
+choice and record canonical and training reward sums separately. Held-out
+evaluation always uses canonical `-1/0/+1` returns.
 
 Evaluate any PPO checkpoint on the gate's disjoint held-out seeds, headlessly,
 against deterministic masked-random blue and the native scripted blue policy:

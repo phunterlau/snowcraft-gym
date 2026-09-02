@@ -39,6 +39,7 @@ def train_ppo(
     model_config: ModelConfig | None = None,
     ppo_config: PPOConfig | None = None,
     git_commit: str | None = None,
+    reward_mode: str = "canonical",
 ) -> dict[str, Any]:
     """Train through a frozen gate and atomically write one final checkpoint."""
     destination = Path(output)
@@ -66,6 +67,7 @@ def train_ppo(
         "gateId": gate_id,
         "worlds": worlds,
         "rolloutSteps": rollout_steps,
+        "rewardMode": reward_mode,
     }
 
     torch.use_deterministic_algorithms(True)
@@ -114,6 +116,7 @@ def train_ppo(
                 seed_schedule=schedule,
                 rollout_steps=rollout_steps,
                 config=config,
+                reward_mode=reward_mode,
             )
             metrics = ppo_update(
                 model,
@@ -132,7 +135,8 @@ def train_ppo(
                     "completedEpisodes": collection.completed_episodes,
                     "boundaryTruncations": collection.boundary_truncations,
                     "rejectedActions": collection.rejected_actions,
-                    "rewardSum": float(collection.rollout.rewards.sum()),
+                    "canonicalRewardSum": collection.canonical_reward_sum,
+                    "trainingRewardSum": collection.training_reward_sum,
                     "metrics": metrics,
                 }
             )
@@ -167,6 +171,7 @@ def train_ppo(
             "trainingSeed": training_seed,
             "worlds": worlds,
             "rolloutSteps": rollout_steps,
+            "rewardMode": reward_mode,
             "startUpdate": start_update,
             "targetUpdate": target_updates,
             "environmentSteps": environment_steps,
@@ -197,6 +202,9 @@ def main() -> None:
     parser.add_argument("--rollout-steps", type=int, default=32)
     parser.add_argument("--target-updates", type=int, default=1)
     parser.add_argument("--training-seed", type=int, default=73)
+    parser.add_argument(
+        "--reward-mode", choices=("canonical", "health-potential"), default="canonical"
+    )
     parser.add_argument("--curriculum", type=Path)
     parser.add_argument("--resume", type=Path)
     parser.add_argument("--json", action="store_true")
@@ -211,6 +219,7 @@ def main() -> None:
             training_seed=args.training_seed,
             curriculum_path=args.curriculum,
             resume=args.resume,
+            reward_mode=args.reward_mode,
         )
     except (FileExistsError, RuntimeError, ValueError) as error:
         parser.error(str(error))

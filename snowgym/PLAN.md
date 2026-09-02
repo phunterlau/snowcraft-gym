@@ -437,7 +437,7 @@ partial observation, or self-play confounds.
       geometry, seed cursor, update metrics, and final checkpoint in a hashed
       machine-readable run manifest; prove resumed and uninterrupted updates
       reach the same semantic state.
-- [ ] Keep canonical evaluation reward at win `+1`, loss `-1`, draw `0`. If
+- [x] Keep canonical evaluation reward at win `+1`, loss `-1`, draw `0`. If
       sparse learning blocks the smoke test, add an opt-in training wrapper with
       potential-based own-minus-enemy health shaping and test that it leaves
       terminal benchmark results unchanged.
@@ -485,7 +485,10 @@ remain open. The batch host now also exposes exact-parity `stepScripted` so the
 held-out evaluator compares PPO, deterministic masked-random, and the native
 scripted blue controller without an HTTP server or renderer. The evaluator
 reports the frozen thresholds but does not turn a threshold miss into hidden
-checkpoint selection. A qualifying checkpoint series remains open.
+checkpoint selection. Training can now explicitly opt into potential-based
+health shaping; checkpoints bind the reward mode, manifests retain shaped and
+canonical sums separately, and held-out evaluation remains canonical. A
+qualifying checkpoint series remains open.
 
 ### M7 — plan-conditioned learned executor
 

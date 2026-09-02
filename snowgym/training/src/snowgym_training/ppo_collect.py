@@ -10,7 +10,14 @@ import torch
 
 from snowgym_client.batch import SnowGymBatchEnv
 
-from .ppo import HybridActorCritic, PPOConfig, PPORollout, RolloutBuffer
+from .ppo import (
+    HybridActorCritic,
+    PPOConfig,
+    PPORollout,
+    RolloutBuffer,
+    health_potential,
+    potential_shaped_reward,
+)
 
 
 @dataclass
@@ -59,6 +66,8 @@ class RolloutCollection:
     completed_episodes: int
     rejected_actions: int
     boundary_truncations: int
+    canonical_reward_sum: float
+    training_reward_sum: float
     seed_schedule: dict[str, int]
 
 
@@ -70,8 +79,11 @@ def collect_rollout(
     seed_schedule: SeedSchedule,
     rollout_steps: int,
     config: PPOConfig,
+    reward_mode: str = "canonical",
 ) -> RolloutCollection:
     """Collect one restartable rollout; every call begins at an episode boundary."""
+    if reward_mode not in {"canonical", "health-potential"}:
+        raise ValueError("reward_mode must be canonical or health-potential")
     seeds = seed_schedule.take(environment.batch_size)
     episode_seeds = list(seeds)
     scenarios = [dict(scenario) for _ in range(environment.batch_size)]
@@ -80,6 +92,8 @@ def collect_rollout(
     completed_episodes = 0
     rejected_actions = 0
     boundary_truncations = 0
+    canonical_reward_sum = 0.0
+    training_reward_sum = 0.0
     model.eval()
 
     for step in range(rollout_steps):
@@ -97,12 +111,24 @@ def collect_rollout(
             artificial = ~(np.asarray(terminated, dtype=np.bool_) | stored_truncated)
             boundary_truncations += int(artificial.sum())
             stored_truncated |= artificial
+        canonical_reward = torch.as_tensor(reward, dtype=torch.float32)
+        training_reward = canonical_reward
+        if reward_mode == "health-potential":
+            training_reward = potential_shaped_reward(
+                canonical_reward,
+                health_potential(tensor_observation),
+                health_potential(tensor_dict(next_observation)),
+                torch.as_tensor(terminated, dtype=torch.bool),
+                gamma=config.gamma,
+            )
+        canonical_reward_sum += float(canonical_reward.sum())
+        training_reward_sum += float(training_reward.sum())
         buffer.add(
             observation=tensor_observation,
             action=action,
             log_probability=log_probability,
             value=value,
-            reward=torch.as_tensor(reward, dtype=torch.float32),
+            reward=training_reward,
             terminated=torch.as_tensor(terminated, dtype=torch.bool),
             truncated=torch.as_tensor(stored_truncated, dtype=torch.bool),
             next_value=next_value,
@@ -135,6 +161,8 @@ def collect_rollout(
         completed_episodes=completed_episodes,
         rejected_actions=rejected_actions,
         boundary_truncations=boundary_truncations,
+        canonical_reward_sum=canonical_reward_sum,
+        training_reward_sum=training_reward_sum,
         seed_schedule=seed_schedule.state(),
     )
 

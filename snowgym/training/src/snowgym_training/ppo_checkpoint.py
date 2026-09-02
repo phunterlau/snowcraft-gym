@@ -186,11 +186,13 @@ def validate_seed_schedule(value: Any) -> None:
 
 
 def validate_collector_config(value: Any) -> None:
-    required = {"gateId", "worlds", "rolloutSteps"}
+    required = {"gateId", "worlds", "rolloutSteps", "rewardMode"}
     if not isinstance(value, dict) or set(value) != required:
         raise ValueError(f"PPO collector config must contain exactly {sorted(required)}")
     if not isinstance(value["gateId"], str) or not value["gateId"]:
         raise ValueError("PPO collector gateId must be non-empty")
+    if value["rewardMode"] not in {"canonical", "health-potential"}:
+        raise ValueError("PPO collector rewardMode is invalid")
     for name in ("worlds", "rolloutSteps"):
         item = value[name]
         if not isinstance(item, int) or isinstance(item, bool) or item <= 0:
