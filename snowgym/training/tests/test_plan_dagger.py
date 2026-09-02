@@ -18,6 +18,10 @@ from snowgym_training.plan_action_adapter_qualification import (
     load_spec as load_action_adapter_qualification_spec,
     qualify_plan_action_adapter,
 )
+from snowgym_training.plan_counterfactual_evaluate import (
+    audit_plan_counterfactual_evaluation,
+    evaluate_plan_counterfactual,
+)
 from snowgym_training.trainer import train_behavior_clone
 from snowgym_training.trainer import load_training_config
 from snowgym_training.trajectory import audit_dataset
@@ -279,3 +283,21 @@ def test_plan_dagger_v1_retains_same_state_counterfactual_labels(tmp_path: Path)
         git_commit="test",
     )
     assert trained["trainingMetrics"]["final"]["counterfactual"] >= 0
+    evaluation_path = tmp_path / "counterfactual-evaluation.json"
+    evaluation = evaluate_plan_counterfactual(
+        checkpoint=tmp_path / "counterfactual-trained",
+        dataset_path=output,
+        output=evaluation_path,
+    )
+    assert evaluation["metrics"]["presentUnitDecisions"] == 12
+    assert 0 <= evaluation["metrics"]["teacherActionChangeRate"] <= 1
+    assert audit_plan_counterfactual_evaluation(
+        evaluation_path, tmp_path / "counterfactual-trained", output
+    )["evaluationDigest"] == evaluation["evaluationDigest"]
+    with pytest.raises(ValueError, match="requires same-state plan labels"):
+        evaluate_plan_counterfactual(
+            checkpoint=CHECKPOINT,
+            dataset_path=ACTION_ADAPTER_OFFLINE.parent.parent / "artifacts"
+            / "plan-dagger-v0-evaluation",
+            output=tmp_path / "invalid-evaluation.json",
+        )

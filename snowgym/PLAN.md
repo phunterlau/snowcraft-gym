@@ -1127,6 +1127,16 @@ the plan tensor and label; zero or omission preserves all legacy runs. A frozen
 collection schedule, an all-transition paired evaluator, and a v1 residual-
 adapter experiment remain next.
 
+M7 all-transition counterfactual evaluator foundation (2026-09-02):
+`plan_counterfactual_evaluate.py` runs one checkpoint under both authoritative
+plan tensors for every paired state. Its audited result reports whether the
+teacher action actually changes, accuracy and NLL under each plan, the model's
+action-change rate, recall and strict pair accuracy where the teacher differs,
+and target error/sensitivity. Checkpoint/state and dataset digests are bound in
+the artifact. This separates an uninformative counterfactual set from a model
+that ignores informative plan interventions. Frozen data and acceptance
+thresholds remain next.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO

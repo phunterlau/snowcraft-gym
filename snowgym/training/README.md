@@ -431,6 +431,19 @@ tensors are bound to the identical pre-step state. Set a frozen training
 config's `counterfactualLossWeight` in `[0,10]` to apply the same hybrid BC loss
 to the alternate pair; omitting it keeps the legacy objective exactly.
 
+Evaluate those paired labels across all transitions with:
+
+```bash
+.venv/bin/snowgym-evaluate-plan-counterfactual \
+  --checkpoint runs/plan-action-adapter \
+  --dataset artifacts/plan-counterfactual-evaluation \
+  --output evaluations/plan-counterfactual.json --json
+```
+
+The result distinguishes teacher action diversity from model sensitivity and
+scores both plan conditions, including strict pair accuracy only on unit-state
+pairs where the production teacher changes action type.
+
 ## PPO foundation
 
 Run a short end-to-end infrastructure smoke against the first frozen curriculum
