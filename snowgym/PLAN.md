@@ -1198,6 +1198,15 @@ the existing full primary and counterfactual hybrid objectives. Empty changed
 batches contribute an exact finite zero. Legacy configs are unchanged. A
 separately frozen v2 weight/budget and unchanged held-out gate are next.
 
+M7 changed-action-v2 development freeze (2026-09-02): before training,
+`plan_action_adapter_v2_dev.json` fixes the v1 architecture, corpus, 2,000-step
+budget, batch size, learning rate, full counterfactual weight, and initializer,
+changing only the training seed to 87001 and adding changed-action weight
+`5.0`. This is a diagnostic on already observed v1 validation/evaluation and
+closed-loop suites, not a qualification retry. If it materially improves
+changed-teacher alignment without losing v1's support/flank progress, a new
+counterfactual corpus with fresh seeds and a separately frozen gate is required.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO

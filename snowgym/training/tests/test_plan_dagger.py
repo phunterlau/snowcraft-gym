@@ -52,6 +52,10 @@ ACTION_ADAPTER_V1_CONFIG = (
     ROOT / "training" / "src" / "snowgym_training" / "configs"
     / "plan_action_adapter_v1.json"
 )
+ACTION_ADAPTER_V2_DEV_CONFIG = (
+    ROOT / "training" / "src" / "snowgym_training" / "configs"
+    / "plan_action_adapter_v2_dev.json"
+)
 ACTION_ADAPTER_V1_QUALIFICATION = (
     ROOT / "training" / "src" / "snowgym_training" / "configs"
     / "plan_action_adapter_qualification_v1.json"
@@ -105,6 +109,9 @@ def test_frozen_plan_dagger_spec_balances_missions_and_disjoins_seeds() -> None:
     adapter_v1 = load_training_config(ACTION_ADAPTER_V1_CONFIG)
     assert adapter_v1["counterfactualLossWeight"] == 1.0
     assert adapter_v1["steps"] == 2000
+    adapter_v2 = load_training_config(ACTION_ADAPTER_V2_DEV_CONFIG)
+    assert adapter_v2["counterfactualChangedActionWeight"] == 5.0
+    assert adapter_v2["evaluationSuite"].endswith("development")
     gate_v1 = load_cf_gate(ACTION_ADAPTER_V1_QUALIFICATION)
     assert gate_v1["paired"]["minimumChangedTeacherPredictionRecall"] == 0.5
     assert gate_v1["evaluationDatasetDigest"].endswith("c955efd22fb")
