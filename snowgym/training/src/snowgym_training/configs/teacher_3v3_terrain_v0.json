@@ -1,0 +1,27 @@
+{
+  "format": "snowgym.trajectory-export.v0",
+  "name": "scripted-blue-3v3-terrain-v0",
+  "teacher": "simple-blue.v0",
+  "maxTeamUnits": 10,
+  "shardSize": 256,
+  "splits": {
+    "train": [
+      {"seed": 51, "scenario": {"blueUnits": 3, "redUnits": 3, "map": "arena4.json", "maxTicks": 2400, "decisionHz": 10, "redDifficulty": "normal", "redController": "random"}},
+      {"seed": 52, "scenario": {"blueUnits": 3, "redUnits": 3, "map": "arena4.json", "maxTicks": 2400, "decisionHz": 10, "redDifficulty": "normal", "redController": "random"}},
+      {"seed": 53, "scenario": {"blueUnits": 3, "redUnits": 3, "map": "arena4.json", "maxTicks": 2400, "decisionHz": 10, "redDifficulty": "normal", "redController": "random"}},
+      {"seed": 54, "scenario": {"blueUnits": 3, "redUnits": 3, "map": "arena4.json", "maxTicks": 2400, "decisionHz": 10, "redDifficulty": "normal", "redController": "random"}},
+      {"seed": 55, "scenario": {"blueUnits": 3, "redUnits": 3, "map": "arena4.json", "maxTicks": 2400, "decisionHz": 10, "redDifficulty": "normal", "redController": "random"}},
+      {"seed": 56, "scenario": {"blueUnits": 3, "redUnits": 3, "map": "arena4.json", "maxTicks": 2400, "decisionHz": 10, "redDifficulty": "normal", "redController": "random"}},
+      {"seed": 57, "scenario": {"blueUnits": 3, "redUnits": 3, "map": "arena4.json", "maxTicks": 2400, "decisionHz": 10, "redDifficulty": "normal", "redController": "random"}},
+      {"seed": 58, "scenario": {"blueUnits": 3, "redUnits": 3, "map": "arena4.json", "maxTicks": 2400, "decisionHz": 10, "redDifficulty": "normal", "redController": "random"}}
+    ],
+    "validation": [
+      {"seed": 151, "scenario": {"blueUnits": 3, "redUnits": 3, "map": "arena4.json", "maxTicks": 2400, "decisionHz": 10, "redDifficulty": "normal", "redController": "random"}},
+      {"seed": 152, "scenario": {"blueUnits": 3, "redUnits": 3, "map": "arena4.json", "maxTicks": 2400, "decisionHz": 10, "redDifficulty": "normal", "redController": "random"}}
+    ],
+    "evaluation": [
+      {"seed": 251, "scenario": {"blueUnits": 3, "redUnits": 3, "map": "arena4.json", "maxTicks": 2400, "decisionHz": 10, "redDifficulty": "normal", "redController": "random"}},
+      {"seed": 252, "scenario": {"blueUnits": 3, "redUnits": 3, "map": "arena4.json", "maxTicks": 2400, "decisionHz": 10, "redDifficulty": "normal", "redController": "random"}}
+    ]
+  }
+}
