@@ -213,6 +213,13 @@ checkpoint, tensor-state, and source-dataset digests; exact resume carries that
 provenance forward. Warm-started results must be described as BC-initialized
 PPO, never as cold-start reward-only learning.
 
+To advance to a new curriculum gate, use `--ppo-warm-start` with an accepted
+checkpoint from the preceding gate. This transfers model/value weights but
+starts a fresh optimizer, update counter, and target-gate seed schedule. The
+new checkpoint records the source checkpoint/state/curriculum digest, source
+gate, and source update. It is deliberately distinct from `--resume`, which
+requires the same gate and rollout contract.
+
 The first stable 1v1 candidate is frozen in `ppo_1v1_bc_v0.json`. Run it
 without restating or drifting hyperparameters:
 

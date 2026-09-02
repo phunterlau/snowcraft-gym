@@ -119,6 +119,7 @@ def run_ppo_series(
     git_commit: str | None = None,
     warm_start: str | Path | None = None,
     series_config_digest: str | None = None,
+    ppo_warm_start: str | Path | None = None,
 ) -> dict[str, Any]:
     destination = Path(output)
     if destination.exists():
@@ -157,6 +158,7 @@ def run_ppo_series(
                 reward_mode=reward_mode,
                 mode="qualification-candidate" if qualifying else "development-series",
                 warm_start=warm_start if previous_checkpoint is None else None,
+                ppo_warm_start=ppo_warm_start if previous_checkpoint is None else None,
             )
             checkpoint = result_root / relative_run / "checkpoint"
             evaluation = evaluate_ppo_checkpoint(
@@ -228,6 +230,7 @@ def main() -> None:
     parser.add_argument("--max-decisions", type=int, default=400)
     parser.add_argument("--qualifying", action="store_true")
     parser.add_argument("--warm-start", type=Path)
+    parser.add_argument("--ppo-warm-start", type=Path)
     parser.add_argument("--json", action="store_true")
     args = parser.parse_args()
     try:
@@ -243,6 +246,7 @@ def main() -> None:
             max_decisions=args.max_decisions,
             qualifying=args.qualifying,
             warm_start=args.warm_start,
+            ppo_warm_start=args.ppo_warm_start,
         )
     except (FileExistsError, RuntimeError, ValueError) as error:
         parser.error(str(error))

@@ -519,6 +519,13 @@ gates remain open. A deterministic headless recorder produced the final
 checkpoint's seed-3101 blue win in 60 decisions, and the existing browser/WebGL
 replay smoke reached the terminal frame and restarted without UI errors. The
 replay is companion evidence; the accepted v0 series manifest remains immutable.
+The trainer now distinguishes exact same-gate resume from cross-gate PPO
+transfer. Transfer imports model/value weights but resets the optimizer, update
+counter, and episode-seed range while binding source checkpoint, state,
+curriculum, gate, and update provenance. A gate-2 development transfer from the
+accepted gate-1 final checkpoint remained at 0/8 versus easy scripted red
+through update 25, while its teacher baseline won 8/8; gate 2 therefore remains
+closed and requires a gate-specific training configuration.
 
 ### M7 — plan-conditioned learned executor
 

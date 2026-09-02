@@ -207,11 +207,26 @@ def validate_collector_config(value: Any) -> None:
 def validate_initialization(value: Any) -> None:
     if value == {"type": "random"}:
         return
-    required = {"type", "checkpointDigest", "stateDigest", "datasetManifestHash"}
-    if not isinstance(value, dict) or set(value) != required:
+    if not isinstance(value, dict):
         raise ValueError("PPO initialization metadata is invalid")
-    if value["type"] != "behavior-clone":
+    if value.get("type") == "behavior-clone":
+        required = {"type", "checkpointDigest", "stateDigest", "datasetManifestHash"}
+    elif value.get("type") == "ppo-transfer":
+        required = {
+            "type", "checkpointDigest", "stateDigest", "curriculumDigest",
+            "sourceGate", "updateIndex",
+        }
+    else:
         raise ValueError("PPO initialization type is invalid")
-    for name in required - {"type"}:
+    if set(value) != required:
+        raise ValueError("PPO initialization metadata is invalid")
+    string_fields = required - {"type", "updateIndex"}
+    for name in string_fields:
         if not isinstance(value[name], str) or not value[name]:
             raise ValueError(f"PPO initialization {name} must be non-empty")
+    if "updateIndex" in required and (
+        not isinstance(value["updateIndex"], int)
+        or isinstance(value["updateIndex"], bool)
+        or value["updateIndex"] < 0
+    ):
+        raise ValueError("PPO initialization updateIndex must be non-negative")

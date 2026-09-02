@@ -105,3 +105,32 @@ def test_ppo_warm_start_records_audited_bc_provenance(tmp_path) -> None:
         "stateDigest": bc_metadata["stateDigest"],
         "datasetManifestHash": "sha256:dataset",
     }
+
+
+def test_ppo_transfer_starts_new_gate_with_source_provenance(tmp_path) -> None:
+    first = train_ppo(
+        output=tmp_path / "first",
+        worlds=1,
+        rollout_steps=1,
+        target_updates=1,
+        git_commit="test",
+    )
+    second = train_ppo(
+        output=tmp_path / "second",
+        gate_id="1v1-easy-scripted",
+        worlds=1,
+        rollout_steps=1,
+        target_updates=1,
+        ppo_warm_start=tmp_path / "first" / "checkpoint",
+        git_commit="test",
+    )
+    assert second["startUpdate"] == 0
+    assert second["seedSchedule"]["minimum"] == 20_000
+    assert second["initialization"] == {
+        "type": "ppo-transfer",
+        "checkpointDigest": first["checkpoint"]["checkpointDigest"],
+        "stateDigest": first["checkpoint"]["stateDigest"],
+        "curriculumDigest": first["curriculumDigest"],
+        "sourceGate": "1v1-random",
+        "updateIndex": 1,
+    }

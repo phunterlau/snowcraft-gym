@@ -19,7 +19,7 @@ from .curriculum import load_curriculum
 from .checkpoint import load_checkpoint
 from .model import ModelConfig
 from .ppo import HybridActorCritic, PPOConfig, ppo_update
-from .ppo_checkpoint import restore_ppo_checkpoint, save_ppo_checkpoint
+from .ppo_checkpoint import load_ppo_checkpoint, restore_ppo_checkpoint, save_ppo_checkpoint
 from .ppo_collect import SeedSchedule, collect_rollout
 from .trainer import resolve_git_commit
 from .trajectory import json_digest
@@ -43,6 +43,7 @@ def train_ppo(
     reward_mode: str = "canonical",
     mode: str = "infrastructure-smoke",
     warm_start: str | Path | None = None,
+    ppo_warm_start: str | Path | None = None,
 ) -> dict[str, Any]:
     """Train through a frozen gate and atomically write one final checkpoint."""
     destination = Path(output)
@@ -83,6 +84,8 @@ def train_ppo(
     start_update = 0
     environment_steps = 0
     if resume is None:
+        if warm_start is not None and ppo_warm_start is not None:
+            raise ValueError("behavior-clone and PPO warm starts are mutually exclusive")
         schedule = SeedSchedule(seed_minimum, seed_maximum)
         initialization: dict[str, Any] = {"type": "random"}
         if warm_start is not None:
@@ -96,9 +99,22 @@ def train_ppo(
                 "stateDigest": source_metadata["stateDigest"],
                 "datasetManifestHash": source_metadata["datasetManifestHash"],
             }
+        if ppo_warm_start is not None:
+            source_metadata, source_state = load_ppo_checkpoint(ppo_warm_start)
+            if source_metadata["architecture"] != architecture.as_dict():
+                raise ValueError("PPO warm start architecture does not match target PPO")
+            model.load_state_dict(source_state["model"])
+            initialization = {
+                "type": "ppo-transfer",
+                "checkpointDigest": source_metadata["checkpointDigest"],
+                "stateDigest": source_metadata["stateDigest"],
+                "curriculumDigest": source_metadata["curriculumDigest"],
+                "sourceGate": source_metadata["collectorConfig"]["gateId"],
+                "updateIndex": source_metadata["updateIndex"],
+            }
     else:
-        if warm_start is not None:
-            raise ValueError("warm_start cannot be combined with PPO resume")
+        if warm_start is not None or ppo_warm_start is not None:
+            raise ValueError("warm starts cannot be combined with PPO resume")
         restored = restore_ppo_checkpoint(
             resume,
             model=model,
@@ -230,6 +246,7 @@ def main() -> None:
     parser.add_argument("--curriculum", type=Path)
     parser.add_argument("--resume", type=Path)
     parser.add_argument("--warm-start", type=Path)
+    parser.add_argument("--ppo-warm-start", type=Path)
     parser.add_argument("--json", action="store_true")
     args = parser.parse_args()
     try:
@@ -244,6 +261,7 @@ def main() -> None:
             resume=args.resume,
             reward_mode=args.reward_mode,
             warm_start=args.warm_start,
+            ppo_warm_start=args.ppo_warm_start,
         )
     except (FileExistsError, RuntimeError, ValueError) as error:
         parser.error(str(error))
