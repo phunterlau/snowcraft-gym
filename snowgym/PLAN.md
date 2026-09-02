@@ -760,6 +760,18 @@ matches `JSON.stringify` object semantics for omitted `undefined` fields, with
 a write/read digest regression test. Paired training configurations and frozen
 behavior metrics remain next.
 
+M7 matched-training runner foundation (2026-09-02):
+`snowgym-run-plan-ablation` accepts one audited plan trajectory dataset and one
+shared architecture/optimization contract, then deterministically trains a
+no-plan and plan-conditioned policy whose generated configs differ only by the
+plan adapter flag. The result manifest binds the source config and dataset,
+both checkpoint/state digests, architectures, and training losses. Its auditor
+reloads each restricted checkpoint and rejects unmatched dataset, optimizer,
+loss, seed, step, adapter flags, or child digest. Unit tests run the full pair
+twice, prove exact reproducibility, and reject checkpoint-metadata corruption.
+A frozen non-smoke data/config split and counterfactual trajectory evaluation
+remain required before advancing the paired-training checklist item.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO

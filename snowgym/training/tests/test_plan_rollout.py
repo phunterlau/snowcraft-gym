@@ -10,6 +10,7 @@ import pytest
 from snowgym_client.state_hash import hash_observation
 from snowgym_training.data import TrajectoryDataset
 from snowgym_training.plan_data import javascript_json_digest
+from snowgym_training.plan_ablation import audit_plan_ablation, run_plan_ablation
 from snowgym_training.plan_rollout import (
     audit_plan_rollouts,
     convert_plan_rollouts,
@@ -64,6 +65,32 @@ def test_plan_rollout_audit_rejects_corruption_and_small_capacity(tmp_path: Path
     source.write_text(json.dumps(valid), encoding="utf-8")
     with pytest.raises(ValueError, match="must cover"):
         convert_plan_rollouts(source=source, output=tmp_path / "out", max_team_units=1)
+
+
+def test_matched_plan_ablation_trains_both_models_reproducibly(tmp_path: Path) -> None:
+    source = tmp_path / "rollouts.json"
+    source.write_text(json.dumps(rollout_value()), encoding="utf-8")
+    dataset = tmp_path / "dataset"
+    convert_plan_rollouts(source=source, output=dataset, max_team_units=3)
+    config = ablation_config()
+
+    first = run_plan_ablation(
+        dataset_path=dataset, output=tmp_path / "first", config=config, git_commit="test"
+    )
+    second = run_plan_ablation(
+        dataset_path=dataset, output=tmp_path / "second", config=config, git_commit="test"
+    )
+    assert first == second
+    assert first["runs"]["noPlan"]["architecture"].get("plan_conditioned") is None
+    assert first["runs"]["planConditioned"]["architecture"]["plan_conditioned"] is True
+    assert audit_plan_ablation(tmp_path / "first") == first
+
+    metadata_path = tmp_path / "first" / "plan-conditioned" / "metadata.json"
+    metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+    metadata["checkpointDigest"] = "sha256:" + "0" * 64
+    metadata_path.write_text(json.dumps(metadata), encoding="utf-8")
+    with pytest.raises(ValueError, match="checkpoint metadata digest mismatch"):
+        audit_plan_ablation(tmp_path / "first")
 
 
 def rollout_value() -> dict:
@@ -176,4 +203,26 @@ def unit(unit_id: int, team: str, x: float, y: float) -> dict:
         "state": "idle",
         "throwCooldown": 0,
         "charge": 0,
+    }
+
+
+def ablation_config() -> dict:
+    return {
+        "format": "snowgym.plan-bc-ablation-config.v0",
+        "name": "plan-smoke",
+        "seed": 17,
+        "steps": 1,
+        "batchSize": 1,
+        "learningRate": 0.001,
+        "architecture": {
+            "entity_hidden": 8,
+            "entity_embedding": 4,
+            "actor_hidden": 8,
+        },
+        "loss": {
+            "action_weight": 1.0,
+            "target_weight": 1.0,
+            "power_weight": 1.0,
+        },
+        "evaluationSuite": "plan-smoke",
     }

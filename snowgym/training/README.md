@@ -679,3 +679,23 @@ aligned `observation__plan_groups [3,38]`,
 shards can train the no-plan ablation (extra arrays are ignored by that model)
 or a `plan_conditioned` architecture; conditioned training fails closed if
 those aligned arrays are absent.
+
+Run a matched behavior-cloning experiment with:
+
+```bash
+cd snowgym/training
+.venv/bin/snowgym-run-plan-ablation \
+  --dataset artifacts/plan-training-10v10 \
+  --config src/snowgym_training/configs/plan_bc_ablation_v0.json \
+  --output artifacts/plan-bc-ablation-v0 \
+  --json
+```
+
+The ablation config defines one architecture and optimization budget and is not
+allowed to set `plan_conditioned`. The runner deterministically derives two
+training configs that differ only by that flag, uses one audited dataset for
+both, and records the child checkpoint/state digests and loss metrics in a
+semantically hashed result. Its auditor reloads both checkpoints and rejects
+any difference in dataset, optimizer, loss, seed, or step. A training result is
+still only a plumbing check until the paired policies are evaluated on frozen
+counterfactual behavior metrics.
