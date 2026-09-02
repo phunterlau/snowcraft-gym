@@ -21,7 +21,55 @@ from .export_scripted import (
     transition_tensors,
 )
 from .policy import TorchPolicy
-from .trajectory import TrajectoryWriter, audit_dataset, json_digest, load_export_spec
+from .trajectory import TrajectoryWriter, audit_dataset, json_digest
+
+PLAN_DAGGER_SPEC_FORMAT = "snowgym.plan-dagger-export.v0"
+
+
+def load_plan_dagger_spec(path: str | Path) -> dict[str, Any]:
+    source = Path(path)
+    try:
+        value = json.loads(source.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as error:
+        raise ValueError(f"cannot load plan DAgger spec {source}: {error}") from error
+    required = {"format", "name", "teacher", "maxTeamUnits", "shardSize", "plans", "splits"}
+    if not isinstance(value, dict) or set(value) != required:
+        raise ValueError("plan DAgger spec fields are invalid")
+    if value["format"] != PLAN_DAGGER_SPEC_FORMAT:
+        raise ValueError(f"plan DAgger spec format must be {PLAN_DAGGER_SPEC_FORMAT}")
+    if value["teacher"] != "plan-teacher-action.v0":
+        raise ValueError("plan DAgger teacher must be plan-teacher-action.v0")
+    if not isinstance(value["name"], str) or not value["name"]:
+        raise ValueError("plan DAgger spec name is invalid")
+    for field, maximum in (("maxTeamUnits", 10), ("shardSize", None)):
+        item = value[field]
+        if not isinstance(item, int) or isinstance(item, bool) or item <= 0:
+            raise ValueError(f"plan DAgger {field} must be positive")
+        if maximum is not None and item > maximum:
+            raise ValueError(f"plan DAgger {field} exceeds {maximum}")
+    plans = value["plans"]
+    if not isinstance(plans, dict) or not plans or any(
+        not isinstance(name, str) or not name or not isinstance(plan, dict)
+        for name, plan in plans.items()
+    ):
+        raise ValueError("plan DAgger plan catalog is invalid")
+    splits = value["splits"]
+    if not isinstance(splits, dict) or set(splits) != {"train", "validation", "evaluation"}:
+        raise ValueError("plan DAgger splits are invalid")
+    seen: set[int] = set()
+    for split, episodes in splits.items():
+        if not isinstance(episodes, list) or not episodes:
+            raise ValueError(f"plan DAgger split {split} is empty")
+        for index, episode in enumerate(episodes):
+            if not isinstance(episode, dict) or set(episode) != {"seed", "scenario", "plan"}:
+                raise ValueError(f"plan DAgger {split}[{index}] fields are invalid")
+            seed = episode["seed"]
+            if not isinstance(seed, int) or isinstance(seed, bool) or seed < 0 or seed in seen:
+                raise ValueError(f"plan DAgger {split}[{index}] seed is invalid or duplicate")
+            seen.add(seed)
+            if not isinstance(episode["scenario"], dict) or episode["plan"] not in plans:
+                raise ValueError(f"plan DAgger {split}[{index}] scenario/plan is invalid")
+    return value
 
 
 def export_plan_dagger_dataset(
@@ -33,18 +81,11 @@ def export_plan_dagger_dataset(
     max_decisions: int | None = None,
     client: SnowGymBatchClient | None = None,
 ) -> dict[str, Any]:
-    spec = load_export_spec(spec_path)
+    spec = load_plan_dagger_spec(spec_path)
     if split not in spec["splits"]:
         raise ValueError(f"unknown split {split!r}")
     if max_decisions is not None and max_decisions <= 0:
         raise ValueError("max_decisions must be positive")
-    for name, episodes in spec["splits"].items():
-        for index, episode in enumerate(episodes):
-            if not isinstance(episode.get("planId"), str) or not episode["planId"]:
-                raise ValueError(f"{name}[{index}].planId must be non-empty")
-            if not isinstance(episode.get("plan"), dict):
-                raise ValueError(f"{name}[{index}].plan must be an object")
-
     metadata, _ = load_checkpoint(checkpoint)
     policy = TorchPolicy(checkpoint)
     if not policy.model.plan_conditioned:
@@ -58,10 +99,13 @@ def export_plan_dagger_dataset(
     versions: dict[str, Any] | None = None
     try:
         for episode_index, episode in enumerate(spec["splits"][split]):
+            plan_name = episode["plan"]
+            plan_id = f"{plan_name}-{episode['seed']}"
+            plan = spec["plans"][plan_name]
             batch_observation, infos = environment.reset(
                 [int(episode["seed"])], [episode["scenario"]]
             )
-            environment.activate_plans([episode["planId"]], [episode["plan"]])
+            environment.activate_plans([plan_id], [plan])
             info = infos[0]
             if versions is None:
                 versions = {
@@ -129,8 +173,9 @@ def export_plan_dagger_dataset(
                     "index": episode_index,
                     "seed": episode["seed"],
                     "scenario": episode["scenario"],
-                    "planId": episode["planId"],
-                    "plan": episode["plan"],
+                    "planName": plan_name,
+                    "planId": plan_id,
+                    "plan": plan,
                     "startTransition": start_transition,
                     "transitions": decisions,
                     "terminated": terminated,

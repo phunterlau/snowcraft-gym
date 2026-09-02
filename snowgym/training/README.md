@@ -351,15 +351,15 @@ Collect plan-conditioned DAgger data without an HTTP server:
 ```bash
 cd snowgym/training
 .venv/bin/python -m snowgym_training.export_plan_dagger \
-  --spec path/to/plan-dagger-spec.json \
+  --spec src/snowgym_training/configs/plan_dagger_v0.json \
   --split train \
   --checkpoint runs/plan_bc_ablation_qual_v1/plan-conditioned \
   --output artifacts/plan-dagger-v0 \
   --json
 ```
 
-The export spec uses the normal `snowgym.trajectory-export.v0` split contract;
-each episode additionally supplies `planId` and a schema-valid `plan`. The
+The `snowgym.plan-dagger-export.v0` spec contains a validated plan catalog and
+disjoint train/validation/evaluation episodes that reference catalog names. The
 collector activates that plan, executes only the learned policy, and labels
 each visited state with the read-only production plan teacher. Output shards
 carry aligned plan tensors and bind the rollout checkpoint, source spec, split

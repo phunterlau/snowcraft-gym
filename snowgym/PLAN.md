@@ -994,6 +994,14 @@ A real two-decision integration test covers the full path. A frozen multi-
 mission collection spec, merged training corpus, and retraining ablation remain
 next.
 
+M7 plan-DAgger-v0 freeze (2026-09-02): the catalog-based
+`configs/plan_dagger_v0.json` freezes direct, flank, hold, withdraw, and two-
+group support templates; ten training episodes and five each for validation and
+evaluation use disjoint seeds. All run on 6v6 Winter Front against easy scripted
+red with a 1,800-tick horizon. The catalog and episode references are validated
+before the batch host starts. Collection results and retraining outcomes remain
+unseen; this freeze must be committed before generation.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO
