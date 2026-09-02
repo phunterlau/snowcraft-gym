@@ -1253,6 +1253,15 @@ batch encoding, preview roles, schema audit, malformed roles, compatible
 initialization, and a training step. A fresh role-aware collection freeze and
 development run remain next.
 
+M7 role-aware-v0 development freeze (2026-09-02): before collection,
+`plan_role_dagger_v2.json` fixes fresh 15201–15210 training, 15301–15305
+validation, and sealed 15401–15405 evaluation seeds with the existing balanced
+mission-pair schedule. `plan_role_adapter_v0_dev.json` fixes qualified
+initialization, seed 89001, the established 2,000-step budget and losses,
+changed-action weight `1.0`, and enables only the new unit-role residuals.
+Development may inspect training/validation plus the existing closed-loop
+suites; the v2 evaluation split remains unopened until a new gate is frozen.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO

@@ -1,0 +1,29 @@
+{
+  "format": "snowgym.bc-training-config.v0",
+  "name": "plan-role-action-adapter-6v6-v0-dev",
+  "seed": 89001,
+  "steps": 2000,
+  "batchSize": 64,
+  "learningRate": 0.0003,
+  "architecture": {
+    "entity_hidden": 32,
+    "entity_embedding": 24,
+    "actor_hidden": 64,
+    "action_conditioned_targets": true,
+    "plan_conditioned": true,
+    "plan_target_only": true,
+    "separate_target_actor": true,
+    "plan_action_adapter": true,
+    "plan_role_conditioned": true
+  },
+  "loss": {
+    "action_weight": 1.0,
+    "target_weight": 5.0,
+    "power_weight": 0.5,
+    "throw_action_weight": 5.0
+  },
+  "evaluationSuite": "plan-role-action-adapter-v0-development",
+  "trainable": "plan-action-target-path",
+  "counterfactualLossWeight": 1.0,
+  "counterfactualChangedActionWeight": 1.0
+}

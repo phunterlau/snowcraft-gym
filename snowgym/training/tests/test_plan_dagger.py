@@ -85,6 +85,10 @@ PLAN_COUNTERFACTUAL_SPEC = (
     ROOT / "training" / "src" / "snowgym_training" / "configs"
     / "plan_counterfactual_dagger_v1.json"
 )
+PLAN_ROLE_SPEC = (
+    ROOT / "training" / "src" / "snowgym_training" / "configs"
+    / "plan_role_dagger_v2.json"
+)
 ACTION_ADAPTER_CHECKPOINT = ROOT / "training" / "runs" / "plan_action_adapter_v0"
 ACTION_ADAPTER_OFFLINE = (
     ROOT / "training" / "evaluations" / "plan_action_adapter_offline_v0.json"
@@ -150,6 +154,17 @@ def test_frozen_plan_dagger_spec_balances_missions_and_disjoins_seeds() -> None:
     assert all(
         episode["plan"] != episode["counterfactualPlan"] for episode in episodes
     )
+    role_spec = load_plan_dagger_spec(PLAN_ROLE_SPEC)
+    assert role_spec["format"] == "snowgym.plan-dagger-export.v2"
+    role_episodes = sum(role_spec["splits"].values(), [])
+    assert len({episode["seed"] for episode in role_episodes}) == 20
+    assert min(episode["seed"] for episode in role_episodes) == 15201
+    role_config = load_training_config(
+        ROOT / "training" / "src" / "snowgym_training" / "configs"
+        / "plan_role_adapter_v0_dev.json"
+    )
+    assert role_config["architecture"]["plan_role_conditioned"] is True
+    assert role_config["counterfactualChangedActionWeight"] == 1.0
 
 
 def test_frozen_plan_action_adapter_gate_is_audited_and_retains_failure(tmp_path: Path) -> None:
