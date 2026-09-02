@@ -114,7 +114,12 @@ def restore_ppo_checkpoint(
         "collectorConfig": collector_config,
     }
     for name, value in expected.items():
-        if metadata[name] != value:
+        actual = (
+            normalized_ppo_config(metadata[name])
+            if name == "ppoConfig"
+            else metadata[name]
+        )
+        if actual != value:
             raise ValueError(f"PPO checkpoint {name} does not match training run")
     model.load_state_dict(state["model"])
     optimizer.load_state_dict(state["optimizer"])
@@ -149,10 +154,7 @@ def validate_ppo_checkpoint_metadata(value: Any) -> None:
         if not isinstance(value[name], str) or not value[name]:
             raise ValueError(f"PPO checkpoint {name} must be a non-empty string")
     model_config(value["architecture"])
-    ppo_value = value["ppoConfig"]
-    if not isinstance(ppo_value, dict) or set(ppo_value) != set(asdict(PPOConfig())):
-        raise ValueError("PPO checkpoint ppoConfig fields are invalid")
-    PPOConfig(**ppo_value)
+    normalized_ppo_config(value["ppoConfig"])
     validate_counters(
         value["trainingSeed"], value["updateIndex"], value["environmentSteps"]
     )
@@ -162,6 +164,15 @@ def validate_ppo_checkpoint_metadata(value: Any) -> None:
     source = {name: item for name, item in value.items() if name != "checkpointDigest"}
     if value["checkpointDigest"] != json_digest(source):
         raise ValueError("PPO checkpoint metadata digest mismatch")
+
+
+def normalized_ppo_config(value: Any) -> dict[str, Any]:
+    current = set(asdict(PPOConfig()))
+    legacy = current - {"initial_target_log_std", "initial_power_log_std"}
+    fields = frozenset(value) if isinstance(value, dict) else frozenset()
+    if not isinstance(value, dict) or fields not in {frozenset(current), frozenset(legacy)}:
+        raise ValueError("PPO checkpoint ppoConfig fields are invalid")
+    return asdict(PPOConfig(**value))
 
 
 def validate_counters(training_seed: Any, update_index: Any, environment_steps: Any) -> None:

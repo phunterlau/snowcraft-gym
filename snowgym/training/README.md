@@ -338,6 +338,13 @@ bootstraps time-limit truncation but not true terminal states. The optional
 health potential is a training signal only and never replaces terminal-only
 benchmark reward.
 
+`PPOConfig.initial_target_log_std` and `initial_power_log_std` make the initial
+continuous exploration scale explicit (default `-1`). A BC-initialized gate
+with coordinated movement may choose a narrower value in its frozen config;
+the selected values are retained in checkpoint and run provenance. Exact
+resume restores checkpoint state, while PPO-to-PPO transfer restores the
+source distribution parameters.
+
 `RolloutBuffer` owns a fixed number of decisions from a fixed number of
 persistent worlds. Every transition is validated and detached on insertion;
 the completed `PPORollout` retains `[time, world, ...]` tensors for audit and

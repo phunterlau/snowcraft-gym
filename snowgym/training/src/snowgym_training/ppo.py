@@ -27,6 +27,8 @@ class PPOConfig:
     learning_rate: float = 3e-4
     update_epochs: int = 4
     minibatch_size: int = 256
+    initial_target_log_std: float = -1.0
+    initial_power_log_std: float = -1.0
 
     def __post_init__(self) -> None:
         unit_interval = {
@@ -40,6 +42,10 @@ class PPOConfig:
         for name in ("value_weight", "entropy_weight"):
             if getattr(self, name) < 0:
                 raise ValueError(f"PPO {name} must be non-negative")
+        for name in ("initial_target_log_std", "initial_power_log_std"):
+            value = getattr(self, name)
+            if not isinstance(value, int | float) or isinstance(value, bool) or not -10 <= value <= 2:
+                raise ValueError(f"PPO {name} must be in [-10, 2]")
         if self.max_grad_norm <= 0 or self.learning_rate <= 0:
             raise ValueError("PPO max_grad_norm and learning_rate must be positive")
         for name in ("update_epochs", "minibatch_size"):
@@ -223,11 +229,21 @@ def stack_field(transitions: list[dict[str, Any]], field: str) -> Tensor:
 
 
 class HybridActorCritic(nn.Module):
-    def __init__(self, model_config: ModelConfig) -> None:
+    def __init__(
+        self,
+        model_config: ModelConfig,
+        *,
+        initial_target_log_std: float = -1.0,
+        initial_power_log_std: float = -1.0,
+    ) -> None:
         super().__init__()
         self.policy = EntityPolicy(model_config)
-        self.target_log_std = nn.Parameter(torch.full((2,), -1.0))
-        self.power_log_std = nn.Parameter(torch.full((1,), -1.0))
+        self.target_log_std = nn.Parameter(
+            torch.full((2,), float(initial_target_log_std))
+        )
+        self.power_log_std = nn.Parameter(
+            torch.full((1,), float(initial_power_log_std))
+        )
         self.value_head = nn.Linear(model_config.actor_hidden, 1)
 
     def forward(self, observation: dict[str, Tensor]) -> dict[str, Tensor]:

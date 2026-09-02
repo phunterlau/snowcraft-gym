@@ -74,6 +74,25 @@ def test_hybrid_policy_respects_masks_and_recomputes_log_probability() -> None:
     assert value.shape == (3,)
 
 
+def test_hybrid_policy_uses_configured_initial_exploration_scale() -> None:
+    model = HybridActorCritic(
+        ModelConfig(16, 12, 24),
+        initial_target_log_std=-3.0,
+        initial_power_log_std=-4.0,
+    )
+    assert model.target_log_std.tolist() == [-3.0, -3.0]
+    assert model.power_log_std.tolist() == [-4.0]
+
+
+def test_ppo_config_rejects_unsafe_initial_exploration_scale() -> None:
+    try:
+        PPOConfig(initial_target_log_std=-11.0)
+    except ValueError as error:
+        assert "initial_target_log_std" in str(error)
+    else:
+        raise AssertionError("PPO accepted an unsafe initial exploration scale")
+
+
 def test_noop_joint_log_probability_ignores_continuous_values() -> None:
     observation = synthetic_observation(batch=1)
     model = HybridActorCritic(ModelConfig(16, 12, 24))

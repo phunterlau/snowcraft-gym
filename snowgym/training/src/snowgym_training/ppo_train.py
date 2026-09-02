@@ -79,7 +79,11 @@ def train_ppo(
     torch.use_deterministic_algorithms(True)
     torch.set_num_threads(1)
     torch.manual_seed(training_seed)
-    model = HybridActorCritic(architecture).cpu()
+    model = HybridActorCritic(
+        architecture,
+        initial_target_log_std=config.initial_target_log_std,
+        initial_power_log_std=config.initial_power_log_std,
+    ).cpu()
     optimizer = torch.optim.Adam(model.parameters(), lr=config.learning_rate)
     start_update = 0
     environment_steps = 0
