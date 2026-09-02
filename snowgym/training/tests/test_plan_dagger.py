@@ -13,6 +13,7 @@ from snowgym_training.export_plan_dagger import (
 )
 from snowgym_training.merge_trajectory import merge_datasets
 from snowgym_training.trainer import train_behavior_clone
+from snowgym_training.trainer import load_training_config
 from snowgym_training.trajectory import audit_dataset
 
 
@@ -25,6 +26,10 @@ PLAN_SUITE = (
 FROZEN_SPEC = (
     ROOT / "training" / "src" / "snowgym_training" / "configs" / "plan_dagger_v0.json"
 )
+CORRECTION_CONFIG = (
+    ROOT / "training" / "src" / "snowgym_training" / "configs"
+    / "plan_dagger_correction_v0.json"
+)
 
 
 def test_frozen_plan_dagger_spec_balances_missions_and_disjoins_seeds() -> None:
@@ -34,6 +39,9 @@ def test_frozen_plan_dagger_spec_balances_missions_and_disjoins_seeds() -> None:
     assert len(spec["splits"]["validation"]) == 5
     assert len(spec["splits"]["evaluation"]) == 5
     assert {episode["plan"] for episode in spec["splits"]["train"]} == set(spec["plans"])
+    correction = load_training_config(CORRECTION_CONFIG)
+    assert correction["trainable"] == "plan-target-path"
+    assert correction["steps"] == 1500
 
 
 def test_plan_dagger_labels_learner_visited_states_headlessly(tmp_path: Path) -> None:

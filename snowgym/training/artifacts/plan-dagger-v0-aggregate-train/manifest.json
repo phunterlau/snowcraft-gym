@@ -1,0 +1,1094 @@
+{
+  "datasetDigest": "sha256:297be4717a9f33a44f374c006e6aca73aed804149c2f781ebd69508b79497bdd",
+  "episodes": [
+    {
+      "blueAlive": 6,
+      "decisionLimited": true,
+      "decisions": 80,
+      "finalStateHash": "fnv1a64:5ae905112294815f",
+      "finalTick": 480,
+      "index": 0,
+      "planId": "synthetic-plan-2400",
+      "planSourceSeed": 2400,
+      "redAlive": 5,
+      "seed": 8200,
+      "sourceIndex": 0,
+      "startTransition": 0,
+      "terminated": false,
+      "transitions": 80,
+      "truncated": false,
+      "winner": null
+    },
+    {
+      "blueAlive": 6,
+      "decisionLimited": true,
+      "decisions": 80,
+      "finalStateHash": "fnv1a64:271cdfc7ad467973",
+      "finalTick": 480,
+      "index": 1,
+      "planId": "synthetic-plan-2401",
+      "planSourceSeed": 2401,
+      "redAlive": 5,
+      "seed": 8200,
+      "sourceIndex": 0,
+      "startTransition": 80,
+      "terminated": false,
+      "transitions": 80,
+      "truncated": false,
+      "winner": null
+    },
+    {
+      "blueAlive": 5,
+      "decisionLimited": true,
+      "decisions": 80,
+      "finalStateHash": "fnv1a64:a8c6c4c86cd538a1",
+      "finalTick": 480,
+      "index": 2,
+      "planId": "synthetic-plan-2402",
+      "planSourceSeed": 2402,
+      "redAlive": 5,
+      "seed": 8200,
+      "sourceIndex": 0,
+      "startTransition": 160,
+      "terminated": false,
+      "transitions": 80,
+      "truncated": false,
+      "winner": null
+    },
+    {
+      "blueAlive": 6,
+      "decisionLimited": true,
+      "decisions": 80,
+      "finalStateHash": "fnv1a64:90ba4827bb222c69",
+      "finalTick": 480,
+      "index": 3,
+      "planId": "synthetic-plan-2403",
+      "planSourceSeed": 2403,
+      "redAlive": 6,
+      "seed": 8200,
+      "sourceIndex": 0,
+      "startTransition": 240,
+      "terminated": false,
+      "transitions": 80,
+      "truncated": false,
+      "winner": null
+    },
+    {
+      "blueAlive": 6,
+      "decisionLimited": true,
+      "decisions": 80,
+      "finalStateHash": "fnv1a64:9f1be3473c6fd016",
+      "finalTick": 480,
+      "index": 4,
+      "planId": "synthetic-plan-2404",
+      "planSourceSeed": 2404,
+      "redAlive": 5,
+      "seed": 8200,
+      "sourceIndex": 0,
+      "startTransition": 320,
+      "terminated": false,
+      "transitions": 80,
+      "truncated": false,
+      "winner": null
+    },
+    {
+      "blueAlive": 6,
+      "decisionLimited": true,
+      "decisions": 80,
+      "finalStateHash": "fnv1a64:d7034c303faa28d6",
+      "finalTick": 480,
+      "index": 5,
+      "planId": "synthetic-plan-2405",
+      "planSourceSeed": 2405,
+      "redAlive": 5,
+      "seed": 8200,
+      "sourceIndex": 0,
+      "startTransition": 400,
+      "terminated": false,
+      "transitions": 80,
+      "truncated": false,
+      "winner": null
+    },
+    {
+      "blueAlive": 6,
+      "decisionLimited": true,
+      "decisions": 80,
+      "finalStateHash": "fnv1a64:804f894af36a5680",
+      "finalTick": 480,
+      "index": 6,
+      "planId": "synthetic-plan-2406",
+      "planSourceSeed": 2406,
+      "redAlive": 6,
+      "seed": 8200,
+      "sourceIndex": 0,
+      "startTransition": 480,
+      "terminated": false,
+      "transitions": 80,
+      "truncated": false,
+      "winner": null
+    },
+    {
+      "blueAlive": 6,
+      "decisionLimited": true,
+      "decisions": 80,
+      "finalStateHash": "fnv1a64:30ac31d1f0d6b7cd",
+      "finalTick": 480,
+      "index": 7,
+      "planId": "synthetic-plan-2407",
+      "planSourceSeed": 2407,
+      "redAlive": 5,
+      "seed": 8200,
+      "sourceIndex": 0,
+      "startTransition": 560,
+      "terminated": false,
+      "transitions": 80,
+      "truncated": false,
+      "winner": null
+    },
+    {
+      "blueAlive": 6,
+      "decisionLimited": true,
+      "decisions": 80,
+      "finalStateHash": "fnv1a64:911dca4d4e64b9e0",
+      "finalTick": 480,
+      "index": 8,
+      "planId": "synthetic-plan-2408",
+      "planSourceSeed": 2408,
+      "redAlive": 6,
+      "seed": 8200,
+      "sourceIndex": 0,
+      "startTransition": 640,
+      "terminated": false,
+      "transitions": 80,
+      "truncated": false,
+      "winner": null
+    },
+    {
+      "blueAlive": 6,
+      "decisionLimited": true,
+      "decisions": 80,
+      "finalStateHash": "fnv1a64:0792b64e41c0df7e",
+      "finalTick": 480,
+      "index": 9,
+      "planId": "synthetic-plan-2409",
+      "planSourceSeed": 2409,
+      "redAlive": 6,
+      "seed": 8200,
+      "sourceIndex": 0,
+      "startTransition": 720,
+      "terminated": false,
+      "transitions": 80,
+      "truncated": false,
+      "winner": null
+    },
+    {
+      "blueAlive": 6,
+      "decisionLimited": true,
+      "decisions": 80,
+      "finalStateHash": "fnv1a64:310fa18062710972",
+      "finalTick": 480,
+      "index": 10,
+      "planId": "synthetic-plan-2410",
+      "planSourceSeed": 2410,
+      "redAlive": 6,
+      "seed": 8200,
+      "sourceIndex": 0,
+      "startTransition": 800,
+      "terminated": false,
+      "transitions": 80,
+      "truncated": false,
+      "winner": null
+    },
+    {
+      "blueAlive": 6,
+      "decisionLimited": true,
+      "decisions": 80,
+      "finalStateHash": "fnv1a64:3c4eb2956b381423",
+      "finalTick": 480,
+      "index": 11,
+      "planId": "synthetic-plan-2411",
+      "planSourceSeed": 2411,
+      "redAlive": 4,
+      "seed": 8200,
+      "sourceIndex": 0,
+      "startTransition": 880,
+      "terminated": false,
+      "transitions": 80,
+      "truncated": false,
+      "winner": null
+    },
+    {
+      "blueAlive": 6,
+      "decisionLimited": true,
+      "decisions": 80,
+      "finalStateHash": "fnv1a64:5b7025fdd2685a9b",
+      "finalTick": 480,
+      "index": 12,
+      "planId": "synthetic-plan-2412",
+      "planSourceSeed": 2412,
+      "redAlive": 6,
+      "seed": 8200,
+      "sourceIndex": 0,
+      "startTransition": 960,
+      "terminated": false,
+      "transitions": 80,
+      "truncated": false,
+      "winner": null
+    },
+    {
+      "blueAlive": 6,
+      "decisionLimited": true,
+      "decisions": 80,
+      "finalStateHash": "fnv1a64:3e5d88f667276127",
+      "finalTick": 480,
+      "index": 13,
+      "planId": "synthetic-plan-2413",
+      "planSourceSeed": 2413,
+      "redAlive": 5,
+      "seed": 8200,
+      "sourceIndex": 0,
+      "startTransition": 1040,
+      "terminated": false,
+      "transitions": 80,
+      "truncated": false,
+      "winner": null
+    },
+    {
+      "blueAlive": 6,
+      "decisionLimited": true,
+      "decisions": 80,
+      "finalStateHash": "fnv1a64:bb15e2407fbc9047",
+      "finalTick": 480,
+      "index": 14,
+      "planId": "synthetic-plan-2414",
+      "planSourceSeed": 2414,
+      "redAlive": 6,
+      "seed": 8200,
+      "sourceIndex": 0,
+      "startTransition": 1120,
+      "terminated": false,
+      "transitions": 80,
+      "truncated": false,
+      "winner": null
+    },
+    {
+      "blueAlive": 6,
+      "decisionLimited": true,
+      "decisions": 80,
+      "finalStateHash": "fnv1a64:90ba4827bb222c69",
+      "finalTick": 480,
+      "index": 15,
+      "planId": "synthetic-plan-2415",
+      "planSourceSeed": 2415,
+      "redAlive": 6,
+      "seed": 8200,
+      "sourceIndex": 0,
+      "startTransition": 1200,
+      "terminated": false,
+      "transitions": 80,
+      "truncated": false,
+      "winner": null
+    },
+    {
+      "blueAlive": 6,
+      "decisionLimited": true,
+      "decisions": 80,
+      "finalStateHash": "fnv1a64:5b9f71d51422b9eb",
+      "finalTick": 480,
+      "index": 16,
+      "planId": "synthetic-plan-2416",
+      "planSourceSeed": 2416,
+      "redAlive": 6,
+      "seed": 8200,
+      "sourceIndex": 0,
+      "startTransition": 1280,
+      "terminated": false,
+      "transitions": 80,
+      "truncated": false,
+      "winner": null
+    },
+    {
+      "blueAlive": 6,
+      "decisionLimited": true,
+      "decisions": 80,
+      "finalStateHash": "fnv1a64:9c0fa77a1467d56c",
+      "finalTick": 480,
+      "index": 17,
+      "planId": "synthetic-plan-2417",
+      "planSourceSeed": 2417,
+      "redAlive": 5,
+      "seed": 8200,
+      "sourceIndex": 0,
+      "startTransition": 1360,
+      "terminated": false,
+      "transitions": 80,
+      "truncated": false,
+      "winner": null
+    },
+    {
+      "blueAlive": 6,
+      "decisionLimited": true,
+      "decisions": 80,
+      "finalStateHash": "fnv1a64:7b6e0cd0dc44ac36",
+      "finalTick": 480,
+      "index": 18,
+      "planId": "synthetic-plan-2418",
+      "planSourceSeed": 2418,
+      "redAlive": 4,
+      "seed": 8200,
+      "sourceIndex": 0,
+      "startTransition": 1440,
+      "terminated": false,
+      "transitions": 80,
+      "truncated": false,
+      "winner": null
+    },
+    {
+      "blueAlive": 6,
+      "decisionLimited": true,
+      "decisions": 80,
+      "finalStateHash": "fnv1a64:8bfa89c7df616c3a",
+      "finalTick": 480,
+      "index": 19,
+      "planId": "synthetic-plan-2419",
+      "planSourceSeed": 2419,
+      "redAlive": 6,
+      "seed": 8200,
+      "sourceIndex": 0,
+      "startTransition": 1520,
+      "terminated": false,
+      "transitions": 80,
+      "truncated": false,
+      "winner": null
+    },
+    {
+      "blueAlive": 6,
+      "decisionLimited": true,
+      "decisions": 80,
+      "finalStateHash": "fnv1a64:4b8b7467b022433b",
+      "finalTick": 480,
+      "index": 20,
+      "planId": "synthetic-plan-2420",
+      "planSourceSeed": 2420,
+      "redAlive": 6,
+      "seed": 8200,
+      "sourceIndex": 0,
+      "startTransition": 1600,
+      "terminated": false,
+      "transitions": 80,
+      "truncated": false,
+      "winner": null
+    },
+    {
+      "blueAlive": 6,
+      "decisionLimited": true,
+      "decisions": 80,
+      "finalStateHash": "fnv1a64:90ba4827bb222c69",
+      "finalTick": 480,
+      "index": 21,
+      "planId": "synthetic-plan-2421",
+      "planSourceSeed": 2421,
+      "redAlive": 6,
+      "seed": 8200,
+      "sourceIndex": 0,
+      "startTransition": 1680,
+      "terminated": false,
+      "transitions": 80,
+      "truncated": false,
+      "winner": null
+    },
+    {
+      "blueAlive": 6,
+      "decisionLimited": true,
+      "decisions": 80,
+      "finalStateHash": "fnv1a64:8298d047637c72bb",
+      "finalTick": 480,
+      "index": 22,
+      "planId": "synthetic-plan-2422",
+      "planSourceSeed": 2422,
+      "redAlive": 6,
+      "seed": 8200,
+      "sourceIndex": 0,
+      "startTransition": 1760,
+      "terminated": false,
+      "transitions": 80,
+      "truncated": false,
+      "winner": null
+    },
+    {
+      "blueAlive": 6,
+      "decisionLimited": true,
+      "decisions": 80,
+      "finalStateHash": "fnv1a64:a5faaf85162c5b2f",
+      "finalTick": 480,
+      "index": 23,
+      "planId": "synthetic-plan-2423",
+      "planSourceSeed": 2423,
+      "redAlive": 5,
+      "seed": 8200,
+      "sourceIndex": 0,
+      "startTransition": 1840,
+      "terminated": false,
+      "transitions": 80,
+      "truncated": false,
+      "winner": null
+    },
+    {
+      "decisionLimited": false,
+      "finalStateHash": "fnv1a64:87effed5c30d966b",
+      "index": 24,
+      "plan": {
+        "groups": [
+          {
+            "allocationWeight": 1,
+            "order": {
+              "approach": "direct",
+              "engagement": {
+                "cohesion": "normal",
+                "fire": "focus",
+                "posture": "balanced",
+                "preferredRange": "medium"
+              },
+              "mission": "engage",
+              "objective": {
+                "kind": "enemy_cluster",
+                "select": "nearest"
+              }
+            },
+            "role": "main",
+            "selection": "balanced"
+          }
+        ],
+        "intentSummary": "Engage the nearest cluster directly with focused fire.",
+        "schemaVersion": "snowgym.command-plan.v0"
+      },
+      "planId": "direct-13001",
+      "planName": "direct",
+      "rolloutWinner": "red",
+      "scenario": {
+        "blueUnits": 6,
+        "map": "arena6.json",
+        "maxTicks": 1800,
+        "redDifficulty": "easy",
+        "redUnits": 6
+      },
+      "seed": 13001,
+      "sourceIndex": 1,
+      "startTransition": 1920,
+      "terminated": true,
+      "transitions": 167,
+      "truncated": false
+    },
+    {
+      "decisionLimited": false,
+      "finalStateHash": "fnv1a64:b61bd76c958fd0c5",
+      "index": 25,
+      "plan": {
+        "groups": [
+          {
+            "allocationWeight": 1,
+            "order": {
+              "approach": "left_flank",
+              "engagement": {
+                "cohesion": "normal",
+                "fire": "distributed",
+                "posture": "balanced",
+                "preferredRange": "medium"
+              },
+              "mission": "engage",
+              "objective": {
+                "kind": "enemy_cluster",
+                "select": "nearest"
+              }
+            },
+            "role": "main",
+            "selection": "balanced"
+          }
+        ],
+        "intentSummary": "Engage the nearest cluster from the left flank with distributed fire.",
+        "schemaVersion": "snowgym.command-plan.v0"
+      },
+      "planId": "flank-13002",
+      "planName": "flank",
+      "rolloutWinner": "red",
+      "scenario": {
+        "blueUnits": 6,
+        "map": "arena6.json",
+        "maxTicks": 1800,
+        "redDifficulty": "easy",
+        "redUnits": 6
+      },
+      "seed": 13002,
+      "sourceIndex": 1,
+      "startTransition": 2087,
+      "terminated": true,
+      "transitions": 218,
+      "truncated": false
+    },
+    {
+      "decisionLimited": false,
+      "finalStateHash": "fnv1a64:44f376738a664437",
+      "index": 26,
+      "plan": {
+        "groups": [
+          {
+            "allocationWeight": 1,
+            "order": {
+              "approach": "direct",
+              "engagement": {
+                "cohesion": "tight",
+                "fire": "opportunistic",
+                "posture": "conservative",
+                "preferredRange": "long"
+              },
+              "mission": "hold",
+              "objective": {
+                "kind": "current_position"
+              }
+            },
+            "role": "main",
+            "selection": "balanced"
+          }
+        ],
+        "intentSummary": "Hold the current line conservatively.",
+        "schemaVersion": "snowgym.command-plan.v0"
+      },
+      "planId": "hold-13003",
+      "planName": "hold",
+      "rolloutWinner": "red",
+      "scenario": {
+        "blueUnits": 6,
+        "map": "arena6.json",
+        "maxTicks": 1800,
+        "redDifficulty": "easy",
+        "redUnits": 6
+      },
+      "seed": 13003,
+      "sourceIndex": 1,
+      "startTransition": 2305,
+      "terminated": true,
+      "transitions": 256,
+      "truncated": false
+    },
+    {
+      "decisionLimited": false,
+      "finalStateHash": "fnv1a64:c15a0ebea36aa656",
+      "index": 27,
+      "plan": {
+        "groups": [
+          {
+            "allocationWeight": 1,
+            "order": {
+              "approach": "direct",
+              "engagement": {
+                "cohesion": "tight",
+                "fire": "opportunistic",
+                "posture": "conservative",
+                "preferredRange": "long"
+              },
+              "mission": "withdraw",
+              "objective": {
+                "kind": "region",
+                "region": "own_backfield"
+              }
+            },
+            "role": "main",
+            "selection": "balanced"
+          }
+        ],
+        "intentSummary": "Withdraw together into the own backfield.",
+        "schemaVersion": "snowgym.command-plan.v0"
+      },
+      "planId": "withdraw-13004",
+      "planName": "withdraw",
+      "rolloutWinner": null,
+      "scenario": {
+        "blueUnits": 6,
+        "map": "arena6.json",
+        "maxTicks": 1800,
+        "redDifficulty": "easy",
+        "redUnits": 6
+      },
+      "seed": 13004,
+      "sourceIndex": 1,
+      "startTransition": 2561,
+      "terminated": false,
+      "transitions": 300,
+      "truncated": true
+    },
+    {
+      "decisionLimited": false,
+      "finalStateHash": "fnv1a64:fddac7a15997e035",
+      "index": 28,
+      "plan": {
+        "groups": [
+          {
+            "allocationWeight": 4,
+            "order": {
+              "approach": "direct",
+              "engagement": {
+                "cohesion": "normal",
+                "fire": "focus",
+                "posture": "balanced",
+                "preferredRange": "medium"
+              },
+              "mission": "engage",
+              "objective": {
+                "kind": "enemy_cluster",
+                "select": "nearest"
+              }
+            },
+            "role": "main",
+            "selection": "balanced"
+          },
+          {
+            "allocationWeight": 2,
+            "order": {
+              "approach": "direct",
+              "engagement": {
+                "cohesion": "tight",
+                "fire": "opportunistic",
+                "posture": "conservative",
+                "preferredRange": "long"
+              },
+              "mission": "support",
+              "objective": {
+                "kind": "ally_group",
+                "role": "main"
+              }
+            },
+            "role": "reserve",
+            "selection": "rearline"
+          }
+        ],
+        "intentSummary": "Engage with the main body while a compact reserve supports it.",
+        "schemaVersion": "snowgym.command-plan.v0"
+      },
+      "planId": "support-13005",
+      "planName": "support",
+      "rolloutWinner": "red",
+      "scenario": {
+        "blueUnits": 6,
+        "map": "arena6.json",
+        "maxTicks": 1800,
+        "redDifficulty": "easy",
+        "redUnits": 6
+      },
+      "seed": 13005,
+      "sourceIndex": 1,
+      "startTransition": 2861,
+      "terminated": true,
+      "transitions": 217,
+      "truncated": false
+    },
+    {
+      "decisionLimited": false,
+      "finalStateHash": "fnv1a64:a1efa6b955d6c2dc",
+      "index": 29,
+      "plan": {
+        "groups": [
+          {
+            "allocationWeight": 1,
+            "order": {
+              "approach": "direct",
+              "engagement": {
+                "cohesion": "normal",
+                "fire": "focus",
+                "posture": "balanced",
+                "preferredRange": "medium"
+              },
+              "mission": "engage",
+              "objective": {
+                "kind": "enemy_cluster",
+                "select": "nearest"
+              }
+            },
+            "role": "main",
+            "selection": "balanced"
+          }
+        ],
+        "intentSummary": "Engage the nearest cluster directly with focused fire.",
+        "schemaVersion": "snowgym.command-plan.v0"
+      },
+      "planId": "direct-13006",
+      "planName": "direct",
+      "rolloutWinner": "red",
+      "scenario": {
+        "blueUnits": 6,
+        "map": "arena6.json",
+        "maxTicks": 1800,
+        "redDifficulty": "easy",
+        "redUnits": 6
+      },
+      "seed": 13006,
+      "sourceIndex": 1,
+      "startTransition": 3078,
+      "terminated": true,
+      "transitions": 195,
+      "truncated": false
+    },
+    {
+      "decisionLimited": false,
+      "finalStateHash": "fnv1a64:6d24204a181e73a6",
+      "index": 30,
+      "plan": {
+        "groups": [
+          {
+            "allocationWeight": 1,
+            "order": {
+              "approach": "left_flank",
+              "engagement": {
+                "cohesion": "normal",
+                "fire": "distributed",
+                "posture": "balanced",
+                "preferredRange": "medium"
+              },
+              "mission": "engage",
+              "objective": {
+                "kind": "enemy_cluster",
+                "select": "nearest"
+              }
+            },
+            "role": "main",
+            "selection": "balanced"
+          }
+        ],
+        "intentSummary": "Engage the nearest cluster from the left flank with distributed fire.",
+        "schemaVersion": "snowgym.command-plan.v0"
+      },
+      "planId": "flank-13007",
+      "planName": "flank",
+      "rolloutWinner": "red",
+      "scenario": {
+        "blueUnits": 6,
+        "map": "arena6.json",
+        "maxTicks": 1800,
+        "redDifficulty": "easy",
+        "redUnits": 6
+      },
+      "seed": 13007,
+      "sourceIndex": 1,
+      "startTransition": 3273,
+      "terminated": true,
+      "transitions": 192,
+      "truncated": false
+    },
+    {
+      "decisionLimited": false,
+      "finalStateHash": "fnv1a64:56698b88906a00fd",
+      "index": 31,
+      "plan": {
+        "groups": [
+          {
+            "allocationWeight": 1,
+            "order": {
+              "approach": "direct",
+              "engagement": {
+                "cohesion": "tight",
+                "fire": "opportunistic",
+                "posture": "conservative",
+                "preferredRange": "long"
+              },
+              "mission": "hold",
+              "objective": {
+                "kind": "current_position"
+              }
+            },
+            "role": "main",
+            "selection": "balanced"
+          }
+        ],
+        "intentSummary": "Hold the current line conservatively.",
+        "schemaVersion": "snowgym.command-plan.v0"
+      },
+      "planId": "hold-13008",
+      "planName": "hold",
+      "rolloutWinner": "red",
+      "scenario": {
+        "blueUnits": 6,
+        "map": "arena6.json",
+        "maxTicks": 1800,
+        "redDifficulty": "easy",
+        "redUnits": 6
+      },
+      "seed": 13008,
+      "sourceIndex": 1,
+      "startTransition": 3465,
+      "terminated": true,
+      "transitions": 250,
+      "truncated": false
+    },
+    {
+      "decisionLimited": false,
+      "finalStateHash": "fnv1a64:081ee8ccd20e2553",
+      "index": 32,
+      "plan": {
+        "groups": [
+          {
+            "allocationWeight": 1,
+            "order": {
+              "approach": "direct",
+              "engagement": {
+                "cohesion": "tight",
+                "fire": "opportunistic",
+                "posture": "conservative",
+                "preferredRange": "long"
+              },
+              "mission": "withdraw",
+              "objective": {
+                "kind": "region",
+                "region": "own_backfield"
+              }
+            },
+            "role": "main",
+            "selection": "balanced"
+          }
+        ],
+        "intentSummary": "Withdraw together into the own backfield.",
+        "schemaVersion": "snowgym.command-plan.v0"
+      },
+      "planId": "withdraw-13009",
+      "planName": "withdraw",
+      "rolloutWinner": null,
+      "scenario": {
+        "blueUnits": 6,
+        "map": "arena6.json",
+        "maxTicks": 1800,
+        "redDifficulty": "easy",
+        "redUnits": 6
+      },
+      "seed": 13009,
+      "sourceIndex": 1,
+      "startTransition": 3715,
+      "terminated": false,
+      "transitions": 300,
+      "truncated": true
+    },
+    {
+      "decisionLimited": false,
+      "finalStateHash": "fnv1a64:60cc04d18edfa66c",
+      "index": 33,
+      "plan": {
+        "groups": [
+          {
+            "allocationWeight": 4,
+            "order": {
+              "approach": "direct",
+              "engagement": {
+                "cohesion": "normal",
+                "fire": "focus",
+                "posture": "balanced",
+                "preferredRange": "medium"
+              },
+              "mission": "engage",
+              "objective": {
+                "kind": "enemy_cluster",
+                "select": "nearest"
+              }
+            },
+            "role": "main",
+            "selection": "balanced"
+          },
+          {
+            "allocationWeight": 2,
+            "order": {
+              "approach": "direct",
+              "engagement": {
+                "cohesion": "tight",
+                "fire": "opportunistic",
+                "posture": "conservative",
+                "preferredRange": "long"
+              },
+              "mission": "support",
+              "objective": {
+                "kind": "ally_group",
+                "role": "main"
+              }
+            },
+            "role": "reserve",
+            "selection": "rearline"
+          }
+        ],
+        "intentSummary": "Engage with the main body while a compact reserve supports it.",
+        "schemaVersion": "snowgym.command-plan.v0"
+      },
+      "planId": "support-13010",
+      "planName": "support",
+      "rolloutWinner": "red",
+      "scenario": {
+        "blueUnits": 6,
+        "map": "arena6.json",
+        "maxTicks": 1800,
+        "redDifficulty": "easy",
+        "redUnits": 6
+      },
+      "seed": 13010,
+      "sourceIndex": 1,
+      "startTransition": 4015,
+      "terminated": true,
+      "transitions": 217,
+      "truncated": false
+    }
+  ],
+  "format": "snowgym.trajectory.v0",
+  "independentSources": true,
+  "maxTeamUnits": 10,
+  "name": "snowgym-trajectory-aggregate",
+  "planConditioned": true,
+  "retainedFields": [
+    "action__action_type",
+    "action__power",
+    "action__target",
+    "episode_index",
+    "next_tick",
+    "observation__allies",
+    "observation__ally_mask",
+    "observation__enemies",
+    "observation__enemy_mask",
+    "observation__obstacle_mask",
+    "observation__obstacles",
+    "observation__plan_group_mask",
+    "observation__plan_groups",
+    "observation__projectile_mask",
+    "observation__projectiles",
+    "observation__team_alive",
+    "observation__tick",
+    "observation__unit_action_mask",
+    "post_state_hash",
+    "pre_state_hash",
+    "reward",
+    "seed",
+    "teacher_accepted",
+    "teacher_reason",
+    "terminated",
+    "tick",
+    "truncated"
+  ],
+  "shards": [
+    {
+      "path": "shard-00000.npz",
+      "tensorDigest": "sha256:3f97cf72c2354d5384ecda210e3a1f75c825ee8bb7a4eb1c12ea512f9a9ec5fa",
+      "transitions": 1024
+    },
+    {
+      "path": "shard-00001.npz",
+      "tensorDigest": "sha256:e43c641c470c5fcb57092b9a0ee3f88a161f6465a15214f596423216ecfea2e2",
+      "transitions": 1024
+    },
+    {
+      "path": "shard-00002.npz",
+      "tensorDigest": "sha256:74d29e0cba56a491734ec5bb0472d69eee3ac61d37d29b0082369077df48213b",
+      "transitions": 1024
+    },
+    {
+      "path": "shard-00003.npz",
+      "tensorDigest": "sha256:0eae0132b0f4dca0d62059d0fef3c7e83948d181737723082ea174b9860433a9",
+      "transitions": 1024
+    },
+    {
+      "path": "shard-00004.npz",
+      "tensorDigest": "sha256:1aba37eda5f78460e5147de7c021d206a0b45a7312842bb2d9534e44625da697",
+      "transitions": 136
+    }
+  ],
+  "sourceSpecDigest": "sha256:c0b5736804ff13dbeaf987fd34687f0e4dcf246dbe28703b976b6dbc6b95ce45",
+  "sources": [
+    {
+      "datasetDigest": "sha256:f64e30e6458ca3d9c9a6e110aae7ae3248e6e2715a938ce323732b1e658d61e6",
+      "droppedFields": [
+        "plan_source_seed"
+      ],
+      "index": 0,
+      "rolloutCheckpointDigest": null,
+      "sourceIdentity": "sha256:f57f337f4444338420f7cdd7ba0c48940bb0d5fe7aa537ef5c2551219f9dafda",
+      "sourcePlanRolloutDigest": "sha256:f57f337f4444338420f7cdd7ba0c48940bb0d5fe7aa537ef5c2551219f9dafda",
+      "sourceSpecDigest": null,
+      "splitSeeds": {
+        "evaluation": [],
+        "train": [
+          8200
+        ],
+        "validation": []
+      },
+      "teacher": "production-plan-aware-controller.v0",
+      "transitions": 1920
+    },
+    {
+      "datasetDigest": "sha256:8d4138dc4eea7a83f7af3273996a026cba2503268e89b468e08a0f490f08d182",
+      "droppedFields": [],
+      "index": 1,
+      "rolloutCheckpointDigest": "sha256:4119b9a3f8c0d3df69b704a8f3f813a1b38ab11ca56faffb4c4cebc2cb235133",
+      "sourceIdentity": "sha256:91085610d2327f74d37e28a648c4057c963f089de9137939caeb9e99a2d151b1",
+      "sourcePlanRolloutDigest": null,
+      "sourceSpecDigest": "sha256:91085610d2327f74d37e28a648c4057c963f089de9137939caeb9e99a2d151b1",
+      "splitSeeds": {
+        "evaluation": [
+          13201,
+          13202,
+          13203,
+          13204,
+          13205
+        ],
+        "train": [
+          13001,
+          13002,
+          13003,
+          13004,
+          13005,
+          13006,
+          13007,
+          13008,
+          13009,
+          13010
+        ],
+        "validation": [
+          13101,
+          13102,
+          13103,
+          13104,
+          13105
+        ]
+      },
+      "teacher": "plan-teacher-action.v0",
+      "transitions": 2312
+    }
+  ],
+  "split": "train",
+  "splitSeeds": {
+    "evaluation": [
+      13201,
+      13202,
+      13203,
+      13204,
+      13205
+    ],
+    "train": [
+      8200,
+      13001,
+      13002,
+      13003,
+      13004,
+      13005,
+      13006,
+      13007,
+      13008,
+      13009,
+      13010
+    ],
+    "validation": [
+      13101,
+      13102,
+      13103,
+      13104,
+      13105
+    ]
+  },
+  "teacher": "ordered-aggregate.v0",
+  "transitions": 4232,
+  "versions": {
+    "apiVersion": "snowgym.v0",
+    "simulationVersion": "snowgym.sim.v1",
+    "stateHashVersion": "snowgym.state.v1",
+    "upstreamBaseCommit": "7d9fca5"
+  }
+}

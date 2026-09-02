@@ -1031,6 +1031,14 @@ bind initializer checkpoint/state digests and the new dataset independently. A
 real plan-DAgger smoke proves the action head remains bit-identical while the
 plan encoder updates. A frozen correction config and post-freeze run are next.
 
+M7 plan-DAgger correction-v0 freeze (2026-09-02): the audited expert-plus-
+learner aggregate contains 4,232 transitions with digest
+`sha256:297be4717a9f33a44f374c006e6aca73aed804149c2f781ebd69508b79497bdd`.
+`configs/plan_dagger_correction_v0.json` fixes qualified-checkpoint
+initialization, plan-target-path-only training, seed 84001, 1,500 steps, batch
+64, learning rate `0.001`, and the existing matched loss weights. The physical
+action path is frozen. Training and closed-loop outcomes remain unseen.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO
