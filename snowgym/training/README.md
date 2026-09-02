@@ -569,3 +569,15 @@ actions. View it through the existing UI engine at:
 ```text
 http://127.0.0.1:5173/replay.html?recording=/replays/ppo_10v10_terrain_relational_bc_v0-seed-9101.json
 ```
+
+## Synthetic command-plan curriculum
+
+M7 begins with the pure TypeScript generator in
+`plan/SyntheticPlanCurriculum.ts`. Given one detached server observation, a
+safe integer base seed, and a sample count, it emits
+`snowgym.synthetic-plan-curriculum.v0` records. Every plan is parsed by the
+production command-plan validator and grounded by the production plan grounder
+before the record exposes stable role-to-unit assignments. The compact source
+section retains the tick, arena, ally/enemy roster geometry and health, plus an
+optional public state hash. Generation is deterministic and makes no OpenAI
+call. A JSON export and the Python plan-tensor/data join are the next M7 seam.

@@ -662,7 +662,7 @@ claimed.
 Goal: train the fast learned controller to follow the existing slow
 `CommandPlan` language without online LLM calls.
 
-- [ ] Add a deterministic synthetic plan curriculum that emits only schema-
+- [x] Add a deterministic synthetic plan curriculum that emits only schema-
       valid plans and records grounded assignments and source seeds.
 - [ ] Add a fixed-size `PlanTensorEncoder` for mission, approach, posture, fire
       policy, preferred range, cohesion, relative objective/group geometry,
@@ -679,6 +679,17 @@ Goal: train the fast learned controller to follow the existing slow
 M7 exit: plan-conditioned policies produce reproducibly distinct, intended
 behavior under counterfactual plans for the same initial state and outperform
 the no-plan ablation on frozen objective-completion metrics.
+
+M7 synthetic curriculum foundation (2026-09-02):
+`training/plan/SyntheticPlanCurriculum.ts` deterministically samples all five
+mission types and the bounded approach/fire vocabularies from explicit source
+seeds. Every sample is canonicalized by the production `CommandPlan` parser and
+grounded by the production `PlanGrounder`; the resulting record retains the
+symbolic plan, stable unit assignments, seed, plan ID, arena/roster provenance,
+and optional source-state hash. The pure core performs no file or provider I/O.
+Tests prove repeatability, schema validity, complete non-overlapping assignment,
+directive coverage, and rejection of unsafe seed ranges or undersized rosters.
+The fixed-size tensor encoder and export/data-join path remain next.
 
 ### M8 — unit-level CTDE / MAPPO
 
