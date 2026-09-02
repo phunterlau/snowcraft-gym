@@ -154,10 +154,18 @@ incomplete rollout cannot be consumed.
 epoch permutations from the training seed and update index, and applies the
 hybrid clipped objective in deterministic minibatches. It rejects non-finite
 losses or gradients, clips the aggregate gradient norm, and returns
-sample-weighted policy/value/entropy/KL/clip diagnostics. Exact PPO checkpoint
-resume is the next gate.
+sample-weighted policy/value/entropy/KL/clip diagnostics.
+
+`snowgym.ppo-checkpoint.v0` persists model and optimizer tensors, Torch RNG
+state, architecture and PPO configuration, training seed, curriculum digest,
+update index, environment-step count, and semantic state/metadata digests.
+Loading uses restricted Torch deserialization and rejects incompatible
+training provenance before restoring state. The deterministic acceptance test
+matches uninterrupted training exactly across a save/restore boundary. This is
+rollout-boundary optimizer resume; persistent-world collection and episode-seed
+scheduling are the next slice.
 
 The frozen `ppo_curriculum_v0.json` keeps training ranges disjoint from eight
 evaluation seeds per gate and sets thresholds before qualifying runs. The
-current foundation does not yet claim a PPO result; live batch collection,
-deterministic optimizer/resume, and the checkpoint series remain next.
+current foundation does not yet claim a PPO result; live batch collection and
+the qualifying checkpoint series remain next.

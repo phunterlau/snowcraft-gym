@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import torch
 
+from snowgym_training.checkpoint import semantic_state_digest
 from snowgym_training.model import ModelConfig
 from snowgym_training.curriculum import load_curriculum, validate_curriculum
 from snowgym_training.ppo import (
@@ -14,6 +15,10 @@ from snowgym_training.ppo import (
     potential_shaped_reward,
     ppo_loss,
     ppo_update,
+)
+from snowgym_training.ppo_checkpoint import (
+    restore_ppo_checkpoint,
+    save_ppo_checkpoint,
 )
 
 def synthetic_observation(batch: int = 3, units: int = 2) -> dict[str, torch.Tensor]:
@@ -295,3 +300,124 @@ def test_ppo_update_is_deterministic_and_reports_clipping_diagnostics() -> None:
         not torch.equal(first.state_dict()[name], reference.state_dict()[name])
         for name in first.state_dict()
     )
+
+
+def test_ppo_checkpoint_resume_matches_uninterrupted_updates(tmp_path) -> None:
+    torch.manual_seed(41)
+    config = PPOConfig(update_epochs=2, minibatch_size=3, learning_rate=0.001)
+    initial = HybridActorCritic(ModelConfig(16, 12, 24))
+    rollout = synthetic_rollout(initial, config)
+    uninterrupted = HybridActorCritic(ModelConfig(16, 12, 24))
+    interrupted = HybridActorCritic(ModelConfig(16, 12, 24))
+    uninterrupted.load_state_dict(initial.state_dict())
+    interrupted.load_state_dict(initial.state_dict())
+    uninterrupted_optimizer = torch.optim.Adam(
+        uninterrupted.parameters(), lr=config.learning_rate
+    )
+    interrupted_optimizer = torch.optim.Adam(
+        interrupted.parameters(), lr=config.learning_rate
+    )
+
+    ppo_update(
+        uninterrupted,
+        uninterrupted_optimizer,
+        rollout,
+        config,
+        training_seed=73,
+        update_index=0,
+    )
+    ppo_update(
+        interrupted,
+        interrupted_optimizer,
+        rollout,
+        config,
+        training_seed=73,
+        update_index=0,
+    )
+    checkpoint = tmp_path / "ppo-checkpoint"
+    metadata = save_ppo_checkpoint(
+        checkpoint,
+        model=interrupted,
+        optimizer=interrupted_optimizer,
+        config=config,
+        curriculum_digest="sha256:test-curriculum",
+        training_seed=73,
+        update_index=1,
+        environment_steps=4,
+        git_commit="test",
+    )
+    assert metadata["updateIndex"] == 1
+    assert metadata["environmentSteps"] == 4
+
+    torch.manual_seed(999)
+    resumed = HybridActorCritic(ModelConfig(16, 12, 24))
+    resumed_optimizer = torch.optim.Adam(resumed.parameters(), lr=config.learning_rate)
+    restored = restore_ppo_checkpoint(
+        checkpoint,
+        model=resumed,
+        optimizer=resumed_optimizer,
+        config=config,
+        curriculum_digest="sha256:test-curriculum",
+        training_seed=73,
+    )
+    assert restored["checkpointDigest"] == metadata["checkpointDigest"]
+    uninterrupted_metrics = ppo_update(
+        uninterrupted,
+        uninterrupted_optimizer,
+        rollout,
+        config,
+        training_seed=73,
+        update_index=1,
+    )
+    resumed_metrics = ppo_update(
+        resumed,
+        resumed_optimizer,
+        rollout,
+        config,
+        training_seed=73,
+        update_index=1,
+    )
+
+    assert resumed_metrics == uninterrupted_metrics
+    assert semantic_state_digest(
+        {
+            "model": resumed.state_dict(),
+            "optimizer": resumed_optimizer.state_dict(),
+        }
+    ) == semantic_state_digest(
+        {
+            "model": uninterrupted.state_dict(),
+            "optimizer": uninterrupted_optimizer.state_dict(),
+        }
+    )
+
+
+def test_ppo_checkpoint_rejects_incompatible_resume(tmp_path) -> None:
+    config = PPOConfig(update_epochs=1, minibatch_size=2)
+    model = HybridActorCritic(ModelConfig(16, 12, 24))
+    optimizer = torch.optim.Adam(model.parameters(), lr=config.learning_rate)
+    checkpoint = tmp_path / "ppo-checkpoint"
+    save_ppo_checkpoint(
+        checkpoint,
+        model=model,
+        optimizer=optimizer,
+        config=config,
+        curriculum_digest="sha256:first",
+        training_seed=5,
+        update_index=0,
+        environment_steps=0,
+        git_commit="test",
+    )
+    try:
+        restore_ppo_checkpoint(
+            checkpoint,
+            model=model,
+            optimizer=optimizer,
+            config=config,
+            curriculum_digest="sha256:other",
+            training_seed=5,
+        )
+    except ValueError as error:
+        assert "curriculumDigest" in str(error)
+    else:
+        raise AssertionError("incompatible PPO checkpoint was accepted")

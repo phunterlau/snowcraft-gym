@@ -426,8 +426,10 @@ partial observation, or self-play confounds.
 - [x] Add the deterministic minibatch optimizer loop with global advantage
       normalization, clipped policy/value losses, finite-gradient enforcement,
       gradient clipping, and aggregated KL/entropy/clip diagnostics.
-- [ ] Add exact PPO checkpoint/resume metadata, including optimizer and random
-      state plus rollout/update counters and curriculum provenance.
+- [x] Add exact rollout-boundary PPO checkpoint/resume metadata, including
+      model, optimizer, Torch random state, update/environment-step counters,
+      architecture/configuration, training seed, curriculum provenance, and
+      semantic state/metadata digests.
 - [ ] Keep canonical evaluation reward at win `+1`, loss `-1`, draw `0`. If
       sparse learning blocks the smoke test, add an opt-in training wrapper with
       potential-based own-minus-enemy health shaping and test that it leaves
@@ -459,8 +461,9 @@ now snapshots vector-world tensors, rejects inconsistent transitions, computes
 terminal-aware GAE only when complete, and flattens time/world axes for the
 optimizer without collapsing entity features. PPO updates use a reproducible
 seed/update-index permutation and report sample-weighted diagnostics across
-every epoch and minibatch; exact checkpoint resume and live collection remain
-open.
+every epoch and minibatch. A restricted-load checkpoint test proves that an
+update-save-restore-update sequence exactly matches uninterrupted optimizer
+state and weights. Live batch collection and qualifying runs remain open.
 
 ### M7 — plan-conditioned learned executor
 
