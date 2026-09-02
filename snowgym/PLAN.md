@@ -624,6 +624,26 @@ digest `sha256:de8e80f22a1ebe0d96c96583e3f01de586215a14c932dcbb2faf7965eeebc87b`
 and all nested artifacts. `3v3-scripted` is advanced; terrain and larger-roster
 gates remain open.
 
+M6.2 gate-5 and gate-6 acceptance (2026-09-02): the committed
+`ppo_3v3_terrain_bc_v0` and `ppo_5v5_terrain_bc_v0` qualifying series each pass
+all eight held-out episodes at updates 1/5/10, versus 0/8 masked-random, with
+zero rejected actions. Gate 5 introduced terrain teacher data; gate 6 added
+action-conditioned movement and throw target heads so the shared continuous
+head no longer had to fit incompatible target distributions. Both results are
+BC-initialized PPO retention gates, not cold-start PPO claims.
+
+Gate-7 initializer acceptance (2026-09-02): the first 10v10 BC initializer
+reliably eliminated nine opponents but targeted defeated roster slots because
+`enemy_mask` represents slot presence, not life state. Relational selection now
+combines that mask with the encoded alive bit. The frozen
+`bc_10v10_terrain_relational_v0` code/policy hybrid keeps neural action
+selection, exact nearest-living-enemy throw targets, and a final-opponent move
+target while retaining the learned movement head as an auxiliary BC objective.
+Its provenance-valid checkpoint won both disjoint BC evaluation episodes in
+145 decisions with all ten blue units alive and zero rejected actions, versus
+0/2 masked-random and 2/2 scripted teacher at 146 decisions. Gate-7 PPO
+qualification remains open.
+
 ### M7 — plan-conditioned learned executor
 
 Goal: train the fast learned controller to follow the existing slow

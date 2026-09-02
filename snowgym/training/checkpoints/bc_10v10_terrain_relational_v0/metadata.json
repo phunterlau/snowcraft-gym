@@ -1,0 +1,75 @@
+{
+  "architecture": {
+    "action_conditioned_targets": true,
+    "actor_hidden": 64,
+    "entity_embedding": 24,
+    "entity_hidden": 32,
+    "last_enemy_move_target": true,
+    "nearest_enemy_features": true,
+    "nearest_enemy_throw_target": true
+  },
+  "checkpointDigest": "sha256:a7f1362cf163fbf23ebc3c8290bb0f772e57fb3a763b6dcf97b21135aa47bc08",
+  "datasetManifestHash": "sha256:6f2e7a7ed096d64e980343818d446e721c2bd70468fe25644b47052c0b89df78",
+  "evaluationSuite": "teacher_10v10_terrain_v0/evaluation",
+  "format": "snowgym.checkpoint.v0",
+  "gitCommit": "9f28de6d62a6c0cb56951358eb0c42772d804645",
+  "loss": {
+    "action_weight": 1.0,
+    "power_weight": 1.0,
+    "target_weight": 10.0,
+    "throw_action_weight": 10.0
+  },
+  "optimizer": {
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "epsilon": 1e-08,
+    "learningRate": 0.003,
+    "name": "Adam",
+    "weightDecay": 0.0
+  },
+  "stateDigest": "sha256:77c3ffe88f078fc984ea138fd89f8e67f09c1c2b26ac351fe6131a85a66798ff",
+  "step": 20000,
+  "trainingConfig": {
+    "architecture": {
+      "action_conditioned_targets": true,
+      "actor_hidden": 64,
+      "entity_embedding": 24,
+      "entity_hidden": 32,
+      "last_enemy_move_target": true,
+      "nearest_enemy_features": true,
+      "nearest_enemy_throw_target": true
+    },
+    "batchSize": 64,
+    "evaluationSuite": "teacher_10v10_terrain_v0/evaluation",
+    "format": "snowgym.bc-training-config.v0",
+    "learningRate": 0.003,
+    "loss": {
+      "action_weight": 1.0,
+      "power_weight": 1.0,
+      "target_weight": 10.0,
+      "throw_action_weight": 10.0
+    },
+    "name": "scripted-blue-10v10-terrain-relational-bc-v0",
+    "seed": 73027,
+    "steps": 20000
+  },
+  "trainingMetrics": {
+    "final": {
+      "action": 6.174906502565136e-06,
+      "power": 2.5904598714987515e-06,
+      "target": 6.122452759882435e-05,
+      "total": 0.000621010665781796
+    },
+    "firstLoss": 3.6488146781921387,
+    "startStep": 0
+  },
+  "trainingSeed": 73027,
+  "versions": {
+    "apiVersion": "snowgym.v0",
+    "simulationVersion": "snowgym.sim.v1",
+    "stateHashVersion": "snowgym.state.v1",
+    "upstreamBaseCommit": "7d9fca5"
+  }
+}

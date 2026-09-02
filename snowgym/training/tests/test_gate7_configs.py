@@ -91,3 +91,27 @@ def test_committed_gate7_initializer_is_digest_bound_and_near_terminal() -> None
     assert evaluation["summary"]["learned"]["blueWins"] == 0
     assert evaluation["summary"]["learned"]["meanRedHealthDealt"] > 9.5
     assert evaluation["summary"]["learned"]["rejectedActions"] == 0
+
+
+def test_committed_gate7_relational_initializer_is_digest_bound_and_wins() -> None:
+    training_root = Path(__file__).parents[1]
+    metadata, _ = load_checkpoint(
+        training_root / "checkpoints/bc_10v10_terrain_relational_v0"
+    )
+    evaluation = json.loads(
+        (
+            training_root / "evaluations/bc_10v10_terrain_relational_v0.json"
+        ).read_text(encoding="utf-8")
+    )
+    claimed = evaluation.pop("resultDigest")
+    assert claimed == json_digest(evaluation)
+    assert evaluation["checkpointDigest"] == metadata["checkpointDigest"]
+    assert metadata["gitCommit"].startswith("9f28de6")
+    assert metadata["datasetManifestHash"] == (
+        "sha256:6f2e7a7ed096d64e980343818d446e721c2bd70468fe25644b47052c0b89df78"
+    )
+    assert metadata["architecture"]["last_enemy_move_target"] is True
+    assert evaluation["summary"]["learned"]["blueWins"] == 2
+    assert evaluation["summary"]["learned"]["meanDecisions"] == 145.0
+    assert evaluation["summary"]["learned"]["meanRedHealthDealt"] == 10.0
+    assert evaluation["summary"]["learned"]["rejectedActions"] == 0

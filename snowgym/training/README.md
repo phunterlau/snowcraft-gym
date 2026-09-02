@@ -522,3 +522,19 @@ contract test resets all seven scenarios against the authoritative batch
 server. Defining a gate does not advance it: a qualifying checkpoint series
 must still pass its held-out threshold, and the current foundation does not yet
 claim a PPO result.
+
+The gate-7 relational initializer is frozen in
+`bc_10v10_terrain_relational_v0.json`. It retains neural action selection and
+an auxiliary learned move target, while the opt-in execution priors aim throws
+at the nearest living enemy and use nearest-living-enemy movement only to clean
+up the final opponent. Relational masks combine roster presence with the
+encoded alive bit; defeated slots must never receive attention or targets.
+The committed checkpoint `checkpoints/bc_10v10_terrain_relational_v0` binds
+source commit `9f28de6`, dataset digest
+`sha256:6f2e7a7ed096d64e980343818d446e721c2bd70468fe25644b47052c0b89df78`,
+and checkpoint digest
+`sha256:a7f1362cf163fbf23ebc3c8290bb0f772e57fb3a763b6dcf97b21135aa47bc08`.
+It won both disjoint BC evaluation episodes in 145 decisions with all ten blue
+units alive and zero rejected actions, versus 0/2 masked-random and 2/2 teacher
+at 146 decisions. This is a behavior-cloned, code/policy hybrid initializer;
+gate-7 PPO qualification remains separate.
