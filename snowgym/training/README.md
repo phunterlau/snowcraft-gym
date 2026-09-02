@@ -632,3 +632,27 @@ checkpoint. This adapter makes counterfactual influence possible; it is not by
 itself evidence that a model follows plans. Acceptance still requires actions
 collected from the production plan-aware executor and a matched no-plan
 ablation.
+
+Export plan-caused rollouts from identical authoritative initial states with:
+
+```bash
+npx tsx snowgym/training/plan/export-plan-rollouts.ts \
+  --map arena6.json \
+  --blue-units 10 \
+  --red-units 10 \
+  --environment-seed 42 \
+  --plan-seed 120 \
+  --samples 6 \
+  --max-decisions 300 \
+  --red-difficulty easy \
+  --output snowgym/training/artifacts/plan-rollouts-10v10.json \
+  --json
+```
+
+Each episode resets to the same state hash, grounds one counterfactual plan,
+and records the production plan-aware controller's detached observation,
+semantic action, dynamic plan tensor, reward, pre/post hashes, and action
+acceptance at every decision. The exporter refuses to replace an artifact
+unless `--force` is explicit. Episodes that do not reach a simulator terminal
+state within the requested horizon are labeled `decisionLimited`; this is
+distinct from the environment's own truncation signal.
