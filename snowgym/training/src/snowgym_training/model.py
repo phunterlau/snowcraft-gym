@@ -26,6 +26,7 @@ class ModelConfig:
     nearest_enemy_features: bool = False
     plan_conditioned: bool = False
     plan_target_only: bool = False
+    separate_target_actor: bool = False
 
     def as_dict(self) -> dict[str, int | bool]:
         value: dict[str, int | bool] = {
@@ -47,6 +48,8 @@ class ModelConfig:
             value["plan_conditioned"] = True
         if self.plan_target_only:
             value["plan_target_only"] = True
+        if self.separate_target_actor:
+            value["separate_target_actor"] = True
         return value
 
 
@@ -64,16 +67,8 @@ class EntityPolicy(nn.Module):
         global_features = embedding * 8 + 3
         self.plan_conditioned = config.plan_conditioned
         self.plan_target_only = config.plan_target_only
+        self.separate_target_actor = config.separate_target_actor
         if self.plan_conditioned:
-            self.plan_encoder = nn.Sequential(
-                nn.Linear(
-                    PLAN_GROUP_SLOTS * PLAN_FEATURE_VECTOR_SIZE + PLAN_GROUP_SLOTS,
-                    config.entity_hidden,
-                ),
-                nn.ReLU(),
-                nn.Linear(config.entity_hidden, embedding),
-                nn.ReLU(),
-            )
             if not self.plan_target_only:
                 global_features += embedding
         self.pairwise_enemy_attention = config.pairwise_enemy_attention
@@ -91,14 +86,27 @@ class EntityPolicy(nn.Module):
             nn.Linear(config.actor_hidden, config.actor_hidden),
             nn.ReLU(),
         )
-        if self.plan_target_only:
-            self.plan_actor = nn.Sequential(
-                nn.Linear(embedding + global_features + embedding, config.actor_hidden),
+        self.action_head = nn.Linear(config.actor_hidden, ACTION_TYPE_COUNT)
+        if self.plan_conditioned:
+            self.plan_encoder = nn.Sequential(
+                nn.Linear(
+                    PLAN_GROUP_SLOTS * PLAN_FEATURE_VECTOR_SIZE + PLAN_GROUP_SLOTS,
+                    config.entity_hidden,
+                ),
+                nn.ReLU(),
+                nn.Linear(config.entity_hidden, embedding),
+                nn.ReLU(),
+            )
+        if self.separate_target_actor:
+            target_features = embedding + global_features
+            if self.plan_target_only:
+                target_features += embedding
+            self.target_actor = nn.Sequential(
+                nn.Linear(target_features, config.actor_hidden),
                 nn.ReLU(),
                 nn.Linear(config.actor_hidden, config.actor_hidden),
                 nn.ReLU(),
             )
-        self.action_head = nn.Linear(config.actor_hidden, ACTION_TYPE_COUNT)
         self.action_conditioned_targets = config.action_conditioned_targets
         if self.action_conditioned_targets:
             self.last_enemy_move_target = config.last_enemy_move_target
@@ -239,10 +247,14 @@ class EntityPolicy(nn.Module):
         expanded = global_context[:, None, :].expand(-1, allies.shape[1], -1)
         actor_input = torch.cat([*actor_inputs, expanded], dim=-1)
         action_hidden = self.actor(actor_input)
-        if self.plan_target_only:
-            assert plan_embedding is not None
-            plan_expanded = plan_embedding[:, None, :].expand(-1, allies.shape[1], -1)
-            target_hidden = self.plan_actor(torch.cat([actor_input, plan_expanded], dim=-1))
+        if self.separate_target_actor:
+            target_inputs = [actor_input.detach()]
+            if self.plan_target_only:
+                assert plan_embedding is not None
+                target_inputs.append(
+                    plan_embedding[:, None, :].expand(-1, allies.shape[1], -1)
+                )
+            target_hidden = self.target_actor(torch.cat(target_inputs, dim=-1))
         else:
             target_hidden = action_hidden
         action_mask = observation["unit_action_mask"].bool().clone()
@@ -351,6 +363,7 @@ def model_config(value: Any) -> ModelConfig:
         "nearest_enemy_features",
         "plan_conditioned",
         "plan_target_only",
+        "separate_target_actor",
     }
     if not isinstance(value, dict) or set(value) - optional != required:
         raise ValueError(
@@ -381,5 +394,17 @@ def model_config(value: Any) -> ModelConfig:
     ):
         raise ValueError(
             "architecture plan_target_only requires action_conditioned_targets"
+        )
+    if value.get("plan_target_only", False) and not value.get(
+        "separate_target_actor", False
+    ):
+        raise ValueError("architecture plan_target_only requires separate_target_actor")
+    if (
+        value.get("separate_target_actor", False)
+        and value.get("plan_conditioned", False)
+        and not value.get("plan_target_only", False)
+    ):
+        raise ValueError(
+            "plan-conditioned separate_target_actor requires plan_target_only"
         )
     return ModelConfig(**value)

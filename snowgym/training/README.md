@@ -765,11 +765,13 @@ pass or change v0 thresholds; the next revision must use a documented model
 change and new disjoint seeds.
 
 For that revision, `architecture.plan_target_only` may be enabled alongside
-`plan_conditioned` and `action_conditioned_targets`. The ordinary action actor
+`plan_conditioned`, `action_conditioned_targets`, and `separate_target_actor`.
+The ordinary action actor
 then receives only physical state; a separate target actor receives the same
 physical context plus the plan embedding and drives move/throw targets and
 power. Counterfactual plans therefore cannot change action logits by
-construction, while they can still change destinations. The paired runner
+construction, and target loss is stopped at the shared physical-feature
+boundary, while plans can still change destinations. The paired runner
 removes this plan-only routing flag from the no-plan control, preserving one
-shared physical architecture and optimization budget. Existing checkpoints and
-the default fully plan-conditioned pathway are unchanged.
+shared separated-target architecture and optimization budget. Existing
+checkpoints and the default fully plan-conditioned pathway are unchanged.

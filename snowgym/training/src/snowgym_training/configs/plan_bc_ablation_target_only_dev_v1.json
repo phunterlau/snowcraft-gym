@@ -10,6 +10,7 @@
     "entity_embedding": 24,
     "actor_hidden": 64,
     "action_conditioned_targets": true,
+    "separate_target_actor": true,
     "plan_target_only": true
   },
   "loss": {

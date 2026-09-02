@@ -9,6 +9,7 @@ import pytest
 
 from snowgym_client.state_hash import hash_observation
 from snowgym_training.data import TrajectoryDataset
+from snowgym_training.checkpoint import load_checkpoint
 from snowgym_training.plan_data import javascript_json_digest
 from snowgym_training.plan_ablation import audit_plan_ablation, run_plan_ablation
 from snowgym_training.plan_evaluate import (
@@ -99,6 +100,39 @@ def test_matched_plan_ablation_trains_both_models_reproducibly(tmp_path: Path) -
     metadata_path.write_text(json.dumps(metadata), encoding="utf-8")
     with pytest.raises(ValueError, match="checkpoint metadata digest mismatch"):
         audit_plan_ablation(tmp_path / "first")
+
+
+def test_target_only_ablation_keeps_trained_action_parameters_identical(tmp_path: Path) -> None:
+    source = tmp_path / "rollouts.json"
+    source.write_text(json.dumps(two_plan_rollout_value()), encoding="utf-8")
+    dataset = tmp_path / "dataset"
+    convert_plan_rollouts(source=source, output=dataset, max_team_units=3)
+    architecture = {
+        **ablation_config()["architecture"],
+        "action_conditioned_targets": True,
+        "separate_target_actor": True,
+        "plan_target_only": True,
+    }
+    run_plan_ablation(
+        dataset_path=dataset,
+        output=tmp_path / "ablation",
+        config={**ablation_config(), "steps": 3, "architecture": architecture},
+        git_commit="test",
+    )
+    _, no_plan = load_checkpoint(tmp_path / "ablation" / "no-plan")
+    _, conditioned = load_checkpoint(tmp_path / "ablation" / "plan-conditioned")
+    shared_prefixes = (
+        "ally_encoder.",
+        "enemy_encoder.",
+        "projectile_encoder.",
+        "obstacle_encoder.",
+        "actor.",
+        "action_head.",
+    )
+    for name, value in no_plan["model"].items():
+        if name.startswith(shared_prefixes):
+            assert name in conditioned["model"]
+            assert np.array_equal(value.numpy(), conditioned["model"][name].numpy())
 
 
 def test_counterfactual_evaluation_swaps_only_plan_input(tmp_path: Path) -> None:

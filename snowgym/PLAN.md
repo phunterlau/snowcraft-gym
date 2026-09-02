@@ -849,13 +849,14 @@ interference, then freeze a new disjoint qualification rather than modifying
 v0.
 
 M7 action-interference isolation foundation (2026-09-02): the optional
-`plan_target_only` architecture routes physical context through the unchanged
-action actor and routes physical context plus the encoded commander plan
-through a separate target actor. Action logits are therefore counterfactually
-plan-invariant by construction while movement/throw targets and power remain
-plan-conditioned. The option requires plan conditioning and action-conditioned
-target heads; legacy and fully shared plan-conditioned checkpoint shapes remain
-unchanged. The paired runner
+`plan_target_only` plus `separate_target_actor` architecture routes physical
+context through the unchanged action actor and routes detached physical
+features plus the encoded commander plan through a separate target actor.
+Target loss cannot update the shared action feature path; action logits are
+therefore counterfactually plan-invariant while movement/throw targets and
+power remain plan-conditioned. The option requires plan conditioning and
+action-conditioned target heads; legacy and fully shared plan-conditioned
+checkpoint shapes remain unchanged. The paired runner
 strips this plan-only routing flag from its no-plan control. Tests prove exact
 action-logit/hidden invariance under counterfactual plans, distinct target-path
 representations, configuration rejection, and finite end-to-end training. A

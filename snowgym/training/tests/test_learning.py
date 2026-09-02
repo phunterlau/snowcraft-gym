@@ -98,7 +98,23 @@ def test_model_config_preserves_legacy_checkpoint_shape() -> None:
     with pytest.raises(ValueError, match="requires plan_conditioned"):
         model_config({**legacy, "plan_target_only": True})
     with pytest.raises(ValueError, match="requires action_conditioned_targets"):
-        model_config({**legacy, "plan_conditioned": True, "plan_target_only": True})
+        model_config(
+            {
+                **legacy,
+                "plan_conditioned": True,
+                "plan_target_only": True,
+                "separate_target_actor": True,
+            }
+        )
+    with pytest.raises(ValueError, match="requires separate_target_actor"):
+        model_config(
+            {
+                **legacy,
+                "action_conditioned_targets": True,
+                "plan_conditioned": True,
+                "plan_target_only": True,
+            }
+        )
 
 
 def test_plan_conditioned_model_requires_fixed_tensors_and_changes_counterfactual(
@@ -149,6 +165,7 @@ def test_plan_target_only_keeps_action_path_invariant_but_changes_targets(
             action_conditioned_targets=True,
             plan_conditioned=True,
             plan_target_only=True,
+            separate_target_actor=True,
         )
     )
 
@@ -160,6 +177,44 @@ def test_plan_target_only_keeps_action_path_invariant_but_changes_targets(
         result["supervised_target_by_action"][0, :, 1],
         result["supervised_target_by_action"][1, :, 1],
     )
+
+
+def test_plan_target_only_shared_action_modules_start_identically() -> None:
+    base = ModelConfig(
+        16,
+        12,
+        24,
+        action_conditioned_targets=True,
+        separate_target_actor=True,
+    )
+    torch.manual_seed(31)
+    no_plan = EntityPolicy(base)
+    torch.manual_seed(31)
+    conditioned = EntityPolicy(
+        ModelConfig(
+            16,
+            12,
+            24,
+            action_conditioned_targets=True,
+            plan_conditioned=True,
+            plan_target_only=True,
+            separate_target_actor=True,
+        )
+    )
+
+    for module_name in (
+        "ally_encoder",
+        "enemy_encoder",
+        "projectile_encoder",
+        "obstacle_encoder",
+        "actor",
+        "action_head",
+    ):
+        left = getattr(no_plan, module_name).state_dict()
+        right = getattr(conditioned, module_name).state_dict()
+        assert left.keys() == right.keys()
+        for name in left:
+            torch.testing.assert_close(left[name], right[name], rtol=0, atol=0)
 
 
 def test_action_conditioned_target_heads_select_distinct_means(tmp_path: Path) -> None:
