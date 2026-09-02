@@ -125,6 +125,7 @@ def train_behavior_clone(
         compatible_architecture = architecture.as_dict()
         compatible_architecture.pop("plan_action_adapter", None)
         compatible_architecture.pop("plan_role_conditioned", None)
+        compatible_architecture.pop("plan_unit_directive_conditioned", None)
         if initial_architecture not in (architecture.as_dict(), compatible_architecture):
             raise ValueError("initializer architecture does not match training config")
         missing, unexpected = model.load_state_dict(initial_state["model"], strict=False)

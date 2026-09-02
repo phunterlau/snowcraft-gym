@@ -487,6 +487,13 @@ promote this checkpoint. A categorical role alone is insufficient because it
 does not carry the unit's resolved group objective, approach, engagement, or
 support directive.
 
+Enable `architecture.plan_unit_directive_conditioned` to select the complete
+38-feature group directive for every unit from `plan_groups` using that unit's
+one-hot role. This option requires `plan_role_conditioned`; it augments the
+zero-initialized action and target residuals without changing the v2 dataset
+format. It is intended for the next development experiment, not a claim that
+the retained role-aware-v0 checkpoint passed.
+
 ## PPO foundation
 
 Run a short end-to-end infrastructure smoke against the first frozen curriculum

@@ -1277,6 +1277,18 @@ condition each unit on its own resolved group directive, not merely its
 main/maneuver/reserve category, while retaining the qualified initializer and
 same-state counterfactual evaluation.
 
+M7 per-unit directive foundation (2026-09-02): the optional
+`plan_unit_directive_conditioned` architecture derives a deterministic
+`[B,U,38]` tensor by selecting each living unit's host-resolved group row with
+its audited one-hot assignment. The full local directive now enters both the
+zero-initialized action and target residuals while the global plan encoder is
+retained. It requires role conditioning, adds no new observation schema, and
+keeps older checkpoints and v2 corpora compatible. Tests cover configuration
+constraints, exact group-row selection, initialized inference, and the
+role-aware closed-loop policy bridge. A frozen development config and run on
+the retained train/validation corpus are next; sealed evaluation seeds remain
+untouched.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO

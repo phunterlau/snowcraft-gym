@@ -29,6 +29,7 @@ class ModelConfig:
     separate_target_actor: bool = False
     plan_action_adapter: bool = False
     plan_role_conditioned: bool = False
+    plan_unit_directive_conditioned: bool = False
 
     def as_dict(self) -> dict[str, int | bool]:
         value: dict[str, int | bool] = {
@@ -56,6 +57,8 @@ class ModelConfig:
             value["plan_action_adapter"] = True
         if self.plan_role_conditioned:
             value["plan_role_conditioned"] = True
+        if self.plan_unit_directive_conditioned:
+            value["plan_unit_directive_conditioned"] = True
         return value
 
 
@@ -76,6 +79,7 @@ class EntityPolicy(nn.Module):
         self.separate_target_actor = config.separate_target_actor
         self.plan_action_adapter_enabled = config.plan_action_adapter
         self.plan_role_conditioned = config.plan_role_conditioned
+        self.plan_unit_directive_conditioned = config.plan_unit_directive_conditioned
         if self.plan_conditioned:
             if not self.plan_target_only:
                 global_features += embedding
@@ -129,7 +133,11 @@ class EntityPolicy(nn.Module):
             self.plan_action_adapter = nn.Sequential(
                 nn.Linear(
                     config.actor_hidden + embedding
-                    + (PLAN_GROUP_SLOTS if self.plan_role_conditioned else 0),
+                    + (PLAN_GROUP_SLOTS if self.plan_role_conditioned else 0)
+                    + (
+                        PLAN_FEATURE_VECTOR_SIZE
+                        if self.plan_unit_directive_conditioned else 0
+                    ),
                     config.actor_hidden,
                 ),
                 nn.ReLU(),
@@ -139,7 +147,15 @@ class EntityPolicy(nn.Module):
             nn.init.zeros_(self.plan_action_adapter[-1].bias)
         if self.plan_role_conditioned:
             self.plan_role_target_adapter = nn.Sequential(
-                nn.Linear(config.actor_hidden + PLAN_GROUP_SLOTS, config.actor_hidden),
+                nn.Linear(
+                    config.actor_hidden
+                    + PLAN_GROUP_SLOTS
+                    + (
+                        PLAN_FEATURE_VECTOR_SIZE
+                        if self.plan_unit_directive_conditioned else 0
+                    ),
+                    config.actor_hidden,
+                ),
                 nn.ReLU(),
                 nn.Linear(config.actor_hidden, config.actor_hidden),
             )
@@ -158,6 +174,10 @@ class EntityPolicy(nn.Module):
             adapter_inputs = [action_hidden.detach(), expanded_plan]
             if self.plan_role_conditioned:
                 adapter_inputs.append(self.unit_plan_roles(observation, action_hidden.shape[:2]))
+            if self.plan_unit_directive_conditioned:
+                adapter_inputs.append(
+                    self.unit_plan_directives(observation, action_hidden.shape[:2])
+                )
             logits = logits + self.plan_action_adapter(
                 torch.cat(adapter_inputs, dim=-1)
             ).masked_fill(~action_mask, 0)
@@ -295,14 +315,16 @@ class EntityPolicy(nn.Module):
         else:
             target_hidden = action_hidden
         if self.plan_role_conditioned:
-            target_hidden = target_hidden + self.plan_role_target_adapter(
-                torch.cat(
-                    [
-                        target_hidden.detach(),
-                        self.unit_plan_roles(observation, allies.shape[:2]),
-                    ],
-                    dim=-1,
+            role_target_inputs = [
+                target_hidden.detach(),
+                self.unit_plan_roles(observation, allies.shape[:2]),
+            ]
+            if self.plan_unit_directive_conditioned:
+                role_target_inputs.append(
+                    self.unit_plan_directives(observation, allies.shape[:2])
                 )
+            target_hidden = target_hidden + self.plan_role_target_adapter(
+                torch.cat(role_target_inputs, dim=-1)
             )
         action_mask = observation["unit_action_mask"].bool().clone()
         action_mask[..., 0] |= ~ally_mask
@@ -340,6 +362,16 @@ class EntityPolicy(nn.Module):
         ):
             raise ValueError("plan_unit_roles must be one-hot or zero")
         return roles
+
+    def unit_plan_directives(
+        self, observation: dict[str, Tensor], batch_units: tuple[int, int]
+    ) -> Tensor:
+        roles = self.unit_plan_roles(observation, batch_units)
+        groups = observation.get("plan_groups")
+        expected = (batch_units[0], PLAN_GROUP_SLOTS, PLAN_FEATURE_VECTOR_SIZE)
+        if groups is None or groups.shape != expected:
+            raise ValueError(f"plan_groups must have shape {list(expected)}")
+        return torch.einsum("bur,brf->buf", roles, groups.float())
 
 
 def entity_encoder(features: int, config: ModelConfig) -> nn.Sequential:
@@ -427,6 +459,7 @@ def model_config(value: Any) -> ModelConfig:
         "separate_target_actor",
         "plan_action_adapter",
         "plan_role_conditioned",
+        "plan_unit_directive_conditioned",
     }
     if not isinstance(value, dict) or set(value) - optional != required:
         raise ValueError(
@@ -474,6 +507,12 @@ def model_config(value: Any) -> ModelConfig:
         "plan_action_adapter", False
     ):
         raise ValueError("architecture plan_role_conditioned requires plan_action_adapter")
+    if value.get("plan_unit_directive_conditioned", False) and not value.get(
+        "plan_role_conditioned", False
+    ):
+        raise ValueError(
+            "architecture plan_unit_directive_conditioned requires plan_role_conditioned"
+        )
     if (
         value.get("separate_target_actor", False)
         and value.get("plan_conditioned", False)

@@ -115,6 +115,18 @@ def test_model_config_preserves_legacy_checkpoint_shape() -> None:
                 "plan_target_only": True,
             }
         )
+    with pytest.raises(ValueError, match="requires plan_role_conditioned"):
+        model_config(
+            {
+                **legacy,
+                "action_conditioned_targets": True,
+                "plan_conditioned": True,
+                "plan_target_only": True,
+                "separate_target_actor": True,
+                "plan_action_adapter": True,
+                "plan_unit_directive_conditioned": True,
+            }
+        )
 
 
 def test_plan_conditioned_model_requires_fixed_tensors_and_changes_counterfactual(
@@ -251,6 +263,7 @@ def test_plan_role_conditioning_requires_and_uses_per_unit_assignments(tmp_path:
             separate_target_actor=True,
             plan_action_adapter=True,
             plan_role_conditioned=True,
+            plan_unit_directive_conditioned=True,
         )
     )
     with pytest.raises(ValueError, match="plan_unit_roles must have shape"):
@@ -260,6 +273,11 @@ def test_plan_role_conditioning_requires_and_uses_per_unit_assignments(tmp_path:
     )
     observation["plan_unit_roles"][:, :, 0] = observation["ally_mask"]
     observation["plan_unit_roles"][1, 0] = torch.tensor([0, 1, 0], dtype=torch.int8)
+    observation["plan_groups"][0, 0, 5] = 0.25
+    observation["plan_groups"][1, 1, 5] = 0.75
+    directives = model.unit_plan_directives(observation, (2, 2))
+    assert directives[0, 0, 5] == 0.25
+    assert directives[1, 0, 5] == 0.75
     model.plan_role_target_adapter[-1].weight.data.fill_(0.01)
     result = model(observation)
     assert not torch.equal(result["hidden"][0, 0], result["hidden"][1, 0])
