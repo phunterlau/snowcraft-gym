@@ -689,7 +689,7 @@ symbolic plan, stable unit assignments, seed, plan ID, arena/roster provenance,
 and optional source-state hash. The pure core performs no file or provider I/O.
 Tests prove repeatability, schema validity, complete non-overlapping assignment,
 directive coverage, and rejection of unsafe seed ranges or undersized rosters.
-The export/data-join path remains next.
+The tensor export/data-join path remains next.
 
 M7 plan-tensor foundation (2026-09-02): `training/plan/PlanTensorEncoder.ts`
 maps a production `PlanSnapshot` into three stable role slots, each with 38
@@ -700,6 +700,17 @@ support relation; and plan age. Raw unit IDs remain host-owned and are not
 learnable features. Tests cover exact shape, slot stability, fractions, support,
 age normalization, bounds, and counterfactual engage-versus-hold separation on
 the same observation. JSON export/data joining and model ablations remain open.
+
+M7 plan-tensor export foundation (2026-09-02):
+`training/plan/PlanTensorDataset.ts` resets the authoritative headless
+`SnowEnvironment`, binds simulator/hash provenance and the public source-state
+hash, aligns every validated curriculum sample with its `[3,38]` tensor, and
+computes a canonical SHA-256 dataset digest. Its auditor rejects plan, seed,
+shape, value, or digest corruption. The `export-plan-tensors.ts` CLI supports
+configurable maps, rosters, environment/plan seeds, counts, safe overwrite, and
+machine-readable summaries. Two independent Winter Front 10v10 exports were
+byte-identical. The Python loader/data join and paired model ablation remain
+next.
 
 ### M8 — unit-level CTDE / MAPPO
 

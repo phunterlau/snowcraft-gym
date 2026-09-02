@@ -590,3 +590,25 @@ tactical frame, allocation and live-assignment fractions, support target, and
 plan age over a documented 30-second horizon. Unit IDs select group members but
 are intentionally absent from the learnable tensor. The command-plan JSON and
 grounded plan remain canonical; this array is only the RL adapter.
+
+Export an audited tensor dataset from an authoritative headless reset:
+
+```bash
+npx tsx snowgym/training/plan/export-plan-tensors.ts \
+  --map arena6.json \
+  --blue-units 10 \
+  --red-units 10 \
+  --environment-seed 42 \
+  --plan-seed 1000 \
+  --samples 60 \
+  --output snowgym/training/artifacts/plan-tensors-10v10.json \
+  --json
+```
+
+The exporter refuses an existing output unless `--force` is explicit. The
+`snowgym.plan-tensor-dataset.v0` artifact binds simulator and state-hash
+versions, scenario and environment seed, the complete validated curriculum,
+aligned fixed-size tensors, and a canonical semantic SHA-256 digest. The
+auditor rejects plan, seed, shape, bounds, mask, or digest corruption. This is
+the portable TypeScript-to-Python boundary; the Python loader and trajectory
+join remain the next M7 step.
