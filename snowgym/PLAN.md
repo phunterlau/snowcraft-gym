@@ -982,6 +982,18 @@ validates per-world state-hash alignment before returning semantic labels. This
 is the host-owned oracle seam for the next plan-conditioned DAgger collector;
 learner-state collection and retraining remain open.
 
+M7 plan-DAgger collector foundation (2026-09-02):
+`export_plan_dagger.py` now runs the qualified plan-conditioned checkpoint in
+persistent authoritative worlds, fetches a fresh host-resolved plan tensor and
+same-hash production plan-teacher action at every learner-visited state, then
+executes only the learner action. It rejects state drift, semantic-action
+round-trip differences, physical action rejection, non-plan checkpoints, and
+invalid plan episodes. Audited trajectory shards retain aligned plan tensors,
+teacher labels, rollout-checkpoint provenance, split seeds, and complete plans.
+A real two-decision integration test covers the full path. A frozen multi-
+mission collection spec, merged training corpus, and retraining ablation remain
+next.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO

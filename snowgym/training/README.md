@@ -346,6 +346,25 @@ states through the production plan-aware executor without advancing them. A
 collector must verify the returned state hashes and submit only the learner
 action; the teacher label never mutates the episode.
 
+Collect plan-conditioned DAgger data without an HTTP server:
+
+```bash
+cd snowgym/training
+.venv/bin/python -m snowgym_training.export_plan_dagger \
+  --spec path/to/plan-dagger-spec.json \
+  --split train \
+  --checkpoint runs/plan_bc_ablation_qual_v1/plan-conditioned \
+  --output artifacts/plan-dagger-v0 \
+  --json
+```
+
+The export spec uses the normal `snowgym.trajectory-export.v0` split contract;
+each episode additionally supplies `planId` and a schema-valid `plan`. The
+collector activates that plan, executes only the learned policy, and labels
+each visited state with the read-only production plan teacher. Output shards
+carry aligned plan tensors and bind the rollout checkpoint, source spec, split
+seeds, simulator versions, and per-episode plan.
+
 ## PPO foundation
 
 Run a short end-to-end infrastructure smoke against the first frozen curriculum
