@@ -3,6 +3,7 @@ from pathlib import Path
 
 from snowgym_training.checkpoint import load_checkpoint
 from snowgym_training.curriculum import load_curriculum
+from snowgym_training.ppo_series import audit_ppo_series
 from snowgym_training.ppo_series_config import load_series_config
 from snowgym_training.trainer import load_training_config
 from snowgym_training.trajectory import json_digest, load_export_spec
@@ -92,3 +93,23 @@ def test_gate5_ppo_config_is_frozen_to_accepted_initializer() -> None:
         "path": "checkpoints/bc_3v3_terrain_v0",
         "checkpointDigest": "sha256:757f46ca1d2c361814c15f11327ffcc88bf73b4218e633bbc8d16b2424cd9cbd",
     }
+
+
+def test_committed_gate5_ppo_series_is_auditable_and_qualifies() -> None:
+    training_root = Path(__file__).parents[1]
+    audit = audit_ppo_series(training_root / "runs/ppo_3v3_terrain_bc_v0")
+    assert audit["mode"] == "qualifying"
+    assert audit["gate"] == "3v3-terrain"
+    assert audit["updates"] == [1, 5, 10]
+    assert audit["finalThresholdPassed"] is True
+
+    for update in (1, 5, 10):
+        evaluation = json.loads(
+            (
+                training_root
+                / f"runs/ppo_3v3_terrain_bc_v0/evaluations/update-{update:06d}.json"
+            ).read_text(encoding="utf-8")
+        )
+        assert evaluation["summary"]["ppo"]["blueWins"] == 8
+        assert evaluation["summary"]["masked_random"]["blueWins"] == 0
+        assert evaluation["summary"]["ppo"]["rejectedActions"] == 0
