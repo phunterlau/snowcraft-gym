@@ -44,11 +44,12 @@ def run_checkpoint_evaluation(
 ) -> dict[str, Any]:
     if max_decisions <= 0:
         raise ValueError("max_decisions must be positive")
-    spec = load_export_spec(spec_path or default_spec_path())
+    spec_source = Path(spec_path) if spec_path is not None else default_spec_path()
+    spec = load_export_spec(spec_source)
     if split not in spec["splits"]:
         raise ValueError(f"unknown split {split!r}")
     metadata, _ = load_checkpoint(checkpoint)
-    if metadata["evaluationSuite"] != f"teacher_1v1_v0/{split}":
+    if metadata["evaluationSuite"] != f"{spec_source.stem}/{split}":
         raise ValueError("checkpoint evaluation suite does not match requested split")
     policy = TorchPolicy(checkpoint)
     initial_scenario = spec["splits"][split][0]["scenario"]

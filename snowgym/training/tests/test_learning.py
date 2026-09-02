@@ -163,7 +163,7 @@ def test_learned_evaluation_records_normal_replay(tmp_path: Path) -> None:
         git_commit="test-commit",
     )
     spec = evaluation_spec()
-    spec_path = tmp_path / "spec.json"
+    spec_path = tmp_path / "teacher_1v1_v0.json"
     spec_path.write_text(json.dumps(spec), encoding="utf-8")
     baseline = {
         "format": "snowgym.teacher-baseline.v0",
