@@ -532,6 +532,13 @@ direct/flank; withdraw reaches 600 at 1–1. Its changed-pair accuracy is only
 model revision should isolate incompatible corrections with directive-gated
 residual experts, while leaving the qualified physical actor frozen.
 
+Set `architecture.plan_directive_experts` only together with full per-unit
+directive conditioning. It creates separate zero-initialized action and target
+residual experts for engage, advance, hold, withdraw, and support, selecting
+exactly one from the directive mission one-hot. This isolates mission-specific
+corrections while preserving the frozen physical actor and qualified initial
+outputs.
+
 ## PPO foundation
 
 Run a short end-to-end infrastructure smoke against the first frozen curriculum

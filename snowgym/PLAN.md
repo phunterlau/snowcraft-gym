@@ -1373,6 +1373,17 @@ v3 evaluation split remains unopened. Since explicit roles and balanced
 multi-group data still trade one mission against another, the next architecture
 should gate separate residual experts by the resolved unit directive.
 
+M7 directive-expert foundation (2026-09-02): the optional
+`plan_directive_experts` architecture replaces the shared action and target
+residuals with five independently parameterized experts, hard-selected by the
+unit directive's audited engage/advance/hold/withdraw/support one-hot. It
+requires full per-unit directives, preserves qualified initializer outputs via
+zero-initialized expert heads, and leaves prior checkpoints unchanged. Training
+initialization and trainable-path filters recognize the expert parameters.
+Tests prove exact zero-residual preservation, configuration constraints, and
+different expert routing for two mission directives. A frozen v3-corpus
+development run is next.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO

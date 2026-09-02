@@ -137,11 +137,15 @@ def train_behavior_clone(
         compatible_architecture.pop("plan_action_adapter", None)
         compatible_architecture.pop("plan_role_conditioned", None)
         compatible_architecture.pop("plan_unit_directive_conditioned", None)
+        compatible_architecture.pop("plan_directive_experts", None)
         if initial_architecture not in (architecture.as_dict(), compatible_architecture):
             raise ValueError("initializer architecture does not match training config")
         missing, unexpected = model.load_state_dict(initial_state["model"], strict=False)
         if unexpected or any(
-            not name.startswith(("plan_action_adapter.", "plan_role_target_adapter."))
+            not name.startswith((
+                "plan_action_adapter.", "plan_role_target_adapter.",
+                "plan_action_experts.", "plan_target_experts.",
+            ))
             for name in missing
         ):
             raise ValueError("initializer state is incompatible with training architecture")
@@ -160,6 +164,8 @@ def train_behavior_clone(
             prefixes += ("plan_action_adapter.",)
             if architecture.plan_role_conditioned:
                 prefixes += ("plan_role_target_adapter.",)
+            if architecture.plan_directive_experts:
+                prefixes += ("plan_action_experts.", "plan_target_experts.")
         for name, parameter in model.named_parameters():
             parameter.requires_grad_(name.startswith(prefixes))
     optimizer_config = {

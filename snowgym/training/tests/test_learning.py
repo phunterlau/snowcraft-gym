@@ -127,6 +127,19 @@ def test_model_config_preserves_legacy_checkpoint_shape() -> None:
                 "plan_unit_directive_conditioned": True,
             }
         )
+    with pytest.raises(ValueError, match="requires plan_unit_directive_conditioned"):
+        model_config(
+            {
+                **legacy,
+                "action_conditioned_targets": True,
+                "plan_conditioned": True,
+                "plan_target_only": True,
+                "separate_target_actor": True,
+                "plan_action_adapter": True,
+                "plan_role_conditioned": True,
+                "plan_directive_experts": True,
+            }
+        )
 
 
 def test_plan_conditioned_model_requires_fixed_tensors_and_changes_counterfactual(
@@ -285,6 +298,47 @@ def test_plan_role_conditioning_requires_and_uses_per_unit_assignments(tmp_path:
     malformed["plan_unit_roles"][0, 0] = torch.tensor([1, 1, 0], dtype=torch.int8)
     with pytest.raises(ValueError, match="one-hot or zero"):
         model(malformed)
+
+
+def test_plan_directive_experts_preserve_base_and_route_by_mission(tmp_path: Path) -> None:
+    dataset = TrajectoryDataset(make_dataset(tmp_path / "dataset"))
+    observation, _ = dataset.batch(np.asarray([0, 0]))
+    observation["plan_groups"] = torch.zeros((2, 3, 38), dtype=torch.float32)
+    observation["plan_group_mask"] = torch.tensor([[1, 0, 0], [1, 0, 0]])
+    observation["plan_unit_roles"] = torch.zeros((2, 2, 3), dtype=torch.int8)
+    observation["plan_unit_roles"][:, :, 0] = observation["ally_mask"]
+    observation["plan_groups"][0, 0, 3] = 1
+    observation["plan_groups"][1, 0, 4] = 1
+    base_config = ModelConfig(
+        16, 12, 24, action_conditioned_targets=True, plan_conditioned=True,
+        plan_target_only=True, separate_target_actor=True,
+    )
+    torch.manual_seed(52)
+    base = EntityPolicy(base_config)
+    expert = EntityPolicy(ModelConfig(
+        **{
+            **base_config.__dict__,
+            "plan_action_adapter": True,
+            "plan_role_conditioned": True,
+            "plan_unit_directive_conditioned": True,
+            "plan_directive_experts": True,
+        }
+    ))
+    missing, unexpected = expert.load_state_dict(base.state_dict(), strict=False)
+    assert not unexpected
+    assert missing and all(
+        name.startswith(("plan_action_experts.", "plan_target_experts."))
+        for name in missing
+    )
+    baseline = base(observation)["action_logits"]
+    torch.testing.assert_close(
+        expert(observation)["action_logits"], baseline, rtol=0, atol=0
+    )
+    expert.plan_action_experts[0][-1].bias.data[1] = 1
+    expert.plan_action_experts[1][-1].bias.data[1] = 2
+    routed = expert(observation)["action_logits"] - baseline
+    torch.testing.assert_close(routed[0, 0, 1], torch.tensor(1.0))
+    torch.testing.assert_close(routed[1, 0, 1], torch.tensor(2.0))
 
 
 def test_action_conditioned_target_heads_select_distinct_means(tmp_path: Path) -> None:
