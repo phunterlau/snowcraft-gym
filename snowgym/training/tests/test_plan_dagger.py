@@ -333,6 +333,7 @@ def test_plan_dagger_v1_retains_same_state_counterfactual_labels(tmp_path: Path)
         "evaluationSuite": "plan-counterfactual-transfer-smoke",
         "trainable": "plan-action-target-path",
         "counterfactualLossWeight": 1.0,
+        "counterfactualChangedActionWeight": 2.0,
     }
     trained = train_behavior_clone(
         dataset_path=output,
@@ -342,6 +343,7 @@ def test_plan_dagger_v1_retains_same_state_counterfactual_labels(tmp_path: Path)
         git_commit="test",
     )
     assert trained["trainingMetrics"]["final"]["counterfactual"] >= 0
+    assert trained["trainingMetrics"]["final"]["counterfactualChangedAction"] >= 0
     evaluation_path = tmp_path / "counterfactual-evaluation.json"
     evaluation = evaluate_plan_counterfactual(
         checkpoint=tmp_path / "counterfactual-trained",

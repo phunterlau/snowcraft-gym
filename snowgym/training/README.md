@@ -452,6 +452,12 @@ are accepted. The remaining paired-action failure is localized to low recall
 and strict accuracy on teacher-changed positions; overall accuracy or raw
 change rate must not be used to claim the gate passed.
 
+For the next imbalance correction, `counterfactualChangedActionWeight` adds a
+symmetric action-classification loss only where primary and alternate teacher
+action types differ. It requires audited same-state labels and is bounded to
+`[0,100]`. Keep the full primary/counterfactual objectives enabled; this term
+does not replace their accuracy and target-regression constraints.
+
 ## PPO foundation
 
 Run a short end-to-end infrastructure smoke against the first frozen curriculum

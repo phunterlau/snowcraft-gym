@@ -1190,6 +1190,14 @@ digest is
 The next revision must weight the identifiable teacher-changed positions rather
 than letting the roughly 90% unchanged pairs dominate the counterfactual loss.
 
+M7 changed-action loss foundation (2026-09-02): behavior cloning now accepts a
+bounded `counterfactualChangedActionWeight` only for datasets with audited
+same-state labels. It adds symmetric primary/alternate cross-entropy solely on
+present unit-states where the production teacher action types differ, retaining
+the existing full primary and counterfactual hybrid objectives. Empty changed
+batches contribute an exact finite zero. Legacy configs are unchanged. A
+separately frozen v2 weight/budget and unchanged held-out gate are next.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO

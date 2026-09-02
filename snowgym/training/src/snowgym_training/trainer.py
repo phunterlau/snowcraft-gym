@@ -10,6 +10,9 @@ from pathlib import Path
 from typing import Any
 
 import torch
+from torch.nn import functional as F
+
+from snowgym_client.encoding import ACTION_THROW
 
 from .checkpoint import load_checkpoint, save_checkpoint
 from .data import TrajectoryDataset, deterministic_batch_indices, manifest_versions
@@ -45,7 +48,9 @@ def validate_training_config(value: Any) -> None:
         "loss",
         "evaluationSuite",
     }
-    optional = {"trainable", "counterfactualLossWeight"}
+    optional = {
+        "trainable", "counterfactualLossWeight", "counterfactualChangedActionWeight"
+    }
     if not isinstance(value, dict) or not required <= set(value) or set(value) - required - optional:
         raise ValueError(f"training config must contain {sorted(required)} and optional trainable")
     if value["format"] != TRAINING_CONFIG_FORMAT:
@@ -71,6 +76,13 @@ def validate_training_config(value: Any) -> None:
         or not 0 <= counterfactual_weight <= 10
     ):
         raise ValueError("counterfactualLossWeight must be in [0, 10]")
+    changed_weight = value.get("counterfactualChangedActionWeight", 0)
+    if (
+        not isinstance(changed_weight, int | float)
+        or isinstance(changed_weight, bool)
+        or not 0 <= changed_weight <= 100
+    ):
+        raise ValueError("counterfactualChangedActionWeight must be in [0, 100]")
 
 
 def train_behavior_clone(
@@ -95,7 +107,10 @@ def train_behavior_clone(
     if architecture.plan_conditioned and "plan_groups" not in dataset.observation_fields:
         raise ValueError("plan-conditioned training requires an aligned plan dataset")
     counterfactual_weight = float(config.get("counterfactualLossWeight", 0))
-    if counterfactual_weight > 0 and not dataset.counterfactual_plan_labels:
+    changed_action_weight = float(config.get("counterfactualChangedActionWeight", 0))
+    if (
+        counterfactual_weight > 0 or changed_action_weight > 0
+    ) and not dataset.counterfactual_plan_labels:
         raise ValueError("counterfactual training requires same-state plan labels")
     losses = loss_config(config["loss"])
     model = EntityPolicy(architecture).cpu()
@@ -160,8 +175,9 @@ def train_behavior_clone(
         )
         observation, action = dataset.batch(indices)
         optimizer.zero_grad(set_to_none=True)
-        components = behavior_clone_loss(model(observation), action, observation, losses)
-        if counterfactual_weight > 0:
+        primary_prediction = model(observation)
+        components = behavior_clone_loss(primary_prediction, action, observation, losses)
+        if counterfactual_weight > 0 or changed_action_weight > 0:
             counterfactual_observation = {
                 **observation,
                 "plan_groups": observation["counterfactual_plan_groups"],
@@ -171,16 +187,46 @@ def train_behavior_clone(
                 field: action[f"counterfactual_{field}"]
                 for field in ("action_type", "target", "power")
             }
+            counterfactual_prediction = model(counterfactual_observation)
             counterfactual = behavior_clone_loss(
-                model(counterfactual_observation),
+                counterfactual_prediction,
                 counterfactual_action,
                 counterfactual_observation,
                 losses,
             )
-            components["total"] = (
-                components["total"] + counterfactual_weight * counterfactual["total"]
+            components["total"] = components["total"] + (
+                counterfactual_weight * counterfactual["total"]
             )
             components["counterfactual"] = counterfactual["total"]
+            if changed_action_weight > 0:
+                present = observation["ally_mask"].bool()
+                primary_labels = action["action_type"].long()
+                counterfactual_labels = counterfactual_action["action_type"].long()
+                changed = present & (primary_labels != counterfactual_labels)
+                if bool(changed.any()):
+                    class_weights = torch.ones(
+                        primary_prediction["action_logits"].shape[-1],
+                        dtype=primary_prediction["action_logits"].dtype,
+                    )
+                    class_weights[ACTION_THROW] = losses.throw_action_weight
+                    changed_loss = 0.5 * (
+                        F.cross_entropy(
+                            primary_prediction["action_logits"][changed],
+                            primary_labels[changed],
+                            weight=class_weights,
+                        )
+                        + F.cross_entropy(
+                            counterfactual_prediction["action_logits"][changed],
+                            counterfactual_labels[changed],
+                            weight=class_weights,
+                        )
+                    )
+                else:
+                    changed_loss = components["total"].new_zeros(())
+                components["total"] = (
+                    components["total"] + changed_action_weight * changed_loss
+                )
+                components["counterfactualChangedAction"] = changed_loss
         if not torch.isfinite(components["total"]):
             raise ValueError(f"non-finite training loss at step {step}")
         components["total"].backward()
