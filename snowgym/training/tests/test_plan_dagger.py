@@ -26,6 +26,7 @@ from snowgym_training.plan_counterfactual_qualification import (
     load_spec as load_cf_gate,
     qualify as qualify_cf_gate,
 )
+from snowgym_training.plan_weight_sweep import summarize_sweep
 from snowgym_training.trainer import train_behavior_clone
 from snowgym_training.trainer import load_training_config
 from snowgym_training.trajectory import audit_dataset
@@ -220,6 +221,22 @@ def test_changed_action_v2_development_retains_measured_tradeoff() -> None:
     assert conditioned["withdraw-backfield"]["decisions"] == 600
     assert conditioned["withdraw-backfield"]["blueAlive"] == 2
     assert conditioned["main-with-reserve-support"]["winner"] == "red"
+
+
+def test_changed_action_weight_sweep_applies_predeclared_selection(tmp_path: Path) -> None:
+    result = summarize_sweep(
+        spec_path=(
+            ROOT / "training" / "src" / "snowgym_training" / "configs"
+            / "plan_action_adapter_weight_sweep_v0.json"
+        ),
+        runs_dir=ROOT / "training" / "runs",
+        evaluations_dir=ROOT / "training" / "evaluations",
+        output=tmp_path / "weight-sweep.json",
+    )
+    assert result["selected"] == "weight3"
+    assert [entry["checksPassed"] for entry in result["entries"]] == [7, 7, 7]
+    assert result["entries"][0]["checks"]["maximumPredictedActionChangeRate"] is True
+    assert result["entries"][2]["checks"]["maximumPredictedActionChangeRate"] is False
 
 
 def test_plan_dagger_labels_learner_visited_states_headlessly(tmp_path: Path) -> None:

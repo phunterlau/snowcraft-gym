@@ -1228,6 +1228,18 @@ existing five mission thresholds. Selection maximizes checks passed, then
 changed-pair accuracy, then prefers lower weight. These reused suites select a
 development candidate only; fresh data and a new gate remain mandatory.
 
+M7 changed-action weight-sweep-v0 outcome (2026-09-02): the audited sweep
+result digest is
+`sha256:e83bff1be89aad0345b0b0336ea7a5caa5bbdb5edabe389ac5c5adb18548054b`.
+Weights 1, 2, and 3 each passed 7/11 development checks. Weight 1 alone kept
+predicted action change under `0.20` (`0.179456`) but narrowly missed changed
+recall (`0.398411`); weights 2/3 improved strict pair accuracy to `0.640182`/
+`0.708286` while over-changing `0.304389`/`0.373452`. All three missed flank,
+hold, and withdraw thresholds. The predeclared tie-break selects weight 3, but
+7/11 is not qualification readiness and no fresh seeds are consumed. Scalar
+weighting cannot resolve the observed mission tradeoff; the next development
+revision must balance supervision by primary mission and group role.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO

@@ -1,0 +1,118 @@
+{
+  "entries": [
+    {
+      "checkpointDigest": "sha256:88eb5ef725dc8da7e2cc26daae3aca52985e6ff0f083014c2aebb95f5fbd8556",
+      "checks": {
+        "changedTeacherPairAccuracy": true,
+        "changedTeacherPredictionRecall": false,
+        "counterfactualActionAccuracy": true,
+        "directBlueAlive": true,
+        "flankBlueAlive": false,
+        "holdDecisions": false,
+        "maximumPredictedActionChangeRate": true,
+        "minimumPredictedActionChangeRate": true,
+        "primaryActionAccuracy": true,
+        "supportRedAlive": true,
+        "withdrawDecisions": false
+      },
+      "checksPassed": 7,
+      "evaluationDigests": {
+        "behaviors": "sha256:cb3f467fcb43dc24d65c8fd87e8a795f49e50bc4bda1f0de3c1545cee44d4de7",
+        "closedLoop": "sha256:d3c631cd308067d793f4b50fda46541eb8257661e9b70d829e4facf50bbb24f6",
+        "paired": "sha256:7135428e177a6cdcc4ab12e62fa194c0870d2cea17853bd50a217e6b28a5a348"
+      },
+      "label": "weight1",
+      "observed": {
+        "changedTeacherPairAccuracy": 0.3076049943246311,
+        "changedTeacherPredictionRecall": 0.39841089670828606,
+        "counterfactualActionAccuracy": 0.8220247626304626,
+        "directBlueAlive": 4,
+        "flankBlueAlive": 3,
+        "holdDecisions": 249,
+        "predictedActionChangeRate": 0.17945611200861605,
+        "primaryActionAccuracy": 0.8511039018630981,
+        "supportRedAlive": 4,
+        "withdrawDecisions": 258
+      },
+      "weight": 1.0
+    },
+    {
+      "checkpointDigest": "sha256:6500d6dee52b06319724c9bfb888ff6a859cebb3e9c48ca93935431a8522804e",
+      "checks": {
+        "changedTeacherPairAccuracy": true,
+        "changedTeacherPredictionRecall": true,
+        "counterfactualActionAccuracy": true,
+        "directBlueAlive": true,
+        "flankBlueAlive": false,
+        "holdDecisions": false,
+        "maximumPredictedActionChangeRate": false,
+        "minimumPredictedActionChangeRate": true,
+        "primaryActionAccuracy": true,
+        "supportRedAlive": true,
+        "withdrawDecisions": false
+      },
+      "checksPassed": 7,
+      "evaluationDigests": {
+        "behaviors": "sha256:7e7aaacb9578d5d6bc0d65778794d9ca94700413c2dcdd617ce581ddc5002424",
+        "closedLoop": "sha256:f1f159ee971b2064012df34d887d63f2da48bcc90755f3723d03f04e818a6ecb",
+        "paired": "sha256:f200b9914bba95f6b7a4096741166818b153b252df05cdc00db93439c8809076"
+      },
+      "label": "weight2",
+      "observed": {
+        "changedTeacherPairAccuracy": 0.6401816118047673,
+        "changedTeacherPredictionRecall": 0.7412031782065834,
+        "counterfactualActionAccuracy": 0.8124663233757019,
+        "directBlueAlive": 6,
+        "flankBlueAlive": 3,
+        "holdDecisions": 246,
+        "predictedActionChangeRate": 0.3043887991383953,
+        "primaryActionAccuracy": 0.8295637965202332,
+        "supportRedAlive": 3,
+        "withdrawDecisions": 268
+      },
+      "weight": 2.0
+    },
+    {
+      "checkpointDigest": "sha256:7d3e4125d4faaebecd2f996af16cbf8a4f7ce2793033aa5ba624771e7b391974",
+      "checks": {
+        "changedTeacherPairAccuracy": true,
+        "changedTeacherPredictionRecall": true,
+        "counterfactualActionAccuracy": true,
+        "directBlueAlive": true,
+        "flankBlueAlive": false,
+        "holdDecisions": false,
+        "maximumPredictedActionChangeRate": false,
+        "minimumPredictedActionChangeRate": true,
+        "primaryActionAccuracy": true,
+        "supportRedAlive": true,
+        "withdrawDecisions": false
+      },
+      "checksPassed": 7,
+      "evaluationDigests": {
+        "behaviors": "sha256:e32d46044b3d13f3610ceef2ac3dcbb4bb5d0300759c118ee396678e0bcf8235",
+        "closedLoop": "sha256:82727ed07cf05fb6798c78eafa91bf7ca2d46d7762b583f482cd9e531ccc7a02",
+        "paired": "sha256:ccaffca9a66ec9acad8323848ea271c93d263c3c9001eeeabbd18b207483f82d"
+      },
+      "label": "weight3",
+      "observed": {
+        "changedTeacherPairAccuracy": 0.7082860385925085,
+        "changedTeacherPredictionRecall": 0.8127128263337117,
+        "counterfactualActionAccuracy": 0.7808293104171753,
+        "directBlueAlive": 5,
+        "flankBlueAlive": 1,
+        "holdDecisions": 203,
+        "predictedActionChangeRate": 0.3734518039849219,
+        "primaryActionAccuracy": 0.8228325247764587,
+        "supportRedAlive": 3,
+        "withdrawDecisions": 236
+      },
+      "weight": 3.0
+    }
+  ],
+  "format": "snowgym.plan-action-adapter-weight-sweep-result.v0",
+  "resultDigest": "sha256:e83bff1be89aad0345b0b0336ea7a5caa5bbdb5edabe389ac5c5adb18548054b",
+  "selected": "weight3",
+  "selectedCheckpointDigest": "sha256:7d3e4125d4faaebecd2f996af16cbf8a4f7ce2793033aa5ba624771e7b391974",
+  "selection": "most-checks-then-pair-accuracy-then-lower-weight",
+  "specDigest": "sha256:2952a6de1b79a749bda20309711fd4c46b257332e31971f850c8a585f442f736"
+}

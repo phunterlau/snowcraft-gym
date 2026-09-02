@@ -464,6 +464,11 @@ and pair accuracy and makes withdraw survive the full 600-decision horizon, but
 over-changes action types and regresses the v1 support win and hold duration.
 It is diagnostic evidence only; do not promote it over v1 or call it qualified.
 
+The committed weight sweep under `runs/plan_action_adapter_weight*_dev` applies
+the frozen selection rule in `evaluations/plan_action_adapter_weight_sweep_v0.json`.
+All three candidates pass 7/11 checks; weight 3 wins the declared tie-break but
+is not promoted because every candidate misses flank, hold, and withdraw.
+
 ## PPO foundation
 
 Run a short end-to-end infrastructure smoke against the first frozen curriculum
