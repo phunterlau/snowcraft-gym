@@ -9,6 +9,7 @@ import pytest
 
 from snowgym_training.baseline import BASELINE_FORMAT, run_teacher_baseline
 from snowgym_training.export_dagger import export_dagger_dataset
+from snowgym_training.merge_trajectory import merge_datasets
 from snowgym_training.export_scripted import (
     action_results,
     assert_action_round_trip,
@@ -180,6 +181,36 @@ def test_dagger_export_labels_states_visited_by_committed_policy(tmp_path: Path)
     assert result["rolloutPolicy"] == "learned-checkpoint"
     assert result["rolloutCheckpointDigest"].startswith("sha256:")
     assert audit_dataset(tmp_path / "dagger")["datasetDigest"] == result["datasetDigest"]
+
+
+def test_merge_datasets_preserves_ordered_source_provenance(tmp_path: Path) -> None:
+    spec_path = tmp_path / "spec.json"
+    spec_path.write_text(json.dumps(export_spec()), encoding="utf-8")
+    first = tmp_path / "first"
+    second = tmp_path / "second"
+    export_scripted_dataset(
+        output=first,
+        split="train",
+        spec_path=spec_path,
+        client=FakeScriptedClient(),
+    )
+    export_scripted_dataset(
+        output=second,
+        split="train",
+        spec_path=spec_path,
+        client=FakeScriptedClient(),
+    )
+
+    result = merge_datasets(output=tmp_path / "merged", inputs=[first, second, first])
+
+    assert result["transitions"] == 18
+    assert [source["datasetDigest"] for source in result["sources"]] == [
+        result["sources"][0]["datasetDigest"],
+        result["sources"][1]["datasetDigest"],
+        result["sources"][0]["datasetDigest"],
+    ]
+    assert [episode["index"] for episode in result["episodes"]] == list(range(6))
+    assert audit_dataset(tmp_path / "merged")["datasetDigest"] == result["datasetDigest"]
 
 
 def test_dataset_audit_detects_tensor_corruption(tmp_path: Path) -> None:

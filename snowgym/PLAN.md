@@ -589,6 +589,13 @@ and `snowgym-export-dagger` records those oracle labels on states visited by a
 provenance-bound learned checkpoint while learner steps remain state-hash
 guarded. Dataset aggregation and a new gate-4 initializer remain open.
 
+The first recovery-only DAgger development checkpoint also lost both held-out
+episodes, confirming that learner-state labels must augment rather than replace
+expert trajectories. `snowgym-merge-trajectories` now provides deterministic
+ordered aggregation with repeated-input integer weighting, compatibility checks,
+source-digest provenance, episode remapping, and a full output re-audit. A
+mixed expert/recovery gate-4 initializer remains open.
+
 ### M7 — plan-conditioned learned executor
 
 Goal: train the fast learned controller to follow the existing slow

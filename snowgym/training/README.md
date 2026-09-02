@@ -115,6 +115,22 @@ episode outcomes, and every tensor digest. It refuses rejected learner actions
 and re-audits the finished dataset. This first collector emits a pure
 learner-state dataset; aggregation/mixing policy remains an explicit later
 training decision.
+
+Aggregate audited datasets in a deterministic order before retraining. Repeating
+an input is an explicit integer weight; the manifest records every ordered
+source digest:
+
+```bash
+uv run snowgym-merge-trajectories \
+  --input artifacts/teacher-3v3-scripted \
+  --input artifacts/teacher-3v3-scripted \
+  --input artifacts/dagger-3v3-scripted \
+  --output artifacts/aggregate-3v3-scripted \
+  --json
+```
+
+The merge rejects differences in split, split seeds, source specification,
+capacity, or simulator versions and re-audits the complete output.
 The `snowgym.checkpoint.v0` metadata binds the model and optimizer state digest
 to the source commit, audited dataset digest, SnowGym versions, architecture,
 optimizer, loss weights, seed, step, and evaluation suite. Loading uses
