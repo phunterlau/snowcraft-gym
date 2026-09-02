@@ -1,0 +1,71 @@
+{
+  "architecture": {
+    "action_conditioned_targets": true,
+    "actor_hidden": 64,
+    "entity_embedding": 24,
+    "entity_hidden": 32,
+    "nearest_enemy_throw_target": true
+  },
+  "checkpointDigest": "sha256:931d6122e0efd092cfe4a51562385b553024052464daedc36f75f7ec0cb9cbcf",
+  "datasetManifestHash": "sha256:6f2e7a7ed096d64e980343818d446e721c2bd70468fe25644b47052c0b89df78",
+  "evaluationSuite": "teacher_10v10_terrain_v0/evaluation",
+  "format": "snowgym.checkpoint.v0",
+  "gitCommit": "c514757581afcd43d60fd3a45f8af69b53f40401",
+  "loss": {
+    "action_weight": 1.0,
+    "power_weight": 1.0,
+    "target_weight": 10.0,
+    "throw_action_weight": 10.0
+  },
+  "optimizer": {
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "epsilon": 1e-08,
+    "learningRate": 0.003,
+    "name": "Adam",
+    "weightDecay": 0.0
+  },
+  "stateDigest": "sha256:ef20ffc67b0b63f1e40e0467160522e66d2338a7050d304ef00d2de49f1b8fc8",
+  "step": 30000,
+  "trainingConfig": {
+    "architecture": {
+      "action_conditioned_targets": true,
+      "actor_hidden": 64,
+      "entity_embedding": 24,
+      "entity_hidden": 32,
+      "nearest_enemy_throw_target": true
+    },
+    "batchSize": 64,
+    "evaluationSuite": "teacher_10v10_terrain_v0/evaluation",
+    "format": "snowgym.bc-training-config.v0",
+    "learningRate": 0.003,
+    "loss": {
+      "action_weight": 1.0,
+      "power_weight": 1.0,
+      "target_weight": 10.0,
+      "throw_action_weight": 10.0
+    },
+    "name": "scripted-blue-10v10-terrain-bc-v0",
+    "seed": 73027,
+    "steps": 30000
+  },
+  "trainingMetrics": {
+    "final": {
+      "action": 1.0374465091445018e-05,
+      "power": 2.9018909117439762e-05,
+      "target": 0.000629992748145014,
+      "total": 0.0063393209129571915
+    },
+    "firstLoss": 3.7119221687316895,
+    "startStep": 0
+  },
+  "trainingSeed": 73027,
+  "versions": {
+    "apiVersion": "snowgym.v0",
+    "simulationVersion": "snowgym.sim.v1",
+    "stateHashVersion": "snowgym.state.v1",
+    "upstreamBaseCommit": "7d9fca5"
+  }
+}
