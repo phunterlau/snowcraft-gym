@@ -249,9 +249,16 @@ def assert_action_round_trip(original: dict[str, Any], encoded: dict[str, Any]) 
     encoded_actions = encoded.get("actions")
     if not isinstance(original_actions, list) or not isinstance(encoded_actions, list):
         raise ValueError("team action round trip is missing actions")
-    if len(original_actions) != len(encoded_actions):
-        raise ValueError("team action round trip changed action count")
     encoded_by_unit = {action.get("unitId"): action for action in encoded_actions}
+    original_unit_ids = {
+        action.get("unitId") for action in original_actions if isinstance(action, dict)
+    }
+    if any(
+        action.get("unitId") not in original_unit_ids and action.get("type") != "noop"
+        for action in encoded_actions
+        if isinstance(action, dict)
+    ):
+        raise ValueError("team action round trip added a state-changing action")
     for action in original_actions:
         if not isinstance(action, dict):
             raise ValueError("teacher action must be an object")

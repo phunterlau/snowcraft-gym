@@ -8,7 +8,11 @@ import numpy as np
 import pytest
 
 from snowgym_training.baseline import BASELINE_FORMAT, run_teacher_baseline
-from snowgym_training.export_scripted import action_results, export_scripted_dataset
+from snowgym_training.export_scripted import (
+    action_results,
+    assert_action_round_trip,
+    export_scripted_dataset,
+)
 from snowgym_training.trajectory import (
     DATASET_FORMAT,
     EXPORT_SPEC_FORMAT,
@@ -90,6 +94,21 @@ class FakeScriptedClient:
             "truncated": truncated,
             "info": info,
         }
+
+
+def test_action_round_trip_allows_only_extra_explicit_noops() -> None:
+    original = {"actions": [{"type": "move", "unitId": 1, "x": 2.0, "y": 3.0}]}
+    encoded = {
+        "actions": [
+            {"type": "move", "unitId": 1, "x": 2.0, "y": 3.0},
+            {"type": "noop", "unitId": 2},
+        ]
+    }
+    assert_action_round_trip(original, encoded)
+
+    encoded["actions"][1] = {"type": "hold", "unitId": 2}
+    with pytest.raises(ValueError, match="state-changing"):
+        assert_action_round_trip(original, encoded)
 
 
 def test_export_spec_rejects_seed_overlap() -> None:
