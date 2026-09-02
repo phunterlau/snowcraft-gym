@@ -753,3 +753,13 @@ ablation-config digest. The gate is conjunctive: target accuracy, degradation
 under plan swapping, target sensitivity, bounded action-accuracy regression,
 and exact no-plan invariance must all pass. A failed check remains visible; the
 runner never selects or silently substitutes a checkpoint.
+
+Qualification v0 is retained as a failed gate in
+`evaluations/plan_qualification_v0.json`. It passed all target-following and
+no-plan-invariance checks, but conditioned action accuracy trailed the no-plan
+control by `0.04844`, exceeding the frozen `0.03` allowance. The paired
+checkpoints and detailed metrics remain under
+`runs/plan_bc_ablation_qual_v0` and
+`evaluations/plan_bc_ablation_qual_v0.json`. Do not reinterpret this as an M7
+pass or change v0 thresholds; the next revision must use a documented model
+change and new disjoint seeds.

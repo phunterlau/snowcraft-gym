@@ -1,0 +1,69 @@
+{
+  "architecture": {
+    "action_conditioned_targets": true,
+    "actor_hidden": 64,
+    "entity_embedding": 24,
+    "entity_hidden": 32
+  },
+  "checkpointDigest": "sha256:8ac61aee8241b3b524d513d1755d35c1f1389a10bb15e1d0bdcc4df0bc05506b",
+  "datasetManifestHash": "sha256:e252f624d0b45cf240af1c9c06709c4bf06b268040db48feb03d109611b0a902",
+  "evaluationSuite": "plan-counterfactual-6v6-terrain-qual-v0",
+  "format": "snowgym.checkpoint.v0",
+  "gitCommit": "28b6c2bb75cd25a0b0093ebeb601574a544c9fe2",
+  "loss": {
+    "action_weight": 1.0,
+    "power_weight": 0.5,
+    "target_weight": 5.0,
+    "throw_action_weight": 5.0
+  },
+  "optimizer": {
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "epsilon": 1e-08,
+    "learningRate": 0.003,
+    "name": "Adam",
+    "weightDecay": 0.0
+  },
+  "stateDigest": "sha256:80ffd9c7fb4a11c796e8ee6e727dc2aa67ddb7d9cf65f0a68ec46bef779dbce0",
+  "step": 3000,
+  "trainingConfig": {
+    "architecture": {
+      "action_conditioned_targets": true,
+      "actor_hidden": 64,
+      "entity_embedding": 24,
+      "entity_hidden": 32
+    },
+    "batchSize": 64,
+    "evaluationSuite": "plan-counterfactual-6v6-terrain-qual-v0",
+    "format": "snowgym.bc-training-config.v0",
+    "learningRate": 0.003,
+    "loss": {
+      "action_weight": 1.0,
+      "power_weight": 0.5,
+      "target_weight": 5.0,
+      "throw_action_weight": 5.0
+    },
+    "name": "plan-aware-blue-6v6-terrain-qual-v0-no-plan",
+    "seed": 83002,
+    "steps": 3000
+  },
+  "trainingMetrics": {
+    "final": {
+      "action": 0.058599382638931274,
+      "power": 0.019929740577936172,
+      "target": 0.01728620007634163,
+      "total": 0.15499524772167206
+    },
+    "firstLoss": 2.6876652240753174,
+    "startStep": 0
+  },
+  "trainingSeed": 83002,
+  "versions": {
+    "apiVersion": "snowgym.v0",
+    "simulationVersion": "snowgym.sim.v1",
+    "stateHashVersion": "snowgym.state.v1",
+    "upstreamBaseCommit": "7d9fca5"
+  }
+}

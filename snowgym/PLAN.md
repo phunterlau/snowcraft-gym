@@ -829,6 +829,25 @@ check, and never performs checkpoint selection. Qualification execution is
 next; even a pass advances only the paired offline target-following evidence,
 not the closed-loop M7 exit.
 
+M7 qualification-v0 outcome (2026-09-02): the frozen post-commit run is
+retained as a failure, not retuned. It used 1,920 training transitions (digest
+`sha256:e252f624d0b45cf240af1c9c06709c4bf06b268040db48feb03d109611b0a902`)
+and 960 disjoint evaluation transitions (digest
+`sha256:b388d20c5f27dbee2984fce34df67d2b391b461b3e81333faf9c7bc8f79a3e78`).
+Seven of eight predeclared checks passed: conditioned correct-plan target MSE
+was `0.064513` versus no-plan `0.239327`, plan swapping added `0.314999` target
+MSE and changed targets by `0.369133`, and no-plan sensitivity remained zero.
+The action-accuracy check failed: conditioned accuracy `0.875694` trailed
+no-plan `0.924132` by `0.048438`, exceeding the frozen `0.03` allowance. The
+result digest is
+`sha256:9b8a91fcb91657946f75317015d039410f2c0a6e09a7bc21e1273343145189e2`
+and qualification digest is
+`sha256:2b53b246fbc236770b2c59a2e0bfcec82b278192dd71c4acc673864bb3524c77`.
+The gate stays closed. Next development must isolate plan-conditioned target
+features from the action classifier or otherwise address multi-task
+interference, then freeze a new disjoint qualification rather than modifying
+v0.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO
