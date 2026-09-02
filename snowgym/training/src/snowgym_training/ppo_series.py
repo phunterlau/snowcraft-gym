@@ -36,6 +36,7 @@ def run_ppo_series(
     ppo_config: PPOConfig | None = None,
     git_commit: str | None = None,
     warm_start: str | Path | None = None,
+    series_config_digest: str | None = None,
 ) -> dict[str, Any]:
     destination = Path(output)
     if destination.exists():
@@ -107,6 +108,7 @@ def run_ppo_series(
             "format": PPO_SERIES_FORMAT,
             "mode": "qualifying" if qualifying else "development",
             "gitCommit": commit,
+            "seriesConfigDigest": series_config_digest,
             "curriculumDigest": curriculum_digest,
             "gateId": gate_id,
             "gate": gate,

@@ -501,7 +501,10 @@ digest-bound behavior-cloning initialization: the BC policy is loaded only at
 the first update and its checkpoint/state/dataset provenance survives every
 resume. A development series showed why retaining all checkpoints matters: its
 BC-initialized update 1 passed 1v1-random at 8/8, while updates 5 and 10 regressed
-to draws. This is tuning evidence, not a qualifying result.
+to draws. A subsequently frozen conservative candidate (`ppo_1v1_bc_v0`) lowers
+the learning rate to `3e-5`, uses one PPO epoch and full 200-decision rollouts,
+and passed 8/8 at retained updates 1, 5, 10, and 25 in a reproduced development
+run. This is tuning evidence, not yet the post-commit qualifying artifact.
 
 ### M7 — plan-conditioned learned executor
 

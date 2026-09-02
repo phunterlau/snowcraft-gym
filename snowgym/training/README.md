@@ -213,6 +213,21 @@ checkpoint, tensor-state, and source-dataset digests; exact resume carries that
 provenance forward. Warm-started results must be described as BC-initialized
 PPO, never as cold-start reward-only learning.
 
+The first stable 1v1 candidate is frozen in `ppo_1v1_bc_v0.json`. Run it
+without restating or drifting hyperparameters:
+
+```bash
+uv run snowgym-run-ppo-config \
+  --output artifacts/ppo-1v1-bc-v0-development \
+  --json
+```
+
+The configuration binds the BC digest, 8 worlds, full 200-decision rollouts,
+health-potential training reward, learning rate `3e-5`, one PPO epoch, and
+checkpoints 1/5/10/25. Its development reproduction passed the frozen 1v1
+random threshold at every checkpoint. Use `--qualifying` only for the immutable
+post-commit run intended as acceptance evidence.
+
 `ppo.py` defines the centralized hybrid actor-critic used by the next training
 stage. Action masks apply before categorical sampling; target terms contribute
 to joint log probability only for move/throw and power only for throw. GAE
