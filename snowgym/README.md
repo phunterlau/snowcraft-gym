@@ -379,6 +379,8 @@ http://127.0.0.1:5173/replay.html?recording=/replays/<file>
 | File                                           | Scenario                                       | Result   |
 | ---------------------------------------------- | ---------------------------------------------- | -------- |
 | `demo-learned-blue-seed-42.json`               | Learned BC blue vs seeded-random red, 1v1      | blue 1–0 |
+| `ppo_1v1_bc_v0-seed-3101.json`                 | Qualified PPO blue vs seeded-random red, 1v1   | blue 1–0 |
+| `ppo_1v1_easy_bc_v0-seed-4103.json`            | Qualified PPO blue vs easy scripted red, 1v1   | blue 1–0 |
 | `blue-seed-42.json`                            | Open 3v3, normal scripted red (acceptance run) | blue 3–0 |
 | `blue-5v2-hard.json`                           | Open 5v2, hard scripted red                    | blue win |
 | `example-open-3v3.json`                        | Open 3v3, scripted red                         | blue 3–0 |

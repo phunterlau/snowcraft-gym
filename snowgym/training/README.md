@@ -140,6 +140,24 @@ masked-random won 0/8 and the teacher 8/8. The final checkpoint averaged 66.75
 decisions with zero rejected actions. This advances `1v1-easy-scripted`; the
 3v3 and later gates remain closed.
 
+Record the fastest winning seed from the final qualifying checkpoint:
+
+```bash
+uv run snowgym-demo-ppo \
+  --checkpoint runs/ppo_1v1_easy_bc_v0/checkpoints/update-000010/checkpoint \
+  --gate 1v1-easy-scripted \
+  --seed 4103 \
+  --record ../../public/replays/ppo_1v1_easy_bc_v0-seed-4103.json \
+  --json
+```
+
+The committed replay is a 43-decision blue win with zero rejected actions.
+After starting the root Vite server, view it through the existing UI engine:
+
+```text
+http://127.0.0.1:5173/replay.html?recording=/replays/ppo_1v1_easy_bc_v0-seed-4103.json
+```
+
 Replay either learned episode through the existing UI after starting
 `npm run dev` from the repository root:
 
