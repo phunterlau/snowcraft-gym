@@ -604,6 +604,11 @@ with one and two blue survivors respectively. `bc_3v3_scripted_v0` now freezes
 that optimization contract before provenance-valid regeneration. Gate-4 PPO
 qualification remains open.
 
+The post-commit `bc_3v3_scripted_v0` regeneration binds source commit
+`c17751d` and the portable aggregate digest, and reproduces 2/2 held-out BC
+wins with zero rejected actions. The baseline, checkpoint, and evaluation are
+now committed evidence; `3v3-scripted` still requires its eight-seed PPO series.
+
 ### M7 — plan-conditioned learned executor
 
 Goal: train the fast learned controller to follow the existing slow

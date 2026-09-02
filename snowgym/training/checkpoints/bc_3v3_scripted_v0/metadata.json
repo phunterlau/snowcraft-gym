@@ -1,0 +1,65 @@
+{
+  "architecture": {
+    "actor_hidden": 64,
+    "entity_embedding": 24,
+    "entity_hidden": 32
+  },
+  "checkpointDigest": "sha256:7e757f64cd46df87921c744c3580b794199af45df0b4fcddb3347c0942f20f47",
+  "datasetManifestHash": "sha256:2fc2770ae2385c16adb14cffde01104a5e4165a4f8154d92021d40ae1fa3e7e4",
+  "evaluationSuite": "teacher_3v3_scripted_v0/evaluation",
+  "format": "snowgym.checkpoint.v0",
+  "gitCommit": "c17751d15c4f5a7dd10487168f2f21e14addb8be",
+  "loss": {
+    "action_weight": 1.0,
+    "power_weight": 1.0,
+    "target_weight": 10.0
+  },
+  "optimizer": {
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "epsilon": 1e-08,
+    "learningRate": 0.003,
+    "name": "Adam",
+    "weightDecay": 0.0
+  },
+  "stateDigest": "sha256:df86e2283a79dd6973cb630a2b9f2baae280f84fad54c983b29685988e1b05da",
+  "step": 10000,
+  "trainingConfig": {
+    "architecture": {
+      "actor_hidden": 64,
+      "entity_embedding": 24,
+      "entity_hidden": 32
+    },
+    "batchSize": 64,
+    "evaluationSuite": "teacher_3v3_scripted_v0/evaluation",
+    "format": "snowgym.bc-training-config.v0",
+    "learningRate": 0.003,
+    "loss": {
+      "action_weight": 1.0,
+      "power_weight": 1.0,
+      "target_weight": 10.0
+    },
+    "name": "scripted-blue-3v3-scripted-bc-v0",
+    "seed": 73024,
+    "steps": 10000
+  },
+  "trainingMetrics": {
+    "final": {
+      "action": 0.0003229553403798491,
+      "power": 0.0016470331465825438,
+      "target": 0.0006230601575225592,
+      "total": 0.008200589567422867
+    },
+    "firstLoss": 2.270197629928589,
+    "startStep": 0
+  },
+  "trainingSeed": 73024,
+  "versions": {
+    "apiVersion": "snowgym.v0",
+    "simulationVersion": "snowgym.sim.v1",
+    "stateHashVersion": "snowgym.state.v1",
+    "upstreamBaseCommit": "7d9fca5"
+  }
+}

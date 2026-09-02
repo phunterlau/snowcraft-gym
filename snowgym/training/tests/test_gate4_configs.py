@@ -1,10 +1,12 @@
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
+from snowgym_training.checkpoint import load_checkpoint
 from snowgym_training.curriculum import load_curriculum
 from snowgym_training.trainer import load_training_config
-from snowgym_training.trajectory import load_export_spec
+from snowgym_training.trajectory import json_digest, load_export_spec
 
 
 def test_gate4_teacher_and_bc_configs_are_valid_and_disjoint() -> None:
@@ -41,3 +43,25 @@ def test_gate4_teacher_and_bc_configs_are_valid_and_disjoint() -> None:
         for left, right in ((0, 1), (0, 2), (1, 2))
     )
     assert not set().union(*split_seeds) & set(gate["evaluationSeeds"])
+
+
+def test_committed_gate4_initializer_is_digest_bound_and_wins() -> None:
+    training_root = Path(__file__).resolve().parents[1]
+    metadata, _ = load_checkpoint(training_root / "checkpoints/bc_3v3_scripted_v0")
+    evaluation = json.loads(
+        (training_root / "evaluations/bc_3v3_scripted_v0.json").read_text(encoding="utf-8")
+    )
+    baseline = json.loads(
+        (training_root / "baselines/teacher_3v3_scripted_v0.json").read_text(encoding="utf-8")
+    )
+    for artifact in (evaluation, baseline):
+        claimed = artifact.pop("resultDigest")
+        assert claimed == json_digest(artifact)
+    assert evaluation["checkpointDigest"] == metadata["checkpointDigest"]
+    assert metadata["gitCommit"].startswith("c17751d")
+    assert metadata["datasetManifestHash"] == (
+        "sha256:2fc2770ae2385c16adb14cffde01104a5e4165a4f8154d92021d40ae1fa3e7e4"
+    )
+    assert evaluation["summary"]["learned"]["blueWins"] == 2
+    assert evaluation["summary"]["learned"]["rejectedActions"] == 0
+    assert baseline["summary"]["masked_random"]["blueWins"] == 0

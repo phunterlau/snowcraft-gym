@@ -141,6 +141,14 @@ The portable 1,745-transition aggregate digest is
 The frozen `bc_3v3_scripted_v0.json` config uses 10,000 steps, target weight 10,
 and power weight 1. Its development checkpoint won both BC held-out episodes;
 post-commit checkpoint generation remains required for accepted provenance.
+
+The committed `bc_3v3_scripted_v0` checkpoint binds source commit `c17751d`,
+aggregate digest `sha256:2fc2770ae2385c16adb14cffde01104a5e4165a4f8154d92021d40ae1fa3e7e4`,
+and checkpoint digest
+`sha256:7e757f64cd46df87921c744c3580b794199af45df0b4fcddb3347c0942f20f47`.
+It won both disjoint BC evaluation episodes in 158 and 73 decisions with one
+and two blue survivors, versus 0/2 masked-random and 2/2 teacher. Gate-4 PPO
+qualification remains separate and open.
 The `snowgym.checkpoint.v0` metadata binds the model and optimizer state digest
 to the source commit, audited dataset digest, SnowGym versions, architecture,
 optimizer, loss weights, seed, step, and evaluation suite. Loading uses
