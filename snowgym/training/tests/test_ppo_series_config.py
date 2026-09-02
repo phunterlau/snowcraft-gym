@@ -54,6 +54,19 @@ def test_gate3_series_config_freezes_narrow_stable_exploration() -> None:
     )
 
 
+def test_gate4_series_config_binds_dagger_initializer() -> None:
+    config_path = Path(__file__).resolve().parents[1] / (
+        "src/snowgym_training/configs/ppo_3v3_scripted_bc_v0.json"
+    )
+    config = load_series_config(config_path)
+    assert config["gateId"] == "3v3-scripted"
+    assert config["checkpointUpdates"] == [1, 5, 10]
+    assert config["ppoConfig"]["learning_rate"] == 0.00000001
+    assert config["warmStart"]["checkpointDigest"] == (
+        "sha256:7e757f64cd46df87921c744c3580b794199af45df0b4fcddb3347c0942f20f47"
+    )
+
+
 def test_ppo_series_config_accepts_exactly_one_ppo_transfer_initializer() -> None:
     config = load_series_config()
     config["ppoWarmStart"] = config.pop("warmStart")

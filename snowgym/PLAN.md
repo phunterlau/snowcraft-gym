@@ -609,6 +609,12 @@ The post-commit `bc_3v3_scripted_v0` regeneration binds source commit
 wins with zero rejected actions. The baseline, checkpoint, and evaluation are
 now committed evidence; `3v3-scripted` still requires its eight-seed PPO series.
 
+The frozen `ppo_3v3_scripted_bc_v0` development series retains 5/8 wins at
+updates 1/5/10 versus 0/8 masked-random, with three red-win seeds and mean
+119.875 decisions. It uses the same narrow-exploration `1e-8` stability regime
+as gate 3 and does not claim improvement over the DAgger initializer.
+Post-commit gate-4 qualification remains open.
+
 ### M7 — plan-conditioned learned executor
 
 Goal: train the fast learned controller to follow the existing slow

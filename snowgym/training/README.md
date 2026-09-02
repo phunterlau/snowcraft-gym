@@ -149,6 +149,13 @@ and checkpoint digest
 It won both disjoint BC evaluation episodes in 158 and 73 decisions with one
 and two blue survivors, versus 0/2 masked-random and 2/2 teacher. Gate-4 PPO
 qualification remains separate and open.
+
+The gate-4 PPO candidate is frozen in `ppo_3v3_scripted_bc_v0.json`. Its
+development series passed at every retained update 1/5/10 with 5/8 wins versus
+0/8 masked-random and mean 119.875 decisions. Three seeds remain red wins. The
+candidate uses the same log-std `-3`, learning rate `1e-8` stability contract as
+gate 3, so it demonstrates retention through PPO rather than improvement over
+the DAgger initializer. Post-commit qualification remains required.
 The `snowgym.checkpoint.v0` metadata binds the model and optimizer state digest
 to the source commit, audited dataset digest, SnowGym versions, architecture,
 optimizer, loss weights, seed, step, and evaluation suite. Loading uses
