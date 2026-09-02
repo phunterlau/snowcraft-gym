@@ -1,0 +1,133 @@
+{
+  "format": "snowgym.teacher-baseline.v0",
+  "maxDecisions": 400,
+  "resultDigest": "sha256:9457e1b7abac14cc9d67321253104963e65c57e86f1459190351ec2e55b52047",
+  "results": [
+    {
+      "blueAlive": 3,
+      "decisionLimited": false,
+      "decisions": 53,
+      "policy": "scripted_teacher",
+      "redAlive": 0,
+      "rejectedActions": 0,
+      "reward": 1.0,
+      "scenario": {
+        "arenaHeight": 30,
+        "arenaWidth": 40,
+        "blueUnits": 3,
+        "decisionHz": 10,
+        "maxTicks": 2400,
+        "redController": "random",
+        "redDifficulty": "normal",
+        "redUnits": 3
+      },
+      "seed": 231,
+      "stateHash": "fnv1a64:34a88cf0a5a581e0",
+      "terminated": true,
+      "tick": 318,
+      "truncated": false,
+      "winner": "blue"
+    },
+    {
+      "blueAlive": 3,
+      "decisionLimited": false,
+      "decisions": 53,
+      "policy": "scripted_teacher",
+      "redAlive": 0,
+      "rejectedActions": 0,
+      "reward": 1.0,
+      "scenario": {
+        "arenaHeight": 30,
+        "arenaWidth": 40,
+        "blueUnits": 3,
+        "decisionHz": 10,
+        "maxTicks": 2400,
+        "redController": "random",
+        "redDifficulty": "normal",
+        "redUnits": 3
+      },
+      "seed": 232,
+      "stateHash": "fnv1a64:34a88cf0a5a581e0",
+      "terminated": true,
+      "tick": 318,
+      "truncated": false,
+      "winner": "blue"
+    },
+    {
+      "blueAlive": 3,
+      "decisionLimited": false,
+      "decisions": 400,
+      "policy": "masked_random",
+      "redAlive": 3,
+      "rejectedActions": 0,
+      "reward": 0.0,
+      "scenario": {
+        "arenaHeight": 30,
+        "arenaWidth": 40,
+        "blueUnits": 3,
+        "decisionHz": 10,
+        "maxTicks": 2400,
+        "redController": "random",
+        "redDifficulty": "normal",
+        "redUnits": 3
+      },
+      "seed": 231,
+      "stateHash": "fnv1a64:698804d36275c0d4",
+      "terminated": false,
+      "tick": 2400,
+      "truncated": true,
+      "winner": null
+    },
+    {
+      "blueAlive": 3,
+      "decisionLimited": false,
+      "decisions": 400,
+      "policy": "masked_random",
+      "redAlive": 3,
+      "rejectedActions": 0,
+      "reward": 0.0,
+      "scenario": {
+        "arenaHeight": 30,
+        "arenaWidth": 40,
+        "blueUnits": 3,
+        "decisionHz": 10,
+        "maxTicks": 2400,
+        "redController": "random",
+        "redDifficulty": "normal",
+        "redUnits": 3
+      },
+      "seed": 232,
+      "stateHash": "fnv1a64:17977db05e3179ef",
+      "terminated": false,
+      "tick": 2400,
+      "truncated": true,
+      "winner": null
+    }
+  ],
+  "sourceSpecDigest": "sha256:11f689d568fd0313cd3635437bf21588b16fcb086ebde63de750575d49f67075",
+  "split": "evaluation",
+  "summary": {
+    "masked_random": {
+      "blueWins": 0,
+      "draws": 2,
+      "episodes": 2,
+      "meanDecisions": 400.0,
+      "redWins": 0,
+      "rejectedActions": 0
+    },
+    "scripted_teacher": {
+      "blueWins": 2,
+      "draws": 0,
+      "episodes": 2,
+      "meanDecisions": 53.0,
+      "redWins": 0,
+      "rejectedActions": 0
+    }
+  },
+  "versions": {
+    "apiVersion": "snowgym.v0",
+    "simulationVersion": "snowgym.sim.v1",
+    "stateHashVersion": "snowgym.state.v1",
+    "upstreamBaseCommit": "7d9fca5"
+  }
+}

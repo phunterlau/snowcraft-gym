@@ -544,6 +544,19 @@ and recorded zero rejected actions. The semantic auditor verifies all nested
 checkpoint and evaluation digests. Gates 1 and 2 are advanced; 3v3-random and
 all later gates remain closed.
 
+M6.2 gate-3 preparation (2026-09-02): a provenance-bound PPO transfer from the
+accepted gate-2 update-10 checkpoint stayed at 0/8 wins at all retained
+development updates 1, 5, and 10, matching masked-random; the scripted teacher
+won 8/8 in 53 decisions. The committed `teacher_3v3_random_v0` suite therefore
+freezes a separate 3v3 corpus with train, validation, BC-evaluation, and PPO
+evaluation seeds all disjoint. Its 424-transition audited training export has
+dataset digest
+`sha256:616494b021b437d6b8b641bae03255ffe525607985169b24e218407a4daf5dff`.
+The deterministic `bc_3v3_random_v0` initializer won both BC evaluation
+episodes in 105 decisions with all blue units alive, versus 0/2 masked-random
+and 2/2 teacher, with zero rejected actions. This is initializer evidence;
+gate-3 PPO configuration and qualification remain open.
+
 ### M7 — plan-conditioned learned executor
 
 Goal: train the fast learned controller to follow the existing slow

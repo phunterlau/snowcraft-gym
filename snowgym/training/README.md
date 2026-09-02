@@ -158,6 +158,17 @@ After starting the root Vite server, view it through the existing UI engine:
 http://127.0.0.1:5173/replay.html?recording=/replays/ppo_1v1_easy_bc_v0-seed-4103.json
 ```
 
+For the next `3v3-random` gate, a direct PPO transfer from the accepted gate-2
+checkpoint remained at 0/8 wins at retained updates 1/5/10, matching
+masked-random, while the native teacher won 8/8. The gate-specific
+`bc_3v3_random_v0` initializer is trained from 424 audited teacher transitions
+bound to dataset digest
+`sha256:616494b021b437d6b8b641bae03255ffe525607985169b24e218407a4daf5dff`.
+On its disjoint BC evaluation seeds it won 2/2 in 105 decisions with all three
+blue units alive and zero rejected actions, versus 0/2 masked-random and 2/2
+teacher. This establishes a PPO initializer only; `3v3-random` remains closed
+until its frozen eight-seed PPO series passes.
+
 Replay either learned episode through the existing UI after starting
 `npm run dev` from the repository root:
 
