@@ -1,5 +1,6 @@
 import type { TeamAction } from '../../actions/UnitAction';
 import { SnowEnvironment } from '../../core/SnowEnvironment';
+import type { AiDifficulty } from '../../../src/systems/AISystem';
 import {
   parseReplayRecording,
   REPLAY_FORMAT,
@@ -32,6 +33,10 @@ export interface TrajectoryMockCommanderOptions {
   readonly seed?: number;
   readonly latencyTicks?: number;
   readonly maxDecisions?: number;
+  readonly blueUnits?: number;
+  readonly redUnits?: number;
+  readonly map?: string;
+  readonly redDifficulty?: AiDifficulty;
 }
 
 export interface TrajectoryMockCommanderResult {
@@ -55,20 +60,24 @@ export interface TrajectoryMockCommanderResult {
 }
 
 /** Runs a reproducible multi-request commander loop driven by actual trajectory evidence. */
-export async function runTrajectoryMockCommanderTenVsTen(
+export async function runTrajectoryMockCommanderBattle(
   options: TrajectoryMockCommanderOptions = {},
 ): Promise<TrajectoryMockCommanderResult> {
   const seed = safeInteger(options.seed ?? 42, 'seed');
   const latencyTicks = nonNegativeInteger(options.latencyTicks ?? 30, 'latencyTicks');
   const maxDecisions = positiveInteger(options.maxDecisions ?? 400, 'maxDecisions');
-  const scenario = createMapScenario('arena6.json', {
-    name: 'trajectory-mock-commander-10v10',
+  const blueUnits = positiveInteger(options.blueUnits ?? 10, 'blueUnits');
+  const redUnits = positiveInteger(options.redUnits ?? 10, 'redUnits');
+  const map = options.map ?? 'arena6.json';
+  const redDifficulty = options.redDifficulty ?? 'easy';
+  const scenario = createMapScenario(map, {
+    name: `trajectory-mock-commander-${blueUnits}v${redUnits}-${map}`,
     seed,
-    blueUnits: 10,
-    redUnits: 10,
+    blueUnits,
+    redUnits,
     maxTicks: maxDecisions * 6,
   });
-  const environment = new SnowEnvironment({ scenario, decisionHz: 10, redDifficulty: 'easy' });
+  const environment = new SnowEnvironment({ scenario, decisionHz: 10, redDifficulty });
   let observation = environment.reset(seed);
   let status = environment.status();
   const initialDecision = directAdvancePlan();
@@ -206,6 +215,9 @@ export async function runTrajectoryMockCommanderTenVsTen(
     winner: status.winner,
   };
 }
+
+/** Backward-compatible name retained for existing callers; options may now select any map roster. */
+export const runTrajectoryMockCommanderTenVsTen = runTrajectoryMockCommanderBattle;
 
 function planTrace(snapshot: ReturnType<PlanStore['current']>): CommanderPlanTraceEntry {
   return {

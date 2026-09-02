@@ -211,11 +211,20 @@ the model.
 - [x] Record a versioned, ID-free commander trace sidecar bound to the replay's
       final public-state hash; add an optional scrubber-aware plan, aggregate
       trajectory, and lifecycle overlay to the existing replay UI.
+- [x] Generalize the deterministic and Luna trajectory runners across validated
+      bundled-map blue/red rosters and red difficulties while preserving the
+      original 10v10 defaults. Reject invalid map capacities before entering
+      the commander loop.
 
 Exit criterion: host-computed trajectory evidence can trigger bounded Luna
 replanning during an episode while the 10 Hz executor continues synchronously,
 and identical mock latency schedules reproduce identical actions, state hashes,
 trajectory digests, plans, and lifecycle traces.
+
+Configurable-runner acceptance (2026-09-02): targeted tests cover an
+understrength 6v10 trace on `arena6`, a 3v3 provider-neutral run on `arena4`,
+default 10v10 compatibility, deterministic replay, and pre-run rejection of a
+10-unit roster on a three-spawn map. No provider request is part of this gate.
 
 ### M5 — multi-agent and research adapters
 

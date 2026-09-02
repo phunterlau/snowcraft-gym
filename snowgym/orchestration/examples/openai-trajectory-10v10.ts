@@ -1,6 +1,8 @@
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { parseArgs } from 'node:util';
+import type { AiDifficulty } from '../../../src/systems/AISystem';
+import { MAP_IDS } from '../../scenarios/maps';
 import {
   OPENAI_COMMANDER_MODEL,
   OpenAICommanderClient,
@@ -11,6 +13,10 @@ import { runTrajectoryCommanderBattle } from './TrajectoryCommanderBattle';
 const { values } = parseArgs({
   options: {
     seed: { type: 'string', default: '42' },
+    'blue-units': { type: 'string', default: '10' },
+    'red-units': { type: 'string', default: '10' },
+    map: { type: 'string', default: 'arena6.json' },
+    'red-difficulty': { type: 'string', default: 'easy' },
     reasoning: { type: 'string', default: 'medium' },
     'pace-ms': { type: 'string', default: '100' },
     'max-decisions': { type: 'string', default: '10000' },
@@ -25,13 +31,17 @@ const { values } = parseArgs({
 });
 
 if (values.help) {
-  console.log(`Run the paced, renderer-free C5 trajectory-aware Luna 10v10 demo.
+  console.log(`Run a paced, renderer-free C5 trajectory-aware Luna M-v-N demo.
 
 Usage:
   OPENAI_API_KEY=... npx tsx snowgym/orchestration/examples/openai-trajectory-10v10.ts [options]
 
 Options:
   --seed INTEGER
+  --blue-units INTEGER
+  --red-units INTEGER
+  --map MAP_ID            Bundled map (${MAP_IDS.join(', ')})
+  --red-difficulty LEVEL  easy, normal, or hard
   --reasoning low|medium|high|xhigh|max
   --pace-ms INTEGER       Wall-clock delay per 10 Hz decision (default: 100)
   --max-decisions INTEGER
@@ -47,6 +57,10 @@ const result = await runTrajectoryCommanderBattle(
   new OpenAICommanderClient({ reasoningEffort: reasoning(values.reasoning) }),
   {
     seed: integer(values.seed, 'seed'),
+    blueUnits: positiveInteger(values['blue-units'], 'blue-units'),
+    redUnits: positiveInteger(values['red-units'], 'red-units'),
+    map: values.map,
+    redDifficulty: difficulty(values['red-difficulty']),
     paceMs: nonNegativeInteger(values['pace-ms'], 'pace-ms'),
     maxDecisions: positiveInteger(values['max-decisions'], 'max-decisions'),
     maximumRequests: positiveInteger(values['max-requests'], 'max-requests'),
@@ -75,7 +89,10 @@ const summary = {
     responses.some(({ status }) => status !== 'rejected') &&
     result.rejectedActions === 0,
   model: responses[0]?.metadata?.model ?? OPENAI_COMMANDER_MODEL,
-  map: 'arena6.json',
+  blueUnits: result.replay.configuration?.blueUnits,
+  redUnits: result.replay.configuration?.redUnits,
+  map: result.replay.configuration?.map,
+  redDifficulty: result.replay.configuration?.redDifficulty,
   seed: result.seed,
   paceMs: result.paceMs,
   maximumRequests: result.maximumRequests,
@@ -106,8 +123,9 @@ const summary = {
 
 if (values.json) console.log(JSON.stringify(summary));
 else {
-  console.log('SnowGym trajectory-aware OpenAI-commanded 10v10 demo');
+  console.log('SnowGym trajectory-aware OpenAI-commanded M-v-N demo');
   console.log(`  model:       ${summary.model}`);
+  console.log(`  matchup:     ${summary.blueUnits} blue vs ${summary.redUnits} red`);
   console.log(`  signals:     ${summary.trajectorySignals.length}`);
   console.log(`  requests:    ${summary.commanderRequests}/${summary.maximumRequests}`);
   console.log(`  responses:   ${JSON.stringify(summary.responses)}`);
@@ -161,4 +179,9 @@ function positiveInteger(value: string | undefined, name: string): number {
   const result = integer(value, name);
   if (result <= 0) throw new RangeError(`${name} must be positive`);
   return result;
+}
+
+function difficulty(value: string | undefined): AiDifficulty {
+  if (value === 'easy' || value === 'normal' || value === 'hard') return value;
+  throw new RangeError('red-difficulty must be easy, normal, or hard');
 }

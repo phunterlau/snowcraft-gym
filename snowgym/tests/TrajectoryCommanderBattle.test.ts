@@ -50,4 +50,29 @@ describe('trajectory-aware commander battle', () => {
     expect(result.rejectedActions).toBe(0);
     expect(result.commanderTrace.schedulerEvents).toEqual(result.schedulerEvents);
   });
+
+  it('runs a configured roster and bundled map through the provider-neutral boundary', async () => {
+    const client = new MockCommander(
+      () => ({ decision: commandedTenVsTenPlan(), metadata: { model: 'mock-configured' } }),
+      { latencyMs: 0, sleep: async () => undefined },
+    );
+    const result = await runTrajectoryCommanderBattle(client, {
+      seed: 5,
+      paceMs: 0,
+      maximumRequests: 2,
+      blueUnits: 3,
+      redUnits: 3,
+      map: 'arena4.json',
+      redDifficulty: 'normal',
+    });
+
+    expect(result.replay.configuration).toMatchObject({
+      blueUnits: 3,
+      redUnits: 3,
+      map: 'arena4.json',
+      redDifficulty: 'normal',
+    });
+    expect(result.rejectedActions).toBe(0);
+    expect(result.commanderTrace.replay.finalStateHash).toBe(result.replay.stateHashes?.at(-1));
+  });
 });

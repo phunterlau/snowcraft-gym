@@ -228,6 +228,23 @@ Run the exact-replay multi-request mock demonstration with:
 npx tsx snowgym/orchestration/examples/trajectory-mock-10v10.ts --json
 ```
 
+The legacy filename retains the original 10v10 default, but both the mock and
+Luna trajectory runners now accept validated bundled-map configurations:
+
+```bash
+npx tsx snowgym/orchestration/examples/trajectory-mock-10v10.ts \
+  --blue-units 6 --red-units 10 \
+  --map arena6.json --red-difficulty easy \
+  --seed 13 --json
+```
+
+`--blue-units`, `--red-units`, `--map`, and `--red-difficulty` reach the same
+`createMapScenario` and `SnowEnvironment` contracts used by deterministic
+examples. A map-capacity or configuration error is raised before the commander
+loop starts. Configurability does not imply that the default doctrine is
+effective for every roster imbalance; qualifying strategy claims require
+paired baseline results over frozen seeds.
+
 Each later request can include the current `snowgym.trajectory-digest.v0` plus
 one `snowgym.plan-outcome.v0` summary for the preceding plan. This explicit,
 host-owned history keeps `store: false`, deterministic capture, provider
@@ -240,6 +257,8 @@ battle headlessly with:
 ```bash
 OPENAI_API_KEY=... npx tsx \
   snowgym/orchestration/examples/openai-trajectory-10v10.ts \
+  --blue-units 10 --red-units 10 \
+  --map arena6.json --red-difficulty easy \
   --reasoning medium --max-requests 3 --json
 ```
 

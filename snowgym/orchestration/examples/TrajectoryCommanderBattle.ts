@@ -1,5 +1,6 @@
 import type { CommanderClient } from '../commander/CommanderClient';
 import type { CommandPlan } from '../command/CommandPlan';
+import type { AiDifficulty } from '../../../src/systems/AISystem';
 import type { TeamAction } from '../../actions/UnitAction';
 import { SnowEnvironment } from '../../core/SnowEnvironment';
 import {
@@ -28,6 +29,10 @@ export interface TrajectoryCommanderBattleOptions {
   readonly paceMs?: number;
   readonly maxDecisions?: number;
   readonly maximumRequests?: number;
+  readonly blueUnits?: number;
+  readonly redUnits?: number;
+  readonly map?: string;
+  readonly redDifficulty?: AiDifficulty;
   readonly pause?: (milliseconds: number) => Promise<void>;
 }
 
@@ -59,14 +64,18 @@ export async function runTrajectoryCommanderBattle(
   const paceMs = nonNegativeInteger(options.paceMs ?? 100, 'paceMs');
   const maxDecisions = positiveInteger(options.maxDecisions ?? 10_000, 'maxDecisions');
   const maximumRequests = positiveInteger(options.maximumRequests ?? 3, 'maximumRequests');
+  const blueUnits = positiveInteger(options.blueUnits ?? 10, 'blueUnits');
+  const redUnits = positiveInteger(options.redUnits ?? 10, 'redUnits');
+  const map = options.map ?? 'arena6.json';
+  const redDifficulty = options.redDifficulty ?? 'easy';
   const pause = options.pause ?? sleep;
-  const scenario = createMapScenario('arena6.json', {
-    name: 'trajectory-commanded-10v10',
+  const scenario = createMapScenario(map, {
+    name: `trajectory-commanded-${blueUnits}v${redUnits}-${map}`,
     seed,
-    blueUnits: 10,
-    redUnits: 10,
+    blueUnits,
+    redUnits,
   });
-  const environment = new SnowEnvironment({ scenario, decisionHz: 10, redDifficulty: 'easy' });
+  const environment = new SnowEnvironment({ scenario, decisionHz: 10, redDifficulty });
   let observation = environment.reset(seed);
   let status = environment.status();
   const initialPlan = directAdvancePlan();

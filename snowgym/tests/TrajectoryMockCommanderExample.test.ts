@@ -1,5 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { runTrajectoryMockCommanderTenVsTen } from '../orchestration/examples/TrajectoryMockCommanderExample';
+import {
+  runTrajectoryMockCommanderBattle,
+  runTrajectoryMockCommanderTenVsTen,
+} from '../orchestration/examples/TrajectoryMockCommanderExample';
 import {
   CommanderTraceFormatError,
   parseCommanderTrace,
@@ -78,5 +81,37 @@ describe('trajectory-aware mock commander 10v10 example', () => {
     expect(second.lifecycleEvents).toEqual(first.lifecycleEvents);
     expect(second.planTraces).toEqual(first.planTraces);
     expect(second.commanderTrace).toEqual(first.commanderTrace);
+  });
+
+  it('supports a smaller blue roster against ten red units with a bound trace', async () => {
+    const result = await runTrajectoryMockCommanderBattle({
+      seed: 13,
+      blueUnits: 6,
+      redUnits: 10,
+      map: 'arena6.json',
+      redDifficulty: 'easy',
+      latencyTicks: 30,
+      maxDecisions: 400,
+    });
+
+    expect(result.replay.configuration).toMatchObject({
+      blueUnits: 6,
+      redUnits: 10,
+      map: 'arena6.json',
+      redDifficulty: 'easy',
+    });
+    expect(result.commanderRequests).toBe(3);
+    expect(result.rejectedActions).toBe(0);
+    expect(result.commanderTrace.replay.finalStateHash).toBe(result.stateHashes.at(-1));
+  });
+
+  it('rejects a roster larger than the selected map before running', async () => {
+    await expect(
+      runTrajectoryMockCommanderBattle({
+        blueUnits: 3,
+        redUnits: 10,
+        map: 'arena1.json',
+      }),
+    ).rejects.toThrow('redUnits must be at most 3');
   });
 });

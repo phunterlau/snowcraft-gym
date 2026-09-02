@@ -356,6 +356,13 @@ Compare the two endings rather than treating a single seed as policy quality.
 The paired examples demonstrate observability and deterministic orchestration,
 not a trained policy benchmark or evidence that replanning guarantees a win.
 
+The mock and Luna trajectory CLIs also accept `--blue-units`, `--red-units`,
+`--map`, and `--red-difficulty`. The historical `*-10v10.ts` filenames retain
+10v10 defaults for compatibility; the runtime configuration is no longer fixed
+to that roster. See the
+[orchestration guide](orchestration/README.md#c5-trajectory-aware-closed-loop)
+for a configurable headless command. Provider-backed runs remain opt-in.
+
 ### Example replays
 
 Ready-made recordings live in [`public/replays/`](../public/replays/). With the
