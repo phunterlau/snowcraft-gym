@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
+import snowgym_training.ppo_series_config as series_config_module
 from snowgym_training.ppo_series_config import load_series_config, validate_series_config
 
 
@@ -35,3 +37,46 @@ def test_gate2_series_config_stops_before_observed_regression() -> None:
     assert config["checkpointUpdates"] == [1, 5, 10]
     assert config["rolloutSteps"] == 300
     assert config["ppoConfig"]["minibatch_size"] == 2400
+
+
+def test_ppo_series_config_accepts_exactly_one_ppo_transfer_initializer() -> None:
+    config = load_series_config()
+    config["ppoWarmStart"] = config.pop("warmStart")
+    validate_series_config(config)
+
+    config["warmStart"] = dict(config["ppoWarmStart"])
+    try:
+        validate_series_config(config)
+    except ValueError as error:
+        assert "exactly one" in str(error)
+    else:
+        raise AssertionError("series config accepted two initializers")
+
+
+def test_configured_series_dispatches_digest_checked_ppo_transfer(tmp_path, monkeypatch) -> None:
+    config = load_series_config()
+    config["ppoWarmStart"] = {
+        "path": "runs/source/checkpoint",
+        "checkpointDigest": "sha256:source",
+    }
+    config.pop("warmStart")
+    config_path = tmp_path / "ppo-transfer.json"
+    config_path.write_text(json.dumps(config), encoding="utf-8")
+    captured = {}
+
+    monkeypatch.setattr(
+        series_config_module,
+        "load_ppo_checkpoint",
+        lambda path: ({"checkpointDigest": "sha256:source"}, {}),
+    )
+
+    def fake_run_ppo_series(**kwargs):
+        captured.update(kwargs)
+        return {"ok": True}
+
+    monkeypatch.setattr(series_config_module, "run_ppo_series", fake_run_ppo_series)
+    assert series_config_module.run_configured_series(
+        output=tmp_path / "output", config_path=config_path
+    ) == {"ok": True}
+    assert captured["warm_start"] is None
+    assert captured["ppo_warm_start"].as_posix().endswith("runs/source/checkpoint")

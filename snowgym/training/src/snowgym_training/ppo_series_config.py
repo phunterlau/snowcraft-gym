@@ -11,6 +11,7 @@ from typing import Any
 from .checkpoint import load_checkpoint
 from .model import model_config
 from .ppo import PPOConfig
+from .ppo_checkpoint import load_ppo_checkpoint
 from .ppo_series import run_ppo_series
 from .trajectory import json_digest
 
@@ -35,10 +36,18 @@ def validate_series_config(value: Any) -> None:
     required = {
         "format", "name", "gateId", "worlds", "rolloutSteps", "trainingSeed",
         "rewardMode", "checkpointUpdates", "maxEvaluationDecisions", "architecture",
-        "ppoConfig", "warmStart",
+        "ppoConfig",
     }
-    if not isinstance(value, dict) or set(value) != required:
-        raise ValueError(f"PPO series config must contain exactly {sorted(required)}")
+    initialization_keys = {"warmStart", "ppoWarmStart"}
+    if (
+        not isinstance(value, dict)
+        or set(value) - initialization_keys != required
+        or len(set(value) & initialization_keys) != 1
+    ):
+        raise ValueError(
+            "PPO series config must contain the required fields and exactly one of "
+            "warmStart or ppoWarmStart"
+        )
     if value["format"] != PPO_SERIES_CONFIG_FORMAT:
         raise ValueError(f"PPO series config format must be {PPO_SERIES_CONFIG_FORMAT}")
     if not all(isinstance(value[name], str) and value[name] for name in ("name", "gateId")):
@@ -61,11 +70,12 @@ def validate_series_config(value: Any) -> None:
     if not isinstance(ppo, dict):
         raise ValueError("PPO series config ppoConfig must be an object")
     PPOConfig(**ppo)
-    warm = value["warmStart"]
+    initialization_key = next(iter(set(value) & initialization_keys))
+    warm = value[initialization_key]
     if not isinstance(warm, dict) or set(warm) != {"path", "checkpointDigest"} or not all(
         isinstance(warm[name], str) and warm[name] for name in warm
     ):
-        raise ValueError("PPO series config warmStart is invalid")
+        raise ValueError(f"PPO series config {initialization_key} is invalid")
 
 
 def run_configured_series(
@@ -73,10 +83,17 @@ def run_configured_series(
 ) -> dict[str, Any]:
     config = load_series_config(config_path)
     training_root = Path(__file__).resolve().parents[2]
-    warm_start = training_root / config["warmStart"]["path"]
-    warm_metadata, _ = load_checkpoint(warm_start)
-    if warm_metadata["checkpointDigest"] != config["warmStart"]["checkpointDigest"]:
-        raise ValueError("PPO series config warm-start checkpoint digest mismatch")
+    warm_start = ppo_warm_start = None
+    if "warmStart" in config:
+        warm_start = training_root / config["warmStart"]["path"]
+        warm_metadata, _ = load_checkpoint(warm_start)
+        expected_digest = config["warmStart"]["checkpointDigest"]
+    else:
+        ppo_warm_start = training_root / config["ppoWarmStart"]["path"]
+        warm_metadata, _ = load_ppo_checkpoint(ppo_warm_start)
+        expected_digest = config["ppoWarmStart"]["checkpointDigest"]
+    if warm_metadata["checkpointDigest"] != expected_digest:
+        raise ValueError("PPO series config initialization checkpoint digest mismatch")
     return run_ppo_series(
         output=output,
         checkpoints=config["checkpointUpdates"],
@@ -90,6 +107,7 @@ def run_configured_series(
         model_config=model_config(config["architecture"]),
         ppo_config=PPOConfig(**config["ppoConfig"]),
         warm_start=warm_start,
+        ppo_warm_start=ppo_warm_start,
         series_config_digest=json_digest(config),
     )
 
