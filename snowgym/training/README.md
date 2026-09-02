@@ -699,3 +699,24 @@ semantically hashed result. Its auditor reloads both checkpoints and rejects
 any difference in dataset, optimizer, loss, seed, or step. A training result is
 still only a plumbing check until the paired policies are evaluated on frozen
 counterfactual behavior metrics.
+
+Evaluate both checkpoints on a separate aligned dataset with:
+
+```bash
+cd snowgym/training
+.venv/bin/snowgym-evaluate-plan-ablation \
+  --ablation artifacts/plan-bc-ablation-v0 \
+  --dataset artifacts/plan-evaluation-10v10 \
+  --output artifacts/plan-bc-ablation-v0/evaluation.json \
+  --json
+```
+
+The evaluator reports overall and first-decision action accuracy and, at the
+first decision of each episode, cyclically swaps only the plan tensors while
+holding the physical observation fixed. It measures correct versus shuffled
+action negative log-likelihood, predicted action changes, and target movement.
+The no-plan model should have exactly zero counterfactual sensitivity by
+construction. Nonzero sensitivity from the conditioned model shows influence,
+but acceptance additionally requires better correct-plan fit and later
+closed-loop objective-completion metrics; arbitrary sensitivity is not plan
+following.

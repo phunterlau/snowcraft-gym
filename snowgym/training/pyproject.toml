@@ -21,6 +21,7 @@ learn = ["torch>=2.7,<3"]
 snowgym-audit-dataset = "snowgym_training.trajectory:main"
 snowgym-convert-plan-rollouts = "snowgym_training.plan_rollout:main"
 snowgym-run-plan-ablation = "snowgym_training.plan_ablation:main"
+snowgym-evaluate-plan-ablation = "snowgym_training.plan_evaluate:main"
 snowgym-export-trajectories = "snowgym_training.export_scripted:main"
 snowgym-export-dagger = "snowgym_training.export_dagger:main"
 snowgym-merge-trajectories = "snowgym_training.merge_trajectory:main"

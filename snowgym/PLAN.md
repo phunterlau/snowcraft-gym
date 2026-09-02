@@ -772,6 +772,20 @@ twice, prove exact reproducibility, and reject checkpoint-metadata corruption.
 A frozen non-smoke data/config split and counterfactual trajectory evaluation
 remain required before advancing the paired-training checklist item.
 
+M7 counterfactual evaluator foundation (2026-09-02):
+`snowgym-evaluate-plan-ablation` loads both restricted child checkpoints and a
+separate audited plan trajectory dataset, then reports overall and same-state
+first-decision action accuracy. At the latter boundary it cyclically swaps only
+the plan tensors while preserving each physical observation and measures
+correct-versus-shuffled action NLL, discrete action changes, and target deltas.
+The no-plan control is required to remain exactly insensitive by construction;
+conditioned sensitivity alone is not treated as following without improved
+correct-plan fit. The evaluation artifact binds the ablation and dataset
+digests, and its auditor rejects result or provenance drift. Unit tests execute
+the full collect/convert/train/evaluate chain and prove the swap cannot affect
+the no-plan model. Frozen held-out data, thresholds, and closed-loop objective
+metrics remain next.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO

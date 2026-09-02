@@ -11,6 +11,10 @@ from snowgym_client.state_hash import hash_observation
 from snowgym_training.data import TrajectoryDataset
 from snowgym_training.plan_data import javascript_json_digest
 from snowgym_training.plan_ablation import audit_plan_ablation, run_plan_ablation
+from snowgym_training.plan_evaluate import (
+    audit_plan_evaluation,
+    evaluate_plan_ablation,
+)
 from snowgym_training.plan_rollout import (
     audit_plan_rollouts,
     convert_plan_rollouts,
@@ -91,6 +95,39 @@ def test_matched_plan_ablation_trains_both_models_reproducibly(tmp_path: Path) -
     metadata_path.write_text(json.dumps(metadata), encoding="utf-8")
     with pytest.raises(ValueError, match="checkpoint metadata digest mismatch"):
         audit_plan_ablation(tmp_path / "first")
+
+
+def test_counterfactual_evaluation_swaps_only_plan_input(tmp_path: Path) -> None:
+    source = tmp_path / "rollouts.json"
+    source.write_text(json.dumps(two_plan_rollout_value()), encoding="utf-8")
+    dataset = tmp_path / "dataset"
+    convert_plan_rollouts(source=source, output=dataset, max_team_units=3)
+    ablation = tmp_path / "ablation"
+    run_plan_ablation(
+        dataset_path=dataset,
+        output=ablation,
+        config={**ablation_config(), "steps": 2},
+        git_commit="test",
+    )
+
+    output = tmp_path / "evaluation.json"
+    result = evaluate_plan_ablation(
+        ablation_path=ablation, dataset_path=dataset, output=output
+    )
+    assert result["episodes"] == 2
+    assert result["metrics"]["noPlan"]["counterfactualActionChangeRate"] == 0.0
+    assert result["metrics"]["noPlan"]["counterfactualTargetMeanAbsoluteDelta"] == 0.0
+    assert (
+        result["metrics"]["planConditioned"]["counterfactualTargetMeanAbsoluteDelta"]
+        > 0.0
+    )
+    assert audit_plan_evaluation(output, ablation, dataset) == result
+
+    corrupt = json.loads(output.read_text(encoding="utf-8"))
+    corrupt["metrics"]["noPlan"]["actionAccuracy"] = 2.0
+    output.write_text(json.dumps(corrupt), encoding="utf-8")
+    with pytest.raises(ValueError, match="digest mismatch"):
+        audit_plan_evaluation(output, ablation, dataset)
 
 
 def rollout_value() -> dict:
@@ -187,6 +224,36 @@ def rollout_value() -> dict:
         ],
     }
     return {**body, "datasetDigest": javascript_json_digest(body)}
+
+
+def two_plan_rollout_value() -> dict:
+    value = rollout_value()
+    second_sample = json.loads(json.dumps(value["curriculum"]["samples"][0]))
+    second_sample["sourceSeed"] = 121
+    second_sample["planId"] = "synthetic-plan-121"
+    second_episode = json.loads(json.dumps(value["episodes"][0]))
+    second_episode["sourceSeed"] = 121
+    second_episode["planId"] = "synthetic-plan-121"
+    transition = second_episode["transitions"][0]
+    transition["planGroups"][0] = 0.0
+    transition["planGroups"][3] = 1.0
+    transition["action"] = {
+        "actions": [
+            {"type": "move", "unitId": index + 1, "x": -5.0, "y": 2.0}
+            for index in range(3)
+        ]
+    }
+    transition["actionResults"] = [
+        {"action": item, "accepted": True} for item in transition["action"]["actions"]
+    ]
+    transition["postStateHash"] = "fnv1a64:2222222222222222"
+    second_episode["outcome"]["finalStateHash"] = transition["postStateHash"]
+    value["curriculum"]["samples"].append(second_sample)
+    value["curriculum"]["sampleCount"] = 2
+    value["episodes"].append(second_episode)
+    body = {name: item for name, item in value.items() if name != "datasetDigest"}
+    value["datasetDigest"] = javascript_json_digest(body)
+    return value
 
 
 def unit(unit_id: int, team: str, x: float, y: float) -> dict:
