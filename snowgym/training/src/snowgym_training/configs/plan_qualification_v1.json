@@ -1,0 +1,33 @@
+{
+  "format": "snowgym.plan-qualification-spec.v0",
+  "name": "plan-aware-blue-6v6-target-only-qualification-v1",
+  "trainingRollout": {
+    "map": "arena6.json",
+    "blueUnits": 6,
+    "redUnits": 6,
+    "environmentSeed": 8200,
+    "planSeed": 2400,
+    "samples": 24,
+    "maxDecisions": 80,
+    "redDifficulty": "easy"
+  },
+  "evaluationRollout": {
+    "map": "arena6.json",
+    "blueUnits": 6,
+    "redUnits": 6,
+    "environmentSeed": 9200,
+    "planSeed": 3000,
+    "samples": 12,
+    "maxDecisions": 80,
+    "redDifficulty": "easy"
+  },
+  "ablationConfigDigest": "sha256:c4cf07e053e50042205b56ac2243650b2ddda99475272ecabadfa6b423c04b0b",
+  "thresholds": {
+    "maxConditionedTargetMse": 0.1,
+    "maxTargetMseRatio": 0.5,
+    "minTargetMseSwapDelta": 0.1,
+    "minTargetMeanAbsoluteDelta": 0.2,
+    "maxActionAccuracyDeficit": 0.03,
+    "noPlanMaxAbsoluteSensitivity": 1e-12
+  }
+}

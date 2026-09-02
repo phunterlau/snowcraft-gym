@@ -885,6 +885,15 @@ and evaluation digest is
 This resolves the observed action-head interference on development data. A v1
 qualification with new seeds must still be frozen and passed.
 
+M7 qualification-v1 freeze (2026-09-02): before observing any new outputs,
+`plan_qualification_v1.json` retains every v0 numerical threshold and binds the
+target-only/separate-actor 3,000-step config digest. Training uses new
+environment seed 8200 and plan seeds 2400-2423; evaluation uses disjoint seed
+9200 and plan seeds 3000-3011. Map, 6v6 roster, red difficulty, sample counts,
+and 80-decision horizon remain unchanged so the architecture fix is the only
+intentional experimental change. Execution is next; v0 remains failed
+regardless of the v1 outcome.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO
