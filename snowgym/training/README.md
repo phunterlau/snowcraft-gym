@@ -382,6 +382,24 @@ the intersection of audited tensor fields, records dropped source-specific
 auxiliaries, and preserves the plan-conditioned marker. Default merging remains
 strict and requires identical source specifications.
 
+For a correction run on a new aggregate dataset, initialize from the qualified
+checkpoint while freezing its physical action path:
+
+```bash
+.venv/bin/snowgym-train-bc \
+  --dataset artifacts/plan-dagger-v0-aggregate-train \
+  --config path/to/frozen-correction-config.json \
+  --initialize runs/plan_bc_ablation_qual_v1/plan-conditioned \
+  --output runs/plan-dagger-correction-v0 \
+  --json
+```
+
+Set `trainable` to `plan-target-path` only with the plan-conditioned,
+target-only, separate-target-actor architecture. The trainer loads model weights
+but resets optimizer and step state for the new dataset; only the plan encoder,
+target actor, target heads, and power head receive gradients. Initialization
+checkpoint/state digests are retained in checkpoint metadata.
+
 ## PPO foundation
 
 Run a short end-to-end infrastructure smoke against the first frozen curriculum

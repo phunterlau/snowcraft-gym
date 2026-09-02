@@ -1022,6 +1022,15 @@ visibility for training. A real qualification-plus-DAgger smoke retained 4,232
 transitions and both required plan arrays while dropping only the original
 `plan_source_seed` auxiliary. Default same-spec merging remains strict.
 
+M7 safe correction-training foundation (2026-09-02): behavior cloning now
+distinguishes exact resume from initialization on a new dataset. The optional
+`plan-target-path` mode requires the target-only/separate-target architecture
+and freezes entity encoders, the physical action actor, and action head while
+training only the plan encoder, target actor/heads, and power head. Checkpoints
+bind initializer checkpoint/state digests and the new dataset independently. A
+real plan-DAgger smoke proves the action head remains bit-identical while the
+plan encoder updates. A frozen correction config and post-freeze run are next.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO

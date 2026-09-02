@@ -45,8 +45,9 @@ def validate_training_config(value: Any) -> None:
         "loss",
         "evaluationSuite",
     }
-    if not isinstance(value, dict) or set(value) != required:
-        raise ValueError(f"training config must contain exactly {sorted(required)}")
+    optional = {"trainable"}
+    if not isinstance(value, dict) or not required <= set(value) or set(value) - required - optional:
+        raise ValueError(f"training config must contain {sorted(required)} and optional trainable")
     if value["format"] != TRAINING_CONFIG_FORMAT:
         raise ValueError(f"training config format must be {TRAINING_CONFIG_FORMAT}")
     if not isinstance(value["name"], str) or not value["name"]:
@@ -61,6 +62,8 @@ def validate_training_config(value: Any) -> None:
     loss_config(value["loss"])
     if not isinstance(value["evaluationSuite"], str) or not value["evaluationSuite"]:
         raise ValueError("evaluationSuite must be non-empty")
+    if value.get("trainable", "all") not in {"all", "plan-target-path"}:
+        raise ValueError("trainable must be all or plan-target-path")
 
 
 def train_behavior_clone(
@@ -69,6 +72,7 @@ def train_behavior_clone(
     output: str | Path,
     config: dict[str, Any],
     resume: str | Path | None = None,
+    initialize: str | Path | None = None,
     target_step: int | None = None,
     git_commit: str | None = None,
 ) -> dict[str, Any]:
@@ -85,6 +89,25 @@ def train_behavior_clone(
         raise ValueError("plan-conditioned training requires an aligned plan dataset")
     losses = loss_config(config["loss"])
     model = EntityPolicy(architecture).cpu()
+    if resume is not None and initialize is not None:
+        raise ValueError("resume and initialize are mutually exclusive")
+    initialization: dict[str, Any] | None = None
+    if initialize is not None:
+        initial_metadata, initial_state = load_checkpoint(initialize)
+        if initial_metadata.get("architecture") != architecture.as_dict():
+            raise ValueError("initializer architecture does not match training config")
+        model.load_state_dict(initial_state["model"])
+        initialization = {
+            "checkpointDigest": initial_metadata["checkpointDigest"],
+            "stateDigest": initial_metadata["stateDigest"],
+        }
+    trainable_mode = config.get("trainable", "all")
+    if trainable_mode == "plan-target-path":
+        if not (architecture.plan_conditioned and architecture.plan_target_only and architecture.separate_target_actor):
+            raise ValueError("plan-target-path requires plan target-only separate-target architecture")
+        prefixes = ("plan_encoder.", "target_actor.", "move_target_head.", "throw_target_head.", "power_head.")
+        for name, parameter in model.named_parameters():
+            parameter.requires_grad_(name.startswith(prefixes))
     optimizer_config = {
         "name": "Adam",
         "learningRate": float(config["learningRate"]),
@@ -93,7 +116,7 @@ def train_behavior_clone(
         "weightDecay": 0.0,
     }
     optimizer = torch.optim.Adam(
-        model.parameters(),
+        [parameter for parameter in model.parameters() if parameter.requires_grad],
         lr=optimizer_config["learningRate"],
         betas=tuple(optimizer_config["betas"]),
         eps=optimizer_config["epsilon"],
@@ -150,6 +173,8 @@ def train_behavior_clone(
             "step": target,
             "evaluationSuite": config["evaluationSuite"],
             "trainingConfig": config,
+            "trainable": trainable_mode,
+            **({"initialization": initialization} if initialization is not None else {}),
             "trainingMetrics": {
                 "startStep": start_step,
                 "firstLoss": first_loss,
@@ -203,6 +228,7 @@ def main() -> None:
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--config", type=Path)
     parser.add_argument("--resume", type=Path)
+    parser.add_argument("--initialize", type=Path)
     parser.add_argument("--target-step", type=int)
     parser.add_argument("--json", action="store_true")
     args = parser.parse_args()
@@ -212,6 +238,7 @@ def main() -> None:
             output=args.output,
             config=load_training_config(args.config),
             resume=args.resume,
+            initialize=args.initialize,
             target_step=args.target_step,
         )
     except (ValueError, FileExistsError) as error:

@@ -6,11 +6,13 @@ from pathlib import Path
 import numpy as np
 
 from snowgym_training.data import TrajectoryDataset
+from snowgym_training.checkpoint import load_checkpoint
 from snowgym_training.export_plan_dagger import (
     export_plan_dagger_dataset,
     load_plan_dagger_spec,
 )
 from snowgym_training.merge_trajectory import merge_datasets
+from snowgym_training.trainer import train_behavior_clone
 from snowgym_training.trajectory import audit_dataset
 
 
@@ -76,3 +78,32 @@ def test_plan_dagger_labels_learner_visited_states_headlessly(tmp_path: Path) ->
         assert np.all(shard["teacher_accepted"])
     merged = merge_datasets(output=tmp_path / "merged", inputs=[output, output])
     assert merged["planConditioned"] is True
+
+    initial_metadata, initial_state = load_checkpoint(CHECKPOINT)
+    config = {
+        "format": "snowgym.bc-training-config.v0",
+        "name": "plan-target-transfer-smoke",
+        "seed": 44001,
+        "steps": 1,
+        "batchSize": 4,
+        "learningRate": 0.001,
+        "architecture": initial_metadata["architecture"],
+        "loss": initial_metadata["loss"],
+        "evaluationSuite": "plan-target-transfer-smoke",
+        "trainable": "plan-target-path",
+    }
+    trained = train_behavior_clone(
+        dataset_path=tmp_path / "merged",
+        output=tmp_path / "trained",
+        config=config,
+        initialize=CHECKPOINT,
+        git_commit="test",
+    )
+    _, trained_state = load_checkpoint(tmp_path / "trained")
+    assert trained["initialization"]["checkpointDigest"] == initial_metadata["checkpointDigest"]
+    assert trained_state["model"]["action_head.weight"].equal(
+        initial_state["model"]["action_head.weight"]
+    )
+    assert not trained_state["model"]["plan_encoder.0.weight"].equal(
+        initial_state["model"]["plan_encoder.0.weight"]
+    )
