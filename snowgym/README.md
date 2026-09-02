@@ -299,6 +299,63 @@ position; it is never used as agent input. See
 [`orchestration/README.md`](orchestration/README.md#commander-trace-and-replay-overlay)
 for generation commands and the replay-binding contract.
 
+### Commander trajectory examples
+
+Two deterministic 10v10 examples show the same blue commander/executor stack
+under different seeded battle trajectories. Blue is the controlled team; red
+uses SnowGym's built-in `easy` scripted controller. The commander is a local
+mock, so these examples exercise scheduling, simulated response latency,
+validation, plan activation, fallback, trajectory monitoring, and replay
+binding without making an OpenAI API request.
+
+| Replay                                  | Seed | Result               | What it demonstrates                                                         |
+| --------------------------------------- | ---: | -------------------- | ---------------------------------------------------------------------------- |
+| `trajectory-10v10-blue-win-seed-2.json` |    2 | blue 7–0 at tick 869 | Three commander requests lead to a split-force plan and a decisive blue win. |
+| `trajectory-10v10.json`                 |   42 | red 4–0 at tick 1519 | Replanning and fallbacks remain observable even when blue cannot recover.    |
+
+Recreate either pair from the repository root. Outputs refuse to overwrite
+existing files unless `--force` is supplied:
+
+```bash
+# Blue-win trajectory
+node --import tsx snowgym/orchestration/examples/trajectory-mock-10v10.ts \
+  --seed 2 \
+  --output public/replays/trajectory-10v10-blue-win-seed-2.json \
+  --trace-output public/replays/trajectory-10v10-blue-win-seed-2.commander.json \
+  --json
+
+# Failure/correction trajectory
+node --import tsx snowgym/orchestration/examples/trajectory-mock-10v10.ts \
+  --seed 42 \
+  --output public/replays/trajectory-10v10.json \
+  --trace-output public/replays/trajectory-10v10.commander.json \
+  --json
+```
+
+To play them, start the existing UI with `npm run dev -- --host 127.0.0.1`,
+then open one of these URLs:
+
+```text
+http://127.0.0.1:5173/replay.html?recording=/replays/trajectory-10v10-blue-win-seed-2.json&trace=/replays/trajectory-10v10-blue-win-seed-2.commander.json
+
+http://127.0.0.1:5173/replay.html?recording=/replays/trajectory-10v10.json&trace=/replays/trajectory-10v10.commander.json
+```
+
+Use **Pause**, the tick scrubber, and the speed selector to inspect decisions.
+The upper-right overlay is synchronized to the displayed tick:
+
+- `plan vN` is the active validated blue plan at that point in the replay;
+- the intent and `role: mission/approach` rows describe the aggregate blue
+  orders, not individual unit commands;
+- each role's progress label and stuck percentage summarize recent observed
+  motion and engagement; and
+- the final five event rows explain why a request, plan activation, rejection,
+  or deterministic fallback occurred.
+
+Compare the two endings rather than treating a single seed as policy quality.
+The paired examples demonstrate observability and deterministic orchestration,
+not a trained policy benchmark or evidence that replanning guarantees a win.
+
 ### Example replays
 
 Ready-made recordings live in [`public/replays/`](../public/replays/). With the
@@ -309,19 +366,21 @@ either pick a file with **Open recording**, or load one directly:
 http://127.0.0.1:5173/replay.html?recording=/replays/<file>
 ```
 
-| File                              | Scenario                                       | Result   |
-| --------------------------------- | ---------------------------------------------- | -------- |
-| `demo-learned-blue-seed-42.json`  | Learned BC blue vs seeded-random red, 1v1      | blue 1–0 |
-| `blue-seed-42.json`               | Open 3v3, normal scripted red (acceptance run) | blue 3–0 |
-| `blue-5v2-hard.json`              | Open 5v2, hard scripted red                    | blue win |
-| `example-open-3v3.json`           | Open 3v3, scripted red                         | blue 3–0 |
-| `example-open-1v3-hard.json`      | Open 1 blue vs 3 hard red                      | red win  |
-| `example-open-2v5-normal.json`    | Open 2 blue vs 5 red                           | red win  |
-| `example-open-8v8.json`           | Open 8v8 on a large arena                      | blue 7–0 |
-| `example-winter-front-10v10.json` | Winter Front (`arena6`) 10v10                  | blue 9–0 |
-| `example-forest-3v3.json`         | Pine Forest (`arena4`) 3v3 — dense tree cover  | blue 3–0 |
-| `example-pond-5v2-hard.json`      | Frozen Pond (`arena2`), hard red               | blue win |
-| `example-village-random.json`     | Village Skirmish (`arena3`) vs `random` red    | blue win |
+| File                                    | Scenario                                       | Result   |
+| --------------------------------------- | ---------------------------------------------- | -------- |
+| `demo-learned-blue-seed-42.json`        | Learned BC blue vs seeded-random red, 1v1      | blue 1–0 |
+| `blue-seed-42.json`                     | Open 3v3, normal scripted red (acceptance run) | blue 3–0 |
+| `blue-5v2-hard.json`                    | Open 5v2, hard scripted red                    | blue win |
+| `example-open-3v3.json`                 | Open 3v3, scripted red                         | blue 3–0 |
+| `example-open-1v3-hard.json`            | Open 1 blue vs 3 hard red                      | red win  |
+| `example-open-2v5-normal.json`          | Open 2 blue vs 5 red                           | red win  |
+| `example-open-8v8.json`                 | Open 8v8 on a large arena                      | blue 7–0 |
+| `example-winter-front-10v10.json`       | Winter Front (`arena6`) 10v10                  | blue 9–0 |
+| `trajectory-10v10-blue-win-seed-2.json` | Mock commander blue on Winter Front, 10v10     | blue 7–0 |
+| `trajectory-10v10.json`                 | Mock commander blue on Winter Front, 10v10     | red 4–0  |
+| `example-forest-3v3.json`               | Pine Forest (`arena4`) 3v3 — dense tree cover  | blue 3–0 |
+| `example-pond-5v2-hard.json`            | Frozen Pond (`arena2`), hard red               | blue win |
+| `example-village-random.json`           | Village Skirmish (`arena3`) vs `random` red    | blue win |
 
 Map recordings render the terrain (trees, rocks, forts) and show units using
 cover. Record your own with `--record PATH` on `snowgym-demo` (see below).
