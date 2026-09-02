@@ -13,7 +13,7 @@ from snowgym_training.data import TrajectoryDataset
 from snowgym_training.demo import run_learned_demo
 from snowgym_training.evaluate import EVALUATION_FORMAT, run_checkpoint_evaluation
 from snowgym_training.loss import LossConfig, behavior_clone_loss
-from snowgym_training.model import EntityPolicy, ModelConfig
+from snowgym_training.model import EntityPolicy, ModelConfig, model_config
 from snowgym_training.policy import TorchPolicy
 from snowgym_training.trainer import TRAINING_CONFIG_FORMAT, train_behavior_clone
 from snowgym_training.trajectory import (
@@ -40,6 +40,36 @@ def test_model_masks_outputs_and_has_finite_gradients(tmp_path: Path) -> None:
         parameter.grad is None or torch.isfinite(parameter.grad).all()
         for parameter in model.parameters()
     )
+
+
+def test_pairwise_enemy_attention_is_masked_and_permutation_invariant(
+    tmp_path: Path,
+) -> None:
+    torch.manual_seed(17)
+    dataset = TrajectoryDataset(make_dataset(tmp_path / "dataset"))
+    observation, _ = dataset.batch(np.asarray([0, 1]))
+    model = EntityPolicy(ModelConfig(16, 12, 24, pairwise_enemy_attention=True))
+    original = model(observation)
+
+    permuted = {name: value.clone() for name, value in observation.items()}
+    order = torch.tensor([1, 0])
+    permuted["enemies"] = permuted["enemies"][:, order]
+    permuted["enemy_mask"] = permuted["enemy_mask"][:, order]
+    reordered = model(permuted)
+
+    assert torch.isfinite(original["hidden"]).all()
+    assert torch.allclose(original["action_logits"], reordered["action_logits"])
+    assert torch.allclose(original["target"], reordered["target"])
+    assert torch.allclose(original["power"], reordered["power"])
+
+
+def test_model_config_preserves_legacy_checkpoint_shape() -> None:
+    legacy = {"entity_hidden": 16, "entity_embedding": 12, "actor_hidden": 24}
+    assert model_config(legacy).as_dict() == legacy
+    assert model_config({**legacy, "pairwise_enemy_attention": True}).as_dict() == {
+        **legacy,
+        "pairwise_enemy_attention": True,
+    }
 
 
 def test_one_batch_overfit_reduces_hybrid_loss(tmp_path: Path) -> None:
