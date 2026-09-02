@@ -48,3 +48,17 @@ def test_batch_subprocess_handshake_and_independent_worlds() -> None:
         assert changed["tick"].tolist() == [[0]]
         assert reset_infos[0]["seed"] == 99
         assert environment._observations[0]["tick"].tolist() == [6]
+
+
+def test_batch_scripted_step_uses_native_blue_policy() -> None:
+    with SnowGymBatchClient() as client:
+        assert "stepScripted" in client.capabilities["operations"]
+        environment = SnowGymBatchEnv(1, client=client)
+        environment.reset([13], [scenario()])
+        observation, rewards, terminated, truncated, infos = environment.step_scripted()
+        assert observation["tick"].tolist() == [[6]]
+        assert rewards.tolist() == [0.0]
+        assert not terminated.any()
+        assert not truncated.any()
+        assert infos[0]["tick"] == 6
+        assert all(result["accepted"] for result in infos[0]["actionResults"])

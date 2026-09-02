@@ -54,6 +54,25 @@ describe('BatchHost', () => {
     expect(batchStep.results[0]).toEqual({ worldId: 'world-0', ...directStep });
   });
 
+  it('matches the built-in scripted-policy endpoint exactly', () => {
+    const host = new BatchHost();
+    const direct = new SnowGymService();
+    const reset = resetBody(43);
+    const batchReset = host.handle(request('reset', [{ worldId: 'world-0', body: reset }]));
+    const directReset = direct.handle('POST', '/reset', reset);
+    expect(batchReset.results[0]).toEqual({ worldId: 'world-0', ...directReset });
+    const snapshot = directReset.body as { status: { stateHash: string } };
+    const body = {
+      expectedStateHash: snapshot.status.stateHash,
+      idempotencyKey: 'scripted-1',
+    };
+    const batchStep = host.handle(
+      request('stepScripted', [{ worldId: 'world-0', body }], 'scripted-step'),
+    );
+    const directStep = direct.handle('POST', '/step-scripted', body);
+    expect(batchStep.results[0]).toEqual({ worldId: 'world-0', ...directStep });
+  });
+
   it('keeps world state independent and reports failures explicitly', () => {
     const host = new BatchHost();
     host.handle(

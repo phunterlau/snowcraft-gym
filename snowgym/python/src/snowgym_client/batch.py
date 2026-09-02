@@ -214,6 +214,39 @@ class SnowGymBatchEnv:
             [payload["info"] for payload in payloads],
         )
 
+    def step_scripted(
+        self,
+    ) -> tuple[
+        dict[str, np.ndarray],
+        np.ndarray,
+        np.ndarray,
+        np.ndarray,
+        list[dict[str, Any]],
+    ]:
+        self._step_index += 1
+        items = []
+        for index, world_id in enumerate(self.world_ids):
+            state_hash = self.state_hashes[index]
+            if state_hash is None:
+                raise RuntimeError("reset() must initialize every batch slot before step_scripted()")
+            items.append(
+                {
+                    "worldId": world_id,
+                    "body": {
+                        "expectedStateHash": state_hash,
+                        "idempotencyKey": f"batch-scripted-{self._step_index}-{world_id}",
+                    },
+                }
+            )
+        payloads = self._consume_results(self.client.request("stepScripted", items))
+        return (
+            self._stack_observations(),
+            np.asarray([payload["reward"] for payload in payloads], dtype=np.float32),
+            np.asarray([payload["terminated"] for payload in payloads], dtype=np.bool_),
+            np.asarray([payload["truncated"] for payload in payloads], dtype=np.bool_),
+            [payload["info"] for payload in payloads],
+        )
+
     def close(self) -> None:
         if self._owns_client:
             self.client.close()

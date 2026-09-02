@@ -5,7 +5,14 @@ export const BATCH_PROTOCOL_VERSION = 'snowgym.batch.v0' as const;
 export const BATCH_REQUEST_FORMAT = 'snowgym.batch-request.v0' as const;
 export const BATCH_RESPONSE_FORMAT = 'snowgym.batch-response.v0' as const;
 
-type BatchOperation = 'handshake' | 'status' | 'reset' | 'step' | 'stepJoint' | 'close';
+type BatchOperation =
+  | 'handshake'
+  | 'status'
+  | 'reset'
+  | 'step'
+  | 'stepScripted'
+  | 'stepJoint'
+  | 'close';
 
 interface BatchItem {
   worldId: string;
@@ -50,7 +57,7 @@ export class BatchHost {
             body: {
               protocolVersion: BATCH_PROTOCOL_VERSION,
               capabilities: snowGymCapabilities(),
-              operations: ['status', 'reset', 'step', 'stepJoint', 'close'],
+              operations: ['status', 'reset', 'step', 'stepScripted', 'stepJoint', 'close'],
               isolation: 'per-world-explicit-result',
             },
           },
@@ -107,6 +114,7 @@ function batchRoute(operation: Exclude<BatchOperation, 'handshake' | 'close'>): 
   if (operation === 'status') return { method: 'GET', path: '/status' };
   if (operation === 'reset') return { method: 'POST', path: '/reset' };
   if (operation === 'step') return { method: 'POST', path: '/step' };
+  if (operation === 'stepScripted') return { method: 'POST', path: '/step-scripted' };
   return { method: 'POST', path: '/step-joint' };
 }
 
@@ -126,6 +134,7 @@ function parseBatchRequest(value: unknown): BatchRequest {
     'status',
     'reset',
     'step',
+    'stepScripted',
     'stepJoint',
     'close',
   ]);

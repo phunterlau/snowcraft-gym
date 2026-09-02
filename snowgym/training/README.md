@@ -42,7 +42,7 @@ http://127.0.0.1:5173/replay.html?recording=/replays/demo-learned-blue-seed-42.j
 The committed seed-42 demonstration ends with a blue win after 54 decisions
 and zero rejected actions. It exercises the learned BC checkpoint on the new
 RL-ready server/client path; the PPO module below is infrastructure only and
-does not yet provide a trained PPO checkpoint.
+does not yet provide a committed qualifying PPO checkpoint.
 
 With `npm run snowgym:server` running in another terminal, export one committed
 split specification without rendering:
@@ -166,6 +166,22 @@ uv run snowgym-train-ppo \
 These commands validate training plumbing only. Their manifest is labeled
 `infrastructure-smoke`; it is not evidence that a curriculum gate was solved.
 
+Evaluate any PPO checkpoint on the gate's disjoint held-out seeds, headlessly,
+against deterministic masked-random blue and the native scripted blue policy:
+
+```bash
+uv run snowgym-evaluate-ppo \
+  --checkpoint artifacts/ppo-smoke-1v1-random/checkpoint \
+  --gate 1v1-random \
+  --output artifacts/ppo-smoke-1v1-random-evaluation.json \
+  --json
+```
+
+The result retains per-episode winner and canonical `-1/0/+1` return, rejected
+actions, policy summaries, frozen gate thresholds, and a result digest. A
+threshold failure is reported as evaluation data rather than a process error,
+so checkpoint series can be audited without selecting only successful runs.
+
 `ppo.py` defines the centralized hybrid actor-critic used by the next training
 stage. Action masks apply before categorical sampling; target terms contribute
 to joint log probability only for move/throw and power only for throw. GAE
@@ -206,5 +222,5 @@ restart at each collection boundary.
 
 The frozen `ppo_curriculum_v0.json` keeps training ranges disjoint from eight
 evaluation seeds per gate and sets thresholds before qualifying runs. The
-current foundation does not yet claim a PPO result; qualifying checkpoint
-series and held-out evaluation remain next.
+current foundation does not yet claim a PPO result; a qualifying checkpoint
+series remains next.

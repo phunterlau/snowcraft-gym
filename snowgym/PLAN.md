@@ -447,6 +447,10 @@ partial observation, or self-play confounds.
 - [ ] Keep training and evaluation seeds disjoint. Evaluate checkpoint series,
       not only the best checkpoint, against masked-random, native random, and
       scripted baselines using the versioned suite.
+- [x] Freeze a headless PPO checkpoint evaluator over each gate's disjoint
+      held-out seeds, with deterministic PPO inference, masked-random and native
+      scripted-blue comparisons, canonical returns, rejected-action accounting,
+      threshold reporting, and a hashed result contract.
 - [ ] Record learning curves, policy/value losses, entropy/KL, rejected actions,
       throughput, checkpoint provenance, and replay links in a machine-readable
       run manifest.
@@ -477,7 +481,11 @@ unfinished worlds so exact resume does not depend on unserialized simulator
 state. The headless smoke runner now exercises collection, optimization,
 manifest writing, and exact resume end to end, while labeling its output as
 infrastructure-only evidence. Qualifying training and held-out evaluation runs
-remain open.
+remain open. The batch host now also exposes exact-parity `stepScripted` so the
+held-out evaluator compares PPO, deterministic masked-random, and the native
+scripted blue controller without an HTTP server or renderer. The evaluator
+reports the frozen thresholds but does not turn a threshold miss into hidden
+checkpoint selection. A qualifying checkpoint series remains open.
 
 ### M7 — plan-conditioned learned executor
 
