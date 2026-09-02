@@ -39,6 +39,10 @@ COUNTERFACTUAL_ARRAYS = {
     "observation__counterfactual_plan_group_mask",
     "observation__counterfactual_plan_groups",
 }
+PLAN_ROLE_ARRAYS = {
+    "observation__plan_unit_roles",
+    "observation__counterfactual_plan_unit_roles",
+}
 
 
 def canonical_json(value: Any) -> str:
@@ -269,6 +273,10 @@ def audit_dataset(path: str | Path) -> dict[str, Any]:
                     "shard is missing counterfactual arrays: "
                     f"{sorted(missing_counterfactual)}"
                 )
+            if manifest.get("planUnitRoles") is True:
+                missing_roles = PLAN_ROLE_ARRAYS - set(arrays)
+                if missing_roles:
+                    raise ValueError(f"shard is missing plan role arrays: {sorted(missing_roles)}")
         if tensor_digest(arrays) != shard.get("tensorDigest"):
             raise ValueError(f"tensor digest mismatch: {shard['path']}")
         lengths = {array.shape[0] for array in arrays.values()}
@@ -277,6 +285,8 @@ def audit_dataset(path: str | Path) -> dict[str, Any]:
         _audit_actions(arrays, shard["path"])
         if counterfactual is not None:
             _audit_counterfactual_actions(arrays, shard["path"])
+            if manifest.get("planUnitRoles") is True:
+                _audit_plan_roles(arrays, shard["path"])
         _audit_continuity(arrays, shard["path"], episode_last)
         for index, seed in zip(arrays["episode_index"], arrays["seed"], strict=True):
             episode_index = int(index)
@@ -348,6 +358,18 @@ def _audit_counterfactual_actions(arrays: dict[str, np.ndarray], shard: str) -> 
         raise ValueError(f"counterfactual plan tensor is outside [-1, 1]: {shard}")
     if np.any((mask != 0) & (mask != 1)):
         raise ValueError(f"counterfactual plan mask is invalid: {shard}")
+
+
+def _audit_plan_roles(arrays: dict[str, np.ndarray], shard: str) -> None:
+    ally_mask = arrays["observation__ally_mask"].astype(bool)
+    for name in PLAN_ROLE_ARRAYS:
+        roles = arrays[name]
+        if roles.shape != (*ally_mask.shape, 3):
+            raise ValueError(f"plan unit-role tensor shape mismatch: {shard}")
+        if np.any((roles != 0) & (roles != 1)) or np.any(roles.sum(axis=-1) > 1):
+            raise ValueError(f"plan unit-role tensor is not one-hot: {shard}")
+        if np.any(roles[~ally_mask] != 0) or np.any(roles[ally_mask].sum(axis=-1) != 1):
+            raise ValueError(f"plan unit-role tensor does not cover living allies: {shard}")
 
 
 def _audit_continuity(

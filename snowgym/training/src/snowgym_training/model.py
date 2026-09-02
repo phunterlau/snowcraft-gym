@@ -28,6 +28,7 @@ class ModelConfig:
     plan_target_only: bool = False
     separate_target_actor: bool = False
     plan_action_adapter: bool = False
+    plan_role_conditioned: bool = False
 
     def as_dict(self) -> dict[str, int | bool]:
         value: dict[str, int | bool] = {
@@ -53,6 +54,8 @@ class ModelConfig:
             value["separate_target_actor"] = True
         if self.plan_action_adapter:
             value["plan_action_adapter"] = True
+        if self.plan_role_conditioned:
+            value["plan_role_conditioned"] = True
         return value
 
 
@@ -72,6 +75,7 @@ class EntityPolicy(nn.Module):
         self.plan_target_only = config.plan_target_only
         self.separate_target_actor = config.separate_target_actor
         self.plan_action_adapter_enabled = config.plan_action_adapter
+        self.plan_role_conditioned = config.plan_role_conditioned
         if self.plan_conditioned:
             if not self.plan_target_only:
                 global_features += embedding
@@ -123,12 +127,24 @@ class EntityPolicy(nn.Module):
         self.power_head = nn.Linear(config.actor_hidden, 1)
         if self.plan_action_adapter_enabled:
             self.plan_action_adapter = nn.Sequential(
-                nn.Linear(config.actor_hidden + embedding, config.actor_hidden),
+                nn.Linear(
+                    config.actor_hidden + embedding
+                    + (PLAN_GROUP_SLOTS if self.plan_role_conditioned else 0),
+                    config.actor_hidden,
+                ),
                 nn.ReLU(),
                 nn.Linear(config.actor_hidden, ACTION_TYPE_COUNT),
             )
             nn.init.zeros_(self.plan_action_adapter[-1].weight)
             nn.init.zeros_(self.plan_action_adapter[-1].bias)
+        if self.plan_role_conditioned:
+            self.plan_role_target_adapter = nn.Sequential(
+                nn.Linear(config.actor_hidden + PLAN_GROUP_SLOTS, config.actor_hidden),
+                nn.ReLU(),
+                nn.Linear(config.actor_hidden, config.actor_hidden),
+            )
+            nn.init.zeros_(self.plan_role_target_adapter[-1].weight)
+            nn.init.zeros_(self.plan_role_target_adapter[-1].bias)
 
     def forward(self, observation: dict[str, Tensor]) -> dict[str, Tensor]:
         action_hidden, target_hidden, action_mask = self.features(observation)
@@ -139,8 +155,11 @@ class EntityPolicy(nn.Module):
         if self.plan_action_adapter_enabled:
             plan_embedding = self.encode_plan(observation, action_hidden.shape[0])
             expanded_plan = plan_embedding[:, None, :].expand(-1, action_hidden.shape[1], -1)
+            adapter_inputs = [action_hidden.detach(), expanded_plan]
+            if self.plan_role_conditioned:
+                adapter_inputs.append(self.unit_plan_roles(observation, action_hidden.shape[:2]))
             logits = logits + self.plan_action_adapter(
-                torch.cat([action_hidden.detach(), expanded_plan], dim=-1)
+                torch.cat(adapter_inputs, dim=-1)
             ).masked_fill(~action_mask, 0)
         result = {
             "action_logits": logits,
@@ -275,6 +294,16 @@ class EntityPolicy(nn.Module):
             target_hidden = self.target_actor(torch.cat(target_inputs, dim=-1))
         else:
             target_hidden = action_hidden
+        if self.plan_role_conditioned:
+            target_hidden = target_hidden + self.plan_role_target_adapter(
+                torch.cat(
+                    [
+                        target_hidden.detach(),
+                        self.unit_plan_roles(observation, allies.shape[:2]),
+                    ],
+                    dim=-1,
+                )
+            )
         action_mask = observation["unit_action_mask"].bool().clone()
         action_mask[..., 0] |= ~ally_mask
         return action_hidden, target_hidden, action_mask
@@ -297,6 +326,20 @@ class EntityPolicy(nn.Module):
         return self.plan_encoder(
             torch.cat([masked.flatten(start_dim=1), mask.to(groups.dtype)], dim=-1)
         )
+
+    def unit_plan_roles(
+        self, observation: dict[str, Tensor], batch_units: tuple[int, int]
+    ) -> Tensor:
+        roles = observation.get("plan_unit_roles")
+        expected = (*batch_units, PLAN_GROUP_SLOTS)
+        if roles is None or roles.shape != expected:
+            raise ValueError(f"plan_unit_roles must have shape {list(expected)}")
+        roles = roles.float()
+        if not bool(((roles == 0) | (roles == 1)).all()) or bool(
+            (roles.sum(dim=-1) > 1).any()
+        ):
+            raise ValueError("plan_unit_roles must be one-hot or zero")
+        return roles
 
 
 def entity_encoder(features: int, config: ModelConfig) -> nn.Sequential:
@@ -383,6 +426,7 @@ def model_config(value: Any) -> ModelConfig:
         "plan_target_only",
         "separate_target_actor",
         "plan_action_adapter",
+        "plan_role_conditioned",
     }
     if not isinstance(value, dict) or set(value) - optional != required:
         raise ValueError(
@@ -426,6 +470,10 @@ def model_config(value: Any) -> ModelConfig:
         raise ValueError(
             "architecture plan_action_adapter requires plan target-only separate-target architecture"
         )
+    if value.get("plan_role_conditioned", False) and not value.get(
+        "plan_action_adapter", False
+    ):
+        raise ValueError("architecture plan_role_conditioned requires plan_action_adapter")
     if (
         value.get("separate_target_actor", False)
         and value.get("plan_conditioned", False)

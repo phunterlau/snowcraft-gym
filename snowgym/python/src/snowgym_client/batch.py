@@ -24,6 +24,7 @@ BATCH_RESPONSE_FORMAT = "snowgym.batch-response.v0"
 BATCH_PROTOCOL_VERSION = "snowgym.batch.v0"
 PLAN_GROUP_SLOTS = 3
 PLAN_FEATURES_PER_GROUP = 38
+PLAN_ROLES = ("main", "maneuver", "reserve")
 
 
 class BatchOperationError(RuntimeError):
@@ -290,6 +291,7 @@ class SnowGymBatchEnv:
             "plan_group_mask": np.asarray(
                 [body["planGroupMask"] for body in bodies], dtype=np.int8
             ),
+            "plan_unit_roles": self._plan_unit_roles(bodies),
         }
         return tensors, bodies
 
@@ -340,6 +342,7 @@ class SnowGymBatchEnv:
             "plan_group_mask": np.asarray(
                 [body["planGroupMask"] for body in bodies], dtype=np.int8
             ),
+            "plan_unit_roles": self._plan_unit_roles(bodies),
         }
         actions = []
         for body in bodies:
@@ -348,6 +351,38 @@ class SnowGymBatchEnv:
                 raise RuntimeError("batch plan preview payload is missing action")
             actions.append(action)
         return tensors, actions, bodies
+
+    def _plan_unit_roles(self, bodies: list[dict[str, Any]]) -> np.ndarray:
+        roles = np.zeros(
+            (self.batch_size, self.max_team_units, len(PLAN_ROLES)), dtype=np.int8
+        )
+        for batch_index, (body, raw) in enumerate(
+            zip(bodies, self.raw_observations, strict=True)
+        ):
+            if raw is None or not isinstance(raw.get("allies"), list):
+                raise RuntimeError("batch plan role encoding requires a raw observation")
+            slots = {
+                ally.get("id"): slot
+                for slot, ally in enumerate(raw["allies"][: self.max_team_units])
+                if isinstance(ally, dict)
+            }
+            assignments = body.get("assignments")
+            if not isinstance(assignments, list):
+                raise RuntimeError("batch plan payload is missing assignments")
+            for assignment in assignments:
+                if not isinstance(assignment, dict) or assignment.get("role") not in PLAN_ROLES:
+                    raise RuntimeError("batch plan assignment role is invalid")
+                unit_ids = assignment.get("unitIds")
+                if not isinstance(unit_ids, list):
+                    raise RuntimeError("batch plan assignment unitIds are invalid")
+                role_index = PLAN_ROLES.index(assignment["role"])
+                for unit_id in unit_ids:
+                    slot = slots.get(unit_id)
+                    if slot is not None:
+                        if roles[batch_index, slot].any():
+                            raise RuntimeError("batch plan assigned one living unit twice")
+                        roles[batch_index, slot, role_index] = 1
+        return roles
 
     def close(self) -> None:
         if self._owns_client:

@@ -1240,6 +1240,19 @@ hold, and withdraw thresholds. The predeclared tie-break selects weight 3, but
 weighting cannot resolve the observed mission tradeoff; the next development
 revision must balance supervision by primary mission and group role.
 
+M7 unit-role conditioning foundation (2026-09-02): the Python batch adapter now
+maps host-owned plan assignments onto stable current ally slots as fixed
+`[B,U,3]` main/maneuver/reserve one-hot tensors, ignoring dead assignment IDs
+without exposing them to the learner. `snowgym.plan-dagger-export.v2` retains
+both primary and same-state counterfactual unit-role tensors with audited
+one-hot, presence, and coverage rules. The optional `plan_role_conditioned`
+model path requires the residual plan adapter and injects per-unit role into a
+zero-initialized action residual and a separate zero-initialized target
+residual, preserving qualified initializer outputs exactly. Tests cover live
+batch encoding, preview roles, schema audit, malformed roles, compatible
+initialization, and a training step. A fresh role-aware collection freeze and
+development run remain next.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO

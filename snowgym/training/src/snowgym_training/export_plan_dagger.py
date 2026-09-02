@@ -25,6 +25,7 @@ from .trajectory import TrajectoryWriter, audit_dataset, json_digest
 
 PLAN_DAGGER_SPEC_FORMAT = "snowgym.plan-dagger-export.v0"
 PLAN_DAGGER_COUNTERFACTUAL_SPEC_FORMAT = "snowgym.plan-dagger-export.v1"
+PLAN_DAGGER_ROLE_SPEC_FORMAT = "snowgym.plan-dagger-export.v2"
 
 
 def load_plan_dagger_spec(path: str | Path) -> dict[str, Any]:
@@ -36,10 +37,15 @@ def load_plan_dagger_spec(path: str | Path) -> dict[str, Any]:
     required = {"format", "name", "teacher", "maxTeamUnits", "shardSize", "plans", "splits"}
     if not isinstance(value, dict) or set(value) != required:
         raise ValueError("plan DAgger spec fields are invalid")
-    if value["format"] not in {PLAN_DAGGER_SPEC_FORMAT, PLAN_DAGGER_COUNTERFACTUAL_SPEC_FORMAT}:
+    if value["format"] not in {
+        PLAN_DAGGER_SPEC_FORMAT,
+        PLAN_DAGGER_COUNTERFACTUAL_SPEC_FORMAT,
+        PLAN_DAGGER_ROLE_SPEC_FORMAT,
+    }:
         raise ValueError(
             "plan DAgger spec format must be "
-            f"{PLAN_DAGGER_SPEC_FORMAT} or {PLAN_DAGGER_COUNTERFACTUAL_SPEC_FORMAT}"
+            f"{PLAN_DAGGER_SPEC_FORMAT}, {PLAN_DAGGER_COUNTERFACTUAL_SPEC_FORMAT}, "
+            f"or {PLAN_DAGGER_ROLE_SPEC_FORMAT}"
         )
     if value["teacher"] != "plan-teacher-action.v0":
         raise ValueError("plan DAgger teacher must be plan-teacher-action.v0")
@@ -67,7 +73,7 @@ def load_plan_dagger_spec(path: str | Path) -> dict[str, Any]:
         for index, episode in enumerate(episodes):
             expected_episode = {"seed", "scenario", "plan"} | (
                 {"counterfactualPlan"}
-                if value["format"] == PLAN_DAGGER_COUNTERFACTUAL_SPEC_FORMAT else set()
+                if value["format"] != PLAN_DAGGER_SPEC_FORMAT else set()
             )
             if not isinstance(episode, dict) or set(episode) != expected_episode:
                 raise ValueError(f"plan DAgger {split}[{index}] fields are invalid")
@@ -77,7 +83,7 @@ def load_plan_dagger_spec(path: str | Path) -> dict[str, Any]:
             seen.add(seed)
             if not isinstance(episode["scenario"], dict) or episode["plan"] not in plans:
                 raise ValueError(f"plan DAgger {split}[{index}] scenario/plan is invalid")
-            if value["format"] == PLAN_DAGGER_COUNTERFACTUAL_SPEC_FORMAT and (
+            if value["format"] != PLAN_DAGGER_SPEC_FORMAT and (
                 episode["counterfactualPlan"] not in plans
                 or episode["counterfactualPlan"] == episode["plan"]
             ):
@@ -154,7 +160,11 @@ def export_plan_dagger_dataset(
                 )
                 observation_before = {
                     **clone_tensors({name: values[0] for name, values in batch_observation.items()}),
-                    **clone_tensors({name: values[0] for name, values in plan_tensors.items()}),
+                    **clone_tensors({
+                        name: values[0] for name, values in plan_tensors.items()
+                        if name != "plan_unit_roles"
+                        or spec["format"] == PLAN_DAGGER_ROLE_SPEC_FORMAT
+                    }),
                 }
                 learner_action = policy.act(observation_before)
                 transition_extra: dict[str, np.ndarray] = {}
@@ -189,6 +199,14 @@ def export_plan_dagger_dataset(
                         ),
                         "observation__counterfactual_plan_group_mask": np.asarray(
                             preview_tensors["plan_group_mask"][0]
+                        ),
+                        **(
+                            {
+                                "observation__counterfactual_plan_unit_roles": np.asarray(
+                                    preview_tensors["plan_unit_roles"][0]
+                                )
+                            }
+                            if spec["format"] == PLAN_DAGGER_ROLE_SPEC_FORMAT else {}
                         ),
                         **{
                             f"action__counterfactual_{name}": np.asarray(value)
@@ -265,9 +283,13 @@ def export_plan_dagger_dataset(
                     "counterfactualPlanLabels": {
                         "teacher": "plan-teacher-action.v0",
                         "pairing": "same-physical-state",
-                    }
+                    },
+                    **(
+                        {"planUnitRoles": True}
+                        if spec["format"] == PLAN_DAGGER_ROLE_SPEC_FORMAT else {}
+                    ),
                 }
-                if spec["format"] == PLAN_DAGGER_COUNTERFACTUAL_SPEC_FORMAT else {}
+                if spec["format"] != PLAN_DAGGER_SPEC_FORMAT else {}
             ),
             "split": split,
             "splitSeeds": {

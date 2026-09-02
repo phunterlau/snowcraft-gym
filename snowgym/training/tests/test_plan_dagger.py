@@ -331,7 +331,7 @@ def test_plan_dagger_labels_learner_visited_states_headlessly(tmp_path: Path) ->
     assert bool(torch.count_nonzero(adapted_state["model"]["plan_action_adapter.2.weight"]))
 
 
-def test_plan_dagger_v1_retains_same_state_counterfactual_labels(tmp_path: Path) -> None:
+def test_plan_dagger_v2_retains_same_state_counterfactual_roles(tmp_path: Path) -> None:
     direct = json.loads(
         (ROOT / "training" / "src" / "snowgym_training" / "configs"
          / "plan_closed_loop_v0.json").read_text(encoding="utf-8")
@@ -341,7 +341,7 @@ def test_plan_dagger_v1_retains_same_state_counterfactual_labels(tmp_path: Path)
          / "plan_closed_loop_behaviors_v1.json").read_text(encoding="utf-8")
     )["cases"][0]
     spec = {
-        "format": "snowgym.plan-dagger-export.v1",
+        "format": "snowgym.plan-dagger-export.v2",
         "name": "plan-counterfactual-smoke",
         "teacher": "plan-teacher-action.v0",
         "maxTeamUnits": 10,
@@ -371,6 +371,7 @@ def test_plan_dagger_v1_retains_same_state_counterfactual_labels(tmp_path: Path)
         "teacher": "plan-teacher-action.v0",
         "pairing": "same-physical-state",
     }
+    assert manifest["planUnitRoles"] is True
     assert manifest["episodes"][0]["counterfactualPlanName"] == "hold"
     assert manifest["episodes"][0]["counterfactualLimited"] is False
     assert audit_dataset(output)["datasetDigest"] == manifest["datasetDigest"]
@@ -378,6 +379,8 @@ def test_plan_dagger_v1_retains_same_state_counterfactual_labels(tmp_path: Path)
     assert dataset.counterfactual_plan_labels is True
     observation, action = dataset.batch(np.asarray([0, 1]))
     assert observation["counterfactual_plan_groups"].shape == (2, 3, 38)
+    assert observation["plan_unit_roles"].shape == (2, 10, 3)
+    assert observation["counterfactual_plan_unit_roles"].shape == (2, 10, 3)
     assert action["counterfactual_action_type"].shape == (2, 10)
     assert not np.array_equal(
         dataset.arrays["observation__plan_groups"][0],
@@ -395,6 +398,7 @@ def test_plan_dagger_v1_retains_same_state_counterfactual_labels(tmp_path: Path)
         "architecture": {
             **initial_metadata["architecture"],
             "plan_action_adapter": True,
+            "plan_role_conditioned": True,
         },
         "loss": initial_metadata["loss"],
         "evaluationSuite": "plan-counterfactual-transfer-smoke",

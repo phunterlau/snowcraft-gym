@@ -26,6 +26,7 @@ OBSERVATION_FIELDS = (
 )
 ACTION_FIELDS = ("action_type", "target", "power")
 PLAN_OBSERVATION_FIELDS = ("plan_groups", "plan_group_mask")
+PLAN_ROLE_FIELD = ("plan_unit_roles",)
 COUNTERFACTUAL_OBSERVATION_FIELDS = (
     "counterfactual_plan_groups", "counterfactual_plan_group_mask"
 )
@@ -43,10 +44,13 @@ class TrajectoryDataset:
         )
         self.observation_fields = OBSERVATION_FIELDS + (
             PLAN_OBSERVATION_FIELDS if self.manifest.get("planConditioned") is True else ()
-        )
+        ) + (PLAN_ROLE_FIELD if self.manifest.get("planUnitRoles") is True else ())
         self.counterfactual_plan_labels = self.manifest.get("counterfactualPlanLabels") is not None
         self.loaded_observation_fields = self.observation_fields + (
             COUNTERFACTUAL_OBSERVATION_FIELDS if self.counterfactual_plan_labels else ()
+        ) + (
+            ("counterfactual_plan_unit_roles",)
+            if self.manifest.get("planUnitRoles") is True else ()
         )
         self.loaded_action_fields = ACTION_FIELDS + (
             COUNTERFACTUAL_ACTION_FIELDS if self.counterfactual_plan_labels else ()

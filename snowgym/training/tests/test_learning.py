@@ -237,6 +237,38 @@ def test_zero_initialized_plan_action_adapter_preserves_base_logits(tmp_path: Pa
     )
 
 
+def test_plan_role_conditioning_requires_and_uses_per_unit_assignments(tmp_path: Path) -> None:
+    dataset = TrajectoryDataset(make_dataset(tmp_path / "dataset"))
+    observation, _ = dataset.batch(np.asarray([0, 0]))
+    observation["plan_groups"] = torch.zeros((2, 3, 38), dtype=torch.float32)
+    observation["plan_group_mask"] = torch.tensor([[1, 1, 0], [1, 1, 0]], dtype=torch.int8)
+    model = EntityPolicy(
+        ModelConfig(
+            16, 12, 24,
+            action_conditioned_targets=True,
+            plan_conditioned=True,
+            plan_target_only=True,
+            separate_target_actor=True,
+            plan_action_adapter=True,
+            plan_role_conditioned=True,
+        )
+    )
+    with pytest.raises(ValueError, match="plan_unit_roles must have shape"):
+        model(observation)
+    observation["plan_unit_roles"] = torch.zeros(
+        (2, observation["allies"].shape[1], 3), dtype=torch.int8
+    )
+    observation["plan_unit_roles"][:, :, 0] = observation["ally_mask"]
+    observation["plan_unit_roles"][1, 0] = torch.tensor([0, 1, 0], dtype=torch.int8)
+    model.plan_role_target_adapter[-1].weight.data.fill_(0.01)
+    result = model(observation)
+    assert not torch.equal(result["hidden"][0, 0], result["hidden"][1, 0])
+    malformed = {name: value.clone() for name, value in observation.items()}
+    malformed["plan_unit_roles"][0, 0] = torch.tensor([1, 1, 0], dtype=torch.int8)
+    with pytest.raises(ValueError, match="one-hot or zero"):
+        model(malformed)
+
+
 def test_action_conditioned_target_heads_select_distinct_means(tmp_path: Path) -> None:
     dataset = TrajectoryDataset(make_dataset(tmp_path / "dataset"))
     observation, action = dataset.batch(np.asarray([0, 1]))

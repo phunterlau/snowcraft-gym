@@ -469,6 +469,13 @@ the frozen selection rule in `evaluations/plan_action_adapter_weight_sweep_v0.js
 All three candidates pass 7/11 checks; weight 3 wins the declared tie-break but
 is not promoted because every candidate misses flank, hold, and withdraw.
 
+For multi-group plans, `snowgym.plan-dagger-export.v2` additionally records
+host-resolved `plan_unit_roles` and `counterfactual_plan_unit_roles` as
+`[units,3]` main/maneuver/reserve one-hot tensors. Enable
+`architecture.plan_role_conditioned` only with the residual plan adapter. Role
+features enter zero-initialized action and target residuals, so loading the
+qualified target-only checkpoint still preserves its initial outputs exactly.
+
 ## PPO foundation
 
 Run a short end-to-end infrastructure smoke against the first frozen curriculum

@@ -40,6 +40,10 @@ def evaluate_plan_counterfactual(
         **observation,
         "plan_groups": observation["counterfactual_plan_groups"],
         "plan_group_mask": observation["counterfactual_plan_group_mask"],
+        **(
+            {"plan_unit_roles": observation["counterfactual_plan_unit_roles"]}
+            if "counterfactual_plan_unit_roles" in observation else {}
+        ),
     }
     alternate_action = {
         field: action[f"counterfactual_{field}"]

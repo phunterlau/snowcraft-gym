@@ -106,6 +106,8 @@ def train_behavior_clone(
     architecture = model_config(config["architecture"])
     if architecture.plan_conditioned and "plan_groups" not in dataset.observation_fields:
         raise ValueError("plan-conditioned training requires an aligned plan dataset")
+    if architecture.plan_role_conditioned and "plan_unit_roles" not in dataset.observation_fields:
+        raise ValueError("plan role-conditioned training requires aligned unit roles")
     counterfactual_weight = float(config.get("counterfactualLossWeight", 0))
     changed_action_weight = float(config.get("counterfactualChangedActionWeight", 0))
     if (
@@ -122,10 +124,14 @@ def train_behavior_clone(
         initial_architecture = initial_metadata.get("architecture")
         compatible_architecture = architecture.as_dict()
         compatible_architecture.pop("plan_action_adapter", None)
+        compatible_architecture.pop("plan_role_conditioned", None)
         if initial_architecture not in (architecture.as_dict(), compatible_architecture):
             raise ValueError("initializer architecture does not match training config")
         missing, unexpected = model.load_state_dict(initial_state["model"], strict=False)
-        if unexpected or any(not name.startswith("plan_action_adapter.") for name in missing):
+        if unexpected or any(
+            not name.startswith(("plan_action_adapter.", "plan_role_target_adapter."))
+            for name in missing
+        ):
             raise ValueError("initializer state is incompatible with training architecture")
         initialization = {
             "checkpointDigest": initial_metadata["checkpointDigest"],
@@ -140,6 +146,8 @@ def train_behavior_clone(
             if not architecture.plan_action_adapter:
                 raise ValueError("plan-action-target-path requires plan_action_adapter")
             prefixes += ("plan_action_adapter.",)
+            if architecture.plan_role_conditioned:
+                prefixes += ("plan_role_target_adapter.",)
         for name, parameter in model.named_parameters():
             parameter.requires_grad_(name.startswith(prefixes))
     optimizer_config = {
@@ -182,6 +190,14 @@ def train_behavior_clone(
                 **observation,
                 "plan_groups": observation["counterfactual_plan_groups"],
                 "plan_group_mask": observation["counterfactual_plan_group_mask"],
+                **(
+                    {
+                        "plan_unit_roles": observation[
+                            "counterfactual_plan_unit_roles"
+                        ]
+                    }
+                    if architecture.plan_role_conditioned else {}
+                ),
             }
             counterfactual_action = {
                 field: action[f"counterfactual_{field}"]
