@@ -31,6 +31,10 @@ CORRECTION_CONFIG = (
     ROOT / "training" / "src" / "snowgym_training" / "configs"
     / "plan_dagger_correction_v0.json"
 )
+ACTION_ADAPTER_CONFIG = (
+    ROOT / "training" / "src" / "snowgym_training" / "configs"
+    / "plan_action_adapter_v0.json"
+)
 
 
 def test_frozen_plan_dagger_spec_balances_missions_and_disjoins_seeds() -> None:
@@ -43,6 +47,9 @@ def test_frozen_plan_dagger_spec_balances_missions_and_disjoins_seeds() -> None:
     correction = load_training_config(CORRECTION_CONFIG)
     assert correction["trainable"] == "plan-target-path"
     assert correction["steps"] == 1500
+    adapter = load_training_config(ACTION_ADAPTER_CONFIG)
+    assert adapter["architecture"]["plan_action_adapter"] is True
+    assert adapter["trainable"] == "plan-action-target-path"
 
 
 def test_plan_dagger_labels_learner_visited_states_headlessly(tmp_path: Path) -> None:

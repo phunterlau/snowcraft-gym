@@ -1079,6 +1079,18 @@ Its semantic result binds checkpoint/state and dataset digests and is independen
 auditable. This supplies the action-accuracy safety measurement needed before a
 residual adapter can be judged on closed-loop outcomes.
 
+M7 residual action-adapter-v0 freeze (2026-09-02): the qualified checkpoint's
+pre-run learner-state baseline has action accuracy `0.631130`, first-decision
+accuracy `1.0`, target MSE `0.121232`, and evaluation digest
+`sha256:4e97e2f7686f56559819395d6df9b3b2f09b71bfd4c957664ffb8de0a6440789`.
+The frozen run uses seed 85001, 1,500 steps, batch 64, learning rate `0.0003`,
+qualified initialization, and plan-action-target-path training. Its conjunctive
+spec requires action accuracy at least `0.681130`, first-decision accuracy at
+least `0.95`, target MSE at most `0.13`, action counterfactual change at least
+`0.05`, target sensitivity at least `0.2`, zero rejected actions, direct/flank
+blue survivors at least 4 each, hold/withdraw duration at least 267/341, and
+support red survivors at most 4. No adapter training outcome has been observed.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO

@@ -1,0 +1,23 @@
+{
+  "format": "snowgym.plan-action-adapter-qualification.v0",
+  "name": "plan-action-adapter-qualification-v0",
+  "trainingConfig": "plan_action_adapter_v0.json",
+  "trainingDatasetDigest": "sha256:297be4717a9f33a44f374c006e6aca73aed804149c2f781ebd69508b79497bdd",
+  "evaluationDatasetDigest": "sha256:c8497125d4c62e86b2e0bbc92b1b0dae1275db42049c8149073079ffca2c2b85",
+  "baselineEvaluationDigest": "sha256:4e97e2f7686f56559819395d6df9b3b2f09b71bfd4c957664ffb8de0a6440789",
+  "offline": {
+    "minimumActionAccuracy": 0.6811295032501221,
+    "minimumFirstDecisionActionAccuracy": 0.95,
+    "maximumCorrectPlanTargetMse": 0.13,
+    "minimumCounterfactualActionChangeRate": 0.05,
+    "minimumCounterfactualTargetMeanAbsoluteDelta": 0.2
+  },
+  "closedLoop": {
+    "maximumRejectedActions": 0,
+    "minimumDirectBlueAlive": 4,
+    "minimumFlankBlueAlive": 4,
+    "minimumHoldDecisions": 267,
+    "minimumWithdrawDecisions": 341,
+    "maximumSupportRedAlive": 4
+  }
+}

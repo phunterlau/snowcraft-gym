@@ -1,0 +1,21 @@
+{
+  "checkpointDigest": "sha256:4119b9a3f8c0d3df69b704a8f3f813a1b38ab11ca56faffb4c4cebc2cb235133",
+  "checkpointStateDigest": "sha256:34de1e9e5882b0c764aa8dd6596ed6ba87e395d7eb9e455036fc10a721d8c50d",
+  "datasetDigest": "sha256:c8497125d4c62e86b2e0bbc92b1b0dae1275db42049c8149073079ffca2c2b85",
+  "episodes": 5,
+  "evaluationDigest": "sha256:4e97e2f7686f56559819395d6df9b3b2f09b71bfd4c957664ffb8de0a6440789",
+  "format": "snowgym.plan-checkpoint-evaluation.v0",
+  "metrics": {
+    "actionAccuracy": 0.6311295032501221,
+    "correctPlanActionNll": 0.00010743095481302589,
+    "correctPlanTargetMse": 0.12123247236013412,
+    "counterfactualActionChangeRate": 0.0,
+    "counterfactualNllDelta": 0.0,
+    "counterfactualTargetMeanAbsoluteDelta": 0.37940359115600586,
+    "counterfactualTargetMseDelta": 0.3255443647503853,
+    "firstDecisionActionAccuracy": 1.0,
+    "shuffledPlanActionNll": 0.00010743095481302589,
+    "shuffledPlanTargetMse": 0.4467768371105194
+  },
+  "transitions": 1210
+}
