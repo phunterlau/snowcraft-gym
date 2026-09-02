@@ -1045,6 +1045,22 @@ ablation's no-plan control. Results bind both checkpoint and state digests, and
 the semantic auditor reloads the supplied override. This avoids copying a
 checkpoint or manufacturing a new ablation manifest for post-DAgger evaluation.
 
+M7 plan-DAgger correction-v0 outcome (2026-09-02): the frozen 1,500-step run
+produced checkpoint digest
+`sha256:54439be3493c17aa5fdd6a5f21f3698c616784e33c9e0a1ce00bf7bcd932cb29`.
+All physical action-path tensors remained bit-identical and all 14 permitted
+target-path tensors changed. The correction did not pass closed-loop acceptance:
+direct ended with 3 blue / 5 red rather than the prior 4 / 4; hold and withdraw
+lost sooner; and support regressed from eliminating two red units to eliminating
+none. Evaluation digests are
+`sha256:3b1a65956f4c3be56b0654091b021d52e6010949eabbba10ac4c6ae4099192e1`
+and
+`sha256:dfcfbf1418b7171ce37c62ecd5c4cb3dada316ab32dabd2e2c388e3a99585965`.
+The checkpoint is retained as failed evidence and must not replace qualification
+v1. Target-only learner-state correction cannot fix mission-dependent action
+timing; the next architecture must condition action decisions while preserving
+a matched no-plan control and explicit action-accuracy bounds.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO

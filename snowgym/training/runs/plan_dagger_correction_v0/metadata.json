@@ -1,0 +1,81 @@
+{
+  "architecture": {
+    "action_conditioned_targets": true,
+    "actor_hidden": 64,
+    "entity_embedding": 24,
+    "entity_hidden": 32,
+    "plan_conditioned": true,
+    "plan_target_only": true,
+    "separate_target_actor": true
+  },
+  "checkpointDigest": "sha256:54439be3493c17aa5fdd6a5f21f3698c616784e33c9e0a1ce00bf7bcd932cb29",
+  "datasetManifestHash": "sha256:297be4717a9f33a44f374c006e6aca73aed804149c2f781ebd69508b79497bdd",
+  "evaluationSuite": "plan-dagger-closed-loop-correction-v0",
+  "format": "snowgym.checkpoint.v0",
+  "gitCommit": "19fe586e30fa21d5506a7ac4389b10b40f7b640b",
+  "initialization": {
+    "checkpointDigest": "sha256:4119b9a3f8c0d3df69b704a8f3f813a1b38ab11ca56faffb4c4cebc2cb235133",
+    "stateDigest": "sha256:34de1e9e5882b0c764aa8dd6596ed6ba87e395d7eb9e455036fc10a721d8c50d"
+  },
+  "loss": {
+    "action_weight": 1.0,
+    "power_weight": 0.5,
+    "target_weight": 5.0,
+    "throw_action_weight": 5.0
+  },
+  "optimizer": {
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "epsilon": 1e-08,
+    "learningRate": 0.001,
+    "name": "Adam",
+    "weightDecay": 0.0
+  },
+  "stateDigest": "sha256:a49ed280aba622b1d0f59c7c6fe3e0d98e3a854f9bf7db0677b1880febbff80a",
+  "step": 1500,
+  "trainable": "plan-target-path",
+  "trainingConfig": {
+    "architecture": {
+      "action_conditioned_targets": true,
+      "actor_hidden": 64,
+      "entity_embedding": 24,
+      "entity_hidden": 32,
+      "plan_conditioned": true,
+      "plan_target_only": true,
+      "separate_target_actor": true
+    },
+    "batchSize": 64,
+    "evaluationSuite": "plan-dagger-closed-loop-correction-v0",
+    "format": "snowgym.bc-training-config.v0",
+    "learningRate": 0.001,
+    "loss": {
+      "action_weight": 1.0,
+      "power_weight": 0.5,
+      "target_weight": 5.0,
+      "throw_action_weight": 5.0
+    },
+    "name": "plan-dagger-6v6-correction-v0",
+    "seed": 84001,
+    "steps": 1500,
+    "trainable": "plan-target-path"
+  },
+  "trainingMetrics": {
+    "final": {
+      "action": 4.7971978187561035,
+      "power": 0.009324691258370876,
+      "target": 0.0038473582826554775,
+      "total": 4.821096897125244
+    },
+    "firstLoss": 3.6166775226593018,
+    "startStep": 0
+  },
+  "trainingSeed": 84001,
+  "versions": {
+    "apiVersion": "snowgym.v0",
+    "simulationVersion": "snowgym.sim.v1",
+    "stateHashVersion": "snowgym.state.v1",
+    "upstreamBaseCommit": "7d9fca5"
+  }
+}
