@@ -22,6 +22,7 @@ from snowgym_training.plan_counterfactual_evaluate import (
     audit_plan_counterfactual_evaluation,
     evaluate_plan_counterfactual,
 )
+from snowgym_training.plan_counterfactual_qualification import load_spec as load_cf_gate
 from snowgym_training.trainer import train_behavior_clone
 from snowgym_training.trainer import load_training_config
 from snowgym_training.trajectory import audit_dataset
@@ -43,6 +44,14 @@ CORRECTION_CONFIG = (
 ACTION_ADAPTER_CONFIG = (
     ROOT / "training" / "src" / "snowgym_training" / "configs"
     / "plan_action_adapter_v0.json"
+)
+ACTION_ADAPTER_V1_CONFIG = (
+    ROOT / "training" / "src" / "snowgym_training" / "configs"
+    / "plan_action_adapter_v1.json"
+)
+ACTION_ADAPTER_V1_QUALIFICATION = (
+    ROOT / "training" / "src" / "snowgym_training" / "configs"
+    / "plan_action_adapter_qualification_v1.json"
 )
 ACTION_ADAPTER_QUALIFICATION = (
     ROOT / "training" / "src" / "snowgym_training" / "configs"
@@ -80,6 +89,12 @@ def test_frozen_plan_dagger_spec_balances_missions_and_disjoins_seeds() -> None:
     adapter = load_training_config(ACTION_ADAPTER_CONFIG)
     assert adapter["architecture"]["plan_action_adapter"] is True
     assert adapter["trainable"] == "plan-action-target-path"
+    adapter_v1 = load_training_config(ACTION_ADAPTER_V1_CONFIG)
+    assert adapter_v1["counterfactualLossWeight"] == 1.0
+    assert adapter_v1["steps"] == 2000
+    gate_v1 = load_cf_gate(ACTION_ADAPTER_V1_QUALIFICATION)
+    assert gate_v1["paired"]["minimumChangedTeacherPredictionRecall"] == 0.5
+    assert gate_v1["evaluationDatasetDigest"].endswith("c955efd22fb")
     counterfactual = load_plan_dagger_spec(PLAN_COUNTERFACTUAL_SPEC)
     assert counterfactual["format"] == "snowgym.plan-dagger-export.v1"
     episodes = sum(counterfactual["splits"].values(), [])

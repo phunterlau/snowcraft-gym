@@ -1161,6 +1161,19 @@ the inherited target-only checkpoint remained exactly action-invariant. This
 establishes identifiable supervision without inspecting validation/evaluation
 metrics. Optimization and acceptance thresholds must be frozen next.
 
+M7 counterfactual residual-adapter-v1 freeze (2026-09-02): before training or
+reading validation/evaluation metrics, `plan_action_adapter_v1.json` fixes
+qualified-checkpoint initialization, seed 86001, 2,000 steps, batch 64,
+learning rate `0.0003`, unchanged hybrid loss weights, and equal weight on the
+same-state counterfactual loss. The v1 qualification spec binds all three
+corpus digests, initializer, and training-only baseline. Its paired evaluation
+requires teacher diversity at least `0.05`, primary/counterfactual accuracy at
+least `0.75`, predicted action changes at least `0.05`, changed-teacher recall
+at least `0.50`, strict changed-pair accuracy at least `0.35`, and both target
+MSE values at most `0.13`. It retains every v0 closed-loop mission threshold.
+The qualification runner audits input/result and checkpoint provenance and
+applies all checks conjunctively. Training and held-out results remain unseen.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO

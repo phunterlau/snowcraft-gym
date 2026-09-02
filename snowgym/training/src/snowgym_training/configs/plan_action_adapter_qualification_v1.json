@@ -1,0 +1,28 @@
+{
+  "format": "snowgym.plan-action-adapter-counterfactual-qualification.v1",
+  "name": "plan-action-adapter-counterfactual-qualification-v1",
+  "trainingConfig": "plan_action_adapter_v1.json",
+  "trainingDatasetDigest": "sha256:c3bd756af35908cfe972c43e11f0292ab5cab3dca0e3375e2bed436725749df5",
+  "validationDatasetDigest": "sha256:d0ec0683697f159e2e14983ee4f19c329fd4ae6778f29f3084185d4ebe237576",
+  "evaluationDatasetDigest": "sha256:f5598b7fa17f03fce5e2b7af2814504796e7eea8ea16b36c847ebc955efd22fb",
+  "initializationCheckpointDigest": "sha256:4119b9a3f8c0d3df69b704a8f3f813a1b38ab11ca56faffb4c4cebc2cb235133",
+  "trainingBaselineEvaluationDigest": "sha256:d1679a72e1716a30bbfcaa12c44fea8faf47875238f5a5bd106d23dee439b254",
+  "paired": {
+    "minimumTeacherActionChangeRate": 0.05,
+    "minimumPrimaryActionAccuracy": 0.75,
+    "minimumCounterfactualActionAccuracy": 0.75,
+    "minimumPredictedActionChangeRate": 0.05,
+    "minimumChangedTeacherPredictionRecall": 0.5,
+    "minimumChangedTeacherPairAccuracy": 0.35,
+    "maximumPrimaryTargetMse": 0.13,
+    "maximumCounterfactualTargetMse": 0.13
+  },
+  "closedLoop": {
+    "maximumRejectedActions": 0,
+    "minimumDirectBlueAlive": 4,
+    "minimumFlankBlueAlive": 4,
+    "minimumHoldDecisions": 267,
+    "minimumWithdrawDecisions": 341,
+    "maximumSupportRedAlive": 4
+  }
+}
