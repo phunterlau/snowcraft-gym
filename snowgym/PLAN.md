@@ -664,7 +664,7 @@ Goal: train the fast learned controller to follow the existing slow
 
 - [x] Add a deterministic synthetic plan curriculum that emits only schema-
       valid plans and records grounded assignments and source seeds.
-- [ ] Add a fixed-size `PlanTensorEncoder` for mission, approach, posture, fire
+- [x] Add a fixed-size `PlanTensorEncoder` for mission, approach, posture, fire
       policy, preferred range, cohesion, relative objective/group geometry,
       group fractions, support relation, and plan age. JSON remains canonical;
       the tensor is only an RL adapter.
@@ -689,7 +689,17 @@ symbolic plan, stable unit assignments, seed, plan ID, arena/roster provenance,
 and optional source-state hash. The pure core performs no file or provider I/O.
 Tests prove repeatability, schema validity, complete non-overlapping assignment,
 directive coverage, and rejection of unsafe seed ranges or undersized rosters.
-The fixed-size tensor encoder and export/data-join path remain next.
+The export/data-join path remains next.
+
+M7 plan-tensor foundation (2026-09-02): `training/plan/PlanTensorEncoder.ts`
+maps a production `PlanSnapshot` into three stable role slots, each with 38
+bounded features and a separate presence mask. It includes role, mission,
+approach, posture, fire, range, cohesion and objective-kind one-hots; tactical-
+frame-relative objective/group geometry; requested and live assigned fractions;
+support relation; and plan age. Raw unit IDs remain host-owned and are not
+learnable features. Tests cover exact shape, slot stability, fractions, support,
+age normalization, bounds, and counterfactual engage-versus-hold separation on
+the same observation. JSON export/data joining and model ablations remain open.
 
 ### M8 — unit-level CTDE / MAPPO
 

@@ -581,3 +581,12 @@ before the record exposes stable role-to-unit assignments. The compact source
 section retains the tick, arena, ally/enemy roster geometry and health, plus an
 optional public state hash. Generation is deterministic and makes no OpenAI
 call. A JSON export and the Python plan-tensor/data join are the next M7 seam.
+
+`plan/PlanTensorEncoder.ts` consumes the production grounded `PlanSnapshot`
+directly and emits a row-major `[3, 38]` `Float32Array` plus a three-slot role
+mask. Rows are fixed to `main`, `maneuver`, and `reserve`; features include the
+bounded directive vocabularies, relative objective/group geometry in the
+tactical frame, allocation and live-assignment fractions, support target, and
+plan age over a documented 30-second horizon. Unit IDs select group members but
+are intentionally absent from the learnable tensor. The command-plan JSON and
+grounded plan remain canonical; this array is only the RL adapter.
