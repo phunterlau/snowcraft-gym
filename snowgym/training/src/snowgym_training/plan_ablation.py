@@ -137,7 +137,11 @@ def _training_config(value: dict[str, Any], conditioned: bool) -> dict[str, Any]
         "batchSize": value["batchSize"],
         "learningRate": value["learningRate"],
         "architecture": {
-            **value["architecture"],
+            **{
+                name: item
+                for name, item in value["architecture"].items()
+                if conditioned or name != "plan_target_only"
+            },
             **({"plan_conditioned": True} if conditioned else {}),
         },
         "loss": value["loss"],

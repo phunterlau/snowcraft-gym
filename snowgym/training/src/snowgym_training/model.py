@@ -25,6 +25,7 @@ class ModelConfig:
     nearest_enemy_throw_target: bool = False
     nearest_enemy_features: bool = False
     plan_conditioned: bool = False
+    plan_target_only: bool = False
 
     def as_dict(self) -> dict[str, int | bool]:
         value: dict[str, int | bool] = {
@@ -44,6 +45,8 @@ class ModelConfig:
             value["nearest_enemy_features"] = True
         if self.plan_conditioned:
             value["plan_conditioned"] = True
+        if self.plan_target_only:
+            value["plan_target_only"] = True
         return value
 
 
@@ -60,6 +63,7 @@ class EntityPolicy(nn.Module):
         self.obstacle_encoder = entity_encoder(9, config)
         global_features = embedding * 8 + 3
         self.plan_conditioned = config.plan_conditioned
+        self.plan_target_only = config.plan_target_only
         if self.plan_conditioned:
             self.plan_encoder = nn.Sequential(
                 nn.Linear(
@@ -70,7 +74,8 @@ class EntityPolicy(nn.Module):
                 nn.Linear(config.entity_hidden, embedding),
                 nn.ReLU(),
             )
-            global_features += embedding
+            if not self.plan_target_only:
+                global_features += embedding
         self.pairwise_enemy_attention = config.pairwise_enemy_attention
         if self.pairwise_enemy_attention:
             self.enemy_query = nn.Linear(embedding, embedding, bias=False)
@@ -86,6 +91,13 @@ class EntityPolicy(nn.Module):
             nn.Linear(config.actor_hidden, config.actor_hidden),
             nn.ReLU(),
         )
+        if self.plan_target_only:
+            self.plan_actor = nn.Sequential(
+                nn.Linear(embedding + global_features + embedding, config.actor_hidden),
+                nn.ReLU(),
+                nn.Linear(config.actor_hidden, config.actor_hidden),
+                nn.ReLU(),
+            )
         self.action_head = nn.Linear(config.actor_hidden, ACTION_TYPE_COUNT)
         self.action_conditioned_targets = config.action_conditioned_targets
         if self.action_conditioned_targets:
@@ -99,20 +111,23 @@ class EntityPolicy(nn.Module):
         self.power_head = nn.Linear(config.actor_hidden, 1)
 
     def forward(self, observation: dict[str, Tensor]) -> dict[str, Tensor]:
-        hidden, action_mask, _ = self.features(observation)
-        power_raw = self.power_head(hidden).squeeze(-1)
-        logits = self.action_head(hidden).masked_fill(
-            ~action_mask, torch.finfo(hidden.dtype).min
+        action_hidden, target_hidden, action_mask = self.features(observation)
+        power_raw = self.power_head(target_hidden).squeeze(-1)
+        logits = self.action_head(action_hidden).masked_fill(
+            ~action_mask, torch.finfo(action_hidden.dtype).min
         )
         result = {
             "action_logits": logits,
             "power": torch.sigmoid(power_raw),
             "power_raw": power_raw,
-            "hidden": hidden,
+            "hidden": target_hidden,
+            "action_hidden": action_hidden,
         }
         if self.action_conditioned_targets:
             zeros = torch.zeros(
-                (*hidden.shape[:-1], 2), dtype=hidden.dtype, device=hidden.device
+                (*target_hidden.shape[:-1], 2),
+                dtype=target_hidden.dtype,
+                device=target_hidden.device,
             )
             enemy_mask = living_enemy_mask(observation)
             nearest_target = nearest_enemy_target(
@@ -120,7 +135,7 @@ class EntityPolicy(nn.Module):
                 observation["enemies"][..., 2:4].float(),
                 enemy_mask,
             )
-            predicted_move_target = self.move_target_head(hidden)
+            predicted_move_target = self.move_target_head(target_hidden)
             move_target = (
                 torch.where(
                     (observation["team_alive"][:, 1] == 1)[:, None, None],
@@ -135,7 +150,7 @@ class EntityPolicy(nn.Module):
                     nearest_target.clamp(-1 + 1e-6, 1 - 1e-6)
                 )
                 if self.nearest_enemy_throw_target
-                else self.throw_target_head(hidden)
+                else self.throw_target_head(target_hidden)
             )
             target_raw_by_action = torch.stack(
                 [
@@ -163,7 +178,7 @@ class EntityPolicy(nn.Module):
                 }
             )
         else:
-            target_raw = self.target_head(hidden)
+            target_raw = self.target_head(target_hidden)
             result.update({"target": torch.tanh(target_raw), "target_raw": target_raw})
         return result
 
@@ -215,14 +230,24 @@ class EntityPolicy(nn.Module):
                 / max(int(observation["allies"].shape[1]), 1),
                 torch.log1p(observation["tick"].float()) / 10.0,
             ]
+        plan_embedding = None
         if self.plan_conditioned:
-            global_inputs.append(self.encode_plan(observation, allies.shape[0]))
+            plan_embedding = self.encode_plan(observation, allies.shape[0])
+        if self.plan_conditioned and not self.plan_target_only:
+            global_inputs.append(plan_embedding)
         global_context = torch.cat(global_inputs, dim=-1)
         expanded = global_context[:, None, :].expand(-1, allies.shape[1], -1)
-        hidden = self.actor(torch.cat([*actor_inputs, expanded], dim=-1))
+        actor_input = torch.cat([*actor_inputs, expanded], dim=-1)
+        action_hidden = self.actor(actor_input)
+        if self.plan_target_only:
+            assert plan_embedding is not None
+            plan_expanded = plan_embedding[:, None, :].expand(-1, allies.shape[1], -1)
+            target_hidden = self.plan_actor(torch.cat([actor_input, plan_expanded], dim=-1))
+        else:
+            target_hidden = action_hidden
         action_mask = observation["unit_action_mask"].bool().clone()
         action_mask[..., 0] |= ~ally_mask
-        return hidden, action_mask, ally_mask
+        return action_hidden, target_hidden, action_mask
 
     def encode_plan(self, observation: dict[str, Tensor], batch_size: int) -> Tensor:
         if "plan_groups" not in observation or "plan_group_mask" not in observation:
@@ -325,6 +350,7 @@ def model_config(value: Any) -> ModelConfig:
         "nearest_enemy_throw_target",
         "nearest_enemy_features",
         "plan_conditioned",
+        "plan_target_only",
     }
     if not isinstance(value, dict) or set(value) - optional != required:
         raise ValueError(
@@ -347,5 +373,13 @@ def model_config(value: Any) -> ModelConfig:
     if any(target_priors) and not value.get("action_conditioned_targets", False):
         raise ValueError(
             "architecture nearest-enemy target prior requires action_conditioned_targets"
+        )
+    if value.get("plan_target_only", False) and not value.get("plan_conditioned", False):
+        raise ValueError("architecture plan_target_only requires plan_conditioned")
+    if value.get("plan_target_only", False) and not value.get(
+        "action_conditioned_targets", False
+    ):
+        raise ValueError(
+            "architecture plan_target_only requires action_conditioned_targets"
         )
     return ModelConfig(**value)

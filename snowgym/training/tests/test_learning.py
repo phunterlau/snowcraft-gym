@@ -95,6 +95,10 @@ def test_model_config_preserves_legacy_checkpoint_shape() -> None:
         **legacy,
         "plan_conditioned": True,
     }
+    with pytest.raises(ValueError, match="requires plan_conditioned"):
+        model_config({**legacy, "plan_target_only": True})
+    with pytest.raises(ValueError, match="requires action_conditioned_targets"):
+        model_config({**legacy, "plan_conditioned": True, "plan_target_only": True})
 
 
 def test_plan_conditioned_model_requires_fixed_tensors_and_changes_counterfactual(
@@ -124,6 +128,38 @@ def test_plan_conditioned_model_requires_fixed_tensors_and_changes_counterfactua
     malformed["plan_groups"] = torch.zeros((2, 3, 37))
     with pytest.raises(ValueError, match="plan_groups must have shape"):
         model(malformed)
+
+
+def test_plan_target_only_keeps_action_path_invariant_but_changes_targets(
+    tmp_path: Path,
+) -> None:
+    torch.manual_seed(29)
+    dataset = TrajectoryDataset(make_dataset(tmp_path / "dataset"))
+    observation, _ = dataset.batch(np.asarray([0, 0]))
+    observation["plan_groups"] = torch.zeros((2, 3, 38), dtype=torch.float32)
+    observation["plan_group_mask"] = torch.tensor(
+        [[1, 0, 0], [1, 0, 0]], dtype=torch.int8
+    )
+    observation["plan_groups"][1, 0, 3] = 1.0
+    model = EntityPolicy(
+        ModelConfig(
+            16,
+            12,
+            24,
+            action_conditioned_targets=True,
+            plan_conditioned=True,
+            plan_target_only=True,
+        )
+    )
+
+    result = model(observation)
+    torch.testing.assert_close(result["action_logits"][0], result["action_logits"][1])
+    torch.testing.assert_close(result["action_hidden"][0], result["action_hidden"][1])
+    assert not torch.equal(result["hidden"][0], result["hidden"][1])
+    assert not torch.equal(
+        result["supervised_target_by_action"][0, :, 1],
+        result["supervised_target_by_action"][1, :, 1],
+    )
 
 
 def test_action_conditioned_target_heads_select_distinct_means(tmp_path: Path) -> None:
