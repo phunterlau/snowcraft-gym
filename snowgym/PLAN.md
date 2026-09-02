@@ -862,6 +862,15 @@ representations, configuration rejection, and finite end-to-end training. A
 new development run on the retained v0 data is next; qualification v0 remains
 permanently failed.
 
+M7 target-only development freeze (2026-09-02):
+`plan_bc_ablation_target_only_dev_v1.json` reuses qualification-v0's retained
+training/evaluation datasets, seed, 3,000-step budget, loss weights, and physical
+architecture, adding only `plan_target_only` to the conditioned branch. This is
+an explicit diagnosis on already observed data, not a qualification retry and
+has no pass threshold. If it restores action accuracy while preserving target
+following, a v1 qualification must be frozen with new disjoint environment and
+plan seeds.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO
