@@ -29,6 +29,7 @@ snowgym-train-ppo = "snowgym_training.ppo_train:main"
 snowgym-evaluate-ppo = "snowgym_training.ppo_evaluate:main"
 snowgym-run-ppo-series = "snowgym_training.ppo_series:main"
 snowgym-run-ppo-config = "snowgym_training.ppo_series_config:main"
+snowgym-audit-ppo-series = "snowgym_training.ppo_series:audit_main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/snowgym_training"]

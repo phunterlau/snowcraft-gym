@@ -4,7 +4,7 @@ import json
 
 from snowgym_training.model import ModelConfig
 from snowgym_training.ppo import PPOConfig
-from snowgym_training.ppo_series import PPO_SERIES_FORMAT, run_ppo_series
+from snowgym_training.ppo_series import PPO_SERIES_FORMAT, audit_ppo_series, run_ppo_series
 
 
 def test_ppo_series_keeps_and_evaluates_every_checkpoint(tmp_path) -> None:
@@ -41,6 +41,20 @@ def test_ppo_series_keeps_and_evaluates_every_checkpoint(tmp_path) -> None:
         assert (tmp_path / "series" / item["runPath"] / "checkpoint" / "state.pt").is_file()
         assert (tmp_path / "series" / item["evaluationPath"]).is_file()
     assert json.loads((tmp_path / "series" / "manifest.json").read_text()) == result
+    audit = audit_ppo_series(tmp_path / "series")
+    assert audit["updates"] == [1, 2]
+    assert audit["seriesDigest"] == result["seriesDigest"]
+
+    evaluation_path = tmp_path / "series" / result["checkpoints"][0]["evaluationPath"]
+    evaluation = json.loads(evaluation_path.read_text())
+    evaluation["maxDecisions"] += 1
+    evaluation_path.write_text(json.dumps(evaluation))
+    try:
+        audit_ppo_series(tmp_path / "series")
+    except ValueError as error:
+        assert "evaluation digest" in str(error)
+    else:
+        raise AssertionError("series audit accepted a modified evaluation")
 
 
 def test_ppo_series_rejects_ambiguous_checkpoint_order(tmp_path) -> None:

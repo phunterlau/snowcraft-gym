@@ -506,6 +506,17 @@ the learning rate to `3e-5`, uses one PPO epoch and full 200-decision rollouts,
 and passed 8/8 at retained updates 1, 5, 10, and 25 in a reproduced development
 run. This is tuning evidence, not yet the post-commit qualifying artifact.
 
+M6.2 gate-1 acceptance (2026-09-02): the committed, BC-initialized
+`ppo_1v1_bc_v0` qualifying series retains updates 1, 5, 10, and 25. Every
+checkpoint won all eight held-out `1v1-random` episodes, while deterministic
+masked-random won none; the final checkpoint averaged 60 decisions and all
+policies recorded zero rejected actions. The series is bound to source commit
+`60459b5`, the frozen series-config digest, curriculum digest, BC checkpoint and
+dataset digests, and every child checkpoint/evaluation digest. The semantic
+auditor restricted-loads every checkpoint and rejects modified child artifacts.
+Only the first curriculum gate is advanced; 1v1 easy scripted and all later
+gates remain open.
+
 ### M7 — plan-conditioned learned executor
 
 Goal: train the fast learned controller to follow the existing slow

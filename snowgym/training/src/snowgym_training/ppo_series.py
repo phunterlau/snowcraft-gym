@@ -13,11 +13,93 @@ from typing import Any
 from .model import ModelConfig
 from .ppo import PPOConfig
 from .ppo_evaluate import evaluate_ppo_checkpoint
+from .ppo_checkpoint import load_ppo_checkpoint
 from .ppo_train import train_ppo
 from .trainer import resolve_git_commit
 from .trajectory import json_digest
 
 PPO_SERIES_FORMAT = "snowgym.ppo-series.v0"
+
+
+def audit_ppo_series(path: str | Path) -> dict[str, Any]:
+    root = Path(path).resolve()
+    try:
+        manifest = json.loads((root / "manifest.json").read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as error:
+        raise ValueError(f"cannot load PPO series manifest: {error}") from error
+    if not isinstance(manifest, dict) or manifest.get("format") != PPO_SERIES_FORMAT:
+        raise ValueError(f"PPO series format must be {PPO_SERIES_FORMAT}")
+    claimed = manifest.get("seriesDigest")
+    source = {name: value for name, value in manifest.items() if name != "seriesDigest"}
+    if claimed != json_digest(source):
+        raise ValueError("PPO series manifest digest mismatch")
+    entries = manifest.get("checkpoints")
+    updates = manifest.get("checkpointUpdates")
+    if (
+        not isinstance(entries, list)
+        or not entries
+        or not all(isinstance(entry, dict) for entry in entries)
+        or not isinstance(updates, list)
+    ):
+        raise ValueError("PPO series checkpoint list is invalid")
+    if [entry.get("update") for entry in entries if isinstance(entry, dict)] != updates:
+        raise ValueError("PPO series checkpoint schedule mismatch")
+    rebuilt_curve: list[dict[str, Any]] = []
+    for entry in entries:
+        run_root = confined_path(root, entry.get("runPath"), "runPath")
+        evaluation_path = confined_path(root, entry.get("evaluationPath"), "evaluationPath")
+        try:
+            run = json.loads((run_root / "manifest.json").read_text(encoding="utf-8"))
+            evaluation = json.loads(evaluation_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as error:
+            raise ValueError(f"cannot load PPO series child artifact: {error}") from error
+        run_source = {name: value for name, value in run.items() if name != "runDigest"}
+        if run.get("runDigest") != json_digest(run_source) or run["runDigest"] != entry.get("runDigest"):
+            raise ValueError("PPO series child run digest mismatch")
+        checkpoint_metadata, _ = load_ppo_checkpoint(run_root / "checkpoint")
+        if checkpoint_metadata["checkpointDigest"] != entry.get("checkpointDigest"):
+            raise ValueError("PPO series checkpoint digest mismatch")
+        evaluation_source = {
+            name: value for name, value in evaluation.items() if name != "resultDigest"
+        }
+        if (
+            evaluation.get("resultDigest") != json_digest(evaluation_source)
+            or evaluation["resultDigest"] != entry.get("evaluationDigest")
+            or evaluation.get("checkpointDigest") != entry.get("checkpointDigest")
+        ):
+            raise ValueError("PPO series evaluation digest mismatch")
+        if evaluation.get("threshold", {}).get("passed") != entry.get("thresholdPassed"):
+            raise ValueError("PPO series threshold result mismatch")
+        if run.get("targetUpdate") != entry.get("update"):
+            raise ValueError("PPO series run update mismatch")
+        child_updates = run.get("updates")
+        if not isinstance(child_updates, list):
+            raise ValueError("PPO series child updates are invalid")
+        rebuilt_curve.extend(child_updates)
+    if rebuilt_curve != manifest.get("learningCurve"):
+        raise ValueError("PPO series learning curve does not match child runs")
+    if [item.get("updateIndex") for item in rebuilt_curve] != list(range(updates[-1])):
+        raise ValueError("PPO series learning curve is not contiguous")
+    if manifest.get("finalThresholdPassed") != entries[-1].get("thresholdPassed"):
+        raise ValueError("PPO series final threshold does not match final checkpoint")
+    return {
+        "ok": True,
+        "format": PPO_SERIES_FORMAT,
+        "mode": manifest.get("mode"),
+        "gate": manifest.get("gateId"),
+        "updates": updates,
+        "finalThresholdPassed": manifest["finalThresholdPassed"],
+        "seriesDigest": claimed,
+    }
+
+
+def confined_path(root: Path, value: Any, name: str) -> Path:
+    if not isinstance(value, str) or not value:
+        raise ValueError(f"PPO series {name} is invalid")
+    candidate = (root / value).resolve()
+    if not candidate.is_relative_to(root):
+        raise ValueError(f"PPO series {name} escapes the artifact root")
+    return candidate
 
 
 def run_ppo_series(
@@ -175,6 +257,18 @@ def main() -> None:
         "output": str(args.output.resolve()),
     }
     print(json.dumps(summary, sort_keys=True) if args.json else summary)
+
+
+def audit_main() -> None:
+    parser = argparse.ArgumentParser(description="Audit a SnowGym PPO checkpoint series")
+    parser.add_argument("path", type=Path)
+    parser.add_argument("--json", action="store_true")
+    args = parser.parse_args()
+    try:
+        result = audit_ppo_series(args.path)
+    except ValueError as error:
+        parser.error(str(error))
+    print(json.dumps(result, sort_keys=True) if args.json else result)
 
 
 if __name__ == "__main__":

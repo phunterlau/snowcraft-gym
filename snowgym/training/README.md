@@ -228,6 +228,20 @@ checkpoints 1/5/10/25. Its development reproduction passed the frozen 1v1
 random threshold at every checkpoint. Use `--qualifying` only for the immutable
 post-commit run intended as acceptance evidence.
 
+The committed qualifying artifact is `runs/ppo_1v1_bc_v0`. Audit all nested
+digests and restricted-load every retained checkpoint with:
+
+```bash
+uv run snowgym-audit-ppo-series runs/ppo_1v1_bc_v0 --json
+```
+
+The qualifying series is provenance-bound to source commit `60459b5` and the
+frozen config digest `sha256:df270e5afd04d0a6b8c65892cc955717041aa553ab92cf9329a4ed0df98f3d21`.
+Updates 1, 5, 10, and 25 each won 8/8 held-out episodes versus 0/8 for
+masked-random; the final checkpoint averaged 60 decisions with zero rejected
+actions. This advances only `1v1-random`, and it is explicitly BC-initialized
+PPO—not a cold-start PPO result.
+
 `ppo.py` defines the centralized hybrid actor-critic used by the next training
 stage. Action masks apply before categorical sampling; target terms contribute
 to joint log probability only for move/throw and power only for throw. GAE
