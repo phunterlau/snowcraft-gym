@@ -1,0 +1,45 @@
+{
+  "format": "snowgym.plan-closed-loop-suite.v0",
+  "name": "plan-target-only-6v6-approach-v0",
+  "maxTeamUnits": 10,
+  "cases": [
+    {
+      "id": "direct-focus",
+      "seed": 10201,
+      "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 900 },
+      "planId": "closed-loop-direct-focus",
+      "maxDecisions": 150,
+      "plan": {
+        "schemaVersion": "snowgym.command-plan.v0",
+        "intentSummary": "Concentrate the whole team on the nearest enemy cluster by a direct approach.",
+        "groups": [{
+          "role": "main", "allocationWeight": 1, "selection": "balanced",
+          "order": {
+            "mission": "engage", "objective": { "kind": "enemy_cluster", "select": "nearest" },
+            "approach": "direct",
+            "engagement": { "posture": "balanced", "fire": "focus", "preferredRange": "medium", "cohesion": "normal" }
+          }
+        }]
+      }
+    },
+    {
+      "id": "left-flank-distributed",
+      "seed": 10201,
+      "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 900 },
+      "planId": "closed-loop-left-flank",
+      "maxDecisions": 150,
+      "plan": {
+        "schemaVersion": "snowgym.command-plan.v0",
+        "intentSummary": "Take the whole team around the left flank and distribute fire across the nearest cluster.",
+        "groups": [{
+          "role": "main", "allocationWeight": 1, "selection": "balanced",
+          "order": {
+            "mission": "engage", "objective": { "kind": "enemy_cluster", "select": "nearest" },
+            "approach": "left_flank",
+            "engagement": { "posture": "balanced", "fire": "distributed", "preferredRange": "medium", "cohesion": "normal" }
+          }
+        }]
+      }
+    }
+  ]
+}

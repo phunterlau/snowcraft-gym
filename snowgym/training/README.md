@@ -730,6 +730,25 @@ but acceptance additionally requires better correct-plan fit and later
 closed-loop objective-completion metrics; arbitrary sensitivity is not plan
 following.
 
+Run the two qualified checkpoints as actual blue-team controllers from matched
+initial states with the frozen direct-versus-left-flank suite:
+
+```bash
+cd snowgym/training
+.venv/bin/snowgym-evaluate-plan-closed-loop \
+  --ablation runs/plan_bc_ablation_qual_v1 \
+  --suite src/snowgym_training/configs/plan_closed_loop_v0.json \
+  --output evaluations/plan_closed_loop_v0.json \
+  --json
+```
+
+Each policy receives the same physical state and symbolic plan. The conditioned
+branch additionally receives the current server-resolved tensor before every
+decision. The result records canonical outcomes, action rejection, normalized
+group-to-objective progress, first-action target divergence, and final group
+trajectory separation. This evaluator measures real covariate-shifted execution;
+it does not infer plan following from offline target loss alone.
+
 The frozen 6v6 development run is retained under
 `runs/plan_bc_ablation_dev_v0`, with held-out metrics in
 `evaluations/plan_bc_ablation_dev_v0.json`. The conditioned model reduced

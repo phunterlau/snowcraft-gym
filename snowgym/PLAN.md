@@ -924,6 +924,17 @@ validates and stacks `[B,3,38]` plan tensors for the next learned closed-loop
 runner. Service, batch-isolation, validation, age, and live subprocess tests
 cover the bridge; closed-loop objective evaluation remains next.
 
+M7 closed-loop evaluation freeze (2026-09-02):
+`configs/plan_closed_loop_v0.json` fixes a same-seed 6v6 Winter Front comparison
+between direct/focus and left-flank/distributed plans before seeing execution
+results. `plan_closed_loop.py` runs the qualified conditioned checkpoint and its
+matched no-plan control as real blue policies, fetching fresh host-owned plan
+tensors at every decision. Its hashed result reports terminal outcomes, rejected
+actions, normalized objective progress, first-action target divergence, and
+final group-position separation. The one-decision real-subprocess smoke proves
+the complete checkpoint-to-authoritative-world path; the frozen full run is
+next and thresholds have not been retrofitted.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO
