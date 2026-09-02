@@ -1384,6 +1384,13 @@ Tests prove exact zero-residual preservation, configuration constraints, and
 different expert routing for two mission directives. A frozen v3-corpus
 development run is next.
 
+M7 directive-experts-v3 development freeze (2026-09-02):
+`plan_directive_experts_v3_dev.json` holds the v3 corpus, qualified initializer,
+seed, 2,000-step budget, balancing, optimizer, and losses fixed from
+multi-group-v2. Its sole architecture change is
+`plan_directive_experts: true`. Development may inspect validation and existing
+closed-loop suites; evaluation remains sealed.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO

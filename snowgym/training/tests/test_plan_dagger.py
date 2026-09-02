@@ -288,6 +288,19 @@ def test_frozen_plan_dagger_spec_balances_missions_and_disjoins_seeds() -> None:
         "sampling", "roleBalancedLoss",
     ):
         assert multigroup_config[field] == balanced_config[field]
+    expert_config = load_training_config(
+        ROOT / "training" / "src" / "snowgym_training" / "configs"
+        / "plan_directive_experts_v3_dev.json"
+    )
+    assert expert_config["architecture"] == {
+        **multigroup_config["architecture"], "plan_directive_experts": True
+    }
+    for field in (
+        "seed", "steps", "batchSize", "learningRate", "loss",
+        "counterfactualLossWeight", "counterfactualChangedActionWeight",
+        "sampling", "roleBalancedLoss",
+    ):
+        assert expert_config[field] == multigroup_config[field]
 
 
 def test_frozen_plan_action_adapter_gate_is_audited_and_retains_failure(tmp_path: Path) -> None:
