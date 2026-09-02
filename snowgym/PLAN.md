@@ -615,6 +615,15 @@ updates 1/5/10 versus 0/8 masked-random, with three red-win seeds and mean
 as gate 3 and does not claim improvement over the DAgger initializer.
 Post-commit gate-4 qualification remains open.
 
+M6.2 gate-4 acceptance (2026-09-02): the committed
+`ppo_3v3_scripted_bc_v0` qualifying series reproduces 5/8 wins at updates 1,
+5, and 10, versus 0/8 masked-random and 8/8 teacher, with zero rejected
+actions. All three red-win seeds remain visible; no best-checkpoint selection
+was performed. The semantic auditor binds source commit `eef57e4`, config
+digest `sha256:de8e80f22a1ebe0d96c96583e3f01de586215a14c932dcbb2faf7965eeebc87b`,
+and all nested artifacts. `3v3-scripted` is advanced; terrain and larger-roster
+gates remain open.
+
 ### M7 — plan-conditioned learned executor
 
 Goal: train the fast learned controller to follow the existing slow

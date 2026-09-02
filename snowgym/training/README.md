@@ -156,6 +156,20 @@ development series passed at every retained update 1/5/10 with 5/8 wins versus
 candidate uses the same log-std `-3`, learning rate `1e-8` stability contract as
 gate 3, so it demonstrates retention through PPO rather than improvement over
 the DAgger initializer. Post-commit qualification remains required.
+
+The committed qualifying artifact is `runs/ppo_3v3_scripted_bc_v0`:
+
+```bash
+uv run snowgym-audit-ppo-series runs/ppo_3v3_scripted_bc_v0 --json
+```
+
+It is bound to source commit `eef57e4`, config digest
+`sha256:de8e80f22a1ebe0d96c96583e3f01de586215a14c932dcbb2faf7965eeebc87b`,
+and series digest
+`sha256:e82ec0f690c9864ab3d6fa9eb307875c0c182e55fd2657bf5dbdcd8a3cf65f3e`.
+Updates 1/5/10 each won 5/8 with mean 119.875 decisions, versus 0/8
+masked-random and 8/8 teacher, with zero rejected actions. This advances
+`3v3-scripted`; the three losing seeds remain visible in every evaluation.
 The `snowgym.checkpoint.v0` metadata binds the model and optimizer state digest
 to the source commit, audited dataset digest, SnowGym versions, architecture,
 optimizer, loss weights, seed, step, and evaluation suite. Loading uses
