@@ -35,6 +35,7 @@ def run_ppo_series(
     model_config: ModelConfig | None = None,
     ppo_config: PPOConfig | None = None,
     git_commit: str | None = None,
+    warm_start: str | Path | None = None,
 ) -> dict[str, Any]:
     destination = Path(output)
     if destination.exists():
@@ -72,6 +73,7 @@ def run_ppo_series(
                 git_commit=commit,
                 reward_mode=reward_mode,
                 mode="qualification-candidate" if qualifying else "development-series",
+                warm_start=warm_start if previous_checkpoint is None else None,
             )
             checkpoint = result_root / relative_run / "checkpoint"
             evaluation = evaluate_ppo_checkpoint(
@@ -113,6 +115,7 @@ def run_ppo_series(
             "rolloutSteps": rollout_steps,
             "trainingSeed": training_seed,
             "rewardMode": reward_mode,
+            "initialization": entries and run["initialization"],
             "maxEvaluationDecisions": max_decisions,
             "checkpoints": entries,
             "learningCurve": learning_curve,
@@ -140,6 +143,7 @@ def main() -> None:
     parser.add_argument("--curriculum", type=Path)
     parser.add_argument("--max-decisions", type=int, default=400)
     parser.add_argument("--qualifying", action="store_true")
+    parser.add_argument("--warm-start", type=Path)
     parser.add_argument("--json", action="store_true")
     args = parser.parse_args()
     try:
@@ -154,6 +158,7 @@ def main() -> None:
             curriculum_path=args.curriculum,
             max_decisions=args.max_decisions,
             qualifying=args.qualifying,
+            warm_start=args.warm_start,
         )
     except (FileExistsError, RuntimeError, ValueError) as error:
         parser.error(str(error))

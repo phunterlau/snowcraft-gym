@@ -496,7 +496,12 @@ qualifying checkpoint series remains open. The curriculum now freezes all seven
 planned gates through map-backed 10v10, with distinct 10,000-seed training
 ranges and eight held-out seeds per gate. A live batch test proves every frozen
 scenario and roster loads on the authoritative server; no gate is considered
-advanced merely because it is defined.
+advanced merely because it is defined. PPO now also supports an explicit,
+digest-bound behavior-cloning initialization: the BC policy is loaded only at
+the first update and its checkpoint/state/dataset provenance survives every
+resume. A development series showed why retaining all checkpoints matters: its
+BC-initialized update 1 passed 1v1-random at 8/8, while updates 5 and 10 regressed
+to draws. This is tuning evidence, not a qualifying result.
 
 ### M7 — plan-conditioned learned executor
 

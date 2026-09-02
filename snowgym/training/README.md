@@ -206,6 +206,13 @@ curve. Add `--qualifying` only for a predeclared qualifying run. That label does
 not imply success: `finalThresholdPassed` still comes solely from the frozen
 held-out evaluation, and earlier failing checkpoints remain in the artifact.
 
+PPO can be initialized from an audited behavior-cloning checkpoint with
+`--warm-start checkpoints/bc_1v1_v0`. The policy weights are loaded only before
+the first update. Every PPO checkpoint and the series manifest retain the BC
+checkpoint, tensor-state, and source-dataset digests; exact resume carries that
+provenance forward. Warm-started results must be described as BC-initialized
+PPO, never as cold-start reward-only learning.
+
 `ppo.py` defines the centralized hybrid actor-critic used by the next training
 stage. Action masks apply before categorical sampling; target terms contribute
 to joint log probability only for move/throw and power only for throw. GAE

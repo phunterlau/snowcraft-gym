@@ -2,7 +2,10 @@ from __future__ import annotations
 
 import json
 
-from snowgym_training.model import ModelConfig
+import torch
+
+from snowgym_training.checkpoint import save_checkpoint
+from snowgym_training.model import EntityPolicy, ModelConfig
 from snowgym_training.ppo import PPOConfig
 from snowgym_training.ppo_train import PPO_RUN_FORMAT, train_ppo
 
@@ -64,3 +67,41 @@ def test_ppo_smoke_run_refuses_overwrite(tmp_path) -> None:
         assert "refusing to overwrite" in str(error)
     else:
         raise AssertionError("PPO trainer overwrote an existing run")
+
+
+def test_ppo_warm_start_records_audited_bc_provenance(tmp_path) -> None:
+    architecture = ModelConfig(16, 12, 24)
+    teacher = EntityPolicy(architecture)
+    teacher_optimizer = torch.optim.Adam(teacher.parameters())
+    bc_metadata = save_checkpoint(
+        tmp_path / "bc",
+        model=teacher,
+        optimizer=teacher_optimizer,
+        metadata={
+            "gitCommit": "test",
+            "datasetManifestHash": "sha256:dataset",
+            "versions": {},
+            "architecture": architecture.as_dict(),
+            "optimizer": {},
+            "loss": {},
+            "trainingSeed": 1,
+            "step": 1,
+            "evaluationSuite": "test",
+        },
+    )
+    result = train_ppo(
+        output=tmp_path / "ppo",
+        worlds=1,
+        rollout_steps=1,
+        target_updates=1,
+        model_config=architecture,
+        ppo_config=PPOConfig(update_epochs=1, minibatch_size=1),
+        warm_start=tmp_path / "bc",
+        git_commit="test",
+    )
+    assert result["initialization"] == {
+        "type": "behavior-clone",
+        "checkpointDigest": bc_metadata["checkpointDigest"],
+        "stateDigest": bc_metadata["stateDigest"],
+        "datasetManifestHash": "sha256:dataset",
+    }

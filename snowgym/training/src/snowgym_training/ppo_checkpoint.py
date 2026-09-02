@@ -30,6 +30,7 @@ def save_ppo_checkpoint(
     git_commit: str,
     seed_schedule: dict[str, int],
     collector_config: dict[str, Any],
+    initialization: dict[str, Any],
 ) -> dict[str, Any]:
     destination = Path(path)
     if destination.exists():
@@ -43,6 +44,7 @@ def save_ppo_checkpoint(
             raise ValueError(f"{name} must be a non-empty string")
     validate_seed_schedule(seed_schedule)
     validate_collector_config(collector_config)
+    validate_initialization(initialization)
     state = {
         "model": model.state_dict(),
         "optimizer": optimizer.state_dict(),
@@ -59,6 +61,7 @@ def save_ppo_checkpoint(
         "environmentSteps": environment_steps,
         "seedSchedule": dict(seed_schedule),
         "collectorConfig": dict(collector_config),
+        "initialization": dict(initialization),
         "stateDigest": semantic_state_digest(state),
     }
     metadata["checkpointDigest"] = json_digest(metadata)
@@ -134,6 +137,7 @@ def validate_ppo_checkpoint_metadata(value: Any) -> None:
         "environmentSteps",
         "seedSchedule",
         "collectorConfig",
+        "initialization",
         "stateDigest",
         "checkpointDigest",
     }
@@ -154,6 +158,7 @@ def validate_ppo_checkpoint_metadata(value: Any) -> None:
     )
     validate_seed_schedule(value["seedSchedule"])
     validate_collector_config(value["collectorConfig"])
+    validate_initialization(value["initialization"])
     source = {name: item for name, item in value.items() if name != "checkpointDigest"}
     if value["checkpointDigest"] != json_digest(source):
         raise ValueError("PPO checkpoint metadata digest mismatch")
@@ -197,3 +202,16 @@ def validate_collector_config(value: Any) -> None:
         item = value[name]
         if not isinstance(item, int) or isinstance(item, bool) or item <= 0:
             raise ValueError(f"PPO collector {name} must be a positive integer")
+
+
+def validate_initialization(value: Any) -> None:
+    if value == {"type": "random"}:
+        return
+    required = {"type", "checkpointDigest", "stateDigest", "datasetManifestHash"}
+    if not isinstance(value, dict) or set(value) != required:
+        raise ValueError("PPO initialization metadata is invalid")
+    if value["type"] != "behavior-clone":
+        raise ValueError("PPO initialization type is invalid")
+    for name in required - {"type"}:
+        if not isinstance(value[name], str) or not value[name]:
+            raise ValueError(f"PPO initialization {name} must be non-empty")

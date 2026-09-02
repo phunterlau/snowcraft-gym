@@ -351,6 +351,7 @@ def test_ppo_checkpoint_resume_matches_uninterrupted_updates(tmp_path) -> None:
         git_commit="test",
         seed_schedule={"minimum": 10_000, "maximum": 10_099, "nextSeed": 10_004},
         collector_config={"gateId": "test", "worlds": 2, "rolloutSteps": 2, "rewardMode": "canonical"},
+        initialization={"type": "random"},
     )
     assert metadata["updateIndex"] == 1
     assert metadata["environmentSteps"] == 4
@@ -417,6 +418,7 @@ def test_ppo_checkpoint_rejects_incompatible_resume(tmp_path) -> None:
         git_commit="test",
         seed_schedule={"minimum": 10_000, "maximum": 10_099, "nextSeed": 10_000},
         collector_config={"gateId": "test", "worlds": 2, "rolloutSteps": 2, "rewardMode": "canonical"},
+        initialization={"type": "random"},
     )
     try:
         restore_ppo_checkpoint(

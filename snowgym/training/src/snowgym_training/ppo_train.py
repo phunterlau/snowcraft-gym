@@ -16,6 +16,7 @@ import torch
 from snowgym_client.batch import SnowGymBatchClient, SnowGymBatchEnv
 
 from .curriculum import load_curriculum
+from .checkpoint import load_checkpoint
 from .model import ModelConfig
 from .ppo import HybridActorCritic, PPOConfig, ppo_update
 from .ppo_checkpoint import restore_ppo_checkpoint, save_ppo_checkpoint
@@ -41,6 +42,7 @@ def train_ppo(
     git_commit: str | None = None,
     reward_mode: str = "canonical",
     mode: str = "infrastructure-smoke",
+    warm_start: str | Path | None = None,
 ) -> dict[str, Any]:
     """Train through a frozen gate and atomically write one final checkpoint."""
     destination = Path(output)
@@ -82,7 +84,21 @@ def train_ppo(
     environment_steps = 0
     if resume is None:
         schedule = SeedSchedule(seed_minimum, seed_maximum)
+        initialization: dict[str, Any] = {"type": "random"}
+        if warm_start is not None:
+            source_metadata, source_state = load_checkpoint(warm_start)
+            if source_metadata["architecture"] != architecture.as_dict():
+                raise ValueError("behavior-clone warm start architecture does not match PPO")
+            model.policy.load_state_dict(source_state["model"])
+            initialization = {
+                "type": "behavior-clone",
+                "checkpointDigest": source_metadata["checkpointDigest"],
+                "stateDigest": source_metadata["stateDigest"],
+                "datasetManifestHash": source_metadata["datasetManifestHash"],
+            }
     else:
+        if warm_start is not None:
+            raise ValueError("warm_start cannot be combined with PPO resume")
         restored = restore_ppo_checkpoint(
             resume,
             model=model,
@@ -105,6 +121,7 @@ def train_ppo(
         )
         start_update = int(restored["updateIndex"])
         environment_steps = int(restored["environmentSteps"])
+        initialization = dict(restored["initialization"])
     if start_update >= target_updates:
         raise ValueError("target_updates must exceed the resumed update index")
 
@@ -162,6 +179,7 @@ def train_ppo(
             git_commit=commit,
             seed_schedule=schedule.state(),
             collector_config=collector_config,
+            initialization=initialization,
         )
         manifest: dict[str, Any] = {
             "format": PPO_RUN_FORMAT,
@@ -175,6 +193,7 @@ def train_ppo(
             "worlds": worlds,
             "rolloutSteps": rollout_steps,
             "rewardMode": reward_mode,
+            "initialization": initialization,
             "startUpdate": start_update,
             "targetUpdate": target_updates,
             "environmentSteps": environment_steps,
@@ -210,6 +229,7 @@ def main() -> None:
     )
     parser.add_argument("--curriculum", type=Path)
     parser.add_argument("--resume", type=Path)
+    parser.add_argument("--warm-start", type=Path)
     parser.add_argument("--json", action="store_true")
     args = parser.parse_args()
     try:
@@ -223,6 +243,7 @@ def main() -> None:
             curriculum_path=args.curriculum,
             resume=args.resume,
             reward_mode=args.reward_mode,
+            warm_start=args.warm_start,
         )
     except (FileExistsError, RuntimeError, ValueError) as error:
         parser.error(str(error))
