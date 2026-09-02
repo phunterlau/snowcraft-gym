@@ -93,6 +93,28 @@ uv run snowgym-evaluate-checkpoint \
 ```
 
 Outputs refuse to overwrite existing checkpoint, replay, or evaluation paths.
+
+### Closed-loop teacher relabeling
+
+When open-loop BC suffers compounding error, collect teacher labels on states
+visited by the learned policy itself. Start the headless server, then run:
+
+```bash
+uv run snowgym-export-dagger \
+  --spec src/snowgym_training/configs/teacher_3v3_scripted_v0.json \
+  --split train \
+  --checkpoint checkpoints/bc_3v3_random_v0 \
+  --output artifacts/dagger-3v3-scripted \
+  --json
+```
+
+The collector reads `GET /teacher-action` without advancing the simulator,
+then advances with the learned action guarded by the same state hash. The
+sharded manifest binds the rollout checkpoint/state digests, source spec,
+episode outcomes, and every tensor digest. It refuses rejected learner actions
+and re-audits the finished dataset. This first collector emits a pure
+learner-state dataset; aggregation/mixing policy remains an explicit later
+training decision.
 The `snowgym.checkpoint.v0` metadata binds the model and optimizer state digest
 to the source commit, audited dataset digest, SnowGym versions, architecture,
 optimizer, loss weights, seed, step, and evaluation suite. Loading uses

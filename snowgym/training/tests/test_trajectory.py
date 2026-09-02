@@ -8,6 +8,7 @@ import numpy as np
 import pytest
 
 from snowgym_training.baseline import BASELINE_FORMAT, run_teacher_baseline
+from snowgym_training.export_dagger import export_dagger_dataset
 from snowgym_training.export_scripted import (
     action_results,
     assert_action_round_trip,
@@ -29,6 +30,18 @@ class FakeScriptedClient:
         self.tick = 0
         self.scenario: dict[str, Any] = {}
         self.reject = reject
+
+    def teacher_action(self) -> dict[str, Any]:
+        value = snapshot(self.seed, self.tick, self.scenario)
+        return {
+            "status": value["status"],
+            "action": {
+                "actions": [
+                    {"type": "move", "unitId": index + 1, "x": 5.0, "y": -2.0}
+                    for index in range(int(self.scenario["blueUnits"]))
+                ]
+            },
+        }
 
     def reset(
         self,
@@ -146,6 +159,27 @@ def test_scripted_export_is_exactly_reproducible_and_auditable(tmp_path: Path) -
             assert left.files == right.files
             for name in left.files:
                 np.testing.assert_array_equal(left[name], right[name])
+
+
+def test_dagger_export_labels_states_visited_by_committed_policy(tmp_path: Path) -> None:
+    spec_path = tmp_path / "spec.json"
+    spec_path.write_text(json.dumps(export_spec()), encoding="utf-8")
+    training_root = Path(__file__).resolve().parents[1]
+    checkpoint = training_root / "checkpoints/bc_1v1_v0"
+
+    result = export_dagger_dataset(
+        output=tmp_path / "dagger",
+        checkpoint=checkpoint,
+        split="train",
+        spec_path=spec_path,
+        client=FakeScriptedClient(),
+    )
+
+    assert result["transitions"] == 6
+    assert result["teacher"] == "teacher-action.v0"
+    assert result["rolloutPolicy"] == "learned-checkpoint"
+    assert result["rolloutCheckpointDigest"].startswith("sha256:")
+    assert audit_dataset(tmp_path / "dagger")["datasetDigest"] == result["datasetDigest"]
 
 
 def test_dataset_audit_detects_tensor_corruption(tmp_path: Path) -> None:

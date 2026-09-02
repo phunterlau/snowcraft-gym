@@ -578,6 +578,17 @@ The first three gates are advanced and the stated M6.2 held-out comparison is
 met. Later 3v3 scripted/terrain and 5v5/10v10 curriculum gates remain open, and
 the 3v3 result remains explicitly BC retention rather than improvement over BC.
 
+Gate-4 preparation found that direct gate-3 PPO transfer loses all eight
+`3v3-scripted` evaluation episodes. An eight-episode open-loop teacher corpus
+audited successfully, but its first BC checkpoint lost both disjoint BC
+evaluation episodes; target-precision weighting improved one development
+variant to 1/2, while simply doubling the corpus did not close the gap. This is
+treated as closed-loop covariate shift rather than grounds for further blind
+hyperparameter sweeps. The server now exposes read-only `GET /teacher-action`,
+and `snowgym-export-dagger` records those oracle labels on states visited by a
+provenance-bound learned checkpoint while learner steps remain state-hash
+guarded. Dataset aggregation and a new gate-4 initializer remain open.
+
 ### M7 — plan-conditioned learned executor
 
 Goal: train the fast learned controller to follow the existing slow

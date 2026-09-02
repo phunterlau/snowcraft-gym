@@ -20,6 +20,7 @@ learn = ["torch>=2.7,<3"]
 [project.scripts]
 snowgym-audit-dataset = "snowgym_training.trajectory:main"
 snowgym-export-trajectories = "snowgym_training.export_scripted:main"
+snowgym-export-dagger = "snowgym_training.export_dagger:main"
 snowgym-teacher-baseline = "snowgym_training.baseline:main"
 snowgym-train-bc = "snowgym_training.trainer:main"
 snowgym-evaluate-checkpoint = "snowgym_training.evaluate:main"
