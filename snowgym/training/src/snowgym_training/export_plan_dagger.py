@@ -24,6 +24,7 @@ from .policy import TorchPolicy
 from .trajectory import TrajectoryWriter, audit_dataset, json_digest
 
 PLAN_DAGGER_SPEC_FORMAT = "snowgym.plan-dagger-export.v0"
+PLAN_DAGGER_COUNTERFACTUAL_SPEC_FORMAT = "snowgym.plan-dagger-export.v1"
 
 
 def load_plan_dagger_spec(path: str | Path) -> dict[str, Any]:
@@ -35,8 +36,11 @@ def load_plan_dagger_spec(path: str | Path) -> dict[str, Any]:
     required = {"format", "name", "teacher", "maxTeamUnits", "shardSize", "plans", "splits"}
     if not isinstance(value, dict) or set(value) != required:
         raise ValueError("plan DAgger spec fields are invalid")
-    if value["format"] != PLAN_DAGGER_SPEC_FORMAT:
-        raise ValueError(f"plan DAgger spec format must be {PLAN_DAGGER_SPEC_FORMAT}")
+    if value["format"] not in {PLAN_DAGGER_SPEC_FORMAT, PLAN_DAGGER_COUNTERFACTUAL_SPEC_FORMAT}:
+        raise ValueError(
+            "plan DAgger spec format must be "
+            f"{PLAN_DAGGER_SPEC_FORMAT} or {PLAN_DAGGER_COUNTERFACTUAL_SPEC_FORMAT}"
+        )
     if value["teacher"] != "plan-teacher-action.v0":
         raise ValueError("plan DAgger teacher must be plan-teacher-action.v0")
     if not isinstance(value["name"], str) or not value["name"]:
@@ -61,7 +65,11 @@ def load_plan_dagger_spec(path: str | Path) -> dict[str, Any]:
         if not isinstance(episodes, list) or not episodes:
             raise ValueError(f"plan DAgger split {split} is empty")
         for index, episode in enumerate(episodes):
-            if not isinstance(episode, dict) or set(episode) != {"seed", "scenario", "plan"}:
+            expected_episode = {"seed", "scenario", "plan"} | (
+                {"counterfactualPlan"}
+                if value["format"] == PLAN_DAGGER_COUNTERFACTUAL_SPEC_FORMAT else set()
+            )
+            if not isinstance(episode, dict) or set(episode) != expected_episode:
                 raise ValueError(f"plan DAgger {split}[{index}] fields are invalid")
             seed = episode["seed"]
             if not isinstance(seed, int) or isinstance(seed, bool) or seed < 0 or seed in seen:
@@ -69,6 +77,13 @@ def load_plan_dagger_spec(path: str | Path) -> dict[str, Any]:
             seen.add(seed)
             if not isinstance(episode["scenario"], dict) or episode["plan"] not in plans:
                 raise ValueError(f"plan DAgger {split}[{index}] scenario/plan is invalid")
+            if value["format"] == PLAN_DAGGER_COUNTERFACTUAL_SPEC_FORMAT and (
+                episode["counterfactualPlan"] not in plans
+                or episode["counterfactualPlan"] == episode["plan"]
+            ):
+                raise ValueError(
+                    f"plan DAgger {split}[{index}] counterfactualPlan is invalid"
+                )
     return value
 
 
@@ -100,6 +115,7 @@ def export_plan_dagger_dataset(
     try:
         for episode_index, episode in enumerate(spec["splits"][split]):
             plan_name = episode["plan"]
+            counterfactual_name = episode.get("counterfactualPlan")
             plan_id = f"{plan_name}-{episode['seed']}"
             plan = spec["plans"][plan_name]
             batch_observation, infos = environment.reset(
@@ -140,6 +156,33 @@ def export_plan_dagger_dataset(
                     **clone_tensors({name: values[0] for name, values in plan_tensors.items()}),
                 }
                 learner_action = policy.act(observation_before)
+                transition_extra: dict[str, np.ndarray] = {}
+                if counterfactual_name is not None:
+                    preview_tensors, preview_actions, preview_metadata = environment.preview_plans(
+                        [f"counterfactual-{counterfactual_name}-{episode['seed']}-{decisions}"],
+                        [spec["plans"][counterfactual_name]],
+                    )
+                    if required_string(preview_metadata[0], "stateHash") != pre_hash:
+                        raise ValueError("counterfactual plan preview does not match learner state")
+                    counterfactual_action = decode_action(
+                        preview_actions[0], raw_before, capacity
+                    )
+                    assert_action_round_trip(
+                        preview_actions[0],
+                        encode_action(counterfactual_action, raw_before, capacity),
+                    )
+                    transition_extra = {
+                        "observation__counterfactual_plan_groups": np.asarray(
+                            preview_tensors["plan_groups"][0]
+                        ),
+                        "observation__counterfactual_plan_group_mask": np.asarray(
+                            preview_tensors["plan_group_mask"][0]
+                        ),
+                        **{
+                            f"action__counterfactual_{name}": np.asarray(value)
+                            for name, value in counterfactual_action.items()
+                        },
+                    }
                 batch_observation, rewards, terms, truncs, infos = environment.step(
                     {name: value[None, ...] for name, value in learner_action.items()}
                 )
@@ -150,22 +193,22 @@ def export_plan_dagger_dataset(
                 )
                 if rejected:
                     raise ValueError("learned plan rollout produced a rejected action")
-                writer.add(
-                    transition_tensors(
-                        observation_before,
-                        teacher_action,
-                        reward=float(rewards[0]),
-                        terminated=bool(terms[0]),
-                        truncated=bool(truncs[0]),
-                        seed=int(episode["seed"]),
-                        episode_index=episode_index,
-                        pre_hash=pre_hash,
-                        post_hash=required_string(info, "stateHash"),
-                        next_tick=int(batch_observation["tick"][0, 0]),
-                        accepted=np.ones(capacity, dtype=np.bool_),
-                        reasons=np.zeros(capacity, dtype=np.int8),
-                    )
+                transition = transition_tensors(
+                    observation_before,
+                    teacher_action,
+                    reward=float(rewards[0]),
+                    terminated=bool(terms[0]),
+                    truncated=bool(truncs[0]),
+                    seed=int(episode["seed"]),
+                    episode_index=episode_index,
+                    pre_hash=pre_hash,
+                    post_hash=required_string(info, "stateHash"),
+                    next_tick=int(batch_observation["tick"][0, 0]),
+                    accepted=np.ones(capacity, dtype=np.bool_),
+                    reasons=np.zeros(capacity, dtype=np.int8),
                 )
+                transition.update(transition_extra)
+                writer.add(transition)
                 terminated, truncated = bool(terms[0]), bool(truncs[0])
                 decisions += 1
             episode_records.append(
@@ -174,6 +217,10 @@ def export_plan_dagger_dataset(
                     "seed": episode["seed"],
                     "scenario": episode["scenario"],
                     "planName": plan_name,
+                    **(
+                        {"counterfactualPlanName": counterfactual_name}
+                        if counterfactual_name is not None else {}
+                    ),
                     "planId": plan_id,
                     "plan": plan,
                     "startTransition": start_transition,
@@ -197,6 +244,15 @@ def export_plan_dagger_dataset(
             "rolloutCheckpointDigest": metadata["checkpointDigest"],
             "rolloutCheckpointStateDigest": metadata["stateDigest"],
             "planConditioned": True,
+            **(
+                {
+                    "counterfactualPlanLabels": {
+                        "teacher": "plan-teacher-action.v0",
+                        "pairing": "same-physical-state",
+                    }
+                }
+                if spec["format"] == PLAN_DAGGER_COUNTERFACTUAL_SPEC_FORMAT else {}
+            ),
             "split": split,
             "splitSeeds": {
                 name: [int(episode["seed"]) for episode in episodes]

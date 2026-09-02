@@ -1115,6 +1115,18 @@ read-only intervention seam enables paired later-state labels without resetting
 plan age or corrupting the executed learner trajectory. Dataset export,
 counterfactual training loss, and a disjoint v1 gate remain next.
 
+M7 same-state counterfactual DAgger foundation (2026-09-02):
+`snowgym.plan-dagger-export.v1` requires each rollout plan to name a distinct
+catalog counterfactual. At every truthful learner transition, the collector
+uses read-only plan preview to attach an alternate `[3,38]` tensor and complete
+production teacher action for the identical pre-step physical state. The
+trajectory auditor validates the extra tensors, legal masked actions, numeric
+bounds, and explicit same-state provenance. Behavior cloning can apply a
+bounded `counterfactualLossWeight` to a second hybrid loss after replacing only
+the plan tensor and label; zero or omission preserves all legacy runs. A frozen
+collection schedule, an all-transition paired evaluator, and a v1 residual-
+adapter experiment remain next.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO

@@ -45,7 +45,7 @@ def validate_training_config(value: Any) -> None:
         "loss",
         "evaluationSuite",
     }
-    optional = {"trainable"}
+    optional = {"trainable", "counterfactualLossWeight"}
     if not isinstance(value, dict) or not required <= set(value) or set(value) - required - optional:
         raise ValueError(f"training config must contain {sorted(required)} and optional trainable")
     if value["format"] != TRAINING_CONFIG_FORMAT:
@@ -64,6 +64,13 @@ def validate_training_config(value: Any) -> None:
         raise ValueError("evaluationSuite must be non-empty")
     if value.get("trainable", "all") not in {"all", "plan-target-path", "plan-action-target-path"}:
         raise ValueError("trainable must be all, plan-target-path, or plan-action-target-path")
+    counterfactual_weight = value.get("counterfactualLossWeight", 0)
+    if (
+        not isinstance(counterfactual_weight, int | float)
+        or isinstance(counterfactual_weight, bool)
+        or not 0 <= counterfactual_weight <= 10
+    ):
+        raise ValueError("counterfactualLossWeight must be in [0, 10]")
 
 
 def train_behavior_clone(
@@ -87,6 +94,9 @@ def train_behavior_clone(
     architecture = model_config(config["architecture"])
     if architecture.plan_conditioned and "plan_groups" not in dataset.observation_fields:
         raise ValueError("plan-conditioned training requires an aligned plan dataset")
+    counterfactual_weight = float(config.get("counterfactualLossWeight", 0))
+    if counterfactual_weight > 0 and not dataset.counterfactual_plan_labels:
+        raise ValueError("counterfactual training requires same-state plan labels")
     losses = loss_config(config["loss"])
     model = EntityPolicy(architecture).cpu()
     if resume is not None and initialize is not None:
@@ -151,6 +161,26 @@ def train_behavior_clone(
         observation, action = dataset.batch(indices)
         optimizer.zero_grad(set_to_none=True)
         components = behavior_clone_loss(model(observation), action, observation, losses)
+        if counterfactual_weight > 0:
+            counterfactual_observation = {
+                **observation,
+                "plan_groups": observation["counterfactual_plan_groups"],
+                "plan_group_mask": observation["counterfactual_plan_group_mask"],
+            }
+            counterfactual_action = {
+                field: action[f"counterfactual_{field}"]
+                for field in ("action_type", "target", "power")
+            }
+            counterfactual = behavior_clone_loss(
+                model(counterfactual_observation),
+                counterfactual_action,
+                counterfactual_observation,
+                losses,
+            )
+            components["total"] = (
+                components["total"] + counterfactual_weight * counterfactual["total"]
+            )
+            components["counterfactual"] = counterfactual["total"]
         if not torch.isfinite(components["total"]):
             raise ValueError(f"non-finite training loss at step {step}")
         components["total"].backward()

@@ -200,3 +200,82 @@ def test_plan_dagger_labels_learner_visited_states_headlessly(tmp_path: Path) ->
         initial_state["model"]["action_head.weight"]
     )
     assert bool(torch.count_nonzero(adapted_state["model"]["plan_action_adapter.2.weight"]))
+
+
+def test_plan_dagger_v1_retains_same_state_counterfactual_labels(tmp_path: Path) -> None:
+    direct = json.loads(
+        (ROOT / "training" / "src" / "snowgym_training" / "configs"
+         / "plan_closed_loop_v0.json").read_text(encoding="utf-8")
+    )["cases"][0]
+    hold = json.loads(
+        (ROOT / "training" / "src" / "snowgym_training" / "configs"
+         / "plan_closed_loop_behaviors_v1.json").read_text(encoding="utf-8")
+    )["cases"][0]
+    spec = {
+        "format": "snowgym.plan-dagger-export.v1",
+        "name": "plan-counterfactual-smoke",
+        "teacher": "plan-teacher-action.v0",
+        "maxTeamUnits": 10,
+        "shardSize": 8,
+        "plans": {"direct": direct["plan"], "hold": hold["plan"]},
+        "splits": {
+            name: [{
+                "seed": seed,
+                "scenario": direct["scenario"],
+                "plan": "direct" if name != "validation" else "hold",
+                "counterfactualPlan": "hold" if name != "validation" else "direct",
+            }]
+            for name, seed in (("train", 12101), ("validation", 12102), ("evaluation", 12103))
+        },
+    }
+    spec_path = tmp_path / "counterfactual-spec.json"
+    spec_path.write_text(json.dumps(spec), encoding="utf-8")
+    output = tmp_path / "counterfactual"
+    manifest = export_plan_dagger_dataset(
+        output=output,
+        checkpoint=CHECKPOINT,
+        split="train",
+        spec_path=spec_path,
+        max_decisions=2,
+    )
+    assert manifest["counterfactualPlanLabels"] == {
+        "teacher": "plan-teacher-action.v0",
+        "pairing": "same-physical-state",
+    }
+    assert manifest["episodes"][0]["counterfactualPlanName"] == "hold"
+    assert audit_dataset(output)["datasetDigest"] == manifest["datasetDigest"]
+    dataset = TrajectoryDataset(output)
+    assert dataset.counterfactual_plan_labels is True
+    observation, action = dataset.batch(np.asarray([0, 1]))
+    assert observation["counterfactual_plan_groups"].shape == (2, 3, 38)
+    assert action["counterfactual_action_type"].shape == (2, 10)
+    assert not np.array_equal(
+        dataset.arrays["observation__plan_groups"][0],
+        dataset.arrays["observation__counterfactual_plan_groups"][0],
+    )
+
+    initial_metadata, _ = load_checkpoint(CHECKPOINT)
+    config = {
+        "format": "snowgym.bc-training-config.v0",
+        "name": "plan-counterfactual-transfer-smoke",
+        "seed": 44101,
+        "steps": 1,
+        "batchSize": 2,
+        "learningRate": 0.001,
+        "architecture": {
+            **initial_metadata["architecture"],
+            "plan_action_adapter": True,
+        },
+        "loss": initial_metadata["loss"],
+        "evaluationSuite": "plan-counterfactual-transfer-smoke",
+        "trainable": "plan-action-target-path",
+        "counterfactualLossWeight": 1.0,
+    }
+    trained = train_behavior_clone(
+        dataset_path=output,
+        output=tmp_path / "counterfactual-trained",
+        config=config,
+        initialize=CHECKPOINT,
+        git_commit="test",
+    )
+    assert trained["trainingMetrics"]["final"]["counterfactual"] >= 0

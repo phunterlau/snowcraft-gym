@@ -26,6 +26,12 @@ OBSERVATION_FIELDS = (
 )
 ACTION_FIELDS = ("action_type", "target", "power")
 PLAN_OBSERVATION_FIELDS = ("plan_groups", "plan_group_mask")
+COUNTERFACTUAL_OBSERVATION_FIELDS = (
+    "counterfactual_plan_groups", "counterfactual_plan_group_mask"
+)
+COUNTERFACTUAL_ACTION_FIELDS = (
+    "counterfactual_action_type", "counterfactual_target", "counterfactual_power"
+)
 
 
 class TrajectoryDataset:
@@ -38,9 +44,16 @@ class TrajectoryDataset:
         self.observation_fields = OBSERVATION_FIELDS + (
             PLAN_OBSERVATION_FIELDS if self.manifest.get("planConditioned") is True else ()
         )
+        self.counterfactual_plan_labels = self.manifest.get("counterfactualPlanLabels") is not None
+        self.loaded_observation_fields = self.observation_fields + (
+            COUNTERFACTUAL_OBSERVATION_FIELDS if self.counterfactual_plan_labels else ()
+        )
+        self.loaded_action_fields = ACTION_FIELDS + (
+            COUNTERFACTUAL_ACTION_FIELDS if self.counterfactual_plan_labels else ()
+        )
         chunks: dict[str, list[np.ndarray]] = {
-            **{f"observation__{name}": [] for name in self.observation_fields},
-            **{f"action__{name}": [] for name in ACTION_FIELDS},
+            **{f"observation__{name}": [] for name in self.loaded_observation_fields},
+            **{f"action__{name}": [] for name in self.loaded_action_fields},
         }
         for shard in self.manifest["shards"]:
             with np.load(self.path / shard["path"], allow_pickle=False) as archive:
@@ -60,11 +73,11 @@ class TrajectoryDataset:
     ) -> tuple[dict[str, torch.Tensor], dict[str, torch.Tensor]]:
         observation = {
             name: torch.from_numpy(self.arrays[f"observation__{name}"][indices])
-            for name in self.observation_fields
+            for name in self.loaded_observation_fields
         }
         action = {
             name: torch.from_numpy(self.arrays[f"action__{name}"][indices])
-            for name in ACTION_FIELDS
+            for name in self.loaded_action_fields
         }
         return observation, action
 

@@ -32,6 +32,13 @@ REQUIRED_ARRAYS = {
     "tick",
     "truncated",
 }
+COUNTERFACTUAL_ARRAYS = {
+    "action__counterfactual_action_type",
+    "action__counterfactual_power",
+    "action__counterfactual_target",
+    "observation__counterfactual_plan_group_mask",
+    "observation__counterfactual_plan_groups",
+}
 
 
 def canonical_json(value: Any) -> str:
@@ -249,12 +256,27 @@ def audit_dataset(path: str | Path) -> dict[str, Any]:
         missing = REQUIRED_ARRAYS - set(arrays)
         if missing:
             raise ValueError(f"shard is missing arrays: {sorted(missing)}")
+        counterfactual = manifest.get("counterfactualPlanLabels")
+        if counterfactual is not None:
+            if counterfactual != {
+                "teacher": "plan-teacher-action.v0",
+                "pairing": "same-physical-state",
+            }:
+                raise ValueError("dataset counterfactual plan-label provenance is invalid")
+            missing_counterfactual = COUNTERFACTUAL_ARRAYS - set(arrays)
+            if missing_counterfactual:
+                raise ValueError(
+                    "shard is missing counterfactual arrays: "
+                    f"{sorted(missing_counterfactual)}"
+                )
         if tensor_digest(arrays) != shard.get("tensorDigest"):
             raise ValueError(f"tensor digest mismatch: {shard['path']}")
         lengths = {array.shape[0] for array in arrays.values()}
         if len(lengths) != 1 or lengths != {shard.get("transitions")}:
             raise ValueError(f"inconsistent transition dimension: {shard['path']}")
         _audit_actions(arrays, shard["path"])
+        if counterfactual is not None:
+            _audit_counterfactual_actions(arrays, shard["path"])
         _audit_continuity(arrays, shard["path"], episode_last)
         for index, seed in zip(arrays["episode_index"], arrays["seed"], strict=True):
             episode_index = int(index)
@@ -309,6 +331,23 @@ def _audit_actions(arrays: dict[str, np.ndarray], shard: str) -> None:
     for key in ("pre_state_hash", "post_state_hash"):
         if not all(STATE_HASH_PATTERN.fullmatch(str(value)) for value in arrays[key]):
             raise ValueError(f"invalid {key}: {shard}")
+
+
+def _audit_counterfactual_actions(arrays: dict[str, np.ndarray], shard: str) -> None:
+    remapped = dict(arrays)
+    for field in ("action_type", "target", "power"):
+        remapped[f"action__{field}"] = arrays[f"action__counterfactual_{field}"]
+    remapped["teacher_accepted"] = np.ones_like(arrays["teacher_accepted"])
+    remapped["teacher_reason"] = np.zeros_like(arrays["teacher_reason"])
+    _audit_actions(remapped, f"{shard}:counterfactual")
+    groups = arrays["observation__counterfactual_plan_groups"]
+    mask = arrays["observation__counterfactual_plan_group_mask"]
+    if groups.shape[1:] != (3, 38) or mask.shape[1:] != (3,):
+        raise ValueError(f"counterfactual plan tensor shape mismatch: {shard}")
+    if not np.all(np.isfinite(groups)) or np.any((groups < -1) | (groups > 1)):
+        raise ValueError(f"counterfactual plan tensor is outside [-1, 1]: {shard}")
+    if np.any((mask != 0) & (mask != 1)):
+        raise ValueError(f"counterfactual plan mask is invalid: {shard}")
 
 
 def _audit_continuity(

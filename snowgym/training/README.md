@@ -423,6 +423,14 @@ label alternate plans on identical later learner-visited physical states. Plan
 preview returns a temporary plan tensor plus the production teacher action
 without changing the active plan or advancing the simulator.
 
+Use a `snowgym.plan-dagger-export.v1` spec to retain that intervention as
+training data. Every split episode adds `counterfactualPlan`, naming a distinct
+entry in the same plan catalog. The exported transition still records only the
+learner action actually executed, while auxiliary counterfactual plan/action
+tensors are bound to the identical pre-step state. Set a frozen training
+config's `counterfactualLossWeight` in `[0,10]` to apply the same hybrid BC loss
+to the alternate pair; omitting it keeps the legacy objective exactly.
+
 ## PPO foundation
 
 Run a short end-to-end infrastructure smoke against the first frozen curriculum
