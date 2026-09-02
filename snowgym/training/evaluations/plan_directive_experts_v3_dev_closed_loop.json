@@ -1,0 +1,469 @@
+{
+  "ablationResultDigest": "sha256:7583be365ffddcb88d40b4bfb3d3c00dca775b4f760fbe5f5453fff44270011b",
+  "comparisons": [
+    {
+      "caseId": "direct-focus",
+      "finalGroupPositionDistance": 0.19617656670851513,
+      "firstTargetMeanAbsoluteDelta": 0.2000370787922293,
+      "objectiveProgressDelta": 0.063727468252182,
+      "roleComparisons": {
+        "main": {
+          "displacementDelta": 0.11429596102622552,
+          "finalPositionDistance": 0.19617656670851513,
+          "objectiveProgressDelta": 0.063727468252182
+        }
+      }
+    },
+    {
+      "caseId": "left-flank-distributed",
+      "finalGroupPositionDistance": 0.3937547761832444,
+      "firstTargetMeanAbsoluteDelta": 0.18893759627826512,
+      "objectiveProgressDelta": 0.16670972108840942,
+      "roleComparisons": {
+        "main": {
+          "displacementDelta": 0.3931075952477666,
+          "finalPositionDistance": 0.3937547761832444,
+          "objectiveProgressDelta": 0.16670972108840942
+        }
+      }
+    }
+  ],
+  "evaluationDigest": "sha256:f929562e6c785b05dafeaaa95edf0fdbcf8d1f65b3c9fa819c204cd711aefd38",
+  "format": "snowgym.plan-closed-loop-evaluation.v0",
+  "policyCheckpoints": {
+    "noPlan": {
+      "checkpointDigest": "sha256:ee41547b09f5434503464f48200a4b157d4787f6ee44f4f0a99353910ccb0865",
+      "stateDigest": "sha256:fab8fbc328dedc6246a5e24e028dfa8ff6c514e43c216caddace2d1135b719e2"
+    },
+    "planConditioned": {
+      "checkpointDigest": "sha256:c0b66d6fb319996fb274011f4921a901ef0a1cdc4731e8503f847d1c1af4a8fb",
+      "stateDigest": "sha256:c36f8e9f6b9f8f32d09665914044755b40df1dac67df9c0b9a2993e39e805544"
+    }
+  },
+  "results": [
+    {
+      "blueAlive": 2,
+      "canonicalReturn": 0.0,
+      "caseId": "direct-focus",
+      "decisionLimited": false,
+      "decisions": 150,
+      "finalMeanGroupPosition": [
+        -0.49144279956817627,
+        0.06511499732732773
+      ],
+      "finalObjectiveDistance": 0.32464852929115295,
+      "firstActionTarget": [
+        [
+          0.11219187825918198,
+          -0.21557188034057617
+        ],
+        [
+          0.12160546332597733,
+          -0.1964188665151596
+        ],
+        [
+          0.14253419637680054,
+          -0.19565820693969727
+        ],
+        [
+          0.13282929360866547,
+          -0.18259157240390778
+        ],
+        [
+          0.08608695864677429,
+          -0.1390378177165985
+        ],
+        [
+          0.013974896632134914,
+          -0.06320497393608093
+        ],
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "initialObjectiveDistance": 1.78125,
+      "meanObjectiveDistance": 0.5843067368865014,
+      "objectiveProgress": 1.456601470708847,
+      "policy": "noPlan",
+      "redAlive": 5,
+      "rejectedActions": 0,
+      "roleMetrics": {
+        "main": {
+          "displacementFromStart": 0.40445814618886167,
+          "finalObjectiveDistance": 0.32464852929115295,
+          "finalPosition": [
+            -0.49144279956817627,
+            0.06511499732732773
+          ],
+          "initialObjectiveDistance": 1.78125,
+          "initialPosition": [
+            -0.890625,
+            0.0
+          ],
+          "meanObjectiveDistance": 0.5843067368865014,
+          "objectiveProgress": 1.456601470708847
+        }
+      },
+      "seed": 10201,
+      "terminated": false,
+      "truncated": true,
+      "winner": null
+    },
+    {
+      "blueAlive": 4,
+      "canonicalReturn": 0.0,
+      "caseId": "direct-focus",
+      "decisionLimited": false,
+      "decisions": 150,
+      "finalMeanGroupPosition": [
+        -0.3810277581214905,
+        -0.09703852236270905
+      ],
+      "finalObjectiveDistance": 0.26092106103897095,
+      "firstActionTarget": [
+        [
+          0.6884142160415649,
+          -0.17304004728794098
+        ],
+        [
+          0.6628012657165527,
+          -0.1523561030626297
+        ],
+        [
+          0.6697192788124084,
+          -0.10644955933094025
+        ],
+        [
+          0.6765492558479309,
+          -0.07715745270252228
+        ],
+        [
+          0.6842444539070129,
+          -0.01740364357829094
+        ],
+        [
+          0.6972137689590454,
+          0.0649455115199089
+        ],
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "initialObjectiveDistance": 1.78125,
+      "meanObjectiveDistance": 0.6013684477408727,
+      "objectiveProgress": 1.520328938961029,
+      "policy": "planConditioned",
+      "redAlive": 3,
+      "rejectedActions": 0,
+      "roleMetrics": {
+        "main": {
+          "displacementFromStart": 0.5187541072150872,
+          "finalObjectiveDistance": 0.26092106103897095,
+          "finalPosition": [
+            -0.3810277581214905,
+            -0.09703852236270905
+          ],
+          "initialObjectiveDistance": 1.78125,
+          "initialPosition": [
+            -0.890625,
+            0.0
+          ],
+          "meanObjectiveDistance": 0.6013684477408727,
+          "objectiveProgress": 1.520328938961029
+        }
+      },
+      "seed": 10201,
+      "terminated": false,
+      "truncated": true,
+      "winner": null
+    },
+    {
+      "blueAlive": 2,
+      "canonicalReturn": 0.0,
+      "caseId": "left-flank-distributed",
+      "decisionLimited": false,
+      "decisions": 150,
+      "finalMeanGroupPosition": [
+        -0.49144279956817627,
+        0.06511499732732773
+      ],
+      "finalObjectiveDistance": 0.32464852929115295,
+      "firstActionTarget": [
+        [
+          0.11219187825918198,
+          -0.21557188034057617
+        ],
+        [
+          0.12160546332597733,
+          -0.1964188665151596
+        ],
+        [
+          0.14253419637680054,
+          -0.19565820693969727
+        ],
+        [
+          0.13282929360866547,
+          -0.18259157240390778
+        ],
+        [
+          0.08608695864677429,
+          -0.1390378177165985
+        ],
+        [
+          0.013974896632134914,
+          -0.06320497393608093
+        ],
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "initialObjectiveDistance": 1.78125,
+      "meanObjectiveDistance": 0.5843067368865014,
+      "objectiveProgress": 1.456601470708847,
+      "policy": "noPlan",
+      "redAlive": 5,
+      "rejectedActions": 0,
+      "roleMetrics": {
+        "main": {
+          "displacementFromStart": 0.40445814618886167,
+          "finalObjectiveDistance": 0.32464852929115295,
+          "finalPosition": [
+            -0.49144279956817627,
+            0.06511499732732773
+          ],
+          "initialObjectiveDistance": 1.78125,
+          "initialPosition": [
+            -0.890625,
+            0.0
+          ],
+          "meanObjectiveDistance": 0.5843067368865014,
+          "objectiveProgress": 1.456601470708847
+        }
+      },
+      "seed": 10201,
+      "terminated": false,
+      "truncated": true,
+      "winner": null
+    },
+    {
+      "blueAlive": 3,
+      "canonicalReturn": 0.0,
+      "caseId": "left-flank-distributed",
+      "decisionLimited": false,
+      "decisions": 150,
+      "finalMeanGroupPosition": [
+        -0.09898370504379272,
+        0.09703180938959122
+      ],
+      "finalObjectiveDistance": 0.15793880820274353,
+      "firstActionTarget": [
+        [
+          0.7461250424385071,
+          -0.25333625078201294
+        ],
+        [
+          0.7201686501502991,
+          -0.23115892708301544
+        ],
+        [
+          0.6957623958587646,
+          -0.20974205434322357
+        ],
+        [
+          0.6910485625267029,
+          -0.19975069165229797
+        ],
+        [
+          0.6927738189697266,
+          -0.16437850892543793
+        ],
+        [
+          0.6792534589767456,
+          -0.09695956856012344
+        ],
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "initialObjectiveDistance": 1.78125,
+      "meanObjectiveDistance": 0.5612294210493565,
+      "objectiveProgress": 1.6233111917972565,
+      "policy": "planConditioned",
+      "redAlive": 6,
+      "rejectedActions": 0,
+      "roleMetrics": {
+        "main": {
+          "displacementFromStart": 0.7975657414366283,
+          "finalObjectiveDistance": 0.15793880820274353,
+          "finalPosition": [
+            -0.09898370504379272,
+            0.09703180938959122
+          ],
+          "initialObjectiveDistance": 1.78125,
+          "initialPosition": [
+            -0.890625,
+            0.0
+          ],
+          "meanObjectiveDistance": 0.5612294210493565,
+          "objectiveProgress": 1.6233111917972565
+        }
+      },
+      "seed": 10201,
+      "terminated": false,
+      "truncated": true,
+      "winner": null
+    }
+  ],
+  "suite": {
+    "cases": [
+      {
+        "id": "direct-focus",
+        "maxDecisions": 150,
+        "plan": {
+          "groups": [
+            {
+              "allocationWeight": 1,
+              "order": {
+                "approach": "direct",
+                "engagement": {
+                  "cohesion": "normal",
+                  "fire": "focus",
+                  "posture": "balanced",
+                  "preferredRange": "medium"
+                },
+                "mission": "engage",
+                "objective": {
+                  "kind": "enemy_cluster",
+                  "select": "nearest"
+                }
+              },
+              "role": "main",
+              "selection": "balanced"
+            }
+          ],
+          "intentSummary": "Concentrate the whole team on the nearest enemy cluster by a direct approach.",
+          "schemaVersion": "snowgym.command-plan.v0"
+        },
+        "planId": "closed-loop-direct-focus",
+        "scenario": {
+          "blueUnits": 6,
+          "map": "arena6.json",
+          "maxTicks": 900,
+          "redDifficulty": "easy",
+          "redUnits": 6
+        },
+        "seed": 10201
+      },
+      {
+        "id": "left-flank-distributed",
+        "maxDecisions": 150,
+        "plan": {
+          "groups": [
+            {
+              "allocationWeight": 1,
+              "order": {
+                "approach": "left_flank",
+                "engagement": {
+                  "cohesion": "normal",
+                  "fire": "distributed",
+                  "posture": "balanced",
+                  "preferredRange": "medium"
+                },
+                "mission": "engage",
+                "objective": {
+                  "kind": "enemy_cluster",
+                  "select": "nearest"
+                }
+              },
+              "role": "main",
+              "selection": "balanced"
+            }
+          ],
+          "intentSummary": "Take the whole team around the left flank and distribute fire across the nearest cluster.",
+          "schemaVersion": "snowgym.command-plan.v0"
+        },
+        "planId": "closed-loop-left-flank",
+        "scenario": {
+          "blueUnits": 6,
+          "map": "arena6.json",
+          "maxTicks": 900,
+          "redDifficulty": "easy",
+          "redUnits": 6
+        },
+        "seed": 10201
+      }
+    ],
+    "format": "snowgym.plan-closed-loop-suite.v0",
+    "maxTeamUnits": 10,
+    "name": "plan-target-only-6v6-approach-v0"
+  },
+  "suiteDigest": "sha256:6222a96c3c2fd52f08c902d2357483ccbe24e18220e1b384fc913860b45b6fa6",
+  "summary": {
+    "noPlan": {
+      "blueWins": 0,
+      "episodes": 2,
+      "meanObjectiveProgress": 1.456601470708847,
+      "rejectedActions": 0,
+      "winRate": 0.0
+    },
+    "planConditioned": {
+      "blueWins": 0,
+      "episodes": 2,
+      "meanObjectiveProgress": 1.5718200653791428,
+      "rejectedActions": 0,
+      "winRate": 0.0
+    }
+  }
+}

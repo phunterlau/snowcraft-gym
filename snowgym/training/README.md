@@ -539,6 +539,11 @@ exactly one from the directive mission one-hot. This isolates mission-specific
 corrections while preserving the frozen physical actor and qualified initial
 outputs.
 
+The directive-experts-v3 checkpoint improves offline fit but regresses the
+closed-loop hold, withdraw, and support missions. It is retained as negative
+evidence. Continue M7 with plan-conditioned closed-loop RL fine-tuning from a
+retained BC initializer; do not open the sealed evaluation split yet.
+
 ## PPO foundation
 
 Run a short end-to-end infrastructure smoke against the first frozen curriculum

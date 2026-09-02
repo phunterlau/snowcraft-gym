@@ -1,0 +1,95 @@
+{
+  "architecture": {
+    "action_conditioned_targets": true,
+    "actor_hidden": 64,
+    "entity_embedding": 24,
+    "entity_hidden": 32,
+    "plan_action_adapter": true,
+    "plan_conditioned": true,
+    "plan_directive_experts": true,
+    "plan_role_conditioned": true,
+    "plan_target_only": true,
+    "plan_unit_directive_conditioned": true,
+    "separate_target_actor": true
+  },
+  "checkpointDigest": "sha256:c0b66d6fb319996fb274011f4921a901ef0a1cdc4731e8503f847d1c1af4a8fb",
+  "datasetManifestHash": "sha256:5bf6a6a2a7d2fac2a559761fd00e95969c933a180f6e1e74e01b0f576de8cc3e",
+  "evaluationSuite": "plan-directive-experts-v3-development",
+  "format": "snowgym.checkpoint.v0",
+  "gitCommit": "8a8d01f07941a3fe6f00dd325386f41f4bd6a199",
+  "initialization": {
+    "checkpointDigest": "sha256:4119b9a3f8c0d3df69b704a8f3f813a1b38ab11ca56faffb4c4cebc2cb235133",
+    "stateDigest": "sha256:34de1e9e5882b0c764aa8dd6596ed6ba87e395d7eb9e455036fc10a721d8c50d"
+  },
+  "loss": {
+    "action_weight": 1.0,
+    "power_weight": 0.5,
+    "target_weight": 5.0,
+    "throw_action_weight": 5.0
+  },
+  "optimizer": {
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "epsilon": 1e-08,
+    "learningRate": 0.0003,
+    "name": "Adam",
+    "weightDecay": 0.0
+  },
+  "stateDigest": "sha256:c36f8e9f6b9f8f32d09665914044755b40df1dac67df9c0b9a2993e39e805544",
+  "step": 2000,
+  "trainable": "plan-action-target-path",
+  "trainingConfig": {
+    "architecture": {
+      "action_conditioned_targets": true,
+      "actor_hidden": 64,
+      "entity_embedding": 24,
+      "entity_hidden": 32,
+      "plan_action_adapter": true,
+      "plan_conditioned": true,
+      "plan_directive_experts": true,
+      "plan_role_conditioned": true,
+      "plan_target_only": true,
+      "plan_unit_directive_conditioned": true,
+      "separate_target_actor": true
+    },
+    "batchSize": 64,
+    "counterfactualChangedActionWeight": 1.0,
+    "counterfactualLossWeight": 1.0,
+    "evaluationSuite": "plan-directive-experts-v3-development",
+    "format": "snowgym.bc-training-config.v0",
+    "learningRate": 0.0003,
+    "loss": {
+      "action_weight": 1.0,
+      "power_weight": 0.5,
+      "target_weight": 5.0,
+      "throw_action_weight": 5.0
+    },
+    "name": "plan-directive-experts-6v6-v3-dev",
+    "roleBalancedLoss": true,
+    "sampling": "plan-mission-uniform",
+    "seed": 89001,
+    "steps": 2000,
+    "trainable": "plan-action-target-path"
+  },
+  "trainingMetrics": {
+    "final": {
+      "action": 0.20496515929698944,
+      "counterfactual": 0.2742084264755249,
+      "counterfactualChangedAction": 0.16872721910476685,
+      "power": 0.023581191897392273,
+      "target": 0.0043016658164560795,
+      "total": 0.6811997294425964
+    },
+    "firstLoss": 15.505247116088867,
+    "startStep": 0
+  },
+  "trainingSeed": 89001,
+  "versions": {
+    "apiVersion": "snowgym.v0",
+    "simulationVersion": "snowgym.sim.v1",
+    "stateHashVersion": "snowgym.state.v1",
+    "upstreamBaseCommit": "7d9fca5"
+  }
+}

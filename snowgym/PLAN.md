@@ -1391,6 +1391,15 @@ multi-group-v2. Its sole architecture change is
 `plan_directive_experts: true`. Development may inspect validation and existing
 closed-loop suites; evaluation remains sealed.
 
+M7 directive-experts-v3 outcome (2026-09-02): checkpoint `c0b66d6f...`
+improves validation primary accuracy to `0.875478` and changed-pair accuracy to
+`0.353362`, but closed loop still fails: direct/flank retain four/three blue,
+and hold, withdraw, and support all lose. The expert checkpoint is retained,
+not promoted, and evaluation remains sealed. Supervised action imitation has
+now failed across shared, role-aware, full-directive, balanced, multigroup, and
+mission-expert variants; the next M7 step is closed-loop plan-conditioned RL
+fine-tuning from a retained BC initializer, not another unguided BC variant.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO
