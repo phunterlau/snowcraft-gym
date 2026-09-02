@@ -157,6 +157,21 @@ BALANCED_DIRECTIVE_BEHAVIORS = (
     ROOT / "training" / "evaluations"
     / "plan_unit_directive_balanced_v1_dev_behaviors.json"
 )
+MULTIGROUP_DIRECTIVE_CHECKPOINT = (
+    ROOT / "training" / "runs" / "plan_multigroup_directive_v2_dev"
+)
+MULTIGROUP_DIRECTIVE_VALIDATION_EVALUATION = (
+    ROOT / "training" / "evaluations"
+    / "plan_multigroup_directive_v2_dev_validation.json"
+)
+MULTIGROUP_DIRECTIVE_CLOSED_LOOP = (
+    ROOT / "training" / "evaluations"
+    / "plan_multigroup_directive_v2_dev_closed_loop.json"
+)
+MULTIGROUP_DIRECTIVE_BEHAVIORS = (
+    ROOT / "training" / "evaluations"
+    / "plan_multigroup_directive_v2_dev_behaviors.json"
+)
 
 
 def test_frozen_plan_dagger_spec_balances_missions_and_disjoins_seeds() -> None:
@@ -546,6 +561,42 @@ def test_balanced_unit_directive_v1_retains_measured_tradeoff() -> None:
     assert missions["withdraw-backfield"]["blueAlive"] == 5
     assert missions["withdraw-backfield"]["redAlive"] == 1
     assert missions["main-with-reserve-support"]["redAlive"] == 6
+
+
+def test_multigroup_directive_v2_retains_failed_development_outcome() -> None:
+    paired = audit_plan_counterfactual_evaluation(
+        MULTIGROUP_DIRECTIVE_VALIDATION_EVALUATION,
+        MULTIGROUP_DIRECTIVE_CHECKPOINT,
+        PLAN_MULTIGROUP_VALIDATION,
+    )
+    assert paired["metrics"]["changedTeacherPairAccuracy"] < 0.24
+    closed_loop = audit_closed_loop(
+        MULTIGROUP_DIRECTIVE_CLOSED_LOOP,
+        ROOT / "training" / "runs" / "plan_bc_ablation_qual_v1",
+        ROOT / "training" / "src" / "snowgym_training" / "configs"
+        / "plan_closed_loop_v0.json",
+        MULTIGROUP_DIRECTIVE_CHECKPOINT,
+    )
+    behaviors = audit_closed_loop(
+        MULTIGROUP_DIRECTIVE_BEHAVIORS,
+        ROOT / "training" / "runs" / "plan_bc_ablation_qual_v1",
+        PLAN_SUITE,
+        MULTIGROUP_DIRECTIVE_CHECKPOINT,
+    )
+    approaches = {
+        item["caseId"]: item for item in closed_loop["results"]
+        if item["policy"] == "planConditioned"
+    }
+    assert approaches["direct-focus"]["blueAlive"] == 4
+    assert approaches["left-flank-distributed"]["blueAlive"] == 2
+    missions = {
+        item["caseId"]: item for item in behaviors["results"]
+        if item["policy"] == "planConditioned"
+    }
+    assert missions["withdraw-backfield"]["decisions"] == 600
+    assert missions["withdraw-backfield"]["blueAlive"] == 1
+    assert missions["withdraw-backfield"]["redAlive"] == 1
+    assert missions["main-with-reserve-support"]["redAlive"] == 5
 
 
 def test_plan_dagger_labels_learner_visited_states_headlessly(tmp_path: Path) -> None:

@@ -1,0 +1,23 @@
+{
+  "checkpointDigest": "sha256:7f570c62400d830ccd8740a456ee185f84e6bbe56c86001b7c6446281deb98d3",
+  "checkpointStateDigest": "sha256:89659bed310c4ea519ed199269c9dc603b3ce4bddc528e2382ab7cf38b560bb1",
+  "datasetDigest": "sha256:ed8dcedaf21eb9e2225cf1d142636c17c9c100a297f16e08108a46e84c01134e",
+  "evaluationDigest": "sha256:275553f1d5c2bf1bd6391153bcdc63e9a9be80326777e29069bf3254f3fb17a2",
+  "format": "snowgym.plan-counterfactual-evaluation.v0",
+  "metrics": {
+    "changedTeacherPairAccuracy": 0.2374821173104435,
+    "changedTeacherPredictionRecall": 0.2732474964234621,
+    "counterfactualActionAccuracy": 0.8278414607048035,
+    "counterfactualActionNll": 0.3475460410118103,
+    "counterfactualTargetMse": 0.007855921052396297,
+    "predictedActionChangeRate": 0.14840019102196753,
+    "predictionTargetMeanAbsoluteDelta": 0.12945066392421722,
+    "presentUnitDecisions": 8376,
+    "primaryActionAccuracy": 0.839780330657959,
+    "primaryActionNll": 0.4408643841743469,
+    "primaryTargetMse": 0.005483811721205711,
+    "teacherActionChangeRate": 0.08345272206303725,
+    "teacherChangedUnitDecisions": 699
+  },
+  "transitions": 1396
+}

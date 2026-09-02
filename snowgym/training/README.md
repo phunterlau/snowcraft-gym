@@ -525,6 +525,13 @@ in both primary and counterfactual plans. The `157xx` evaluation split remains
 uncollected. Some episodes terminate before every counterfactual can be labeled
 after attrition; those bounds are explicit in each manifest.
 
+The v3 balanced checkpoint under `runs/plan_multigroup_directive_v2_dev`
+improves support only enough to remove one red and retains four/two blue in
+direct/flank; withdraw reaches 600 at 1–1. Its changed-pair accuracy is only
+`0.237482`. This falsifies data coverage alone as the remaining fix. The next
+model revision should isolate incompatible corrections with directive-gated
+residual experts, while leaving the qualified physical actor frozen.
+
 ## PPO foundation
 
 Run a short end-to-end infrastructure smoke against the first frozen curriculum

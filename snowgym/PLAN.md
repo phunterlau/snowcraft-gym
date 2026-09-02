@@ -1363,6 +1363,16 @@ optimizer, loss, sampling, and role-balancing setting from balanced v1 fixed.
 Only the dataset changes to the immutable v3 train/validation corpus. Existing
 closed-loop suites may be inspected; the v3 evaluation split remains sealed.
 
+M7 multi-group-directive-v2 development outcome (2026-09-02): the frozen run
+produced checkpoint `7f570c62...`. Validation primary/counterfactual accuracy
+was `0.839780`/`0.827841`, but changed-teacher recall/pair accuracy fell to
+`0.273247`/`0.237482`. Direct/flank retained four/two blue; withdraw reached
+600 decisions at 1–1; support killed one red but still lost with no blue alive.
+All actions were accepted. The checkpoint is retained but not promoted and the
+v3 evaluation split remains unopened. Since explicit roles and balanced
+multi-group data still trade one mission against another, the next architecture
+should gate separate residual experts by the resolved unit directive.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO

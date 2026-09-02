@@ -1,0 +1,93 @@
+{
+  "architecture": {
+    "action_conditioned_targets": true,
+    "actor_hidden": 64,
+    "entity_embedding": 24,
+    "entity_hidden": 32,
+    "plan_action_adapter": true,
+    "plan_conditioned": true,
+    "plan_role_conditioned": true,
+    "plan_target_only": true,
+    "plan_unit_directive_conditioned": true,
+    "separate_target_actor": true
+  },
+  "checkpointDigest": "sha256:7f570c62400d830ccd8740a456ee185f84e6bbe56c86001b7c6446281deb98d3",
+  "datasetManifestHash": "sha256:5bf6a6a2a7d2fac2a559761fd00e95969c933a180f6e1e74e01b0f576de8cc3e",
+  "evaluationSuite": "plan-multigroup-directive-v2-development",
+  "format": "snowgym.checkpoint.v0",
+  "gitCommit": "ad2379c7cae69bb6b11e440b06f493faecb6194f",
+  "initialization": {
+    "checkpointDigest": "sha256:4119b9a3f8c0d3df69b704a8f3f813a1b38ab11ca56faffb4c4cebc2cb235133",
+    "stateDigest": "sha256:34de1e9e5882b0c764aa8dd6596ed6ba87e395d7eb9e455036fc10a721d8c50d"
+  },
+  "loss": {
+    "action_weight": 1.0,
+    "power_weight": 0.5,
+    "target_weight": 5.0,
+    "throw_action_weight": 5.0
+  },
+  "optimizer": {
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "epsilon": 1e-08,
+    "learningRate": 0.0003,
+    "name": "Adam",
+    "weightDecay": 0.0
+  },
+  "stateDigest": "sha256:89659bed310c4ea519ed199269c9dc603b3ce4bddc528e2382ab7cf38b560bb1",
+  "step": 2000,
+  "trainable": "plan-action-target-path",
+  "trainingConfig": {
+    "architecture": {
+      "action_conditioned_targets": true,
+      "actor_hidden": 64,
+      "entity_embedding": 24,
+      "entity_hidden": 32,
+      "plan_action_adapter": true,
+      "plan_conditioned": true,
+      "plan_role_conditioned": true,
+      "plan_target_only": true,
+      "plan_unit_directive_conditioned": true,
+      "separate_target_actor": true
+    },
+    "batchSize": 64,
+    "counterfactualChangedActionWeight": 1.0,
+    "counterfactualLossWeight": 1.0,
+    "evaluationSuite": "plan-multigroup-directive-v2-development",
+    "format": "snowgym.bc-training-config.v0",
+    "learningRate": 0.0003,
+    "loss": {
+      "action_weight": 1.0,
+      "power_weight": 0.5,
+      "target_weight": 5.0,
+      "throw_action_weight": 5.0
+    },
+    "name": "plan-multigroup-directive-balanced-6v6-v2-dev",
+    "roleBalancedLoss": true,
+    "sampling": "plan-mission-uniform",
+    "seed": 89001,
+    "steps": 2000,
+    "trainable": "plan-action-target-path"
+  },
+  "trainingMetrics": {
+    "final": {
+      "action": 0.21807460486888885,
+      "counterfactual": 0.2969241738319397,
+      "counterfactualChangedAction": 0.20540234446525574,
+      "power": 0.020244155079126358,
+      "target": 0.004919695667922497,
+      "total": 0.7551217079162598
+    },
+    "firstLoss": 15.505247116088867,
+    "startStep": 0
+  },
+  "trainingSeed": 89001,
+  "versions": {
+    "apiVersion": "snowgym.v0",
+    "simulationVersion": "snowgym.sim.v1",
+    "stateHashVersion": "snowgym.state.v1",
+    "upstreamBaseCommit": "7d9fca5"
+  }
+}
