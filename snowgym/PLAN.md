@@ -1289,6 +1289,15 @@ role-aware closed-loop policy bridge. A frozen development config and run on
 the retained train/validation corpus are next; sealed evaluation seeds remain
 untouched.
 
+M7 per-unit-directive-v0 development freeze (2026-09-02):
+`plan_unit_directive_adapter_v0_dev.json` reuses the corrected v2 training and
+validation corpora plus the qualified plan-conditioned initializer. It holds
+seed 89001, 2,000 steps, batch 64, learning rate `0.0003`, and both
+counterfactual weights at `1.0`, exactly matching role-aware-v0. The sole model
+change is `plan_unit_directive_conditioned: true`. Only validation and the
+existing closed-loop suites may be inspected; evaluation seeds 15401–15405
+remain sealed.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO

@@ -180,6 +180,19 @@ def test_frozen_plan_dagger_spec_balances_missions_and_disjoins_seeds() -> None:
     )
     assert role_config["architecture"]["plan_role_conditioned"] is True
     assert role_config["counterfactualChangedActionWeight"] == 1.0
+    directive_config = load_training_config(
+        ROOT / "training" / "src" / "snowgym_training" / "configs"
+        / "plan_unit_directive_adapter_v0_dev.json"
+    )
+    assert directive_config["architecture"] == {
+        **role_config["architecture"],
+        "plan_unit_directive_conditioned": True,
+    }
+    for field in (
+        "seed", "steps", "batchSize", "learningRate", "loss",
+        "counterfactualLossWeight", "counterfactualChangedActionWeight",
+    ):
+        assert directive_config[field] == role_config[field]
 
 
 def test_frozen_plan_action_adapter_gate_is_audited_and_retains_failure(tmp_path: Path) -> None:
