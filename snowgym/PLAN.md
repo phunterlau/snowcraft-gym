@@ -1357,6 +1357,12 @@ roles also cover all three categories. Attrition-bounded episodes are retained
 and explicitly marked. No evaluation artifact exists. A training freeze on
 this immutable corpus is next.
 
+M7 multi-group-directive-v2 development freeze (2026-09-02):
+`plan_multigroup_directive_v2_dev.json` holds every architecture, seed, budget,
+optimizer, loss, sampling, and role-balancing setting from balanced v1 fixed.
+Only the dataset changes to the immutable v3 train/validation corpus. Existing
+closed-loop suites may be inspected; the v3 evaluation split remains sealed.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO
