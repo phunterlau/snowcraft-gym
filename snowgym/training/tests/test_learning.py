@@ -91,6 +91,39 @@ def test_model_config_preserves_legacy_checkpoint_shape() -> None:
         "action_conditioned_targets": True,
         "last_enemy_move_target": True,
     }
+    assert model_config({**legacy, "plan_conditioned": True}).as_dict() == {
+        **legacy,
+        "plan_conditioned": True,
+    }
+
+
+def test_plan_conditioned_model_requires_fixed_tensors_and_changes_counterfactual(
+    tmp_path: Path,
+) -> None:
+    torch.manual_seed(23)
+    dataset = TrajectoryDataset(make_dataset(tmp_path / "dataset"))
+    observation, action = dataset.batch(np.asarray([0, 1]))
+    model = EntityPolicy(ModelConfig(16, 12, 24, plan_conditioned=True))
+    with pytest.raises(ValueError, match="requires plan_groups"):
+        model(observation)
+
+    first = {name: value.clone() for name, value in observation.items()}
+    first["plan_groups"] = torch.zeros((2, 3, 38), dtype=torch.float32)
+    first["plan_group_mask"] = torch.tensor([[1, 0, 0], [1, 0, 0]], dtype=torch.int8)
+    second = {name: value.clone() for name, value in first.items()}
+    second["plan_groups"][:, 0, 3] = 1.0
+    original = model(first)
+    counterfactual = model(second)
+
+    assert not torch.equal(original["hidden"], counterfactual["hidden"])
+    loss = behavior_clone_loss(original, action, first, LossConfig())
+    loss["total"].backward()
+    assert model.plan_encoder[0].weight.grad is not None
+    assert torch.isfinite(model.plan_encoder[0].weight.grad).all()
+    malformed = {name: value.clone() for name, value in first.items()}
+    malformed["plan_groups"] = torch.zeros((2, 3, 37))
+    with pytest.raises(ValueError, match="plan_groups must have shape"):
+        model(malformed)
 
 
 def test_action_conditioned_target_heads_select_distinct_means(tmp_path: Path) -> None:

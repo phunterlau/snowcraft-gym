@@ -11,6 +11,8 @@ from torch import Tensor, nn
 
 from snowgym_client.encoding import ACTION_TYPE_COUNT
 
+from .plan_data import PLAN_FEATURE_VECTOR_SIZE, PLAN_GROUP_SLOTS
+
 
 @dataclass(frozen=True)
 class ModelConfig:
@@ -22,6 +24,7 @@ class ModelConfig:
     last_enemy_move_target: bool = False
     nearest_enemy_throw_target: bool = False
     nearest_enemy_features: bool = False
+    plan_conditioned: bool = False
 
     def as_dict(self) -> dict[str, int | bool]:
         value: dict[str, int | bool] = {
@@ -39,6 +42,8 @@ class ModelConfig:
             value["nearest_enemy_throw_target"] = True
         if self.nearest_enemy_features:
             value["nearest_enemy_features"] = True
+        if self.plan_conditioned:
+            value["plan_conditioned"] = True
         return value
 
 
@@ -54,6 +59,18 @@ class EntityPolicy(nn.Module):
         self.projectile_encoder = entity_encoder(8, config)
         self.obstacle_encoder = entity_encoder(9, config)
         global_features = embedding * 8 + 3
+        self.plan_conditioned = config.plan_conditioned
+        if self.plan_conditioned:
+            self.plan_encoder = nn.Sequential(
+                nn.Linear(
+                    PLAN_GROUP_SLOTS * PLAN_FEATURE_VECTOR_SIZE + PLAN_GROUP_SLOTS,
+                    config.entity_hidden,
+                ),
+                nn.ReLU(),
+                nn.Linear(config.entity_hidden, embedding),
+                nn.ReLU(),
+            )
+            global_features += embedding
         self.pairwise_enemy_attention = config.pairwise_enemy_attention
         if self.pairwise_enemy_attention:
             self.enemy_query = nn.Linear(embedding, embedding, bias=False)
@@ -187,8 +204,7 @@ class EntityPolicy(nn.Module):
                 :, None, None
             ].to(relational.dtype)
             actor_inputs.append(relational)
-        global_context = torch.cat(
-            [
+        global_inputs = [
                 *masked_mean_max(allies, ally_mask),
                 *masked_mean_max(enemies, observation["enemy_mask"].bool()),
                 *masked_mean_max(
@@ -198,14 +214,34 @@ class EntityPolicy(nn.Module):
                 observation["team_alive"].float()
                 / max(int(observation["allies"].shape[1]), 1),
                 torch.log1p(observation["tick"].float()) / 10.0,
-            ],
-            dim=-1,
-        )
+            ]
+        if self.plan_conditioned:
+            global_inputs.append(self.encode_plan(observation, allies.shape[0]))
+        global_context = torch.cat(global_inputs, dim=-1)
         expanded = global_context[:, None, :].expand(-1, allies.shape[1], -1)
         hidden = self.actor(torch.cat([*actor_inputs, expanded], dim=-1))
         action_mask = observation["unit_action_mask"].bool().clone()
         action_mask[..., 0] |= ~ally_mask
         return hidden, action_mask, ally_mask
+
+    def encode_plan(self, observation: dict[str, Tensor], batch_size: int) -> Tensor:
+        if "plan_groups" not in observation or "plan_group_mask" not in observation:
+            raise ValueError(
+                "plan-conditioned policy requires plan_groups and plan_group_mask"
+            )
+        groups = observation["plan_groups"].float()
+        mask = observation["plan_group_mask"].bool()
+        if groups.shape != (batch_size, PLAN_GROUP_SLOTS, PLAN_FEATURE_VECTOR_SIZE):
+            raise ValueError(
+                "plan_groups must have shape "
+                f"[batch, {PLAN_GROUP_SLOTS}, {PLAN_FEATURE_VECTOR_SIZE}]"
+            )
+        if mask.shape != (batch_size, PLAN_GROUP_SLOTS):
+            raise ValueError(f"plan_group_mask must have shape [batch, {PLAN_GROUP_SLOTS}]")
+        masked = groups * mask.unsqueeze(-1).to(groups.dtype)
+        return self.plan_encoder(
+            torch.cat([masked.flatten(start_dim=1), mask.to(groups.dtype)], dim=-1)
+        )
 
 
 def entity_encoder(features: int, config: ModelConfig) -> nn.Sequential:
@@ -288,6 +324,7 @@ def model_config(value: Any) -> ModelConfig:
         "last_enemy_move_target",
         "nearest_enemy_throw_target",
         "nearest_enemy_features",
+        "plan_conditioned",
     }
     if not isinstance(value, dict) or set(value) - optional != required:
         raise ValueError(

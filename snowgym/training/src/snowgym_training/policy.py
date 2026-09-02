@@ -12,6 +12,7 @@ from snowgym_client.encoding import GymAction, GymObservation, make_action_space
 from .checkpoint import load_checkpoint
 from .data import OBSERVATION_FIELDS
 from .model import EntityPolicy, model_config
+from .plan_data import PLAN_FEATURE_VECTOR_SIZE, PLAN_GROUP_SLOTS
 
 
 class TorchPolicy:
@@ -29,6 +30,29 @@ class TorchPolicy:
             name: torch.from_numpy(np.array(observation[name], copy=True))[None, ...]
             for name in OBSERVATION_FIELDS
         }
+        if self.model.plan_conditioned:
+            required_plan = {"plan_groups", "plan_group_mask"}
+            missing_plan = required_plan - set(observation)
+            if missing_plan:
+                raise ValueError(
+                    f"policy observation missing plan fields: {sorted(missing_plan)}"
+                )
+            plan_groups = np.asarray(observation["plan_groups"])
+            plan_mask = np.asarray(observation["plan_group_mask"])
+            if plan_groups.shape != (PLAN_GROUP_SLOTS, PLAN_FEATURE_VECTOR_SIZE):
+                raise ValueError("policy plan_groups has an invalid shape")
+            if plan_mask.shape != (PLAN_GROUP_SLOTS,):
+                raise ValueError("policy plan_group_mask has an invalid shape")
+            tensors.update(
+                {
+                    "plan_groups": torch.from_numpy(np.array(plan_groups, copy=True))[
+                        None, ...
+                    ],
+                    "plan_group_mask": torch.from_numpy(np.array(plan_mask, copy=True))[
+                        None, ...
+                    ],
+                }
+            )
         with torch.no_grad():
             prediction = self.model(tensors)
         action_type = prediction["action_logits"].argmax(dim=-1)[0].cpu().numpy()

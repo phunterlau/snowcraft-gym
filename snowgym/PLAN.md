@@ -720,6 +720,17 @@ validation, bounds and corruption. A live cross-language load reproduced the
 exported 10v10 digest exactly. Adding plan inputs to the model and running the
 paired with/without-plan ablation remain next.
 
+M7 model adapter foundation (2026-09-02): the shared `EntityPolicy` now has an
+opt-in `plan_conditioned` architecture flag. Enabled models encode the masked
+`[3,38]` plan rows plus role-presence mask into one global embedding appended to
+the unchanged physical entity context; disabled models retain the exact legacy
+parameter shape and metadata. `TorchPolicy` requires and shape-checks the plan
+tensors only for conditioned checkpoints. Tests prove missing/malformed inputs
+fail closed, masked rows are removed from the adapter input, counterfactual
+plans change hidden state for the same physical observation, and gradients are
+finite. Plan-caused trajectory collection and the paired training ablation
+remain open, so the M7 training checklist item is not yet advanced.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO

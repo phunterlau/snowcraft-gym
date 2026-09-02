@@ -621,3 +621,14 @@ materializes immutable `plan_groups` (`float32 [samples,3,38]`),
 trajectory transitions; the returned arrays are detached copies, so training
 augmentation cannot mutate the audited source. Indices must be a one-dimensional
 integer array and are range checked before selection.
+
+Set `architecture.plan_conditioned` only for checkpoints trained with aligned
+plan data. The entity policy masks absent plan rows, flattens the fixed three
+role slots plus presence mask through a small adapter, and appends that global
+embedding to the otherwise unchanged physical context. Legacy configurations
+omit the flag and retain their exact parameter shapes. `TorchPolicy` requires
+`plan_groups [3,38]` and `plan_group_mask [3]` only when loading a conditioned
+checkpoint. This adapter makes counterfactual influence possible; it is not by
+itself evidence that a model follows plans. Acceptance still requires actions
+collected from the production plan-aware executor and a matched no-plan
+ablation.
