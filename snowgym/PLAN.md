@@ -1340,6 +1340,15 @@ promoted, and sealed evaluation remains untouched. The next collection must add
 real maneuver-group assignments and more multi-group support supervision before
 another controlled training run.
 
+M7 multi-group DAgger-v3 collection freeze (2026-09-02):
+`plan_multigroup_dagger_v3.json` defines six plan families on the unchanged 6v6
+arena: direct, hold, withdraw, a true main+maneuver left flank, main+reserve
+support, and main+maneuver+reserve support. Train seeds 15501–15512 and
+validation seeds 15601–15606 are disjoint from sealed evaluation seeds
+15701–15706. Each plan appears twice in train and once in validation/evaluation;
+all pairs use a distinct same-state counterfactual. Only train/validation may be
+collected until a later gate is frozen.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO

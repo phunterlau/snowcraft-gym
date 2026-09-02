@@ -1,0 +1,63 @@
+{
+  "format": "snowgym.plan-dagger-export.v2",
+  "name": "plan-multigroup-counterfactual-dagger-6v6-v3",
+  "teacher": "plan-teacher-action.v0",
+  "maxTeamUnits": 10,
+  "shardSize": 1024,
+  "plans": {
+    "direct": { "schemaVersion": "snowgym.command-plan.v0", "intentSummary": "Engage directly with focused fire.", "groups": [
+      { "role": "main", "allocationWeight": 1, "selection": "balanced", "order": { "mission": "engage", "objective": { "kind": "enemy_cluster", "select": "nearest" }, "approach": "direct", "engagement": { "posture": "balanced", "fire": "focus", "preferredRange": "medium", "cohesion": "normal" } } }
+    ] },
+    "maneuver": { "schemaVersion": "snowgym.command-plan.v0", "intentSummary": "Main fixes while a maneuver group flanks left.", "groups": [
+      { "role": "main", "allocationWeight": 4, "selection": "frontline", "order": { "mission": "engage", "objective": { "kind": "enemy_cluster", "select": "nearest" }, "approach": "direct", "engagement": { "posture": "balanced", "fire": "focus", "preferredRange": "medium", "cohesion": "normal" } } },
+      { "role": "maneuver", "allocationWeight": 2, "selection": "nearest_left_lane", "order": { "mission": "engage", "objective": { "kind": "enemy_cluster", "select": "nearest" }, "approach": "left_flank", "engagement": { "posture": "aggressive", "fire": "distributed", "preferredRange": "medium", "cohesion": "normal" } } }
+    ] },
+    "hold": { "schemaVersion": "snowgym.command-plan.v0", "intentSummary": "Hold the current line conservatively.", "groups": [
+      { "role": "main", "allocationWeight": 1, "selection": "balanced", "order": { "mission": "hold", "objective": { "kind": "current_position" }, "approach": "direct", "engagement": { "posture": "conservative", "fire": "opportunistic", "preferredRange": "long", "cohesion": "tight" } } }
+    ] },
+    "withdraw": { "schemaVersion": "snowgym.command-plan.v0", "intentSummary": "Withdraw together into the own backfield.", "groups": [
+      { "role": "main", "allocationWeight": 1, "selection": "balanced", "order": { "mission": "withdraw", "objective": { "kind": "region", "region": "own_backfield" }, "approach": "direct", "engagement": { "posture": "conservative", "fire": "opportunistic", "preferredRange": "long", "cohesion": "tight" } } }
+    ] },
+    "support": { "schemaVersion": "snowgym.command-plan.v0", "intentSummary": "Main engages while a compact reserve supports it.", "groups": [
+      { "role": "main", "allocationWeight": 4, "selection": "frontline", "order": { "mission": "engage", "objective": { "kind": "enemy_cluster", "select": "nearest" }, "approach": "direct", "engagement": { "posture": "balanced", "fire": "focus", "preferredRange": "medium", "cohesion": "normal" } } },
+      { "role": "reserve", "allocationWeight": 2, "selection": "rearline", "order": { "mission": "support", "objective": { "kind": "ally_group", "role": "main" }, "approach": "direct", "engagement": { "posture": "conservative", "fire": "opportunistic", "preferredRange": "long", "cohesion": "tight" } } }
+    ] },
+    "support_maneuver": { "schemaVersion": "snowgym.command-plan.v0", "intentSummary": "Main engages, maneuver flanks left, and reserve supports main.", "groups": [
+      { "role": "main", "allocationWeight": 3, "selection": "frontline", "order": { "mission": "engage", "objective": { "kind": "enemy_cluster", "select": "nearest" }, "approach": "direct", "engagement": { "posture": "balanced", "fire": "focus", "preferredRange": "medium", "cohesion": "normal" } } },
+      { "role": "maneuver", "allocationWeight": 2, "selection": "nearest_left_lane", "order": { "mission": "engage", "objective": { "kind": "enemy_cluster", "select": "nearest" }, "approach": "left_flank", "engagement": { "posture": "aggressive", "fire": "distributed", "preferredRange": "medium", "cohesion": "normal" } } },
+      { "role": "reserve", "allocationWeight": 1, "selection": "rearline", "order": { "mission": "support", "objective": { "kind": "ally_group", "role": "main" }, "approach": "direct", "engagement": { "posture": "conservative", "fire": "opportunistic", "preferredRange": "long", "cohesion": "tight" } } }
+    ] }
+  },
+  "splits": {
+    "train": [
+      { "seed": 15501, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "direct", "counterfactualPlan": "support" },
+      { "seed": 15502, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "maneuver", "counterfactualPlan": "hold" },
+      { "seed": 15503, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "hold", "counterfactualPlan": "maneuver" },
+      { "seed": 15504, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "withdraw", "counterfactualPlan": "support_maneuver" },
+      { "seed": 15505, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "support", "counterfactualPlan": "withdraw" },
+      { "seed": 15506, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "support_maneuver", "counterfactualPlan": "direct" },
+      { "seed": 15507, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "direct", "counterfactualPlan": "maneuver" },
+      { "seed": 15508, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "maneuver", "counterfactualPlan": "support" },
+      { "seed": 15509, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "hold", "counterfactualPlan": "withdraw" },
+      { "seed": 15510, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "withdraw", "counterfactualPlan": "direct" },
+      { "seed": 15511, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "support", "counterfactualPlan": "support_maneuver" },
+      { "seed": 15512, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "support_maneuver", "counterfactualPlan": "hold" }
+    ],
+    "validation": [
+      { "seed": 15601, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "direct", "counterfactualPlan": "maneuver" },
+      { "seed": 15602, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "maneuver", "counterfactualPlan": "support" },
+      { "seed": 15603, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "hold", "counterfactualPlan": "withdraw" },
+      { "seed": 15604, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "withdraw", "counterfactualPlan": "direct" },
+      { "seed": 15605, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "support", "counterfactualPlan": "support_maneuver" },
+      { "seed": 15606, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "support_maneuver", "counterfactualPlan": "hold" }
+    ],
+    "evaluation": [
+      { "seed": 15701, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "direct", "counterfactualPlan": "support" },
+      { "seed": 15702, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "maneuver", "counterfactualPlan": "hold" },
+      { "seed": 15703, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "hold", "counterfactualPlan": "maneuver" },
+      { "seed": 15704, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "withdraw", "counterfactualPlan": "support_maneuver" },
+      { "seed": 15705, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "support", "counterfactualPlan": "withdraw" },
+      { "seed": 15706, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "support_maneuver", "counterfactualPlan": "direct" }
+    ]
+  }
+}

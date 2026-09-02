@@ -91,6 +91,10 @@ PLAN_ROLE_SPEC = (
     ROOT / "training" / "src" / "snowgym_training" / "configs"
     / "plan_role_dagger_v2.json"
 )
+PLAN_MULTIGROUP_SPEC = (
+    ROOT / "training" / "src" / "snowgym_training" / "configs"
+    / "plan_multigroup_dagger_v3.json"
+)
 ACTION_ADAPTER_CHECKPOINT = ROOT / "training" / "runs" / "plan_action_adapter_v0"
 ACTION_ADAPTER_OFFLINE = (
     ROOT / "training" / "evaluations" / "plan_action_adapter_offline_v0.json"
@@ -210,6 +214,25 @@ def test_frozen_plan_dagger_spec_balances_missions_and_disjoins_seeds() -> None:
     )
     assert role_config["architecture"]["plan_role_conditioned"] is True
     assert role_config["counterfactualChangedActionWeight"] == 1.0
+    multigroup = load_plan_dagger_spec(PLAN_MULTIGROUP_SPEC)
+    assert set(multigroup["plans"]) == {
+        "direct", "maneuver", "hold", "withdraw", "support", "support_maneuver"
+    }
+    assert [len(multigroup["splits"][name]) for name in (
+        "train", "validation", "evaluation"
+    )] == [12, 6, 6]
+    all_multigroup = sum(multigroup["splits"].values(), [])
+    assert len({episode["seed"] for episode in all_multigroup}) == 24
+    assert all(
+        episode["plan"] != episode["counterfactualPlan"]
+        for episode in all_multigroup
+    )
+    roles = {
+        group["role"]
+        for plan in multigroup["plans"].values()
+        for group in plan["groups"]
+    }
+    assert roles == {"main", "maneuver", "reserve"}
     directive_config = load_training_config(
         ROOT / "training" / "src" / "snowgym_training" / "configs"
         / "plan_unit_directive_adapter_v0_dev.json"
