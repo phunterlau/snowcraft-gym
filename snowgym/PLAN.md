@@ -1002,6 +1002,17 @@ red with a 1,800-tick horizon. The catalog and episode references are validated
 before the batch host starts. Collection results and retraining outcomes remain
 unseen; this freeze must be committed before generation.
 
+M7 plan-DAgger-v0 collection (2026-09-02): the post-freeze headless run produced
+2,312 training, 1,191 validation, and 1,210 evaluation transitions with dataset
+digests `sha256:8d4138dc4eea7a83f7af3273996a026cba2503268e89b468e08a0f490f08d182`,
+`sha256:900a2872af7e730f81535b91356c8f70e2a78ef6b9972116191d14efb3d8700e`,
+and `sha256:c8497125d4c62e86b2e0bbc92b1b0dae1275db42049c8149073079ffca2c2b85`.
+Every direct, flank, hold, and support rollout lost; withdraw reached the frozen
+300-decision limit. These are learner-state correction labels, not performance
+evidence. Before combining them with expert-state data, the aggregate writer
+must retain plan-conditioning metadata and explicitly support independently
+seeded source specs.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO
