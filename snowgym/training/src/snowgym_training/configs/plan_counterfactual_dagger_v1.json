@@ -1,0 +1,45 @@
+{
+  "format": "snowgym.plan-dagger-export.v1",
+  "name": "plan-counterfactual-dagger-6v6-v1",
+  "teacher": "plan-teacher-action.v0",
+  "maxTeamUnits": 10,
+  "shardSize": 1024,
+  "plans": {
+    "direct": { "schemaVersion": "snowgym.command-plan.v0", "intentSummary": "Engage the nearest cluster directly with focused fire.", "groups": [{ "role": "main", "allocationWeight": 1, "selection": "balanced", "order": { "mission": "engage", "objective": { "kind": "enemy_cluster", "select": "nearest" }, "approach": "direct", "engagement": { "posture": "balanced", "fire": "focus", "preferredRange": "medium", "cohesion": "normal" } } }] },
+    "flank": { "schemaVersion": "snowgym.command-plan.v0", "intentSummary": "Engage the nearest cluster from the left flank with distributed fire.", "groups": [{ "role": "main", "allocationWeight": 1, "selection": "balanced", "order": { "mission": "engage", "objective": { "kind": "enemy_cluster", "select": "nearest" }, "approach": "left_flank", "engagement": { "posture": "balanced", "fire": "distributed", "preferredRange": "medium", "cohesion": "normal" } } }] },
+    "hold": { "schemaVersion": "snowgym.command-plan.v0", "intentSummary": "Hold the current line conservatively.", "groups": [{ "role": "main", "allocationWeight": 1, "selection": "balanced", "order": { "mission": "hold", "objective": { "kind": "current_position" }, "approach": "direct", "engagement": { "posture": "conservative", "fire": "opportunistic", "preferredRange": "long", "cohesion": "tight" } } }] },
+    "withdraw": { "schemaVersion": "snowgym.command-plan.v0", "intentSummary": "Withdraw together into the own backfield.", "groups": [{ "role": "main", "allocationWeight": 1, "selection": "balanced", "order": { "mission": "withdraw", "objective": { "kind": "region", "region": "own_backfield" }, "approach": "direct", "engagement": { "posture": "conservative", "fire": "opportunistic", "preferredRange": "long", "cohesion": "tight" } } }] },
+    "support": { "schemaVersion": "snowgym.command-plan.v0", "intentSummary": "Engage with the main body while a compact reserve supports it.", "groups": [
+      { "role": "main", "allocationWeight": 4, "selection": "balanced", "order": { "mission": "engage", "objective": { "kind": "enemy_cluster", "select": "nearest" }, "approach": "direct", "engagement": { "posture": "balanced", "fire": "focus", "preferredRange": "medium", "cohesion": "normal" } } },
+      { "role": "reserve", "allocationWeight": 2, "selection": "rearline", "order": { "mission": "support", "objective": { "kind": "ally_group", "role": "main" }, "approach": "direct", "engagement": { "posture": "conservative", "fire": "opportunistic", "preferredRange": "long", "cohesion": "tight" } } }
+    ] }
+  },
+  "splits": {
+    "train": [
+      { "seed": 14201, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "direct", "counterfactualPlan": "withdraw" },
+      { "seed": 14202, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "flank", "counterfactualPlan": "hold" },
+      { "seed": 14203, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "hold", "counterfactualPlan": "direct" },
+      { "seed": 14204, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "withdraw", "counterfactualPlan": "support" },
+      { "seed": 14205, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "support", "counterfactualPlan": "withdraw" },
+      { "seed": 14206, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "direct", "counterfactualPlan": "hold" },
+      { "seed": 14207, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "flank", "counterfactualPlan": "withdraw" },
+      { "seed": 14208, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "hold", "counterfactualPlan": "support" },
+      { "seed": 14209, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "withdraw", "counterfactualPlan": "direct" },
+      { "seed": 14210, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "support", "counterfactualPlan": "hold" }
+    ],
+    "validation": [
+      { "seed": 14301, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "direct", "counterfactualPlan": "hold" },
+      { "seed": 14302, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "flank", "counterfactualPlan": "withdraw" },
+      { "seed": 14303, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "hold", "counterfactualPlan": "support" },
+      { "seed": 14304, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "withdraw", "counterfactualPlan": "direct" },
+      { "seed": 14305, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "support", "counterfactualPlan": "hold" }
+    ],
+    "evaluation": [
+      { "seed": 14401, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "direct", "counterfactualPlan": "withdraw" },
+      { "seed": 14402, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "flank", "counterfactualPlan": "hold" },
+      { "seed": 14403, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "hold", "counterfactualPlan": "direct" },
+      { "seed": 14404, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "withdraw", "counterfactualPlan": "support" },
+      { "seed": 14405, "scenario": { "map": "arena6.json", "blueUnits": 6, "redUnits": 6, "redDifficulty": "easy", "maxTicks": 1800 }, "plan": "support", "counterfactualPlan": "withdraw" }
+    ]
+  }
+}

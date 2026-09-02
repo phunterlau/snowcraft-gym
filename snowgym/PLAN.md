@@ -1137,6 +1137,16 @@ the artifact. This separates an uninformative counterfactual set from a model
 that ignores informative plan interventions. Frozen data and acceptance
 thresholds remain next.
 
+M7 counterfactual DAgger-v1 collection freeze (2026-09-02): before generating
+new labels, `configs/plan_counterfactual_dagger_v1.json` fixes ten training,
+five validation, and five untouched evaluation episodes on 6v6 Winter Front
+against easy scripted red, each with a 1,800-tick horizon. Seeds 14201–14210,
+14301–14305, and 14401–14405 are disjoint from each other and v0. Every direct,
+flank, hold, withdraw, and support primary is paired with a distinct plan chosen
+to contrast offensive timing, defensive posture, or group support. Training
+teacher-diversity diagnostics may inform a separately committed optimization
+freeze; validation/evaluation metrics must remain unseen until that freeze.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO

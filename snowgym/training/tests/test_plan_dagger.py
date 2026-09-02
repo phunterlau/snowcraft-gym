@@ -48,6 +48,10 @@ ACTION_ADAPTER_QUALIFICATION = (
     ROOT / "training" / "src" / "snowgym_training" / "configs"
     / "plan_action_adapter_qualification_v0.json"
 )
+PLAN_COUNTERFACTUAL_SPEC = (
+    ROOT / "training" / "src" / "snowgym_training" / "configs"
+    / "plan_counterfactual_dagger_v1.json"
+)
 ACTION_ADAPTER_CHECKPOINT = ROOT / "training" / "runs" / "plan_action_adapter_v0"
 ACTION_ADAPTER_OFFLINE = (
     ROOT / "training" / "evaluations" / "plan_action_adapter_offline_v0.json"
@@ -76,6 +80,13 @@ def test_frozen_plan_dagger_spec_balances_missions_and_disjoins_seeds() -> None:
     adapter = load_training_config(ACTION_ADAPTER_CONFIG)
     assert adapter["architecture"]["plan_action_adapter"] is True
     assert adapter["trainable"] == "plan-action-target-path"
+    counterfactual = load_plan_dagger_spec(PLAN_COUNTERFACTUAL_SPEC)
+    assert counterfactual["format"] == "snowgym.plan-dagger-export.v1"
+    episodes = sum(counterfactual["splits"].values(), [])
+    assert len({episode["seed"] for episode in episodes}) == 20
+    assert all(
+        episode["plan"] != episode["counterfactualPlan"] for episode in episodes
+    )
 
 
 def test_frozen_plan_action_adapter_gate_is_audited_and_retains_failure(tmp_path: Path) -> None:
