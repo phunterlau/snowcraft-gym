@@ -731,6 +731,19 @@ plans change hidden state for the same physical observation, and gradients are
 finite. Plan-caused trajectory collection and the paired training ablation
 remain open, so the M7 training checklist item is not yet advanced.
 
+M7 plan-caused rollout foundation (2026-09-02):
+`training/plan/PlanRolloutDataset.ts` executes every synthetic plan through the
+production `PlanGrounder`, `PlanStore`, `PlanAwareTeamController`, and
+`ReactiveUnitPolicy`, restarting the authoritative headless environment from
+the same seed and public state hash for each counterfactual plan. Every decision
+retains the detached observation, semantic action, dynamic plan tensor, reward,
+pre/post state hashes, and physical action acceptance. Its semantic auditor
+checks curriculum/episode alignment, observation hashes, tensor bounds, action
+results, outcomes, and a canonical dataset digest. Tests prove byte-level
+repeatability, same-state restarts, plan/action diversity, zero rejected actions,
+and rejection of state, tensor, result, or digest corruption. A portable CLI,
+Python trajectory conversion, and the paired training ablation remain next.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO

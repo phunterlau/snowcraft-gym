@@ -143,21 +143,25 @@ function assertAssignmentsMatch(
     role,
     unitIds: [...assignment.unitIds],
   }));
-  if (canonicalJson(expected) !== canonicalJson(actual)) {
+  if (canonicalPlanJson(expected) !== canonicalPlanJson(actual)) {
     throw new ValueError('regrounded assignments do not match curriculum assignments');
   }
 }
 
 function digest(value: unknown): string {
-  return `sha256:${createHash('sha256').update(canonicalJson(value)).digest('hex')}`;
+  return planArtifactDigest(value);
 }
 
-function canonicalJson(value: unknown): string {
-  if (Array.isArray(value)) return `[${value.map(canonicalJson).join(',')}]`;
+export function planArtifactDigest(value: unknown): string {
+  return `sha256:${createHash('sha256').update(canonicalPlanJson(value)).digest('hex')}`;
+}
+
+export function canonicalPlanJson(value: unknown): string {
+  if (Array.isArray(value)) return `[${value.map(canonicalPlanJson).join(',')}]`;
   if (isRecord(value)) {
     return `{${Object.keys(value)
       .sort()
-      .map((key) => `${JSON.stringify(key)}:${canonicalJson(value[key])}`)
+      .map((key) => `${JSON.stringify(key)}:${canonicalPlanJson(value[key])}`)
       .join(',')}}`;
   }
   return JSON.stringify(value) ?? 'null';
