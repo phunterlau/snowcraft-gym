@@ -515,7 +515,10 @@ policies recorded zero rejected actions. The series is bound to source commit
 dataset digests, and every child checkpoint/evaluation digest. The semantic
 auditor restricted-loads every checkpoint and rejects modified child artifacts.
 Only the first curriculum gate is advanced; 1v1 easy scripted and all later
-gates remain open.
+gates remain open. A deterministic headless recorder produced the final
+checkpoint's seed-3101 blue win in 60 decisions, and the existing browser/WebGL
+replay smoke reached the terminal frame and restarted without UI errors. The
+replay is companion evidence; the accepted v0 series manifest remains immutable.
 
 ### M7 — plan-conditioned learned executor
 

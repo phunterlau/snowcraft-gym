@@ -242,6 +242,24 @@ masked-random; the final checkpoint averaged 60 decisions with zero rejected
 actions. This advances only `1v1-random`, and it is explicitly BC-initialized
 PPO—not a cold-start PPO result.
 
+Record the final qualifying checkpoint headlessly through the persistent batch
+host:
+
+```bash
+uv run snowgym-demo-ppo \
+  --checkpoint runs/ppo_1v1_bc_v0/checkpoints/update-000025/checkpoint \
+  --seed 3101 \
+  --record ../../public/replays/ppo_1v1_bc_v0-seed-3101.json \
+  --json
+```
+
+The committed replay is a 60-decision blue win with zero rejected actions.
+After starting the root Vite server, view it in the existing UI engine at:
+
+```text
+http://127.0.0.1:5173/replay.html?recording=/replays/ppo_1v1_bc_v0-seed-3101.json
+```
+
 `ppo.py` defines the centralized hybrid actor-critic used by the next training
 stage. Action masks apply before categorical sampling; target terms contribute
 to joint log probability only for move/throw and power only for throw. GAE
