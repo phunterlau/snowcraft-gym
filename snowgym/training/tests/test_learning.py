@@ -10,6 +10,7 @@ import torch
 
 from snowgym_training.checkpoint import load_checkpoint
 from snowgym_training.data import TrajectoryDataset
+from snowgym_training.demo import run_learned_demo
 from snowgym_training.evaluate import EVALUATION_FORMAT, run_checkpoint_evaluation
 from snowgym_training.loss import LossConfig, behavior_clone_loss
 from snowgym_training.model import EntityPolicy, ModelConfig
@@ -194,6 +195,21 @@ def test_learned_evaluation_records_normal_replay(tmp_path: Path) -> None:
     )
     assert replay["format"] == "snowgym.replay.v0"
     assert len(replay["frames"]) == 3
+
+
+def test_learned_demo_records_checkpoint_provenance(tmp_path: Path) -> None:
+    result = run_learned_demo(
+        output=tmp_path / "learned-demo.json",
+        checkpoint=Path(__file__).parents[1] / "checkpoints" / "bc_1v1_v0",
+        seed=42,
+        client=FakeLearningClient(),
+    )
+    replay = json.loads((tmp_path / "learned-demo.json").read_text(encoding="utf-8"))
+    assert result["winner"] == "blue"
+    assert result["rejectedActions"] == 0
+    assert result["checkpointDigest"].startswith("sha256:")
+    assert replay["format"] == "snowgym.replay.v0"
+    assert replay["outcome"]["winner"] == "blue"
 
 
 def make_dataset(path: Path) -> Path:

@@ -16,6 +16,34 @@ Add the isolated Torch learner for training or checkpoint evaluation:
 uv sync --extra dev --extra learn
 ```
 
+## Quick learned-policy demo
+
+Run the committed behavior-cloned blue policy against the native seeded-random
+red controller and write a replay consumable by the existing SnowCraft UI:
+
+```bash
+# Terminal 1, from the repository root
+npm run snowgym:server
+
+# Terminal 2
+cd snowgym/training
+uv run snowgym-demo-learned \
+  --seed 42 \
+  --record ../../public/replays/demo-learned-blue-seed-42.json
+```
+
+The command is headless and refuses to overwrite an existing recording. Start
+`npm run dev -- --host 127.0.0.1` from the repository root, then open:
+
+```text
+http://127.0.0.1:5173/replay.html?recording=/replays/demo-learned-blue-seed-42.json
+```
+
+The committed seed-42 demonstration ends with a blue win after 54 decisions
+and zero rejected actions. It exercises the learned BC checkpoint on the new
+RL-ready server/client path; the PPO module below is infrastructure only and
+does not yet provide a trained PPO checkpoint.
+
 With `npm run snowgym:server` running in another terminal, export one committed
 split specification without rendering:
 

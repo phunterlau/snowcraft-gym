@@ -264,9 +264,12 @@ actions, versus the teacher's 53. See the
 [joined evaluation](./training/evaluations/bc_1v1_v0.json). This establishes a
 narrow 1v1 imitation-learning proof, not broad policy generalization.
 
-To replay it through SnowCraft's existing Three.js arena, character, snowball,
-particle, camera, lighting, and asset renderers, start the normal Vite server
-from the repository root:
+The committed seed-42 learned-policy demo records a blue win after 54 decisions
+with zero rejected actions. Recreate it with the commands in the
+[training guide](./training/README.md#quick-learned-policy-demo). To replay it
+through SnowCraft's existing Three.js arena, character, snowball, particle,
+camera, lighting, and asset renderers, start the normal Vite server from the
+repository root:
 
 ```bash
 npm run dev -- --host 127.0.0.1
@@ -275,7 +278,7 @@ npm run dev -- --host 127.0.0.1
 Open:
 
 ```text
-http://127.0.0.1:5173/replay.html?recording=/replays/blue-seed-42.json
+http://127.0.0.1:5173/replay.html?recording=/replays/demo-learned-blue-seed-42.json
 ```
 
 The replay viewer has play/pause, scrubbing, 0.5x-4x speed, and a local JSON
@@ -308,6 +311,7 @@ http://127.0.0.1:5173/replay.html?recording=/replays/<file>
 
 | File                              | Scenario                                       | Result   |
 | --------------------------------- | ---------------------------------------------- | -------- |
+| `demo-learned-blue-seed-42.json`  | Learned BC blue vs seeded-random red, 1v1      | blue 1–0 |
 | `blue-seed-42.json`               | Open 3v3, normal scripted red (acceptance run) | blue 3–0 |
 | `blue-5v2-hard.json`              | Open 5v2, hard scripted red                    | blue win |
 | `example-open-3v3.json`           | Open 3v3, scripted red                         | blue 3–0 |
