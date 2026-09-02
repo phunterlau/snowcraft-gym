@@ -557,6 +557,16 @@ episodes in 105 decisions with all blue units alive, versus 0/2 masked-random
 and 2/2 teacher, with zero rejected actions. This is initializer evidence;
 gate-3 PPO configuration and qualification remain open.
 
+Gate-3 development then tested exploration explicitly. BC-seeded PPO with the
+historical log-std `-1` and learning rate `3e-5` collapsed to 0/8 after update
+1; narrowing target/power log-std to `-3` did not by itself prevent the
+categorical policy from crossing a fragile argmax boundary. The predeclared
+`ppo_3v3_random_bc_v0` stability candidate combines log-std `-3` with learning
+rate `1e-8` and passed 8/8 at every retained update 1/5/10 versus 0/8
+masked-random. Its deterministic behavior remains 105 decisions, equal to the
+BC initializer. This is an honest retention result through the PPO pipeline,
+not material reward-driven improvement; qualification remains open.
+
 ### M7 — plan-conditioned learned executor
 
 Goal: train the fast learned controller to follow the existing slow

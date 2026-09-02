@@ -39,6 +39,21 @@ def test_gate2_series_config_stops_before_observed_regression() -> None:
     assert config["ppoConfig"]["minibatch_size"] == 2400
 
 
+def test_gate3_series_config_freezes_narrow_stable_exploration() -> None:
+    config_path = Path(__file__).resolve().parents[1] / (
+        "src/snowgym_training/configs/ppo_3v3_random_bc_v0.json"
+    )
+    config = load_series_config(config_path)
+    assert config["gateId"] == "3v3-random"
+    assert config["checkpointUpdates"] == [1, 5, 10]
+    assert config["rolloutSteps"] == 400
+    assert config["ppoConfig"]["learning_rate"] == 0.00000001
+    assert config["ppoConfig"]["initial_target_log_std"] == -3.0
+    assert config["warmStart"]["checkpointDigest"] == (
+        "sha256:d6389cacdd31399ac996ce8492bd1cdd0b876a8063c16f88c8020b5dd9e9bde2"
+    )
+
+
 def test_ppo_series_config_accepts_exactly_one_ppo_transfer_initializer() -> None:
     config = load_series_config()
     config["ppoWarmStart"] = config.pop("warmStart")

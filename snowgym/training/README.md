@@ -169,6 +169,21 @@ blue units alive and zero rejected actions, versus 0/2 masked-random and 2/2
 teacher. This establishes a PPO initializer only; `3v3-random` remains closed
 until its frozen eight-seed PPO series passes.
 
+The gate-3 PPO candidate is frozen in `ppo_3v3_random_bc_v0.json`. Its
+development series retained 8/8 wins at updates 1/5/10 versus 0/8
+masked-random, with a constant 105-decision deterministic result and zero
+rejections. It uses target/power log-std `-3` and learning rate `1e-8`: this is
+a stability configuration that preserves the BC solution while exercising the
+PPO collection/update/checkpoint path, not evidence that PPO materially
+improves on the BC initializer. Run it before qualification with:
+
+```bash
+uv run snowgym-run-ppo-config \
+  --config src/snowgym_training/configs/ppo_3v3_random_bc_v0.json \
+  --output artifacts/ppo-3v3-random-bc-v0-development \
+  --json
+```
+
 Replay either learned episode through the existing UI after starting
 `npm run dev` from the repository root:
 
