@@ -209,6 +209,7 @@ def test_merge_datasets_preserves_ordered_source_provenance(tmp_path: Path) -> N
         result["sources"][1]["datasetDigest"],
         result["sources"][0]["datasetDigest"],
     ]
+    assert all("path" not in source for source in result["sources"])
     assert [episode["index"] for episode in result["episodes"]] == list(range(6))
     assert audit_dataset(tmp_path / "merged")["datasetDigest"] == result["datasetDigest"]
 

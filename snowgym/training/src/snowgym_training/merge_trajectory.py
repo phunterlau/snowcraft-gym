@@ -57,7 +57,6 @@ def merge_datasets(
         sources.append(
             {
                 "index": source_index,
-                "path": str(root.resolve()),
                 "datasetDigest": manifest["datasetDigest"],
                 "transitions": manifest["transitions"],
                 "teacher": manifest.get("teacher"),
