@@ -536,6 +536,14 @@ update 10. `ppo_1v1_easy_bc_v0` now freezes that checkpoint schedule and all
 hyperparameters before qualification; no qualifying gate-2 result is claimed
 yet.
 
+M6.2 gate-2 acceptance (2026-09-02): the committed
+`ppo_1v1_easy_bc_v0` qualifying series retains updates 1, 5, and 10; all three
+pass the frozen held-out threshold. The final checkpoint won 5/8 against easy
+scripted red versus 0/8 masked-random and 8/8 teacher, averaged 66.75 decisions,
+and recorded zero rejected actions. The semantic auditor verifies all nested
+checkpoint and evaluation digests. Gates 1 and 2 are advanced; 3v3-random and
+all later gates remain closed.
+
 ### M7 — plan-conditioned learned executor
 
 Goal: train the fast learned controller to follow the existing slow

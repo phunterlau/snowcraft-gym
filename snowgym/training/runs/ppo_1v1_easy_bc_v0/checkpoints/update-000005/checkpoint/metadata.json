@@ -1,0 +1,43 @@
+{
+  "architecture": {
+    "actor_hidden": 64,
+    "entity_embedding": 24,
+    "entity_hidden": 32
+  },
+  "checkpointDigest": "sha256:b96c7cb58c0ed65f0bb3311640a0424f378d43c1a29eb1e65a6142829aa15593",
+  "collectorConfig": {
+    "gateId": "1v1-easy-scripted",
+    "rewardMode": "health-potential",
+    "rolloutSteps": 300,
+    "worlds": 8
+  },
+  "curriculumDigest": "sha256:6e1e9e33a53f5d47551081f452ddab9d4246f5e9a18027ca03ee5a52ba688829",
+  "environmentSteps": 12000,
+  "format": "snowgym.ppo-checkpoint.v0",
+  "gitCommit": "2a3099c56cbc65475481074b2ab6874cda193f3d",
+  "initialization": {
+    "checkpointDigest": "sha256:773ee667201fd57fd54b08ef3cc9b6c3ae5e78e6a1ec5b975658f7e9a75d9c69",
+    "datasetManifestHash": "sha256:0448fdfa4661645b695bcbc4759f2e40cb2e2bca2aa30fb350e4e215d02722ea",
+    "stateDigest": "sha256:55994fdc56f16ea61ca2fd611b76d183f900dfa083b6dd59fc33fd1f4cefcc8e",
+    "type": "behavior-clone"
+  },
+  "ppoConfig": {
+    "clip_ratio": 0.2,
+    "entropy_weight": 0.001,
+    "gae_lambda": 0.95,
+    "gamma": 0.99,
+    "learning_rate": 3e-05,
+    "max_grad_norm": 0.5,
+    "minibatch_size": 2400,
+    "update_epochs": 1,
+    "value_weight": 0.5
+  },
+  "seedSchedule": {
+    "maximum": 29999,
+    "minimum": 20000,
+    "nextSeed": 20140
+  },
+  "stateDigest": "sha256:8823b37a1dd433de62509e99fc29e81a506412d79c6c5cc6f4ce52bb57441c89",
+  "trainingSeed": 74,
+  "updateIndex": 5
+}

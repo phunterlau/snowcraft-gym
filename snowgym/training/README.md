@@ -127,6 +127,19 @@ sweep passed at updates 1/5/10 but regressed at update 25. This is a frozen
 tuning decision made before the qualifying run, not post-hoc checkpoint
 selection inside a qualifying artifact.
 
+The committed gate-2 qualifying artifact is `runs/ppo_1v1_easy_bc_v0`:
+
+```bash
+uv run snowgym-audit-ppo-series runs/ppo_1v1_easy_bc_v0 --json
+```
+
+It is bound to source commit `2a3099c` and config digest
+`sha256:f1cb3bd658d003deb57396d9668a6aa99c880665fddff2bd91b574afe599a0da`.
+Updates 1/5/10 won 5/8, 4/8, and 5/8 respectively against easy scripted red;
+masked-random won 0/8 and the teacher 8/8. The final checkpoint averaged 66.75
+decisions with zero rejected actions. This advances `1v1-easy-scripted`; the
+3v3 and later gates remain closed.
+
 Replay either learned episode through the existing UI after starting
 `npm run dev` from the repository root:
 
