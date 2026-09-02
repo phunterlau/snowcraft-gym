@@ -1174,6 +1174,22 @@ MSE values at most `0.13`. It retains every v0 closed-loop mission threshold.
 The qualification runner audits input/result and checkpoint provenance and
 applies all checks conjunctively. Training and held-out results remain unseen.
 
+M7 counterfactual residual-adapter-v1 outcome (2026-09-02): the frozen run is
+retained as a failed gate with checkpoint digest
+`sha256:4e7c4aaf9644ce63179bbecff2ebdca05e3dee64ad24b40efc6bb96a524348f5`.
+On untouched evaluation data, primary/counterfactual action accuracy reached
+`0.841111`/`0.860139`, target MSE `0.006856`/`0.009023`, and predicted action
+change `0.084583`; teacher change was `0.090417`. Changed-teacher recall and
+strict pair accuracy were only `0.165899` and `0.084485`, failing their frozen
+thresholds. Closed loop, flank preserved five blue, hold lasted 338 decisions,
+and support achieved the first learned plan-conditioned blue win at 6–0 with
+zero rejected actions. Direct preserved three blue and withdraw lasted 259
+decisions, so those checks failed. Ten of fourteen checks passed; qualification
+digest is
+`sha256:075a610c3f60ac2a77b112a5dd1c67506b991ae29ad56db2cda1f21f0a81a5c0`.
+The next revision must weight the identifiable teacher-changed positions rather
+than letting the roughly 90% unchanged pairs dominate the counterfactual loss.
+
 ### M8 — unit-level CTDE / MAPPO
 
 Goal: add decentralized execution only after centralized plan-conditioned PPO

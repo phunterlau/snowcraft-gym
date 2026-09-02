@@ -444,6 +444,14 @@ The result distinguishes teacher action diversity from model sensitivity and
 scores both plan conditions, including strict pair accuracy only on unit-state
 pairs where the production teacher changes action type.
 
+The frozen v1 result is retained under `runs/plan_action_adapter_v1` and
+`evaluations/plan_action_adapter_v1_*.json`. It fails the conjunctive gate, but
+establishes partial closed-loop progress: the support case is a 6–0 blue win,
+flank preserves five blue, hold lasts 338 decisions, and all physical actions
+are accepted. The remaining paired-action failure is localized to low recall
+and strict accuracy on teacher-changed positions; overall accuracy or raw
+change rate must not be used to claim the gate passed.
+
 ## PPO foundation
 
 Run a short end-to-end infrastructure smoke against the first frozen curriculum

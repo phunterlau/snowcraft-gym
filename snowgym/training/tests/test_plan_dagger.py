@@ -22,7 +22,10 @@ from snowgym_training.plan_counterfactual_evaluate import (
     audit_plan_counterfactual_evaluation,
     evaluate_plan_counterfactual,
 )
-from snowgym_training.plan_counterfactual_qualification import load_spec as load_cf_gate
+from snowgym_training.plan_counterfactual_qualification import (
+    load_spec as load_cf_gate,
+    qualify as qualify_cf_gate,
+)
 from snowgym_training.trainer import train_behavior_clone
 from snowgym_training.trainer import load_training_config
 from snowgym_training.trajectory import audit_dataset
@@ -52,6 +55,16 @@ ACTION_ADAPTER_V1_CONFIG = (
 ACTION_ADAPTER_V1_QUALIFICATION = (
     ROOT / "training" / "src" / "snowgym_training" / "configs"
     / "plan_action_adapter_qualification_v1.json"
+)
+ACTION_ADAPTER_V1_CHECKPOINT = ROOT / "training" / "runs" / "plan_action_adapter_v1"
+ACTION_ADAPTER_V1_EVALUATION = (
+    ROOT / "training" / "evaluations" / "plan_action_adapter_v1_evaluation.json"
+)
+ACTION_ADAPTER_V1_CLOSED_LOOP = (
+    ROOT / "training" / "evaluations" / "plan_action_adapter_v1_closed_loop.json"
+)
+ACTION_ADAPTER_V1_BEHAVIORS = (
+    ROOT / "training" / "evaluations" / "plan_action_adapter_v1_behaviors.json"
 )
 ACTION_ADAPTER_QUALIFICATION = (
     ROOT / "training" / "src" / "snowgym_training" / "configs"
@@ -138,6 +151,25 @@ def test_frozen_plan_action_adapter_gate_is_audited_and_retains_failure(tmp_path
             behaviors_path=ACTION_ADAPTER_BEHAVIORS,
             output=tmp_path / "tampered-result.json",
         )
+
+
+def test_counterfactual_adapter_v1_gate_retains_partial_closed_loop_progress(
+    tmp_path: Path,
+) -> None:
+    result = qualify_cf_gate(
+        spec_path=ACTION_ADAPTER_V1_QUALIFICATION,
+        checkpoint=ACTION_ADAPTER_V1_CHECKPOINT,
+        paired_path=ACTION_ADAPTER_V1_EVALUATION,
+        closed_loop_path=ACTION_ADAPTER_V1_CLOSED_LOOP,
+        behaviors_path=ACTION_ADAPTER_V1_BEHAVIORS,
+        output=tmp_path / "v1-qualification.json",
+    )
+    assert result["passed"] is False
+    assert result["checks"]["predictedActionChangeRate"] is True
+    assert result["checks"]["changedTeacherPredictionRecall"] is False
+    assert result["checks"]["flankBlueAlive"] is True
+    assert result["checks"]["supportRedAlive"] is True
+    assert result["observed"]["closedLoop"]["supportRedAlive"] == 0
 
 
 def test_plan_dagger_labels_learner_visited_states_headlessly(tmp_path: Path) -> None:

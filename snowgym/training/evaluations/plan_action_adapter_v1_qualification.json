@@ -1,0 +1,49 @@
+{
+  "checkpointDigest": "sha256:4e7c4aaf9644ce63179bbecff2ebdca05e3dee64ad24b40efc6bb96a524348f5",
+  "checkpointStateDigest": "sha256:25aac11550e6d9b8ce68e4a36b86888ffacee56383291ecfa1b5b46d8417c6fd",
+  "checks": {
+    "changedTeacherPairAccuracy": false,
+    "changedTeacherPredictionRecall": false,
+    "counterfactualActionAccuracy": true,
+    "counterfactualTargetMse": true,
+    "directBlueAlive": false,
+    "flankBlueAlive": true,
+    "holdDecisions": true,
+    "predictedActionChangeRate": true,
+    "primaryActionAccuracy": true,
+    "primaryTargetMse": true,
+    "rejectedActions": true,
+    "supportRedAlive": true,
+    "teacherActionChangeRate": true,
+    "withdrawDecisions": false
+  },
+  "format": "snowgym.plan-action-adapter-counterfactual-qualification-result.v1",
+  "inputEvaluationDigests": {
+    "behaviors": "sha256:fc2a0eb18f267880f72db08367e56d042d3b16d55135a3cc7ca8728aacf33be6",
+    "closedLoop": "sha256:7e8f9dc9ee464f532645851ac2a3110cf1ab8101b10ce193ab762115ca35c44c",
+    "paired": "sha256:dac7fe0dd9053280f8090dd91ec95eae2c2f4a78bf9af88e2fff1518783c6f3e"
+  },
+  "observed": {
+    "closedLoop": {
+      "directBlueAlive": 3.0,
+      "flankBlueAlive": 5.0,
+      "holdDecisions": 338.0,
+      "rejectedActions": 0.0,
+      "supportRedAlive": 0.0,
+      "withdrawDecisions": 259.0
+    },
+    "paired": {
+      "changedTeacherPairAccuracy": 0.08448540706605223,
+      "changedTeacherPredictionRecall": 0.16589861751152074,
+      "counterfactualActionAccuracy": 0.8601388931274414,
+      "counterfactualTargetMse": 0.00902254693210125,
+      "predictedActionChangeRate": 0.08458333333333333,
+      "primaryActionAccuracy": 0.8411111235618591,
+      "primaryTargetMse": 0.006856045685708523,
+      "teacherActionChangeRate": 0.09041666666666667
+    }
+  },
+  "passed": false,
+  "qualificationDigest": "sha256:075a610c3f60ac2a77b112a5dd1c67506b991ae29ad56db2cda1f21f0a81a5c0",
+  "specDigest": "sha256:c4ef9aaa559b3624ff2b3fde6551187b14baa2f820a143551612bb2f0b227386"
+}
