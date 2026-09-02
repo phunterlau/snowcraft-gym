@@ -90,6 +90,8 @@ class EntityPolicy(nn.Module):
                     self.enemy_key(enemies),
                     self.enemy_value(enemies),
                     observation["enemy_mask"].bool(),
+                    observation["allies"][..., 2:4].float(),
+                    observation["enemies"][..., 2:4].float(),
                 )
             )
         global_context = torch.cat(
@@ -132,9 +134,18 @@ def masked_mean_max(values: Tensor, mask: Tensor) -> tuple[Tensor, Tensor]:
 
 
 def masked_enemy_attention(
-    query: Tensor, key: Tensor, value: Tensor, enemy_mask: Tensor
+    query: Tensor,
+    key: Tensor,
+    value: Tensor,
+    enemy_mask: Tensor,
+    ally_position: Tensor,
+    enemy_position: Tensor,
 ) -> Tensor:
     scores = torch.matmul(query, key.transpose(-2, -1)) / math.sqrt(query.shape[-1])
+    distance_squared = (
+        ally_position[:, :, None, :] - enemy_position[:, None, :, :]
+    ).square().sum(dim=-1)
+    scores = scores - 8.0 * distance_squared
     scores = scores.masked_fill(
         ~enemy_mask[:, None, :], torch.finfo(scores.dtype).min
     )
