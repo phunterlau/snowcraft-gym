@@ -4,6 +4,10 @@ SnowGym is an extension layer over SnowCraft for autonomous teams and future RL
 environments. Code in this directory may import the upstream engine in `src/`;
 the upstream engine must not import SnowGym.
 
+The research-grade [GPT-5.6 Luna map generator](./mapgen/README.md) creates,
+validates, evaluates, replays, and explicitly promotes exact-layout terrain
+artifacts without making rendering an agent input.
+
 ## First runnable milestone
 
 The headless server runs three policy-controlled blue units against the

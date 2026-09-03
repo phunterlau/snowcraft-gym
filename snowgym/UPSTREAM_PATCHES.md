@@ -113,3 +113,21 @@ local command wrapper only.
 
 SnowGym dependency: directs agents to the renderer-free interfaces, capability
 endpoint, safe artifact workflow, and required verification gates.
+
+## `package.json`, `src/main.ts`, and `src/physics/Pathfinding.ts` (map generator)
+
+Reason: the constrained map-generation side tool needs a root entry point,
+explicit promotion into the browser catalog, and authoritative reachability
+checks for blockers whose player-radius inflation reaches an arena edge.
+
+Change: added `npm run snowgym:mapgen`, a generated-map insertion marker in the
+browser map list, and clamped partially out-of-grid inflated obstacle bounds in
+the existing path grid instead of dropping those obstacles from pathfinding.
+
+Upstream behavior: existing maps, menu entries, and controls are unchanged. The
+pathfinding correction only affects blockers touching an arena boundary; they
+now remain blockers instead of disappearing from the coarse grid.
+
+SnowGym dependency: generated maps remain isolated artifacts until an explicit
+promotion, and their deterministic playability validator uses the same path
+geometry as simulation movement.

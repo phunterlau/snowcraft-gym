@@ -1463,6 +1463,35 @@ M10 exit: the benchmark quantifies where the slow-command/fast-executor
 hierarchy fails and whether late-bound group plans degrade more gracefully than
 individual exact assignments.
 
+### Side tool — constrained LLM map generation (G0–G3 implemented)
+
+- [x] Add a dedicated `snowgym/mapgen/` tool and root command using the exact
+      `gpt-5.6-luna` model, strict Responses API output, environment-only
+      credentials, `store: false`, and a two-attempt draft/repair ceiling.
+- [x] Restrict generation to current map elements and effective attributes;
+      reject ignored rotation, invalid footprints, blocked/overlapping spawns,
+      disconnected engagement space, and maps above fixed Gym capacities.
+- [x] Canonicalize accepted geometry and retain request/map hashes, source
+      revision, provider request IDs, latency, token use, attempts, and complete
+      validation history as immutable artifact lineage.
+- [x] Run generated maps directly through the renderer-free environment without
+      adding arbitrary file paths to the live server/Gym contract; emit paired
+      normal/swapped-spawn evaluations and optional standard visual replays.
+- [x] Add bounded suite generation with explicit development/evaluation labels
+      and an explicit promotion command that updates browser and headless static
+      catalogs only after validation.
+
+Research boundary: generated artifacts enable validity/repair, diversity,
+difficulty, side-bias, policy-transfer, and commander-stress experiments. They
+do not count as evidence of policy generalization until frozen policies run on
+sealed maps, and offline outcomes are not causal claims. New terrain types,
+model-authored behavior flags, arbitrary server file loading, and pixels as
+agent input remain out of scope.
+
+Map-generator commits require provider-mock, geometry, artifact, replay,
+promotion, full TypeScript, build, and Python gates. Live Luna generation is an
+explicitly approved acceptance step and never part of `npm test`.
+
 ### Immediate commit sequence and gates
 
 1. Training scaffold, trajectory schema, semantic-action inversion, and small

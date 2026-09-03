@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "snowgym.map-suite.v0",
+  "maps": [
+    {
+      "id": "dev-lanes-mirror-10v10",
+      "brief": "A balanced two-lane battlefield with a contestable center and alternate flanking routes.",
+      "blueCapacity": 10,
+      "redCapacity": 10,
+      "width": 64,
+      "height": 48,
+      "topology": "lanes",
+      "symmetry": "mirror",
+      "density": "medium",
+      "objectBudget": 40,
+      "desiredCover": "medium",
+      "split": "development",
+      "tags": ["generalization-v0", "two-lane"]
+    },
+    {
+      "id": "dev-chokepoint-asymmetric-6v10",
+      "brief": "An asymmetric 6-blue versus 10-red stress map where the smaller blue force has defensible cover and multiple escape routes.",
+      "blueCapacity": 6,
+      "redCapacity": 10,
+      "width": 64,
+      "height": 48,
+      "topology": "chokepoint",
+      "symmetry": "asymmetric",
+      "density": "medium",
+      "objectBudget": 42,
+      "desiredCover": "high",
+      "split": "development",
+      "tags": ["generalization-v0", "understrength-blue", "commander-stress"]
+    }
+  ]
+}

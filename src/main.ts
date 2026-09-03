@@ -41,6 +41,7 @@ const MAPS = [
   { label: 'Pine Forest', value: 'arena4.json' },
   { label: 'Schoolyard Scramble', value: 'arena5.json' },
   { label: 'Winter Front', value: 'arena6.json' },
+  // MAPGEN_PROMOTED_MAPS
 ] as const;
 
 const DIFFICULTIES = [

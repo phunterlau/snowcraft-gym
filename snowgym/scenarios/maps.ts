@@ -254,6 +254,7 @@ const MAP_DATA: Record<string, MapData> = {
       { team: Team.Enemy, x: 28, y: 18 },
     ],
   },
+  // MAPGEN_PROMOTED_MAPS
 };
 
 export const MAP_IDS: readonly string[] = Object.keys(MAP_DATA);

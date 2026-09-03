@@ -15,6 +15,7 @@
     "test:watch": "vitest",
     "snowgym:server": "tsx snowgym/server/main.ts",
     "snowgym:example": "tsx snowgym/examples/main.ts",
+    "snowgym:mapgen": "node --import tsx snowgym/mapgen/main.ts",
     "snowgym:replay:smoke": "node snowgym/replay/smoke.mjs",
     "snowgym:commander:benchmark": "node --import tsx snowgym/orchestration/examples/commander-latency-benchmark.ts",
     "smoke": "node scripts/smoke.mjs",
