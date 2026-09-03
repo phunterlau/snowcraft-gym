@@ -7,6 +7,9 @@ free of Torch.
 The repository-owned model architecture, inputs, variants, checkpoints, and M7
 execution boundary are documented in the
 [`snowgym_training/executor` guide](./src/snowgym_training/executor/README.md).
+The implemented behavior-cloning, hybrid-action, GAE, PPO, reward-shaping, and
+plan-counterfactual equations are collected in the
+[`training/math` reference](./math/README.md).
 
 Set up only the data tools:
 

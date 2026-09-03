@@ -9,6 +9,8 @@ tensors into physical actions at the normal decision rate.
 The canonical implementation is [`model.py`](./model.py). The former
 `snowgym_training.model` module is a compatibility export so existing scripts,
 tests, and checkpoint tooling continue to load unchanged.
+The equations used by this model and its trainers are derived in the
+[`training/math` reference](../../../math/README.md).
 
 ## Ownership and boundaries
 
