@@ -1439,6 +1439,15 @@ reported on the same held-out scenarios.
 
 ### M10 — latency and generalization benchmark
 
+M10 deterministic latency-runner foundation (2026-09-02):
+`CommanderLatencyBenchmark` executes the trajectory-aware mock commander over
+a validated seed-by-latency matrix and emits episode outcomes, request/plan/
+signal counts, aggregate metrics, and a semantic digest. The CLI defaults to
+0, 100, 250, 500 ms and 1, 2, 4, 8 simulated seconds at 60 Hz, supports M-vs-N
+and maps, and refuses accidental overwrite. Tests prove complete matrices,
+exact reruns, tamper detection, and preflight rejection. Strategy baselines and
+frozen benchmark specs remain next.
+
 - [ ] Sweep simulated commander latency at 0, 100, 250, 500 ms and 1, 2, 4,
       and 8 seconds; run separately authorized real-latency checks only after
       deterministic sweeps pass.

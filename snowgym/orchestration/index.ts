@@ -24,3 +24,4 @@ export * from './trace/CommanderTrace';
 export * from './trajectory/TrajectoryMonitor';
 export * from './trajectory/PlanOutcome';
 export * from './trajectory/TrajectorySignals';
+export * from './benchmark/CommanderLatencyBenchmark';

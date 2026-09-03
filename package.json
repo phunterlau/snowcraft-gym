@@ -16,6 +16,7 @@
     "snowgym:server": "tsx snowgym/server/main.ts",
     "snowgym:example": "tsx snowgym/examples/main.ts",
     "snowgym:replay:smoke": "node snowgym/replay/smoke.mjs",
+    "snowgym:commander:benchmark": "node --import tsx snowgym/orchestration/examples/commander-latency-benchmark.ts",
     "smoke": "node scripts/smoke.mjs",
     "smoke:interaction": "node scripts/interaction.mjs",
     "smoke:combat": "node scripts/combat.mjs"

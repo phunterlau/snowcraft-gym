@@ -320,3 +320,19 @@ The optional overlay follows the scrubber and shows the active symbolic plan,
 aggregate group progress and stuck fractions, and recent scheduler/lifecycle
 events. A replay without `trace=` behaves exactly as before. Both files can
 also be selected independently with the viewer's local-file controls.
+
+## Deterministic commander latency benchmark
+
+```bash
+npm run snowgym:commander:benchmark -- \
+  --seeds 11,12,13,14,15 \
+  --latency-ticks 0,6,15,30,60,120,240,480 \
+  --blue-units 10 --red-units 10 --map arena6.json \
+  --output snowgym/orchestration/artifacts/latency-v0.json --json
+```
+
+At 60 simulation Hz these ticks represent 0, 100, 250, 500 ms and 1, 2, 4,
+8 seconds. Output includes every episode, aggregate outcomes by latency, and a
+semantic digest. Existing files are not overwritten without `--force`. This
+mock benchmark is the deterministic gate before separately authorized live
+provider experiments; it does not claim LLM quality.
