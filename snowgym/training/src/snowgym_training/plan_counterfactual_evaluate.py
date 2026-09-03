@@ -14,7 +14,7 @@ from snowgym_client.encoding import ACTION_MOVE, ACTION_THROW
 
 from .checkpoint import load_checkpoint
 from .data import TrajectoryDataset
-from .model import EntityPolicy, model_config, select_action_target
+from .executor import EntityPolicy, model_config, select_action_target
 from .trajectory import audit_dataset, json_digest
 
 FORMAT = "snowgym.plan-counterfactual-evaluation.v0"

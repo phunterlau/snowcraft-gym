@@ -12,7 +12,7 @@ from torch.nn import functional as F
 
 from snowgym_client.encoding import ACTION_MOVE, ACTION_THROW
 
-from .model import select_action_target
+from .executor import select_action_target
 
 
 @dataclass(frozen=True)

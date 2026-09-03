@@ -1,0 +1,180 @@
+# SnowGym neural executor
+
+This directory owns the fast, repository-native neural policy used to control
+one SnowGym team. It is deliberately separate from the slow LLM commander:
+GPT-5.6 Luna may propose a bounded symbolic `CommandPlan`, while this local
+PyTorch model converts authoritative observations and host-resolved plan
+tensors into physical actions at the normal decision rate.
+
+The canonical implementation is [`model.py`](./model.py). The former
+`snowgym_training.model` module is a compatibility export so existing scripts,
+tests, and checkpoint tooling continue to load unchanged.
+
+## Ownership and boundaries
+
+- The architecture and training implementation are part of this repository;
+  they are not downloaded foundation-model code.
+- Checkpoint weights are trained locally from SnowGym trajectories and rewards.
+- The simulator remains independent of Torch. Python receives detached,
+  fixed-shape observations from the authoritative TypeScript environment.
+- The LLM never emits unit IDs, coordinates, or physical actions. It produces
+  only the versioned symbolic plan consumed through host-owned adapters.
+- Checkpoint metadata binds architecture, dataset, source revision, training
+  configuration, and semantic state digests. Loading uses restricted Torch
+  state loading and validates those records.
+
+Repository licensing terms are not defined by this package; they must be
+established at the repository level before external distribution.
+
+## Data flow
+
+```text
+SnowEnvironment / SnowGymBatchEnv
+  -> detached entity tensors and legal-action masks
+  -> host-resolved plan tensors and per-unit assignments (when enabled)
+  -> EntityPolicy shared entity encoders
+  -> per-unit action type, target, and throw-power heads
+  -> Gym action validation
+  -> authoritative TypeScript step
+```
+
+The policy never reads pixels or browser state. Rendering is used only to
+replay an already-recorded trajectory.
+
+## Inputs
+
+The physical observation contains masked fixed-capacity tensors for allies,
+enemies, projectiles, and obstacles, plus team counts, simulation tick, and a
+per-unit legal-action mask. Entity rows are encoded independently and reduced
+with masked mean and maximum aggregation, which keeps the shared actor usable
+across supported roster sizes.
+
+Optional relational features add per-ally enemy attention, nearest-living-enemy
+geometry, or deterministic target priors. A plan-conditioned model additionally
+requires:
+
+| Field | Shape | Meaning |
+| --- | --- | --- |
+| `plan_groups` | `[batch, 3, 38]` | Host-resolved main, maneuver, and reserve directives |
+| `plan_group_mask` | `[batch, 3]` | Which group rows are present |
+| `plan_unit_roles` | `[batch, units, 3]` | Host-owned assignment from each living ally slot to a group |
+
+Per-unit directive features are derived inside the model by selecting the
+assigned group row. Raw entity IDs remain outside the learnable observation.
+
+## Outputs
+
+For every present ally slot, `EntityPolicy` emits:
+
+- masked categorical logits for `noop`, `move`, `throw`, and `hold`;
+- a bounded normalized two-dimensional target;
+- bounded throw power.
+
+Action-conditioned heads can learn distinct move and throw targets. Legal
+action masks are applied before selection, and absent slots can only emit the
+compatible no-op behavior.
+
+## Architecture variants
+
+`ModelConfig` defines one compatible family rather than unrelated models:
+
+| Option | Purpose |
+| --- | --- |
+| `pairwise_enemy_attention` | Adds an ally-relative masked attention summary over living enemies |
+| `action_conditioned_targets` | Separates move and throw target predictions |
+| `nearest_enemy_features` | Adds local nearest-enemy geometry to each ally actor |
+| `plan_conditioned` | Encodes the three symbolic group rows into global plan context |
+| `plan_target_only` + `separate_target_actor` | Keeps plan target learning from perturbing the physical action classifier |
+| `plan_action_adapter` | Adds a zero-initialized plan residual to action logits |
+| `plan_role_conditioned` | Conditions residuals on main, maneuver, or reserve assignment |
+| `plan_unit_directive_conditioned` | Supplies the full resolved directive for each unit's group |
+| `plan_directive_experts` | Routes residuals through separate engage, advance, hold, withdraw, and support experts |
+
+The zero-initialized adapters preserve inherited checkpoint behavior before a
+new training step. Invalid option combinations fail during configuration
+loading rather than silently changing checkpoint semantics.
+
+## Current checkpoints
+
+Representative committed artifacts are:
+
+| Artifact | Parameters | Status |
+| --- | ---: | --- |
+| `runs/plan_bc_ablation_qual_v1/plan-conditioned` | 47,649 | Passed the frozen offline plan-target qualification |
+| `runs/plan_directive_experts_v3_dev` | 145,269 | Latest mission-expert development checkpoint; retained negative closed-loop evidence |
+| `checkpoints/bc_10v10_terrain_relational_v0` | 23,495 | Successful 10v10 relational blue behavior-cloning initializer |
+
+These are small CPU-oriented policies. GPT-5.6 Luna is not embedded in any of
+these checkpoints.
+
+## Execute an existing M7 checkpoint
+
+From `snowgym/training`:
+
+```bash
+uv sync --extra dev --extra learn
+
+.venv/bin/snowgym-evaluate-plan-closed-loop \
+  --ablation runs/plan_bc_ablation_qual_v1 \
+  --conditioned-checkpoint runs/plan_directive_experts_v3_dev \
+  --suite src/snowgym_training/configs/plan_closed_loop_behaviors_v1.json \
+  --output /tmp/snowgym-m7-closed-loop.json \
+  --json
+```
+
+The command starts the persistent headless batch host itself. It needs neither
+the HTTP server nor a browser. Output paths are immutable: choose a new path for
+each run.
+
+## Train the present supervised executor
+
+The matched no-plan/plan-input trainer is useful for architecture checks:
+
+```bash
+.venv/bin/snowgym-run-plan-ablation \
+  --dataset <audited-plan-trajectory-dataset> \
+  --config src/snowgym_training/configs/plan_bc_ablation_qual_v1.json \
+  --output /tmp/snowgym-plan-ablation \
+  --json
+```
+
+Replace the placeholder with an existing audited dataset path, and never
+overwrite a retained run. The qualification-v1 checkpoint is committed, but
+its original generated training corpus is not presented here as a reusable
+path.
+DAgger collection and correction commands are documented in the package-level
+[`README.md`](../../../README.md).
+
+## M7 research status and next execution seam
+
+The plan-conditioned model has passed a frozen offline target-following gate,
+but supervised variants have not jointly solved direct, flank, hold, withdraw,
+and support behavior in closed loop. The retained failures are evidence against
+continuing unguided behavior-cloning variants.
+
+The next M7 implementation is a plan-conditioned PPO collector. It must:
+
+1. activate a validated plan after each batch reset;
+2. retrieve fresh plan tensors and assignments before every decision;
+3. store those inputs in the immutable rollout buffer;
+4. re-activate plans after selective world resets;
+5. optimize mission-aware shaping while retaining canonical terminal returns;
+6. evaluate every retained checkpoint on frozen, disjoint mission suites.
+
+Until that bridge exists, the generic `snowgym-train-ppo` command must not be
+described as plan-conditioned training: its current collector consumes only the
+physical observation.
+
+## Design invariants
+
+- Preserve legacy checkpoint shapes unless an architecture flag explicitly
+  introduces a new path.
+- Keep fixed-size tensors and masks stable across roster sizes.
+- Never put raw unit IDs, enemy IDs, or unrestricted coordinates into a
+  commander plan.
+- Keep reflexes, action validation, target replacement, and lifecycle fallback
+  host-owned.
+- Report offline imitation, closed-loop execution, and online-LLM orchestration
+  as separate evidence classes.
+- Freeze evaluation seeds and thresholds before a qualifying run; retain failed
+  artifacts instead of selecting only successful checkpoints.

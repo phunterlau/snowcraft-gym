@@ -17,7 +17,7 @@ from snowgym_client.batch import SnowGymBatchClient, SnowGymBatchEnv
 
 from .curriculum import load_curriculum
 from .checkpoint import load_checkpoint
-from .model import ModelConfig
+from .executor import ModelConfig
 from .ppo import HybridActorCritic, PPOConfig, ppo_update
 from .ppo_checkpoint import load_ppo_checkpoint, restore_ppo_checkpoint, save_ppo_checkpoint
 from .ppo_collect import SeedSchedule, collect_rollout

@@ -13,7 +13,7 @@ from snowgym_client.batch import SnowGymBatchClient, SnowGymBatchEnv
 from snowgym_client.recording import ReplayRecorder, write_replay
 
 from .curriculum import load_curriculum
-from .model import model_config
+from .executor import model_config
 from .ppo import HybridActorCritic
 from .ppo_checkpoint import load_ppo_checkpoint
 from .ppo_collect import numpy_actions, tensor_dict

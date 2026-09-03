@@ -12,7 +12,7 @@ import torch
 
 from .checkpoint import load_checkpoint
 from .data import TrajectoryDataset
-from .model import EntityPolicy, model_config
+from .executor import EntityPolicy, model_config
 from .plan_ablation import audit_plan_ablation
 from .trajectory import audit_dataset, json_digest
 

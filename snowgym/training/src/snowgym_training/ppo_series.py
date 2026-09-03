@@ -10,7 +10,7 @@ import tempfile
 from pathlib import Path
 from typing import Any
 
-from .model import ModelConfig
+from .executor import ModelConfig
 from .ppo import PPOConfig
 from .ppo_evaluate import evaluate_ppo_checkpoint
 from .ppo_checkpoint import load_ppo_checkpoint

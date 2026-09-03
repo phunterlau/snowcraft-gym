@@ -17,7 +17,7 @@ from snowgym_client.encoding import ACTION_THROW
 from .checkpoint import load_checkpoint, save_checkpoint
 from .data import TrajectoryDataset, deterministic_batch_indices, manifest_versions
 from .loss import behavior_clone_loss, loss_config
-from .model import EntityPolicy, model_config
+from .executor import EntityPolicy, model_config
 
 TRAINING_CONFIG_FORMAT = "snowgym.bc-training-config.v0"
 

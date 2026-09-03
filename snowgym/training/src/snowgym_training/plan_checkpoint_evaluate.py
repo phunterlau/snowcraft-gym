@@ -9,7 +9,7 @@ from typing import Any
 
 from .checkpoint import load_checkpoint
 from .data import TrajectoryDataset
-from .model import EntityPolicy, model_config
+from .executor import EntityPolicy, model_config
 from .plan_evaluate import _first_transition_indices, _load_array, _metrics
 from .trajectory import audit_dataset, json_digest
 

@@ -4,6 +4,10 @@ This isolated package contains reproducible data collection and the first
 behavior-cloned SnowGym policy. The core `snowgym-client` and simulator remain
 free of Torch.
 
+The repository-owned model architecture, inputs, variants, checkpoints, and M7
+execution boundary are documented in the
+[`snowgym_training/executor` guide](./src/snowgym_training/executor/README.md).
+
 Set up only the data tools:
 
 ```bash
@@ -41,8 +45,8 @@ http://127.0.0.1:5173/replay.html?recording=/replays/demo-learned-blue-seed-42.j
 
 The committed seed-42 demonstration ends with a blue win after 54 decisions
 and zero rejected actions. It exercises the learned BC checkpoint on the new
-RL-ready server/client path; the PPO module below is infrastructure only and
-does not yet provide a committed qualifying PPO checkpoint.
+RL-ready server/client path. Later sections document the committed qualifying
+centralized PPO series and the still-open plan-conditioned PPO bridge.
 
 With `npm run snowgym:server` running in another terminal, export one committed
 split specification without rendering:

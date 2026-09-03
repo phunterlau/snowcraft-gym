@@ -11,7 +11,7 @@ from torch.distributions import Categorical, Normal
 
 from snowgym_client.encoding import ACTION_MOVE, ACTION_THROW
 
-from .model import EntityPolicy, ModelConfig, select_action_target
+from .executor import EntityPolicy, ModelConfig, select_action_target
 
 EPSILON = 1e-6
 

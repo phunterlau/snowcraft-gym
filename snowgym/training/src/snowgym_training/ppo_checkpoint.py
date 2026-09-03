@@ -10,7 +10,7 @@ from typing import Any
 import torch
 
 from .checkpoint import semantic_state_digest
-from .model import model_config
+from .executor import model_config
 from .ppo import HybridActorCritic, PPOConfig
 from .trajectory import json_digest
 

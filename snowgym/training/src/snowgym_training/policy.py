@@ -11,7 +11,7 @@ from snowgym_client.encoding import GymAction, GymObservation, make_action_space
 
 from .checkpoint import load_checkpoint
 from .data import OBSERVATION_FIELDS
-from .model import EntityPolicy, model_config
+from .executor import EntityPolicy, model_config
 from .plan_data import PLAN_FEATURE_VECTOR_SIZE, PLAN_GROUP_SLOTS
 
 

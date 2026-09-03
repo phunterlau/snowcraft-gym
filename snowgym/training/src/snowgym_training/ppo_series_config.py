@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Any
 
 from .checkpoint import load_checkpoint
-from .model import model_config
+from .executor import model_config
 from .ppo import PPOConfig
 from .ppo_checkpoint import load_ppo_checkpoint
 from .ppo_series import run_ppo_series
