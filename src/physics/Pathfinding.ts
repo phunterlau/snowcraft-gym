@@ -170,9 +170,11 @@ export class PathGrid {
 
       const inflated = inflateShape(obstacle.collision, this.inflate);
       const bounds = shapeBounds(inflated);
-      const minCell = this.worldToCell(bounds.minX, bounds.minY);
-      const maxCell = this.worldToCell(bounds.maxX, bounds.maxY);
-      if (!minCell || !maxCell) continue;
+      // Clamp partially out-of-grid inflated footprints. A wall that touches
+      // the arena edge must block the edge cells rather than disappear from
+      // pathfinding merely because player-radius inflation crosses the border.
+      const minCell = this.worldToCellClamped(bounds.minX, bounds.minY);
+      const maxCell = this.worldToCellClamped(bounds.maxX, bounds.maxY);
 
       for (let y = minCell.y; y <= maxCell.y; y++) {
         for (let x = minCell.x; x <= maxCell.x; x++) {
