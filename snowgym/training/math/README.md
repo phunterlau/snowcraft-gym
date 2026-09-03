@@ -376,7 +376,7 @@ paired objective is
 $$
 L_{\mathrm{pair}}=
 L_{\mathrm{BC}}(s,P,A^*)
-+\beta L_{\mathrm{BC}}(s,P',A'^*)
++\beta L_{\mathrm{BC}}(s,P^{\prime},A^{\prime *})
 +\eta L_{\mathrm{changed}}.
 $$
 
@@ -387,7 +387,7 @@ $$
 L_{\mathrm{changed}}=
 \frac{1}{2}\left[
 \mathrm{CE}_{D}(\pi_\theta(\cdot\mid s,P),a^*)
-+\mathrm{CE}_{D}(\pi_\theta(\cdot\mid s,P'),a'^*)
++\mathrm{CE}_{D}(\pi_\theta(\cdot\mid s,P^{\prime}),a^{\prime *})
 \right].
 $$
 
