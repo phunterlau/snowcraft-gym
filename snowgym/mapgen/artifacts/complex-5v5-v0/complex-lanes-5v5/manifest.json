@@ -1,0 +1,25 @@
+{
+  "schemaVersion": "snowgym.map-artifact.v0",
+  "artifactId": "complex-lanes-5v5",
+  "createdAt": "2026-09-03T05:55:10.169Z",
+  "generatorRevision": "f1400a672c1cda88d5821a87845591f8d11bf29e",
+  "model": "gpt-5.6-luna",
+  "reasoningEffort": "medium",
+  "requestDigest": "sha256:bdb8b8ba27a129024e3d338a0b084c13c0ea82d21ea2868648648d23512b9520",
+  "mapDigest": "sha256:c2c4e737ed67117cc8ede2781a55486116bef88832b6d6eda56b1d611bf63d90",
+  "attempts": [
+    {
+      "attempt": 1,
+      "model": "gpt-5.6-luna",
+      "reasoningEffort": "medium",
+      "latencyMs": 24244.144792,
+      "responseId": "resp_02f3cfd14605232c016a990ba6482887d099fbd270b052541d",
+      "providerRequestId": "req_532cea2c35f14daabd3ca3716be1ede5",
+      "inputTokens": 548,
+      "outputTokens": 2457,
+      "reasoningTokens": 1428,
+      "cachedInputTokens": 0,
+      "outcome": "accepted"
+    }
+  ]
+}

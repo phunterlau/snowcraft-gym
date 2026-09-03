@@ -1,0 +1,92 @@
+{
+  "schemaVersion": "snowgym.map-evaluation.v0",
+  "mapDigest": "sha256:275b4c30ada2b370e48897e4d6d224c8c63d12e8265cdab520a2ec036f48e99b",
+  "episodes": [
+    {
+      "seed": 41,
+      "swappedSpawns": false,
+      "decisions": 209,
+      "ticks": 1252,
+      "terminated": true,
+      "truncated": false,
+      "winner": "blue",
+      "blueAlive": 4,
+      "redAlive": 0,
+      "rejectedActions": 0,
+      "finalStateHash": "fnv1a64:d6ec0138ffa0e4e2"
+    },
+    {
+      "seed": 41,
+      "swappedSpawns": true,
+      "decisions": 192,
+      "ticks": 1150,
+      "terminated": true,
+      "truncated": false,
+      "winner": "blue",
+      "blueAlive": 5,
+      "redAlive": 0,
+      "rejectedActions": 0,
+      "finalStateHash": "fnv1a64:4635ef021ed2f603"
+    },
+    {
+      "seed": 42,
+      "swappedSpawns": false,
+      "decisions": 1800,
+      "ticks": 10800,
+      "terminated": false,
+      "truncated": true,
+      "winner": null,
+      "blueAlive": 4,
+      "redAlive": 2,
+      "rejectedActions": 0,
+      "finalStateHash": "fnv1a64:833fc5dc4f656b63"
+    },
+    {
+      "seed": 42,
+      "swappedSpawns": true,
+      "decisions": 184,
+      "ticks": 1100,
+      "terminated": true,
+      "truncated": false,
+      "winner": "blue",
+      "blueAlive": 5,
+      "redAlive": 0,
+      "rejectedActions": 0,
+      "finalStateHash": "fnv1a64:74916602dcd9e1e2"
+    },
+    {
+      "seed": 43,
+      "swappedSpawns": false,
+      "decisions": 1800,
+      "ticks": 10800,
+      "terminated": false,
+      "truncated": true,
+      "winner": null,
+      "blueAlive": 4,
+      "redAlive": 2,
+      "rejectedActions": 0,
+      "finalStateHash": "fnv1a64:6371be3f46f2392d"
+    },
+    {
+      "seed": 43,
+      "swappedSpawns": true,
+      "decisions": 183,
+      "ticks": 1097,
+      "terminated": true,
+      "truncated": false,
+      "winner": "blue",
+      "blueAlive": 5,
+      "redAlive": 0,
+      "rejectedActions": 0,
+      "finalStateHash": "fnv1a64:edfa9e58c210e563"
+    }
+  ],
+  "summary": {
+    "episodeCount": 6,
+    "terminationRate": 0.6666666666666666,
+    "blueWinRate": 0.6666666666666666,
+    "redWinRate": 0,
+    "meanTicks": 4366.5,
+    "sideAdvantage": -0.6666666666666666
+  }
+}

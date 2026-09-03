@@ -1,0 +1,25 @@
+{
+  "schemaVersion": "snowgym.map-artifact.v0",
+  "artifactId": "complex-chokepoint-5v5",
+  "createdAt": "2026-09-03T05:56:30.199Z",
+  "generatorRevision": "f1400a672c1cda88d5821a87845591f8d11bf29e",
+  "model": "gpt-5.6-luna",
+  "reasoningEffort": "medium",
+  "requestDigest": "sha256:aedbdf0337cabe92efb2f6cf9cf2f8c9e3d9392bb26d969a79cbc524449d2780",
+  "mapDigest": "sha256:6d8df1af3d840b059e772aa0645086538d45242234a8feaa3081df6cf47cdd75",
+  "attempts": [
+    {
+      "attempt": 1,
+      "model": "gpt-5.6-luna",
+      "reasoningEffort": "medium",
+      "latencyMs": 20749.854999999996,
+      "responseId": "resp_05d8cac262a0d775016a990bf6c3dc87d0b11d7920af38c796",
+      "providerRequestId": "req_ae738d0e13f341728864cc092b5fc540",
+      "inputTokens": 561,
+      "outputTokens": 2119,
+      "reasoningTokens": 1320,
+      "cachedInputTokens": 0,
+      "outcome": "accepted"
+    }
+  ]
+}

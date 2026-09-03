@@ -1,0 +1,407 @@
+[
+  {
+    "schemaVersion": "snowgym.map-validation.v0",
+    "valid": false,
+    "mapDigest": null,
+    "findings": [
+      {
+        "severity": "error",
+        "code": "engagement_space_disconnected",
+        "path": "map.objects",
+        "message": "every spawn must have a traversable path to at least one opposing spawn"
+      },
+      {
+        "severity": "warning",
+        "code": "blocking_objects_overlap",
+        "path": "map.objects",
+        "message": "26 blocking object pairs overlap"
+      }
+    ],
+    "metrics": {
+      "obstacleCount": 44,
+      "blockingObstacleCount": 44,
+      "decorativeObstacleCount": 0,
+      "obstacleDensity": 0.019400352733686066,
+      "blockingFootprintFraction": 0.25093474426807755,
+      "overlapPairs": 26,
+      "symmetryError": 0,
+      "blueMeanPathLength": null,
+      "redMeanPathLength": null,
+      "pathLengthImbalance": null,
+      "blueMeanCoverDistance": 2.7838612966854708,
+      "redMeanCoverDistance": 2.7838612966854708,
+      "coverAccessImbalance": 0
+    }
+  },
+  {
+    "schemaVersion": "snowgym.map-validation.v0",
+    "valid": true,
+    "mapDigest": "sha256:275b4c30ada2b370e48897e4d6d224c8c63d12e8265cdab520a2ec036f48e99b",
+    "findings": [
+      {
+        "severity": "warning",
+        "code": "blocking_objects_overlap",
+        "path": "map.objects",
+        "message": "10 blocking object pairs overlap"
+      }
+    ],
+    "metrics": {
+      "obstacleCount": 44,
+      "blockingObstacleCount": 44,
+      "decorativeObstacleCount": 0,
+      "obstacleDensity": 0.019400352733686066,
+      "blockingFootprintFraction": 0.21784832451499114,
+      "overlapPairs": 10,
+      "symmetryError": 0,
+      "blueMeanPathLength": 53.22753547590035,
+      "redMeanPathLength": 53.24674461603614,
+      "pathLengthImbalance": 0.00036075708053709865,
+      "blueMeanCoverDistance": 3.1510212592491027,
+      "redMeanCoverDistance": 3.1510212592491027,
+      "coverAccessImbalance": 0
+    },
+    "canonicalMap": {
+      "name": "Rotational Snow Village Courtyard",
+      "width": 54,
+      "height": 42,
+      "objects": [
+        {
+          "type": "fence",
+          "x": -16,
+          "y": -2,
+          "width": 2,
+          "height": 7
+        },
+        {
+          "type": "fence",
+          "x": -16,
+          "y": 2,
+          "width": 2,
+          "height": 7
+        },
+        {
+          "type": "fence",
+          "x": -11,
+          "y": -7,
+          "width": 6,
+          "height": 2
+        },
+        {
+          "type": "fence",
+          "x": -11,
+          "y": 7,
+          "width": 6,
+          "height": 2
+        },
+        {
+          "type": "fence",
+          "x": -5,
+          "y": -14,
+          "width": 4,
+          "height": 2
+        },
+        {
+          "type": "fence",
+          "x": -5,
+          "y": 14,
+          "width": 4,
+          "height": 2
+        },
+        {
+          "type": "fence",
+          "x": 5,
+          "y": -14,
+          "width": 4,
+          "height": 2
+        },
+        {
+          "type": "fence",
+          "x": 5,
+          "y": 14,
+          "width": 4,
+          "height": 2
+        },
+        {
+          "type": "fence",
+          "x": 11,
+          "y": -7,
+          "width": 6,
+          "height": 2
+        },
+        {
+          "type": "fence",
+          "x": 11,
+          "y": 7,
+          "width": 6,
+          "height": 2
+        },
+        {
+          "type": "fence",
+          "x": 16,
+          "y": -2,
+          "width": 2,
+          "height": 7
+        },
+        {
+          "type": "fence",
+          "x": 16,
+          "y": 2,
+          "width": 2,
+          "height": 7
+        },
+        {
+          "type": "fort",
+          "x": -21,
+          "y": -16,
+          "width": 8,
+          "height": 3
+        },
+        {
+          "type": "fort",
+          "x": -21,
+          "y": 16,
+          "width": 8,
+          "height": 3
+        },
+        {
+          "type": "fort",
+          "x": -15,
+          "y": -19,
+          "width": 6,
+          "height": 3
+        },
+        {
+          "type": "fort",
+          "x": -15,
+          "y": 19,
+          "width": 6,
+          "height": 3
+        },
+        {
+          "type": "fort",
+          "x": 15,
+          "y": -19,
+          "width": 6,
+          "height": 3
+        },
+        {
+          "type": "fort",
+          "x": 15,
+          "y": 19,
+          "width": 6,
+          "height": 3
+        },
+        {
+          "type": "fort",
+          "x": 21,
+          "y": -16,
+          "width": 8,
+          "height": 3
+        },
+        {
+          "type": "fort",
+          "x": 21,
+          "y": 16,
+          "width": 8,
+          "height": 3
+        },
+        {
+          "type": "rock",
+          "x": -20,
+          "y": -8,
+          "radius": 1.2
+        },
+        {
+          "type": "rock",
+          "x": -20,
+          "y": 8,
+          "radius": 1.2
+        },
+        {
+          "type": "rock",
+          "x": -10,
+          "y": -15,
+          "radius": 1.2
+        },
+        {
+          "type": "rock",
+          "x": -10,
+          "y": 15,
+          "radius": 1.2
+        },
+        {
+          "type": "rock",
+          "x": 10,
+          "y": -15,
+          "radius": 1.2
+        },
+        {
+          "type": "rock",
+          "x": 10,
+          "y": 15,
+          "radius": 1.2
+        },
+        {
+          "type": "rock",
+          "x": 20,
+          "y": -8,
+          "radius": 1.2
+        },
+        {
+          "type": "rock",
+          "x": 20,
+          "y": 8,
+          "radius": 1.2
+        },
+        {
+          "type": "tree",
+          "x": -18,
+          "y": -11,
+          "radius": 1.5
+        },
+        {
+          "type": "tree",
+          "x": -18,
+          "y": 11,
+          "radius": 1.5
+        },
+        {
+          "type": "tree",
+          "x": -13,
+          "y": -13,
+          "radius": 1.5
+        },
+        {
+          "type": "tree",
+          "x": -13,
+          "y": 13,
+          "radius": 1.5
+        },
+        {
+          "type": "tree",
+          "x": -9,
+          "y": -17,
+          "radius": 1.5
+        },
+        {
+          "type": "tree",
+          "x": -9,
+          "y": 17,
+          "radius": 1.5
+        },
+        {
+          "type": "tree",
+          "x": -8,
+          "y": -8,
+          "radius": 1.5
+        },
+        {
+          "type": "tree",
+          "x": -8,
+          "y": 8,
+          "radius": 1.5
+        },
+        {
+          "type": "tree",
+          "x": 8,
+          "y": -8,
+          "radius": 1.5
+        },
+        {
+          "type": "tree",
+          "x": 8,
+          "y": 8,
+          "radius": 1.5
+        },
+        {
+          "type": "tree",
+          "x": 9,
+          "y": -17,
+          "radius": 1.5
+        },
+        {
+          "type": "tree",
+          "x": 9,
+          "y": 17,
+          "radius": 1.5
+        },
+        {
+          "type": "tree",
+          "x": 13,
+          "y": -13,
+          "radius": 1.5
+        },
+        {
+          "type": "tree",
+          "x": 13,
+          "y": 13,
+          "radius": 1.5
+        },
+        {
+          "type": "tree",
+          "x": 18,
+          "y": -11,
+          "radius": 1.5
+        },
+        {
+          "type": "tree",
+          "x": 18,
+          "y": 11,
+          "radius": 1.5
+        }
+      ],
+      "spawns": [
+        {
+          "team": "enemy",
+          "x": 23,
+          "y": -10
+        },
+        {
+          "team": "enemy",
+          "x": 23,
+          "y": -5
+        },
+        {
+          "team": "enemy",
+          "x": 23,
+          "y": 0
+        },
+        {
+          "team": "enemy",
+          "x": 23,
+          "y": 5
+        },
+        {
+          "team": "enemy",
+          "x": 23,
+          "y": 10
+        },
+        {
+          "team": "player",
+          "x": -23,
+          "y": -10
+        },
+        {
+          "team": "player",
+          "x": -23,
+          "y": -5
+        },
+        {
+          "team": "player",
+          "x": -23,
+          "y": 0
+        },
+        {
+          "team": "player",
+          "x": -23,
+          "y": 5
+        },
+        {
+          "team": "player",
+          "x": -23,
+          "y": 10
+        }
+      ]
+    }
+  }
+]

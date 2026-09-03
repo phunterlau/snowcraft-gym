@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "snowgym.map-generation-request.v0",
+  "brief": "A tactical 5v5 snow village made from several cover pockets. Each team should be able to advance pocket by pocket, flank around at least two sides, and contest an open central courtyard without blocked spawns or isolated regions.",
+  "blueCapacity": 5,
+  "redCapacity": 5,
+  "width": 54,
+  "height": 42,
+  "topology": "pockets",
+  "symmetry": "rotational",
+  "density": "dense",
+  "objectBudget": 44,
+  "desiredCover": "high",
+  "split": "development",
+  "tags": [
+    "complex-5v5-v0",
+    "cover-pockets",
+    "courtyard"
+  ]
+}

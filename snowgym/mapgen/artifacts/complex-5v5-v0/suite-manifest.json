@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "snowgym.map-suite-result.v0",
+  "sourceConfig": "/Users/hliu/github/snowcraft-gym/snowgym/mapgen/examples/complex-5v5-suite.json",
+  "model": "gpt-5.6-luna",
+  "reasoningEffort": "medium",
+  "maxRequestsPerMap": 2,
+  "maps": [
+    {
+      "id": "complex-lanes-5v5",
+      "mapDigest": "sha256:c2c4e737ed67117cc8ede2781a55486116bef88832b6d6eda56b1d611bf63d90",
+      "attempts": 1,
+      "split": "development",
+      "requestDigest": "sha256:bdb8b8ba27a129024e3d338a0b084c13c0ea82d21ea2868648648d23512b9520"
+    },
+    {
+      "id": "complex-pockets-5v5",
+      "mapDigest": "sha256:275b4c30ada2b370e48897e4d6d224c8c63d12e8265cdab520a2ec036f48e99b",
+      "attempts": 2,
+      "split": "development",
+      "requestDigest": "sha256:ff41fec65bf26a8bdf32d1818be1b04ff8c94aed85157976f2cf180946f2f33b"
+    },
+    {
+      "id": "complex-chokepoint-5v5",
+      "mapDigest": "sha256:6d8df1af3d840b059e772aa0645086538d45242234a8feaa3081df6cf47cdd75",
+      "attempts": 1,
+      "split": "development",
+      "requestDigest": "sha256:aedbdf0337cabe92efb2f6cf9cf2f8c9e3d9392bb26d969a79cbc524449d2780"
+    }
+  ]
+}

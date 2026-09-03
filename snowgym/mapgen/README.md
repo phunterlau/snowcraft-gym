@@ -100,6 +100,11 @@ A ready-to-edit development matrix lives at
 [`examples/development-suite.json`](./examples/development-suite.json). A batch
 config uses this form:
 
+The checked-in [`complex-5v5-suite.json`](./examples/complex-5v5-suite.json)
+defines multi-lane, cover-pocket, and asymmetric-chokepoint examples. Generated
+artifacts retain each accepted map, validation history, paired 5v5 evaluation,
+and visual replay under `artifacts/complex-5v5-v0/`.
+
 ```json
 {
   "schemaVersion": "snowgym.map-suite.v0",

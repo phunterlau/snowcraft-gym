@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "snowgym.map-artifact.v0",
+  "artifactId": "complex-pockets-5v5",
+  "createdAt": "2026-09-03T05:56:06.576Z",
+  "generatorRevision": "f1400a672c1cda88d5821a87845591f8d11bf29e",
+  "model": "gpt-5.6-luna",
+  "reasoningEffort": "medium",
+  "requestDigest": "sha256:ff41fec65bf26a8bdf32d1818be1b04ff8c94aed85157976f2cf180946f2f33b",
+  "mapDigest": "sha256:275b4c30ada2b370e48897e4d6d224c8c63d12e8265cdab520a2ec036f48e99b",
+  "attempts": [
+    {
+      "attempt": 1,
+      "model": "gpt-5.6-luna",
+      "reasoningEffort": "medium",
+      "latencyMs": 24443.043457999996,
+      "responseId": "resp_070d9ba26e52feb7016a990bbe6c3087d0a91f9cee7720511c",
+      "providerRequestId": "req_39f5eb90aab143ac80f08b7956fa1f12",
+      "inputTokens": 556,
+      "outputTokens": 2646,
+      "reasoningTokens": 1539,
+      "cachedInputTokens": 0,
+      "outcome": "invalid"
+    },
+    {
+      "attempt": 2,
+      "model": "gpt-5.6-luna",
+      "reasoningEffort": "medium",
+      "latencyMs": 29443.806790999995,
+      "responseId": "resp_06ec3e29d6c7993a016a990bd6d47c87d0b4ae1472897a8b6f",
+      "providerRequestId": "req_5679a61bce904496acef606d8b9d4f43",
+      "inputTokens": 1693,
+      "outputTokens": 3174,
+      "reasoningTokens": 2070,
+      "cachedInputTokens": 0,
+      "outcome": "accepted"
+    }
+  ]
+}

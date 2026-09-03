@@ -1,0 +1,50 @@
+{
+  "schemaVersion": "snowgym.map-suite.v0",
+  "maps": [
+    {
+      "id": "complex-lanes-5v5",
+      "brief": "A complex but fair 5v5 battlefield with two offset attack lanes, a dangerous exposed central crossing, protected lateral rotations, and enough gaps that no team can seal the map with one firing line.",
+      "blueCapacity": 5,
+      "redCapacity": 5,
+      "width": 56,
+      "height": 40,
+      "topology": "lanes",
+      "symmetry": "mirror",
+      "density": "dense",
+      "objectBudget": 42,
+      "desiredCover": "high",
+      "split": "development",
+      "tags": ["complex-5v5-v0", "multi-lane", "rotation"]
+    },
+    {
+      "id": "complex-pockets-5v5",
+      "brief": "A tactical 5v5 snow village made from several cover pockets. Each team should be able to advance pocket by pocket, flank around at least two sides, and contest an open central courtyard without blocked spawns or isolated regions.",
+      "blueCapacity": 5,
+      "redCapacity": 5,
+      "width": 54,
+      "height": 42,
+      "topology": "pockets",
+      "symmetry": "rotational",
+      "density": "dense",
+      "objectBudget": 44,
+      "desiredCover": "high",
+      "split": "development",
+      "tags": ["complex-5v5-v0", "cover-pockets", "courtyard"]
+    },
+    {
+      "id": "complex-chokepoint-5v5",
+      "brief": "An asymmetric 5v5 commander stress map with one obvious central chokepoint, two longer bypass routes, unequal-looking but comparable spawn access to sight-blocking cover, and no fully sealed wall from one arena edge to another.",
+      "blueCapacity": 5,
+      "redCapacity": 5,
+      "width": 60,
+      "height": 44,
+      "topology": "chokepoint",
+      "symmetry": "asymmetric",
+      "density": "medium",
+      "objectBudget": 40,
+      "desiredCover": "medium",
+      "split": "development",
+      "tags": ["complex-5v5-v0", "chokepoint", "commander-stress"]
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "snowgym.map-generation-request.v0",
+  "brief": "A complex but fair 5v5 battlefield with two offset attack lanes, a dangerous exposed central crossing, protected lateral rotations, and enough gaps that no team can seal the map with one firing line.",
+  "blueCapacity": 5,
+  "redCapacity": 5,
+  "width": 56,
+  "height": 40,
+  "topology": "lanes",
+  "symmetry": "mirror",
+  "density": "dense",
+  "objectBudget": 42,
+  "desiredCover": "high",
+  "split": "development",
+  "tags": [
+    "complex-5v5-v0",
+    "multi-lane",
+    "rotation"
+  ]
+}

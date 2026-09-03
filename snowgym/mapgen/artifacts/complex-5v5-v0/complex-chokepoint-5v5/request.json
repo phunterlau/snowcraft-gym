@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "snowgym.map-generation-request.v0",
+  "brief": "An asymmetric 5v5 commander stress map with one obvious central chokepoint, two longer bypass routes, unequal-looking but comparable spawn access to sight-blocking cover, and no fully sealed wall from one arena edge to another.",
+  "blueCapacity": 5,
+  "redCapacity": 5,
+  "width": 60,
+  "height": 44,
+  "topology": "chokepoint",
+  "symmetry": "asymmetric",
+  "density": "medium",
+  "objectBudget": 40,
+  "desiredCover": "medium",
+  "split": "development",
+  "tags": [
+    "complex-5v5-v0",
+    "chokepoint",
+    "commander-stress"
+  ]
+}
