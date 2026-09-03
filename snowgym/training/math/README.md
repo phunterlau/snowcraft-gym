@@ -40,8 +40,8 @@ Allies, enemies, projectiles, and obstacles use separate two-layer encoders.
 For entity type $k$ and row $z_{k,j}$,
 
 $$
-e_{k,j}=\operatorname{ReLU}\!\left(
-W_{k,2}\operatorname{ReLU}(W_{k,1}z_{k,j}+b_{k,1})+b_{k,2}
+e_{k,j}=\mathrm{ReLU}\!\left(
+W_{k,2}\mathrm{ReLU}(W_{k,1}z_{k,j}+b_{k,1})+b_{k,2}
 \right).
 $$
 
@@ -59,7 +59,7 @@ $$
 An empty entity set receives a zero maximum. The global physical context is
 
 $$
-g_t=\operatorname{concat}\left(
+g_t=\mathrm{concat}\left(
 \bar e_{\mathrm{ally}},e_{\mathrm{ally}}^{\max},
 \bar e_{\mathrm{enemy}},e_{\mathrm{enemy}}^{\max},
 \bar e_{\mathrm{projectile}},e_{\mathrm{projectile}}^{\max},
@@ -72,7 +72,7 @@ where $c_t$ contains normalized living-team counts. A shared actor processes
 each ally embedding together with $g_t$:
 
 $$
-h_i=f_{\mathrm{actor}}\!\left(\operatorname{concat}(e_{\mathrm{ally},i},g_t)\right).
+h_i=f_{\mathrm{actor}}\!\left(\mathrm{concat}(e_{\mathrm{ally},i},g_t)\right).
 $$
 
 Optional nearest-enemy geometry and pairwise enemy attention add ally-specific
@@ -85,8 +85,8 @@ features. Let $G\in\mathbb{R}^{R\times F}$ be the group tensor and
 $q\in\{0,1\}^R$ its row mask. The plan embedding is
 
 $$
-e_P=f_P\!\left(\operatorname{concat}
-\left(\operatorname{vec}(G\odot q),q\right)\right).
+e_P=f_P\!\left(\mathrm{concat}
+\left(\mathrm{vec}(G\odot q),q\right)\right).
 $$
 
 The host supplies a one-hot assignment $C_i\in\{0,1\}^R$ for each living ally.
@@ -134,14 +134,14 @@ $$
 The model predicts an unconstrained mean $\mu_i^x$. PPO samples
 
 $$
-u_i^x\sim\mathcal{N}(\mu_i^x,\operatorname{diag}((\sigma^x)^2)),
+u_i^x\sim\mathcal{N}(\mu_i^x,\mathrm{diag}((\sigma^x)^2)),
 \qquad
 x_i=\tanh(u_i^x).
 $$
 
 Action-conditioned models use separate means for movement and throwing. Target
 probability contributes only when $a_i$ is move or throw. With
-$u_i^x=\operatorname{atanh}(x_i)$, the change-of-variables log density is
+$u_i^x=\mathrm{atanh}(x_i)$, the change-of-variables log density is
 
 $$
 \log \pi_i^x(x_i\mid a_i,s_t)=
@@ -158,7 +158,7 @@ The unconstrained power sample and bounded action are
 $$
 u_i^p\sim\mathcal{N}(\mu_i^p,(\sigma^p)^2),
 \qquad
-p_i=\operatorname{sigmoid}(u_i^p).
+p_i=\mathrm{sigmoid}(u_i^p).
 $$
 
 Power probability contributes only when $a_i$ is throw. Its transformed log
@@ -166,7 +166,7 @@ density is
 
 $$
 \log \pi_i^p(p_i\mid s_t)=
-\log\mathcal{N}(\operatorname{logit}(p_i);\mu_i^p,\sigma^p)
+\log\mathcal{N}(\mathrm{logit}(p_i);\mu_i^p,\sigma^p)
 -\log(p_i(1-p_i)+\varepsilon).
 $$
 
@@ -273,8 +273,8 @@ Advantages are normalized over the complete time-by-world rollout:
 
 $$
 \tilde A_t=
-\frac{\hat A_t-\operatorname{mean}(\hat A)}
-     {\max(10^{-8},\operatorname{std}(\hat A))}.
+\frac{\hat A_t-\mathrm{mean}(\hat A)}
+     {\max(10^{-8},\mathrm{std}(\hat A))}.
 $$
 
 ## 8. PPO objective
@@ -295,7 +295,7 @@ L_{\mathrm{policy}}(\theta)=
 -\mathbb{E}_t\left[
 \min\left(
 \rho_t\tilde A_t,
-\operatorname{clip}(\rho_t,1-\epsilon,1+\epsilon)\tilde A_t
+\mathrm{clip}(\rho_t,1-\epsilon,1+\epsilon)\tilde A_t
 \right)
 \right].
 $$
@@ -386,8 +386,8 @@ action types differ. The changed-action term is
 $$
 L_{\mathrm{changed}}=
 \frac{1}{2}\left[
-\operatorname{CE}_{D}(\pi_\theta(\cdot\mid s,P),a^*)
-+\operatorname{CE}_{D}(\pi_\theta(\cdot\mid s,P'),a'^*)
+\mathrm{CE}_{D}(\pi_\theta(\cdot\mid s,P),a^*)
++\mathrm{CE}_{D}(\pi_\theta(\cdot\mid s,P'),a'^*)
 \right].
 $$
 
