@@ -325,3 +325,9 @@ cd snowgym/training
 
 Updates 100, 150, and 200 are evaluated; only update 200 is eligible for the
 bootstrap gate.
+
+R1e failed the final mission gate. Update 200 reached 38/40 contacts, 28/40
+hits, and 14% mean progress, but no Engage completion or physical win. The
+exact continuation demonstrates that duration improves contact and damage but
+does not approach the frozen 80% target-health reduction. The audited result is
+under `runs/m7b_engage_teacher_reservoir_r1e_continue200_v0/`.

@@ -1,0 +1,115 @@
+{
+  "artifacts": {
+    "bootstrap-report.json": "sha256:26b5a1cafd608cdc8925d105253a73c53b5c545c5009d312689e36efeb805ea2",
+    "development-evaluation-update-000100.json": "sha256:448387215c14488413c67c3e2dc69017f0f1df003032310c0a200f5fbae4c5bc",
+    "development-evaluation-update-000150.json": "sha256:c421a3ee9049df3d730dc2a2bd9b8f41973cef76d39fd10f71f2c9156bba57d9",
+    "development-evaluation-update-000200.json": "sha256:8860048108a9ef9bf1902d60d38782ff91204c6ed6f1f7741fa1bffa38ff187e",
+    "evaluation-trajectory.json": "sha256:0771f03c2007be47cc3798beafbe172fc984f6324653cf86f5bb6d3f155b09f9"
+  },
+  "bootstrapReportDigest": "sha256:d19540b0088bb1295459b33a7971a07e569e685e4a850812c5c75d41422345c6",
+  "config": {
+    "anchorTotalUpdates": 200,
+    "bcAnchorFloor": 0.05,
+    "bcLossConfig": {
+      "action_weight": 1.0,
+      "power_weight": 0.5,
+      "target_weight": 5.0,
+      "throw_action_weight": 5.0
+    },
+    "bootstrapGates": {
+      "correctMinusInitializer": 0.2,
+      "correctMinusShuffled": 0.2,
+      "correctSuccessRate": 0.5,
+      "firstContactRate": 0.8,
+      "maximumRejectedActionRate": 0.001
+    },
+    "finalUpdate": 200,
+    "format": "snowgym.engage-r1e-config.v0",
+    "intervention": "successful-teacher-bc-reservoir",
+    "option": "engage",
+    "ppoConfig": {
+      "clip_ratio": 0.2,
+      "entropy_weight": 0.01,
+      "gae_lambda": 0.9885140204,
+      "gamma": 0.9976921765,
+      "initial_power_log_std": -1.0,
+      "initial_target_log_std": -1.0,
+      "learning_rate": 0.0003,
+      "max_grad_norm": 0.5,
+      "minibatch_size": 1600,
+      "ratio_mode": "per-unit",
+      "target_kl": null,
+      "update_epochs": 4,
+      "value_weight": 0.5
+    },
+    "reservoirBcFraction": 0.9,
+    "reservoirSeedCount": 40,
+    "reservoirSeedPartition": "training",
+    "retainedUpdates": [
+      100,
+      150,
+      200
+    ],
+    "rolloutSteps": 200,
+    "selectionPolicy": "final-update-only",
+    "singleChange": "continue-r1d-training-from-100-to-200-updates",
+    "sourceCheckpointDigest": "sha256:c8be42034ce7d500d68a0c197132eeebbbd71fda8d41305a086b7ee71ac9bed4",
+    "sourceUpdate": 100,
+    "trainingSeed": 91001,
+    "worlds": 8
+  },
+  "configDigest": "sha256:c757db01a3f23bc243ff2eb053907de3ce3ef2d80c5ee64cbbdcf19daf8ff67a",
+  "evaluations": {
+    "100": {
+      "checkpointDigest": "sha256:c8be42034ce7d500d68a0c197132eeebbbd71fda8d41305a086b7ee71ac9bed4",
+      "evaluationDigest": "sha256:b0ecaac4a2ff81ed6f146ecab11b6b65f794df735ce51a0e7d969709bcfe1dd8"
+    },
+    "150": {
+      "checkpointDigest": "sha256:d1161f67ec1c5ba0ae3f1cc0dcf6fd94f6fed5562948c238ae3a0e5f4b43c7aa",
+      "evaluationDigest": "sha256:4f2b54fd60328f5f6b82754382967648a143b7c70db1a5237c39924114a60e7b"
+    },
+    "200": {
+      "checkpointDigest": "sha256:5e4feb4e1f97d2ba3a5521bcb6b4a5df8f9194ed02d4badf4a1b96304196c80c",
+      "evaluationDigest": "sha256:846ca2e11759d8c647a592bb165baa7e0eaeabfe426e178049f6b88d9219fda5"
+    }
+  },
+  "format": "snowgym.engage-r1e-run.v0",
+  "gitCommit": "3466e5a77816099183e8cf40be9bd058742b37c2",
+  "manifestDigest": "sha256:5777518926e7f30f356a9d2e3873ad879dad1a19fb670103ea028533e0e30956",
+  "passed": false,
+  "reservoir": {
+    "digest": "sha256:a1410c32a718c53664b91878852a2203247454ae0bf2dcb4caeb904b0ac334a6",
+    "episodes": 40,
+    "format": "snowgym.teacher-bc-reservoir.v0",
+    "implementationGitCommit": "1c479e4d0dd87bcfcda2488be0cbe6c328196b71",
+    "manifestDigest": "sha256:faa5e14b9de79a0a49d524bcd958a9a7b9ab536f30c454657ce6f713f31b15ec",
+    "manifestPath": "runs/m7b_engage_teacher_reservoir_v0/manifest.json",
+    "path": "runs/m7b_engage_teacher_reservoir_v0/teacher_states.npz",
+    "samples": 5367,
+    "simulationVersion": "snowgym.sim.v2",
+    "sourceCheckpointDigest": null,
+    "stateHashVersion": "snowgym.state.v2"
+  },
+  "sourceCheckpoint": {
+    "checkpointDigest": "sha256:c8be42034ce7d500d68a0c197132eeebbbd71fda8d41305a086b7ee71ac9bed4",
+    "stateDigest": "sha256:c811d9f663d83109a92df201719e0294eecb43b8e051c951409fa619634f613a",
+    "updateIndex": 100
+  },
+  "trainingRuns": {
+    "150": {
+      "checkpointDigest": "sha256:d1161f67ec1c5ba0ae3f1cc0dcf6fd94f6fed5562948c238ae3a0e5f4b43c7aa",
+      "environmentSteps": 240000,
+      "startUpdate": 100,
+      "stateDigest": "sha256:60e307fd90b5665d4b85ef4966ee9909430a0d8ef76e19bbd56116af6338adc6",
+      "targetUpdates": 150
+    },
+    "200": {
+      "checkpointDigest": "sha256:5e4feb4e1f97d2ba3a5521bcb6b4a5df8f9194ed02d4badf4a1b96304196c80c",
+      "environmentSteps": 320000,
+      "startUpdate": 150,
+      "stateDigest": "sha256:5c4a23426a3dc41ccd790a4213f6b41253578b0bdb6647bc8064572b388bce59",
+      "targetUpdates": 200
+    }
+  },
+  "trajectoryDigest": "sha256:f1b35deccac32e0a6dce27e8aa74e0d04ee3e13e3c3bc1ba81d7b3d41c1731b8"
+}

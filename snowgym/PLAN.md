@@ -953,6 +953,17 @@ Stage-1 freeze, 90% successful-teacher BC mixture, `0.05` BC floor, learner-only
 PPO data, losses, exploration, reward, discount, and training seeds. Evaluate
 updates 100, 150, and 200 and apply the bootstrap gate only to update 200.
 
+M7b-R1e result (2026-09-04): exact continuation improved update-200 contact to
+38/40, hits to 28/40, and mean mission progress to 14%, with zero rejected
+actions. It still completed 0/40 Engage missions and won 0/40 battles. The final
+bootstrap gate failed, so R1 remains open and R2 remains blocked. Training
+duration alone is insufficient under the current Stage-1/reservoir objective.
+Before another full PPO run, require a cheaper reservoir-only supervised causal
+probe that tests whether the trainable Stage-1 modules can reproduce the full
+teacher trajectory in deterministic closed loop and identifies the remaining
+action/target/power error by mission phase. Evidence is archived under
+`training/runs/m7b_engage_teacher_reservoir_r1e_continue200_v0/`.
+
 #### M7c — full-fight fixed-plan composition
 
 - [ ] Hold one-, two-, and three-role plans throughout complete 3v3, 5v5, and

@@ -488,6 +488,33 @@ def test_engage_r1d_candidate_passes_digest_audit() -> None:
     assert not manifest["passed"]
 
 
+def test_engage_r1e_candidate_passes_digest_audit() -> None:
+    root = (
+        Path(__file__).resolve().parents[1]
+        / "runs/m7b_engage_teacher_reservoir_r1e_continue200_v0"
+    )
+    manifest = audit_artifact_manifest(root, "manifest.json")
+    load_digested_json(root / "manifest.json", "manifestDigest")
+    trajectory = load_digested_json(
+        root / "evaluation-trajectory.json", "trajectoryDigest"
+    )
+    bootstrap = load_digested_json(root / "bootstrap-report.json", "reportDigest")
+    assert manifest["sourceCheckpoint"]["checkpointDigest"] == (
+        manifest["config"]["sourceCheckpointDigest"]
+    )
+    for update in (150, 200):
+        metadata, _ = load_ppo_checkpoint(root / f"update-{update:06d}/checkpoint")
+        assert metadata["collectorConfig"]["reservoirBcFraction"] == 0.9
+        assert metadata["collectorConfig"]["bcAnchorFloor"] == 0.05
+    correct = trajectory["summaries"]["200"]["correct"]
+    assert correct["contactRate"] == 0.95
+    assert correct["hitRate"] == 0.7
+    assert correct["successRate"] == 0.0
+    assert bootstrap["gates"]["firstContact"]
+    assert not bootstrap["passed"]
+    assert not manifest["passed"]
+
+
 def test_live_fixed_option_wrapper_executes_production_teacher() -> None:
     scenario = {
         "blueUnits": 3,

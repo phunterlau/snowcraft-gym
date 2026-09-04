@@ -815,6 +815,10 @@ evidence rather than a promoted executor.
 R1e continues the exact improving R1d trajectory from update 100 to update 200
 without changing its optimizer or learning mechanism. Only update 200 is gated.
 
+R1e reached 95% contact and 70% hit rate at update 200, but zero mission
+successes and zero battle wins. R1 remains open; another full PPO continuation
+requires a reservoir-only closed-loop capacity diagnostic first.
+
 The frozen `ppo_curriculum_v0.json` keeps training ranges disjoint from eight
 evaluation seeds per gate and sets thresholds before qualifying runs. Its order
 is 1v1 random, 1v1 easy scripted, 3v3 random, 3v3 easy scripted, 3v3 terrain on
