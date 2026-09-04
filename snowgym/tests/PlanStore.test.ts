@@ -82,6 +82,7 @@ describe('PlanStore', () => {
           command: reserveCommand,
           assignment: { role: 'reserve', unitIds: [1] },
           objective: source.groups[0].objective,
+          activationAnchor: { x: 0, y: 0 },
         },
       ],
     };
@@ -129,6 +130,7 @@ function groundedPlan(planId: string, sourceTick: number): GroundedPlan {
           anchor: { x: 4, y: 0 },
           enemyIds: [2],
         },
+        activationAnchor: { x: -10, y: 0 },
       },
     ],
   };

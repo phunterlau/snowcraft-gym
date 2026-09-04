@@ -338,6 +338,38 @@ def test_plan_role_conditioning_requires_and_uses_per_unit_assignments(tmp_path:
         model(malformed)
 
 
+def test_physical_role_state_routes_owning_and_supported_rows(tmp_path: Path) -> None:
+    dataset = TrajectoryDataset(make_dataset(tmp_path / "dataset"))
+    observation, _ = dataset.batch(np.asarray([0]))
+    observation["plan_groups"] = torch.zeros((1, 3, 38), dtype=torch.float32)
+    observation["plan_group_mask"] = torch.tensor([[1, 1, 1]], dtype=torch.int8)
+    observation["plan_unit_roles"] = torch.zeros((1, 2, 3), dtype=torch.int8)
+    observation["plan_unit_roles"][0, 0, 2] = 1
+    observation["plan_groups"][0, 2, 7] = 1
+    observation["plan_groups"][0, 2, 34] = 1
+    observation["plan_role_state"] = torch.arange(60, dtype=torch.float32).reshape(1, 3, 20)
+    model = EntityPolicy(
+        ModelConfig(
+            16,
+            12,
+            24,
+            action_conditioned_targets=True,
+            plan_conditioned=True,
+            plan_target_only=True,
+            separate_target_actor=True,
+            plan_action_adapter=True,
+            plan_role_conditioned=True,
+            plan_unit_directive_conditioned=True,
+            physical_role_state_conditioned=True,
+        )
+    )
+
+    routed = model.unit_physical_role_state(observation, (1, 2))
+    torch.testing.assert_close(routed[0, 0, :20], observation["plan_role_state"][0, 2])
+    torch.testing.assert_close(routed[0, 0, 20:], observation["plan_role_state"][0, 0])
+    torch.testing.assert_close(routed[0, 1], torch.zeros(40))
+
+
 def test_plan_directive_experts_preserve_base_and_route_by_mission(tmp_path: Path) -> None:
     dataset = TrajectoryDataset(make_dataset(tmp_path / "dataset"))
     observation, _ = dataset.batch(np.asarray([0, 0]))

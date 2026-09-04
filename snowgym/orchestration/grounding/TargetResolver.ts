@@ -74,6 +74,36 @@ export class TargetResolver {
     };
   }
 
+  /** Refresh only objectives whose semantics are entity-backed at activation. */
+  refresh(
+    objective: ResolvedObjective,
+    observation: Observation,
+    assignments: readonly GroupAssignment[] = [],
+  ): ResolvedObjective {
+    if (objective.kind === 'region' || objective.kind === 'current_position') {
+      return objective;
+    }
+    if (objective.kind === 'enemy_cluster') {
+      const selected = new Set(objective.enemyIds);
+      const surviving = observation.enemies.filter(
+        (unit) => unit.alive && selected.has(unit.id),
+      );
+      if (surviving.length > 0) return { ...objective, anchor: centroid(surviving) };
+      return observation.enemies.some(({ alive }) => alive)
+        ? this.resolveEnemyCluster(objective.selector, observation)
+        : objective;
+    }
+    const assignment = findAssignment(objective.role, assignments);
+    const surviving = livingAssignmentMembers(assignment, observation);
+    return surviving.length === 0
+      ? objective
+      : {
+          ...objective,
+          anchor: centroid(surviving),
+          unitIds: [...assignment.unitIds],
+        };
+  }
+
   private resolveEnemyCluster(
     selector: EnemyClusterSelector,
     observation: Observation,
@@ -176,12 +206,19 @@ function findAssignment(role: GroupRole, assignments: readonly GroupAssignment[]
 }
 
 function assignmentCentroid(assignment: GroupAssignment, observation: Observation): Point {
-  const ids = new Set(assignment.unitIds);
-  const units = observation.allies.filter((unit) => unit.alive && ids.has(unit.id));
+  const units = livingAssignmentMembers(assignment, observation);
   if (units.length === 0) {
     throw new TargetResolutionError(`group ${assignment.role} has no living assigned units`);
   }
   return centroid(units);
+}
+
+function livingAssignmentMembers(
+  assignment: GroupAssignment,
+  observation: Observation,
+): UnitObservation[] {
+  const ids = new Set(assignment.unitIds);
+  return observation.allies.filter((unit) => unit.alive && ids.has(unit.id));
 }
 
 function clampToObservationArena(point: Point, observation: Observation): Point {

@@ -14,6 +14,11 @@ import {
   encodePlanTensor,
   planRoleSlot,
 } from '../training/plan/PlanTensorEncoder';
+import {
+  PLAN_ROLE_STATE_FEATURES,
+  PLAN_ROLE_STATE_LAYOUT,
+  encodeRoleState,
+} from '../training/plan/RoleStateEncoder';
 import { observationWith } from './orchestrationTestHelpers';
 
 describe('PlanTensorEncoder', () => {
@@ -42,6 +47,52 @@ describe('PlanTensorEncoder', () => {
     expect(reserve[PLAN_FEATURE_LAYOUT.planAge.offset]).toBeCloseTo(0.5);
     expect([...encoded.groups].every(Number.isFinite)).toBe(true);
     expect([...encoded.groups].every((value) => value >= -1 && value <= 1)).toBe(true);
+
+    const physical = encodeRoleState(
+      { plan: grounded, activatedAtTick: 60, version: 1 },
+      observation,
+    );
+    expect(physical.roleState).toHaveLength(3 * PLAN_ROLE_STATE_FEATURES);
+    expect(physical.missionProgress).toHaveLength(3);
+    expect([...physical.roleState].every(Number.isFinite)).toBe(true);
+    expect([...physical.roleState].every((value) => value >= -1 && value <= 1)).toBe(true);
+    expect([...physical.missionProgress].every((value) => value >= 0 && value <= 1)).toBe(true);
+    expect(
+      rowOf(
+        physical.roleState,
+        planRoleSlot('main'),
+        PLAN_ROLE_STATE_FEATURES,
+      )[PLAN_ROLE_STATE_LAYOUT.livingFraction.offset],
+    ).toBe(1);
+  });
+
+  it('keeps role membership and activation anchors stable through casualties', () => {
+    const initial = observationWith({
+      allies: units(3, 'blue', -10),
+      enemies: units(3, 'red', 10, 100),
+    });
+    const grounder = new PlanGrounder();
+    const grounded = grounder.ground(envelope(singlePlan('engage')), initial);
+    const assigned = [...grounded.groups[0].assignment.unitIds];
+    const activationAnchor = grounded.groups[0].activationAnchor;
+    const changed = observationWith({
+      allies: initial.allies.map((unit, index) =>
+        index === 0
+          ? { ...unit, health: 0, alive: false, state: 'defeated' as const }
+          : { ...unit, x: unit.x + 4 },
+      ),
+      enemies: initial.enemies,
+    });
+    const physical = encodeRoleState(
+      { plan: grounded, activatedAtTick: 0, version: 1 },
+      changed,
+    );
+    const main = rowOf(physical.roleState, 0, PLAN_ROLE_STATE_FEATURES);
+
+    expect(grounded.groups[0].assignment.unitIds).toEqual(assigned);
+    expect(grounded.groups[0].activationAnchor).toEqual(activationAnchor);
+    expect(main[PLAN_ROLE_STATE_LAYOUT.livingFraction.offset]).toBeCloseTo(2 / 3);
+    expect(main[PLAN_ROLE_STATE_LAYOUT.activationDisplacement.offset]).not.toBe(0);
   });
 
   it('changes directives under a counterfactual plan while keeping the same state', () => {
@@ -73,6 +124,10 @@ describe('PlanTensorEncoder', () => {
 
 function row(values: Float32Array, slot: number): Float32Array {
   return values.subarray(slot * PLAN_FEATURE_VECTOR_SIZE, (slot + 1) * PLAN_FEATURE_VECTOR_SIZE);
+}
+
+function rowOf(values: Float32Array, slot: number, width: number): Float32Array {
+  return values.subarray(slot * width, (slot + 1) * width);
 }
 
 function envelope(decision: CommandPlan): CommandPlanEnvelope {

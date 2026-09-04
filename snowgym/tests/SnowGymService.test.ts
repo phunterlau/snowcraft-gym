@@ -61,6 +61,8 @@ describe('SnowGymService', () => {
       stateHash: string;
       planGroups: number[];
       planGroupMask: number[];
+      planRoleState: number[];
+      missionProgress: number[];
       assignments: Array<{ role: string; unitIds: number[] }>;
     };
 
@@ -73,9 +75,13 @@ describe('SnowGymService', () => {
       planGroupMask: [1, 1, 1],
     });
     expect(body.planGroups).toHaveLength(114);
+    expect(body.planRoleState).toHaveLength(60);
+    expect(body.missionProgress).toHaveLength(3);
     expect(
       body.planGroups.every((value) => Number.isFinite(value) && value >= -1 && value <= 1),
     ).toBe(true);
+    expect(body.planRoleState.every((value) => Number.isFinite(value))).toBe(true);
+    expect(body.missionProgress.every((value) => value >= 0 && value <= 1)).toBe(true);
     expect(body.assignments.flatMap(({ unitIds }) => unitIds).sort((a, b) => a - b)).toEqual(
       Array.from({ length: 10 }, (_, index) => index + 1),
     );

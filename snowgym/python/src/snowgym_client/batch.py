@@ -24,6 +24,7 @@ BATCH_RESPONSE_FORMAT = "snowgym.batch-response.v0"
 BATCH_PROTOCOL_VERSION = "snowgym.batch.v0"
 PLAN_GROUP_SLOTS = 3
 PLAN_FEATURES_PER_GROUP = 38
+PLAN_ROLE_STATE_FEATURES = 20
 PLAN_ROLES = ("main", "maneuver", "reserve")
 
 
@@ -294,6 +295,12 @@ class SnowGymBatchEnv:
                 [body["planGroupMask"] for body in bodies], dtype=np.int8
             ),
             "plan_unit_roles": self._plan_unit_roles(bodies),
+            "plan_role_state": np.asarray(
+                [body["planRoleState"] for body in bodies], dtype=np.float32
+            ).reshape(self.batch_size, PLAN_GROUP_SLOTS, PLAN_ROLE_STATE_FEATURES),
+            "mission_progress": np.asarray(
+                [body["missionProgress"] for body in bodies], dtype=np.float32
+            ),
         }
         return tensors, bodies
 
@@ -345,6 +352,12 @@ class SnowGymBatchEnv:
                 [body["planGroupMask"] for body in bodies], dtype=np.int8
             ),
             "plan_unit_roles": self._plan_unit_roles(bodies),
+            "plan_role_state": np.asarray(
+                [body["planRoleState"] for body in bodies], dtype=np.float32
+            ).reshape(self.batch_size, PLAN_GROUP_SLOTS, PLAN_ROLE_STATE_FEATURES),
+            "mission_progress": np.asarray(
+                [body["missionProgress"] for body in bodies], dtype=np.float32
+            ),
         }
         actions = []
         for body in bodies:
@@ -451,6 +464,8 @@ class SnowGymBatchEnv:
                 raise RuntimeError("batch plan payload stateHash does not match world state")
             groups = body.get("planGroups")
             mask = body.get("planGroupMask")
+            role_state = body.get("planRoleState")
+            mission_progress = body.get("missionProgress")
             if (
                 not isinstance(groups, list)
                 or len(groups) != PLAN_GROUP_SLOTS * PLAN_FEATURES_PER_GROUP
@@ -470,6 +485,32 @@ class SnowGymBatchEnv:
                 or any(value not in (0, 1) or isinstance(value, bool) for value in mask)
             ):
                 raise RuntimeError("batch planGroupMask tensor is invalid")
+            if (
+                not isinstance(role_state, list)
+                or len(role_state) != PLAN_GROUP_SLOTS * PLAN_ROLE_STATE_FEATURES
+                or any(
+                    not isinstance(value, (int, float))
+                    or isinstance(value, bool)
+                    or not np.isfinite(value)
+                    or value < -1
+                    or value > 1
+                    for value in role_state
+                )
+            ):
+                raise RuntimeError("batch planRoleState tensor is invalid")
+            if (
+                not isinstance(mission_progress, list)
+                or len(mission_progress) != PLAN_GROUP_SLOTS
+                or any(
+                    not isinstance(value, (int, float))
+                    or isinstance(value, bool)
+                    or not np.isfinite(value)
+                    or value < 0
+                    or value > 1
+                    for value in mission_progress
+                )
+            ):
+                raise RuntimeError("batch missionProgress tensor is invalid")
             bodies.append(body)
         return bodies
 

@@ -263,7 +263,7 @@ export function directAdvancePlan(): CommandPlan {
 export function economyOfForcePlan(): CommandPlan {
   return {
     schemaVersion: COMMAND_PLAN_VERSION,
-    intentSummary: 'Preserve the outnumbered force, distribute fire, and fight at medium range.',
+    intentSummary: 'Preserve the outnumbered force, focus the nearest cluster, and fight at medium range.',
     groups: [
       {
         role: 'main',
@@ -271,13 +271,13 @@ export function economyOfForcePlan(): CommandPlan {
         selection: 'balanced',
         order: {
           mission: 'engage',
-          objective: { kind: 'enemy_cluster', select: 'largest' },
+          objective: { kind: 'enemy_cluster', select: 'nearest' },
           approach: 'direct',
           engagement: {
             posture: 'balanced',
-            fire: 'distributed',
+            fire: 'focus',
             preferredRange: 'medium',
-            cohesion: 'loose',
+            cohesion: 'normal',
           },
         },
       },

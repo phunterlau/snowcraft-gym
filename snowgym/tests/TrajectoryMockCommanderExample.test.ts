@@ -102,9 +102,9 @@ describe('trajectory-aware mock commander 10v10 example', () => {
       redDifficulty: 'easy',
     });
     expect(result.winner).toBe('blue');
-    expect(result.blueAlive).toBe(1);
+    expect(result.blueAlive).toBe(2);
     expect(result.redAlive).toBe(0);
-    expect(result.commanderRequests).toBe(2);
+    expect(result.commanderRequests).toBe(1);
     expect(result.rejectedActions).toBe(0);
     expect(result.planTraces[0].planId).toBe('trajectory-initial-economy-of-force');
     expect(result.planTraces[0].decision.intentSummary).toContain('outnumbered force');

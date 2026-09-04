@@ -26,7 +26,7 @@ describe('single-request commanded battle', () => {
     });
     expect(result).toMatchObject({
       rejectedActions: 0,
-      blueAlive: 9,
+      blueAlive: 8,
       redAlive: 0,
       winner: 'blue',
     });

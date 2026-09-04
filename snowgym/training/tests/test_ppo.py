@@ -99,6 +99,48 @@ def test_hybrid_policy_uses_configured_initial_exploration_scale() -> None:
     assert model.power_log_std.tolist() == [-4.0]
 
 
+def test_role_aware_critic_owns_separate_entity_pools_and_uses_physical_state() -> None:
+    observation = synthetic_observation(batch=2)
+    observation.update(
+        {
+            "plan_groups": torch.zeros((2, 3, 38)),
+            "plan_group_mask": torch.tensor([[1, 0, 0], [1, 0, 0]], dtype=torch.int8),
+            "plan_unit_roles": torch.tensor(
+                [[[1, 0, 0], [0, 0, 0]], [[1, 0, 0], [0, 0, 0]]],
+                dtype=torch.int8,
+            ),
+            "plan_role_state": torch.zeros((2, 3, 20)),
+            "mission_progress": torch.zeros((2, 3)),
+        }
+    )
+    observation["plan_groups"][:, 0, 3] = 1
+    config = ModelConfig(
+        16,
+        12,
+        24,
+        action_conditioned_targets=True,
+        plan_conditioned=True,
+        plan_target_only=True,
+        separate_target_actor=True,
+        plan_action_adapter=True,
+        plan_role_conditioned=True,
+        plan_unit_directive_conditioned=True,
+        physical_role_state_conditioned=True,
+    )
+    model = HybridActorCritic(config)
+    output = model(observation)
+
+    assert output["value"].shape == (2,)
+    assert model.policy.ally_encoder is not model.role_aware_critic.ally_encoder
+    assert (
+        model.policy.ally_encoder[0].weight.data_ptr()
+        != model.role_aware_critic.ally_encoder[0].weight.data_ptr()
+    )
+    output["value"].sum().backward()
+    assert model.role_aware_critic.value[-1].weight.grad is not None
+    assert model.policy.target_actor[0].weight.grad is None
+
+
 def test_ppo_config_rejects_unsafe_initial_exploration_scale() -> None:
     try:
         PPOConfig(initial_target_log_std=-11.0)

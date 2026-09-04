@@ -26,9 +26,9 @@ describe('delayed mock commander 10v10 example', () => {
     });
     expect(result).toMatchObject({
       rejectedActions: 0,
-      decisions: 152,
-      finalTick: 908,
-      blueAlive: 9,
+      decisions: 155,
+      finalTick: 925,
+      blueAlive: 10,
       redAlive: 0,
       winner: 'blue',
     });

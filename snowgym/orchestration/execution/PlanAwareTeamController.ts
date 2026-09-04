@@ -3,7 +3,7 @@ import type { TeamController } from '../../agents/TeamController';
 import type { Observation, UnitObservation } from '../../observations/Observation';
 import type { GroupRole } from '../command/CommandPlan';
 import type { GroupAssignment } from '../grounding/GroupAllocator';
-import { TargetResolutionError, TargetResolver } from '../grounding/TargetResolver';
+import { TargetResolver } from '../grounding/TargetResolver';
 import { centroid } from '../grounding/TacticalFrame';
 import type { PlanStore } from '../runtime/PlanStore';
 import type { GroupRuntimeSummary, UnitPolicy } from './UnitPolicy';
@@ -24,12 +24,11 @@ export class PlanAwareTeamController implements TeamController {
 
     for (const grounded of snapshot.plan.groups) {
       const livingMembers = members(grounded.assignment, observation);
-      let objective = grounded.objective;
-      try {
-        objective = this.targetResolver.resolve(grounded.command, observation, assignments);
-      } catch (error) {
-        if (!(error instanceof TargetResolutionError)) throw error;
-      }
+      const objective = this.targetResolver.refresh(
+        grounded.objective,
+        observation,
+        assignments,
+      );
       const candidateEnemies = candidatesFor(objective, observation);
       runtimes.set(grounded.role, {
         role: grounded.role,

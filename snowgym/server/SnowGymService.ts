@@ -19,15 +19,16 @@ import {
 } from '../orchestration/command/PlanValidator';
 import { PlanGrounder } from '../orchestration/grounding/PlanGrounder';
 import { GroupAllocationError } from '../orchestration/grounding/GroupAllocator';
-import { TargetResolutionError, TargetResolver } from '../orchestration/grounding/TargetResolver';
+import { TargetResolutionError } from '../orchestration/grounding/TargetResolver';
 import {
   PlanStore,
   type GroundedPlan,
-  type PlanSnapshot,
 } from '../orchestration/runtime/PlanStore';
 import { PlanAwareTeamController } from '../orchestration/execution/PlanAwareTeamController';
 import { ReactiveUnitPolicy } from '../orchestration/execution/ReactiveUnitPolicy';
 import { encodePlanTensor } from '../training/plan/PlanTensorEncoder';
+import { encodeRoleState } from '../training/plan/RoleStateEncoder';
+import { refreshPlanObjectives } from '../orchestration/runtime/PlanProjection';
 
 export interface ServiceResponse {
   status: number;
@@ -194,6 +195,7 @@ export class SnowGymService {
     const observation = this.environment.observe(Team.Player);
     const snapshot = refreshPlanObjectives(store.current(), observation);
     const tensor = encodePlanTensor(snapshot, observation, observation.tick);
+    const physical = encodeRoleState(store.current(), observation);
     return {
       planId: snapshot.plan.envelope.planId,
       version: snapshot.version,
@@ -202,6 +204,8 @@ export class SnowGymService {
       stateHash: this.environment.status().stateHash,
       planGroups: [...tensor.groups],
       planGroupMask: [...tensor.groupMask],
+      planRoleState: [...physical.roleState],
+      missionProgress: [...physical.missionProgress],
       assignments: snapshot.plan.groups.map(({ role, assignment }) => ({
         role,
         unitIds: [...assignment.unitIds],
@@ -318,31 +322,6 @@ export class SnowGymService {
     }
     return { decisions, result, ...this.snapshot() };
   }
-}
-
-function refreshPlanObjectives(
-  snapshot: PlanSnapshot,
-  observation: ReturnType<SnowEnvironment['observe']>,
-): PlanSnapshot {
-  const resolver = new TargetResolver();
-  const assignments = snapshot.plan.groups.map(({ assignment }) => assignment);
-  return {
-    ...snapshot,
-    plan: {
-      ...snapshot.plan,
-      groups: snapshot.plan.groups.map((group) => {
-        try {
-          return {
-            ...group,
-            objective: resolver.resolve(group.command, observation, assignments),
-          };
-        } catch (error) {
-          if (error instanceof TargetResolutionError) return group;
-          throw error;
-        }
-      }),
-    },
-  };
 }
 
 class RequestValidationError extends Error {}

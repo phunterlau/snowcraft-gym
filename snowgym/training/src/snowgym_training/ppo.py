@@ -12,6 +12,8 @@ from torch.distributions import Categorical, Normal
 from snowgym_client.encoding import ACTION_MOVE, ACTION_THROW
 
 from .executor import EntityPolicy, ModelConfig, select_action_target
+from .executor.model import entity_encoder, masked_mean_max
+from .plan_data import PLAN_FEATURE_VECTOR_SIZE, PLAN_GROUP_SLOTS
 
 EPSILON = 1e-6
 
@@ -244,15 +246,22 @@ class HybridActorCritic(nn.Module):
         self.power_log_std = nn.Parameter(
             torch.full((1,), float(initial_power_log_std))
         )
-        self.value_head = nn.Linear(model_config.actor_hidden, 1)
+        if model_config.physical_role_state_conditioned:
+            self.role_aware_critic = RoleAwareCentralCritic(model_config)
+        else:
+            self.value_head = nn.Linear(model_config.actor_hidden, 1)
 
     def forward(self, observation: dict[str, Tensor]) -> dict[str, Tensor]:
         prediction = self.policy(observation)
-        ally_mask = observation["ally_mask"].bool()
-        hidden = prediction["hidden"]
-        weights = ally_mask.unsqueeze(-1).to(hidden.dtype)
-        pooled = (hidden * weights).sum(dim=1) / weights.sum(dim=1).clamp_min(1.0)
-        return {**prediction, "value": self.value_head(pooled).squeeze(-1)}
+        if hasattr(self, "role_aware_critic"):
+            value = self.role_aware_critic(observation)
+        else:
+            ally_mask = observation["ally_mask"].bool()
+            hidden = prediction["hidden"]
+            weights = ally_mask.unsqueeze(-1).to(hidden.dtype)
+            pooled = (hidden * weights).sum(dim=1) / weights.sum(dim=1).clamp_min(1.0)
+            value = self.value_head(pooled).squeeze(-1)
+        return {**prediction, "value": value}
 
     def act(
         self, observation: dict[str, Tensor], *, deterministic: bool = False
@@ -330,6 +339,102 @@ class HybridActorCritic(nn.Module):
             + power_normal.entropy() * throw_mask
         ).sum(dim=-1)
         return joint_log_prob, entropy
+
+
+class RoleAwareCentralCritic(nn.Module):
+    """Independent global entity/plan/role value path for centralized training."""
+
+    def __init__(self, config: ModelConfig) -> None:
+        super().__init__()
+        embedding = config.entity_embedding
+        unit_features = 21 if config.observation_version == 3 else 10
+        projectile_features = 9 if config.observation_version == 3 else 8
+        self.ally_encoder = entity_encoder(unit_features, config)
+        self.enemy_encoder = entity_encoder(unit_features, config)
+        self.projectile_encoder = entity_encoder(projectile_features, config)
+        self.obstacle_encoder = entity_encoder(9, config)
+        self.plan_encoder = nn.Sequential(
+            nn.Linear(
+                PLAN_GROUP_SLOTS * PLAN_FEATURE_VECTOR_SIZE + PLAN_GROUP_SLOTS,
+                config.entity_hidden,
+            ),
+            nn.ReLU(),
+            nn.Linear(config.entity_hidden, embedding),
+            nn.ReLU(),
+        )
+        self.role_encoder = nn.Sequential(
+            nn.Linear(PLAN_GROUP_SLOTS * 20 + PLAN_GROUP_SLOTS, config.entity_hidden),
+            nn.ReLU(),
+            nn.Linear(config.entity_hidden, embedding),
+            nn.ReLU(),
+        )
+        self.value = nn.Sequential(
+            nn.Linear(embedding * 10 + 3, config.actor_hidden),
+            nn.ReLU(),
+            nn.Linear(config.actor_hidden, 1),
+        )
+
+    def forward(self, observation: dict[str, Tensor]) -> Tensor:
+        plan_groups = observation.get("plan_groups")
+        group_mask = observation.get("plan_group_mask")
+        role_state = observation.get("plan_role_state")
+        mission_progress = observation.get("mission_progress")
+        batch = observation["allies"].shape[0]
+        if plan_groups is None or plan_groups.shape != (
+            batch,
+            PLAN_GROUP_SLOTS,
+            PLAN_FEATURE_VECTOR_SIZE,
+        ):
+            raise ValueError("role-aware critic requires plan_groups [batch,3,38]")
+        if group_mask is None or group_mask.shape != (batch, PLAN_GROUP_SLOTS):
+            raise ValueError("role-aware critic requires plan_group_mask [batch,3]")
+        if role_state is None or role_state.shape != (batch, PLAN_GROUP_SLOTS, 20):
+            raise ValueError("role-aware critic requires plan_role_state [batch,3,20]")
+        if mission_progress is None or mission_progress.shape != (
+            batch,
+            PLAN_GROUP_SLOTS,
+        ):
+            raise ValueError("role-aware critic requires mission_progress [batch,3]")
+        mask = group_mask.bool()
+        entity_context = []
+        for values, present, encoder in (
+            (observation["allies"], observation["ally_mask"], self.ally_encoder),
+            (observation["enemies"], observation["enemy_mask"], self.enemy_encoder),
+            (
+                observation["projectiles"],
+                observation["projectile_mask"],
+                self.projectile_encoder,
+            ),
+            (observation["obstacles"], observation["obstacle_mask"], self.obstacle_encoder),
+        ):
+            entity_context.extend(masked_mean_max(encoder(values.float()), present.bool()))
+        plan = self.plan_encoder(
+            torch.cat(
+                [
+                    (plan_groups.float() * mask.unsqueeze(-1)).flatten(start_dim=1),
+                    mask.float(),
+                ],
+                dim=-1,
+            )
+        )
+        role = self.role_encoder(
+            torch.cat(
+                [
+                    (role_state.float() * mask.unsqueeze(-1)).flatten(start_dim=1),
+                    mission_progress.float() * mask.float(),
+                ],
+                dim=-1,
+            )
+        )
+        scalars = torch.cat(
+            [
+                observation["team_alive"].float()
+                / max(int(observation["allies"].shape[1]), 1),
+                torch.log1p(observation["tick"].float()) / 10.0,
+            ],
+            dim=-1,
+        )
+        return self.value(torch.cat([*entity_context, plan, role, scalars], dim=-1)).squeeze(-1)
 
 
 def conditioned_target_mean(

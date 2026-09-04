@@ -55,7 +55,7 @@ describe('TargetResolver', () => {
     );
   });
 
-  it('late-binds current-position and ally-group objectives from assignments', () => {
+  it('grounds current-position and ally-group objectives from assignments', () => {
     const observation = observationWith({
       allies: [unit(1, 'blue', -9, 1), unit(2, 'blue', -7, 3)],
     });
@@ -76,6 +76,39 @@ describe('TargetResolver', () => {
       unitIds: [1, 2],
     });
     expect(() => resolver.resolve(holdCurrentGroup(), observation)).toThrow(TargetResolutionError);
+  });
+
+  it('refreshes only entity-backed anchors while preserving selected memberships', () => {
+    const initial = observationWith({
+      allies: [unit(1, 'blue', -9, 0), unit(2, 'blue', -7, 2)],
+      enemies: [unit(10, 'red', 4, 0), unit(11, 'red', 6, 2), unit(12, 'red', 12, 0)],
+    });
+    const assignments: GroupAssignment[] = [
+      { role: 'main', unitIds: [1] },
+      { role: 'reserve', unitIds: [2] },
+    ];
+    const resolver = new TargetResolver(3);
+    const held = resolver.resolve(holdCurrentGroup(), initial, assignments);
+    const supported = resolver.resolve(supportGroup(), initial, assignments);
+    const enemy = resolver.resolve(engageGroup('nearest'), initial, assignments);
+    const changed = observationWith({
+      allies: [unit(1, 'blue', -3, 1), unit(2, 'blue', -1, 4)],
+      enemies: [
+        { ...unit(10, 'red', 8, 0), alive: false, health: 0, state: 'defeated' },
+        unit(11, 'red', 9, 3),
+        unit(12, 'red', 2, -4),
+      ],
+    });
+
+    expect(resolver.refresh(held, changed, assignments)).toEqual(held);
+    expect(resolver.refresh(supported, changed, assignments)).toMatchObject({
+      anchor: { x: -3, y: 1 },
+      unitIds: [1],
+    });
+    expect(resolver.refresh(enemy, changed, assignments)).toMatchObject({
+      anchor: { x: 9, y: 3 },
+      enemyIds: [10, 11],
+    });
   });
 
   it('rejects enemy objectives after elimination', () => {

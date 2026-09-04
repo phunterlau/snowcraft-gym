@@ -107,6 +107,8 @@ def test_batch_plan_tensors_are_host_owned_and_follow_world_ticks() -> None:
         assert tensors["plan_groups"].shape == (2, 3, 38)
         assert tensors["plan_group_mask"].tolist() == [[1, 0, 0], [1, 0, 0]]
         assert tensors["plan_unit_roles"].shape == (2, 10, 3)
+        assert tensors["plan_role_state"].shape == (2, 3, 20)
+        assert tensors["mission_progress"].shape == (2, 3)
         assert tensors["plan_unit_roles"][:, 0].tolist() == [[1, 0, 0], [1, 0, 0]]
         assert [body["stateHash"] for body in metadata] == environment.state_hashes
         assert np.all(tensors["plan_groups"][:, 0, 37] == 0)
@@ -119,6 +121,8 @@ def test_batch_plan_tensors_are_host_owned_and_follow_world_ticks() -> None:
         )
         assert preview_tensors["plan_groups"].shape == (2, 3, 38)
         assert preview_tensors["plan_unit_roles"].shape == (2, 10, 3)
+        assert preview_tensors["plan_role_state"].shape == (2, 3, 20)
+        assert preview_tensors["mission_progress"].shape == (2, 3)
         assert [body["planId"] for body in preview_metadata] == [
             "preview-left", "preview-right"
         ]

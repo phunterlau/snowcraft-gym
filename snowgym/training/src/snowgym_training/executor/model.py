@@ -49,6 +49,7 @@ class ModelConfig:
     plan_unit_directive_conditioned: bool = False
     plan_directive_experts: bool = False
     observation_version: int = 2
+    physical_role_state_conditioned: bool = False
 
     def as_dict(self) -> dict[str, int | bool]:
         value: dict[str, int | bool] = {
@@ -82,6 +83,8 @@ class ModelConfig:
             value["plan_directive_experts"] = True
         if self.observation_version != 2:
             value["observation_version"] = self.observation_version
+        if self.physical_role_state_conditioned:
+            value["physical_role_state_conditioned"] = True
         return value
 
 
@@ -164,6 +167,8 @@ class EntityPolicy(nn.Module):
                     if self.plan_unit_directive_conditioned else 0
                 )
             )
+            if self.config.physical_role_state_conditioned:
+                action_adapter_features += 40
             if self.plan_directive_experts:
                 self.plan_action_experts = nn.ModuleList([
                     zero_output_adapter(
@@ -183,6 +188,8 @@ class EntityPolicy(nn.Module):
                     if self.plan_unit_directive_conditioned else 0
                 )
             )
+            if self.config.physical_role_state_conditioned:
+                target_adapter_features += 40
             if self.plan_directive_experts:
                 self.plan_target_experts = nn.ModuleList([
                     zero_output_adapter(
@@ -210,6 +217,10 @@ class EntityPolicy(nn.Module):
             if self.plan_unit_directive_conditioned:
                 adapter_inputs.append(
                     self.unit_plan_directives(observation, action_hidden.shape[:2])
+                )
+            if self.config.physical_role_state_conditioned:
+                adapter_inputs.append(
+                    self.unit_physical_role_state(observation, action_hidden.shape[:2])
                 )
             action_adapter_input = torch.cat(adapter_inputs, dim=-1)
             action_residual = (
@@ -363,6 +374,10 @@ class EntityPolicy(nn.Module):
                 role_target_inputs.append(
                     self.unit_plan_directives(observation, allies.shape[:2])
                 )
+            if self.config.physical_role_state_conditioned:
+                role_target_inputs.append(
+                    self.unit_physical_role_state(observation, allies.shape[:2])
+                )
             target_adapter_input = torch.cat(role_target_inputs, dim=-1)
             target_residual = (
                 self.apply_plan_experts(
@@ -419,6 +434,23 @@ class EntityPolicy(nn.Module):
         if groups is None or groups.shape != expected:
             raise ValueError(f"plan_groups must have shape {list(expected)}")
         return torch.einsum("bur,brf->buf", roles, groups.float())
+
+    def unit_physical_role_state(
+        self, observation: dict[str, Tensor], batch_units: tuple[int, int]
+    ) -> Tensor:
+        roles = self.unit_plan_roles(observation, batch_units)
+        state = observation.get("plan_role_state")
+        expected = (batch_units[0], PLAN_GROUP_SLOTS, 20)
+        if state is None or state.shape != expected:
+            raise ValueError(f"plan_role_state must have shape {list(expected)}")
+        state = state.float()
+        if not bool(torch.isfinite(state).all()):
+            raise ValueError("plan_role_state must be finite")
+        owning = torch.einsum("bur,brf->buf", roles, state)
+        directives = self.unit_plan_directives(observation, batch_units)
+        supported_roles = directives[..., 34:37]
+        supported = torch.einsum("bur,brf->buf", supported_roles, state)
+        return torch.cat([owning, supported], dim=-1)
 
     @staticmethod
     def apply_plan_experts(
@@ -507,6 +539,7 @@ def model_config(value: Any) -> ModelConfig:
     }
     optional = {
         "observation_version",
+        "physical_role_state_conditioned",
         "pairwise_enemy_attention",
         "action_conditioned_targets",
         "last_enemy_move_target",
@@ -581,6 +614,13 @@ def model_config(value: Any) -> ModelConfig:
     ):
         raise ValueError(
             "architecture plan_directive_experts requires plan_unit_directive_conditioned"
+        )
+    if value.get("physical_role_state_conditioned", False) and not (
+        value.get("plan_role_conditioned", False)
+        and value.get("plan_unit_directive_conditioned", False)
+    ):
+        raise ValueError(
+            "architecture physical_role_state_conditioned requires plan role and directive conditioning"
         )
     if (
         value.get("separate_target_actor", False)

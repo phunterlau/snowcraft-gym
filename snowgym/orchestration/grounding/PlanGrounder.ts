@@ -3,6 +3,7 @@ import type { CommandPlanEnvelope, GroupRole } from '../command/CommandPlan';
 import type { GroundedPlan } from '../runtime/PlanStore';
 import { GroupAllocator } from './GroupAllocator';
 import { TargetResolver, type ResolvedObjective } from './TargetResolver';
+import { centroid } from './TacticalFrame';
 
 /** Converts one validated symbolic plan into stable assignments and initial objectives. */
 export class PlanGrounder {
@@ -37,6 +38,11 @@ export class PlanGrounder {
           command,
           assignment,
           objective: this.resolver.resolve(command, observation, assignments),
+          activationAnchor: centroid(
+            observation.allies.filter(
+              (unit) => unit.alive && assignment.unitIds.includes(unit.id),
+            ),
+          ),
         };
       }),
     };

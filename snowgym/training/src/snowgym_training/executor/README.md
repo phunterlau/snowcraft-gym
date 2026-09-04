@@ -60,6 +60,8 @@ requires:
 | `plan_groups` | `[batch, 3, 38]` | Host-resolved main, maneuver, and reserve directives |
 | `plan_group_mask` | `[batch, 3]` | Which group rows are present |
 | `plan_unit_roles` | `[batch, units, 3]` | Host-owned assignment from each living ally slot to a group |
+| `plan_role_state` | `[batch, 3, 20]` | Physical centroid, velocity, cohesion, health, readiness, objective, support, flank, and phase summaries |
+| `mission_progress` | `[batch, 3]` | Host-computed instantaneous mission progress in stable role order |
 
 Per-unit directive features are derived inside the model by selecting the
 assigned group row. Raw entity IDs remain outside the learnable observation.
@@ -91,10 +93,15 @@ compatible no-op behavior.
 | `plan_role_conditioned` | Conditions residuals on main, maneuver, or reserve assignment |
 | `plan_unit_directive_conditioned` | Supplies the full resolved directive for each unit's group |
 | `plan_directive_experts` | Routes residuals through separate engage, advance, hold, withdraw, and support experts |
+| `physical_role_state_conditioned` | Adds the owning and supported role rows to each fighter residual and selects an independent centralized role-aware critic |
 
 The zero-initialized adapters preserve inherited checkpoint behavior before a
 new training step. Invalid option combinations fail during configuration
 loading rather than silently changing checkpoint semantics.
+
+The role-aware centralized critic owns separate ally, enemy, projectile, and
+obstacle encoders. It pools global entities, symbolic plan rows, all physical
+role rows, and mission progress; it does not reuse the actor target pathway.
 
 ## Current checkpoints
 

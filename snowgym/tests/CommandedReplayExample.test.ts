@@ -23,12 +23,12 @@ describe('commanded 10v10 replay example', () => {
       { role: 'reserve', units: 1, mission: 'support' },
     ]);
     expect(result.replay.outcome).toMatchObject({
-      decisions: 164,
-      finalTick: 981,
+      decisions: 183,
+      finalTick: 1096,
       terminated: true,
       truncated: false,
       winner: 'blue',
-      blueAlive: 10,
+      blueAlive: 8,
       redAlive: 0,
     });
     for (const role of ['main', 'maneuver', 'reserve'] as const) {

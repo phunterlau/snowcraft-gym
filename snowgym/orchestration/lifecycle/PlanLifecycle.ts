@@ -191,7 +191,7 @@ export class PlanLifecycle {
     const members = livingMembers(group.assignment.unitIds, observation);
     if (members.length === 0) return false;
     try {
-      const objective = this.resolver.resolve(group.command, observation, assignments);
+      const objective = this.resolver.refresh(group.objective, observation, assignments);
       const center = centroid(members);
       return (
         Math.hypot(center.x - objective.anchor.x, center.y - objective.anchor.y) <=

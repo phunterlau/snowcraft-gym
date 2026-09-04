@@ -7,6 +7,8 @@ export interface GroundedGroupPlan {
   readonly command: GroupCommand;
   readonly assignment: GroupAssignment;
   readonly objective: ResolvedObjective;
+  /** Centroid of this stable roster at activation, retained through casualties. */
+  readonly activationAnchor: { readonly x: number; readonly y: number };
 }
 
 export interface GroundedPlan {
@@ -85,6 +87,12 @@ function validateActivation(plan: GroundedPlan, activatedAtTick: number): void {
     groundedRoles.add(grounded.role);
     if (!sameJsonValue(grounded.command, command)) {
       throw new RangeError(`grounded command does not match envelope group ${command.role}`);
+    }
+    if (
+      !Number.isFinite(grounded.activationAnchor.x) ||
+      !Number.isFinite(grounded.activationAnchor.y)
+    ) {
+      throw new RangeError(`group ${command.role} activation anchor must be finite`);
     }
     for (const unitId of grounded.assignment.unitIds) {
       if (!Number.isSafeInteger(unitId))

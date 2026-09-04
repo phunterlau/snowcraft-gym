@@ -57,8 +57,12 @@ Plan-conditioned clients activate a validated symbolic `CommandPlan` with
 guarded `POST /activate-plan`, then read `GET /plan-observation` before each
 decision. The server owns group allocation, symbolic target resolution,
 tactical-frame geometry, living-unit fractions, and plan age; the read returns
-fixed `planGroups` (three role slots by 38 features), `planGroupMask`, assignment
-metadata, tick, and state hash without advancing physics. Reset clears the
+fixed `planGroups` (three role slots by 38 features), `planGroupMask`,
+`planRoleState` (three by 20 physical features), per-role `missionProgress`,
+assignment metadata, tick, and state hash without advancing physics. Region and
+current-position anchors remain fixed from activation; selected enemy and
+supported-group anchors follow only their surviving activation-time members.
+Reset clears the
 active plan. The persistent batch host exposes the same operations as
 `activatePlan` and `planObservation` for closed-loop training.
 `GET /plan-teacher-action` is the corresponding read-only oracle seam: it runs
