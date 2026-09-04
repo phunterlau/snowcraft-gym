@@ -936,6 +936,16 @@ targets remain exclusively learner-on-policy. Preserve all other optimizer,
 seed, reward, exploration, loss, checkpoint, and evaluation settings; retain
 updates 50, 75, and 100 and gate only update 100.
 
+M7b-R1d result (2026-09-04): the update-100 checkpoint passed the contact and
+rejected-action gates but not mission-success or control-improvement gates.
+Across updates 50, 75, and 100, contact increased from 45% to 67.5% to 85%, hit
+rate increased from 12.5% to 22.5% to 52.5%, and mean mission progress reached
+8.6%. No episode completed Engage or won the full battle. The monotonic recovery
+supports continuing the exact R1d trajectory without changing its learning
+mechanism. The audited result is archived under
+`training/runs/m7b_engage_teacher_reservoir_r1d_reservoir90_v0/`; R1 remains
+open until a predeclared final checkpoint passes.
+
 #### M7c — full-fight fixed-plan composition
 
 - [ ] Hold one-, two-, and three-role plans throughout complete 3v3, 5v5, and

@@ -302,3 +302,9 @@ cd snowgym/training
 
 The runner retains updates 50, 75, and 100 and gates only update 100 under the
 frozen `configs/m7b_engage_r1d_reservoir90_v0.json` protocol.
+
+R1d failed mission success but recovered the intended trajectory monotonically.
+Contact rose from 45% to 67.5% to 85%, hit rate rose from 12.5% to 22.5% to
+52.5%, and update-100 mean progress was 8.6%. No episode completed Engage or
+won the full battle. The audited run is retained at
+`runs/m7b_engage_teacher_reservoir_r1d_reservoir90_v0/`.

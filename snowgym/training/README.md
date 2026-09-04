@@ -808,6 +808,10 @@ artifact is retained as negative evidence; it does not advance R1.
 R1d retains the BC floor and changes only the auxiliary BC mixture from 50% to
 90% successful-teacher reservoir states. PPO remains entirely learner-on-policy.
 
+R1d reached 85% contact and 52.5% hit rate at update 100, with monotonic gains
+across retained checkpoints, but no Engage completion. It remains development
+evidence rather than a promoted executor.
+
 The frozen `ppo_curriculum_v0.json` keeps training ranges disjoint from eight
 evaluation seeds per gate and sets thresholds before qualifying runs. Its order
 is 1v1 random, 1v1 easy scripted, 3v3 random, 3v3 easy scripted, 3v3 terrain on

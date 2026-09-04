@@ -1,0 +1,1224 @@
+{
+  "checkpointDigest": "sha256:a067396d0960379f928465c764827f098e27e960f0b4e0efd57a0efd03e9b71e",
+  "evaluatedOptions": [
+    "engage"
+  ],
+  "evaluationDigest": "sha256:0c4e882f09e481aaba3602421ee8f8bf202abf33de55f506bb86dfa12eb1ca28",
+  "format": "snowgym.m7b-development-evaluation.v0",
+  "inheritedHeadLearningRate": 0.0,
+  "missions": {
+    "engage": {
+      "correct": [
+        {
+          "firstContactDecision": 79,
+          "firstHitDecision": 92,
+          "physicalWin": false,
+          "progress": 0.12000000476837158,
+          "rejectedActions": 0,
+          "seed": 200000,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": 171,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200001,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200002,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": 82,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200003,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": 77,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200004,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200005,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": 186,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200006,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": 120,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200007,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": 140,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200008,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200009,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200010,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": 81,
+          "firstHitDecision": 94,
+          "physicalWin": false,
+          "progress": 0.04000002145767212,
+          "rejectedActions": 0,
+          "seed": 200011,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200012,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200013,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": 145,
+          "firstHitDecision": 188,
+          "physicalWin": false,
+          "progress": 0.04000002145767212,
+          "rejectedActions": 0,
+          "seed": 200014,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200015,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200016,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200017,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200018,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200019,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": 180,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200020,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": 178,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200021,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200022,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": 163,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200023,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200024,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": 126,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200025,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200026,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": 163,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200027,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": 166,
+          "firstHitDecision": 195,
+          "physicalWin": false,
+          "progress": 0.04000002145767212,
+          "rejectedActions": 0,
+          "seed": 200028,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": 119,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200029,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200030,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200031,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": 182,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200032,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200033,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200034,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": 79,
+          "firstHitDecision": 84,
+          "physicalWin": false,
+          "progress": 0.04000002145767212,
+          "rejectedActions": 0,
+          "seed": 200035,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200036,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200037,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200038,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200039,
+          "success": false,
+          "totalActions": 1500
+        }
+      ],
+      "initializer": [
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200000,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200001,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200002,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200003,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200004,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200005,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200006,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200007,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200008,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200009,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200010,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200011,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200012,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200013,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200014,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200015,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200016,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200017,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200018,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200019,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200020,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200021,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200022,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200023,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200024,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200025,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200026,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200027,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200028,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200029,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200030,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200031,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200032,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200033,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200034,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200035,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200036,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200037,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200038,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200039,
+          "success": false,
+          "totalActions": 1500
+        }
+      ],
+      "shuffled": [
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200000,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200001,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200002,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200003,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200004,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200005,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200006,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200007,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200008,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200009,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200010,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200011,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200012,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200013,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200014,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200015,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200016,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200017,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200018,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200019,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200020,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200021,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200022,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200023,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200024,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200025,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200026,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200027,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200028,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200029,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200030,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200031,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200032,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200033,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200034,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200035,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200036,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200037,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200038,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "firstContactDecision": null,
+          "firstHitDecision": null,
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200039,
+          "success": false,
+          "totalActions": 1500
+        }
+      ]
+    }
+  },
+  "newModuleLearningRate": 0.0003,
+  "parameterL2Change": 13.111951848629918,
+  "protocolDigest": "sha256:54c1fa4217c5bd663c3b60e967a10c9b058da3c2decb2329407860340de7748c",
+  "sourceDigest": "sha256:4119b9a3f8c0d3df69b704a8f3f813a1b38ab11ca56faffb4c4cebc2cb235133",
+  "split": "development"
+}

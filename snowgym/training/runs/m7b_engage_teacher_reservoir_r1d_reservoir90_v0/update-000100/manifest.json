@@ -1,0 +1,2547 @@
+{
+  "anchorTotalUpdates": 200,
+  "architecture": {
+    "action_conditioned_targets": true,
+    "actor_hidden": 64,
+    "entity_embedding": 24,
+    "entity_hidden": 32,
+    "observation_version": 3,
+    "plan_conditioned": true,
+    "plan_ppo_residuals": true,
+    "plan_target_only": true,
+    "separate_target_actor": true,
+    "v3_extension_adapters": true
+  },
+  "bcAnchorFloor": 0.05,
+  "bcLossConfig": {
+    "action_weight": 1.0,
+    "power_weight": 0.5,
+    "target_weight": 5.0,
+    "throw_action_weight": 5.0
+  },
+  "bcTeacherReservoir": {
+    "digest": "sha256:a1410c32a718c53664b91878852a2203247454ae0bf2dcb4caeb904b0ac334a6",
+    "episodes": 40,
+    "format": "snowgym.teacher-bc-reservoir.v0",
+    "implementationGitCommit": "1c479e4d0dd87bcfcda2488be0cbe6c328196b71",
+    "manifestDigest": "sha256:faa5e14b9de79a0a49d524bcd958a9a7b9ab536f30c454657ce6f713f31b15ec",
+    "manifestPath": "runs/m7b_engage_teacher_reservoir_v0/manifest.json",
+    "path": "runs/m7b_engage_teacher_reservoir_v0/teacher_states.npz",
+    "samples": 5367,
+    "simulationVersion": "snowgym.sim.v2",
+    "sourceCheckpointDigest": null,
+    "stateHashVersion": "snowgym.state.v2"
+  },
+  "checkpoint": {
+    "architecture": {
+      "action_conditioned_targets": true,
+      "actor_hidden": 64,
+      "entity_embedding": 24,
+      "entity_hidden": 32,
+      "observation_version": 3,
+      "plan_conditioned": true,
+      "plan_ppo_residuals": true,
+      "plan_target_only": true,
+      "separate_target_actor": true,
+      "v3_extension_adapters": true
+    },
+    "checkpointDigest": "sha256:c8be42034ce7d500d68a0c197132eeebbbd71fda8d41305a086b7ee71ac9bed4",
+    "collectorConfig": {
+      "anchorTotalUpdates": 200,
+      "bcAnchorFloor": 0.05,
+      "gateId": "m7b-engage-stage1",
+      "option": "engage",
+      "protocolDigest": "sha256:54c1fa4217c5bd663c3b60e967a10c9b058da3c2decb2329407860340de7748c",
+      "reservoirBcFraction": 0.9,
+      "rewardMode": "executor",
+      "rolloutSteps": 200,
+      "stage": 1,
+      "teacherReservoir": {
+        "digest": "sha256:a1410c32a718c53664b91878852a2203247454ae0bf2dcb4caeb904b0ac334a6",
+        "episodes": 40,
+        "format": "snowgym.teacher-bc-reservoir.v0",
+        "implementationGitCommit": "1c479e4d0dd87bcfcda2488be0cbe6c328196b71",
+        "manifestDigest": "sha256:faa5e14b9de79a0a49d524bcd958a9a7b9ab536f30c454657ce6f713f31b15ec",
+        "manifestPath": "runs/m7b_engage_teacher_reservoir_v0/manifest.json",
+        "path": "runs/m7b_engage_teacher_reservoir_v0/teacher_states.npz",
+        "samples": 5367,
+        "simulationVersion": "snowgym.sim.v2",
+        "sourceCheckpointDigest": null,
+        "stateHashVersion": "snowgym.state.v2"
+      },
+      "worlds": 8
+    },
+    "curriculumDigest": "sha256:54c1fa4217c5bd663c3b60e967a10c9b058da3c2decb2329407860340de7748c",
+    "environmentSteps": 160000,
+    "format": "snowgym.ppo-checkpoint.v0",
+    "gitCommit": "b90c3042ce7251b860673a882cb4727103228140",
+    "initialization": {
+      "checkpointDigest": "sha256:4119b9a3f8c0d3df69b704a8f3f813a1b38ab11ca56faffb4c4cebc2cb235133",
+      "datasetManifestHash": "sha256:f64e30e6458ca3d9c9a6e110aae7ae3248e6e2715a938ce323732b1e658d61e6",
+      "stateDigest": "sha256:34de1e9e5882b0c764aa8dd6596ed6ba87e395d7eb9e455036fc10a721d8c50d",
+      "type": "behavior-clone"
+    },
+    "optionSchedule": {
+      "digest": "sha256:92e6d9ef3f12a5cabc184d0ddc194726310896a919d6683728946bb10b1bfade",
+      "format": "snowgym.option-schedule.v0",
+      "length": 10000,
+      "nextIndex": 800,
+      "prefix": "m7b-engage"
+    },
+    "ppoConfig": {
+      "clip_ratio": 0.2,
+      "entropy_weight": 0.01,
+      "gae_lambda": 0.9885140204,
+      "gamma": 0.9976921765,
+      "initial_power_log_std": -1.0,
+      "initial_target_log_std": -1.0,
+      "learning_rate": 0.0003,
+      "max_grad_norm": 0.5,
+      "minibatch_size": 1600,
+      "ratio_mode": "per-unit",
+      "target_kl": null,
+      "update_epochs": 4,
+      "value_weight": 0.5
+    },
+    "seedSchedule": {
+      "maximum": 109999,
+      "minimum": 100000,
+      "nextSeed": 100800
+    },
+    "stateDigest": "sha256:c811d9f663d83109a92df201719e0294eecb43b8e051c951409fa619634f613a",
+    "trainingSeed": 91001,
+    "updateIndex": 100
+  },
+  "discounting": {
+    "decisionHz": 10,
+    "declaredReturnHalfLifeSeconds": 30,
+    "declaredTraceHalfLifeSeconds": 5,
+    "derivedGaeTraceHalfLifeSeconds": 5.000000007417392,
+    "derivedLambdaHalfLifeSeconds": 6.00000002474862,
+    "derivedReturnHalfLifeSeconds": 29.999999648310332,
+    "derivedTraceHalfLifeSeconds": 6.00000002474862,
+    "developmentSweep": {
+      "returnSeconds": [
+        15,
+        30,
+        60
+      ],
+      "traceSeconds": [
+        2,
+        5,
+        10
+      ]
+    },
+    "discountManifestVersion": 2,
+    "gaeLambda": 0.9885140204,
+    "gamma": 0.9976921765,
+    "traceDecayFactor": 0.9862327045136414
+  },
+  "environmentSteps": 160000,
+  "format": "snowgym.option-ppo-run.v0",
+  "gitCommit": "b90c3042ce7251b860673a882cb4727103228140",
+  "initialization": {
+    "checkpointDigest": "sha256:4119b9a3f8c0d3df69b704a8f3f813a1b38ab11ca56faffb4c4cebc2cb235133",
+    "datasetManifestHash": "sha256:f64e30e6458ca3d9c9a6e110aae7ae3248e6e2715a938ce323732b1e658d61e6",
+    "stateDigest": "sha256:34de1e9e5882b0c764aa8dd6596ed6ba87e395d7eb9e455036fc10a721d8c50d",
+    "type": "behavior-clone"
+  },
+  "learningRates": {
+    "new": 0.0003
+  },
+  "migration": {
+    "copiedTensors": 36,
+    "expandedInputTensors": [
+      "ally_encoder.0.weight",
+      "enemy_encoder.0.weight",
+      "projectile_encoder.0.weight"
+    ],
+    "newExtensionTensors": [
+      "ally_v3_adapter.0.bias",
+      "ally_v3_adapter.0.weight",
+      "ally_v3_adapter.2.bias",
+      "ally_v3_adapter.2.weight",
+      "enemy_v3_adapter.0.bias",
+      "enemy_v3_adapter.0.weight",
+      "enemy_v3_adapter.2.bias",
+      "enemy_v3_adapter.2.weight",
+      "projectile_v3_adapter.0.bias",
+      "projectile_v3_adapter.0.weight",
+      "projectile_v3_adapter.2.bias",
+      "projectile_v3_adapter.2.weight",
+      "v3_scalar_adapter.0.bias",
+      "v3_scalar_adapter.0.weight",
+      "v3_scalar_adapter.2.bias",
+      "v3_scalar_adapter.2.weight"
+    ],
+    "newResidualTensors": [
+      "plan_ppo_residual.0.bias",
+      "plan_ppo_residual.0.weight",
+      "plan_ppo_residual.2.bias",
+      "plan_ppo_residual.2.weight"
+    ]
+  },
+  "mode": "development",
+  "option": "engage",
+  "optionSchedule": {
+    "digest": "sha256:92e6d9ef3f12a5cabc184d0ddc194726310896a919d6683728946bb10b1bfade",
+    "format": "snowgym.option-schedule.v0",
+    "length": 10000,
+    "nextIndex": 800,
+    "prefix": "m7b-engage"
+  },
+  "optionSpec": {
+    "horizon": 200,
+    "name": "engage",
+    "role": "main"
+  },
+  "ppoConfig": {
+    "clip_ratio": 0.2,
+    "entropy_weight": 0.01,
+    "gae_lambda": 0.9885140204,
+    "gamma": 0.9976921765,
+    "initial_power_log_std": -1.0,
+    "initial_target_log_std": -1.0,
+    "learning_rate": 0.0003,
+    "max_grad_norm": 0.5,
+    "minibatch_size": 1600,
+    "ratio_mode": "per-unit",
+    "target_kl": null,
+    "update_epochs": 4,
+    "value_weight": 0.5
+  },
+  "protocolDigest": "sha256:54c1fa4217c5bd663c3b60e967a10c9b058da3c2decb2329407860340de7748c",
+  "reservoirBcFraction": 0.9,
+  "rootInitializer": {
+    "checkpointDigest": "sha256:4119b9a3f8c0d3df69b704a8f3f813a1b38ab11ca56faffb4c4cebc2cb235133",
+    "datasetManifestHash": "sha256:f64e30e6458ca3d9c9a6e110aae7ae3248e6e2715a938ce323732b1e658d61e6",
+    "stateDigest": "sha256:34de1e9e5882b0c764aa8dd6596ed6ba87e395d7eb9e455036fc10a721d8c50d"
+  },
+  "scenario": {
+    "arenaHeight": 80,
+    "arenaWidth": 100,
+    "blueUnits": 5,
+    "decisionHz": 10,
+    "maxTicks": 1800,
+    "redController": "random",
+    "redDifficulty": "easy",
+    "redUnits": 5
+  },
+  "seedSchedule": {
+    "maximum": 109999,
+    "minimum": 100000,
+    "nextSeed": 100800
+  },
+  "stage": 1,
+  "startUpdate": 75,
+  "targetUpdates": 100,
+  "trainingSeed": 91001,
+  "updates": [
+    {
+      "actionCounts": {
+        "hold": 110,
+        "move": 6886,
+        "noop": 561,
+        "throw": 443
+      },
+      "boundaryTruncations": 0,
+      "completedOptions": 8,
+      "environmentSteps": 121600,
+      "episodeOptionIds": [
+        "m7b-engage-000600",
+        "m7b-engage-000601",
+        "m7b-engage-000602",
+        "m7b-engage-000603",
+        "m7b-engage-000604",
+        "m7b-engage-000605",
+        "m7b-engage-000606",
+        "m7b-engage-000607"
+      ],
+      "episodeSeeds": [
+        100600,
+        100601,
+        100602,
+        100603,
+        100604,
+        100605,
+        100606,
+        100607
+      ],
+      "metrics": {
+        "actorClipFraction": 0.0,
+        "anchorWeights": {
+          "bc": 0.05,
+          "initializerKl": 0.005
+        },
+        "bc": 0.6518414914608002,
+        "bcAction": 0.3949154391884804,
+        "bcOnPolicy": 0.602837324142456,
+        "bcPower": 0.057025521993637085,
+        "bcReservoir": 0.6572864055633545,
+        "bcSampleMixture": {
+          "onPolicyFraction": 0.09999999999999998,
+          "teacherReservoirFraction": 0.9
+        },
+        "bcTarget": 0.03588182386010885,
+        "criticClipFraction": 0.0,
+        "initializerKl": 0.9406560212373734,
+        "maximumActorGradientNormAfterClip": 0.3812641203403473,
+        "maximumActorGradientNormBeforeClip": 0.3812641203403473,
+        "maximumCriticGradientNormAfterClip": 0.004193230997771025,
+        "maximumCriticGradientNormBeforeClip": 0.004193230997771025,
+        "maximumGradientNormBeforeClip": 0.3812641203403473,
+        "minibatches": 4,
+        "powerStd": 0.3678794503211975,
+        "ppo": -0.00970546412281692,
+        "ratioByCasualties": {
+          "0": 1.000023603439331,
+          "1": 1.0034489631652832
+        },
+        "ratioByLivingUnits": {
+          "4": 1.0034489631652832,
+          "5": 1.000023603439331
+        },
+        "ratioByRosterSize": {
+          "5": 1.0001285076141357
+        },
+        "samples": 1600,
+        "targetStd": [
+          0.3678794503211975,
+          0.3678794503211975
+        ],
+        "total": 0.027589891105890274,
+        "updateIndex": 75
+      },
+      "rejectedActions": 0,
+      "rewardSums": {
+        "canonical": 0.0,
+        "combat": -0.72,
+        "executor": -8.107817426866047,
+        "mission": -8.0,
+        "shaping": -0.03581742686604636
+      },
+      "successfulOptions": 0,
+      "teacherActionCounts": {
+        "hold": 9,
+        "move": 7195,
+        "noop": 560,
+        "throw": 236
+      },
+      "updateIndex": 75
+    },
+    {
+      "actionCounts": {
+        "hold": 98,
+        "move": 6980,
+        "noop": 481,
+        "throw": 441
+      },
+      "boundaryTruncations": 0,
+      "completedOptions": 8,
+      "environmentSteps": 123200,
+      "episodeOptionIds": [
+        "m7b-engage-000608",
+        "m7b-engage-000609",
+        "m7b-engage-000610",
+        "m7b-engage-000611",
+        "m7b-engage-000612",
+        "m7b-engage-000613",
+        "m7b-engage-000614",
+        "m7b-engage-000615"
+      ],
+      "episodeSeeds": [
+        100608,
+        100609,
+        100610,
+        100611,
+        100612,
+        100613,
+        100614,
+        100615
+      ],
+      "metrics": {
+        "actorClipFraction": 0.0,
+        "anchorWeights": {
+          "bc": 0.05,
+          "initializerKl": 0.004933333333333333
+        },
+        "bc": 0.6181478947401047,
+        "bcAction": 0.22015128284692764,
+        "bcOnPolicy": 0.4349992796778679,
+        "bcPower": 0.03531486913561821,
+        "bcReservoir": 0.6384977400302887,
+        "bcSampleMixture": {
+          "onPolicyFraction": 0.09999999999999998,
+          "teacherReservoirFraction": 0.9
+        },
+        "bcTarget": 0.03943811263889074,
+        "criticClipFraction": 0.0,
+        "initializerKl": 0.963215708732605,
+        "maximumActorGradientNormAfterClip": 0.4492673873901367,
+        "maximumActorGradientNormBeforeClip": 0.4492673873901367,
+        "maximumCriticGradientNormAfterClip": 0.002504665171727538,
+        "maximumCriticGradientNormBeforeClip": 0.002504665171727538,
+        "maximumGradientNormBeforeClip": 0.4492673873901367,
+        "minibatches": 4,
+        "powerStd": 0.3678794503211975,
+        "ppo": -0.010143951047211885,
+        "ratioByCasualties": {
+          "0": 1.0020896196365356
+        },
+        "ratioByLivingUnits": {
+          "5": 1.0020896196365356
+        },
+        "ratioByRosterSize": {
+          "5": 1.0020896196365356
+        },
+        "samples": 1600,
+        "targetStd": [
+          0.3678794503211975,
+          0.3678794503211975
+        ],
+        "total": 0.025515309534966946,
+        "updateIndex": 76
+      },
+      "rejectedActions": 0,
+      "rewardSums": {
+        "canonical": 0.0,
+        "combat": -0.4799999999999999,
+        "executor": -8.062954704302324,
+        "mission": -8.0,
+        "shaping": -0.014954704302322708
+      },
+      "successfulOptions": 0,
+      "teacherActionCounts": {
+        "hold": 5,
+        "move": 7379,
+        "noop": 481,
+        "throw": 135
+      },
+      "updateIndex": 76
+    },
+    {
+      "actionCounts": {
+        "hold": 65,
+        "move": 6894,
+        "noop": 555,
+        "throw": 486
+      },
+      "boundaryTruncations": 0,
+      "completedOptions": 8,
+      "environmentSteps": 124800,
+      "episodeOptionIds": [
+        "m7b-engage-000616",
+        "m7b-engage-000617",
+        "m7b-engage-000618",
+        "m7b-engage-000619",
+        "m7b-engage-000620",
+        "m7b-engage-000621",
+        "m7b-engage-000622",
+        "m7b-engage-000623"
+      ],
+      "episodeSeeds": [
+        100616,
+        100617,
+        100618,
+        100619,
+        100620,
+        100621,
+        100622,
+        100623
+      ],
+      "metrics": {
+        "actorClipFraction": 0.0,
+        "anchorWeights": {
+          "bc": 0.05,
+          "initializerKl": 0.004866666666666667
+        },
+        "bc": 0.602141335606575,
+        "bcAction": 0.172779843211174,
+        "bcOnPolicy": 0.40846458822488785,
+        "bcPower": 0.10790222138166428,
+        "bcReservoir": 0.6236609816551208,
+        "bcSampleMixture": {
+          "onPolicyFraction": 0.09999999999999998,
+          "teacherReservoirFraction": 0.9
+        },
+        "bcTarget": 0.03634672611951828,
+        "criticClipFraction": 0.0,
+        "initializerKl": 1.1611985266208649,
+        "maximumActorGradientNormAfterClip": 0.29089435935020447,
+        "maximumActorGradientNormBeforeClip": 0.29089435935020447,
+        "maximumCriticGradientNormAfterClip": 0.00930335745215416,
+        "maximumCriticGradientNormBeforeClip": 0.00930335745215416,
+        "maximumGradientNormBeforeClip": 0.29089435935020447,
+        "minibatches": 4,
+        "powerStd": 0.3678794503211975,
+        "ppo": -0.009742574067786336,
+        "ratioByCasualties": {
+          "0": 0.9996230602264404,
+          "1": 1.0160584449768066
+        },
+        "ratioByLivingUnits": {
+          "4": 1.0160584449768066,
+          "5": 0.9996230602264404
+        },
+        "ratioByRosterSize": {
+          "5": 0.9999107122421265
+        },
+        "samples": 1600,
+        "targetStd": [
+          0.3678794503211975,
+          0.3678794503211975
+        ],
+        "total": 0.0260156593285501,
+        "updateIndex": 77
+      },
+      "rejectedActions": 0,
+      "rewardSums": {
+        "canonical": 0.0,
+        "combat": -0.5199999999999999,
+        "executor": -8.077662999119244,
+        "mission": -8.0,
+        "shaping": -0.025662999119244967
+      },
+      "successfulOptions": 0,
+      "teacherActionCounts": {
+        "hold": 14,
+        "move": 7326,
+        "noop": 555,
+        "throw": 105
+      },
+      "updateIndex": 77
+    },
+    {
+      "actionCounts": {
+        "hold": 91,
+        "move": 6608,
+        "noop": 743,
+        "throw": 558
+      },
+      "boundaryTruncations": 0,
+      "completedOptions": 8,
+      "environmentSteps": 126400,
+      "episodeOptionIds": [
+        "m7b-engage-000624",
+        "m7b-engage-000625",
+        "m7b-engage-000626",
+        "m7b-engage-000627",
+        "m7b-engage-000628",
+        "m7b-engage-000629",
+        "m7b-engage-000630",
+        "m7b-engage-000631"
+      ],
+      "episodeSeeds": [
+        100624,
+        100625,
+        100626,
+        100627,
+        100628,
+        100629,
+        100630,
+        100631
+      ],
+      "metrics": {
+        "actorClipFraction": 0.0,
+        "anchorWeights": {
+          "bc": 0.05,
+          "initializerKl": 0.0048
+        },
+        "bc": 0.5927993655204773,
+        "bcAction": 0.2949748709797859,
+        "bcOnPolicy": 0.504707470536232,
+        "bcPower": 0.05780962202697992,
+        "bcReservoir": 0.6025873720645905,
+        "bcSampleMixture": {
+          "onPolicyFraction": 0.09999999999999998,
+          "teacherReservoirFraction": 0.9
+        },
+        "bcTarget": 0.03616555407643318,
+        "criticClipFraction": 0.0,
+        "initializerKl": 1.2251077890396118,
+        "maximumActorGradientNormAfterClip": 0.1745249181985855,
+        "maximumActorGradientNormBeforeClip": 0.1745249181985855,
+        "maximumCriticGradientNormAfterClip": 0.005327780265361071,
+        "maximumCriticGradientNormBeforeClip": 0.005327780265361071,
+        "maximumGradientNormBeforeClip": 0.1745249181985855,
+        "minibatches": 4,
+        "powerStd": 0.3678794503211975,
+        "ppo": -0.009853825671598315,
+        "ratioByCasualties": {
+          "0": 1.0004167556762695,
+          "1": 0.9987468719482422,
+          "2": 1.031238317489624
+        },
+        "ratioByLivingUnits": {
+          "3": 1.031238317489624,
+          "4": 0.9987468719482422,
+          "5": 1.0004167556762695
+        },
+        "ratioByRosterSize": {
+          "5": 1.0004243850708008
+        },
+        "samples": 1600,
+        "targetStd": [
+          0.3678794503211975,
+          0.3678794503211975
+        ],
+        "total": 0.025666660629212856,
+        "updateIndex": 78
+      },
+      "rejectedActions": 0,
+      "rewardSums": {
+        "canonical": 0.0,
+        "combat": -1.0000000000000002,
+        "executor": -8.196282396898695,
+        "mission": -8.0,
+        "shaping": -0.09628239689869511
+      },
+      "successfulOptions": 0,
+      "teacherActionCounts": {
+        "hold": 20,
+        "move": 6962,
+        "noop": 743,
+        "throw": 275
+      },
+      "updateIndex": 78
+    },
+    {
+      "actionCounts": {
+        "hold": 64,
+        "move": 6458,
+        "noop": 844,
+        "throw": 634
+      },
+      "boundaryTruncations": 0,
+      "completedOptions": 8,
+      "environmentSteps": 128000,
+      "episodeOptionIds": [
+        "m7b-engage-000632",
+        "m7b-engage-000633",
+        "m7b-engage-000634",
+        "m7b-engage-000635",
+        "m7b-engage-000636",
+        "m7b-engage-000637",
+        "m7b-engage-000638",
+        "m7b-engage-000639"
+      ],
+      "episodeSeeds": [
+        100632,
+        100633,
+        100634,
+        100635,
+        100636,
+        100637,
+        100638,
+        100639
+      ],
+      "metrics": {
+        "actorClipFraction": 0.0,
+        "anchorWeights": {
+          "bc": 0.05,
+          "initializerKl": 0.0047333333333333324
+        },
+        "bc": 0.6004081070423126,
+        "bcAction": 0.2551848664879799,
+        "bcOnPolicy": 0.46627411246299744,
+        "bcPower": 0.13486040756106377,
+        "bcReservoir": 0.6153119206428528,
+        "bcSampleMixture": {
+          "onPolicyFraction": 0.09999999999999998,
+          "teacherReservoirFraction": 0.9
+        },
+        "bcTarget": 0.02873180853202939,
+        "criticClipFraction": 0.0,
+        "initializerKl": 1.3692387640476227,
+        "maximumActorGradientNormAfterClip": 0.2824100852012634,
+        "maximumActorGradientNormBeforeClip": 0.2824100852012634,
+        "maximumCriticGradientNormAfterClip": 0.003941037692129612,
+        "maximumCriticGradientNormBeforeClip": 0.003941037692129612,
+        "maximumGradientNormBeforeClip": 0.2824100852012634,
+        "minibatches": 4,
+        "powerStd": 0.3678794503211975,
+        "ppo": -0.009551191003993154,
+        "ratioByCasualties": {
+          "0": 0.999286949634552,
+          "1": 1.0036050081253052
+        },
+        "ratioByLivingUnits": {
+          "4": 1.0036050081253052,
+          "5": 0.999286949634552
+        },
+        "ratioByRosterSize": {
+          "5": 0.9995272755622864
+        },
+        "samples": 1600,
+        "targetStd": [
+          0.3678794503211975,
+          0.3678794503211975
+        ],
+        "total": 0.026950278785079718,
+        "updateIndex": 79
+      },
+      "rejectedActions": 0,
+      "rewardSums": {
+        "canonical": 0.0,
+        "combat": -1.0400000000000007,
+        "executor": -8.206282745481797,
+        "mission": -8.0,
+        "shaping": -0.10228274548179761
+      },
+      "successfulOptions": 0,
+      "teacherActionCounts": {
+        "hold": 12,
+        "move": 6876,
+        "noop": 844,
+        "throw": 268
+      },
+      "updateIndex": 79
+    },
+    {
+      "actionCounts": {
+        "hold": 78,
+        "move": 6614,
+        "noop": 742,
+        "throw": 566
+      },
+      "boundaryTruncations": 0,
+      "completedOptions": 8,
+      "environmentSteps": 129600,
+      "episodeOptionIds": [
+        "m7b-engage-000640",
+        "m7b-engage-000641",
+        "m7b-engage-000642",
+        "m7b-engage-000643",
+        "m7b-engage-000644",
+        "m7b-engage-000645",
+        "m7b-engage-000646",
+        "m7b-engage-000647"
+      ],
+      "episodeSeeds": [
+        100640,
+        100641,
+        100642,
+        100643,
+        100644,
+        100645,
+        100646,
+        100647
+      ],
+      "metrics": {
+        "actorClipFraction": 0.0,
+        "anchorWeights": {
+          "bc": 0.05,
+          "initializerKl": 0.004666666666666667
+        },
+        "bc": 0.5874216854572296,
+        "bcAction": 0.1902756206691265,
+        "bcOnPolicy": 0.3622494637966156,
+        "bcPower": 0.03150576259940863,
+        "bcReservoir": 0.6124408543109894,
+        "bcSampleMixture": {
+          "onPolicyFraction": 0.09999999999999998,
+          "teacherReservoirFraction": 0.9
+        },
+        "bcTarget": 0.03124419040977955,
+        "criticClipFraction": 0.0,
+        "initializerKl": 1.1613404154777527,
+        "maximumActorGradientNormAfterClip": 0.28956130146980286,
+        "maximumActorGradientNormBeforeClip": 0.28956130146980286,
+        "maximumCriticGradientNormAfterClip": 0.00610710633918643,
+        "maximumCriticGradientNormBeforeClip": 0.00610710633918643,
+        "maximumGradientNormBeforeClip": 0.28956130146980286,
+        "minibatches": 4,
+        "powerStd": 0.3678794503211975,
+        "ppo": -0.009701880626380444,
+        "ratioByCasualties": {
+          "0": 0.9998939633369446,
+          "1": 1.008010745048523,
+          "2": 0.9928694367408752
+        },
+        "ratioByLivingUnits": {
+          "3": 0.9928694367408752,
+          "4": 1.008010745048523,
+          "5": 0.9998939633369446
+        },
+        "ratioByRosterSize": {
+          "5": 0.999782919883728
+        },
+        "samples": 1600,
+        "targetStd": [
+          0.3678794503211975,
+          0.3678794503211975
+        ],
+        "total": 0.025088792201131582,
+        "updateIndex": 80
+      },
+      "rejectedActions": 0,
+      "rewardSums": {
+        "canonical": 0.0,
+        "combat": -0.7600000000000001,
+        "executor": -8.1499426714547,
+        "mission": -8.0,
+        "shaping": -0.07394267145470035
+      },
+      "successfulOptions": 0,
+      "teacherActionCounts": {
+        "hold": 21,
+        "move": 7158,
+        "noop": 742,
+        "throw": 79
+      },
+      "updateIndex": 80
+    },
+    {
+      "actionCounts": {
+        "hold": 104,
+        "move": 6676,
+        "noop": 649,
+        "throw": 571
+      },
+      "boundaryTruncations": 0,
+      "completedOptions": 8,
+      "environmentSteps": 131200,
+      "episodeOptionIds": [
+        "m7b-engage-000648",
+        "m7b-engage-000649",
+        "m7b-engage-000650",
+        "m7b-engage-000651",
+        "m7b-engage-000652",
+        "m7b-engage-000653",
+        "m7b-engage-000654",
+        "m7b-engage-000655"
+      ],
+      "episodeSeeds": [
+        100648,
+        100649,
+        100650,
+        100651,
+        100652,
+        100653,
+        100654,
+        100655
+      ],
+      "metrics": {
+        "actorClipFraction": 0.0,
+        "anchorWeights": {
+          "bc": 0.05,
+          "initializerKl": 0.0046
+        },
+        "bc": 0.5882119685411453,
+        "bcAction": 0.338076613843441,
+        "bcOnPolicy": 0.544317826628685,
+        "bcPower": 0.08897274918854237,
+        "bcReservoir": 0.5930891036987305,
+        "bcSampleMixture": {
+          "onPolicyFraction": 0.09999999999999998,
+          "teacherReservoirFraction": 0.9
+        },
+        "bcTarget": 0.03235096577554941,
+        "criticClipFraction": 0.0,
+        "initializerKl": 1.2344097793102264,
+        "maximumActorGradientNormAfterClip": 0.3613860011100769,
+        "maximumActorGradientNormBeforeClip": 0.3613860011100769,
+        "maximumCriticGradientNormAfterClip": 0.002366037108004093,
+        "maximumCriticGradientNormBeforeClip": 0.002366037108004093,
+        "maximumGradientNormBeforeClip": 0.3613860011100769,
+        "minibatches": 4,
+        "powerStd": 0.3678794503211975,
+        "ppo": -0.010577951790764928,
+        "ratioByCasualties": {
+          "0": 1.000983476638794
+        },
+        "ratioByLivingUnits": {
+          "5": 1.000983476638794
+        },
+        "ratioByRosterSize": {
+          "5": 1.000983476638794
+        },
+        "samples": 1600,
+        "targetStd": [
+          0.3678794503211975,
+          0.3678794503211975
+        ],
+        "total": 0.02451093215495348,
+        "updateIndex": 81
+      },
+      "rejectedActions": 0,
+      "rewardSums": {
+        "canonical": 0.0,
+        "combat": -0.8400000000000002,
+        "executor": -8.111970825783054,
+        "mission": -8.0,
+        "shaping": -0.027970825783054543
+      },
+      "successfulOptions": 0,
+      "teacherActionCounts": {
+        "hold": 20,
+        "move": 7079,
+        "noop": 649,
+        "throw": 252
+      },
+      "updateIndex": 81
+    },
+    {
+      "actionCounts": {
+        "hold": 118,
+        "move": 6531,
+        "noop": 755,
+        "throw": 596
+      },
+      "boundaryTruncations": 0,
+      "completedOptions": 8,
+      "environmentSteps": 132800,
+      "episodeOptionIds": [
+        "m7b-engage-000656",
+        "m7b-engage-000657",
+        "m7b-engage-000658",
+        "m7b-engage-000659",
+        "m7b-engage-000660",
+        "m7b-engage-000661",
+        "m7b-engage-000662",
+        "m7b-engage-000663"
+      ],
+      "episodeSeeds": [
+        100656,
+        100657,
+        100658,
+        100659,
+        100660,
+        100661,
+        100662,
+        100663
+      ],
+      "metrics": {
+        "actorClipFraction": 0.0,
+        "anchorWeights": {
+          "bc": 0.05,
+          "initializerKl": 0.004533333333333334
+        },
+        "bc": 0.573229506611824,
+        "bcAction": 0.23839672654867172,
+        "bcOnPolicy": 0.44164928793907166,
+        "bcPower": 0.06451745890080929,
+        "bcReservoir": 0.5878495573997498,
+        "bcSampleMixture": {
+          "onPolicyFraction": 0.09999999999999998,
+          "teacherReservoirFraction": 0.9
+        },
+        "bcTarget": 0.03419876657426357,
+        "criticClipFraction": 0.0,
+        "initializerKl": 1.4330168664455414,
+        "maximumActorGradientNormAfterClip": 0.3313206434249878,
+        "maximumActorGradientNormBeforeClip": 0.3313206434249878,
+        "maximumCriticGradientNormAfterClip": 0.0038964669220149517,
+        "maximumCriticGradientNormBeforeClip": 0.0038964669220149517,
+        "maximumGradientNormBeforeClip": 0.3313206434249878,
+        "minibatches": 4,
+        "powerStd": 0.3678794503211975,
+        "ppo": -0.010368915041908622,
+        "ratioByCasualties": {
+          "0": 0.999129056930542,
+          "1": 0.9971717596054077
+        },
+        "ratioByLivingUnits": {
+          "4": 0.9971717596054077,
+          "5": 0.999129056930542
+        },
+        "ratioByRosterSize": {
+          "5": 0.9990519881248474
+        },
+        "samples": 1600,
+        "targetStd": [
+          0.3678794503211975,
+          0.3678794503211975
+        ],
+        "total": 0.024788903538137674,
+        "updateIndex": 82
+      },
+      "rejectedActions": 0,
+      "rewardSums": {
+        "canonical": 0.0,
+        "combat": -0.96,
+        "executor": -8.139940962928444,
+        "mission": -8.0,
+        "shaping": -0.043940962928443295
+      },
+      "successfulOptions": 0,
+      "teacherActionCounts": {
+        "hold": 11,
+        "move": 7044,
+        "noop": 755,
+        "throw": 190
+      },
+      "updateIndex": 82
+    },
+    {
+      "actionCounts": {
+        "hold": 113,
+        "move": 6665,
+        "noop": 672,
+        "throw": 550
+      },
+      "boundaryTruncations": 0,
+      "completedOptions": 8,
+      "environmentSteps": 134400,
+      "episodeOptionIds": [
+        "m7b-engage-000664",
+        "m7b-engage-000665",
+        "m7b-engage-000666",
+        "m7b-engage-000667",
+        "m7b-engage-000668",
+        "m7b-engage-000669",
+        "m7b-engage-000670",
+        "m7b-engage-000671"
+      ],
+      "episodeSeeds": [
+        100664,
+        100665,
+        100666,
+        100667,
+        100668,
+        100669,
+        100670,
+        100671
+      ],
+      "metrics": {
+        "actorClipFraction": 0.0,
+        "anchorWeights": {
+          "bc": 0.05,
+          "initializerKl": 0.0044666666666666665
+        },
+        "bc": 0.5826716274023056,
+        "bcAction": 0.30632545053958893,
+        "bcOnPolicy": 0.47605354338884354,
+        "bcPower": 0.05844107083976269,
+        "bcReservoir": 0.5945180952548981,
+        "bcSampleMixture": {
+          "onPolicyFraction": 0.09999999999999998,
+          "teacherReservoirFraction": 0.9
+        },
+        "bcTarget": 0.02810150943696499,
+        "criticClipFraction": 0.0,
+        "initializerKl": 1.1940710842609406,
+        "maximumActorGradientNormAfterClip": 0.4309006929397583,
+        "maximumActorGradientNormBeforeClip": 0.4309006929397583,
+        "maximumCriticGradientNormAfterClip": 0.012956449761986732,
+        "maximumCriticGradientNormBeforeClip": 0.012956449761986732,
+        "maximumGradientNormBeforeClip": 0.4309006929397583,
+        "minibatches": 4,
+        "powerStd": 0.3678794503211975,
+        "ppo": -0.010074823163449764,
+        "ratioByCasualties": {
+          "0": 0.9997232556343079,
+          "2": 0.9944102764129639
+        },
+        "ratioByLivingUnits": {
+          "3": 0.9944102764129639,
+          "5": 0.9997232556343079
+        },
+        "ratioByRosterSize": {
+          "5": 0.9997032880783081
+        },
+        "samples": 1600,
+        "targetStd": [
+          0.3678794503211975,
+          0.3678794503211975
+        ],
+        "total": 0.02439227607101202,
+        "updateIndex": 83
+      },
+      "rejectedActions": 0,
+      "rewardSums": {
+        "canonical": 0.0,
+        "combat": -1.0800000000000003,
+        "executor": -8.17585002239976,
+        "mission": -8.0,
+        "shaping": -0.06785002239976046
+      },
+      "successfulOptions": 0,
+      "teacherActionCounts": {
+        "hold": 37,
+        "move": 7047,
+        "noop": 672,
+        "throw": 244
+      },
+      "updateIndex": 83
+    },
+    {
+      "actionCounts": {
+        "hold": 160,
+        "move": 6916,
+        "noop": 492,
+        "throw": 432
+      },
+      "boundaryTruncations": 0,
+      "completedOptions": 8,
+      "environmentSteps": 136000,
+      "episodeOptionIds": [
+        "m7b-engage-000672",
+        "m7b-engage-000673",
+        "m7b-engage-000674",
+        "m7b-engage-000675",
+        "m7b-engage-000676",
+        "m7b-engage-000677",
+        "m7b-engage-000678",
+        "m7b-engage-000679"
+      ],
+      "episodeSeeds": [
+        100672,
+        100673,
+        100674,
+        100675,
+        100676,
+        100677,
+        100678,
+        100679
+      ],
+      "metrics": {
+        "actorClipFraction": 0.0,
+        "anchorWeights": {
+          "bc": 0.05,
+          "initializerKl": 0.0044
+        },
+        "bc": 0.5714925527572632,
+        "bcAction": 0.2206956185400486,
+        "bcOnPolicy": 0.427886426448822,
+        "bcPower": 0.062046985141932964,
+        "bcReservoir": 0.5874487906694412,
+        "bcSampleMixture": {
+          "onPolicyFraction": 0.09999999999999998,
+          "teacherReservoirFraction": 0.9
+        },
+        "bcTarget": 0.03523346036672592,
+        "criticClipFraction": 0.0,
+        "initializerKl": 1.1557681858539581,
+        "maximumActorGradientNormAfterClip": 0.2749597132205963,
+        "maximumActorGradientNormBeforeClip": 0.2749597132205963,
+        "maximumCriticGradientNormAfterClip": 0.0030836991500109434,
+        "maximumCriticGradientNormBeforeClip": 0.0030836991500109434,
+        "maximumGradientNormBeforeClip": 0.2749597132205963,
+        "minibatches": 4,
+        "powerStd": 0.3678794503211975,
+        "ppo": -0.009912495501339436,
+        "ratioByCasualties": {
+          "0": 1.0000990629196167,
+          "1": 0.9956697225570679
+        },
+        "ratioByLivingUnits": {
+          "4": 0.9956697225570679,
+          "5": 1.0000990629196167
+        },
+        "ratioByRosterSize": {
+          "5": 1.0000630617141724
+        },
+        "samples": 1600,
+        "targetStd": [
+          0.3678794503211975,
+          0.3678794503211975
+        ],
+        "total": 0.023747513070702553,
+        "updateIndex": 84
+      },
+      "rejectedActions": 0,
+      "rewardSums": {
+        "canonical": 0.0,
+        "combat": -0.7200000000000001,
+        "executor": -8.080862046718856,
+        "mission": -8.0,
+        "shaping": -0.008862046718855765
+      },
+      "successfulOptions": 0,
+      "teacherActionCounts": {
+        "hold": 12,
+        "move": 7370,
+        "noop": 491,
+        "throw": 127
+      },
+      "updateIndex": 84
+    },
+    {
+      "actionCounts": {
+        "hold": 211,
+        "move": 6585,
+        "noop": 725,
+        "throw": 479
+      },
+      "boundaryTruncations": 0,
+      "completedOptions": 8,
+      "environmentSteps": 137600,
+      "episodeOptionIds": [
+        "m7b-engage-000680",
+        "m7b-engage-000681",
+        "m7b-engage-000682",
+        "m7b-engage-000683",
+        "m7b-engage-000684",
+        "m7b-engage-000685",
+        "m7b-engage-000686",
+        "m7b-engage-000687"
+      ],
+      "episodeSeeds": [
+        100680,
+        100681,
+        100682,
+        100683,
+        100684,
+        100685,
+        100686,
+        100687
+      ],
+      "metrics": {
+        "actorClipFraction": 0.0,
+        "anchorWeights": {
+          "bc": 0.05,
+          "initializerKl": 0.004333333333333334
+        },
+        "bc": 0.5546661764383316,
+        "bcAction": 0.30978497862815857,
+        "bcOnPolicy": 0.47688934206962585,
+        "bcPower": 0.04206263646483421,
+        "bcReservoir": 0.56330806016922,
+        "bcSampleMixture": {
+          "onPolicyFraction": 0.09999999999999998,
+          "teacherReservoirFraction": 0.9
+        },
+        "bcTarget": 0.029214608948677778,
+        "criticClipFraction": 0.0,
+        "initializerKl": 1.3977941572666168,
+        "maximumActorGradientNormAfterClip": 0.4006877541542053,
+        "maximumActorGradientNormBeforeClip": 0.4006877541542053,
+        "maximumCriticGradientNormAfterClip": 0.006308168638497591,
+        "maximumCriticGradientNormBeforeClip": 0.006308168638497591,
+        "maximumGradientNormBeforeClip": 0.4006877541542053,
+        "minibatches": 4,
+        "powerStd": 0.3678794503211975,
+        "ppo": -0.011153611820191145,
+        "ratioByCasualties": {
+          "0": 0.9982369542121887,
+          "1": 1.0046107769012451,
+          "2": 0.9431394338607788
+        },
+        "ratioByLivingUnits": {
+          "3": 0.9431394338607788,
+          "4": 1.0046107769012451,
+          "5": 0.9982369542121887
+        },
+        "ratioByRosterSize": {
+          "5": 0.9981122016906738
+        },
+        "samples": 1600,
+        "targetStd": [
+          0.3678794503211975,
+          0.3678794503211975
+        ],
+        "total": 0.02263680472970009,
+        "updateIndex": 85
+      },
+      "rejectedActions": 0,
+      "rewardSums": {
+        "canonical": 0.0,
+        "combat": -1.1200000000000003,
+        "executor": -8.22092927096073,
+        "mission": -8.0,
+        "shaping": -0.10892927096072902
+      },
+      "successfulOptions": 0,
+      "teacherActionCounts": {
+        "hold": 13,
+        "move": 7003,
+        "noop": 725,
+        "throw": 259
+      },
+      "updateIndex": 85
+    },
+    {
+      "actionCounts": {
+        "hold": 211,
+        "move": 6384,
+        "noop": 875,
+        "throw": 530
+      },
+      "boundaryTruncations": 0,
+      "completedOptions": 8,
+      "environmentSteps": 139200,
+      "episodeOptionIds": [
+        "m7b-engage-000688",
+        "m7b-engage-000689",
+        "m7b-engage-000690",
+        "m7b-engage-000691",
+        "m7b-engage-000692",
+        "m7b-engage-000693",
+        "m7b-engage-000694",
+        "m7b-engage-000695"
+      ],
+      "episodeSeeds": [
+        100688,
+        100689,
+        100690,
+        100691,
+        100692,
+        100693,
+        100694,
+        100695
+      ],
+      "metrics": {
+        "actorClipFraction": 1.0,
+        "anchorWeights": {
+          "bc": 0.05,
+          "initializerKl": 0.004266666666666667
+        },
+        "bc": 0.571257621049881,
+        "bcAction": 0.4415724277496338,
+        "bcOnPolicy": 0.6248089671134949,
+        "bcPower": 0.07169941999018192,
+        "bcReservoir": 0.5653074979782104,
+        "bcSampleMixture": {
+          "onPolicyFraction": 0.09999999999999998,
+          "teacherReservoirFraction": 0.9
+        },
+        "bcTarget": 0.029477358795702457,
+        "criticClipFraction": 0.0,
+        "initializerKl": 1.6760684251785278,
+        "maximumActorGradientNormAfterClip": 0.5,
+        "maximumActorGradientNormBeforeClip": 0.8015409708023071,
+        "maximumCriticGradientNormAfterClip": 0.00733922841027379,
+        "maximumCriticGradientNormBeforeClip": 0.00733922841027379,
+        "maximumGradientNormBeforeClip": 0.8015409708023071,
+        "minibatches": 4,
+        "powerStd": 0.3678794503211975,
+        "ppo": -0.009884386090561748,
+        "ratioByCasualties": {
+          "0": 1.0008506774902344,
+          "1": 1.0023784637451172,
+          "2": 0.9851852059364319
+        },
+        "ratioByLivingUnits": {
+          "3": 0.9851852059364319,
+          "4": 1.0023784637451172,
+          "5": 1.0008506774902344
+        },
+        "ratioByRosterSize": {
+          "5": 1.000943660736084
+        },
+        "samples": 1600,
+        "targetStd": [
+          0.3678794503211975,
+          0.3678794503211975
+        ],
+        "total": 0.025829719845205545,
+        "updateIndex": 86
+      },
+      "rejectedActions": 0,
+      "rewardSums": {
+        "canonical": 0.0,
+        "combat": -2.4000000000000012,
+        "executor": -8.325851040500106,
+        "mission": -8.0,
+        "shaping": -0.08585104050010628
+      },
+      "successfulOptions": 0,
+      "teacherActionCounts": {
+        "hold": 30,
+        "move": 6610,
+        "noop": 875,
+        "throw": 485
+      },
+      "updateIndex": 86
+    },
+    {
+      "actionCounts": {
+        "hold": 283,
+        "move": 6564,
+        "noop": 673,
+        "throw": 480
+      },
+      "boundaryTruncations": 0,
+      "completedOptions": 8,
+      "environmentSteps": 140800,
+      "episodeOptionIds": [
+        "m7b-engage-000696",
+        "m7b-engage-000697",
+        "m7b-engage-000698",
+        "m7b-engage-000699",
+        "m7b-engage-000700",
+        "m7b-engage-000701",
+        "m7b-engage-000702",
+        "m7b-engage-000703"
+      ],
+      "episodeSeeds": [
+        100696,
+        100697,
+        100698,
+        100699,
+        100700,
+        100701,
+        100702,
+        100703
+      ],
+      "metrics": {
+        "actorClipFraction": 0.0,
+        "anchorWeights": {
+          "bc": 0.05,
+          "initializerKl": 0.004200000000000001
+        },
+        "bc": 0.5596794337034225,
+        "bcAction": 0.3002162426710129,
+        "bcOnPolicy": 0.5022581219673157,
+        "bcPower": 0.06640759110450745,
+        "bcReservoir": 0.5660596042871475,
+        "bcSampleMixture": {
+          "onPolicyFraction": 0.09999999999999998,
+          "teacherReservoirFraction": 0.9
+        },
+        "bcTarget": 0.03376761730760336,
+        "criticClipFraction": 0.0,
+        "initializerKl": 1.4420866668224335,
+        "maximumActorGradientNormAfterClip": 0.33682781457901,
+        "maximumActorGradientNormBeforeClip": 0.33682781457901,
+        "maximumCriticGradientNormAfterClip": 0.011810649186372757,
+        "maximumCriticGradientNormBeforeClip": 0.011810649186372757,
+        "maximumGradientNormBeforeClip": 0.33682781457901,
+        "minibatches": 4,
+        "powerStd": 0.3678794503211975,
+        "ppo": -0.010542098199948668,
+        "ratioByCasualties": {
+          "0": 0.9989957213401794,
+          "1": 1.0062766075134277,
+          "2": 1.0227537155151367
+        },
+        "ratioByLivingUnits": {
+          "3": 1.0227537155151367,
+          "4": 1.0062766075134277,
+          "5": 0.9989957213401794
+        },
+        "ratioByRosterSize": {
+          "5": 0.9994989037513733
+        },
+        "samples": 1600,
+        "targetStd": [
+          0.3678794503211975,
+          0.3678794503211975
+        ],
+        "total": 0.023498638533055782,
+        "updateIndex": 87
+      },
+      "rejectedActions": 0,
+      "rewardSums": {
+        "canonical": 0.0,
+        "combat": -1.2000000000000002,
+        "executor": -8.14612456764333,
+        "mission": -8.0,
+        "shaping": -0.026124567643330043
+      },
+      "successfulOptions": 0,
+      "teacherActionCounts": {
+        "hold": 14,
+        "move": 7103,
+        "noop": 673,
+        "throw": 210
+      },
+      "updateIndex": 87
+    },
+    {
+      "actionCounts": {
+        "hold": 259,
+        "move": 6665,
+        "noop": 598,
+        "throw": 478
+      },
+      "boundaryTruncations": 0,
+      "completedOptions": 8,
+      "environmentSteps": 142400,
+      "episodeOptionIds": [
+        "m7b-engage-000704",
+        "m7b-engage-000705",
+        "m7b-engage-000706",
+        "m7b-engage-000707",
+        "m7b-engage-000708",
+        "m7b-engage-000709",
+        "m7b-engage-000710",
+        "m7b-engage-000711"
+      ],
+      "episodeSeeds": [
+        100704,
+        100705,
+        100706,
+        100707,
+        100708,
+        100709,
+        100710,
+        100711
+      ],
+      "metrics": {
+        "actorClipFraction": 0.0,
+        "anchorWeights": {
+          "bc": 0.05,
+          "initializerKl": 0.0041333333333333335
+        },
+        "bc": 0.5726523697376251,
+        "bcAction": 0.34674497693777084,
+        "bcOnPolicy": 0.5593181252479553,
+        "bcPower": 0.09108620509505272,
+        "bcReservoir": 0.5741339772939682,
+        "bcSampleMixture": {
+          "onPolicyFraction": 0.09999999999999998,
+          "teacherReservoirFraction": 0.9
+        },
+        "bcTarget": 0.03340601455420256,
+        "criticClipFraction": 0.0,
+        "initializerKl": 1.1884948313236237,
+        "maximumActorGradientNormAfterClip": 0.33311036229133606,
+        "maximumActorGradientNormBeforeClip": 0.33311036229133606,
+        "maximumCriticGradientNormAfterClip": 0.0028662721160799265,
+        "maximumCriticGradientNormBeforeClip": 0.0028662721160799265,
+        "maximumGradientNormBeforeClip": 0.33311036229133606,
+        "minibatches": 4,
+        "powerStd": 0.3678794503211975,
+        "ppo": -0.010696993442252278,
+        "ratioByCasualties": {
+          "0": 0.9987015128135681,
+          "1": 1.004673957824707
+        },
+        "ratioByLivingUnits": {
+          "4": 1.004673957824707,
+          "5": 0.9987015128135681
+        },
+        "ratioByRosterSize": {
+          "5": 0.9987912178039551
+        },
+        "samples": 1600,
+        "targetStd": [
+          0.3678794503211975,
+          0.3678794503211975
+        ],
+        "total": 0.022848070599138737,
+        "updateIndex": 88
+      },
+      "rejectedActions": 0,
+      "rewardSums": {
+        "canonical": 0.0,
+        "combat": -1.1200000000000003,
+        "executor": -8.132401162430615,
+        "mission": -8.0,
+        "shaping": -0.020401162430614128
+      },
+      "successfulOptions": 0,
+      "teacherActionCounts": {
+        "hold": 15,
+        "move": 7136,
+        "noop": 597,
+        "throw": 252
+      },
+      "updateIndex": 88
+    },
+    {
+      "actionCounts": {
+        "hold": 331,
+        "move": 6815,
+        "noop": 457,
+        "throw": 397
+      },
+      "boundaryTruncations": 0,
+      "completedOptions": 8,
+      "environmentSteps": 144000,
+      "episodeOptionIds": [
+        "m7b-engage-000712",
+        "m7b-engage-000713",
+        "m7b-engage-000714",
+        "m7b-engage-000715",
+        "m7b-engage-000716",
+        "m7b-engage-000717",
+        "m7b-engage-000718",
+        "m7b-engage-000719"
+      ],
+      "episodeSeeds": [
+        100712,
+        100713,
+        100714,
+        100715,
+        100716,
+        100717,
+        100718,
+        100719
+      ],
+      "metrics": {
+        "actorClipFraction": 0.0,
+        "anchorWeights": {
+          "bc": 0.05,
+          "initializerKl": 0.004066666666666666
+        },
+        "bc": 0.5933140069246292,
+        "bcAction": 0.26344405114650726,
+        "bcOnPolicy": 0.5369170159101486,
+        "bcPower": 0.12960399314761162,
+        "bcReservoir": 0.5995803326368332,
+        "bcSampleMixture": {
+          "onPolicyFraction": 0.09999999999999998,
+          "teacherReservoirFraction": 0.9
+        },
+        "bcTarget": 0.041734193451702595,
+        "criticClipFraction": 0.0,
+        "initializerKl": 0.9571498334407806,
+        "maximumActorGradientNormAfterClip": 0.3016076385974884,
+        "maximumActorGradientNormBeforeClip": 0.3016076385974884,
+        "maximumCriticGradientNormAfterClip": 0.004039457533508539,
+        "maximumCriticGradientNormBeforeClip": 0.004039457533508539,
+        "maximumGradientNormBeforeClip": 0.3016076385974884,
+        "minibatches": 4,
+        "powerStd": 0.3678794503211975,
+        "ppo": -0.010694424156099558,
+        "ratioByCasualties": {
+          "0": 1.0004563331604004
+        },
+        "ratioByLivingUnits": {
+          "5": 1.0004563331604004
+        },
+        "ratioByRosterSize": {
+          "5": 1.0004563331604004
+        },
+        "samples": 1600,
+        "targetStd": [
+          0.3678794503211975,
+          0.3678794503211975
+        ],
+        "total": 0.022863685619086027,
+        "updateIndex": 89
+      },
+      "rejectedActions": 0,
+      "rewardSums": {
+        "canonical": 0.0,
+        "combat": -0.56,
+        "executor": -8.079078234862443,
+        "mission": -8.0,
+        "shaping": -0.023078234862443703
+      },
+      "successfulOptions": 0,
+      "teacherActionCounts": {
+        "hold": 1,
+        "move": 7426,
+        "noop": 456,
+        "throw": 117
+      },
+      "updateIndex": 89
+    },
+    {
+      "actionCounts": {
+        "hold": 286,
+        "move": 6781,
+        "noop": 507,
+        "throw": 426
+      },
+      "boundaryTruncations": 0,
+      "completedOptions": 8,
+      "environmentSteps": 145600,
+      "episodeOptionIds": [
+        "m7b-engage-000720",
+        "m7b-engage-000721",
+        "m7b-engage-000722",
+        "m7b-engage-000723",
+        "m7b-engage-000724",
+        "m7b-engage-000725",
+        "m7b-engage-000726",
+        "m7b-engage-000727"
+      ],
+      "episodeSeeds": [
+        100720,
+        100721,
+        100722,
+        100723,
+        100724,
+        100725,
+        100726,
+        100727
+      ],
+      "metrics": {
+        "actorClipFraction": 0.0,
+        "anchorWeights": {
+          "bc": 0.05,
+          "initializerKl": 0.004
+        },
+        "bc": 0.6007795929908752,
+        "bcAction": 0.36543968319892883,
+        "bcOnPolicy": 0.5685781538486481,
+        "bcPower": 0.03183329105377197,
+        "bcReservoir": 0.6043575406074524,
+        "bcSampleMixture": {
+          "onPolicyFraction": 0.09999999999999998,
+          "teacherReservoirFraction": 0.9
+        },
+        "bcTarget": 0.03744436614215374,
+        "criticClipFraction": 0.0,
+        "initializerKl": 0.9585753977298737,
+        "maximumActorGradientNormAfterClip": 0.20876248180866241,
+        "maximumActorGradientNormBeforeClip": 0.20876248180866241,
+        "maximumCriticGradientNormAfterClip": 0.0022578213829547167,
+        "maximumCriticGradientNormBeforeClip": 0.0022578213829547167,
+        "maximumGradientNormBeforeClip": 0.20876248180866241,
+        "minibatches": 4,
+        "powerStd": 0.3678794503211975,
+        "ppo": -0.010270254919305444,
+        "ratioByCasualties": {
+          "0": 0.9987050890922546,
+          "1": 0.9889683723449707
+        },
+        "ratioByLivingUnits": {
+          "4": 0.9889683723449707,
+          "5": 0.9987050890922546
+        },
+        "ratioByRosterSize": {
+          "5": 0.9986808896064758
+        },
+        "samples": 1600,
+        "targetStd": [
+          0.3678794503211975,
+          0.3678794503211975
+        ],
+        "total": 0.023603026289492846,
+        "updateIndex": 90
+      },
+      "rejectedActions": 0,
+      "rewardSums": {
+        "canonical": 0.0,
+        "combat": -0.8400000000000002,
+        "executor": -8.112340073064201,
+        "mission": -8.0,
+        "shaping": -0.02834007306420072
+      },
+      "successfulOptions": 0,
+      "teacherActionCounts": {
+        "hold": 11,
+        "move": 7273,
+        "noop": 507,
+        "throw": 209
+      },
+      "updateIndex": 90
+    },
+    {
+      "actionCounts": {
+        "hold": 263,
+        "move": 6690,
+        "noop": 549,
+        "throw": 498
+      },
+      "boundaryTruncations": 0,
+      "completedOptions": 8,
+      "environmentSteps": 147200,
+      "episodeOptionIds": [
+        "m7b-engage-000728",
+        "m7b-engage-000729",
+        "m7b-engage-000730",
+        "m7b-engage-000731",
+        "m7b-engage-000732",
+        "m7b-engage-000733",
+        "m7b-engage-000734",
+        "m7b-engage-000735"
+      ],
+      "episodeSeeds": [
+        100728,
+        100729,
+        100730,
+        100731,
+        100732,
+        100733,
+        100734,
+        100735
+      ],
+      "metrics": {
+        "actorClipFraction": 0.0,
+        "anchorWeights": {
+          "bc": 0.05,
+          "initializerKl": 0.003933333333333333
+        },
+        "bc": 0.5730329900979996,
+        "bcAction": 0.13822659850120544,
+        "bcOnPolicy": 0.3339909464120865,
+        "bcPower": 0.02908870205283165,
+        "bcReservoir": 0.5995932519435883,
+        "bcSampleMixture": {
+          "onPolicyFraction": 0.09999999999999998,
+          "teacherReservoirFraction": 0.9
+        },
+        "bcTarget": 0.03624399844557047,
+        "criticClipFraction": 0.0,
+        "initializerKl": 0.9704447537660599,
+        "maximumActorGradientNormAfterClip": 0.4642302393913269,
+        "maximumActorGradientNormBeforeClip": 0.4642302393913269,
+        "maximumCriticGradientNormAfterClip": 0.00158707017544657,
+        "maximumCriticGradientNormBeforeClip": 0.00158707017544657,
+        "maximumGradientNormBeforeClip": 0.4642302393913269,
+        "minibatches": 4,
+        "powerStd": 0.3678794503211975,
+        "ppo": -0.010697954567149282,
+        "ratioByCasualties": {
+          "0": 1.0032366514205933,
+          "1": 1.0170172452926636
+        },
+        "ratioByLivingUnits": {
+          "4": 1.0170172452926636,
+          "5": 1.0032366514205933
+        },
+        "ratioByRosterSize": {
+          "5": 1.0033142566680908
+        },
+        "samples": 1600,
+        "targetStd": [
+          0.3678794503211975,
+          0.3678794503211975
+        ],
+        "total": 0.021770778112113476,
+        "updateIndex": 91
+      },
+      "rejectedActions": 0,
+      "rewardSums": {
+        "canonical": 0.0,
+        "combat": -0.4799999999999999,
+        "executor": -8.055015784589976,
+        "mission": -8.0,
+        "shaping": -0.007015784589976426
+      },
+      "successfulOptions": 0,
+      "teacherActionCounts": {
+        "hold": 7,
+        "move": 7411,
+        "noop": 549,
+        "throw": 33
+      },
+      "updateIndex": 91
+    },
+    {
+      "actionCounts": {
+        "hold": 287,
+        "move": 6679,
+        "noop": 540,
+        "throw": 494
+      },
+      "boundaryTruncations": 0,
+      "completedOptions": 8,
+      "environmentSteps": 148800,
+      "episodeOptionIds": [
+        "m7b-engage-000736",
+        "m7b-engage-000737",
+        "m7b-engage-000738",
+        "m7b-engage-000739",
+        "m7b-engage-000740",
+        "m7b-engage-000741",
+        "m7b-engage-000742",
+        "m7b-engage-000743"
+      ],
+      "episodeSeeds": [
+        100736,
+        100737,
+        100738,
+        100739,
+        100740,
+        100741,
+        100742,
+        100743
+      ],
+      "metrics": {
+        "actorClipFraction": 0.0,
+        "anchorWeights": {
+          "bc": 0.05,
+          "initializerKl": 0.0038666666666666663
+        },
+        "bc": 0.5572259277105331,
+        "bcAction": 0.19461898505687714,
+        "bcOnPolicy": 0.3499507009983063,
+        "bcPower": 0.018990093376487494,
+        "bcReservoir": 0.5802565515041351,
+        "bcSampleMixture": {
+          "onPolicyFraction": 0.09999999999999998,
+          "teacherReservoirFraction": 0.9
+        },
+        "bcTarget": 0.029167333617806435,
+        "criticClipFraction": 0.0,
+        "initializerKl": 1.2173683047294617,
+        "maximumActorGradientNormAfterClip": 0.4037349820137024,
+        "maximumActorGradientNormBeforeClip": 0.4037349820137024,
+        "maximumCriticGradientNormAfterClip": 0.001141907530836761,
+        "maximumCriticGradientNormBeforeClip": 0.001141907530836761,
+        "maximumGradientNormBeforeClip": 0.4037349820137024,
+        "minibatches": 4,
+        "powerStd": 0.3678794503211975,
+        "ppo": -0.010793449822813272,
+        "ratioByCasualties": {
+          "0": 1.000646710395813
+        },
+        "ratioByLivingUnits": {
+          "5": 1.000646710395813
+        },
+        "ratioByRosterSize": {
+          "5": 1.000646710395813
+        },
+        "samples": 1600,
+        "targetStd": [
+          0.3678794503211975,
+          0.3678794503211975
+        ],
+        "total": 0.021775003988295794,
+        "updateIndex": 92
+      },
+      "rejectedActions": 0,
+      "rewardSums": {
+        "canonical": 0.0,
+        "combat": -0.43999999999999995,
+        "executor": -8.068739877202345,
+        "mission": -8.0,
+        "shaping": -0.024739877202344607
+      },
+      "successfulOptions": 0,
+      "teacherActionCounts": {
+        "hold": 0,
+        "move": 7379,
+        "noop": 540,
+        "throw": 81
+      },
+      "updateIndex": 92
+    },
+    {
+      "actionCounts": {
+        "hold": 327,
+        "move": 6468,
+        "noop": 664,
+        "throw": 541
+      },
+      "boundaryTruncations": 0,
+      "completedOptions": 8,
+      "environmentSteps": 150400,
+      "episodeOptionIds": [
+        "m7b-engage-000744",
+        "m7b-engage-000745",
+        "m7b-engage-000746",
+        "m7b-engage-000747",
+        "m7b-engage-000748",
+        "m7b-engage-000749",
+        "m7b-engage-000750",
+        "m7b-engage-000751"
+      ],
+      "episodeSeeds": [
+        100744,
+        100745,
+        100746,
+        100747,
+        100748,
+        100749,
+        100750,
+        100751
+      ],
+      "metrics": {
+        "actorClipFraction": 0.0,
+        "anchorWeights": {
+          "bc": 0.05,
+          "initializerKl": 0.0038
+        },
+        "bc": 0.5605143010616302,
+        "bcAction": 0.28408998250961304,
+        "bcOnPolicy": 0.442806139588356,
+        "bcPower": 0.03066142648458481,
+        "bcReservoir": 0.5735930055379868,
+        "bcSampleMixture": {
+          "onPolicyFraction": 0.09999999999999998,
+          "teacherReservoirFraction": 0.9
+        },
+        "bcTarget": 0.028677089605480433,
+        "criticClipFraction": 0.0,
+        "initializerKl": 1.3109794557094574,
+        "maximumActorGradientNormAfterClip": 0.2529202103614807,
+        "maximumActorGradientNormBeforeClip": 0.2529202103614807,
+        "maximumCriticGradientNormAfterClip": 0.0015956541756168008,
+        "maximumCriticGradientNormBeforeClip": 0.0015956541756168008,
+        "maximumGradientNormBeforeClip": 0.2529202103614807,
+        "minibatches": 4,
+        "powerStd": 0.3678794503211975,
+        "ppo": -0.011215035803616047,
+        "ratioByCasualties": {
+          "0": 0.9987220168113708,
+          "1": 0.996279239654541
+        },
+        "ratioByLivingUnits": {
+          "4": 0.996279239654541,
+          "5": 0.9987220168113708
+        },
+        "ratioByRosterSize": {
+          "5": 0.9986579418182373
+        },
+        "samples": 1600,
+        "targetStd": [
+          0.3678794503211975,
+          0.3678794503211975
+        ],
+        "total": 0.021792400628328323,
+        "updateIndex": 93
+      },
+      "rejectedActions": 0,
+      "rewardSums": {
+        "canonical": 0.0,
+        "combat": -1.0400000000000003,
+        "executor": -8.128832186065157,
+        "mission": -8.0,
+        "shaping": -0.024832186065155804
+      },
+      "successfulOptions": 0,
+      "teacherActionCounts": {
+        "hold": 2,
+        "move": 7170,
+        "noop": 663,
+        "throw": 165
+      },
+      "updateIndex": 93
+    },
+    {
+      "actionCounts": {
+        "hold": 393,
+        "move": 6436,
+        "noop": 629,
+        "throw": 542
+      },
+      "boundaryTruncations": 0,
+      "completedOptions": 8,
+      "environmentSteps": 152000,
+      "episodeOptionIds": [
+        "m7b-engage-000752",
+        "m7b-engage-000753",
+        "m7b-engage-000754",
+        "m7b-engage-000755",
+        "m7b-engage-000756",
+        "m7b-engage-000757",
+        "m7b-engage-000758",
+        "m7b-engage-000759"
+      ],
+      "episodeSeeds": [
+        100752,
+        100753,
+        100754,
+        100755,
+        100756,
+        100757,
+        100758,
+        100759
+      ],
+      "metrics": {
+        "actorClipFraction": 0.0,
+        "anchorWeights": {
+          "bc": 0.05,
+          "initializerKl": 0.003733333333333334
+        },
+        "bc": 0.571051299571991,
+        "bcAction": 0.3255399689078331,
+        "bcOnPolicy": 0.5223603695631027,
+        "bcPower": 0.09293372556567192,
+        "bcReservoir": 0.5764614194631577,
+        "bcSampleMixture": {
+          "onPolicyFraction": 0.09999999999999998,
+          "teacherReservoirFraction": 0.9
+        },
+        "bcTarget": 0.03007070766761899,
+        "criticClipFraction": 0.0,
+        "initializerKl": 1.4935636222362518,
+        "maximumActorGradientNormAfterClip": 0.422061026096344,
+        "maximumActorGradientNormBeforeClip": 0.422061026096344,
+        "maximumCriticGradientNormAfterClip": 0.005743611603975296,
+        "maximumCriticGradientNormBeforeClip": 0.005743611603975296,
+        "maximumGradientNormBeforeClip": 0.422061026096344,
+        "minibatches": 4,
+        "powerStd": 0.3678794503211975,
+        "ppo": -0.011177367065101862,
+        "ratioByCasualties": {
+          "0": 1.0000152587890625,
+          "1": 1.0230940580368042
+        },
+        "ratioByLivingUnits": {
+          "4": 1.0230940580368042,
+          "5": 1.0000152587890625
+        },
+        "ratioByRosterSize": {
+          "5": 1.0004479885101318
+        },
+        "samples": 1600,
+        "targetStd": [
+          0.3678794503211975,
+          0.3678794503211975
+        ],
+        "total": 0.022951168939471245,
+        "updateIndex": 94
+      },
+      "rejectedActions": 0,
+      "rewardSums": {
+        "canonical": 0.0,
+        "combat": -0.8000000000000002,
+        "executor": -8.103539803111413,
+        "mission": -8.0,
+        "shaping": -0.02353980311141257
+      },
+      "successfulOptions": 0,
+      "teacherActionCounts": {
+        "hold": 8,
+        "move": 7153,
+        "noop": 629,
+        "throw": 210
+      },
+      "updateIndex": 94
+    },
+    {
+      "actionCounts": {
+        "hold": 569,
+        "move": 6206,
+        "noop": 695,
+        "throw": 530
+      },
+      "boundaryTruncations": 0,
+      "completedOptions": 8,
+      "environmentSteps": 153600,
+      "episodeOptionIds": [
+        "m7b-engage-000760",
+        "m7b-engage-000761",
+        "m7b-engage-000762",
+        "m7b-engage-000763",
+        "m7b-engage-000764",
+        "m7b-engage-000765",
+        "m7b-engage-000766",
+        "m7b-engage-000767"
+      ],
+      "episodeSeeds": [
+        100760,
+        100761,
+        100762,
+        100763,
+        100764,
+        100765,
+        100766,
+        100767
+      ],
+      "metrics": {
+        "actorClipFraction": 0.0,
+        "anchorWeights": {
+          "bc": 0.05,
+          "initializerKl": 0.003666666666666667
+        },
+        "bc": 0.5530644953250885,
+        "bcAction": 0.3458690196275711,
+        "bcOnPolicy": 0.4986932724714279,
+        "bcPower": 0.03738837968558073,
+        "bcReservoir": 0.5591057687997818,
+        "bcSampleMixture": {
+          "onPolicyFraction": 0.09999999999999998,
+          "teacherReservoirFraction": 0.9
+        },
+        "bcTarget": 0.026826010551303625,
+        "criticClipFraction": 0.0,
+        "initializerKl": 1.7020924389362335,
+        "maximumActorGradientNormAfterClip": 0.2649960219860077,
+        "maximumActorGradientNormBeforeClip": 0.2649960219860077,
+        "maximumCriticGradientNormAfterClip": 0.0013259404804557562,
+        "maximumCriticGradientNormBeforeClip": 0.0013259404804557562,
+        "maximumGradientNormBeforeClip": 0.2649960219860077,
+        "minibatches": 4,
+        "powerStd": 0.3678794503211975,
+        "ppo": -0.010442595928907394,
+        "ratioByCasualties": {
+          "0": 1.000256896018982,
+          "1": 0.9949918389320374
+        },
+        "ratioByLivingUnits": {
+          "4": 0.9949918389320374,
+          "5": 1.000256896018982
+        },
+        "ratioByRosterSize": {
+          "5": 1.0000264644622803
+        },
+        "samples": 1600,
+        "targetStd": [
+          0.3678794503211975,
+          0.3678794503211975
+        ],
+        "total": 0.02345163468271494,
+        "updateIndex": 95
+      },
+      "rejectedActions": 0,
+      "rewardSums": {
+        "canonical": 0.0,
+        "combat": -1.1600000000000004,
+        "executor": -8.162064164025885,
+        "mission": -8.0,
+        "shaping": -0.046064164025883536
+      },
+      "successfulOptions": 0,
+      "teacherActionCounts": {
+        "hold": 19,
+        "move": 7077,
+        "noop": 694,
+        "throw": 210
+      },
+      "updateIndex": 95
+    },
+    {
+      "actionCounts": {
+        "hold": 510,
+        "move": 6281,
+        "noop": 689,
+        "throw": 520
+      },
+      "boundaryTruncations": 0,
+      "completedOptions": 8,
+      "environmentSteps": 155200,
+      "episodeOptionIds": [
+        "m7b-engage-000768",
+        "m7b-engage-000769",
+        "m7b-engage-000770",
+        "m7b-engage-000771",
+        "m7b-engage-000772",
+        "m7b-engage-000773",
+        "m7b-engage-000774",
+        "m7b-engage-000775"
+      ],
+      "episodeSeeds": [
+        100768,
+        100769,
+        100770,
+        100771,
+        100772,
+        100773,
+        100774,
+        100775
+      ],
+      "metrics": {
+        "actorClipFraction": 0.0,
+        "anchorWeights": {
+          "bc": 0.05,
+          "initializerKl": 0.0036
+        },
+        "bc": 0.5790365934371948,
+        "bcAction": 0.5874166935682297,
+        "bcOnPolicy": 0.7617874592542648,
+        "bcPower": 0.09941677749156952,
+        "bcReservoir": 0.5587309747934341,
+        "bcSampleMixture": {
+          "onPolicyFraction": 0.09999999999999998,
+          "teacherReservoirFraction": 0.9
+        },
+        "bcTarget": 0.024932480417191982,
+        "criticClipFraction": 0.0,
+        "initializerKl": 1.7459090650081635,
+        "maximumActorGradientNormAfterClip": 0.3892492949962616,
+        "maximumActorGradientNormBeforeClip": 0.3892492949962616,
+        "maximumCriticGradientNormAfterClip": 0.002544368151575327,
+        "maximumCriticGradientNormBeforeClip": 0.002544368151575327,
+        "maximumGradientNormBeforeClip": 0.3892492949962616,
+        "minibatches": 4,
+        "powerStd": 0.3678794503211975,
+        "ppo": -0.011059451382607222,
+        "ratioByCasualties": {
+          "0": 1.0007518529891968,
+          "1": 1.0084033012390137,
+          "2": 0.9747990369796753
+        },
+        "ratioByLivingUnits": {
+          "3": 0.9747990369796753,
+          "4": 1.0084033012390137,
+          "5": 1.0007518529891968
+        },
+        "ratioByRosterSize": {
+          "5": 1.0006173849105835
+        },
+        "samples": 1600,
+        "targetStd": [
+          0.3678794503211975,
+          0.3678794503211975
+        ],
+        "total": 0.02417765185236931,
+        "updateIndex": 96
+      },
+      "rejectedActions": 0,
+      "rewardSums": {
+        "canonical": 0.0,
+        "combat": -1.2400000000000004,
+        "executor": -8.215112876776066,
+        "mission": -8.0,
+        "shaping": -0.09111287677606594
+      },
+      "successfulOptions": 0,
+      "teacherActionCounts": {
+        "hold": 38,
+        "move": 6678,
+        "noop": 688,
+        "throw": 596
+      },
+      "updateIndex": 96
+    },
+    {
+      "actionCounts": {
+        "hold": 531,
+        "move": 6166,
+        "noop": 765,
+        "throw": 538
+      },
+      "boundaryTruncations": 0,
+      "completedOptions": 8,
+      "environmentSteps": 156800,
+      "episodeOptionIds": [
+        "m7b-engage-000776",
+        "m7b-engage-000777",
+        "m7b-engage-000778",
+        "m7b-engage-000779",
+        "m7b-engage-000780",
+        "m7b-engage-000781",
+        "m7b-engage-000782",
+        "m7b-engage-000783"
+      ],
+      "episodeSeeds": [
+        100776,
+        100777,
+        100778,
+        100779,
+        100780,
+        100781,
+        100782,
+        100783
+      ],
+      "metrics": {
+        "actorClipFraction": 0.0,
+        "anchorWeights": {
+          "bc": 0.05,
+          "initializerKl": 0.003533333333333334
+        },
+        "bc": 0.5457015931606293,
+        "bcAction": 0.26367832720279694,
+        "bcOnPolicy": 0.4411071315407753,
+        "bcPower": 0.06277830339968204,
+        "bcReservoir": 0.5573232024908066,
+        "bcSampleMixture": {
+          "onPolicyFraction": 0.09999999999999998,
+          "teacherReservoirFraction": 0.9
+        },
+        "bcTarget": 0.029207932762801647,
+        "criticClipFraction": 0.0,
+        "initializerKl": 2.115883767604828,
+        "maximumActorGradientNormAfterClip": 0.40712466835975647,
+        "maximumActorGradientNormBeforeClip": 0.40712466835975647,
+        "maximumCriticGradientNormAfterClip": 0.00706307590007782,
+        "maximumCriticGradientNormBeforeClip": 0.00706307590007782,
+        "maximumGradientNormBeforeClip": 0.40712466835975647,
+        "minibatches": 4,
+        "powerStd": 0.3678794503211975,
+        "ppo": -0.011192856123670936,
+        "ratioByCasualties": {
+          "0": 1.0008888244628906,
+          "1": 1.0040996074676514
+        },
+        "ratioByLivingUnits": {
+          "4": 1.0040996074676514,
+          "5": 1.0008888244628906
+        },
+        "ratioByRosterSize": {
+          "5": 1.0011857748031616
+        },
+        "samples": 1600,
+        "targetStd": [
+          0.3678794503211975,
+          0.3678794503211975
+        ],
+        "total": 0.023568347096443176,
+        "updateIndex": 97
+      },
+      "rejectedActions": 0,
+      "rewardSums": {
+        "canonical": 0.0,
+        "combat": -1.4000000000000008,
+        "executor": -8.176740554147669,
+        "mission": -8.0,
+        "shaping": -0.03674055414766708
+      },
+      "successfulOptions": 0,
+      "teacherActionCounts": {
+        "hold": 10,
+        "move": 7073,
+        "noop": 765,
+        "throw": 152
+      },
+      "updateIndex": 97
+    },
+    {
+      "actionCounts": {
+        "hold": 540,
+        "move": 6008,
+        "noop": 869,
+        "throw": 583
+      },
+      "boundaryTruncations": 0,
+      "completedOptions": 8,
+      "environmentSteps": 158400,
+      "episodeOptionIds": [
+        "m7b-engage-000784",
+        "m7b-engage-000785",
+        "m7b-engage-000786",
+        "m7b-engage-000787",
+        "m7b-engage-000788",
+        "m7b-engage-000789",
+        "m7b-engage-000790",
+        "m7b-engage-000791"
+      ],
+      "episodeSeeds": [
+        100784,
+        100785,
+        100786,
+        100787,
+        100788,
+        100789,
+        100790,
+        100791
+      ],
+      "metrics": {
+        "actorClipFraction": 0.0,
+        "anchorWeights": {
+          "bc": 0.05,
+          "initializerKl": 0.003466666666666667
+        },
+        "bc": 0.5509955734014511,
+        "bcAction": 0.36620498448610306,
+        "bcOnPolicy": 0.5464619398117065,
+        "bcPower": 0.08896236680448055,
+        "bcReservoir": 0.5514993369579315,
+        "bcSampleMixture": {
+          "onPolicyFraction": 0.09999999999999998,
+          "teacherReservoirFraction": 0.9
+        },
+        "bcTarget": 0.027155155315995216,
+        "criticClipFraction": 0.0,
+        "initializerKl": 2.306865155696869,
+        "maximumActorGradientNormAfterClip": 0.4918050765991211,
+        "maximumActorGradientNormBeforeClip": 0.4918050765991211,
+        "maximumCriticGradientNormAfterClip": 0.0018222981598228216,
+        "maximumCriticGradientNormBeforeClip": 0.0018222981598228216,
+        "maximumGradientNormBeforeClip": 0.4918050765991211,
+        "minibatches": 4,
+        "powerStd": 0.3678794503211975,
+        "ppo": -0.010699833044782281,
+        "ratioByCasualties": {
+          "0": 1.000374436378479,
+          "1": 1.0039921998977661,
+          "2": 1.0204861164093018
+        },
+        "ratioByLivingUnits": {
+          "3": 1.0204861164093018,
+          "4": 1.0039921998977661,
+          "5": 1.000374436378479
+        },
+        "ratioByRosterSize": {
+          "5": 1.0006908178329468
+        },
+        "samples": 1600,
+        "targetStd": [
+          0.3678794503211975,
+          0.3678794503211975
+        ],
+        "total": 0.024847079068422318,
+        "updateIndex": 98
+      },
+      "rejectedActions": 0,
+      "rewardSums": {
+        "canonical": 0.0,
+        "combat": -2.120000000000001,
+        "executor": -8.279665385416163,
+        "mission": -8.0,
+        "shaping": -0.06766538541616252
+      },
+      "successfulOptions": 0,
+      "teacherActionCounts": {
+        "hold": 22,
+        "move": 6748,
+        "noop": 869,
+        "throw": 361
+      },
+      "updateIndex": 98
+    },
+    {
+      "actionCounts": {
+        "hold": 514,
+        "move": 6270,
+        "noop": 678,
+        "throw": 538
+      },
+      "boundaryTruncations": 0,
+      "completedOptions": 8,
+      "environmentSteps": 160000,
+      "episodeOptionIds": [
+        "m7b-engage-000792",
+        "m7b-engage-000793",
+        "m7b-engage-000794",
+        "m7b-engage-000795",
+        "m7b-engage-000796",
+        "m7b-engage-000797",
+        "m7b-engage-000798",
+        "m7b-engage-000799"
+      ],
+      "episodeSeeds": [
+        100792,
+        100793,
+        100794,
+        100795,
+        100796,
+        100797,
+        100798,
+        100799
+      ],
+      "metrics": {
+        "actorClipFraction": 0.0,
+        "anchorWeights": {
+          "bc": 0.05,
+          "initializerKl": 0.0034
+        },
+        "bc": 0.5422566831111908,
+        "bcAction": 0.3217378705739975,
+        "bcOnPolicy": 0.5182050466537476,
+        "bcPower": 0.06249745283275843,
+        "bcReservoir": 0.544929102063179,
+        "bcSampleMixture": {
+          "onPolicyFraction": 0.09999999999999998,
+          "teacherReservoirFraction": 0.9
+        },
+        "bcTarget": 0.033043690957129,
+        "criticClipFraction": 0.0,
+        "initializerKl": 1.919526994228363,
+        "maximumActorGradientNormAfterClip": 0.3838255703449249,
+        "maximumActorGradientNormBeforeClip": 0.3838255703449249,
+        "maximumCriticGradientNormAfterClip": 0.0035802358761429787,
+        "maximumCriticGradientNormBeforeClip": 0.0035802358761429787,
+        "maximumGradientNormBeforeClip": 0.3838255703449249,
+        "minibatches": 4,
+        "powerStd": 0.3678794503211975,
+        "ppo": -0.011154667008668184,
+        "ratioByCasualties": {
+          "0": 0.9998902082443237,
+          "1": 0.988227128982544
+        },
+        "ratioByLivingUnits": {
+          "4": 0.988227128982544,
+          "5": 0.9998902082443237
+        },
+        "ratioByRosterSize": {
+          "5": 0.9996642470359802
+        },
+        "samples": 1600,
+        "targetStd": [
+          0.3678794503211975,
+          0.3678794503211975
+        ],
+        "total": 0.022484559565782547,
+        "updateIndex": 99
+      },
+      "rejectedActions": 0,
+      "rewardSums": {
+        "canonical": 0.0,
+        "combat": -1.2000000000000004,
+        "executor": -8.17483389005203,
+        "mission": -8.0,
+        "shaping": -0.05483389005202888
+      },
+      "successfulOptions": 0,
+      "teacherActionCounts": {
+        "hold": 17,
+        "move": 7067,
+        "noop": 678,
+        "throw": 238
+      },
+      "updateIndex": 99
+    }
+  ]
+}
