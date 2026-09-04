@@ -1,0 +1,277 @@
+{
+  "checkpointDigest": "sha256:b5b8e3c184cca7c50de774a093e8a1f22851c14eae83e3e9ba6ad477632674d8",
+  "coverage": {
+    "d1FiveNeighborMeanDistance": 34.150322203268196,
+    "d1NearestMean": 34.0782627362034,
+    "d1NearestP95": 153.98473739624023,
+    "d1OutsideD2P95Fraction": 0.7645560407569141,
+    "d2LeaveOneOutNearestP95": 0.7595239520072926,
+    "d3FiveNeighborMeanDistance": 1.6832270923992618,
+    "d3NearestMean": 1.5567307905699126,
+    "d3NearestP95": 4.234383392333983,
+    "d3OutsideD2P95Fraction": 0.698375,
+    "features": [
+      "ownCentroidX",
+      "ownCentroidY",
+      "objectiveX",
+      "objectiveY",
+      "objectiveDx",
+      "objectiveDy",
+      "spread",
+      "livingFraction",
+      "meanMoveTargetX",
+      "meanMoveTargetY",
+      "roleProgress"
+    ]
+  },
+  "format": "snowgym.engage.distribution-report.v0",
+  "reportDigest": "sha256:c5cd5d28692cab1505146d04affc00f362a41b1e52d3cd4a10d7175558d56889",
+  "summaries": {
+    "deterministic-learner": {
+      "actionAgreement": 0.9309088128854681,
+      "baseMoveOutputMean": 0.08145605027675629,
+      "bins": {
+        "contact:post": {
+          "actionAgreement": 0.8446560459012391,
+          "moveTargetMse": 0.03385963663458824,
+          "states": 3429
+        },
+        "contact:pre": {
+          "actionAgreement": 0.9927368190767885,
+          "moveTargetMse": 0.024364842101931572,
+          "states": 4571
+        },
+        "distance:0-9": {
+          "actionAgreement": 0.5528913963328632,
+          "moveTargetMse": 0.028568284586071968,
+          "states": 143
+        },
+        "distance:20-40": {
+          "actionAgreement": 0.9700156985871271,
+          "moveTargetMse": 0.029057836160063744,
+          "states": 3943
+        },
+        "distance:40+": {
+          "actionAgreement": 0.977319587628866,
+          "moveTargetMse": 0.023726439103484154,
+          "states": 1455
+        },
+        "distance:9-20": {
+          "actionAgreement": 0.8636363636363636,
+          "moveTargetMse": 0.028592513874173164,
+          "states": 2459
+        },
+        "range:inside": {
+          "actionAgreement": 0.5732975511573297,
+          "moveTargetMse": 0.02336164563894272,
+          "states": 1238
+        },
+        "range:outside": {
+          "actionAgreement": 0.994981367952879,
+          "moveTargetMse": 0.028225986286997795,
+          "states": 6762
+        },
+        "time:early": {
+          "actionAgreement": 0.9876865671641791,
+          "moveTargetMse": 0.022948913276195526,
+          "states": 2680
+        },
+        "time:late": {
+          "actionAgreement": 0.9368924302788845,
+          "moveTargetMse": 0.03409964218735695,
+          "states": 2640
+        },
+        "time:middle": {
+          "actionAgreement": 0.8680012040939193,
+          "moveTargetMse": 0.027226191014051437,
+          "states": 2680
+        },
+        "x:negative": {
+          "actionAgreement": 0.9844339622641509,
+          "moveTargetMse": 0.02314850501716137,
+          "states": 2120
+        },
+        "x:nonnegative": {
+          "actionAgreement": 0.9110971436552832,
+          "moveTargetMse": 0.029812335968017578,
+          "states": 5880
+        }
+      },
+      "criticValueRmse": 4.190258056383372,
+      "episodes": 40,
+      "moveTargetDirectionCosine": 0.3580973271416275,
+      "moveTargetMseNormalized": 0.027844687923789024,
+      "moveTargetRmseWorldUnits": 7.644730433374645,
+      "objectiveRelativeMoveMse": 0.08932585269212723,
+      "planResidualMeanAbsolute": 0.6234377026557922,
+      "powerMse": 0.05637825280427933,
+      "states": 8000,
+      "successRate": 0.0,
+      "throwTargetMseNormalized": 0.08756207674741745
+    },
+    "stochastic-learner": {
+      "actionAgreement": 0.940817709509826,
+      "baseMoveOutputMean": 0.09204129129648209,
+      "bins": {
+        "contact:post": {
+          "actionAgreement": 0.8214848262102279,
+          "moveTargetMse": 0.018810773268342018,
+          "states": 1936
+        },
+        "contact:pre": {
+          "actionAgreement": 0.9782981530343008,
+          "moveTargetMse": 0.024251636117696762,
+          "states": 6064
+        },
+        "distance:0-9": {
+          "actionAgreement": 0.4,
+          "moveTargetMse": 0.014622921124100685,
+          "states": 10
+        },
+        "distance:20-40": {
+          "actionAgreement": 0.9452086842597791,
+          "moveTargetMse": 0.02326313592493534,
+          "states": 4298
+        },
+        "distance:40+": {
+          "actionAgreement": 0.9804255319148936,
+          "moveTargetMse": 0.025074675679206848,
+          "states": 1645
+        },
+        "distance:9-20": {
+          "actionAgreement": 0.9023146331894861,
+          "moveTargetMse": 0.021209780126810074,
+          "states": 2047
+        },
+        "range:inside": {
+          "actionAgreement": 0.7239159891598916,
+          "moveTargetMse": 0.015741422772407532,
+          "states": 1204
+        },
+        "range:outside": {
+          "actionAgreement": 0.9785497510238959,
+          "moveTargetMse": 0.024045711383223534,
+          "states": 6796
+        },
+        "time:early": {
+          "actionAgreement": 0.981044776119403,
+          "moveTargetMse": 0.024085547775030136,
+          "states": 2680
+        },
+        "time:late": {
+          "actionAgreement": 0.8887525875948785,
+          "moveTargetMse": 0.026311693713068962,
+          "states": 2640
+        },
+        "time:middle": {
+          "actionAgreement": 0.9512686567164179,
+          "moveTargetMse": 0.01940646395087242,
+          "states": 2680
+        },
+        "x:negative": {
+          "actionAgreement": 0.9811306340718106,
+          "moveTargetMse": 0.024103039875626564,
+          "states": 2618
+        },
+        "x:nonnegative": {
+          "actionAgreement": 0.9210929615370239,
+          "moveTargetMse": 0.022664004936814308,
+          "states": 5382
+        }
+      },
+      "criticValueRmse": 4.245090884250267,
+      "episodes": 40,
+      "moveTargetDirectionCosine": 0.5681969455727254,
+      "moveTargetMseNormalized": 0.023166418075561523,
+      "moveTargetRmseWorldUnits": 6.807167490638561,
+      "objectiveRelativeMoveMse": 0.07321947067975998,
+      "planResidualMeanAbsolute": 0.6136477589607239,
+      "powerMse": 0.04569307342171669,
+      "states": 8000,
+      "successRate": 0.0,
+      "throwTargetMseNormalized": 0.08940482139587402
+    },
+    "teacher": {
+      "actionAgreement": 0.9318603720016015,
+      "baseMoveOutputMean": 0.14325006306171417,
+      "bins": {
+        "contact:post": {
+          "actionAgreement": 0.8540245566166439,
+          "moveTargetMse": 0.08634229749441147,
+          "states": 2347
+        },
+        "contact:pre": {
+          "actionAgreement": 0.989838043823436,
+          "moveTargetMse": 0.016362372785806656,
+          "states": 3149
+        },
+        "distance:0-9": {
+          "actionAgreement": 0.7751572327044025,
+          "moveTargetMse": 0.10713155567646027,
+          "states": 382
+        },
+        "distance:20-40": {
+          "actionAgreement": 0.9990331491712707,
+          "moveTargetMse": 0.019141897559165955,
+          "states": 1448
+        },
+        "distance:40+": {
+          "actionAgreement": 0.9773371104815864,
+          "moveTargetMse": 0.020847607403993607,
+          "states": 1412
+        },
+        "distance:9-20": {
+          "actionAgreement": 0.8867288060363959,
+          "moveTargetMse": 0.0662156492471695,
+          "states": 2254
+        },
+        "range:inside": {
+          "actionAgreement": 0.8231952907156873,
+          "moveTargetMse": 0.07937780767679214,
+          "states": 1938
+        },
+        "range:outside": {
+          "actionAgreement": 0.9910061832490163,
+          "moveTargetMse": 0.026728171855211258,
+          "states": 3558
+        },
+        "time:early": {
+          "actionAgreement": 0.9880597014925373,
+          "moveTargetMse": 0.016866430640220642,
+          "states": 2680
+        },
+        "time:late": {
+          "actionAgreement": 0.91350531107739,
+          "moveTargetMse": 0.18602144718170166,
+          "states": 265
+        },
+        "time:middle": {
+          "actionAgreement": 0.8747157977263819,
+          "moveTargetMse": 0.05732334405183792,
+          "states": 2551
+        },
+        "x:negative": {
+          "actionAgreement": 0.98451862602806,
+          "moveTargetMse": 0.01908208429813385,
+          "states": 2067
+        },
+        "x:nonnegative": {
+          "actionAgreement": 0.9001050297584315,
+          "moveTargetMse": 0.05683036148548126,
+          "states": 3429
+        }
+      },
+      "criticValueRmse": 5.564860942624014,
+      "episodes": 40,
+      "moveTargetDirectionCosine": 0.5944234398176336,
+      "moveTargetMseNormalized": 0.04058922082185745,
+      "moveTargetRmseWorldUnits": 8.614049413874561,
+      "objectiveRelativeMoveMse": 0.07602111250162125,
+      "planResidualMeanAbsolute": 0.6365572214126587,
+      "powerMse": 0.03849661722779274,
+      "states": 5496,
+      "successRate": 1.0,
+      "throwTargetMseNormalized": 0.11237069964408875
+    }
+  }
+}

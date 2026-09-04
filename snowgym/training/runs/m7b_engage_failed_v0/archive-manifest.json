@@ -1,0 +1,26 @@
+{
+  "format": "snowgym.failed-run-archive.v0",
+  "status": "negative-diagnostic-only",
+  "reviewedRevision": "c747fce",
+  "trainingRevision": "b4a18f0576d8b5417153bfa4ee03d2bd82f90db4",
+  "evidenceImplementationRevisions": {
+    "interventionsAndDistributions": "733c9852ad5efa8801eca8a3b324e9a8db507155",
+    "gradientAndRecovery": "2531aa4dded1b315c0c4ab37f74c93d28517d2c3"
+  },
+  "simulationVersion": "snowgym.sim.v2",
+  "stateHashVersion": "snowgym.state.v2",
+  "claim": "The archived Engage learner had zero mission success on all 40 development seeds and is not eligible for promotion.",
+  "artifacts": {
+    "development-evaluation.json": "sha256:79e0a9b213e821529c628f6674bd7b786425ded5c1b283705247008e638dd642",
+    "stage1/checkpoint/metadata.json": "sha256:b87e36174ebe918ddbfd4e1149bf256fd05bb555807a650403283de187a72b67",
+    "stage1/checkpoint/state.pt": "sha256:1ffb8e4e9761a14c55e13a5589e6427aade10c92c0a387bcf1a3f4a6baaa8845",
+    "stage1/manifest.json": "sha256:6440756d86c03a606adf675c3b5303278262841fa0612a49cde000722661a642",
+    "stage2/checkpoint/metadata.json": "sha256:aae557a854674445e759788797e14c78de5f057291232d79bb195792f76b8401",
+    "stage2/checkpoint/state.pt": "sha256:d91e079dc1ba648c6350bb065c0e0fd732f396d97b9077ca9daa445ebbd7a056",
+    "stage2/manifest.json": "sha256:83fba0a72508730f3785adf31e2142f46b89718ded1c704c434a176f42a9fc39",
+    "snowgym-engage-intervention-matrix-v0.json": "sha256:a7150a40970657e81438ce1875bb4c66c1194c794987445b3c4e42335859c119",
+    "diagnostics/manifest.json": "sha256:6dc6888c84d92fa23ceb466faa0f6d552fd49c1f984d2c50b0c8a3cf9483a5ef",
+    "gradient-diagnostics/manifest.json": "sha256:28e043a799715ce9e4b554c55ec39a273ac30566926e7728d2c3876cc3779b6a",
+    "recovery-report.json": "sha256:14b87a851d614b7baa06661d16fc95db1ed35e3b72090db342743f64e18eac1f"
+  }
+}

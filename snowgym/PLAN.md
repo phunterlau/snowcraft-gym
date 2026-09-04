@@ -819,7 +819,7 @@ checkpoints and 40-seed evaluation are preserved under
 
 The recovery milestones are now:
 
-- [ ] **M7b-R0 — correctness and attribution:** repair the actor-side v3 path,
+- [x] **M7b-R0 — correctness and attribution:** repair the actor-side v3 path,
       option terminal/tracker/PBRS semantics, actor/critic clipping, and
       discount metadata; then run deterministic action-channel interventions,
       teacher/stochastic/deterministic state-distribution exports, and
@@ -855,6 +855,22 @@ do not qualify a fighter under v2. Gates 1, 3, 5, 6, and 7 are reopened for
 v2 requalification. Scripted-Red gates 2 and 4 remain valid because their
 controller path was unchanged. Historical random-opponent replay tests now
 assert the observed v2 losses rather than preserving obsolete blue-win claims.
+
+M7b-R0 acceptance (2026-09-04): the no-training 40-seed matrix establishes
+that the failed learner contacts on 82.5% of episodes but never hits; teacher
+movement alone reaches contact on 100% without hits, teacher action alone hits
+on 45%, teacher action plus movement hits on 87.5%, and the full teacher passes
+Engage on 100%. The deterministic learner and successful teacher lie outside
+the stochastic learner support on 69.84% and 76.46% of states respectively
+under the frozen D2 nearest-neighbor threshold. Read-only gradient diagnostics
+show a 23.03 critic norm versus a 0.77 actor norm, implying an old shared-clip
+scale of 0.0217, plus strong move-BC/initializer-anchor opposition. The frozen
+decision selects exactly one R1 intervention: a successful-teacher trajectory
+reservoir for BC-only sampling while PPO remains strictly on-policy. Evidence
+under `training/runs/m7b_engage_failed_v0/` binds implementation revisions
+`733c985` and `2531aa4`, simulation v2, state-hash v2, the failed checkpoint
+digest, all 40 development seeds, and nested artifact hashes. No qualification
+seed was used.
 
 #### M7c — full-fight fixed-plan composition
 

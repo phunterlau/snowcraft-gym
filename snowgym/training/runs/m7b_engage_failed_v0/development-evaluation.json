@@ -1,0 +1,984 @@
+{
+  "checkpointDigest": "sha256:b5b8e3c184cca7c50de774a093e8a1f22851c14eae83e3e9ba6ad477632674d8",
+  "evaluatedOptions": [
+    "engage"
+  ],
+  "evaluationDigest": "sha256:a6073d214e9afdf35c2b171e097dad347d07c6c748ad5cd645db1ee55579f2d4",
+  "format": "snowgym.m7b-development-evaluation.v0",
+  "inheritedHeadLearningRate": 2.9999999999999997e-05,
+  "missions": {
+    "engage": {
+      "correct": [
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200000,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200001,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200002,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200003,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200004,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200005,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200006,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200007,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200008,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200009,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200010,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200011,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200012,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200013,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200014,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200015,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200016,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200017,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200018,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200019,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200020,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200021,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200022,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200023,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200024,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200025,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200026,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200027,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200028,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200029,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200030,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200031,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200032,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200033,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200034,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200035,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200036,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200037,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200038,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200039,
+          "success": false,
+          "totalActions": 1500
+        }
+      ],
+      "initializer": [
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200000,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200001,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200002,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200003,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200004,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200005,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200006,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200007,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200008,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200009,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200010,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200011,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200012,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200013,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200014,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200015,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200016,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200017,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200018,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200019,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200020,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200021,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200022,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200023,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200024,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200025,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200026,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200027,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200028,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200029,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200030,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200031,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200032,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200033,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200034,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200035,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200036,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200037,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200038,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200039,
+          "success": false,
+          "totalActions": 1500
+        }
+      ],
+      "shuffled": [
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200000,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200001,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200002,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200003,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200004,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200005,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200006,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200007,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200008,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200009,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200010,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200011,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200012,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200013,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200014,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200015,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200016,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200017,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200018,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200019,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200020,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200021,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200022,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200023,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200024,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200025,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200026,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200027,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200028,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200029,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200030,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200031,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200032,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200033,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200034,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200035,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200036,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200037,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200038,
+          "success": false,
+          "totalActions": 1500
+        },
+        {
+          "physicalWin": false,
+          "progress": 0.0,
+          "rejectedActions": 0,
+          "seed": 200039,
+          "success": false,
+          "totalActions": 1500
+        }
+      ]
+    }
+  },
+  "newModuleLearningRate": 0.0003,
+  "parameterL2Change": 6.780971763194451,
+  "protocolDigest": "sha256:54c1fa4217c5bd663c3b60e967a10c9b058da3c2decb2329407860340de7748c",
+  "sourceDigest": "sha256:4119b9a3f8c0d3df69b704a8f3f813a1b38ab11ca56faffb4c4cebc2cb235133",
+  "split": "development"
+}

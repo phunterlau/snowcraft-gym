@@ -1,0 +1,87 @@
+{
+  "attribution": "action-move-throw-interaction-with-successful-state-coverage-gap",
+  "constraints": {
+    "benchmarkUnchanged": true,
+    "otherLearningInterventionsDeferred": true,
+    "ppoRolloutsRemainOnPolicy": true,
+    "qualificationSeedsUsed": false,
+    "teacherReservoirUsedOnlyForBc": true
+  },
+  "distributionDigest": "sha256:c5cd5d28692cab1505146d04affc00f362a41b1e52d3cd4a10d7175558d56889",
+  "evidence": {
+    "currentGlobalClipScale": 0.021700516341540767,
+    "deterministicOutsideStochasticP95Fraction": 0.698375,
+    "goalAnchorContactRate": 1.0,
+    "interactionHitGain": 0.425,
+    "learnerContactRate": 0.825,
+    "learnerHitRate": 0.0,
+    "strongGradientConflicts": [
+      {
+        "cosine": -0.9579132199287415,
+        "firstComponent": "move-target-bc",
+        "parameterGroup": "plan-residual",
+        "secondComponent": "move-initializer-anchor"
+      },
+      {
+        "cosine": -0.9538810849189758,
+        "firstComponent": "move-target-bc",
+        "parameterGroup": "move-head",
+        "secondComponent": "move-initializer-anchor"
+      },
+      {
+        "cosine": -0.8787446618080139,
+        "firstComponent": "ppo-actor",
+        "parameterGroup": "plan-residual",
+        "secondComponent": "move-initializer-anchor"
+      },
+      {
+        "cosine": -0.8495961427688599,
+        "firstComponent": "ppo-actor",
+        "parameterGroup": "move-head",
+        "secondComponent": "move-initializer-anchor"
+      },
+      {
+        "cosine": -0.8436921238899231,
+        "firstComponent": "ppo-actor",
+        "parameterGroup": "power-head",
+        "secondComponent": "power-initializer-anchor"
+      },
+      {
+        "cosine": -0.8212826251983643,
+        "firstComponent": "power-bc",
+        "parameterGroup": "plan-residual",
+        "secondComponent": "power-initializer-anchor"
+      },
+      {
+        "cosine": -0.8018143773078918,
+        "firstComponent": "power-bc",
+        "parameterGroup": "power-head",
+        "secondComponent": "power-initializer-anchor"
+      },
+      {
+        "cosine": -0.5140344500541687,
+        "firstComponent": "ppo-actor",
+        "parameterGroup": "throw-head",
+        "secondComponent": "throw-target-bc"
+      },
+      {
+        "cosine": -0.489450603723526,
+        "firstComponent": "ppo-actor",
+        "parameterGroup": "throw-head",
+        "secondComponent": "throw-initializer-anchor"
+      }
+    ],
+    "successfulTeacherOutsideStochasticP95Fraction": 0.7645560407569141,
+    "teacherActionHitRate": 0.45,
+    "teacherActionMoveHitRate": 0.875,
+    "teacherMoveContactRate": 1.0,
+    "teacherSuccessRate": 1.0
+  },
+  "format": "snowgym.engage.recovery-report.v0",
+  "gradientDigest": "sha256:c14ec278990e3b415b4e52588264b0c0e8125f2820cf540f25280796498f03d7",
+  "implementationGitCommit": "2531aa4dded1b315c0c4ab37f74c93d28517d2c3",
+  "matrixDigest": "sha256:574d8a38f31f17b20e14b9d58c31bda8ee5a2b885a175fe8984c41bac091709c",
+  "reason": "Teacher action plus movement restores hits, only the full teacher completes Engage, and successful teacher states lie outside the learner-state support.",
+  "reportDigest": "sha256:5ba11cef2b1592e8831d0365233ef16f01f1e4cd81d7ef7fd485a20aa77292b1",
+  "selectedIntervention": "successful-teacher-bc-reservoir"
+}

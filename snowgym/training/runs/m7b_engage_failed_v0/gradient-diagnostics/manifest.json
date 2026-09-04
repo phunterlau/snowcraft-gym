@@ -1,0 +1,10 @@
+{
+  "artifacts": {
+    "gradient_components.json": "sha256:1f7e219c619316035ed461b41e4f93b2cc7a4f7e9a3588db2064e1bbcdae1891",
+    "gradient_cosines.csv": "sha256:2b61536d9fd8608ce5264eed7c08731acfdf2dce604272bc8d15c716477a9d3f",
+    "gradient_norms.csv": "sha256:370ebff623f27a18506db2b61f26fa69cc79a99ab07339b4d5458c66decd80ea"
+  },
+  "format": "snowgym.engage.gradient-diagnostics-manifest.v0",
+  "implementationGitCommit": "2531aa4dded1b315c0c4ab37f74c93d28517d2c3",
+  "manifestDigest": "sha256:33b9fc9add6b401ed83ed70403efd358d3982e9c0339b42d461a9e124ffa16ed"
+}

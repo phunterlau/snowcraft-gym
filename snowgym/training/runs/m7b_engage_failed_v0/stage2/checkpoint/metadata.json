@@ -1,0 +1,66 @@
+{
+  "architecture": {
+    "action_conditioned_targets": true,
+    "actor_hidden": 64,
+    "entity_embedding": 24,
+    "entity_hidden": 32,
+    "observation_version": 3,
+    "plan_conditioned": true,
+    "plan_ppo_residuals": true,
+    "plan_target_only": true,
+    "separate_target_actor": true
+  },
+  "checkpointDigest": "sha256:b5b8e3c184cca7c50de774a093e8a1f22851c14eae83e3e9ba6ad477632674d8",
+  "collectorConfig": {
+    "anchorTotalUpdates": 200,
+    "gateId": "m7b-engage-stage2",
+    "option": "engage",
+    "protocolDigest": "sha256:54c1fa4217c5bd663c3b60e967a10c9b058da3c2decb2329407860340de7748c",
+    "rewardMode": "executor",
+    "rolloutSteps": 200,
+    "stage": 2,
+    "worlds": 8
+  },
+  "curriculumDigest": "sha256:54c1fa4217c5bd663c3b60e967a10c9b058da3c2decb2329407860340de7748c",
+  "environmentSteps": 160000,
+  "format": "snowgym.ppo-checkpoint.v0",
+  "gitCommit": "b4a18f0576d8b5417153bfa4ee03d2bd82f90db4",
+  "initialization": {
+    "checkpointDigest": "sha256:4e034e7b509f96c0d6b27646cf610a7bd56084f0f0943b7ea9ab2e8a31a91549",
+    "curriculumDigest": "sha256:54c1fa4217c5bd663c3b60e967a10c9b058da3c2decb2329407860340de7748c",
+    "sourceGate": "m7b-engage-stage1",
+    "stateDigest": "sha256:bd88181a42ecec0998f60aa6d4e95e555413f366598996294705ab05cb49e70e",
+    "type": "ppo-transfer",
+    "updateIndex": 50
+  },
+  "optionSchedule": {
+    "digest": "sha256:92e6d9ef3f12a5cabc184d0ddc194726310896a919d6683728946bb10b1bfade",
+    "format": "snowgym.option-schedule.v0",
+    "length": 10000,
+    "nextIndex": 800,
+    "prefix": "m7b-engage"
+  },
+  "ppoConfig": {
+    "clip_ratio": 0.2,
+    "entropy_weight": 0.01,
+    "gae_lambda": 0.9885140204,
+    "gamma": 0.9976921765,
+    "initial_power_log_std": -1.0,
+    "initial_target_log_std": -1.0,
+    "learning_rate": 0.0003,
+    "max_grad_norm": 0.5,
+    "minibatch_size": 1600,
+    "ratio_mode": "per-unit",
+    "target_kl": null,
+    "update_epochs": 4,
+    "value_weight": 0.5
+  },
+  "seedSchedule": {
+    "maximum": 109999,
+    "minimum": 100000,
+    "nextSeed": 100800
+  },
+  "stateDigest": "sha256:2c9d06bf7214203c180cceb1289243c02f834c367951908080d6b03d4574ad34",
+  "trainingSeed": 91001,
+  "updateIndex": 100
+}

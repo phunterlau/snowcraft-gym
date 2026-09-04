@@ -1,0 +1,27 @@
+{
+  "actorOnlyNorm": 0.7678104852031044,
+  "artifactDigest": "sha256:c14ec278990e3b415b4e52588264b0c0e8125f2820cf540f25280796498f03d7",
+  "checkpointDigest": "sha256:b5b8e3c184cca7c50de774a093e8a1f22851c14eae83e3e9ba6ad477632674d8",
+  "criticOnlyNorm": 23.02812968329233,
+  "currentGlobalClipScale": 0.021700516341540767,
+  "datasetDigest": "sha256:1a415907bdf523bef249d5ca442a8996cedb77137ae85cbb28cd76bb95f059c3",
+  "format": "snowgym.engage.gradient-diagnostics.v0",
+  "globalNormBeforeCurrentClip": 23.0409264061087,
+  "implementationGitCommit": "2531aa4dded1b315c0c4ab37f74c93d28517d2c3",
+  "initializerDigest": "sha256:4119b9a3f8c0d3df69b704a8f3f813a1b38ab11ca56faffb4c4cebc2cb235133",
+  "losses": {
+    "action-bc": 0.5902761816978455,
+    "categorical-initializer-kl": 0.11330298334360123,
+    "critic-value": 4.154541969299316,
+    "move-initializer-anchor": 0.8301936984062195,
+    "move-target-bc": 0.019322983920574188,
+    "power-bc": 0.02846245840191841,
+    "power-initializer-anchor": 0.06316058337688446,
+    "ppo-actor": -0.008755376562476158,
+    "throw-initializer-anchor": 3.0701377391815186,
+    "throw-target-bc": 0.08635184913873672
+  },
+  "samples": 256,
+  "stateDigestAfter": "sha256:987883e6011173b4a1e7be0c421099399d4c44422c206c8f65b99dd58a36650d",
+  "stateDigestBefore": "sha256:987883e6011173b4a1e7be0c421099399d4c44422c206c8f65b99dd58a36650d"
+}
