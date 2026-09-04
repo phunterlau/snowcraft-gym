@@ -31,6 +31,7 @@ class SnowGymEnv(gym.Env[GymObservation, GymAction]):
         client: SnowGymClient | None = None,
         max_team_units: int = MAX_TEAM_UNITS,
         configurable: bool = False,
+        observation_version: int = 2,
         blue_units: int | None = None,
         red_units: int | None = None,
         arena_width: float = 40.0,
@@ -47,6 +48,7 @@ class SnowGymEnv(gym.Env[GymObservation, GymAction]):
         self.render_mode = render_mode
         self._max_team_units = validate_capacity(max_team_units)
         self._configurable = configurable
+        self._observation_version = observation_version
         self._map = map
         self._map_roster = {}
         if blue_units is not None:
@@ -72,6 +74,7 @@ class SnowGymEnv(gym.Env[GymObservation, GymAction]):
         self.observation_space = make_observation_space(
             self._max_team_units,
             include_unit_masks=configurable,
+            observation_version=observation_version,
         )
         self._client = client or SnowGymHttpClient(server_url, timeout)
         self._raw_observation: dict[str, Any] | None = None
@@ -195,6 +198,7 @@ class SnowGymEnv(gym.Env[GymObservation, GymAction]):
             raw,
             self._max_team_units,
             include_unit_masks=self._configurable,
+            observation_version=self._observation_version,
         )
 
 

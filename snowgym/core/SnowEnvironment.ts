@@ -157,7 +157,11 @@ export class SnowEnvironment {
   }
 
   observe(team: Team): Observation {
-    return observeWorld(this.world, team, this.tick);
+    return observeWorld(this.world, team, this.tick, {
+      decisionHz: this.decisionHz,
+      maxTicks: this.scenario.maxTicks,
+      steeringTarget: (player) => this.movement.currentSteeringTarget(player),
+    });
   }
 
   step(blueAction: TeamAction): StepResult {
@@ -256,7 +260,7 @@ export class SnowEnvironment {
     // reached the world) and tryThrow cannot be re-issued without
     // double-firing a snowball.
     if (runRedController) {
-      this.redController.act(observeWorld(this.world, Team.Enemy, this.tick), SIM.dt);
+      this.redController.act(this.observe(Team.Enemy), SIM.dt);
     }
     this.movement.update(SIM.dt);
     this.throwing.update(SIM.dt);

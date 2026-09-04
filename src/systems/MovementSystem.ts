@@ -231,6 +231,18 @@ export class MovementSystem implements System {
     return true;
   }
 
+  /**
+   * Returns the detached steering waypoint currently affecting one unit.
+   * SnowGym uses this read-only seam to expose persistent controller state;
+   * callers cannot mutate the cached path through the returned value.
+   */
+  currentSteeringTarget(player: Player): PathWaypoint | null {
+    if (!player.moveTarget) return null;
+    const state = this.paths.get(player.id);
+    const target = state?.waypoints[state.waypointIndex] ?? player.moveTarget;
+    return { x: target.x, y: target.y };
+  }
+
   update(dt: number): void {
     this.applyKeyboardMovement(dt);
 

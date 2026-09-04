@@ -141,8 +141,11 @@ The JSON contract reports `apiVersion: "snowgym.v0"` and uses canonical
 labels. Status and step info also report `simulationVersion`,
 `upstreamBaseCommit`, `stateHashVersion`, and `stateHash`. The hash is a
 versioned, non-cryptographic checksum of the detached public observation. It is
-intended for deterministic regression and exact-action replay checks; it does
-not cover hidden controller or RNG internals.
+intended for deterministic regression and exact-action replay checks.
+`snowgym.state.v2` includes the persistent movement/throw controller fields
+published by the full-state observation. The v1 canonicalizer remains available
+for committed legacy replay artifacts. Symmetric `stepJoint` play has the public
+actuator-complete contract; scripted Red deliberately retains private AI timers.
 
 The blue policy consumes detached entity observations and emits semantic
 `noop`, `hold`, `move`, and `throw` actions. `SnowCraftActionAdapter` validates team
@@ -171,8 +174,7 @@ uv sync --extra dev
 The seed-42 acceptance run should report a completed blue win and the surviving
 team counts directly in the terminal, then write a portable visual recording.
 Both `snowgym-check` and `snowgym-demo` accept `--json` for agent-friendly
-machine-readable output; the checker validates Squad-v0, Squad-v1, and
-Squad-v2.
+machine-readable output; the checker validates Squad-v0 through Squad-v3.
 
 ## PettingZoo two-team environment
 
@@ -489,8 +491,8 @@ and verified frame hashes. It refuses to replace an existing output unless
 ## Gymnasium client
 
 Importing `snowgym_client` registers legacy fixed-3v3 `SnowGym/Squad-v0`,
-eight-slot configurable `SnowGym/Squad-v1`, and ten-slot configurable
-`SnowGym/Squad-v2`:
+eight-slot configurable `SnowGym/Squad-v1`, ten-slot configurable
+`SnowGym/Squad-v2`, and actuator-complete `SnowGym/Squad-v3`:
 
 ```python
 import gymnasium as gym
@@ -521,6 +523,13 @@ environment version's tensor shapes. The action space contains one action type,
 normalized target, and throw power per blue slot. The HTTP adapter is the
 correctness/reference transport; `SnowGymBatchEnv` supplies the persistent
 multi-world transport used for high-throughput training.
+
+`Squad-v3` retains the ten-slot capacity and widens unit tensors from 10 to 21
+features and projectile tensors from 8 to 9. The appended fields encode move
+target presence/position, steering waypoint, aim direction, stun/throw/immunity/
+speed timers, and projectile age. It also exposes decision rate, decision
+duration, episode limit, and remaining episode fraction as scalar tensors.
+Existing v0-v2 spaces and behavior are unchanged.
 
 Configurable command-line examples:
 

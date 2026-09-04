@@ -94,6 +94,13 @@ export function snowGymCapabilities(): object {
         { id: 'SnowGym/Squad-v0', maxTeamUnits: 3, configurable: false },
         { id: 'SnowGym/Squad-v1', maxTeamUnits: 8, configurable: true },
         { id: 'SnowGym/Squad-v2', maxTeamUnits: 10, configurable: true },
+        {
+          id: 'SnowGym/Squad-v3',
+          maxTeamUnits: 10,
+          configurable: true,
+          observationVersion: 'snowgym.observation.v1',
+          actuatorComplete: true,
+        },
       ],
     },
     pettingZoo: {

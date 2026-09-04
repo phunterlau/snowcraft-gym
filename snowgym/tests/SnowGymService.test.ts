@@ -506,6 +506,7 @@ describe('SnowGymService', () => {
       'SnowGym/Squad-v0',
       'SnowGym/Squad-v1',
       'SnowGym/Squad-v2',
+      'SnowGym/Squad-v3',
     ]);
     expect(body.pettingZoo.environment).toEqual({
       id: 'SnowGym/ParallelSquad-v0',

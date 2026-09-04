@@ -150,6 +150,23 @@ def test_registered_environment_passes_gymnasium_checker() -> None:
     check_env(environment, skip_render_check=True)
 
 
+def test_full_state_v3_environment_exposes_controller_complete_tensors() -> None:
+    environment = gym.make(
+        snowgym_client.FULL_STATE_ENV_ID, client=FakeClient()
+    ).unwrapped
+    observation, _ = environment.reset(seed=42)
+
+    check_env(environment, skip_render_check=True)
+    assert observation["allies"].shape == (10, 21)
+    assert observation["enemies"].shape == (10, 21)
+    assert observation["projectiles"].shape == (64, 9)
+    assert int(observation["decision_hz"][0]) == 10
+    assert float(observation["decision_dt"][0]) == pytest.approx(0.1)
+    assert int(observation["max_ticks"][0]) == 60 * 180
+    assert float(observation["remaining_fraction"][0]) == pytest.approx(1.0)
+    assert environment.observation_space.contains(observation)
+
+
 def test_parallel_environment_passes_pettingzoo_checker() -> None:
     parallel_api_test(SnowGymParallelEnv(client=FakeClient()), num_cycles=25)
 
@@ -894,7 +911,7 @@ def test_visual_recording_contains_frames_actions_and_outcome(tmp_path: Any) -> 
     assert replay["outcome"]["finalTick"] == 6
     assert replay["configuration"]["blueUnits"] == 3
     assert replay["simulationVersion"] == "snowgym.sim.v1"
-    assert replay["stateHashVersion"] == "snowgym.state.v1"
+    assert replay["stateHashVersion"] == "snowgym.state.v2"
     assert replay["upstreamBaseCommit"] == "7d9fca5"
     assert replay["stateHashes"] == [
         hash_observation(replay["frames"][0]),
@@ -924,6 +941,7 @@ def make_snapshot(
         for index in range(red_units)
     ]
     observation = {
+        "observationVersion": "snowgym.observation.v1",
         "tick": tick,
         "selfTeam": "blue",
         "simulationHz": 60,
@@ -933,11 +951,17 @@ def make_snapshot(
         "projectiles": [],
         "obstacles": make_obstacles(config.get("map")),
         "match": {"blueAlive": blue_units, "redAlive": red_units},
+        "decision": {
+            "hz": int(config["decisionHz"]),
+            "dt": 1.0 / int(config["decisionHz"]),
+            "maxTicks": int(config["maxTicks"]),
+            "remainingFraction": max(0.0, 1.0 - tick / int(config["maxTicks"])),
+        },
     }
     status = {
         "apiVersion": "snowgym.v0",
         "simulationVersion": "snowgym.sim.v1",
-        "stateHashVersion": "snowgym.state.v1",
+        "stateHashVersion": "snowgym.state.v2",
         "upstreamBaseCommit": "7d9fca5",
         "stateHash": hash_observation(observation),
         "scenario": f"{blue_units}-vs-{red_units}-open",
@@ -1011,6 +1035,13 @@ def make_unit(unit_id: int, team: str, x: float, y: float) -> dict[str, Any]:
         "state": "idle",
         "throwCooldown": 0,
         "charge": 0,
+        "moveTarget": None,
+        "steeringTarget": None,
+        "aimDirection": {"x": 1, "y": 0},
+        "stunRemaining": 0,
+        "throwPhaseRemaining": 0,
+        "immunityRemaining": 0,
+        "speedRemaining": 0,
     }
 
 

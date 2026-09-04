@@ -17,6 +17,7 @@ from snowgym_training.model import (
     EntityPolicy,
     ModelConfig,
     living_enemy_mask,
+    migrate_legacy_observation_state_dict,
     model_config,
     nearest_enemy_target,
 )
@@ -95,6 +96,12 @@ def test_model_config_preserves_legacy_checkpoint_shape() -> None:
         **legacy,
         "plan_conditioned": True,
     }
+    assert model_config({**legacy, "observation_version": 3}).as_dict() == {
+        **legacy,
+        "observation_version": 3,
+    }
+    with pytest.raises(ValueError, match="observation_version must be 2 or 3"):
+        model_config({**legacy, "observation_version": 4})
     with pytest.raises(ValueError, match="requires plan_conditioned"):
         model_config({**legacy, "plan_target_only": True})
     with pytest.raises(ValueError, match="requires action_conditioned_targets"):
@@ -140,6 +147,37 @@ def test_model_config_preserves_legacy_checkpoint_shape() -> None:
                 "plan_directive_experts": True,
             }
         )
+
+
+def test_v3_checkpoint_migration_preserves_legacy_outputs_for_zero_new_fields(
+    tmp_path: Path,
+) -> None:
+    torch.manual_seed(31)
+    dataset = TrajectoryDataset(make_dataset(tmp_path / "dataset"))
+    legacy_observation, _ = dataset.batch(np.asarray([0, 1]))
+    legacy = EntityPolicy(ModelConfig(16, 12, 24))
+    migrated = EntityPolicy(ModelConfig(16, 12, 24, observation_version=3))
+    migrated.load_state_dict(
+        migrate_legacy_observation_state_dict(migrated, legacy.state_dict())
+    )
+
+    v3_observation = {
+        name: value.clone() for name, value in legacy_observation.items()
+    }
+    v3_observation["allies"] = torch.nn.functional.pad(
+        legacy_observation["allies"], (0, 11)
+    )
+    v3_observation["enemies"] = torch.nn.functional.pad(
+        legacy_observation["enemies"], (0, 11)
+    )
+    v3_observation["projectiles"] = torch.nn.functional.pad(
+        legacy_observation["projectiles"], (0, 1)
+    )
+
+    expected = legacy(legacy_observation)
+    actual = migrated(v3_observation)
+    for name in ("action_logits", "target", "power", "hidden", "action_hidden"):
+        assert torch.equal(expected[name], actual[name])
 
 
 def test_plan_conditioned_model_requires_fixed_tensors_and_changes_counterfactual(

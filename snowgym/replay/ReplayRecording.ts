@@ -1,6 +1,10 @@
 import type { TeamAction } from '../actions/UnitAction';
 import type { Observation } from '../observations/Observation';
-import { STATE_HASH_VERSION } from '../protocol/Version';
+import {
+  LEGACY_STATE_HASH_VERSION,
+  STATE_HASH_VERSION,
+  type StateHashVersion,
+} from '../protocol/Version';
 import { hashObservation } from '../reproducibility/StateHash';
 
 export const REPLAY_FORMAT = 'snowgym.replay.v0' as const;
@@ -19,7 +23,7 @@ export interface ReplayRecording {
   format: typeof REPLAY_FORMAT;
   apiVersion: 'snowgym.v0';
   simulationVersion?: string;
-  stateHashVersion?: typeof STATE_HASH_VERSION;
+  stateHashVersion?: StateHashVersion;
   upstreamBaseCommit?: string;
   scenario: string;
   seed: number;
@@ -73,6 +77,17 @@ export function parseReplayRecording(value: unknown): ReplayRecording {
   if (actions.length !== frames.length - 1) {
     throw new ReplayFormatError('actions must contain one entry per frame transition');
   }
+  if (
+    replay.stateHashVersion !== undefined &&
+    replay.stateHashVersion !== STATE_HASH_VERSION &&
+    replay.stateHashVersion !== LEGACY_STATE_HASH_VERSION
+  ) {
+    throw new ReplayFormatError('unsupported state hash version');
+  }
+  const hashVersion: StateHashVersion =
+    replay.stateHashVersion === STATE_HASH_VERSION
+      ? STATE_HASH_VERSION
+      : LEGACY_STATE_HASH_VERSION;
   if (replay.stateHashes !== undefined) {
     const stateHashes = array(replay.stateHashes, 'stateHashes');
     if (stateHashes.length !== frames.length) {
@@ -82,7 +97,7 @@ export function parseReplayRecording(value: unknown): ReplayRecording {
       if (typeof hash !== 'string' || !/^fnv1a64:[0-9a-f]{16}$/.test(hash)) {
         throw new ReplayFormatError(`stateHashes[${index}] is invalid`);
       }
-      if (hash !== hashObservation(frames[index] as Observation)) {
+      if (hash !== hashObservation(frames[index] as Observation, hashVersion)) {
         throw new ReplayFormatError(`stateHashes[${index}] does not match its frame`);
       }
     }
@@ -96,9 +111,6 @@ export function parseReplayRecording(value: unknown): ReplayRecording {
   positive(replay.ticksPerDecision, 'ticksPerDecision');
   optionalNonEmptyString(replay.simulationVersion, 'simulationVersion');
   optionalNonEmptyString(replay.upstreamBaseCommit, 'upstreamBaseCommit');
-  if (replay.stateHashVersion !== undefined && replay.stateHashVersion !== STATE_HASH_VERSION) {
-    throw new ReplayFormatError(`expected state hash version ${STATE_HASH_VERSION}`);
-  }
   if (replay.configuration !== undefined) {
     const configuration = record(replay.configuration, 'configuration');
     positive(configuration.blueUnits, 'configuration.blueUnits');

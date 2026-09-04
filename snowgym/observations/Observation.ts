@@ -1,9 +1,10 @@
-import { SIM } from '../../src/game/config';
-import { Team, type ObstacleType } from '../../src/game/types';
+import { SIM, THROW } from '../../src/game/config';
+import { PlayerState, Team, type ObstacleType, type Player } from '../../src/game/types';
 import type { World } from '../../src/game/World';
 import type { Shape } from '../../src/physics/shapes';
 
 export type SnowTeam = 'blue' | 'red';
+export const OBSERVATION_VERSION = 'snowgym.observation.v1' as const;
 export type UnitState =
   | 'idle'
   | 'moving'
@@ -27,6 +28,13 @@ export interface UnitObservation {
   state: UnitState;
   throwCooldown: number;
   charge: number;
+  moveTarget?: { x: number; y: number } | null;
+  steeringTarget?: { x: number; y: number } | null;
+  aimDirection?: { x: number; y: number };
+  stunRemaining?: number;
+  throwPhaseRemaining?: number;
+  immunityRemaining?: number;
+  speedRemaining?: number;
 }
 
 export interface ProjectileObservation {
@@ -39,6 +47,7 @@ export interface ProjectileObservation {
   vy: number;
   height: number;
   heightVelocity: number;
+  age?: number;
 }
 
 /** Static terrain obstacle, normalized to a center + half-extents footprint. */
@@ -57,6 +66,7 @@ export interface ObstacleObservation {
 }
 
 export interface Observation {
+  observationVersion?: typeof OBSERVATION_VERSION;
   tick: number;
   selfTeam: SnowTeam;
   simulationHz: number;
@@ -66,14 +76,39 @@ export interface Observation {
   projectiles: ProjectileObservation[];
   /** Terrain obstacles in deterministic id order; empty on open arenas. */
   obstacles: ObstacleObservation[];
+  decision?: {
+    hz: number;
+    dt: number;
+    maxTicks: number;
+    remainingFraction: number;
+  };
   match: {
     blueAlive: number;
     redAlive: number;
   };
 }
 
+export interface ObservationContext {
+  readonly decisionHz?: number;
+  readonly maxTicks?: number;
+  readonly steeringTarget?: (player: Player) => { readonly x: number; readonly y: number } | null;
+}
+
 /** Returns a detached, deterministic snapshot of simulation state. */
-export function observeWorld(world: World, selfTeam: Team, tick: number): Observation {
+export function observeWorld(
+  world: World,
+  selfTeam: Team,
+  tick: number,
+  context: ObservationContext = {},
+): Observation {
+  const decisionHz = context.decisionHz ?? SIM.hz;
+  const maxTicks = context.maxTicks ?? Number.MAX_SAFE_INTEGER;
+  if (!Number.isFinite(decisionHz) || decisionHz <= 0 || decisionHz > SIM.hz) {
+    throw new RangeError('observation decisionHz must be in (0, simulationHz]');
+  }
+  if (!Number.isSafeInteger(maxTicks) || maxTicks <= 0) {
+    throw new RangeError('observation maxTicks must be a positive safe integer');
+  }
   const units = world.players
     .map(
       (player): UnitObservation => ({
@@ -89,6 +124,13 @@ export function observeWorld(world: World, selfTeam: Team, tick: number): Observ
         state: player.state,
         throwCooldown: player.throwCooldown,
         charge: player.throwCharge,
+        moveTarget: point(player.moveTarget),
+        steeringTarget: point(context.steeringTarget?.(player) ?? player.moveTarget),
+        aimDirection: { x: player.aimDirection.x, y: player.aimDirection.y },
+        stunRemaining: player.stunTimer,
+        throwPhaseRemaining: throwPhaseRemaining(player),
+        immunityRemaining: player.immunityTimer,
+        speedRemaining: player.speedTimer,
       }),
     )
     .sort((a, b) => a.id - b.id);
@@ -106,6 +148,7 @@ export function observeWorld(world: World, selfTeam: Team, tick: number): Observ
         vy: snowball.velocity.y,
         height: snowball.height,
         heightVelocity: snowball.heightVelocity,
+        age: snowball.age,
       }),
     )
     .sort((a, b) => a.id - b.id);
@@ -124,6 +167,7 @@ export function observeWorld(world: World, selfTeam: Team, tick: number): Observ
     .sort((a, b) => a.id - b.id);
 
   return {
+    observationVersion: OBSERVATION_VERSION,
     tick,
     selfTeam: snowTeam(selfTeam),
     simulationHz: SIM.hz,
@@ -132,11 +176,27 @@ export function observeWorld(world: World, selfTeam: Team, tick: number): Observ
     enemies: units.filter((unit) => unit.team !== snowTeam(selfTeam)),
     projectiles,
     obstacles,
+    decision: {
+      hz: decisionHz,
+      dt: 1 / decisionHz,
+      maxTicks,
+      remainingFraction: Math.min(1, Math.max(0, (maxTicks - tick) / maxTicks)),
+    },
     match: {
       blueAlive: world.countLiving(Team.Player),
       redAlive: world.countLiving(Team.Enemy),
     },
   };
+}
+
+function point(value: { readonly x: number; readonly y: number } | null): { x: number; y: number } | null {
+  return value === null ? null : { x: value.x, y: value.y };
+}
+
+function throwPhaseRemaining(player: Player): number {
+  if (player.state === PlayerState.Throwing) return Math.max(0, THROW.windup - player.throwTimer);
+  if (player.state === PlayerState.Recovering) return Math.max(0, THROW.recovery - player.throwTimer);
+  return 0;
 }
 
 function snowTeam(team: Team): SnowTeam {

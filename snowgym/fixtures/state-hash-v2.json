@@ -1,0 +1,79 @@
+{
+  "format": "snowgym.state-hash-fixture.v2",
+  "expected": "fnv1a64:2121b31e18b5760c",
+  "observation": {
+    "observationVersion": "snowgym.observation.v1",
+    "tick": 12,
+    "selfTeam": "blue",
+    "simulationHz": 60,
+    "arena": { "width": 40, "height": 30 },
+    "allies": [
+      {
+        "id": 1,
+        "team": "blue",
+        "x": -8,
+        "y": 2,
+        "vx": 3,
+        "vy": -1,
+        "health": 80,
+        "maxHealth": 100,
+        "alive": true,
+        "state": "moving",
+        "throwCooldown": 0.2,
+        "charge": 0,
+        "moveTarget": { "x": 4, "y": -3 },
+        "steeringTarget": { "x": -1, "y": 5 },
+        "aimDirection": { "x": 0.6, "y": 0.8 },
+        "stunRemaining": 0,
+        "throwPhaseRemaining": 0.1,
+        "immunityRemaining": 1.25,
+        "speedRemaining": 2.5
+      }
+    ],
+    "enemies": [
+      {
+        "id": 2,
+        "team": "red",
+        "x": 9,
+        "y": -2,
+        "vx": 0,
+        "vy": 0,
+        "health": 100,
+        "maxHealth": 100,
+        "alive": true,
+        "state": "idle",
+        "throwCooldown": 0,
+        "charge": 0,
+        "moveTarget": null,
+        "steeringTarget": null,
+        "aimDirection": { "x": -1, "y": 0 },
+        "stunRemaining": 0,
+        "throwPhaseRemaining": 0,
+        "immunityRemaining": 0,
+        "speedRemaining": 0
+      }
+    ],
+    "projectiles": [
+      {
+        "id": 3,
+        "ownerId": 2,
+        "team": "red",
+        "x": 2,
+        "y": 1,
+        "vx": -5,
+        "vy": 0.5,
+        "height": 1.2,
+        "heightVelocity": -0.25,
+        "age": 0.75
+      }
+    ],
+    "obstacles": [],
+    "decision": {
+      "hz": 10,
+      "dt": 0.1,
+      "maxTicks": 1800,
+      "remainingFraction": 0.9933333333333333
+    },
+    "match": { "blueAlive": 1, "redAlive": 1 }
+  }
+}

@@ -9,7 +9,7 @@ import warnings
 import gymnasium as gym
 from gymnasium.utils.env_checker import check_env
 
-from . import CONFIGURABLE_ENV_ID, ENV_ID, TEN_UNIT_ENV_ID
+from . import CONFIGURABLE_ENV_ID, ENV_ID, FULL_STATE_ENV_ID, TEN_UNIT_ENV_ID
 
 
 def main() -> None:
@@ -23,12 +23,13 @@ def main() -> None:
         (ENV_ID, {}),
         (CONFIGURABLE_ENV_ID, {}),
         (TEN_UNIT_ENV_ID, {"map": "arena6.json"}),
+        (FULL_STATE_ENV_ID, {"map": "arena6.json"}),
     )
     for environment_id, kwargs in environments:
         with warnings.catch_warnings():
             warnings.filterwarnings(
                 "ignore",
-                message=r".*SnowGym/Squad-v[01] is out of date.*",
+                message=r".*SnowGym/Squad-v[012] is out of date.*",
                 category=DeprecationWarning,
             )
             environment = gym.make(

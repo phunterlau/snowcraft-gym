@@ -18,6 +18,7 @@ from .research_env import SnowGymResearchParallelEnv
 ENV_ID = "SnowGym/Squad-v0"
 CONFIGURABLE_ENV_ID = "SnowGym/Squad-v1"
 TEN_UNIT_ENV_ID = "SnowGym/Squad-v2"
+FULL_STATE_ENV_ID = "SnowGym/Squad-v3"
 
 if ENV_ID not in registry:
     register(
@@ -42,9 +43,22 @@ if TEN_UNIT_ENV_ID not in registry:
         nondeterministic=False,
     )
 
+if FULL_STATE_ENV_ID not in registry:
+    register(
+        id=FULL_STATE_ENV_ID,
+        entry_point="snowgym_client.env:SnowGymEnv",
+        kwargs={
+            "max_team_units": 10,
+            "configurable": True,
+            "observation_version": 3,
+        },
+        nondeterministic=False,
+    )
+
 __all__ = [
     "CONFIGURABLE_ENV_ID",
     "ENV_ID",
+    "FULL_STATE_ENV_ID",
     "TEN_UNIT_ENV_ID",
     "SnowGymEnv",
     "SnowGymBatchClient",

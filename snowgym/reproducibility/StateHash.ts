@@ -4,7 +4,11 @@ import type {
   ProjectileObservation,
   UnitObservation,
 } from '../observations/Observation';
-import { STATE_HASH_VERSION } from '../protocol/Version';
+import {
+  LEGACY_STATE_HASH_VERSION,
+  STATE_HASH_VERSION,
+  type StateHashVersion,
+} from '../protocol/Version';
 
 const SCALE = 1_000_000_000;
 const FNV_OFFSET = 0xcbf29ce484222325n;
@@ -15,8 +19,11 @@ const UINT64_MASK = 0xffffffffffffffffn;
  * Hashes the detached public simulator state using a versioned canonical form.
  * This is a regression checksum, not a cryptographic integrity signature.
  */
-export function hashObservation(observation: Observation): string {
-  const canonical = canonicalObservation(observation);
+export function hashObservation(
+  observation: Observation,
+  version: StateHashVersion = STATE_HASH_VERSION,
+): string {
+  const canonical = canonicalObservation(observation, version);
   let hash = FNV_OFFSET;
   for (const byte of new TextEncoder().encode(canonical)) {
     hash ^= BigInt(byte);
@@ -26,24 +33,62 @@ export function hashObservation(observation: Observation): string {
 }
 
 /** Canonical token stream shared with the Python client implementation. */
-export function canonicalObservation(observation: Observation): string {
+export function canonicalObservation(
+  observation: Observation,
+  version: StateHashVersion = STATE_HASH_VERSION,
+): string {
+  if (version === LEGACY_STATE_HASH_VERSION) return canonicalObservationV1(observation);
+  const decision = observation.decision ?? {
+    hz: observation.simulationHz,
+    dt: 1 / observation.simulationHz,
+    maxTicks: Number.MAX_SAFE_INTEGER,
+    remainingFraction: 1,
+  };
   const tokens: string[] = [
     STATE_HASH_VERSION,
+    observation.observationVersion ?? 'legacy',
+    integer(observation.tick),
+    observation.selfTeam,
+    integer(observation.simulationHz),
+    quantized(observation.arena.width),
+    quantized(observation.arena.height),
+    'decision',
+    quantized(decision.hz),
+    quantized(decision.dt),
+    integer(decision.maxTicks),
+    quantized(decision.remainingFraction),
+  ];
+  appendUnits(tokens, 'allies', observation.allies, true);
+  appendUnits(tokens, 'enemies', observation.enemies, true);
+  appendProjectiles(tokens, observation.projectiles, true);
+  appendObstacles(tokens, observation.obstacles ?? []);
+  tokens.push('match', integer(observation.match.blueAlive), integer(observation.match.redAlive));
+  return tokens.join('|');
+}
+
+export function canonicalObservationV1(observation: Observation): string {
+  const tokens: string[] = [
+    LEGACY_STATE_HASH_VERSION,
     integer(observation.tick),
     observation.selfTeam,
     integer(observation.simulationHz),
     quantized(observation.arena.width),
     quantized(observation.arena.height),
   ];
-  appendUnits(tokens, 'allies', observation.allies);
-  appendUnits(tokens, 'enemies', observation.enemies);
-  appendProjectiles(tokens, observation.projectiles);
+  appendUnits(tokens, 'allies', observation.allies, false);
+  appendUnits(tokens, 'enemies', observation.enemies, false);
+  appendProjectiles(tokens, observation.projectiles, false);
   appendObstacles(tokens, observation.obstacles ?? []);
   tokens.push('match', integer(observation.match.blueAlive), integer(observation.match.redAlive));
   return tokens.join('|');
 }
 
-function appendUnits(tokens: string[], label: string, units: readonly UnitObservation[]): void {
+function appendUnits(
+  tokens: string[],
+  label: string,
+  units: readonly UnitObservation[],
+  includeController: boolean,
+): void {
   const ordered = [...units].sort((a, b) => a.id - b.id);
   tokens.push(label, integer(ordered.length));
   for (const unit of ordered) {
@@ -61,10 +106,25 @@ function appendUnits(tokens: string[], label: string, units: readonly UnitObserv
       quantized(unit.throwCooldown),
       quantized(unit.charge),
     );
+    if (includeController) {
+      appendPoint(tokens, 'moveTarget', unit.moveTarget);
+      appendPoint(tokens, 'steeringTarget', unit.steeringTarget);
+      appendPoint(tokens, 'aimDirection', unit.aimDirection);
+      tokens.push(
+        quantized(unit.stunRemaining ?? 0),
+        quantized(unit.throwPhaseRemaining ?? 0),
+        quantized(unit.immunityRemaining ?? 0),
+        quantized(unit.speedRemaining ?? 0),
+      );
+    }
   }
 }
 
-function appendProjectiles(tokens: string[], projectiles: readonly ProjectileObservation[]): void {
+function appendProjectiles(
+  tokens: string[],
+  projectiles: readonly ProjectileObservation[],
+  includeAge: boolean,
+): void {
   const ordered = [...projectiles].sort((a, b) => a.id - b.id);
   tokens.push('projectiles', integer(ordered.length));
   for (const projectile of ordered) {
@@ -79,7 +139,20 @@ function appendProjectiles(tokens: string[], projectiles: readonly ProjectileObs
       quantized(projectile.height),
       quantized(projectile.heightVelocity),
     );
+    if (includeAge) tokens.push(quantized(projectile.age ?? 0));
   }
+}
+
+function appendPoint(
+  tokens: string[],
+  label: string,
+  value: { readonly x: number; readonly y: number } | null | undefined,
+): void {
+  if (value === null || value === undefined) {
+    tokens.push(label, '0');
+    return;
+  }
+  tokens.push(label, '1', quantized(value.x), quantized(value.y));
 }
 
 function appendObstacles(tokens: string[], obstacles: readonly ObstacleObservation[]): void {

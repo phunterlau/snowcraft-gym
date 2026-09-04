@@ -96,6 +96,38 @@ describe('SnowEnvironment', () => {
   it('replays simultaneous team policies to identical public state hashes', () => {
     expect(recordJointHashes(17, 30)).toEqual(recordJointHashes(17, 30));
   });
+
+  it('advances equal full states and joint actions to equal next states', () => {
+    const first = new SnowEnvironment({ decisionHz: 10 });
+    const second = new SnowEnvironment({ decisionHz: 10 });
+    first.reset(73);
+    second.reset(73);
+    const policy = new SimpleBlueAgent();
+    const blueAction = policy.act(first.observe(Team.Player));
+    const redAction = policy.act(first.observe(Team.Enemy));
+
+    expect(first.status().stateHash).toBe(second.status().stateHash);
+    const firstResult = first.stepJoint(blueAction, redAction);
+    const secondResult = second.stepJoint(structuredClone(blueAction), structuredClone(redAction));
+
+    expect(firstResult.observations).toEqual(secondResult.observations);
+    expect(first.status().stateHash).toBe(second.status().stateHash);
+  });
+
+  it('exposes the persistent movement target and current steering waypoint', () => {
+    const environment = new SnowEnvironment({ decisionHz: 10 });
+    const observation = environment.reset(19);
+    const unit = observation.allies[0];
+    const result = environment.stepJoint(
+      { actions: [{ type: 'move', unitId: unit.id, x: 10, y: 4 }] },
+      { actions: [] },
+    );
+    const moved = result.observations.blue.allies[0];
+
+    expect(moved.moveTarget).toEqual({ x: 10, y: 4 });
+    expect(moved.steeringTarget).not.toBeNull();
+    expect(result.observations.blue.decision).toMatchObject({ hz: 10, dt: 0.1 });
+  });
 });
 
 function runBattle(): BattleSummary {

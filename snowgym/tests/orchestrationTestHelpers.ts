@@ -6,6 +6,7 @@ export function observationWith(
   const allies = overrides.allies ?? [unit(1, 'blue', -10, 0)];
   const enemies = overrides.enemies ?? [unit(100, 'red', 10, 0)];
   return {
+    observationVersion: 'snowgym.observation.v1',
     tick: 0,
     selfTeam: 'blue',
     simulationHz: 60,
@@ -14,6 +15,7 @@ export function observationWith(
     enemies,
     projectiles: [],
     obstacles: [],
+    decision: { hz: 10, dt: 0.1, maxTicks: 10_800, remainingFraction: 1 },
     match: {
       blueAlive: allies.filter(({ alive }) => alive).length,
       redAlive: enemies.filter(({ alive }) => alive).length,
@@ -35,5 +37,12 @@ function unit(id: number, team: UnitObservation['team'], x: number, y: number): 
     state: 'idle',
     throwCooldown: 0,
     charge: 0,
+    moveTarget: null,
+    steeringTarget: null,
+    aimDirection: { x: team === 'blue' ? 1 : -1, y: 0 },
+    stunRemaining: 0,
+    throwPhaseRemaining: 0,
+    immunityRemaining: 0,
+    speedRemaining: 0,
   };
 }

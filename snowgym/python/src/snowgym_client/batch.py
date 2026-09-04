@@ -138,12 +138,14 @@ class SnowGymBatchEnv:
         batch_size: int,
         *,
         max_team_units: int = 10,
+        observation_version: int = 2,
         client: SnowGymBatchClient | None = None,
     ) -> None:
         if not isinstance(batch_size, int) or isinstance(batch_size, bool) or batch_size <= 0:
             raise ValueError("batch_size must be a positive integer")
         self.batch_size = batch_size
         self.max_team_units = max_team_units
+        self.observation_version = observation_version
         self.action_space = make_action_space(max_team_units)
         self.client = client or SnowGymBatchClient()
         self._owns_client = client is None
@@ -424,7 +426,10 @@ class SnowGymBatchEnv:
             self.raw_observations[index] = raw
             self.state_hashes[index] = state_hash
             self._observations[index] = encode_observation(
-                raw, self.max_team_units, include_unit_masks=True
+                raw,
+                self.max_team_units,
+                include_unit_masks=True,
+                observation_version=self.observation_version,
             )
             payloads.append(body)
         if failures:

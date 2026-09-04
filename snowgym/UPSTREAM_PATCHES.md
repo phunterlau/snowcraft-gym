@@ -25,12 +25,15 @@ UI commands.
 Change: added public `tryMove(player, x, y)`, routed the existing group move
 command through it, and made rejected state-incompatible orders atomic. Later
 added public `tryHold(player)` so a controller that reports orders on behalf of
-a unit can cancel a stale move target without disturbing other states.
+a unit can cancel a stale move target without disturbing other states. M7a also
+added the read-only `currentSteeringTarget(player)` seam so renderer-free full
+state observations can expose the active path waypoint without owning pathfinding.
 
 Upstream behavior: unchanged; group formation, clamping, state transitions, and
 movement integration use the same logic as before.
 
-SnowGym dependency: `SnowCraftActionAdapter` uses this generic engine seam.
+SnowGym dependency: `SnowCraftActionAdapter` uses the command seams and
+`SnowEnvironment` uses the waypoint seam for actuator-complete observations.
 
 ## `src/systems/ThrowSystem.ts`
 

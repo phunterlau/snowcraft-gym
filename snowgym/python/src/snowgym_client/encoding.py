@@ -16,7 +16,9 @@ MAX_CONFIGURABLE_TEAM_UNITS = 10
 MAX_PROJECTILES = 64
 MAX_OBSTACLES = 64
 UNIT_FEATURES = 10
+UNIT_FEATURES_V3 = 21
 PROJECTILE_FEATURES = 8
+PROJECTILE_FEATURES_V3 = 9
 OBSTACLE_FEATURES = 9
 VELOCITY_SCALE = 20.0
 HEIGHT_SCALE = 3.0
@@ -65,15 +67,21 @@ def make_observation_space(
     max_team_units: int = MAX_TEAM_UNITS,
     *,
     include_unit_masks: bool = False,
+    observation_version: int = 2,
 ) -> spaces.Dict:
     max_team_units = validate_team_capacity(max_team_units)
+    validate_observation_version(observation_version)
+    unit_features = UNIT_FEATURES_V3 if observation_version == 3 else UNIT_FEATURES
+    projectile_features = (
+        PROJECTILE_FEATURES_V3 if observation_version == 3 else PROJECTILE_FEATURES
+    )
     definitions: dict[str, spaces.Space] = {
-            "allies": spaces.Box(-1.0, 1.0, shape=(max_team_units, UNIT_FEATURES), dtype=np.float32),
-            "enemies": spaces.Box(-1.0, 1.0, shape=(max_team_units, UNIT_FEATURES), dtype=np.float32),
+            "allies": spaces.Box(-1.0, 1.0, shape=(max_team_units, unit_features), dtype=np.float32),
+            "enemies": spaces.Box(-1.0, 1.0, shape=(max_team_units, unit_features), dtype=np.float32),
             "projectiles": spaces.Box(
                 -1.0,
                 1.0,
-                shape=(MAX_PROJECTILES, PROJECTILE_FEATURES),
+                shape=(MAX_PROJECTILES, projectile_features),
                 dtype=np.float32,
             ),
             "projectile_mask": spaces.Box(0, 1, shape=(MAX_PROJECTILES,), dtype=np.int8),
@@ -96,6 +104,19 @@ def make_observation_space(
     if include_unit_masks:
         definitions["ally_mask"] = spaces.Box(0, 1, shape=(max_team_units,), dtype=np.int8)
         definitions["enemy_mask"] = spaces.Box(0, 1, shape=(max_team_units,), dtype=np.int8)
+    if observation_version == 3:
+        definitions.update(
+            {
+                "decision_hz": spaces.Box(1, 60, shape=(1,), dtype=np.int32),
+                "decision_dt": spaces.Box(0.0, 1.0, shape=(1,), dtype=np.float32),
+                "max_ticks": spaces.Box(
+                    1, np.iinfo(np.int64).max, shape=(1,), dtype=np.int64
+                ),
+                "remaining_fraction": spaces.Box(
+                    0.0, 1.0, shape=(1,), dtype=np.float32
+                ),
+            }
+        )
     return spaces.Dict(definitions)
 
 
@@ -104,8 +125,10 @@ def encode_observation(
     max_team_units: int = MAX_TEAM_UNITS,
     *,
     include_unit_masks: bool = False,
+    observation_version: int = 2,
 ) -> GymObservation:
     max_team_units = validate_team_capacity(max_team_units)
+    validate_observation_version(observation_version)
     arena = require_dict(raw, "arena")
     width = positive_number(arena, "width")
     height = positive_number(arena, "height")
@@ -121,9 +144,13 @@ def encode_observation(
             f"allies={len(allies_raw)} enemies={len(enemies_raw)}"
         )
 
-    allies = np.zeros((max_team_units, UNIT_FEATURES), dtype=np.float32)
-    enemies = np.zeros((max_team_units, UNIT_FEATURES), dtype=np.float32)
-    projectiles = np.zeros((MAX_PROJECTILES, PROJECTILE_FEATURES), dtype=np.float32)
+    unit_features = UNIT_FEATURES_V3 if observation_version == 3 else UNIT_FEATURES
+    projectile_features = (
+        PROJECTILE_FEATURES_V3 if observation_version == 3 else PROJECTILE_FEATURES
+    )
+    allies = np.zeros((max_team_units, unit_features), dtype=np.float32)
+    enemies = np.zeros((max_team_units, unit_features), dtype=np.float32)
+    projectiles = np.zeros((MAX_PROJECTILES, projectile_features), dtype=np.float32)
     projectile_mask = np.zeros(MAX_PROJECTILES, dtype=np.int8)
     obstacles = np.zeros((MAX_OBSTACLES, OBSTACLE_FEATURES), dtype=np.float32)
     obstacle_mask = np.zeros(MAX_OBSTACLES, dtype=np.int8)
@@ -133,15 +160,17 @@ def encode_observation(
 
     for index, unit in enumerate(allies_raw):
         unit_data = require_object(unit, "ally")
-        allies[index] = encode_unit(unit_data, width, height)
+        allies[index] = encode_unit(unit_data, width, height, observation_version)
         action_mask[index] = encode_action_mask(unit_data)
         ally_mask[index] = 1
     for index, unit in enumerate(enemies_raw):
-        enemies[index] = encode_unit(require_object(unit, "enemy"), width, height)
+        enemies[index] = encode_unit(
+            require_object(unit, "enemy"), width, height, observation_version
+        )
         enemy_mask[index] = 1
     for index, projectile in enumerate(projectiles_raw[:MAX_PROJECTILES]):
         projectiles[index] = encode_projectile(
-            require_object(projectile, "projectile"), width, height
+            require_object(projectile, "projectile"), width, height, observation_version
         )
         projectile_mask[index] = 1
     for index, obstacle in enumerate(obstacles_raw[:MAX_OBSTACLES]):
@@ -166,6 +195,20 @@ def encode_observation(
     if include_unit_masks:
         encoded["ally_mask"] = ally_mask
         encoded["enemy_mask"] = enemy_mask
+    if observation_version == 3:
+        if raw.get("observationVersion") != "snowgym.observation.v1":
+            raise ValueError("v3 encoding requires snowgym.observation.v1")
+        decision = require_dict(raw, "decision")
+        encoded.update(
+            {
+                "decision_hz": np.asarray([integer(decision, "hz")], dtype=np.int32),
+                "decision_dt": np.asarray([number(decision, "dt")], dtype=np.float32),
+                "max_ticks": np.asarray([integer(decision, "maxTicks")], dtype=np.int64),
+                "remaining_fraction": np.asarray(
+                    [number(decision, "remainingFraction")], dtype=np.float32
+                ),
+            }
+        )
     return encoded
 
 
@@ -295,13 +338,14 @@ def decode_action(
     return {"action_type": action_types, "target": targets, "power": powers}
 
 
-def encode_unit(unit: JsonObject, width: float, height: float) -> np.ndarray:
+def encode_unit(
+    unit: JsonObject, width: float, height: float, observation_version: int = 2
+) -> np.ndarray:
     max_health = max(number(unit, "maxHealth"), 1.0)
     state = unit.get("state")
     if state not in STATE_INDEX:
         raise ValueError(f"unknown unit state {state!r}")
-    return np.asarray(
-        [
+    values = [
             1.0,
             1.0 if bool(unit.get("alive", False)) else 0.0,
             normalize(number(unit, "x"), width / 2.0),
@@ -312,17 +356,39 @@ def encode_unit(unit: JsonObject, width: float, height: float) -> np.ndarray:
             float(np.clip(number(unit, "throwCooldown"), 0.0, 1.0)),
             float(np.clip(number(unit, "charge"), 0.0, 1.0)),
             STATE_INDEX[str(state)] / max(len(STATE_INDEX) - 1, 1),
-        ],
-        dtype=np.float32,
-    )
+        ]
+    if observation_version == 3:
+        move_target = optional_point(unit.get("moveTarget"), "moveTarget")
+        steering_target = optional_point(unit.get("steeringTarget"), "steeringTarget")
+        aim = require_object(unit.get("aimDirection"), "aimDirection")
+        values.extend(
+            [
+                1.0 if move_target is not None else 0.0,
+                normalize(move_target[0], width / 2.0) if move_target else 0.0,
+                normalize(move_target[1], height / 2.0) if move_target else 0.0,
+                normalize(steering_target[0], width / 2.0) if steering_target else 0.0,
+                normalize(steering_target[1], height / 2.0) if steering_target else 0.0,
+                normalize(number(aim, "x"), 1.0),
+                normalize(number(aim, "y"), 1.0),
+                normalize(number(unit, "stunRemaining"), 1.0),
+                normalize(number(unit, "throwPhaseRemaining"), 1.0),
+                normalize(number(unit, "immunityRemaining"), 5.0),
+                normalize(number(unit, "speedRemaining"), 6.0),
+            ]
+        )
+    return np.asarray(values, dtype=np.float32)
 
 
-def encode_projectile(projectile: JsonObject, width: float, height: float) -> np.ndarray:
+def encode_projectile(
+    projectile: JsonObject,
+    width: float,
+    height: float,
+    observation_version: int = 2,
+) -> np.ndarray:
     team = projectile.get("team")
     if team not in {"blue", "red"}:
         raise ValueError(f"unknown projectile team {team!r}")
-    return np.asarray(
-        [
+    values = [
             1.0,
             -1.0 if team == "blue" else 1.0,
             normalize(number(projectile, "x"), width / 2.0),
@@ -331,9 +397,10 @@ def encode_projectile(projectile: JsonObject, width: float, height: float) -> np
             normalize(number(projectile, "vy"), VELOCITY_SCALE),
             normalize(number(projectile, "height"), HEIGHT_SCALE),
             normalize(number(projectile, "heightVelocity"), HEIGHT_VELOCITY_SCALE),
-        ],
-        dtype=np.float32,
-    )
+        ]
+    if observation_version == 3:
+        values.append(normalize(number(projectile, "age"), 5.0))
+    return np.asarray(values, dtype=np.float32)
 
 
 def encode_action_mask(unit: JsonObject) -> np.ndarray:
@@ -387,6 +454,13 @@ def require_list(record: JsonObject, key: str) -> list[Any]:
     return value
 
 
+def optional_point(value: Any, name: str) -> tuple[float, float] | None:
+    if value is None:
+        return None
+    point = require_object(value, name)
+    return number(point, "x"), number(point, "y")
+
+
 def number(record: JsonObject, key: str) -> float:
     value = record.get(key)
     if not isinstance(value, int | float) or isinstance(value, bool):
@@ -415,4 +489,10 @@ def validate_team_capacity(value: int) -> int:
         raise ValueError(
             f"max_team_units must be in [1, {MAX_CONFIGURABLE_TEAM_UNITS}]"
         )
+    return value
+
+
+def validate_observation_version(value: int) -> int:
+    if value not in (2, 3) or isinstance(value, bool):
+        raise ValueError("observation_version must be 2 or 3")
     return value

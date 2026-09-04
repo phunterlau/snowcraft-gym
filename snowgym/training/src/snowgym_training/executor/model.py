@@ -23,6 +23,7 @@ __all__ = [
     "living_enemy_mask",
     "masked_enemy_attention",
     "masked_mean_max",
+    "migrate_legacy_observation_state_dict",
     "model_config",
     "nearest_enemy_target",
     "select_action_target",
@@ -47,6 +48,7 @@ class ModelConfig:
     plan_role_conditioned: bool = False
     plan_unit_directive_conditioned: bool = False
     plan_directive_experts: bool = False
+    observation_version: int = 2
 
     def as_dict(self) -> dict[str, int | bool]:
         value: dict[str, int | bool] = {
@@ -78,6 +80,8 @@ class ModelConfig:
             value["plan_unit_directive_conditioned"] = True
         if self.plan_directive_experts:
             value["plan_directive_experts"] = True
+        if self.observation_version != 2:
+            value["observation_version"] = self.observation_version
         return value
 
 
@@ -88,9 +92,11 @@ class EntityPolicy(nn.Module):
         super().__init__()
         self.config = config
         embedding = config.entity_embedding
-        self.ally_encoder = entity_encoder(10, config)
-        self.enemy_encoder = entity_encoder(10, config)
-        self.projectile_encoder = entity_encoder(8, config)
+        unit_features = 21 if config.observation_version == 3 else 10
+        projectile_features = 9 if config.observation_version == 3 else 8
+        self.ally_encoder = entity_encoder(unit_features, config)
+        self.enemy_encoder = entity_encoder(unit_features, config)
+        self.projectile_encoder = entity_encoder(projectile_features, config)
         self.obstacle_encoder = entity_encoder(9, config)
         global_features = embedding * 8 + 3
         self.plan_conditioned = config.plan_conditioned
@@ -500,6 +506,7 @@ def model_config(value: Any) -> ModelConfig:
         "actor_hidden",
     }
     optional = {
+        "observation_version",
         "pairwise_enemy_attention",
         "action_conditioned_targets",
         "last_enemy_move_target",
@@ -524,9 +531,13 @@ def model_config(value: Any) -> ModelConfig:
         if name in required
     ):
         raise ValueError("architecture dimensions must be positive integers")
-    for name in optional:
+    boolean_optional = optional - {"observation_version"}
+    for name in boolean_optional:
         if not isinstance(value.get(name, False), bool):
             raise ValueError(f"architecture {name} must be boolean")
+    observation_version = value.get("observation_version", 2)
+    if observation_version not in (2, 3) or isinstance(observation_version, bool):
+        raise ValueError("architecture observation_version must be 2 or 3")
     target_priors = (
         value.get("last_enemy_move_target", False),
         value.get("nearest_enemy_throw_target", False),
@@ -580,6 +591,52 @@ def model_config(value: Any) -> ModelConfig:
             "plan-conditioned separate_target_actor requires plan_target_only"
         )
     return ModelConfig(**value)
+
+
+def migrate_legacy_observation_state_dict(
+    model: EntityPolicy, legacy_state: dict[str, Tensor]
+) -> dict[str, Tensor]:
+    """Expand v2 entity inputs into v3 while preserving zero-column behavior.
+
+    All parameters must otherwise match the target model exactly. The three
+    first-layer entity weights copy their legacy columns and initialize the new
+    observation columns to zero.
+    """
+    if model.config.observation_version != 3:
+        raise ValueError("checkpoint observation migration requires a v3 model")
+    target_state = model.state_dict()
+    if set(legacy_state) != set(target_state):
+        missing = sorted(set(target_state) - set(legacy_state))
+        unexpected = sorted(set(legacy_state) - set(target_state))
+        raise ValueError(
+            f"legacy checkpoint fields differ: missing={missing} unexpected={unexpected}"
+        )
+    expandable = {
+        "ally_encoder.0.weight",
+        "enemy_encoder.0.weight",
+        "projectile_encoder.0.weight",
+    }
+    migrated: dict[str, Tensor] = {}
+    for name, target in target_state.items():
+        source = legacy_state[name]
+        if source.shape == target.shape:
+            migrated[name] = source.detach().clone()
+            continue
+        if (
+            name not in expandable
+            or source.ndim != 2
+            or target.ndim != 2
+            or source.shape[0] != target.shape[0]
+            or source.shape[1] >= target.shape[1]
+        ):
+            raise ValueError(
+                f"legacy checkpoint tensor {name} has shape {tuple(source.shape)}, "
+                f"expected {tuple(target.shape)}"
+            )
+        expanded = torch.zeros_like(target)
+        expanded[:, : source.shape[1]] = source
+        migrated[name] = expanded
+    return migrated
 
 
 def zero_output_adapter(inputs: int, hidden: int, outputs: int) -> nn.Sequential:
