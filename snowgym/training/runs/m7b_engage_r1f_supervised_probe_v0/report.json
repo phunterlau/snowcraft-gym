@@ -1,0 +1,63 @@
+{
+  "bootstrapDiagnosticPassed": false,
+  "criticUpdates": 0,
+  "development": {
+    "correct": {
+      "contactRate": 0.875,
+      "hitRate": 0.525,
+      "meanProgress": 0.06600000560283661,
+      "physicalWinRate": 0.0,
+      "rejectedActionRate": 0.0,
+      "successRate": 0.0
+    },
+    "initializer": {
+      "contactRate": 0.0,
+      "hitRate": 0.0,
+      "meanProgress": 0.0,
+      "physicalWinRate": 0.0,
+      "rejectedActionRate": 0.0,
+      "successRate": 0.0
+    },
+    "shuffled": {
+      "contactRate": 0.8,
+      "hitRate": 0.25,
+      "meanProgress": 0.020000003278255463,
+      "physicalWinRate": 0.0,
+      "rejectedActionRate": 0.0,
+      "successRate": 0.0
+    }
+  },
+  "format": "snowgym.engage-supervised-probe-report.v0",
+  "frozenParametersUnchanged": true,
+  "interpretation": "Bounded Stage-1 supervised fitting probe; R1 promotion and PPO attribution require separate experiments.",
+  "parameterChangeFromR1e": {
+    "actorTotal": 3.880222297809325,
+    "critic": 0.0,
+    "inheritedHeads": 0.0,
+    "newActor": 3.880222297809325,
+    "otherInheritedActor": 0.0
+  },
+  "ppoUpdates": 0,
+  "qualificationEligible": false,
+  "trainingMethod": "supervised-only",
+  "trainingSummaries": {
+    "0": {
+      "contactRate": 0.95,
+      "episodes": 40,
+      "hitRate": 0.875,
+      "meanProgress": 0.20800000466406346,
+      "physicalWinRate": 0.0,
+      "rejectedActionRate": 0.0,
+      "successRate": 0.0
+    },
+    "20": {
+      "contactRate": 0.725,
+      "episodes": 40,
+      "hitRate": 0.425,
+      "meanProgress": 0.07199999839067459,
+      "physicalWinRate": 0.0,
+      "rejectedActionRate": 0.0,
+      "successRate": 0.0
+    }
+  }
+}

@@ -983,6 +983,22 @@ epochs. This capacity/optimization probe does not itself qualify R1 or isolate
 PPO's causal contribution. Decide the next intervention from the completed
 probe and its failure channels before another PPO run.
 
+M7b-R1f result (2026-09-04): the frozen 20-epoch supervised-only probe failed
+to reproduce Engage on either the 40 reservoir training seeds or the 40
+development seeds (0/40 on each). Development contact/hits/progress changed
+from R1e's 95%/70%/14% to 87.5%/52.5%/6.6%, with zero wins or rejected
+actions. The HOLD counterfactual now contacted on 80% and hit on 25% of seeds,
+weakening plan selectivity. On teacher states, throw-coordinate RMSE improved
+from 18.71 to 9.74 units while mean throw-ray error worsened from 31.81 to
+45.65 degrees; power RMSE also worsened. New actor parameters changed by L2
+3.88022; inherited actor and critic parameters remained exact. R1 remains
+open and no further PPO continuation ran. Next: a no-training throw-direction/
+power channel intervention, followed by a separately predeclared physical
+throw-loss probe if supported. The result does not establish an architecture
+capacity limit or PPO's causal effect. Evidence:
+`training/runs/m7b_engage_r1f_supervised_probe_v0/`; interpretation and next
+decision: `training/reviews/m7b_r1f_results.md`.
+
 #### M7c — full-fight fixed-plan composition
 
 - [ ] Hold one-, two-, and three-role plans throughout complete 3v3, 5v5, and

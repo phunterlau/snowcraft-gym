@@ -805,8 +805,9 @@ R1c reproduced the reference update-50 state exactly and retained contact at
 update 100, but hit rate fell to 2.5% and mission success remained zero. The
 artifact is retained as negative evidence; it does not advance R1.
 
-R1d retains the BC floor and changes only the auxiliary BC mixture from 50% to
-90% successful-teacher reservoir states. PPO remains entirely learner-on-policy.
+R1d retains the BC floor and changes only the auxiliary BC loss weighting from
+50% to 90% successful-teacher reservoir loss, with equal minibatch sample counts
+from both sources. PPO remains entirely learner-on-policy.
 
 R1d reached 85% contact and 52.5% hit rate at update 100, with monotonic gains
 across retained checkpoints, but no Engage completion. It remains development
@@ -818,6 +819,15 @@ without changing its optimizer or learning mechanism. Only update 200 is gated.
 R1e reached 95% contact and 70% hit rate at update 200, but zero mission
 successes and zero battle wins. R1 remains open; another full PPO continuation
 requires a reservoir-only closed-loop capacity diagnostic first.
+
+R1f completed that bounded diagnostic: 20 BC-only epochs from R1e, with the
+inherited actor and critic frozen. It achieved 0/40 Engage successes on both
+training and development seeds. Development hits fell to 52.5%; teacher-state
+throw-coordinate error improved while throw-direction error worsened from
+31.81 to 45.65 degrees. HOLD selectivity also weakened. See the
+[results review and next decision](reviews/m7b_r1f_results.md) and the
+[headless reproduction command](src/snowgym_training/options/README.md#r1f-supervised-only-teacher-trajectory-probe).
+R1 remains open; the artifact is negative evidence, not a promoted executor.
 
 The frozen `ppo_curriculum_v0.json` keeps training ranges disjoint from eight
 evaluation seeds per gate and sets thresholds before qualifying runs. Its order

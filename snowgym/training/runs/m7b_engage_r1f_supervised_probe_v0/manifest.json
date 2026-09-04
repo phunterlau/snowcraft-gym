@@ -1,0 +1,918 @@
+{
+  "artifacts": {
+    "bootstrap-diagnostic.json": "sha256:31333e2ead84433f427c716f69c452bac9531b52e59da24df826764c7ca6c932",
+    "config.json": "sha256:d8d6e0bc984a58b559205f6cbe8b9cb15fd90247d37f9158b43dd7ecfeea4849",
+    "development-evaluation.json": "sha256:4465083c3f1905b9c05ae702089352fedbf0478e6a2008f79e6f579b7b89f0e9",
+    "epoch-000/metadata.json": "sha256:743065795cc6e7a4b09986d7f7a13301e8869083af0e5f7462d83198b4dde77d",
+    "epoch-000/state.pt": "sha256:b719a4731228bb1f59385d16f842adafad8680ca98e179a7f79c1c8bac4f4f6a",
+    "epoch-010/metadata.json": "sha256:f6ad0083b30d3f8857f8ab6376ad3cea2f13c230ecc68c2f8536ae9251c52782",
+    "epoch-010/state.pt": "sha256:d663267b2a66523def80347604e4de859a4a20da5b86fe6fded4c57f4dffa1b9",
+    "epoch-020/metadata.json": "sha256:d0c29fd15ef5cc4e5b4026290b41ca93217c23bfa242c6a9d5a50e0294521e9f",
+    "epoch-020/state.pt": "sha256:f51bab62e369075a5fd4b94a22b8e4857913c0849c9512436a63aa971c1c278e",
+    "report.json": "sha256:92e3be7eb2058ecac772764787d348dfd5596d8cd3a867568eb2b3839660248d",
+    "teacher-agreement-epoch-000.json": "sha256:7f4b649968dc39b849ff7dc5d270c6253ca6db3e126b88e5d4f37ea1b09c1152",
+    "teacher-agreement-epoch-010.json": "sha256:ca051dd60daf1ea04672de93da53d7416b2b71b286b7311ba6ece23f9d7eebdd",
+    "teacher-agreement-epoch-020.json": "sha256:c51051455697fbf8af4bf0747ed032587f153a3e078ebb53dae654e575819dc5",
+    "training-evaluation-epoch-000.json": "sha256:ca3b9ba87ea6d3d1a32fd607aa133e5c5eb2d9a5a01e2417bd3b128d272f9329",
+    "training-evaluation-epoch-020.json": "sha256:66e9c4c08894f278caa9be7a80691d3843ff3091a5324ae6536362b1b460515f"
+  },
+  "capabilities": {
+    "actions": {
+      "semantics": {
+        "coordinates": "world-space",
+        "hold": "cancels-current-movement-order",
+        "noop": "does-not-cancel-current-movement-order",
+        "omittedUnits": "retain-current-movement-order",
+        "powerRange": [
+          0,
+          1
+        ]
+      },
+      "teamField": "actions",
+      "types": {
+        "hold": {
+          "required": [
+            "type",
+            "unitId"
+          ]
+        },
+        "move": {
+          "required": [
+            "type",
+            "unitId",
+            "x",
+            "y"
+          ]
+        },
+        "noop": {
+          "required": [
+            "type",
+            "unitId"
+          ]
+        },
+        "throw": {
+          "required": [
+            "type",
+            "unitId",
+            "x",
+            "y",
+            "power"
+          ]
+        }
+      }
+    },
+    "apiVersion": "snowgym.v0",
+    "endpoints": {
+      "activatePlan": {
+        "guarded": true,
+        "method": "POST",
+        "mutates": true,
+        "path": "/activate-plan",
+        "requires": [
+          "planId",
+          "plan"
+        ]
+      },
+      "autoplay": {
+        "method": "POST",
+        "mutates": true,
+        "path": "/autoplay"
+      },
+      "capabilities": {
+        "method": "GET",
+        "mutates": false,
+        "path": "/capabilities"
+      },
+      "health": {
+        "method": "GET",
+        "mutates": false,
+        "path": "/health"
+      },
+      "planObservation": {
+        "method": "GET",
+        "mutates": false,
+        "path": "/plan-observation"
+      },
+      "planTeacherAction": {
+        "method": "GET",
+        "mutates": false,
+        "path": "/plan-teacher-action"
+      },
+      "previewPlan": {
+        "guarded": true,
+        "method": "POST",
+        "mutates": false,
+        "path": "/preview-plan",
+        "requires": [
+          "planId",
+          "plan"
+        ]
+      },
+      "reset": {
+        "guarded": true,
+        "method": "POST",
+        "mutates": true,
+        "path": "/reset"
+      },
+      "status": {
+        "method": "GET",
+        "mutates": false,
+        "path": "/status"
+      },
+      "step": {
+        "method": "POST",
+        "mutates": true,
+        "path": "/step",
+        "requires": [
+          "action"
+        ]
+      },
+      "stepJoint": {
+        "method": "POST",
+        "mutates": true,
+        "path": "/step-joint",
+        "requires": [
+          "actions.blue",
+          "actions.red"
+        ]
+      },
+      "stepScripted": {
+        "method": "POST",
+        "mutates": true,
+        "path": "/step-scripted"
+      },
+      "teacherAction": {
+        "method": "GET",
+        "mutates": false,
+        "path": "/teacher-action"
+      }
+    },
+    "format": "snowgym.capabilities.v0",
+    "gymnasium": {
+      "environments": [
+        {
+          "configurable": false,
+          "id": "SnowGym/Squad-v0",
+          "maxTeamUnits": 3
+        },
+        {
+          "configurable": true,
+          "id": "SnowGym/Squad-v1",
+          "maxTeamUnits": 8
+        },
+        {
+          "configurable": true,
+          "id": "SnowGym/Squad-v2",
+          "maxTeamUnits": 10
+        },
+        {
+          "actuatorComplete": true,
+          "configurable": true,
+          "id": "SnowGym/Squad-v3",
+          "maxTeamUnits": 10,
+          "observationVersion": "snowgym.observation.v1"
+        }
+      ]
+    },
+    "pettingZoo": {
+      "environment": {
+        "agents": [
+          "blue",
+          "red"
+        ],
+        "api": "parallel",
+        "id": "SnowGym/ParallelSquad-v0",
+        "maxTeamUnits": 10
+      },
+      "researchEnvironment": {
+        "id": "SnowGym/ResearchParallelSquad-v0",
+        "latencyUnits": "team-decisions",
+        "transforms": [
+          "local-visibility",
+          "action-delay",
+          "observation-delay",
+          "semantic-raster"
+        ],
+        "visibilityRadiusUnits": "world"
+      }
+    },
+    "replayFormat": "snowgym.replay.v0",
+    "scenarios": {
+      "decisionHz": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        10,
+        12,
+        15,
+        20,
+        30,
+        60
+      ],
+      "maps": [
+        {
+          "blueCapacity": 3,
+          "height": 30,
+          "id": "arena1.json",
+          "name": "Snowy Clearing",
+          "redCapacity": 3,
+          "width": 40
+        },
+        {
+          "blueCapacity": 3,
+          "height": 30,
+          "id": "arena2.json",
+          "name": "Frozen Pond",
+          "redCapacity": 3,
+          "width": 44
+        },
+        {
+          "blueCapacity": 3,
+          "height": 32,
+          "id": "arena3.json",
+          "name": "Village Skirmish",
+          "redCapacity": 3,
+          "width": 46
+        },
+        {
+          "blueCapacity": 3,
+          "height": 34,
+          "id": "arena4.json",
+          "name": "Pine Forest",
+          "redCapacity": 3,
+          "width": 48
+        },
+        {
+          "blueCapacity": 3,
+          "height": 32,
+          "id": "arena5.json",
+          "name": "Schoolyard Scramble",
+          "redCapacity": 3,
+          "width": 46
+        },
+        {
+          "blueCapacity": 10,
+          "height": 48,
+          "id": "arena6.json",
+          "name": "Winter Front",
+          "redCapacity": 10,
+          "width": 64
+        }
+      ],
+      "maxTeamSize": 10,
+      "redControllers": [
+        "scripted",
+        "random"
+      ],
+      "redDifficulties": [
+        "easy",
+        "normal",
+        "hard"
+      ],
+      "simulationHz": 60
+    },
+    "simulationVersion": "snowgym.sim.v2",
+    "stateHashVersion": "snowgym.state.v2",
+    "transport": {
+      "binding": "loopback",
+      "episodeModel": "single-shared",
+      "expectedStateHash": true,
+      "idempotencyKey": true,
+      "maxBodyBytes": 1000000
+    },
+    "upstreamBaseCommit": "7d9fca5"
+  },
+  "checkpoints": {
+    "0": {
+      "architecture": {
+        "action_conditioned_targets": true,
+        "actor_hidden": 64,
+        "entity_embedding": 24,
+        "entity_hidden": 32,
+        "observation_version": 3,
+        "plan_conditioned": true,
+        "plan_ppo_residuals": true,
+        "plan_target_only": true,
+        "separate_target_actor": true,
+        "v3_extension_adapters": true
+      },
+      "checkpointDigest": "sha256:92c3f5d07b37f37f621520dde75f6dc0b2e19546e34be7e22ac1048ba24fddf5",
+      "collectorConfig": {
+        "gateId": "m7b-engage-supervised-probe",
+        "option": "engage",
+        "rewardMode": "executor",
+        "rolloutSteps": 200,
+        "stage": 1,
+        "worlds": 1
+      },
+      "curriculumDigest": "sha256:54c1fa4217c5bd663c3b60e967a10c9b058da3c2decb2329407860340de7748c",
+      "environmentSteps": 0,
+      "format": "snowgym.ppo-checkpoint.v0",
+      "gitCommit": "8f7d4f9bc91600bd52d35e25de866492cdd353ac",
+      "initialization": {
+        "checkpointDigest": "sha256:5e4feb4e1f97d2ba3a5521bcb6b4a5df8f9194ed02d4badf4a1b96304196c80c",
+        "curriculumDigest": "sha256:54c1fa4217c5bd663c3b60e967a10c9b058da3c2decb2329407860340de7748c",
+        "sourceGate": "m7b-engage-stage1",
+        "stateDigest": "sha256:5c4a23426a3dc41ccd790a4213f6b41253578b0bdb6647bc8064572b388bce59",
+        "type": "ppo-transfer",
+        "updateIndex": 200
+      },
+      "initializerDigest": "sha256:74603580e19e66fd70f1cd650dc834fa54887933b6f2706fa2b8928951c5bfac",
+      "initializerSourceDigest": "sha256:4119b9a3f8c0d3df69b704a8f3f813a1b38ab11ca56faffb4c4cebc2cb235133",
+      "ppoConfig": {
+        "clip_ratio": 0.2,
+        "entropy_weight": 0.01,
+        "gae_lambda": 0.9885140204,
+        "gamma": 0.9976921765,
+        "initial_power_log_std": -1.0,
+        "initial_target_log_std": -1.0,
+        "learning_rate": 0.0003,
+        "max_grad_norm": 0.5,
+        "minibatch_size": 1600,
+        "ratio_mode": "per-unit",
+        "target_kl": null,
+        "update_epochs": 4,
+        "value_weight": 0.5
+      },
+      "seedSchedule": {
+        "maximum": 100039,
+        "minimum": 100000,
+        "nextSeed": 100000
+      },
+      "stateDigest": "sha256:79a01ad144c7a6e3a3e149283a855fed6862a04f3dc8e483c5a071d9d09719f1",
+      "trainingSeed": 91001,
+      "updateIndex": 0
+    },
+    "10": {
+      "architecture": {
+        "action_conditioned_targets": true,
+        "actor_hidden": 64,
+        "entity_embedding": 24,
+        "entity_hidden": 32,
+        "observation_version": 3,
+        "plan_conditioned": true,
+        "plan_ppo_residuals": true,
+        "plan_target_only": true,
+        "separate_target_actor": true,
+        "v3_extension_adapters": true
+      },
+      "checkpointDigest": "sha256:807b93bba064a426cb4bf5e603bcc826bb5aaead02f342ced2d2d333546b46e5",
+      "collectorConfig": {
+        "gateId": "m7b-engage-supervised-probe",
+        "option": "engage",
+        "rewardMode": "executor",
+        "rolloutSteps": 200,
+        "stage": 1,
+        "worlds": 1
+      },
+      "curriculumDigest": "sha256:54c1fa4217c5bd663c3b60e967a10c9b058da3c2decb2329407860340de7748c",
+      "environmentSteps": 0,
+      "format": "snowgym.ppo-checkpoint.v0",
+      "gitCommit": "8f7d4f9bc91600bd52d35e25de866492cdd353ac",
+      "initialization": {
+        "checkpointDigest": "sha256:5e4feb4e1f97d2ba3a5521bcb6b4a5df8f9194ed02d4badf4a1b96304196c80c",
+        "curriculumDigest": "sha256:54c1fa4217c5bd663c3b60e967a10c9b058da3c2decb2329407860340de7748c",
+        "sourceGate": "m7b-engage-stage1",
+        "stateDigest": "sha256:5c4a23426a3dc41ccd790a4213f6b41253578b0bdb6647bc8064572b388bce59",
+        "type": "ppo-transfer",
+        "updateIndex": 200
+      },
+      "initializerDigest": "sha256:74603580e19e66fd70f1cd650dc834fa54887933b6f2706fa2b8928951c5bfac",
+      "initializerSourceDigest": "sha256:4119b9a3f8c0d3df69b704a8f3f813a1b38ab11ca56faffb4c4cebc2cb235133",
+      "ppoConfig": {
+        "clip_ratio": 0.2,
+        "entropy_weight": 0.01,
+        "gae_lambda": 0.9885140204,
+        "gamma": 0.9976921765,
+        "initial_power_log_std": -1.0,
+        "initial_target_log_std": -1.0,
+        "learning_rate": 0.0003,
+        "max_grad_norm": 0.5,
+        "minibatch_size": 1600,
+        "ratio_mode": "per-unit",
+        "target_kl": null,
+        "update_epochs": 4,
+        "value_weight": 0.5
+      },
+      "seedSchedule": {
+        "maximum": 100039,
+        "minimum": 100000,
+        "nextSeed": 100000
+      },
+      "stateDigest": "sha256:77fd6fa48ccb4df773ed5a8b940837fa11c4590c5531cd434c1d56c8c3255395",
+      "trainingSeed": 91001,
+      "updateIndex": 10
+    },
+    "20": {
+      "architecture": {
+        "action_conditioned_targets": true,
+        "actor_hidden": 64,
+        "entity_embedding": 24,
+        "entity_hidden": 32,
+        "observation_version": 3,
+        "plan_conditioned": true,
+        "plan_ppo_residuals": true,
+        "plan_target_only": true,
+        "separate_target_actor": true,
+        "v3_extension_adapters": true
+      },
+      "checkpointDigest": "sha256:10d924ecdfbc554a8e0324387d8d049b9ffe719e8d8f2768123e4886c265a697",
+      "collectorConfig": {
+        "gateId": "m7b-engage-supervised-probe",
+        "option": "engage",
+        "rewardMode": "executor",
+        "rolloutSteps": 200,
+        "stage": 1,
+        "worlds": 1
+      },
+      "curriculumDigest": "sha256:54c1fa4217c5bd663c3b60e967a10c9b058da3c2decb2329407860340de7748c",
+      "environmentSteps": 0,
+      "format": "snowgym.ppo-checkpoint.v0",
+      "gitCommit": "8f7d4f9bc91600bd52d35e25de866492cdd353ac",
+      "initialization": {
+        "checkpointDigest": "sha256:5e4feb4e1f97d2ba3a5521bcb6b4a5df8f9194ed02d4badf4a1b96304196c80c",
+        "curriculumDigest": "sha256:54c1fa4217c5bd663c3b60e967a10c9b058da3c2decb2329407860340de7748c",
+        "sourceGate": "m7b-engage-stage1",
+        "stateDigest": "sha256:5c4a23426a3dc41ccd790a4213f6b41253578b0bdb6647bc8064572b388bce59",
+        "type": "ppo-transfer",
+        "updateIndex": 200
+      },
+      "initializerDigest": "sha256:74603580e19e66fd70f1cd650dc834fa54887933b6f2706fa2b8928951c5bfac",
+      "initializerSourceDigest": "sha256:4119b9a3f8c0d3df69b704a8f3f813a1b38ab11ca56faffb4c4cebc2cb235133",
+      "ppoConfig": {
+        "clip_ratio": 0.2,
+        "entropy_weight": 0.01,
+        "gae_lambda": 0.9885140204,
+        "gamma": 0.9976921765,
+        "initial_power_log_std": -1.0,
+        "initial_target_log_std": -1.0,
+        "learning_rate": 0.0003,
+        "max_grad_norm": 0.5,
+        "minibatch_size": 1600,
+        "ratio_mode": "per-unit",
+        "target_kl": null,
+        "update_epochs": 4,
+        "value_weight": 0.5
+      },
+      "seedSchedule": {
+        "maximum": 100039,
+        "minimum": 100000,
+        "nextSeed": 100000
+      },
+      "stateDigest": "sha256:de40c3d3ace72c3562718513e853d23f29a6e30f823db7d0b266c796d73e693c",
+      "trainingSeed": 91001,
+      "updateIndex": 20
+    }
+  },
+  "config": {
+    "bcLossConfig": {
+      "action_weight": 1.0,
+      "power_weight": 0.5,
+      "target_weight": 5.0,
+      "throw_action_weight": 5.0
+    },
+    "developmentEvaluationSeeds": [
+      200000,
+      200039
+    ],
+    "epochs": 20,
+    "format": "snowgym.engage-supervised-probe-config.v0",
+    "learningRate": 0.0003,
+    "maxGradNorm": 0.5,
+    "minibatchSize": 256,
+    "reservoirDigest": "sha256:a1410c32a718c53664b91878852a2203247454ae0bf2dcb4caeb904b0ac334a6",
+    "retainedEpochs": [
+      0,
+      10,
+      20
+    ],
+    "selectionPolicy": "final-epoch-only",
+    "sourceCheckpointDigest": "sha256:5e4feb4e1f97d2ba3a5521bcb6b4a5df8f9194ed02d4badf4a1b96304196c80c",
+    "stage": 1,
+    "trainingEvaluationSeeds": [
+      100000,
+      100039
+    ],
+    "trainingSeed": 91001
+  },
+  "configDigest": "sha256:b3dec8cddaae394d3cf20f757d990f04ee122e8b119e5ae1c062d5ade452dac6",
+  "epochs": [
+    {
+      "epoch": 1,
+      "loss": {
+        "action": 0.3240040085247737,
+        "power": 0.012449787328728078,
+        "target": 0.026941744899070082,
+        "total": 0.4649376234451619
+      },
+      "maximumActorGradientNormBeforeClip": 2.7907495498657227,
+      "optimizerSteps": 21,
+      "samples": 5367
+    },
+    {
+      "epoch": 2,
+      "loss": {
+        "action": 0.31270741054814954,
+        "power": 0.01174624707169438,
+        "target": 0.025093596506373095,
+        "total": 0.4440485209765238
+      },
+      "maximumActorGradientNormBeforeClip": 1.1062699556350708,
+      "optimizerSteps": 21,
+      "samples": 5367
+    },
+    {
+      "epoch": 3,
+      "loss": {
+        "action": 0.3060802014397802,
+        "power": 0.011794200655366537,
+        "target": 0.024273366078551153,
+        "total": 0.4333441313671981
+      },
+      "maximumActorGradientNormBeforeClip": 1.3811228275299072,
+      "optimizerSteps": 21,
+      "samples": 5367
+    },
+    {
+      "epoch": 4,
+      "loss": {
+        "action": 0.30098019186868913,
+        "power": 0.01192501071043686,
+        "target": 0.02330528300179879,
+        "total": 0.42346911101517165
+      },
+      "maximumActorGradientNormBeforeClip": 1.1609673500061035,
+      "optimizerSteps": 21,
+      "samples": 5367
+    },
+    {
+      "epoch": 5,
+      "loss": {
+        "action": 0.29689451163655134,
+        "power": 0.011809993308826722,
+        "target": 0.022578242036196603,
+        "total": 0.4156907163720036
+      },
+      "maximumActorGradientNormBeforeClip": 1.2287919521331787,
+      "optimizerSteps": 21,
+      "samples": 5367
+    },
+    {
+      "epoch": 6,
+      "loss": {
+        "action": 0.2921133670273586,
+        "power": 0.012230997826700684,
+        "target": 0.02204730280107385,
+        "total": 0.4084653792788646
+      },
+      "maximumActorGradientNormBeforeClip": 1.1659996509552002,
+      "optimizerSteps": 21,
+      "samples": 5367
+    },
+    {
+      "epoch": 7,
+      "loss": {
+        "action": 0.2887553485085761,
+        "power": 0.012601945246270478,
+        "target": 0.021401062178804997,
+        "total": 0.402061634724958
+      },
+      "maximumActorGradientNormBeforeClip": 1.3882194757461548,
+      "optimizerSteps": 21,
+      "samples": 5367
+    },
+    {
+      "epoch": 8,
+      "loss": {
+        "action": 0.2853524144610502,
+        "power": 0.012934784563017087,
+        "target": 0.02095973760219999,
+        "total": 0.39661849185321857
+      },
+      "maximumActorGradientNormBeforeClip": 1.8171769380569458,
+      "optimizerSteps": 21,
+      "samples": 5367
+    },
+    {
+      "epoch": 9,
+      "loss": {
+        "action": 0.2821837027012491,
+        "power": 0.013194321892990376,
+        "target": 0.020504388852363883,
+        "total": 0.3913028120650289
+      },
+      "maximumActorGradientNormBeforeClip": 1.278630018234253,
+      "optimizerSteps": 21,
+      "samples": 5367
+    },
+    {
+      "epoch": 10,
+      "loss": {
+        "action": 0.28276842997763574,
+        "power": 0.01334365683611054,
+        "target": 0.020010493690530103,
+        "total": 0.3894927264348253
+      },
+      "maximumActorGradientNormBeforeClip": 1.8286677598953247,
+      "optimizerSteps": 21,
+      "samples": 5367
+    },
+    {
+      "epoch": 11,
+      "loss": {
+        "action": 0.2768716903256597,
+        "power": 0.013668900560112178,
+        "target": 0.019419399623014484,
+        "total": 0.38080313822866396
+      },
+      "maximumActorGradientNormBeforeClip": 1.1196316480636597,
+      "optimizerSteps": 21,
+      "samples": 5367
+    },
+    {
+      "epoch": 12,
+      "loss": {
+        "action": 0.27364373543596987,
+        "power": 0.014102618171147501,
+        "target": 0.018814929830924147,
+        "total": 0.3747696985584499
+      },
+      "maximumActorGradientNormBeforeClip": 1.3110218048095703,
+      "optimizerSteps": 21,
+      "samples": 5367
+    },
+    {
+      "epoch": 13,
+      "loss": {
+        "action": 0.2720704258532193,
+        "power": 0.014444760802264917,
+        "target": 0.018131364826185867,
+        "total": 0.36994963344613424
+      },
+      "maximumActorGradientNormBeforeClip": 1.7061409950256348,
+      "optimizerSteps": 21,
+      "samples": 5367
+    },
+    {
+      "epoch": 14,
+      "loss": {
+        "action": 0.26858283203141703,
+        "power": 0.01449779827492695,
+        "target": 0.017408640034537043,
+        "total": 0.3628749324774773
+      },
+      "maximumActorGradientNormBeforeClip": 1.154909610748291,
+      "optimizerSteps": 21,
+      "samples": 5367
+    },
+    {
+      "epoch": 15,
+      "loss": {
+        "action": 0.2660004554268855,
+        "power": 0.014766513488843874,
+        "target": 0.016758172893773494,
+        "total": 0.35717457615620646
+      },
+      "maximumActorGradientNormBeforeClip": 1.3525067567825317,
+      "optimizerSteps": 21,
+      "samples": 5367
+    },
+    {
+      "epoch": 16,
+      "loss": {
+        "action": 0.26450065448560905,
+        "power": 0.01492388533608433,
+        "target": 0.016018408807371112,
+        "total": 0.3520546421639098
+      },
+      "maximumActorGradientNormBeforeClip": 1.3178040981292725,
+      "optimizerSteps": 21,
+      "samples": 5367
+    },
+    {
+      "epoch": 17,
+      "loss": {
+        "action": 0.2617549300082729,
+        "power": 0.015295239307197341,
+        "target": 0.01548850384752733,
+        "total": 0.3468450667284178
+      },
+      "maximumActorGradientNormBeforeClip": 1.6961184740066528,
+      "optimizerSteps": 21,
+      "samples": 5367
+    },
+    {
+      "epoch": 18,
+      "loss": {
+        "action": 0.2600855488772274,
+        "power": 0.015252208175980636,
+        "target": 0.014909609829656778,
+        "total": 0.34225969870307715
+      },
+      "maximumActorGradientNormBeforeClip": 1.5920870304107666,
+      "optimizerSteps": 21,
+      "samples": 5367
+    },
+    {
+      "epoch": 19,
+      "loss": {
+        "action": 0.25950881549493326,
+        "power": 0.015976255222355407,
+        "target": 0.014421237480622087,
+        "total": 0.3396031314242324
+      },
+      "maximumActorGradientNormBeforeClip": 1.9295861721038818,
+      "optimizerSteps": 21,
+      "samples": 5367
+    },
+    {
+      "epoch": 20,
+      "loss": {
+        "action": 0.2577633950737839,
+        "power": 0.01595195690185548,
+        "target": 0.013946793991839818,
+        "total": 0.3354733474698395
+      },
+      "maximumActorGradientNormBeforeClip": 1.912508487701416,
+      "optimizerSteps": 21,
+      "samples": 5367
+    }
+  ],
+  "format": "snowgym.engage-supervised-probe-run.v0",
+  "gitCommit": "8f7d4f9bc91600bd52d35e25de866492cdd353ac",
+  "manifestDigest": "sha256:916c61967d48e35dd4e9c074b90920ebb8674f01b7fc153b2df1ecd0da1d14b1",
+  "protocolDigest": "sha256:54c1fa4217c5bd663c3b60e967a10c9b058da3c2decb2329407860340de7748c",
+  "reservoir": {
+    "digest": "sha256:a1410c32a718c53664b91878852a2203247454ae0bf2dcb4caeb904b0ac334a6",
+    "episodes": 40,
+    "format": "snowgym.teacher-bc-reservoir.v0",
+    "implementationGitCommit": "1c479e4d0dd87bcfcda2488be0cbe6c328196b71",
+    "manifestDigest": "sha256:faa5e14b9de79a0a49d524bcd958a9a7b9ab536f30c454657ce6f713f31b15ec",
+    "manifestPath": "runs/m7b_engage_teacher_reservoir_v0/manifest.json",
+    "path": "runs/m7b_engage_teacher_reservoir_v0/teacher_states.npz",
+    "samples": 5367,
+    "simulationVersion": "snowgym.sim.v2",
+    "sourceCheckpointDigest": null,
+    "stateHashVersion": "snowgym.state.v2"
+  },
+  "rootInitializerIdentity": {
+    "method": "legacy-seeded-reconstruction",
+    "sourceCheckpointDigest": "sha256:4119b9a3f8c0d3df69b704a8f3f813a1b38ab11ca56faffb4c4cebc2cb235133",
+    "sourceIdentityVerified": true,
+    "stateDigest": "sha256:74603580e19e66fd70f1cd650dc834fa54887933b6f2706fa2b8928951c5bfac",
+    "trainingSeed": 91001
+  },
+  "sourceCheckpoint": {
+    "architecture": {
+      "action_conditioned_targets": true,
+      "actor_hidden": 64,
+      "entity_embedding": 24,
+      "entity_hidden": 32,
+      "observation_version": 3,
+      "plan_conditioned": true,
+      "plan_ppo_residuals": true,
+      "plan_target_only": true,
+      "separate_target_actor": true,
+      "v3_extension_adapters": true
+    },
+    "checkpointDigest": "sha256:5e4feb4e1f97d2ba3a5521bcb6b4a5df8f9194ed02d4badf4a1b96304196c80c",
+    "collectorConfig": {
+      "anchorTotalUpdates": 200,
+      "bcAnchorFloor": 0.05,
+      "gateId": "m7b-engage-stage1",
+      "option": "engage",
+      "protocolDigest": "sha256:54c1fa4217c5bd663c3b60e967a10c9b058da3c2decb2329407860340de7748c",
+      "reservoirBcFraction": 0.9,
+      "rewardMode": "executor",
+      "rolloutSteps": 200,
+      "stage": 1,
+      "teacherReservoir": {
+        "digest": "sha256:a1410c32a718c53664b91878852a2203247454ae0bf2dcb4caeb904b0ac334a6",
+        "episodes": 40,
+        "format": "snowgym.teacher-bc-reservoir.v0",
+        "implementationGitCommit": "1c479e4d0dd87bcfcda2488be0cbe6c328196b71",
+        "manifestDigest": "sha256:faa5e14b9de79a0a49d524bcd958a9a7b9ab536f30c454657ce6f713f31b15ec",
+        "manifestPath": "runs/m7b_engage_teacher_reservoir_v0/manifest.json",
+        "path": "runs/m7b_engage_teacher_reservoir_v0/teacher_states.npz",
+        "samples": 5367,
+        "simulationVersion": "snowgym.sim.v2",
+        "sourceCheckpointDigest": null,
+        "stateHashVersion": "snowgym.state.v2"
+      },
+      "worlds": 8
+    },
+    "curriculumDigest": "sha256:54c1fa4217c5bd663c3b60e967a10c9b058da3c2decb2329407860340de7748c",
+    "environmentSteps": 320000,
+    "format": "snowgym.ppo-checkpoint.v0",
+    "gitCommit": "3466e5a77816099183e8cf40be9bd058742b37c2",
+    "initialization": {
+      "checkpointDigest": "sha256:4119b9a3f8c0d3df69b704a8f3f813a1b38ab11ca56faffb4c4cebc2cb235133",
+      "datasetManifestHash": "sha256:f64e30e6458ca3d9c9a6e110aae7ae3248e6e2715a938ce323732b1e658d61e6",
+      "stateDigest": "sha256:34de1e9e5882b0c764aa8dd6596ed6ba87e395d7eb9e455036fc10a721d8c50d",
+      "type": "behavior-clone"
+    },
+    "optionSchedule": {
+      "digest": "sha256:92e6d9ef3f12a5cabc184d0ddc194726310896a919d6683728946bb10b1bfade",
+      "format": "snowgym.option-schedule.v0",
+      "length": 10000,
+      "nextIndex": 1601,
+      "prefix": "m7b-engage"
+    },
+    "ppoConfig": {
+      "clip_ratio": 0.2,
+      "entropy_weight": 0.01,
+      "gae_lambda": 0.9885140204,
+      "gamma": 0.9976921765,
+      "initial_power_log_std": -1.0,
+      "initial_target_log_std": -1.0,
+      "learning_rate": 0.0003,
+      "max_grad_norm": 0.5,
+      "minibatch_size": 1600,
+      "ratio_mode": "per-unit",
+      "target_kl": null,
+      "update_epochs": 4,
+      "value_weight": 0.5
+    },
+    "seedSchedule": {
+      "maximum": 109999,
+      "minimum": 100000,
+      "nextSeed": 101601
+    },
+    "stateDigest": "sha256:5c4a23426a3dc41ccd790a4213f6b41253578b0bdb6647bc8064572b388bce59",
+    "trainingSeed": 91001,
+    "updateIndex": 200
+  },
+  "sourceFiles": {
+    "__init__.py": "sha256:62ea3b7208cae9d8443ce5b5359f3a8deec329ebbd82fc2feeb71adb84422f64",
+    "baseline.py": "sha256:18ee262941ef5bc9866e265d2e2f6fa19da75104e61f811a1fc53d92d6bbbdd2",
+    "benchmarks/__init__.py": "sha256:65d189a8f80382e632e0fdd54e08b165ae844772744c31934d0a775fdc725573",
+    "benchmarks/throughput.py": "sha256:67bd85ea82ebb08ad9ac0dea41359003b0c8713621cb44805e743c82bfc63aa2",
+    "checkpoint.py": "sha256:f8570fed2c657a1c18a3ccad86f4d1e65ee7462cbff247c956b41e2cd972d093",
+    "curriculum.py": "sha256:fed216fbb7734416c0a130daed57a06d4652db2b46432624689ef8eb755923a0",
+    "data.py": "sha256:9bbd8c7ffc9798c3f9da55698d7ea43d258d5ef165c7f01a31fe5088129cc41f",
+    "demo.py": "sha256:390b8cca56ea4c76c71e19b264fedea9f30505edb7acac63557f32a0d1c7119b",
+    "evaluate.py": "sha256:84bbbadec18dc8dc92d5396ce939db4e769c671d9fe6da073d47ef331d15b00a",
+    "executor/__init__.py": "sha256:23c7207ee326ce26f3f0e3c99cefbf6b386b88a60738112d9daaff7790531b36",
+    "executor/model.py": "sha256:39f1ccb5aeca9caf06f9c0f0a73bf26fd19238c1282e87b88e8023c036cadbb0",
+    "export_dagger.py": "sha256:952b0b27dda5fe90c9b13f8634a401d560827b4c383661dd8f0a29282b455892",
+    "export_plan_dagger.py": "sha256:3e6f660007ab710e31dbf833bed9f99e4cf3ff9027309aa97cd5de31f4001cfa",
+    "export_scripted.py": "sha256:50503a3426ca4e3245dd7cac778a7072bbcd949d2d9fe9b860230fdff57228c4",
+    "loss.py": "sha256:0d6ae03080624e65ea4cc2f6f56fa50abf0af188885a536239e51515bdd2c623",
+    "merge_trajectory.py": "sha256:84592ed8cba9a115d6fbe4fd2e0480bcc17b12350502393a420942d866884dec",
+    "model.py": "sha256:af869f9e613586a116d7848ccdd4505517d523dc691356c69fab3165296ef9fb",
+    "options/__init__.py": "sha256:33d044f7a7f08044354b9839687aa3dbd0d12b79fd97d7960a76399a6b117a08",
+    "options/bootstrap.py": "sha256:2e5614ec63b8d93610be8656b48af869dd727077417b385af22dfd577707e87a",
+    "options/causal_fork.py": "sha256:2b34902ba9ddc38495be371cc41ff5aa3e32b0b4b846b1df88bb9b314eff4646",
+    "options/collection.py": "sha256:f28057c32b40a861b5a3756a3300787421022049dbdfdcb8803943c8837e558b",
+    "options/definitions.py": "sha256:19139392ebb26e8a9ad3bce6df9cd431987cf11bf85e656bba900799b351d9c9",
+    "options/diagnostics.py": "sha256:6139c21c500414c7d1fdf5ca78dbebedad8e0d32dfe1a92020633fd12af5f8fd",
+    "options/environment.py": "sha256:f72e87b486cad69e7c228ac2694d00ab883d717d79f3489066c35252eed4dc60",
+    "options/evaluate.py": "sha256:745ed90cf123d202b5b110ee35c04c134593c291d4111b4df9b6961cd466fd28",
+    "options/export_reservoir.py": "sha256:53be17b653143f4f9b3237769b23ef380c63a48ca846ff0d7874ff341fd77d50",
+    "options/followup_run.py": "sha256:b9dc4f287eaf56f4c2d80fccebabdd5e661af9b7e2cf08a4c4bad777d8dd5f69",
+    "options/gradient_diagnostics.py": "sha256:a1f85525c2602f8764342f272f28201596e0614851c2f7091e67184833e6d04b",
+    "options/identity.py": "sha256:3651e5112d8a0459187a3afe38cb6cc1f26660e0387723c9cd53096cf61599d5",
+    "options/interventions.py": "sha256:38c108792db079852efd71bd2841faed0b040c46ad4b1311a61c1b4d09192169",
+    "options/plans.py": "sha256:793815b93371cf86a86192295260eec9c8d4d2a2d4d1d079e1f35a61d92c0c1c",
+    "options/probe_metrics.py": "sha256:a8d0ffb6df74aba79e0dee2a15ab50562b6c977f03aabba917561063cb1a32cc",
+    "options/protocol.py": "sha256:1b2078cbb3343d23bf8b98552120e5a0e19ed72eb3e06123115f9ea7536969cb",
+    "options/qualification.py": "sha256:6c4badf07636ca019171a5149c0ae9488022546821d9be256f798bf585a4b975",
+    "options/r1.py": "sha256:7f41cd6c15b8aed2e440b3f2cd922d715a4d1935c3c7a85bb93b7bd5e943003d",
+    "options/r1b.py": "sha256:024f58991ca18fafc1f34531b9d2d025d47c7e057d24a3d93213061e1b07439f",
+    "options/r1c.py": "sha256:f08bab760254769b1f6ff0f21d8ee5620375fb30117b6a27246f1e503a8e620f",
+    "options/r1d.py": "sha256:1bd0cc584b03f249aac331c7a7bd756ea1abec2deda5c1d1a56bb3ad9d112dab",
+    "options/r1e.py": "sha256:336f7a56108c8e41b7074caa9fb9e56ee332adb126867ff8df3749d6221ec876",
+    "options/recovery_report.py": "sha256:0b7b442116f8946c1c08b296f9e02c4b690486520181a0f53095f5f34aae8751",
+    "options/reservoir.py": "sha256:34e4bba10d3125f92beadf584e55ac36e1cffd0940ac2bb7f4fec0a269fe6918",
+    "options/supervised_probe.py": "sha256:40e789f04df0d7f4da538f52ed4fc5c6af9989de9eed2fb60da5f6ec2be14ee7",
+    "options/teacher.py": "sha256:d8e05d9868f4ccf4692a1773198dda18c3fd8b220291770b0e323602f2bf7cf4",
+    "options/tracker.py": "sha256:f181cc1883fad8d1e3e5a8299d9d0033d56cdaa7ae30e3400ae21f9e57ac2b09",
+    "options/train.py": "sha256:a65f88993cdac9954c355a73845dcdee45df818200a1b4359c897c87368bcc80",
+    "plan_ablation.py": "sha256:a2fe350e3d4089127c11c4c2ca9fd39a134a721a0a5e96f7ac0398885af83037",
+    "plan_action_adapter_qualification.py": "sha256:68e99254543a684034f2b6b5d9274276336eafe3fe841d5f0f6128db860f83d6",
+    "plan_checkpoint_evaluate.py": "sha256:08781fe00c349c1bcdadd78cd512f3a975d808d26e50116fe66f616ba0b1ff52",
+    "plan_closed_loop.py": "sha256:f0a98188569ca018671d831ded63fe5afb1beaaef7db347af0ada1f70b359e55",
+    "plan_counterfactual_evaluate.py": "sha256:4ec2c8956bc458e15f800a3ecccbb1031d2338c0f9f93ce215cca36e014dec9a",
+    "plan_counterfactual_qualification.py": "sha256:5bedb4c428cf318fbc4d8862d793c9d1b2cd784f54ef5e65fd73d3fe5fc9509c",
+    "plan_data.py": "sha256:4ebc9359bad43a880652278e18773a0077c1f49e566b71b0f7b1004f421c8681",
+    "plan_evaluate.py": "sha256:3a994c8692f48ff2609112a5e41c61b702f89c14718d0ff59f87fd5dc97c0b2d",
+    "plan_ppo.py": "sha256:193d2ba02ee295cd66ff18c45ebaee1c5b0470e341041667873b9b0a0e9e8a1b",
+    "plan_qualification.py": "sha256:3f814bc599b8206ff6ee065847e910b9aa4a095f1c574fcf78f969797e6e0bc9",
+    "plan_rollout.py": "sha256:e0b13e3b44876a64fd5376604d19c20b5be559df7850a7b3e82e8ec5f5a3f6c3",
+    "plan_weight_sweep.py": "sha256:33f952590efbb1f21a470443f8a2e7268866b00fe24f2e220f4f3b3b9bc1c457",
+    "policy.py": "sha256:9efb44c8131b3e23fd9a3f5b40f950a44dcf2ceb8ea06d05eafa83368d5327cb",
+    "ppo.py": "sha256:ad6c11ab58b4c08dafc1b6e0e2db87493a2fc67be363a03cb8fc3e567063def2",
+    "ppo_checkpoint.py": "sha256:bbbb8569b3a91417d56bc7aad8873df56fe3f35dcf716dca8c0c8ea7a2931dd0",
+    "ppo_collect.py": "sha256:9485a3ddf01b97efed0374ef09c3a337ee9d089f8cb54d6a95e2692d79ab34be",
+    "ppo_demo.py": "sha256:79f742663e7236b4abdb0d95736f358ea5ce4b61dafbd730055ab9f0c23acdb8",
+    "ppo_evaluate.py": "sha256:4ea5f59e4ce082b8df54450ff653a0ece1149d7a08db4e1d67fed95453faecda",
+    "ppo_series.py": "sha256:3e3472d8d3d5c707074d316aa9622b87a0a26fa65db6bc5f72e19af78faeb99c",
+    "ppo_series_config.py": "sha256:fe33f5eba2ace250af8a2824c10afef65140e52801327945e2d807dddbf2a4e9",
+    "ppo_train.py": "sha256:c1f04549b397a9f9b5ff90035dc378382e6f25ed9366781e1b0b57a95c565b6a",
+    "trainer.py": "sha256:315f25fc17a37a085807da90cee3a1a5148a94d1cdfa9964eca1b9fa892d7944",
+    "trajectory.py": "sha256:4629735079ba98872ff5ca62b2c4c5c59817eda9e86689d3e71b557517bc5ad5"
+  }
+}

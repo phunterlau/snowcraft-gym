@@ -1,0 +1,174 @@
+{
+  "all": {
+    "classAccuracy": 0.9031139287712101,
+    "classCorrect": 24217,
+    "confusion": [
+      [
+        1716,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        21436,
+        1858,
+        140
+      ],
+      [
+        0,
+        283,
+        879,
+        0
+      ],
+      [
+        0,
+        311,
+        6,
+        186
+      ]
+    ],
+    "count": 26815,
+    "moveCount": 23434,
+    "moveSquaredError": 1094247.890625,
+    "moveTargetRmseWorld": 6.833365430192016,
+    "powerSquaredError": 18.564087688922882,
+    "rayCount": 1162,
+    "rayDegreesSum": 53039.87268066406,
+    "throwCount": 1162,
+    "throwPowerRmse": 0.12639611971198675,
+    "throwRayMeanDegrees": 45.645329329315025,
+    "throwSquaredError": 110304.76831054688,
+    "throwTargetRmseWorld": 9.743030887237383,
+    "undefinedThrowRays": 0
+  },
+  "approach": {
+    "classAccuracy": 0.9143544121182977,
+    "classCorrect": 19014,
+    "confusion": [
+      [
+        323,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        18691,
+        1736,
+        37
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        2,
+        6,
+        0
+      ]
+    ],
+    "count": 20795,
+    "moveCount": 20464,
+    "moveSquaredError": 893183.47265625,
+    "moveTargetRmseWorld": 6.606555315446621,
+    "powerSquaredError": 0.0,
+    "rayCount": 0,
+    "rayDegreesSum": 0.0,
+    "throwCount": 0,
+    "throwPowerRmse": null,
+    "throwRayMeanDegrees": null,
+    "throwSquaredError": 0.0,
+    "throwTargetRmseWorld": null,
+    "undefinedThrowRays": 0
+  },
+  "contact": {
+    "classAccuracy": 0.8900782214903252,
+    "classCorrect": 4324,
+    "confusion": [
+      [
+        1393,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        2745,
+        122,
+        103
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        309,
+        0,
+        186
+      ]
+    ],
+    "count": 4858,
+    "moveCount": 2970,
+    "moveSquaredError": 201064.42529296875,
+    "moveTargetRmseWorld": 8.227907370322194,
+    "powerSquaredError": 0.0,
+    "rayCount": 0,
+    "rayDegreesSum": 0.0,
+    "throwCount": 0,
+    "throwPowerRmse": null,
+    "throwRayMeanDegrees": null,
+    "throwSquaredError": 0.0,
+    "throwTargetRmseWorld": null,
+    "undefinedThrowRays": 0
+  },
+  "fire": {
+    "classAccuracy": 0.7564543889845095,
+    "classCorrect": 879,
+    "confusion": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        283,
+        879,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "count": 1162,
+    "moveCount": 0,
+    "moveSquaredError": 0.0,
+    "moveTargetRmseWorld": null,
+    "powerSquaredError": 18.564087688922882,
+    "rayCount": 1162,
+    "rayDegreesSum": 53039.87268066406,
+    "throwCount": 1162,
+    "throwPowerRmse": 0.12639611971198675,
+    "throwRayMeanDegrees": 45.645329329315025,
+    "throwSquaredError": 110304.76831054688,
+    "throwTargetRmseWorld": 9.743030887237383,
+    "undefinedThrowRays": 0
+  }
+}

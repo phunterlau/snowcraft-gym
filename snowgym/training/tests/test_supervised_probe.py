@@ -11,6 +11,7 @@ from snowgym_training.options import evaluate
 from snowgym_training.options.identity import checkpoint_model
 from snowgym_training.options.probe_metrics import phase_masks, accumulate, empty_counts, finish_counts, teacher_agreement
 from snowgym_training.options.reservoir import TeacherBcReservoir, load_teacher_bc_reservoir, file_digest
+from snowgym_training.options.recovery_report import audit_artifact_manifest
 from snowgym_training.ppo_checkpoint import load_ppo_checkpoint
 from snowgym_training.trajectory import json_digest
 
@@ -128,3 +129,33 @@ def test_probe_pipeline_preserves_artifacts_and_cannot_promote(tmp_path, monkeyp
     assert metadata["environmentSteps"] == 0
     with pytest.raises(FileExistsError):
         probe.run_supervised_probe(source_checkpoint=CHECKPOINT, reservoir_path=RESERVOIR, output=output)
+
+
+def test_archived_r1f_probe_lineage_and_negative_result() -> None:
+    root = TRAINING_ROOT / "runs/m7b_engage_r1f_supervised_probe_v0"
+    manifest = audit_artifact_manifest(root, "manifest.json")
+    assert manifest["manifestDigest"] == json_digest({key: value for key, value in manifest.items() if key != "manifestDigest"})
+    assert manifest["config"] == probe.load_probe_config()
+    assert len(manifest["epochs"]) == 20
+    assert sum(epoch["optimizerSteps"] for epoch in manifest["epochs"]) == 420
+    assert sum(epoch["samples"] for epoch in manifest["epochs"]) == 20 * 5367
+    first, first_state = load_ppo_checkpoint(root / "epoch-000")
+    final, final_state = load_ppo_checkpoint(root / "epoch-020")
+    assert first["initializerDigest"] == final["initializerDigest"]
+    assert manifest["checkpoints"]["20"] == final
+    for name, tensor in first_state["model"].items():
+        if name.startswith("role_aware_critic."):
+            assert torch.equal(tensor, final_state["model"][name])
+    for epoch in (0, 20):
+        rows = json.loads((root / f"training-evaluation-epoch-{epoch:03d}.json").read_text())
+        assert [row["seed"] for row in rows] == list(range(100000, 100040))
+        assert sum(row["success"] for row in rows) == 0
+    evaluation = json.loads((root / "development-evaluation.json").read_text())
+    for rows in evaluation["missions"]["engage"].values():
+        assert [row["seed"] for row in rows] == list(range(200000, 200040))
+    result = json.loads((root / "report.json").read_text())
+    assert not result["bootstrapDiagnosticPassed"]
+    assert not result["qualificationEligible"]
+    assert result["frozenParametersUnchanged"]
+    assert result["parameterChangeFromR1e"]["newActor"] > 0
+    assert result["parameterChangeFromR1e"]["inheritedHeads"] == 0
