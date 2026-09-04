@@ -781,6 +781,11 @@ the six-arm Engage intervention matrix, teacher/stochastic/deterministic state
 datasets, and per-loss gradient norms/cosines, then create one digest-bound
 intervention recommendation before any new PPO run.
 
+It also documents the M7b-R1 successful-teacher reservoir exporter and frozen
+two-stage runner. The first R1 candidate is a recorded negative result: partial
+contact/hit acquisition at Stage 1 regressed at Stage 2, so the Engage bootstrap
+gate and all later mission stages remain closed.
+
 The frozen `ppo_curriculum_v0.json` keeps training ranges disjoint from eight
 evaluation seeds per gate and sets thresholds before qualifying runs. Its order
 is 1v1 random, 1v1 easy scripted, 3v3 random, 3v3 easy scripted, 3v3 terrain on

@@ -27,7 +27,10 @@ from snowgym_training.options.causal_fork import run_causal_fork
 from snowgym_training.options.evaluate import resolve_evaluation_options
 from snowgym_training.options.interventions import compose_intervention_action
 from snowgym_training.options.gradient_diagnostics import write_csv
-from snowgym_training.options.recovery_report import audit_artifact_manifest
+from snowgym_training.options.recovery_report import (
+    audit_artifact_manifest,
+    load_digested_json,
+)
 from snowgym_training.options.bootstrap import engage_bootstrap_report
 from snowgym_training.options.r1 import load_r1_config
 from snowgym_training.trajectory import json_digest
@@ -307,6 +310,18 @@ def test_archived_failed_engage_evidence_passes_digest_audit() -> None:
     audit_artifact_manifest(archive, "archive-manifest.json")
     audit_artifact_manifest(archive / "diagnostics", "manifest.json")
     audit_artifact_manifest(archive / "gradient-diagnostics", "manifest.json")
+
+
+def test_failed_engage_r1_candidate_passes_digest_audit() -> None:
+    root = Path(__file__).resolve().parents[1] / "runs"
+    reservoir = root / "m7b_engage_teacher_reservoir_v0"
+    run = root / "m7b_engage_teacher_reservoir_r1_v0"
+    reservoir_manifest = audit_artifact_manifest(reservoir, "manifest.json")
+    run_manifest = audit_artifact_manifest(run, "manifest.json")
+    load_digested_json(run / "manifest.json", "manifestDigest")
+    assert reservoir_manifest["seedPartition"] == "training"
+    assert reservoir_manifest["allSuccessful"]
+    assert not run_manifest["passed"]
 
 
 def test_live_fixed_option_wrapper_executes_production_teacher() -> None:

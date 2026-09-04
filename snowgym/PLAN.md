@@ -872,6 +872,19 @@ under `training/runs/m7b_engage_failed_v0/` binds implementation revisions
 digest, all 40 development seeds, and nested artifact hashes. No qualification
 seed was used.
 
+M7b-R1 first candidate (2026-09-04): the provenance-bound reservoir contains
+5,367 successful production-teacher states from 40 training seeds and is mixed
+50/50 with learner-state labels only inside the auxiliary BC loss. The frozen
+50-update Stage-1 checkpoint reached contact on 28/40 development seeds and hit
+on 10/40, but completed Engage on 0/40. After the predeclared Stage-2 updates,
+the final checkpoint reached neither contact nor a hit on any of the 40 seeds;
+correct, shuffled, and initializer conditions all had 0% success, with zero
+rejected actions. The bootstrap gate failed, so R1 remains open and R2/later
+missions remain blocked. The negative run is preserved under
+`training/runs/m7b_engage_teacher_reservoir_r1_v0/`. A subsequent R1 attempt
+must remain within the selected teacher-reservoir intervention and predeclare
+its sampling/anchor or unfreezing change before training.
+
 #### M7c — full-fight fixed-plan composition
 
 - [ ] Hold one-, two-, and three-role plans throughout complete 3v3, 5v5, and

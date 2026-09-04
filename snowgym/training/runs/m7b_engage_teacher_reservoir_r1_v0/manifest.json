@@ -1,0 +1,73 @@
+{
+  "artifacts": {
+    "bootstrap-report.json": "sha256:abe0c8beec6226944334bd04e06b1d3bb829ca1f118464fafc62d407ec0bd748",
+    "development-evaluation.json": "sha256:f2574f6b01f922f5b808c5a24dd216f0be6c3cb8a8ac99d25f20602f9cbda10b",
+    "stage1-development-evaluation.json": "sha256:23c95cc416de6905866544e7a101925039b9393694bfd7ff032f84627bba1318"
+  },
+  "bootstrapReportDigest": "sha256:f77638f46fab50ecacf565f2526367175b4c8f0d01cc4fca852d666fc69f81ae",
+  "config": {
+    "anchorTotalUpdates": 200,
+    "bcLossConfig": {
+      "action_weight": 1.0,
+      "power_weight": 0.5,
+      "target_weight": 5.0,
+      "throw_action_weight": 5.0
+    },
+    "bootstrapGates": {
+      "correctMinusInitializer": 0.2,
+      "correctMinusShuffled": 0.2,
+      "correctSuccessRate": 0.5,
+      "firstContactRate": 0.8,
+      "maximumRejectedActionRate": 0.001
+    },
+    "format": "snowgym.engage-r1-config.v0",
+    "intervention": "successful-teacher-bc-reservoir",
+    "option": "engage",
+    "ppoConfig": {
+      "clip_ratio": 0.2,
+      "entropy_weight": 0.01,
+      "gae_lambda": 0.9885140204,
+      "gamma": 0.9976921765,
+      "initial_power_log_std": -1.0,
+      "initial_target_log_std": -1.0,
+      "learning_rate": 0.0003,
+      "max_grad_norm": 0.5,
+      "minibatch_size": 1600,
+      "ratio_mode": "per-unit",
+      "target_kl": null,
+      "update_epochs": 4,
+      "value_weight": 0.5
+    },
+    "reservoirBcFraction": 0.5,
+    "reservoirSeedCount": 40,
+    "reservoirSeedPartition": "training",
+    "rolloutSteps": 200,
+    "stage1TargetUpdates": 50,
+    "stage2TargetUpdates": 100,
+    "trainingSeed": 91001,
+    "worlds": 8
+  },
+  "configDigest": "sha256:19d0e6c9f1acab6589fbaa5b3e8778aca3f9bd47edc7487dc4dff72deae3f4ca",
+  "developmentEvaluationDigest": "sha256:1452ba5db70fbb424738f0da7bd8c65ff0067dce8eea8ae9e71a1292faa0bffa",
+  "evaluationImplementationGitCommit": "913270d11ccbfa3e534a55c3bad3bb8494bb985c",
+  "format": "snowgym.engage-r1-run.v0",
+  "gitCommit": "1c479e4d0dd87bcfcda2488be0cbe6c328196b71",
+  "manifestDigest": "sha256:d39bdc9109a16b9af0d86913eade296113cf323a296c9633188d451ac2c6f4b6",
+  "passed": false,
+  "reservoir": {
+    "digest": "sha256:a1410c32a718c53664b91878852a2203247454ae0bf2dcb4caeb904b0ac334a6",
+    "episodes": 40,
+    "format": "snowgym.teacher-bc-reservoir.v0",
+    "implementationGitCommit": "1c479e4d0dd87bcfcda2488be0cbe6c328196b71",
+    "manifestDigest": "sha256:faa5e14b9de79a0a49d524bcd958a9a7b9ab536f30c454657ce6f713f31b15ec",
+    "manifestPath": "runs/m7b_engage_teacher_reservoir_v0/manifest.json",
+    "path": "runs/m7b_engage_teacher_reservoir_v0/teacher_states.npz",
+    "samples": 5367,
+    "simulationVersion": "snowgym.sim.v2",
+    "sourceCheckpointDigest": null,
+    "stateHashVersion": "snowgym.state.v2"
+  },
+  "stage1CheckpointDigest": "sha256:777fdaca3198e41fd195079783cc8eeb19dfb1c088cc582ab8f599c519cfa0f2",
+  "stage1DevelopmentEvaluationDigest": "sha256:f4ee7693923068f7c4f7d4bb3f4ecf98c7e0e76b848db911ab075cead5e2d992",
+  "stage2CheckpointDigest": "sha256:d5026a7dcc2e0bbd350921ff495e7369c477fe8b28813ca4aeae553495825162"
+}

@@ -203,3 +203,30 @@ previously sampled but not applied. Evidence created after the repair reports
 `snowgym.sim.v2`. Earlier random-opponent qualification artifacts remain
 available as v1 history, but require v2 requalification before reuse as fighter
 performance evidence. Scripted-Red results are unaffected.
+
+## M7b-R1 teacher reservoir
+
+Export the selected BC-only reservoir from successful production-teacher
+episodes on training seeds, then run the frozen two-stage experiment:
+
+```bash
+cd snowgym/training
+.venv/bin/snowgym-export-teacher-reservoir \
+  --output runs/m7b_engage_teacher_reservoir_v0 \
+  --seed-count 40
+
+.venv/bin/snowgym-run-engage-r1 \
+  --reservoir runs/m7b_engage_teacher_reservoir_v0/teacher_states.npz \
+  --output runs/m7b_engage_teacher_reservoir_r1_v0
+```
+
+The runner consumes the frozen
+`configs/m7b_engage_r1_v0.json`, performs 50 Stage-1 and 50 Stage-2 updates,
+evaluates the 40 paired development seeds, and writes a digest-bound bootstrap
+report. Reservoir transitions participate only in BC. PPO ratios, advantages,
+and returns use learner-executed rollouts.
+
+The first candidate is retained as negative evidence. Stage 1 reached contact
+on 28/40 seeds and hit on 10/40 but had no mission successes. The Stage-2
+checkpoint regressed to 0/40 contact, hits, and successes. R1 therefore remains
+open, and no later option or qualification run is authorized by this result.
