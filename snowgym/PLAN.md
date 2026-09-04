@@ -790,6 +790,15 @@ its move target remained short of the teacher objective and no combat began.
 This negative result is diagnostic; it does not advance the ordered-training
 or qualification checkboxes.
 
+M7b target-gradient repair (2026-09-03): the negative Engage probe exposed
+that the executed move target included the new plan residual while the BC
+supervision view excluded it. The supervised move tensor now includes the same
+residual, retaining the special last-enemy execution override boundary. A
+dedicated gradient test requires nonzero move-residual gradients and zero
+gradients in unused action/throw/power rows. In a five-update full-horizon
+probe, target BC MSE fell from 0.199 to 0.138; longer development and the
+per-mission gates remain open.
+
 #### M7c — full-fight fixed-plan composition
 
 - [ ] Hold one-, two-, and three-role plans throughout complete 3v3, 5v5, and

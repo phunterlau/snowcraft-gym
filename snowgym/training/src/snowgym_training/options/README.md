@@ -96,6 +96,10 @@ separate action/target/power behavior-cloning losses, and target/power
 exploration scales. These fields distinguish command classification from
 physical target learning when mission reward remains sparse.
 
+The plan residual is part of both the executed move/throw means and their BC
+supervision view. The environment-only last-enemy move override remains outside
+the supervised move view, preserving the existing hybrid-action boundary.
+
 The BC anchor decays from 0.1 to zero over the first half of
 `--anchor-total-updates`; initializer KL decays from 0.01 to zero over its first
 three quarters. This total is frozen across exact resume and staged transfer.

@@ -3,6 +3,7 @@ from __future__ import annotations
 import torch
 
 from snowgym_training.executor import EntityPolicy, ModelConfig, model_config
+from snowgym_training.loss import LossConfig, behavior_clone_loss
 from snowgym_training.plan_ppo import (
     freeze_initializer,
     initialize_plan_ppo_policy,
@@ -149,3 +150,36 @@ def test_plan_ppo_anchor_decay_and_zero_initializer_kl() -> None:
         initializer_policy_kl(model, prediction, initial, observation),
         torch.zeros(()),
     )
+
+
+def test_plan_move_residual_receives_bc_gradient_without_unused_dimensions() -> None:
+    torch.manual_seed(103)
+    source = ModelConfig(
+        16,
+        12,
+        24,
+        action_conditioned_targets=True,
+        plan_conditioned=True,
+        plan_target_only=True,
+        separate_target_actor=True,
+    )
+    model = HybridActorCritic(target_only_plan_ppo_config(source))
+    observation = target_observation(source_observation(batch=2, units=3))
+    prediction = model(observation)
+    labels = {
+        "action_type": torch.ones((2, 3), dtype=torch.int64),
+        "target": torch.full((2, 3, 2), 0.75),
+        "power": torch.zeros((2, 3)),
+    }
+    loss = behavior_clone_loss(
+        prediction,
+        labels,
+        observation,
+        LossConfig(action_weight=0, target_weight=1, power_weight=0),
+    )["total"]
+    loss.backward()
+    gradient = model.policy.plan_ppo_residual[2].weight.grad
+    assert gradient is not None
+    assert bool(gradient[4:6].abs().sum() > 0)
+    torch.testing.assert_close(gradient[:4], torch.zeros_like(gradient[:4]))
+    torch.testing.assert_close(gradient[6:], torch.zeros_like(gradient[6:]))

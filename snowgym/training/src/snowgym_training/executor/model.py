@@ -294,6 +294,7 @@ class EntityPolicy(nn.Module):
                 enemy_mask,
             )
             predicted_move_target = self.move_target_head(target_hidden)
+            supervised_move_target = predicted_move_target
             move_target = (
                 torch.where(
                     (observation["team_alive"][:, 1] == 1)[:, None, None],
@@ -312,6 +313,9 @@ class EntityPolicy(nn.Module):
             )
             if plan_ppo_residual is not None:
                 move_target = move_target + plan_ppo_residual[..., 4:6]
+                supervised_move_target = (
+                    supervised_move_target + plan_ppo_residual[..., 4:6]
+                )
                 throw_target = throw_target + plan_ppo_residual[..., 6:8]
             target_raw_by_action = torch.stack(
                 [
@@ -323,7 +327,7 @@ class EntityPolicy(nn.Module):
                 dim=-2,
             )
             supervised_target_raw_by_action = torch.stack(
-                [zeros, predicted_move_target, throw_target, zeros], dim=-2
+                [zeros, supervised_move_target, throw_target, zeros], dim=-2
             )
             selected = logits.argmax(dim=-1)
             target_raw = select_action_target(target_raw_by_action, selected)
