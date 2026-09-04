@@ -2,6 +2,10 @@
 
 Date: 2026-09-04. Status: development diagnosis; R1 remains open.
 
+Follow-up: [R1h completed the action-choice/movement diagnostic](../../../reviews/m7b_r1h_results.md).
+Its results prioritize relative movement alongside shot geometry. The proposals
+below retain the R1g reasoning at the time of that experiment.
+
 ## Question and experiment
 
 The production plan-aware teacher can complete Engage, while its learned

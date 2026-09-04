@@ -164,3 +164,35 @@ def test_pipeline_rejects_teacher_trajectory_mismatch(tmp_path, monkeypatch):
     with pytest.raises(RuntimeError, match="trajectory parity"):
         channels.run_matrix(CHECKPOINT, output=tmp_path / "bad-run")
     assert not (tmp_path / "bad-run").exists()
+
+
+def test_archived_matrix_audit_complete_pairing_and_boundary_controls():
+    root = ROOT / "runs/m7b_engage_r1h_control_channels_v0"
+    manifest = audit_artifact_manifest(root, "manifest.json")
+    assert manifest["manifestDigest"] == json_digest({k: v for k, v in manifest.items() if k != "manifestDigest"})
+    assert manifest["config"] == channels.load_config()
+    records = {arm: json.loads((root / f"{arm}.json").read_text()) for arm in channels.ARMS}
+    report = json.loads((root / "report.json").read_text())
+    assert channels.summarize(records) == report["summary"]
+    assert report["teacherTrajectoryParity"] and report["modelUnchanged"]
+    assert report["trainingUpdates"] == 0 and not report["qualificationEligible"]
+    old = json.loads((ROOT / "runs/m7b_engage_r1g_throw_channels_v0/direction-power.json").read_text())
+    for arm, rows in records.items():
+        assert [r["seed"] for r in rows] == list(range(200000, 200040))
+        for i, row in enumerate(rows):
+            assert len(row["stateHashes"]) == row["decisions"] + 1
+            assert row["stateHashes"][0] == old[i]["stateHashes"][0]
+            assert row["rejectedActions"] == 0
+            assert row["throwsNotReady"] == 0
+            assert row["moveReplacements"] == (row["executedMoves"] if arm in {"teacher-move", "teacher-choice-move"} else 0)
+            if arm in {"shot-only", "teacher-move"}:
+                assert row["choiceChanges"] == 0
+            if arm == "shot-only":
+                assert row["actionsDigest"] == old[i]["actionsDigest"]
+                assert row["stateHashes"] == old[i]["stateHashes"]
+                for field in ("success", "progress", "decisions", "firstContactDecision", "firstHitDecision"):
+                    assert row[field] == old[i][field]
+            if arm == "teacher-choice-move":
+                assert row["stateHashes"] == records["teacher"][i]["stateHashes"]
+            if arm in {"teacher-choice", "teacher-choice-move", "teacher"}:
+                assert row["throwsOutOfRange"] == row["throwsWhileTeacherDoesNotThrow"] == 0

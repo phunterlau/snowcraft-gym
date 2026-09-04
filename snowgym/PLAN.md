@@ -1048,6 +1048,20 @@ Use paired development intervals for simple effects and interaction; no new
 training, provider calls, qualification seeds, architecture change, or promotion.
 Run targeted and full milestone tests before implementation and artifact commits.
 
+M7b-R1h result (2026-09-04): all 200 episodes completed without training or
+rejected actions. With corrected shots, learned choice/movement scored 10/40;
+teacher movement with learned choice scored 40/40; teacher choice with learned
+movement scored 11/40; both and the full teacher scored 40/40. All 40 shot-only
+trajectories reproduce R1g exactly, and combined restoration reproduces the
+full teacher. Movement repair adds 75 success points (paired-bootstrap 95%:
+60–87.5), while choice repair with learned movement adds 2.5 (−12.5–17.5).
+The movement intervention includes range keeping, formation/cohesion, and dodge
+destinations. It identifies a conditional channel bottleneck, not a qualified
+learned controller. Next: predeclare a target-relative movement/shot representation
+and gradient probe, retaining the inherited classifier initially; test learning
+against matched priors and HOLD selectivity before additional PPO. R1 remains
+open. Evidence and design decision: [R1h review](training/reviews/m7b_r1h_results.md).
+
 #### M7c — full-fight fixed-plan composition
 
 - [ ] Hold one-, two-, and three-role plans throughout complete 3v3, 5v5, and

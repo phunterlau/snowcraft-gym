@@ -837,6 +837,14 @@ enemy selection. The result prioritizes a target-relative shot ablation and a
 separate firing-versus-movement diagnostic; it does not qualify an executor.
 See [R1g results and executor design feedback](src/snowgym_training/executor/DESIGN_FEEDBACK_R1G.md).
 
+R1h completed the next 200-episode diagnostic with corrected shots in every
+factorial arm. Teacher movement with learned action choice achieved 40/40 Engage
+successes; teacher choice with learned movement achieved 11/40, versus the
+10/40 shot-only baseline. Full restoration reproduced teacher trajectories
+exactly. This prioritizes a relative movement/shot representation and gradient
+probe before more PPO; the oracle-assisted result does not qualify the learner.
+See [R1h results and next design decision](reviews/m7b_r1h_results.md).
+
 The frozen `ppo_curriculum_v0.json` keeps training ranges disjoint from eight
 evaluation seeds per gate and sets thresholds before qualifying runs. Its order
 is 1v1 random, 1v1 easy scripted, 3v3 random, 3v3 easy scripted, 3v3 terrain on

@@ -188,11 +188,14 @@ plan-aware collection from the generic `snowgym-train-ppo` command.
 R1e PPO and R1f supervised recovery both failed to complete Engage. R1g then
 tested frozen throw-channel replacements without training: learned execution
 passed 0/40, direction replacement 7/40, direction plus power 10/40, and the
-full teacher 40/40. The next design work is a conditional-action diagnostic
-followed by a separately versioned target-relative shot ablation, with gradient
-reachability and plan-selectivity gates. The
-[design feedback](DESIGN_FEEDBACK_R1G.md) specifies the evidence and limitations.
-Further PPO continuation and executor promotion remain gated.
+full teacher 40/40. R1h completed the conditional-action diagnostic: with shots
+corrected, teacher movement plus learned choice passed 40/40; teacher choice
+plus learned movement passed 11/40. This expands the next representation probe
+to relative movement as well as shots, while initially retaining the inherited
+action classifier. See [R1g design feedback](DESIGN_FEEDBACK_R1G.md) and the
+[R1h result and updated design priorities](../../../reviews/m7b_r1h_results.md).
+Gradient reachability, improvement over matched priors, and plan selectivity
+remain required before further PPO continuation or executor promotion.
 
 ## Design invariants
 

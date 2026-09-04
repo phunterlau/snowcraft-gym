@@ -1,0 +1,323 @@
+{
+  "format": "snowgym.engage-control-channels-report.v0",
+  "modelUnchanged": true,
+  "qualificationEligible": false,
+  "summary": {
+    "arms": {
+      "shot-only": {
+        "choiceChanges": 0,
+        "choiceConfusion": [
+          [
+            2518,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            31860,
+            1004,
+            41
+          ],
+          [
+            0,
+            1814,
+            196,
+            0
+          ],
+          [
+            0,
+            434,
+            0,
+            0
+          ]
+        ],
+        "contactRate": 0.85,
+        "episodes": 40,
+        "executedMoves": 32905,
+        "executedThrows": 2010,
+        "hitRate": 0.95,
+        "meanProgress": 0.5269999964162707,
+        "meanShotDistance": 15.279369971594729,
+        "moveReplacements": 0,
+        "rejectedActions": 0,
+        "successRate": 0.25,
+        "teacherMoveAgreements": 34108,
+        "teacherThrowAgreements": 1200,
+        "throwsNotReady": 0,
+        "throwsOutOfRange": 1739,
+        "throwsWhileTeacherDoesNotThrow": 1814,
+        "throwsWithThreat": 132,
+        "totalActions": 38065
+      },
+      "teacher": {
+        "choiceChanges": 2774,
+        "choiceConfusion": [
+          [
+            1740,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            21916,
+            314,
+            355
+          ],
+          [
+            0,
+            1969,
+            863,
+            0
+          ],
+          [
+            0,
+            136,
+            0,
+            180
+          ]
+        ],
+        "contactRate": 1.0,
+        "episodes": 40,
+        "executedMoves": 24021,
+        "executedThrows": 1177,
+        "hitRate": 1.0,
+        "meanProgress": 0.849000003375113,
+        "meanShotDistance": 7.991326973958057,
+        "moveReplacements": 0,
+        "rejectedActions": 0,
+        "successRate": 1.0,
+        "teacherMoveAgreements": 24021,
+        "teacherThrowAgreements": 1177,
+        "throwsNotReady": 0,
+        "throwsOutOfRange": 0,
+        "throwsWhileTeacherDoesNotThrow": 0,
+        "throwsWithThreat": 0,
+        "totalActions": 27480
+      },
+      "teacher-choice": {
+        "choiceChanges": 7016,
+        "choiceConfusion": [
+          [
+            1550,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            28138,
+            354,
+            90
+          ],
+          [
+            0,
+            6534,
+            412,
+            1
+          ],
+          [
+            0,
+            37,
+            0,
+            15
+          ]
+        ],
+        "contactRate": 0.9,
+        "episodes": 40,
+        "executedMoves": 34709,
+        "executedThrows": 766,
+        "hitRate": 0.9,
+        "meanProgress": 0.5369999969378114,
+        "meanShotDistance": 7.9153622682294245,
+        "moveReplacements": 0,
+        "rejectedActions": 0,
+        "successRate": 0.275,
+        "teacherMoveAgreements": 34709,
+        "teacherThrowAgreements": 766,
+        "throwsNotReady": 0,
+        "throwsOutOfRange": 0,
+        "throwsWhileTeacherDoesNotThrow": 0,
+        "throwsWithThreat": 0,
+        "totalActions": 37630
+      },
+      "teacher-choice-move": {
+        "choiceChanges": 2774,
+        "choiceConfusion": [
+          [
+            1740,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            21916,
+            314,
+            355
+          ],
+          [
+            0,
+            1969,
+            863,
+            0
+          ],
+          [
+            0,
+            136,
+            0,
+            180
+          ]
+        ],
+        "contactRate": 1.0,
+        "episodes": 40,
+        "executedMoves": 24021,
+        "executedThrows": 1177,
+        "hitRate": 1.0,
+        "meanProgress": 0.849000003375113,
+        "meanShotDistance": 7.991326973958057,
+        "moveReplacements": 24021,
+        "rejectedActions": 0,
+        "successRate": 1.0,
+        "teacherMoveAgreements": 24021,
+        "teacherThrowAgreements": 1177,
+        "throwsNotReady": 0,
+        "throwsOutOfRange": 0,
+        "throwsWhileTeacherDoesNotThrow": 0,
+        "throwsWithThreat": 0,
+        "totalActions": 27480
+      },
+      "teacher-move": {
+        "choiceChanges": 0,
+        "choiceConfusion": [
+          [
+            1842,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            21923,
+            927,
+            403
+          ],
+          [
+            0,
+            778,
+            679,
+            0
+          ],
+          [
+            0,
+            148,
+            0,
+            35
+          ]
+        ],
+        "contactRate": 1.0,
+        "episodes": 40,
+        "executedMoves": 23253,
+        "executedThrows": 1457,
+        "hitRate": 1.0,
+        "meanProgress": 0.8470000034198165,
+        "meanShotDistance": 10.001960745757845,
+        "moveReplacements": 23253,
+        "rejectedActions": 0,
+        "successRate": 1.0,
+        "teacherMoveAgreements": 22849,
+        "teacherThrowAgreements": 1606,
+        "throwsNotReady": 0,
+        "throwsOutOfRange": 695,
+        "throwsWhileTeacherDoesNotThrow": 778,
+        "throwsWithThreat": 134,
+        "totalActions": 26735
+      }
+    },
+    "pairedContrasts": {
+      "choiceWithLearnerMovement": {
+        "progress": {
+          "bootstrap95": [
+            -0.0640000028628856,
+            0.08402500797994399
+          ],
+          "mean": 0.010000000521540642
+        },
+        "success": {
+          "bootstrap95": [
+            -0.125,
+            0.175
+          ],
+          "mean": 0.025
+        }
+      },
+      "choiceWithTeacherMovement": {
+        "progress": {
+          "bootstrap95": [
+            -0.005999999865889549,
+            0.009999999776482582
+          ],
+          "mean": 0.0019999999552965165
+        },
+        "success": {
+          "bootstrap95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        }
+      },
+      "interaction": {
+        "progress": {
+          "bootstrap95": [
+            -0.08100000528153033,
+            0.06500000325962901
+          ],
+          "mean": -0.008000000566244125
+        },
+        "success": {
+          "bootstrap95": [
+            -0.175,
+            0.125
+          ],
+          "mean": -0.025
+        }
+      },
+      "movementWithLearnerChoice": {
+        "progress": {
+          "bootstrap95": [
+            0.2370000080857426,
+            0.4040000058803707
+          ],
+          "mean": 0.32000000700354575
+        },
+        "success": {
+          "bootstrap95": [
+            0.6,
+            0.875
+          ],
+          "mean": 0.75
+        }
+      },
+      "movementWithTeacherChoice": {
+        "progress": {
+          "bootstrap95": [
+            0.22600000351667404,
+            0.40100000854581597
+          ],
+          "mean": 0.31200000643730164
+        },
+        "success": {
+          "bootstrap95": [
+            0.575,
+            0.85
+          ],
+          "mean": 0.725
+        }
+      }
+    }
+  },
+  "teacherTrajectoryParity": true,
+  "trainingUpdates": 0
+}
