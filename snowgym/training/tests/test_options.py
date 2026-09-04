@@ -22,6 +22,7 @@ from snowgym_training.plan_ppo import target_only_plan_ppo_config
 from snowgym_training.ppo import HybridActorCritic, PPOConfig
 from snowgym_training.ppo_collect import SeedSchedule
 from snowgym_training.options.causal_fork import run_causal_fork
+from snowgym_training.options.evaluate import resolve_evaluation_options
 from snowgym_training.trajectory import json_digest
 
 
@@ -336,6 +337,29 @@ def test_m7b_qualification_requires_every_mission_independently() -> None:
     assert not failed["passed"]
     assert not failed["missions"]["support"]["passed"]
     assert failed["missions"]["engage"]["passed"]
+
+
+def test_m7b_development_may_select_missions_but_qualification_may_not() -> None:
+    assert resolve_evaluation_options("development", ("hold", "engage")) == (
+        "engage",
+        "hold",
+    )
+    assert resolve_evaluation_options("qualification", None) == tuple(
+        FROZEN_OPTION_SPECS
+    )
+    for selected in (("engage", "engage"), (), ("unknown",)):
+        try:
+            resolve_evaluation_options("development", selected)
+        except ValueError:
+            pass
+        else:
+            raise AssertionError("development accepted an invalid option selection")
+    try:
+        resolve_evaluation_options("qualification", ("engage",))
+    except ValueError as error:
+        assert "every frozen mission" in str(error)
+    else:
+        raise AssertionError("qualification accepted a mission subset")
 
 
 def test_same_state_hold_withdraw_advance_fork_is_deterministic_and_diverges() -> None:

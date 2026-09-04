@@ -799,6 +799,15 @@ gradients in unused action/throw/power rows. In a five-update full-horizon
 probe, target BC MSE fell from 0.199 to 0.138; longer development and the
 per-mission gates remain open.
 
+M7b Engage development audit (2026-09-03): development evaluation may now
+select one or more trained missions, while qualification remains hard-locked
+to all eight missions and 100 untouched seeds each. The repaired stage-2
+Engage checkpoint was evaluated on all 40 predeclared development seeds.
+Correct, shuffled, and initializer conditions each had zero mission success,
+zero mean progress, and zero physical wins; each condition executed 60,000
+accepted actions with no rejection. The checkpoint is retained only as a
+negative diagnostic and is not eligible for M7b promotion.
+
 #### M7c — full-fight fixed-plan composition
 
 - [ ] Hold one-, two-, and three-role plans throughout complete 3v3, 5v5, and

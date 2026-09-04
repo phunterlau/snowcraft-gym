@@ -125,9 +125,11 @@ def evaluate_m7b_checkpoint(
     output: str | Path,
     split: str = "development",
     initializer_path: str | Path = DEFAULT_INITIALIZER,
+    options: tuple[str, ...] | None = None,
 ) -> dict[str, Any]:
     if split not in {"development", "qualification"}:
         raise ValueError("M7b evaluation split must be development or qualification")
+    selected_options = resolve_evaluation_options(split, options)
     destination = Path(output)
     if destination.exists():
         raise FileExistsError(f"refusing to overwrite M7b evaluation {destination}")
@@ -153,7 +155,8 @@ def evaluate_m7b_checkpoint(
     initializer = freeze_initializer(initializer)
     missions: dict[str, Any] = {}
     with SnowGymBatchClient() as client:
-        for mission_index, option in enumerate(OPTION_ORDER):
+        for option in selected_options:
+            mission_index = OPTION_ORDER.index(option)
             seeds = [start + mission_index * count + offset for offset in range(count)]
             missions[option] = {
                 condition: [
@@ -188,6 +191,7 @@ def evaluate_m7b_checkpoint(
         "inheritedHeadLearningRate": new_learning_rate / 10 if stage >= 2 else 0.0,
         "newModuleLearningRate": new_learning_rate,
         "parameterL2Change": math.sqrt(difference),
+        "evaluatedOptions": list(selected_options),
         "missions": missions,
     }
     value["evaluationDigest"] = json_digest(value)
@@ -204,14 +208,35 @@ def main() -> None:
     parser.add_argument("--output", required=True)
     parser.add_argument("--split", choices=("development", "qualification"), default="development")
     parser.add_argument("--initializer", default=str(DEFAULT_INITIALIZER))
+    parser.add_argument(
+        "--option",
+        action="append",
+        choices=OPTION_ORDER,
+        help="development-only mission subset; repeat to select multiple",
+    )
     args = parser.parse_args()
     result = evaluate_m7b_checkpoint(
         args.checkpoint,
         output=args.output,
         split=args.split,
         initializer_path=args.initializer,
+        options=tuple(args.option) if args.option else None,
     )
     print(json.dumps(result, sort_keys=True))
+
+
+def resolve_evaluation_options(
+    split: str, options: tuple[str, ...] | None
+) -> tuple[str, ...]:
+    selected = OPTION_ORDER if options is None else options
+    if not selected or len(set(selected)) != len(selected):
+        raise ValueError("M7b evaluation options must be non-empty and unique")
+    if any(option not in OPTION_ORDER for option in selected):
+        raise ValueError("M7b evaluation contains an unknown option")
+    canonical = tuple(option for option in OPTION_ORDER if option in selected)
+    if split == "qualification" and canonical != OPTION_ORDER:
+        raise ValueError("M7b qualification evaluation requires every frozen mission")
+    return canonical
 
 
 if __name__ == "__main__":

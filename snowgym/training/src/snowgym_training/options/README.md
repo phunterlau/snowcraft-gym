@@ -135,6 +135,7 @@ Generate the paired input artifact directly from a staged checkpoint:
 .venv/bin/snowgym-evaluate-m7b \
   --checkpoint path/to/checkpoint \
   --split development \
+  --option engage \
   --output /tmp/snowgym-m7b-development.json
 ```
 
@@ -145,6 +146,9 @@ grounds a deterministic valid alternative at every state without replacing
 the tracker’s intended objective; the initializer condition runs the migrated
 accepted policy. Qualification mode consumes exactly 100 untouched seeds per
 mission and emits `snowgym.m7b-evaluation.v0` for the strict qualifier.
+Development may repeat `--option` to evaluate only the missions trained so
+far. Qualification rejects every subset and always evaluates all eight frozen
+missions.
 
 `--ppo-warm-start` may transfer a checkpoint into the next option in the frozen
 training order. A new option starts its own preallocated 10,000-seed range and
