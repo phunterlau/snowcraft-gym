@@ -26,6 +26,7 @@ from snowgym_training.ppo_collect import SeedSchedule
 from snowgym_training.options.causal_fork import run_causal_fork
 from snowgym_training.options.evaluate import resolve_evaluation_options
 from snowgym_training.options.interventions import compose_intervention_action
+from snowgym_training.options.gradient_diagnostics import write_csv
 from snowgym_training.options.recovery_report import audit_artifact_manifest
 from snowgym_training.trajectory import json_digest
 
@@ -258,6 +259,12 @@ def test_engage_intervention_changes_only_the_selected_action_channel() -> None:
     anchored = compose_intervention_action("goal-anchor", learner, teacher, goal)
     assert anchored["target"].tolist()[0][0] == pytest.approx([0.4, -0.4])
     assert anchored["target"].tolist()[0][1] == pytest.approx([0.3, 0.4])
+
+
+def test_gradient_diagnostic_csv_uses_repository_line_endings(tmp_path: Path) -> None:
+    destination = tmp_path / "diagnostic.csv"
+    write_csv(destination, [{"component": "actor", "norm": 1.0}])
+    assert destination.read_bytes() == b"component,norm\nactor,1.0\n"
 
 
 def test_archived_failed_engage_evidence_passes_digest_audit() -> None:

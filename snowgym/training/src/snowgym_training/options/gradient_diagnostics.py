@@ -338,7 +338,7 @@ def group_norm(
 
 def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
     stream = io.StringIO()
-    writer = csv.DictWriter(stream, fieldnames=list(rows[0]))
+    writer = csv.DictWriter(stream, fieldnames=list(rows[0]), lineterminator="\n")
     writer.writeheader()
     writer.writerows(rows)
     path.write_text(stream.getvalue(), encoding="utf-8")
