@@ -261,7 +261,7 @@ class HybridActorCritic(nn.Module):
         self.power_log_std = nn.Parameter(
             torch.full((1,), float(initial_power_log_std))
         )
-        if model_config.physical_role_state_conditioned:
+        if model_config.physical_role_state_conditioned or model_config.plan_ppo_residuals:
             self.role_aware_critic = RoleAwareCentralCritic(model_config)
         else:
             self.value_head = nn.Linear(model_config.actor_hidden, 1)

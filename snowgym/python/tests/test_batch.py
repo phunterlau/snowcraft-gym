@@ -89,6 +89,30 @@ def test_batch_scripted_step_uses_native_blue_policy() -> None:
         assert all(result["accepted"] for result in infos[0]["actionResults"])
 
 
+def test_batch_joint_step_controls_both_teams_symmetrically() -> None:
+    with SnowGymBatchClient() as client:
+        assert "stepJoint" in client.capabilities["operations"]
+        environment = SnowGymBatchEnv(2, client=client, observation_version=3)
+        observation, _ = environment.reset([19, 19], [scenario(), scenario()])
+        assert observation["allies"].shape == (2, 10, 21)
+
+        observation, rewards, terminated, truncated, infos = environment.step_joint(
+            noop_actions(2), noop_actions(2)
+        )
+
+        assert observation["tick"].tolist() == [[6], [6]]
+        assert rewards.tolist() == [0.0, 0.0]
+        assert not terminated.any()
+        assert not truncated.any()
+        assert infos[0]["stateHash"] == infos[1]["stateHash"]
+        assert all(
+            result["accepted"]
+            for info in infos
+            for team_results in info["actionResults"].values()
+            for result in team_results
+        )
+
+
 def test_batch_plan_tensors_are_host_owned_and_follow_world_ticks() -> None:
     with SnowGymBatchClient() as client:
         assert "activatePlan" in client.capabilities["operations"]
@@ -135,3 +159,19 @@ def test_batch_plan_tensors_are_host_owned_and_follow_world_ticks() -> None:
         advanced, metadata = environment.plan_observations()
         assert [body["tick"] for body in metadata] == [6, 6]
         np.testing.assert_allclose(advanced["plan_groups"][:, 0, 37], 1 / 300)
+
+        reset, _ = environment.reset_indices([1], [44], [scenario()])
+        assert reset["tick"].tolist() == [[0]]
+        reactivated = environment.activate_plan_indices(
+            [1], ["plan-replacement"], [one_group_plan()]
+        )
+        assert [body["planId"] for body in reactivated] == ["plan-replacement"]
+        selected, selected_metadata = environment.plan_observations([1])
+        assert selected["plan_groups"].shape == (1, 3, 38)
+        assert selected["plan_unit_roles"].shape == (1, 10, 3)
+        assert [body["tick"] for body in selected_metadata] == [0]
+        _, all_metadata = environment.plan_observations()
+        assert [(body["planId"], body["tick"]) for body in all_metadata] == [
+            ("plan-left", 6),
+            ("plan-replacement", 0),
+        ]

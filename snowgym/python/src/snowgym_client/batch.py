@@ -194,18 +194,11 @@ class SnowGymBatchEnv:
             state_hash = self.state_hashes[index]
             if raw is None or state_hash is None:
                 raise RuntimeError("reset() must initialize every batch slot before step()")
-            action: GymAction = {
-                "action_type": np.asarray(actions["action_type"][index]),
-                "target": np.asarray(actions["target"][index], dtype=np.float32),
-                "power": np.asarray(actions["power"][index], dtype=np.float32),
-            }
-            if not self.action_space.contains(action):
-                raise ValueError(f"batch action for slot {index} is outside action_space")
             items.append(
                 {
                     "worldId": world_id,
                     "body": {
-                        "action": encode_action(action, raw, self.max_team_units),
+                        "action": self._batch_action(actions, index, raw),
                         "expectedStateHash": state_hash,
                         "idempotencyKey": f"batch-{self._step_index}-{world_id}",
                     },
@@ -254,15 +247,72 @@ class SnowGymBatchEnv:
             [payload["info"] for payload in payloads],
         )
 
+    def step_joint(
+        self,
+        blue_actions: dict[str, np.ndarray],
+        red_actions: dict[str, np.ndarray],
+    ) -> tuple[
+        dict[str, np.ndarray],
+        np.ndarray,
+        np.ndarray,
+        np.ndarray,
+        list[dict[str, Any]],
+    ]:
+        """Advance simultaneous explicit teams in every persistent world."""
+        self._step_index += 1
+        items = []
+        for index, world_id in enumerate(self.world_ids):
+            raw = self.raw_observations[index]
+            state_hash = self.state_hashes[index]
+            if raw is None or state_hash is None:
+                raise RuntimeError("reset() must initialize every batch slot before step_joint()")
+            red_raw = {**raw, "allies": raw["enemies"], "enemies": raw["allies"]}
+            blue = self._batch_action(blue_actions, index, raw)
+            red = self._batch_action(red_actions, index, red_raw)
+            items.append(
+                {
+                    "worldId": world_id,
+                    "body": {
+                        "actions": {"blue": blue, "red": red},
+                        "expectedStateHash": state_hash,
+                        "idempotencyKey": f"batch-joint-{self._step_index}-{world_id}",
+                    },
+                }
+            )
+        payloads = self._consume_joint_results(self.client.request("stepJoint", items))
+        return (
+            self._stack_observations(),
+            np.asarray([payload["rewards"]["blue"] for payload in payloads], dtype=np.float32),
+            np.asarray([payload["terminations"]["blue"] for payload in payloads], dtype=np.bool_),
+            np.asarray([payload["truncations"]["blue"] for payload in payloads], dtype=np.bool_),
+            [payload["info"] for payload in payloads],
+        )
+
     def activate_plans(
         self, plan_ids: list[str], plans: list[dict[str, Any]]
     ) -> list[dict[str, Any]]:
         """Atomically ground one symbolic plan in every initialized world."""
-        if len(plan_ids) != self.batch_size or len(plans) != self.batch_size:
-            raise ValueError("plan_ids/plans must match batch_size")
+        return self.activate_plan_indices(
+            list(range(self.batch_size)), plan_ids, plans
+        )
+
+    def activate_plan_indices(
+        self,
+        indices: list[int],
+        plan_ids: list[str],
+        plans: list[dict[str, Any]],
+    ) -> list[dict[str, Any]]:
+        """Activate plans only in selected worlds, preserving all other episodes."""
+        if len(indices) != len(plan_ids) or len(indices) != len(plans):
+            raise ValueError("selective plan activation inputs must have equal length")
+        if len(set(indices)) != len(indices) or any(
+            index < 0 or index >= self.batch_size for index in indices
+        ):
+            raise ValueError("selective plan activation indices are invalid")
         self._plan_activation_index += 1
         items = []
-        for index, world_id in enumerate(self.world_ids):
+        for index, plan_id, plan in zip(indices, plan_ids, plans, strict=True):
+            world_id = self.world_ids[index]
             state_hash = self.state_hashes[index]
             if state_hash is None:
                 raise RuntimeError("reset() must initialize every batch slot before activate_plans()")
@@ -270,8 +320,8 @@ class SnowGymBatchEnv:
                 {
                     "worldId": world_id,
                     "body": {
-                        "planId": plan_ids[index],
-                        "plan": plans[index],
+                        "planId": plan_id,
+                        "plan": plan,
                         "expectedStateHash": state_hash,
                         "idempotencyKey": (
                             f"batch-plan-{self._plan_activation_index}-{world_id}"
@@ -279,25 +329,36 @@ class SnowGymBatchEnv:
                     },
                 }
             )
-        return self._plan_bodies(self.client.request("activatePlan", items))
+        return self._plan_bodies(
+            self.client.request("activatePlan", items), indices=indices
+        )
 
     def plan_observations(
         self,
+        indices: list[int] | None = None,
     ) -> tuple[dict[str, np.ndarray], list[dict[str, Any]]]:
         """Read current host-resolved plan tensors without advancing any world."""
-        items = [{"worldId": world_id} for world_id in self.world_ids]
-        bodies = self._plan_bodies(self.client.request("planObservation", items))
+        selected = indices if indices is not None else list(range(self.batch_size))
+        if len(set(selected)) != len(selected) or any(
+            index < 0 or index >= self.batch_size for index in selected
+        ):
+            raise ValueError("selective plan observation indices are invalid")
+        items = [{"worldId": self.world_ids[index]} for index in selected]
+        bodies = self._plan_bodies(
+            self.client.request("planObservation", items), indices=selected
+        )
+        count = len(selected)
         tensors = {
             "plan_groups": np.asarray(
                 [body["planGroups"] for body in bodies], dtype=np.float32
-            ).reshape(self.batch_size, PLAN_GROUP_SLOTS, PLAN_FEATURES_PER_GROUP),
+            ).reshape(count, PLAN_GROUP_SLOTS, PLAN_FEATURES_PER_GROUP),
             "plan_group_mask": np.asarray(
                 [body["planGroupMask"] for body in bodies], dtype=np.int8
             ),
-            "plan_unit_roles": self._plan_unit_roles(bodies),
+            "plan_unit_roles": self._plan_unit_roles(bodies, selected),
             "plan_role_state": np.asarray(
                 [body["planRoleState"] for body in bodies], dtype=np.float32
-            ).reshape(self.batch_size, PLAN_GROUP_SLOTS, PLAN_ROLE_STATE_FEATURES),
+            ).reshape(count, PLAN_GROUP_SLOTS, PLAN_ROLE_STATE_FEATURES),
             "mission_progress": np.asarray(
                 [body["missionProgress"] for body in bodies], dtype=np.float32
             ),
@@ -367,13 +428,17 @@ class SnowGymBatchEnv:
             actions.append(action)
         return tensors, actions, bodies
 
-    def _plan_unit_roles(self, bodies: list[dict[str, Any]]) -> np.ndarray:
+    def _plan_unit_roles(
+        self, bodies: list[dict[str, Any]], indices: list[int] | None = None
+    ) -> np.ndarray:
+        selected = indices if indices is not None else list(range(self.batch_size))
         roles = np.zeros(
-            (self.batch_size, self.max_team_units, len(PLAN_ROLES)), dtype=np.int8
+            (len(selected), self.max_team_units, len(PLAN_ROLES)), dtype=np.int8
         )
-        for batch_index, (body, raw) in enumerate(
-            zip(bodies, self.raw_observations, strict=True)
+        for batch_index, (body, index) in enumerate(
+            zip(bodies, selected, strict=True)
         ):
+            raw = self.raw_observations[index]
             if raw is None or not isinstance(raw.get("allies"), list):
                 raise RuntimeError("batch plan role encoding requires a raw observation")
             slots = {
@@ -449,14 +514,17 @@ class SnowGymBatchEnv:
             raise BatchOperationError("one or more batch worlds failed", results)
         return payloads
 
-    def _plan_bodies(self, results: list[dict[str, Any]]) -> list[dict[str, Any]]:
-        if len(results) != self.batch_size:
+    def _plan_bodies(
+        self, results: list[dict[str, Any]], indices: list[int] | None = None
+    ) -> list[dict[str, Any]]:
+        selected = indices if indices is not None else list(range(self.batch_size))
+        if len(results) != len(selected):
             raise RuntimeError("batch plan result count mismatch")
         failures = [result for result in results if result.get("status") != 200]
         if failures:
             raise BatchOperationError("one or more batch plan operations failed", results)
         bodies: list[dict[str, Any]] = []
-        for index, result in enumerate(results):
+        for index, result in zip(selected, results, strict=True):
             body = result.get("body")
             if not isinstance(body, dict):
                 raise RuntimeError("batch plan payload is missing its body")
@@ -513,6 +581,50 @@ class SnowGymBatchEnv:
                 raise RuntimeError("batch missionProgress tensor is invalid")
             bodies.append(body)
         return bodies
+
+    def _batch_action(
+        self, actions: dict[str, np.ndarray], index: int, raw: dict[str, Any]
+    ) -> dict[str, Any]:
+        action: GymAction = {
+            "action_type": np.asarray(actions["action_type"][index]),
+            "target": np.asarray(actions["target"][index], dtype=np.float32),
+            "power": np.asarray(actions["power"][index], dtype=np.float32),
+        }
+        if not self.action_space.contains(action):
+            raise ValueError(f"batch action for slot {index} is outside action_space")
+        return encode_action(action, raw, self.max_team_units)
+
+    def _consume_joint_results(
+        self, results: list[dict[str, Any]]
+    ) -> list[dict[str, Any]]:
+        if len(results) != self.batch_size:
+            raise RuntimeError("batch joint result count mismatch")
+        failures = [result for result in results if result.get("status") != 200]
+        payloads: list[dict[str, Any]] = []
+        for index, result in enumerate(results):
+            body = result.get("body")
+            if result.get("status") != 200 or not isinstance(body, dict):
+                continue
+            observations = body.get("observations")
+            info = body.get("info")
+            if not isinstance(observations, dict) or not isinstance(info, dict):
+                raise RuntimeError("batch joint payload is missing observations/info")
+            raw = observations.get("blue")
+            state_hash = info.get("stateHash")
+            if not isinstance(raw, dict) or not isinstance(state_hash, str):
+                raise RuntimeError("batch joint payload is missing blue state")
+            self.raw_observations[index] = raw
+            self.state_hashes[index] = state_hash
+            self._observations[index] = encode_observation(
+                raw,
+                self.max_team_units,
+                include_unit_masks=True,
+                observation_version=self.observation_version,
+            )
+            payloads.append(body)
+        if failures:
+            raise BatchOperationError("one or more batch joint worlds failed", results)
+        return payloads
 
     def _stack_observations(
         self, indices: list[int] | None = None

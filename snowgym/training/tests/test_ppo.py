@@ -573,10 +573,18 @@ def test_ppo_checkpoint_resume_matches_uninterrupted_updates(tmp_path) -> None:
         seed_schedule={"minimum": 10_000, "maximum": 10_099, "nextSeed": 10_004},
         collector_config={"gateId": "test", "worlds": 2, "rolloutSteps": 2, "rewardMode": "canonical"},
         initialization={"type": "random"},
+        plan_schedule={
+            "format": "snowgym.plan-schedule.v0",
+            "digest": "sha256:test-plans",
+            "prefix": "fixed",
+            "length": 20,
+            "nextIndex": 4,
+        },
     )
     assert metadata["updateIndex"] == 1
     assert metadata["environmentSteps"] == 4
     assert metadata["seedSchedule"]["nextSeed"] == 10_004
+    assert metadata["planSchedule"]["nextIndex"] == 4
 
     torch.manual_seed(999)
     resumed = HybridActorCritic(ModelConfig(16, 12, 24))
@@ -591,6 +599,7 @@ def test_ppo_checkpoint_resume_matches_uninterrupted_updates(tmp_path) -> None:
         collector_config={"gateId": "test", "worlds": 2, "rolloutSteps": 2, "rewardMode": "canonical"},
     )
     assert restored["checkpointDigest"] == metadata["checkpointDigest"]
+    assert restored["planSchedule"] == metadata["planSchedule"]
     uninterrupted_metrics = ppo_update(
         uninterrupted,
         uninterrupted_optimizer,

@@ -742,6 +742,16 @@ matches uninterrupted training exactly across a save/restore boundary. This is
 rollout-boundary optimizer and sampling resume; simulator worlds intentionally
 restart at each collection boundary.
 
+Plan-aware collection uses `collect_plan_rollout` with observation v3. It
+activates a fixed plan after every full or selective reset, reads fresh
+host-resolved plan, role, and mission tensors before every decision, and keeps
+commander scheduling disabled. `PlanSchedule` assigns immutable plan IDs from a
+bounded sequence and records its content digest and cursor in the PPO
+checkpoint, so an interrupted run cannot silently reorder or replace plans.
+The batch adapter also exposes symmetric `step_joint` for later two-policy
+training while the fixed-plan collector retains the configured server-side Red
+controller.
+
 The frozen `ppo_curriculum_v0.json` keeps training ranges disjoint from eight
 evaluation seeds per gate and sets thresholds before qualifying runs. Its order
 is 1v1 random, 1v1 easy scripted, 3v3 random, 3v3 easy scripted, 3v3 terrain on

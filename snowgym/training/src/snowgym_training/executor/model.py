@@ -8,6 +8,7 @@ from typing import Any
 
 import torch
 from torch import Tensor, nn
+from torch.nn import functional as F
 
 from snowgym_client.encoding import ACTION_TYPE_COUNT
 
@@ -50,6 +51,7 @@ class ModelConfig:
     plan_directive_experts: bool = False
     observation_version: int = 2
     physical_role_state_conditioned: bool = False
+    plan_ppo_residuals: bool = False
 
     def as_dict(self) -> dict[str, int | bool]:
         value: dict[str, int | bool] = {
@@ -85,6 +87,8 @@ class ModelConfig:
             value["observation_version"] = self.observation_version
         if self.physical_role_state_conditioned:
             value["physical_role_state_conditioned"] = True
+        if self.plan_ppo_residuals:
+            value["plan_ppo_residuals"] = True
         return value
 
 
@@ -97,9 +101,17 @@ class EntityPolicy(nn.Module):
         embedding = config.entity_embedding
         unit_features = 21 if config.observation_version == 3 else 10
         projectile_features = 9 if config.observation_version == 3 else 8
-        self.ally_encoder = entity_encoder(unit_features, config)
-        self.enemy_encoder = entity_encoder(unit_features, config)
-        self.projectile_encoder = entity_encoder(projectile_features, config)
+        self.ally_encoder = entity_encoder(
+            unit_features, config, legacy_features=10 if config.observation_version == 3 else None
+        )
+        self.enemy_encoder = entity_encoder(
+            unit_features, config, legacy_features=10 if config.observation_version == 3 else None
+        )
+        self.projectile_encoder = entity_encoder(
+            projectile_features,
+            config,
+            legacy_features=8 if config.observation_version == 3 else None,
+        )
         self.obstacle_encoder = entity_encoder(9, config)
         global_features = embedding * 8 + 3
         self.plan_conditioned = config.plan_conditioned
@@ -201,6 +213,17 @@ class EntityPolicy(nn.Module):
                 self.plan_role_target_adapter = zero_output_adapter(
                     target_adapter_features, config.actor_hidden, config.actor_hidden
                 )
+        if self.config.plan_ppo_residuals:
+            plan_ppo_features = (
+                config.actor_hidden * 2
+                + embedding
+                + PLAN_GROUP_SLOTS
+                + PLAN_FEATURE_VECTOR_SIZE
+                + 40
+            )
+            self.plan_ppo_residual = zero_output_adapter(
+                plan_ppo_features, config.actor_hidden, ACTION_TYPE_COUNT + 5
+            )
 
     def forward(self, observation: dict[str, Tensor]) -> dict[str, Tensor]:
         action_hidden, target_hidden, action_mask = self.features(observation)
@@ -208,6 +231,25 @@ class EntityPolicy(nn.Module):
         logits = self.action_head(action_hidden).masked_fill(
             ~action_mask, torch.finfo(action_hidden.dtype).min
         )
+        plan_ppo_residual = None
+        if self.config.plan_ppo_residuals:
+            plan_embedding = self.encode_plan(observation, action_hidden.shape[0])
+            plan_ppo_input = torch.cat(
+                [
+                    action_hidden.detach(),
+                    target_hidden.detach(),
+                    plan_embedding[:, None, :].expand(-1, action_hidden.shape[1], -1),
+                    self.unit_plan_roles(observation, action_hidden.shape[:2]),
+                    self.unit_plan_directives(observation, action_hidden.shape[:2]),
+                    self.unit_physical_role_state(observation, action_hidden.shape[:2]),
+                ],
+                dim=-1,
+            )
+            plan_ppo_residual = self.plan_ppo_residual(plan_ppo_input)
+            logits = logits + plan_ppo_residual[..., :ACTION_TYPE_COUNT].masked_fill(
+                ~action_mask, 0
+            )
+            power_raw = power_raw + plan_ppo_residual[..., -1]
         if self.plan_action_adapter_enabled:
             plan_embedding = self.encode_plan(observation, action_hidden.shape[0])
             expanded_plan = plan_embedding[:, None, :].expand(-1, action_hidden.shape[1], -1)
@@ -268,6 +310,9 @@ class EntityPolicy(nn.Module):
                 if self.nearest_enemy_throw_target
                 else self.throw_target_head(target_hidden)
             )
+            if plan_ppo_residual is not None:
+                move_target = move_target + plan_ppo_residual[..., 4:6]
+                throw_target = throw_target + plan_ppo_residual[..., 6:8]
             target_raw_by_action = torch.stack(
                 [
                     zeros,
@@ -463,9 +508,34 @@ class EntityPolicy(nn.Module):
         return (outputs * mission.unsqueeze(-1)).sum(dim=-2)
 
 
-def entity_encoder(features: int, config: ModelConfig) -> nn.Sequential:
+class SplitInputLinear(nn.Linear):
+    """Keep legacy-column arithmetic identical when appended columns are zero."""
+
+    def __init__(self, inputs: int, outputs: int, split_at: int) -> None:
+        super().__init__(inputs, outputs)
+        self.split_at = split_at
+
+    def forward(self, values: Tensor) -> Tensor:
+        legacy = F.linear(
+            values[..., : self.split_at],
+            self.weight[:, : self.split_at],
+            self.bias,
+        )
+        extension = F.linear(
+            values[..., self.split_at :],
+            self.weight[:, self.split_at :],
+            None,
+        )
+        return legacy + extension
+
+
+def entity_encoder(
+    features: int, config: ModelConfig, *, legacy_features: int | None = None
+) -> nn.Sequential:
     return nn.Sequential(
-        nn.Linear(features, config.entity_hidden),
+        SplitInputLinear(features, config.entity_hidden, legacy_features)
+        if legacy_features is not None
+        else nn.Linear(features, config.entity_hidden),
         nn.ReLU(),
         nn.Linear(config.entity_hidden, config.entity_embedding),
         nn.ReLU(),
@@ -540,6 +610,7 @@ def model_config(value: Any) -> ModelConfig:
     optional = {
         "observation_version",
         "physical_role_state_conditioned",
+        "plan_ppo_residuals",
         "pairwise_enemy_attention",
         "action_conditioned_targets",
         "last_enemy_move_target",
@@ -621,6 +692,18 @@ def model_config(value: Any) -> ModelConfig:
     ):
         raise ValueError(
             "architecture physical_role_state_conditioned requires plan role and directive conditioning"
+        )
+    if value.get("plan_ppo_residuals", False) and not (
+        value.get("observation_version", 2) == 3
+        and value.get("plan_conditioned", False)
+        and value.get("plan_target_only", False)
+        and value.get("separate_target_actor", False)
+        and value.get("action_conditioned_targets", False)
+        and not value.get("nearest_enemy_throw_target", False)
+    ):
+        raise ValueError(
+            "architecture plan_ppo_residuals requires v3 learned move/throw heads "
+            "and the plan target-only separate-target architecture"
         )
     if (
         value.get("separate_target_actor", False)

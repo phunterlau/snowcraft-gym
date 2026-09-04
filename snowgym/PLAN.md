@@ -688,21 +688,21 @@ persistent controller state, incomplete physical role summaries, roster-sized
 PPO updates, and a terminal objective that does not define mission obedience.
 The accepted implementation order is:
 
-- [ ] Register `SnowGym/Squad-v3` with actuator-complete unit/projectile and
+- [x] Register `SnowGym/Squad-v3` with actuator-complete unit/projectile and
       decision-horizon fields while preserving v0-v2 tensor contracts.
-- [ ] Introduce `snowgym.state.v2` over the complete public state and retain a
+- [x] Introduce `snowgym.state.v2` over the complete public state and retain a
       v1 verifier for committed replay artifacts.
-- [ ] Keep the `[3,38]` command tensor stable; add a masked `[3,20]` physical
+- [x] Keep the `[3,38]` command tensor stable; add a masked `[3,20]` physical
       role-state tensor and freeze current-position/region anchors at plan
       activation while entity-backed objectives remain late-bound.
-- [ ] Replace the training default's squad-product PPO clip with masked
+- [x] Replace the training default's squad-product PPO clip with masked
       per-unit clipping averaged inside each decision; normalize entropy and
       health shaping by active/initial roster and derive discounting from
       physical-time half-lives.
-- [ ] Migrate the accepted target-only initializer by zero-extending its unit
+- [x] Migrate the accepted target-only initializer by zero-extending its unit
       encoder, add shared zero-output plan residuals, and train a separate
       role-aware centralized critic.
-- [ ] Extend the persistent batch client with the existing simultaneous
+- [x] Extend the persistent batch client with the existing simultaneous
       `stepJoint` contract and collect authoritative plan/role tensors after
       every reset and before every policy decision.
 
@@ -710,6 +710,19 @@ M7a exit: v3 state/action transitions and v2 hashes are deterministic, legacy
 replays still verify, migrated zero-extension preserves legacy policy outputs,
 1/3/5/10-unit PPO statistics are roster-stable, and interrupted plan-aware
 collection resumes exactly.
+
+M7a acceptance (2026-09-03): `SnowGym/Squad-v3` exposes complete public
+controller state and decision-horizon data through `snowgym.state.v2`; legacy
+v1 replays remain independently verifiable. Stable assignments, activation
+anchors, `[3,20]` physical role summaries, and mission progress feed a shared
+fighter residual and an independent centralized critic. PPO stores and clips
+masked per-unit likelihood ratios, retaining squad products only as a
+diagnostic ablation. The persistent batch client supports `stepJoint`,
+selective plan activation, and fresh plan/role reads. Its immutable plan
+schedule binds content and cursor into exact-resume checkpoints. The accepted
+target-only policy migrates through a split first-layer seam, so zero-valued v3
+extensions reproduce action logits, learned move/throw targets, and power
+exactly before the zero-output plan residual is trained.
 
 #### M7b — fixed-plan option PPO
 

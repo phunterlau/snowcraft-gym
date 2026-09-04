@@ -31,6 +31,7 @@ def save_ppo_checkpoint(
     seed_schedule: dict[str, int],
     collector_config: dict[str, Any],
     initialization: dict[str, Any],
+    plan_schedule: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     destination = Path(path)
     if destination.exists():
@@ -45,6 +46,8 @@ def save_ppo_checkpoint(
     validate_seed_schedule(seed_schedule)
     validate_collector_config(collector_config)
     validate_initialization(initialization)
+    if plan_schedule is not None:
+        validate_plan_schedule(plan_schedule)
     state = {
         "model": model.state_dict(),
         "optimizer": optimizer.state_dict(),
@@ -64,6 +67,8 @@ def save_ppo_checkpoint(
         "initialization": dict(initialization),
         "stateDigest": semantic_state_digest(state),
     }
+    if plan_schedule is not None:
+        metadata["planSchedule"] = dict(plan_schedule)
     metadata["checkpointDigest"] = json_digest(metadata)
     destination.mkdir(parents=True)
     torch.save(state, destination / "state.pt")
@@ -146,8 +151,16 @@ def validate_ppo_checkpoint_metadata(value: Any) -> None:
         "stateDigest",
         "checkpointDigest",
     }
-    if not isinstance(value, dict) or set(value) != required:
-        raise ValueError(f"PPO checkpoint metadata must contain exactly {sorted(required)}")
+    optional = {"planSchedule"}
+    if (
+        not isinstance(value, dict)
+        or not required <= set(value)
+        or set(value) - required - optional
+    ):
+        raise ValueError(
+            f"PPO checkpoint metadata must contain {sorted(required)} "
+            "and optionally planSchedule"
+        )
     if value["format"] != PPO_CHECKPOINT_FORMAT:
         raise ValueError(f"PPO checkpoint format must be {PPO_CHECKPOINT_FORMAT}")
     for name in ("gitCommit", "curriculumDigest", "stateDigest"):
@@ -161,6 +174,8 @@ def validate_ppo_checkpoint_metadata(value: Any) -> None:
     validate_seed_schedule(value["seedSchedule"])
     validate_collector_config(value["collectorConfig"])
     validate_initialization(value["initialization"])
+    if "planSchedule" in value:
+        validate_plan_schedule(value["planSchedule"])
     source = {name: item for name, item in value.items() if name != "checkpointDigest"}
     if value["checkpointDigest"] != json_digest(source):
         raise ValueError("PPO checkpoint metadata digest mismatch")
@@ -246,3 +261,19 @@ def validate_initialization(value: Any) -> None:
         or value["updateIndex"] < 0
     ):
         raise ValueError("PPO initialization updateIndex must be non-negative")
+
+
+def validate_plan_schedule(value: Any) -> None:
+    required = {"format", "digest", "prefix", "length", "nextIndex"}
+    if not isinstance(value, dict) or set(value) != required:
+        raise ValueError(f"PPO plan schedule must contain exactly {sorted(required)}")
+    if value["format"] != "snowgym.plan-schedule.v0":
+        raise ValueError("PPO plan schedule format is invalid")
+    for name in ("digest", "prefix"):
+        if not isinstance(value[name], str) or not value[name]:
+            raise ValueError(f"PPO plan schedule {name} must be non-empty")
+    for name in ("length", "nextIndex"):
+        if not isinstance(value[name], int) or isinstance(value[name], bool):
+            raise ValueError(f"PPO plan schedule {name} must be an integer")
+    if value["length"] <= 0 or not 0 <= value["nextIndex"] <= value["length"]:
+        raise ValueError("PPO plan schedule cursor is outside its range")

@@ -94,6 +94,7 @@ compatible no-op behavior.
 | `plan_unit_directive_conditioned` | Supplies the full resolved directive for each unit's group |
 | `plan_directive_experts` | Routes residuals through separate engage, advance, hold, withdraw, and support experts |
 | `physical_role_state_conditioned` | Adds the owning and supported role rows to each fighter residual and selects an independent centralized role-aware critic |
+| `plan_ppo_residuals` | Adds one zero-output shared residual for action logits, learned move/throw targets, and power; also selects the independent role-aware critic |
 
 The zero-initialized adapters preserve inherited checkpoint behavior before a
 new training step. Invalid option combinations fail during configuration
@@ -102,6 +103,14 @@ loading rather than silently changing checkpoint semantics.
 The role-aware centralized critic owns separate ally, enemy, projectile, and
 obstacle encoders. It pools global entities, symbolic plan rows, all physical
 role rows, and mission progress; it does not reuse the actor target pathway.
+
+M7 plan PPO starts from the accepted target-only checkpoint. Its legacy entity
+columns are copied into v3 encoders, appended columns are zero initialized, and
+a split first-layer calculation preserves inherited policy outputs exactly when
+the new fields are zero. Stage 1 trains only the shared residual and critic;
+stage 2 opens action, target, and power heads at one tenth of the new-module
+learning rate; stage 3 opens final entity-encoder layers only after both
+physical and plan gates pass.
 
 ## Current checkpoints
 
