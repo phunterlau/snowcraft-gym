@@ -28,6 +28,8 @@ from snowgym_training.options.evaluate import resolve_evaluation_options
 from snowgym_training.options.interventions import compose_intervention_action
 from snowgym_training.options.gradient_diagnostics import write_csv
 from snowgym_training.options.recovery_report import audit_artifact_manifest
+from snowgym_training.options.bootstrap import engage_bootstrap_report
+from snowgym_training.options.r1 import load_r1_config
 from snowgym_training.trajectory import json_digest
 
 
@@ -265,6 +267,39 @@ def test_gradient_diagnostic_csv_uses_repository_line_endings(tmp_path: Path) ->
     destination = tmp_path / "diagnostic.csv"
     write_csv(destination, [{"component": "actor", "norm": 1.0}])
     assert destination.read_bytes() == b"component,norm\nactor,1.0\n"
+
+
+def test_frozen_engage_r1_config_and_bootstrap_gate() -> None:
+    config = load_r1_config()
+    assert config["intervention"] == "successful-teacher-bc-reservoir"
+    assert config["reservoirSeedPartition"] == "training"
+    conditions = {}
+    for name, successes in {
+        "correct": 24, "shuffled": 8, "initializer": 0
+    }.items():
+        conditions[name] = [
+            {
+                "seed": 200_000 + index,
+                "success": index < successes,
+                "progress": float(index < successes),
+                "physicalWin": False,
+                "rejectedActions": 0,
+                "totalActions": 5,
+                "firstContactDecision": 10 if name == "correct" and index < 36 else None,
+                "firstHitDecision": 20 if name == "correct" and index < 24 else None,
+            }
+            for index in range(40)
+        ]
+    value = {
+        "format": "snowgym.m7b-development-evaluation.v0",
+        "checkpointDigest": "sha256:" + "0" * 64,
+        "evaluatedOptions": ["engage"],
+        "missions": {"engage": conditions},
+    }
+    value["evaluationDigest"] = json_digest(value)
+    report = engage_bootstrap_report(value)
+    assert report["passed"]
+    assert report["metrics"]["firstContactRate"] == 0.9
 
 
 def test_archived_failed_engage_evidence_passes_digest_audit() -> None:

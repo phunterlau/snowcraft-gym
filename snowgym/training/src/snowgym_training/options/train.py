@@ -38,6 +38,7 @@ from .collection import OptionEntry, OptionSchedule, collect_option_rollout
 from .environment import FixedPlanOptionBatchEnv
 from .plans import teacher_option_plan, teacher_option_scenario
 from .protocol import load_option_protocol
+from .reservoir import load_teacher_bc_reservoir
 
 OPTION_PPO_RUN_FORMAT = "snowgym.option-ppo-run.v0"
 OPTION_ORDER = (
@@ -70,6 +71,9 @@ def train_option_ppo(
     physical_gate_passed: bool = False,
     plan_gate_passed: bool = False,
     infrastructure_smoke: bool = False,
+    teacher_reservoir_path: str | Path | None = None,
+    teacher_reservoir_manifest: str | Path | None = None,
+    reservoir_bc_fraction: float = 0.5,
 ) -> dict[str, Any]:
     destination = Path(output)
     if destination.exists():
@@ -87,6 +91,8 @@ def train_option_ppo(
         raise ValueError("target_updates exceeds the frozen anchor schedule")
     if resume is not None and ppo_warm_start is not None:
         raise ValueError("exact resume and staged PPO transfer are mutually exclusive")
+    if teacher_reservoir_path is not None and option != "engage":
+        raise ValueError("the selected R1 teacher reservoir is Engage-only")
     protocol = load_option_protocol()
     protocol_digest = json_digest(protocol)
     seed_start = int(protocol["seeds"]["training"][0]) + OPTION_ORDER.index(option) * 10_000
@@ -116,6 +122,13 @@ def train_option_ppo(
         power_weight=0.5,
         throw_action_weight=5,
     )
+    teacher_reservoir = (
+        load_teacher_bc_reservoir(
+            teacher_reservoir_path, manifest_path=teacher_reservoir_manifest
+        )
+        if teacher_reservoir_path is not None
+        else None
+    )
     collector_config = {
         "gateId": f"m7b-{option}-stage{stage}",
         "worlds": worlds,
@@ -126,6 +139,13 @@ def train_option_ppo(
         "anchorTotalUpdates": anchor_total_updates,
         "protocolDigest": protocol_digest,
     }
+    if teacher_reservoir is not None:
+        collector_config.update(
+            {
+                "teacherReservoir": teacher_reservoir.metadata,
+                "reservoirBcFraction": reservoir_bc_fraction,
+            }
+        )
     initialization = {
         "type": "behavior-clone",
         "checkpointDigest": source_metadata["checkpointDigest"],
@@ -239,6 +259,8 @@ def train_option_ppo(
                 training_seed=training_seed,
                 update_index=update_index,
                 total_updates=anchor_total_updates,
+                teacher_reservoir=teacher_reservoir,
+                reservoir_bc_fraction=reservoir_bc_fraction,
             )
             environment_steps += worlds * rollout_steps
             updates.append(
@@ -290,6 +312,12 @@ def train_option_ppo(
             "architecture": architecture.as_dict(),
             "ppoConfig": asdict(config),
             "bcLossConfig": bc_config.as_dict(),
+            "bcTeacherReservoir": (
+                None if teacher_reservoir is None else teacher_reservoir.metadata
+            ),
+            "reservoirBcFraction": (
+                0.0 if teacher_reservoir is None else reservoir_bc_fraction
+            ),
             "discounting": discount_manifest(config, 10),
             "stage": stage,
             "learningRates": {
@@ -338,6 +366,9 @@ def main() -> None:
     parser.add_argument("--physical-gate-passed", action="store_true")
     parser.add_argument("--plan-gate-passed", action="store_true")
     parser.add_argument("--infrastructure-smoke", action="store_true")
+    parser.add_argument("--teacher-reservoir")
+    parser.add_argument("--teacher-reservoir-manifest")
+    parser.add_argument("--reservoir-bc-fraction", type=float, default=0.5)
     args = parser.parse_args()
     result = train_option_ppo(
         output=args.output,
@@ -354,6 +385,9 @@ def main() -> None:
         physical_gate_passed=args.physical_gate_passed,
         plan_gate_passed=args.plan_gate_passed,
         infrastructure_smoke=args.infrastructure_smoke,
+        teacher_reservoir_path=args.teacher_reservoir,
+        teacher_reservoir_manifest=args.teacher_reservoir_manifest,
+        reservoir_bc_fraction=args.reservoir_bc_fraction,
     )
     print(json.dumps(result, sort_keys=True))
 

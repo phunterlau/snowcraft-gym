@@ -25,6 +25,7 @@ from .environment import FixedPlanOptionBatchEnv
 from .plans import teacher_option_plan, teacher_option_scenario
 from .protocol import load_option_protocol
 from .train import DEFAULT_INITIALIZER, OPTION_ORDER
+from .interventions import contact_distance, require_raw, team_health
 
 CONDITIONS = ("correct", "shuffled", "initializer")
 SHUFFLED_OPTION = {
@@ -65,6 +66,15 @@ def evaluate_option_episode(
     rejected = 0
     total_actions = 0
     final_info: dict[str, Any] = {}
+    initial_raw = require_raw(base)
+    plan_body = base.plan_observations()[1][0]
+    assignment = next(
+        item for item in plan_body["assignments"] if item["role"] == spec.role
+    )
+    assigned = tuple(int(value) for value in assignment["unitIds"])
+    initial_enemy_health = team_health(initial_raw["enemies"])
+    first_contact: int | None = None
+    first_hit: int | None = None
     maximum_decisions = math.ceil(int(scenario["maxTicks"]) / 6)
     for decision in range(maximum_decisions):
         policy_observation = observation
@@ -93,6 +103,11 @@ def evaluate_option_episode(
             plan_tensors, _ = base.plan_observations()
             observation = merge_observations(physical, plan_tensors)
         final_info = infos[0]
+        raw = require_raw(base)
+        if first_contact is None and contact_distance(raw, assigned) <= 9.0:
+            first_contact = decision + 1
+        if first_hit is None and team_health(raw["enemies"]) < initial_enemy_health:
+            first_hit = decision + 1
         action_results = final_info.get("actionResults", [])
         rejected += sum(
             result.get("accepted") is False
@@ -116,6 +131,8 @@ def evaluate_option_episode(
         "physicalWin": final_info.get("winner") == "blue",
         "rejectedActions": rejected,
         "totalActions": total_actions,
+        "firstContactDecision": first_contact,
+        "firstHitDecision": first_hit,
     }
 
 

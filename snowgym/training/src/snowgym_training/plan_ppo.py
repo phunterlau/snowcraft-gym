@@ -20,6 +20,7 @@ from .ppo import (
     ratio_diagnostics,
     clip_separate_actor_critic_gradients,
 )
+from .options.reservoir import TeacherBcReservoir
 
 EXPANDABLE_V3_INPUTS = {
     "ally_encoder.0.weight",
@@ -123,6 +124,8 @@ def plan_ppo_update(
     training_seed: int,
     update_index: int,
     total_updates: int,
+    teacher_reservoir: TeacherBcReservoir | None = None,
+    reservoir_bc_fraction: float = 0.5,
 ) -> dict[str, Any]:
     """Apply PPO with the frozen M7b BC and initializer-KL anchors."""
     weights = plan_ppo_anchor_weights(update_index, total_updates)
@@ -134,6 +137,10 @@ def plan_ppo_update(
         raise ValueError("plan PPO teacher action fields are invalid")
     if any(value.shape[0] != flat["advantages"].shape[0] for value in flattened_teacher.values()):
         raise ValueError("plan PPO teacher actions do not align with rollout")
+    if teacher_reservoir is None:
+        reservoir_bc_fraction = 0.0
+    elif not 0 < reservoir_bc_fraction < 1:
+        raise ValueError("teacher reservoir BC fraction must be in (0,1)")
     advantages = flat["advantages"]
     normalized = (advantages - advantages.mean()) / advantages.std(
         unbiased=False
@@ -148,6 +155,8 @@ def plan_ppo_update(
         "bcAction": 0.0,
         "bcTarget": 0.0,
         "bcPower": 0.0,
+        "bcOnPolicy": 0.0,
+        "bcReservoir": 0.0,
         "initializerKl": 0.0,
     }
     seen = 0
@@ -159,6 +168,12 @@ def plan_ppo_update(
     critic_clipped = 0
     model.train()
     initializer.eval()
+    reservoir_cursor = 0
+    reservoir_permutation = None
+    if teacher_reservoir is not None:
+        reservoir_permutation = torch.randperm(
+            teacher_reservoir.size, generator=generator
+        )
     for _ in range(config.update_epochs):
         permutation = torch.randperm(sample_count, generator=generator)
         for start in range(0, sample_count, config.minibatch_size):
@@ -186,7 +201,33 @@ def plan_ppo_update(
             bc_losses = behavior_clone_loss(
                 prediction, teacher, observation, loss_config
             )
+            reservoir_losses = None
+            if teacher_reservoir is not None:
+                reservoir_indices, reservoir_cursor, reservoir_permutation = (
+                    take_reservoir_indices(
+                        teacher_reservoir.size,
+                        int(indices.numel()),
+                        reservoir_cursor,
+                        reservoir_permutation,
+                        generator,
+                    )
+                )
+                reservoir_observation, reservoir_teacher = teacher_reservoir.batch(
+                    reservoir_indices
+                )
+                reservoir_prediction = model(reservoir_observation)
+                reservoir_losses = behavior_clone_loss(
+                    reservoir_prediction,
+                    reservoir_teacher,
+                    reservoir_observation,
+                    loss_config,
+                )
             bc = bc_losses["total"]
+            if reservoir_losses is not None:
+                bc = (
+                    (1 - reservoir_bc_fraction) * bc
+                    + reservoir_bc_fraction * reservoir_losses["total"]
+                )
             with torch.no_grad():
                 initial_prediction = initializer(observation)
             initial_kl = initializer_policy_kl(
@@ -227,6 +268,12 @@ def plan_ppo_update(
                 "bcAction": bc_losses["action"],
                 "bcTarget": bc_losses["target"],
                 "bcPower": bc_losses["power"],
+                "bcOnPolicy": bc_losses["total"],
+                "bcReservoir": (
+                    reservoir_losses["total"]
+                    if reservoir_losses is not None
+                    else bc_losses["total"] * 0
+                ),
                 "initializerKl": initial_kl,
             }.items():
                 totals[name] += float(value.detach()) * count
@@ -247,6 +294,10 @@ def plan_ppo_update(
         "samples": sample_count,
         "minibatches": minibatches,
         "anchorWeights": weights,
+        "bcSampleMixture": {
+            "onPolicyFraction": 1 - reservoir_bc_fraction,
+            "teacherReservoirFraction": reservoir_bc_fraction,
+        },
         **{name: value / seen for name, value in totals.items()},
         "targetStd": model.target_log_std.detach().exp().tolist(),
         "powerStd": float(model.power_log_std.detach().exp()),
@@ -263,6 +314,33 @@ def plan_ppo_update(
         "criticClipFraction": critic_clipped / max(minibatches, 1),
         **diagnostics,
     }
+
+
+def take_reservoir_indices(
+    reservoir_size: int,
+    count: int,
+    cursor: int,
+    permutation: Tensor,
+    generator: torch.Generator,
+) -> tuple[Tensor, int, Tensor]:
+    """Take a deterministic sample stream, reshuffling only at full passes."""
+    if reservoir_size <= 0 or count <= 0 or permutation.shape != (reservoir_size,):
+        raise ValueError("teacher reservoir sampling state is invalid")
+    chunks: list[Tensor] = []
+    remaining = count
+    while remaining:
+        available = reservoir_size - cursor
+        take = min(remaining, available)
+        chunks.append(permutation[cursor : cursor + take])
+        cursor += take
+        remaining -= take
+        if cursor == reservoir_size and remaining:
+            permutation = torch.randperm(reservoir_size, generator=generator)
+            cursor = 0
+    if cursor == reservoir_size:
+        permutation = torch.randperm(reservoir_size, generator=generator)
+        cursor = 0
+    return torch.cat(chunks), cursor, permutation
 
 
 def target_only_plan_ppo_config(source: ModelConfig) -> ModelConfig:

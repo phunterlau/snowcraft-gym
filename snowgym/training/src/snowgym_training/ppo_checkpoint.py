@@ -234,7 +234,10 @@ def validate_seed_schedule(value: Any) -> None:
 
 def validate_collector_config(value: Any) -> None:
     required = {"gateId", "worlds", "rolloutSteps", "rewardMode"}
-    optional = {"option", "stage", "anchorTotalUpdates", "protocolDigest"}
+    optional = {
+        "option", "stage", "anchorTotalUpdates", "protocolDigest",
+        "teacherReservoir", "reservoirBcFraction",
+    }
     if (
         not isinstance(value, dict)
         or not required <= set(value)

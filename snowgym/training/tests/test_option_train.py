@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import math
+from pathlib import Path
 
 from snowgym_client.batch import SnowGymBatchClient
 from snowgym_training.checkpoint import load_checkpoint
@@ -16,6 +17,11 @@ from snowgym_training.ppo_checkpoint import load_ppo_checkpoint
 
 def test_option_ppo_smoke_and_exact_resume_match_uninterrupted(tmp_path) -> None:
     config = PPOConfig(update_epochs=1, minibatch_size=2)
+    training_root = Path(__file__).resolve().parents[1]
+    teacher_reservoir = (
+        training_root
+        / "runs/m7b_engage_failed_v0/diagnostics/teacher_states.npz"
+    )
     first = train_option_ppo(
         output=tmp_path / "first",
         option="engage",
@@ -27,6 +33,7 @@ def test_option_ppo_smoke_and_exact_resume_match_uninterrupted(tmp_path) -> None
         training_seed=93_001,
         git_commit="test",
         infrastructure_smoke=True,
+        teacher_reservoir_path=teacher_reservoir,
     )
     resumed = train_option_ppo(
         output=tmp_path / "resumed",
@@ -40,6 +47,7 @@ def test_option_ppo_smoke_and_exact_resume_match_uninterrupted(tmp_path) -> None
         resume=tmp_path / "first" / "checkpoint",
         git_commit="test",
         infrastructure_smoke=True,
+        teacher_reservoir_path=teacher_reservoir,
     )
     uninterrupted = train_option_ppo(
         output=tmp_path / "uninterrupted",
@@ -52,14 +60,21 @@ def test_option_ppo_smoke_and_exact_resume_match_uninterrupted(tmp_path) -> None
         training_seed=93_001,
         git_commit="test",
         infrastructure_smoke=True,
+        teacher_reservoir_path=teacher_reservoir,
     )
     assert first["format"] == OPTION_PPO_RUN_FORMAT
     assert first["mode"] == "infrastructure-smoke"
     assert sum(first["updates"][0]["actionCounts"].values()) == 10
     assert sum(first["updates"][0]["teacherActionCounts"].values()) == 10
     assert set(first["updates"][0]["metrics"]) >= {
-        "bcAction", "bcTarget", "bcPower", "targetStd", "powerStd"
+        "bcAction", "bcTarget", "bcPower", "bcOnPolicy", "bcReservoir",
+        "targetStd", "powerStd"
     }
+    assert first["updates"][0]["metrics"]["bcSampleMixture"] == {
+        "onPolicyFraction": 0.5,
+        "teacherReservoirFraction": 0.5,
+    }
+    assert first["bcTeacherReservoir"]["samples"] == 5496
     assert first["initialization"]["checkpointDigest"] == (
         "sha256:4119b9a3f8c0d3df69b704a8f3f813a1b38ab11ca56faffb4c4cebc2cb235133"
     )
@@ -88,7 +103,8 @@ def test_option_ppo_smoke_and_exact_resume_match_uninterrupted(tmp_path) -> None
             client=client,
         )
     assert set(episode) == {
-        "seed", "success", "progress", "physicalWin", "rejectedActions", "totalActions"
+        "seed", "success", "progress", "physicalWin", "rejectedActions",
+        "totalActions", "firstContactDecision", "firstHitDecision",
     }
     assert episode["rejectedActions"] == 0
     assert episode["totalActions"] > 0

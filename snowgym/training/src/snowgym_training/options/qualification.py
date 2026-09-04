@@ -145,8 +145,13 @@ def _records(value: Any, mission: str, condition: str) -> list[dict[str, Any]]:
     }
     if not isinstance(value, list) or len(value) != 100:
         raise ValueError(f"M7b {mission}/{condition} must contain 100 results")
+    optional = {"firstContactDecision", "firstHitDecision"}
     for row in value:
-        if not isinstance(row, dict) or set(row) != required:
+        if (
+            not isinstance(row, dict)
+            or not required <= set(row)
+            or set(row) - required - optional
+        ):
             raise ValueError(f"M7b {mission}/{condition} result fields are invalid")
         if not isinstance(row["seed"], int) or isinstance(row["seed"], bool):
             raise ValueError(f"M7b {mission}/{condition} seed is invalid")
@@ -161,6 +166,13 @@ def _records(value: Any, mission: str, condition: str) -> list[dict[str, Any]]:
         for key in ("rejectedActions", "totalActions"):
             if not isinstance(row[key], int) or isinstance(row[key], bool) or row[key] < 0:
                 raise ValueError(f"M7b {mission}/{condition} action count is invalid")
+        for key in optional & set(row):
+            if row[key] is not None and (
+                not isinstance(row[key], int)
+                or isinstance(row[key], bool)
+                or row[key] <= 0
+            ):
+                raise ValueError(f"M7b {mission}/{condition} {key} is invalid")
     return value
 
 

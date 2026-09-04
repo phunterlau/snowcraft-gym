@@ -1,0 +1,42 @@
+{
+  "format": "snowgym.engage-r1-config.v0",
+  "option": "engage",
+  "intervention": "successful-teacher-bc-reservoir",
+  "reservoirBcFraction": 0.5,
+  "reservoirSeedPartition": "training",
+  "reservoirSeedCount": 40,
+  "worlds": 8,
+  "rolloutSteps": 200,
+  "anchorTotalUpdates": 200,
+  "stage1TargetUpdates": 50,
+  "stage2TargetUpdates": 100,
+  "trainingSeed": 91001,
+  "ppoConfig": {
+    "gamma": 0.9976921765,
+    "gae_lambda": 0.9885140204,
+    "clip_ratio": 0.2,
+    "value_weight": 0.5,
+    "entropy_weight": 0.01,
+    "learning_rate": 0.0003,
+    "max_grad_norm": 0.5,
+    "update_epochs": 4,
+    "minibatch_size": 1600,
+    "target_kl": null,
+    "initial_target_log_std": -1.0,
+    "initial_power_log_std": -1.0,
+    "ratio_mode": "per-unit"
+  },
+  "bcLossConfig": {
+    "action_weight": 1.0,
+    "target_weight": 5.0,
+    "power_weight": 0.5,
+    "throw_action_weight": 5.0
+  },
+  "bootstrapGates": {
+    "correctSuccessRate": 0.5,
+    "correctMinusShuffled": 0.2,
+    "correctMinusInitializer": 0.2,
+    "firstContactRate": 0.8,
+    "maximumRejectedActionRate": 0.001
+  }
+}
