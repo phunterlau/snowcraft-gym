@@ -199,6 +199,10 @@ remain required before further PPO continuation or executor promotion.
 
 ## Design invariants
 
+The next bounded implementation is available as the
+[R1i matched geometry-feature probe](GEOMETRY_PROBE.md). Its custom checkpoints
+are deterministic-only and remain separate from production PPO models.
+
 - Preserve legacy checkpoint shapes unless an architecture flag explicitly
   introduces a new path.
 - Keep fixed-size tensors and masks stable across roster sizes.

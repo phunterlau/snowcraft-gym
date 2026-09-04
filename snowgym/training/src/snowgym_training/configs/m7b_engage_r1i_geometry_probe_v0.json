@@ -1,0 +1,17 @@
+{
+  "format": "snowgym.geometry-probe-config.v0",
+  "sourceCheckpointDigest": "sha256:10d924ecdfbc554a8e0324387d8d049b9ffe719e8d8f2768123e4886c265a697",
+  "reservoirDigest": "sha256:a1410c32a718c53664b91878852a2203247454ae0bf2dcb4caeb904b0ac334a6",
+  "arms": ["absolute", "relative"],
+  "trainingEvaluationSeeds": [100000, 100039],
+  "developmentEvaluationSeeds": [200000, 200039],
+  "smallBatchSteps": 200,
+  "smallBatchLearningRate": 0.001,
+  "smallBatchRequiredReduction": 0.5,
+  "epochs": 20,
+  "minibatchSize": 256,
+  "learningRate": 0.0003,
+  "maxGradNorm": 0.5,
+  "trainingSeed": 92001,
+  "selectionPolicy": "final-epoch-only"
+}

@@ -465,3 +465,12 @@ and describe the visited state, not an exclusive causal explanation of each
 teacher decision. The older R0 action intervention did not reselect conditional
 heads after a type change; retain its historical artifacts but do not treat
 that action-only arm as equivalent to R1h.
+
+### R1i matched geometry-feature fitting
+
+The [geometry-probe design and command](../executor/GEOMETRY_PROBE.md) compare
+equal-size absolute and fighter-relative feature modules from the frozen R1f
+checkpoint. A disposable small-batch gate precedes 20 supervised epochs and
+paired Engage/HOLD development evaluation. There are no teacher execution
+overrides, PPO updates, or provider calls. Custom deterministic-only checkpoints
+cannot be resumed through the PPO trainer.

@@ -1062,6 +1062,31 @@ and gradient probe, retaining the inherited classifier initially; test learning
 against matched priors and HOLD selectivity before additional PPO. R1 remains
 open. Evidence and design decision: [R1h review](training/reviews/m7b_r1h_results.md).
 
+M7b-R1i predeclaration (2026-09-04): bounded supervised representation probe
+from frozen R1f epoch-20, using the audited 5,367-state successful teacher
+reservoir (training seeds 100000–100039). Compare equal-size absolute-feature
+and fighter-relative-feature residual modules; preserve the existing absolute
+tanh target decoder to isolate input geometry. Freeze the complete inherited
+actor/critic, including action choice. Both zero-output residuals must reproduce
+the source exactly. Use separate move and throw/power heads, trainable masked
+entity pools, own/support role state and symbolic directives; no teacher or
+nearest-enemy execution override. Optimize identical move MSE + throw cosine
+loss + 0.1 throw-endpoint MSE + 0.5 power MSE in both arms. Treat undefined rays
+explicitly with a finite epsilon-normalized direction loss.
+Before full fitting, require each arm to reduce loss by at least 50% on 32
+fixed training states (first 16 with any throw, first 16 with move and no throw)
+within 200 Adam steps at 1e-3, with finite gradients and exact frozen weights.
+Run this gate on disposable copies. Then fit both fresh arms for 20 epochs,
+batch size 256, Adam 3e-4, norm clip 0.5, paired seed 92001 and identical
+minibatch order. Retain epochs 0/20; do not select intermediate checkpoints.
+Record full-reservoir agreement and gradient reachability; evaluate final arms
+on 40 development seeds 200000–200039 with correct and same-state HOLD plan
+inputs, plus the frozen source baseline. Save custom deterministic-probe
+checkpoints and reload parity, provenance, and parameter-change evidence.
+No sampled action/PPO likelihood contract change, PPO updates, provider calls,
+qualification seeds, or promotion. If the fitting gate fails, archive it and
+stop before the 20-epoch run. Require full milestone tests before each commit.
+
 #### M7c — full-fight fixed-plan composition
 
 - [ ] Hold one-, two-, and three-role plans throughout complete 3v3, 5v5, and
