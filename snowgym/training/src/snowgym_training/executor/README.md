@@ -197,11 +197,14 @@ action classifier. See [R1g design feedback](DESIGN_FEEDBACK_R1G.md) and the
 Gradient reachability, improvement over matched priors, and plan selectivity
 remain required before further PPO continuation or executor promotion.
 
-## Design invariants
+The [R1i matched geometry-feature probe](GEOMETRY_PROBE.md) is complete.
+Absolute/relative residuals achieved 0/40 and 1/40 Engage successes, improving
+progress and HOLD separation without changing the inherited classifier. Relative
+features showed no clear advantage over the matched control. See the
+[result and next decoder-probe decision](../../../reviews/m7b_r1i_results.md).
+Its custom checkpoints are deterministic-only and remain separate from PPO.
 
-The next bounded implementation is available as the
-[R1i matched geometry-feature probe](GEOMETRY_PROBE.md). Its custom checkpoints
-are deterministic-only and remain separate from production PPO models.
+## Design invariants
 
 - Preserve legacy checkpoint shapes unless an architecture flag explicitly
   introduces a new path.

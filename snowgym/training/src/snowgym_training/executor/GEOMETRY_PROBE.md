@@ -3,6 +3,9 @@
 This is an isolated, deterministic-only supervised experiment. The production
 executor, Gym action schema, and PPO likelihood implementation remain unchanged.
 
+The frozen run is complete. See [R1i results and design decision](../../../reviews/m7b_r1i_results.md):
+both arms improved physical progress, but neither passed recovery qualification.
+
 ## Matched architecture
 
 Both arms freeze the entire R1f epoch-20 actor and critic. They add equal-size

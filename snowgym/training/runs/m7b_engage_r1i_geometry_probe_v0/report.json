@@ -1,0 +1,1213 @@
+{
+  "arms": {
+    "absolute": {
+      "checkpointReloadExact": true,
+      "epochs": [
+        {
+          "epoch": 1,
+          "loss": 0.34777345080626215
+        },
+        {
+          "epoch": 2,
+          "loss": 0.23804820781649658
+        },
+        {
+          "epoch": 3,
+          "loss": 0.20572677663369
+        },
+        {
+          "epoch": 4,
+          "loss": 0.20001730059075892
+        },
+        {
+          "epoch": 5,
+          "loss": 0.1933139975102716
+        },
+        {
+          "epoch": 6,
+          "loss": 0.19168606310810749
+        },
+        {
+          "epoch": 7,
+          "loss": 0.1940301090578849
+        },
+        {
+          "epoch": 8,
+          "loss": 0.18673942724663783
+        },
+        {
+          "epoch": 9,
+          "loss": 0.18015069416088167
+        },
+        {
+          "epoch": 10,
+          "loss": 0.16664416101562127
+        },
+        {
+          "epoch": 11,
+          "loss": 0.15192474414843832
+        },
+        {
+          "epoch": 12,
+          "loss": 0.13901238415812966
+        },
+        {
+          "epoch": 13,
+          "loss": 0.12921999916864638
+        },
+        {
+          "epoch": 14,
+          "loss": 0.12612743452205236
+        },
+        {
+          "epoch": 15,
+          "loss": 0.12141719602918812
+        },
+        {
+          "epoch": 16,
+          "loss": 0.11747921023740657
+        },
+        {
+          "epoch": 17,
+          "loss": 0.11678069302694567
+        },
+        {
+          "epoch": 18,
+          "loss": 0.11463749144127054
+        },
+        {
+          "epoch": 19,
+          "loss": 0.11369103593645936
+        },
+        {
+          "epoch": 20,
+          "loss": 0.11194293671021231
+        }
+      ],
+      "newParameterCount": 33669,
+      "newParameterL2Change": 4.552048556043949,
+      "sourceUnchanged": true,
+      "teacherAgreementAfter": {
+        "all": {
+          "classAccuracy": 0.9031139287712101,
+          "classCorrect": 24217,
+          "confusion": [
+            [
+              1716,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              21436,
+              1858,
+              140
+            ],
+            [
+              0,
+              283,
+              879,
+              0
+            ],
+            [
+              0,
+              311,
+              6,
+              186
+            ]
+          ],
+          "count": 26815,
+          "moveCount": 23434,
+          "moveSquaredError": 470684.26171875,
+          "moveTargetRmseWorld": 4.481688067998359,
+          "powerSquaredError": 17.632189482450485,
+          "rayCount": 1162,
+          "rayDegreesSum": 22924.939880371094,
+          "throwCount": 1162,
+          "throwPowerRmse": 0.12318279618426814,
+          "throwRayMeanDegrees": 19.72886392458786,
+          "throwSquaredError": 446076.0517578125,
+          "throwTargetRmseWorld": 19.593020371955927,
+          "undefinedThrowRays": 0
+        },
+        "approach": {
+          "classAccuracy": 0.9143544121182977,
+          "classCorrect": 19014,
+          "confusion": [
+            [
+              323,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              18691,
+              1736,
+              37
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              2,
+              6,
+              0
+            ]
+          ],
+          "count": 20795,
+          "moveCount": 20464,
+          "moveSquaredError": 384391.1064453125,
+          "moveTargetRmseWorld": 4.334024897959329,
+          "powerSquaredError": 0.0,
+          "rayCount": 0,
+          "rayDegreesSum": 0.0,
+          "throwCount": 0,
+          "throwPowerRmse": null,
+          "throwRayMeanDegrees": null,
+          "throwSquaredError": 0.0,
+          "throwTargetRmseWorld": null,
+          "undefinedThrowRays": 0
+        },
+        "contact": {
+          "classAccuracy": 0.8900782214903252,
+          "classCorrect": 4324,
+          "confusion": [
+            [
+              1393,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              2745,
+              122,
+              103
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              309,
+              0,
+              186
+            ]
+          ],
+          "count": 4858,
+          "moveCount": 2970,
+          "moveSquaredError": 86293.16162109375,
+          "moveTargetRmseWorld": 5.39026312648639,
+          "powerSquaredError": 0.0,
+          "rayCount": 0,
+          "rayDegreesSum": 0.0,
+          "throwCount": 0,
+          "throwPowerRmse": null,
+          "throwRayMeanDegrees": null,
+          "throwSquaredError": 0.0,
+          "throwTargetRmseWorld": null,
+          "undefinedThrowRays": 0
+        },
+        "fire": {
+          "classAccuracy": 0.7564543889845095,
+          "classCorrect": 879,
+          "confusion": [
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              283,
+              879,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ]
+          ],
+          "count": 1162,
+          "moveCount": 0,
+          "moveSquaredError": 0.0,
+          "moveTargetRmseWorld": null,
+          "powerSquaredError": 17.632189482450485,
+          "rayCount": 1162,
+          "rayDegreesSum": 22924.939880371094,
+          "throwCount": 1162,
+          "throwPowerRmse": 0.12318279618426814,
+          "throwRayMeanDegrees": 19.72886392458786,
+          "throwSquaredError": 446076.0517578125,
+          "throwTargetRmseWorld": 19.593020371955927,
+          "undefinedThrowRays": 0
+        }
+      },
+      "teacherAgreementBefore": {
+        "all": {
+          "classAccuracy": 0.9031139287712101,
+          "classCorrect": 24217,
+          "confusion": [
+            [
+              1716,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              21436,
+              1858,
+              140
+            ],
+            [
+              0,
+              283,
+              879,
+              0
+            ],
+            [
+              0,
+              311,
+              6,
+              186
+            ]
+          ],
+          "count": 26815,
+          "moveCount": 23434,
+          "moveSquaredError": 1094247.890625,
+          "moveTargetRmseWorld": 6.833365430192016,
+          "powerSquaredError": 18.564087688922882,
+          "rayCount": 1162,
+          "rayDegreesSum": 53039.87268066406,
+          "throwCount": 1162,
+          "throwPowerRmse": 0.12639611971198675,
+          "throwRayMeanDegrees": 45.645329329315025,
+          "throwSquaredError": 110304.76831054688,
+          "throwTargetRmseWorld": 9.743030887237383,
+          "undefinedThrowRays": 0
+        },
+        "approach": {
+          "classAccuracy": 0.9143544121182977,
+          "classCorrect": 19014,
+          "confusion": [
+            [
+              323,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              18691,
+              1736,
+              37
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              2,
+              6,
+              0
+            ]
+          ],
+          "count": 20795,
+          "moveCount": 20464,
+          "moveSquaredError": 893183.47265625,
+          "moveTargetRmseWorld": 6.606555315446621,
+          "powerSquaredError": 0.0,
+          "rayCount": 0,
+          "rayDegreesSum": 0.0,
+          "throwCount": 0,
+          "throwPowerRmse": null,
+          "throwRayMeanDegrees": null,
+          "throwSquaredError": 0.0,
+          "throwTargetRmseWorld": null,
+          "undefinedThrowRays": 0
+        },
+        "contact": {
+          "classAccuracy": 0.8900782214903252,
+          "classCorrect": 4324,
+          "confusion": [
+            [
+              1393,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              2745,
+              122,
+              103
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              309,
+              0,
+              186
+            ]
+          ],
+          "count": 4858,
+          "moveCount": 2970,
+          "moveSquaredError": 201064.42529296875,
+          "moveTargetRmseWorld": 8.227907370322194,
+          "powerSquaredError": 0.0,
+          "rayCount": 0,
+          "rayDegreesSum": 0.0,
+          "throwCount": 0,
+          "throwPowerRmse": null,
+          "throwRayMeanDegrees": null,
+          "throwSquaredError": 0.0,
+          "throwTargetRmseWorld": null,
+          "undefinedThrowRays": 0
+        },
+        "fire": {
+          "classAccuracy": 0.7564543889845095,
+          "classCorrect": 879,
+          "confusion": [
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              283,
+              879,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ]
+          ],
+          "count": 1162,
+          "moveCount": 0,
+          "moveSquaredError": 0.0,
+          "moveTargetRmseWorld": null,
+          "powerSquaredError": 18.564087688922882,
+          "rayCount": 1162,
+          "rayDegreesSum": 53039.87268066406,
+          "throwCount": 1162,
+          "throwPowerRmse": 0.12639611971198675,
+          "throwRayMeanDegrees": 45.645329329315025,
+          "throwSquaredError": 110304.76831054688,
+          "throwTargetRmseWorld": 9.743030887237383,
+          "undefinedThrowRays": 0
+        }
+      }
+    },
+    "relative": {
+      "checkpointReloadExact": true,
+      "epochs": [
+        {
+          "epoch": 1,
+          "loss": 0.3479838063702673
+        },
+        {
+          "epoch": 2,
+          "loss": 0.23864476896929346
+        },
+        {
+          "epoch": 3,
+          "loss": 0.20561775454645032
+        },
+        {
+          "epoch": 4,
+          "loss": 0.1991707199175575
+        },
+        {
+          "epoch": 5,
+          "loss": 0.19249534566119905
+        },
+        {
+          "epoch": 6,
+          "loss": 0.1913302915820823
+        },
+        {
+          "epoch": 7,
+          "loss": 0.19432801767858865
+        },
+        {
+          "epoch": 8,
+          "loss": 0.18807210055380666
+        },
+        {
+          "epoch": 9,
+          "loss": 0.18391542069479277
+        },
+        {
+          "epoch": 10,
+          "loss": 0.17527590499080625
+        },
+        {
+          "epoch": 11,
+          "loss": 0.1663991131272999
+        },
+        {
+          "epoch": 12,
+          "loss": 0.15572236498596728
+        },
+        {
+          "epoch": 13,
+          "loss": 0.14226728886260387
+        },
+        {
+          "epoch": 14,
+          "loss": 0.13359305526188728
+        },
+        {
+          "epoch": 15,
+          "loss": 0.12581948295738168
+        },
+        {
+          "epoch": 16,
+          "loss": 0.1179863748582955
+        },
+        {
+          "epoch": 17,
+          "loss": 0.11459849669055075
+        },
+        {
+          "epoch": 18,
+          "loss": 0.11118450096438934
+        },
+        {
+          "epoch": 19,
+          "loss": 0.10857440980343218
+        },
+        {
+          "epoch": 20,
+          "loss": 0.10641617378598599
+        }
+      ],
+      "newParameterCount": 33669,
+      "newParameterL2Change": 4.989936433482345,
+      "sourceUnchanged": true,
+      "teacherAgreementAfter": {
+        "all": {
+          "classAccuracy": 0.9031139287712101,
+          "classCorrect": 24217,
+          "confusion": [
+            [
+              1716,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              21436,
+              1858,
+              140
+            ],
+            [
+              0,
+              283,
+              879,
+              0
+            ],
+            [
+              0,
+              311,
+              6,
+              186
+            ]
+          ],
+          "count": 26815,
+          "moveCount": 23434,
+          "moveSquaredError": 464176.92578125,
+          "moveTargetRmseWorld": 4.450599974998935,
+          "powerSquaredError": 17.85453850030899,
+          "rayCount": 1162,
+          "rayDegreesSum": 21861.110290527344,
+          "throwCount": 1162,
+          "throwPowerRmse": 0.1239570552623741,
+          "throwRayMeanDegrees": 18.813347926443498,
+          "throwSquaredError": 451972.595703125,
+          "throwTargetRmseWorld": 19.72209232647963,
+          "undefinedThrowRays": 0
+        },
+        "approach": {
+          "classAccuracy": 0.9143544121182977,
+          "classCorrect": 19014,
+          "confusion": [
+            [
+              323,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              18691,
+              1736,
+              37
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              2,
+              6,
+              0
+            ]
+          ],
+          "count": 20795,
+          "moveCount": 20464,
+          "moveSquaredError": 379118.2958984375,
+          "moveTargetRmseWorld": 4.3041966805227005,
+          "powerSquaredError": 0.0,
+          "rayCount": 0,
+          "rayDegreesSum": 0.0,
+          "throwCount": 0,
+          "throwPowerRmse": null,
+          "throwRayMeanDegrees": null,
+          "throwSquaredError": 0.0,
+          "throwTargetRmseWorld": null,
+          "undefinedThrowRays": 0
+        },
+        "contact": {
+          "classAccuracy": 0.8900782214903252,
+          "classCorrect": 4324,
+          "confusion": [
+            [
+              1393,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              2745,
+              122,
+              103
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              309,
+              0,
+              186
+            ]
+          ],
+          "count": 4858,
+          "moveCount": 2970,
+          "moveSquaredError": 85058.62890625,
+          "moveTargetRmseWorld": 5.351566966039327,
+          "powerSquaredError": 0.0,
+          "rayCount": 0,
+          "rayDegreesSum": 0.0,
+          "throwCount": 0,
+          "throwPowerRmse": null,
+          "throwRayMeanDegrees": null,
+          "throwSquaredError": 0.0,
+          "throwTargetRmseWorld": null,
+          "undefinedThrowRays": 0
+        },
+        "fire": {
+          "classAccuracy": 0.7564543889845095,
+          "classCorrect": 879,
+          "confusion": [
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              283,
+              879,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ]
+          ],
+          "count": 1162,
+          "moveCount": 0,
+          "moveSquaredError": 0.0,
+          "moveTargetRmseWorld": null,
+          "powerSquaredError": 17.85453850030899,
+          "rayCount": 1162,
+          "rayDegreesSum": 21861.110290527344,
+          "throwCount": 1162,
+          "throwPowerRmse": 0.1239570552623741,
+          "throwRayMeanDegrees": 18.813347926443498,
+          "throwSquaredError": 451972.595703125,
+          "throwTargetRmseWorld": 19.72209232647963,
+          "undefinedThrowRays": 0
+        }
+      },
+      "teacherAgreementBefore": {
+        "all": {
+          "classAccuracy": 0.9031139287712101,
+          "classCorrect": 24217,
+          "confusion": [
+            [
+              1716,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              21436,
+              1858,
+              140
+            ],
+            [
+              0,
+              283,
+              879,
+              0
+            ],
+            [
+              0,
+              311,
+              6,
+              186
+            ]
+          ],
+          "count": 26815,
+          "moveCount": 23434,
+          "moveSquaredError": 1094247.890625,
+          "moveTargetRmseWorld": 6.833365430192016,
+          "powerSquaredError": 18.564087688922882,
+          "rayCount": 1162,
+          "rayDegreesSum": 53039.87268066406,
+          "throwCount": 1162,
+          "throwPowerRmse": 0.12639611971198675,
+          "throwRayMeanDegrees": 45.645329329315025,
+          "throwSquaredError": 110304.76831054688,
+          "throwTargetRmseWorld": 9.743030887237383,
+          "undefinedThrowRays": 0
+        },
+        "approach": {
+          "classAccuracy": 0.9143544121182977,
+          "classCorrect": 19014,
+          "confusion": [
+            [
+              323,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              18691,
+              1736,
+              37
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              2,
+              6,
+              0
+            ]
+          ],
+          "count": 20795,
+          "moveCount": 20464,
+          "moveSquaredError": 893183.47265625,
+          "moveTargetRmseWorld": 6.606555315446621,
+          "powerSquaredError": 0.0,
+          "rayCount": 0,
+          "rayDegreesSum": 0.0,
+          "throwCount": 0,
+          "throwPowerRmse": null,
+          "throwRayMeanDegrees": null,
+          "throwSquaredError": 0.0,
+          "throwTargetRmseWorld": null,
+          "undefinedThrowRays": 0
+        },
+        "contact": {
+          "classAccuracy": 0.8900782214903252,
+          "classCorrect": 4324,
+          "confusion": [
+            [
+              1393,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              2745,
+              122,
+              103
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              309,
+              0,
+              186
+            ]
+          ],
+          "count": 4858,
+          "moveCount": 2970,
+          "moveSquaredError": 201064.42529296875,
+          "moveTargetRmseWorld": 8.227907370322194,
+          "powerSquaredError": 0.0,
+          "rayCount": 0,
+          "rayDegreesSum": 0.0,
+          "throwCount": 0,
+          "throwPowerRmse": null,
+          "throwRayMeanDegrees": null,
+          "throwSquaredError": 0.0,
+          "throwTargetRmseWorld": null,
+          "undefinedThrowRays": 0
+        },
+        "fire": {
+          "classAccuracy": 0.7564543889845095,
+          "classCorrect": 879,
+          "confusion": [
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              283,
+              879,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ]
+          ],
+          "count": 1162,
+          "moveCount": 0,
+          "moveSquaredError": 0.0,
+          "moveTargetRmseWorld": null,
+          "powerSquaredError": 18.564087688922882,
+          "rayCount": 1162,
+          "rayDegreesSum": 53039.87268066406,
+          "throwCount": 1162,
+          "throwPowerRmse": 0.12639611971198675,
+          "throwRayMeanDegrees": 45.645329329315025,
+          "throwSquaredError": 110304.76831054688,
+          "throwTargetRmseWorld": 9.743030887237383,
+          "undefinedThrowRays": 0
+        }
+      }
+    }
+  },
+  "capabilities": {
+    "actions": {
+      "semantics": {
+        "coordinates": "world-space",
+        "hold": "cancels-current-movement-order",
+        "noop": "does-not-cancel-current-movement-order",
+        "omittedUnits": "retain-current-movement-order",
+        "powerRange": [
+          0,
+          1
+        ]
+      },
+      "teamField": "actions",
+      "types": {
+        "hold": {
+          "required": [
+            "type",
+            "unitId"
+          ]
+        },
+        "move": {
+          "required": [
+            "type",
+            "unitId",
+            "x",
+            "y"
+          ]
+        },
+        "noop": {
+          "required": [
+            "type",
+            "unitId"
+          ]
+        },
+        "throw": {
+          "required": [
+            "type",
+            "unitId",
+            "x",
+            "y",
+            "power"
+          ]
+        }
+      }
+    },
+    "apiVersion": "snowgym.v0",
+    "endpoints": {
+      "activatePlan": {
+        "guarded": true,
+        "method": "POST",
+        "mutates": true,
+        "path": "/activate-plan",
+        "requires": [
+          "planId",
+          "plan"
+        ]
+      },
+      "autoplay": {
+        "method": "POST",
+        "mutates": true,
+        "path": "/autoplay"
+      },
+      "capabilities": {
+        "method": "GET",
+        "mutates": false,
+        "path": "/capabilities"
+      },
+      "health": {
+        "method": "GET",
+        "mutates": false,
+        "path": "/health"
+      },
+      "planObservation": {
+        "method": "GET",
+        "mutates": false,
+        "path": "/plan-observation"
+      },
+      "planTeacherAction": {
+        "method": "GET",
+        "mutates": false,
+        "path": "/plan-teacher-action"
+      },
+      "previewPlan": {
+        "guarded": true,
+        "method": "POST",
+        "mutates": false,
+        "path": "/preview-plan",
+        "requires": [
+          "planId",
+          "plan"
+        ]
+      },
+      "reset": {
+        "guarded": true,
+        "method": "POST",
+        "mutates": true,
+        "path": "/reset"
+      },
+      "status": {
+        "method": "GET",
+        "mutates": false,
+        "path": "/status"
+      },
+      "step": {
+        "method": "POST",
+        "mutates": true,
+        "path": "/step",
+        "requires": [
+          "action"
+        ]
+      },
+      "stepJoint": {
+        "method": "POST",
+        "mutates": true,
+        "path": "/step-joint",
+        "requires": [
+          "actions.blue",
+          "actions.red"
+        ]
+      },
+      "stepScripted": {
+        "method": "POST",
+        "mutates": true,
+        "path": "/step-scripted"
+      },
+      "teacherAction": {
+        "method": "GET",
+        "mutates": false,
+        "path": "/teacher-action"
+      }
+    },
+    "format": "snowgym.capabilities.v0",
+    "gymnasium": {
+      "environments": [
+        {
+          "configurable": false,
+          "id": "SnowGym/Squad-v0",
+          "maxTeamUnits": 3
+        },
+        {
+          "configurable": true,
+          "id": "SnowGym/Squad-v1",
+          "maxTeamUnits": 8
+        },
+        {
+          "configurable": true,
+          "id": "SnowGym/Squad-v2",
+          "maxTeamUnits": 10
+        },
+        {
+          "actuatorComplete": true,
+          "configurable": true,
+          "id": "SnowGym/Squad-v3",
+          "maxTeamUnits": 10,
+          "observationVersion": "snowgym.observation.v1"
+        }
+      ]
+    },
+    "pettingZoo": {
+      "environment": {
+        "agents": [
+          "blue",
+          "red"
+        ],
+        "api": "parallel",
+        "id": "SnowGym/ParallelSquad-v0",
+        "maxTeamUnits": 10
+      },
+      "researchEnvironment": {
+        "id": "SnowGym/ResearchParallelSquad-v0",
+        "latencyUnits": "team-decisions",
+        "transforms": [
+          "local-visibility",
+          "action-delay",
+          "observation-delay",
+          "semantic-raster"
+        ],
+        "visibilityRadiusUnits": "world"
+      }
+    },
+    "replayFormat": "snowgym.replay.v0",
+    "scenarios": {
+      "decisionHz": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        10,
+        12,
+        15,
+        20,
+        30,
+        60
+      ],
+      "maps": [
+        {
+          "blueCapacity": 3,
+          "height": 30,
+          "id": "arena1.json",
+          "name": "Snowy Clearing",
+          "redCapacity": 3,
+          "width": 40
+        },
+        {
+          "blueCapacity": 3,
+          "height": 30,
+          "id": "arena2.json",
+          "name": "Frozen Pond",
+          "redCapacity": 3,
+          "width": 44
+        },
+        {
+          "blueCapacity": 3,
+          "height": 32,
+          "id": "arena3.json",
+          "name": "Village Skirmish",
+          "redCapacity": 3,
+          "width": 46
+        },
+        {
+          "blueCapacity": 3,
+          "height": 34,
+          "id": "arena4.json",
+          "name": "Pine Forest",
+          "redCapacity": 3,
+          "width": 48
+        },
+        {
+          "blueCapacity": 3,
+          "height": 32,
+          "id": "arena5.json",
+          "name": "Schoolyard Scramble",
+          "redCapacity": 3,
+          "width": 46
+        },
+        {
+          "blueCapacity": 10,
+          "height": 48,
+          "id": "arena6.json",
+          "name": "Winter Front",
+          "redCapacity": 10,
+          "width": 64
+        }
+      ],
+      "maxTeamSize": 10,
+      "redControllers": [
+        "scripted",
+        "random"
+      ],
+      "redDifficulties": [
+        "easy",
+        "normal",
+        "hard"
+      ],
+      "simulationHz": 60
+    },
+    "simulationVersion": "snowgym.sim.v2",
+    "stateHashVersion": "snowgym.state.v2",
+    "transport": {
+      "binding": "loopback",
+      "episodeModel": "single-shared",
+      "expectedStateHash": true,
+      "idempotencyKey": true,
+      "maxBodyBytes": 1000000
+    },
+    "upstreamBaseCommit": "7d9fca5"
+  },
+  "criticUpdates": 0,
+  "development": {
+    "absolute": {
+      "correct": {
+        "contactRate": 1.0,
+        "episodes": 40,
+        "hitRate": 1.0,
+        "meanProgress": 0.3079999998211861,
+        "physicalWinRate": 0.0,
+        "rejectedActionRate": 0.0,
+        "successRate": 0.0
+      },
+      "shuffled": {
+        "contactRate": 0.0,
+        "episodes": 40,
+        "hitRate": 0.0,
+        "meanProgress": 0.0,
+        "physicalWinRate": 0.0,
+        "rejectedActionRate": 0.0,
+        "successRate": 0.0
+      }
+    },
+    "relative": {
+      "correct": {
+        "contactRate": 1.0,
+        "episodes": 40,
+        "hitRate": 0.975,
+        "meanProgress": 0.263000001013279,
+        "physicalWinRate": 0.0,
+        "rejectedActionRate": 0.0,
+        "successRate": 0.025
+      },
+      "shuffled": {
+        "contactRate": 0.2,
+        "episodes": 40,
+        "hitRate": 0.025,
+        "meanProgress": 0.001000000536441803,
+        "physicalWinRate": 0.0,
+        "rejectedActionRate": 0.0,
+        "successRate": 0.0
+      }
+    },
+    "source": {
+      "correct": {
+        "contactRate": 0.875,
+        "episodes": 40,
+        "hitRate": 0.525,
+        "meanProgress": 0.06600000560283661,
+        "physicalWinRate": 0.0,
+        "rejectedActionRate": 0.0,
+        "successRate": 0.0
+      },
+      "shuffled": {
+        "contactRate": 0.8,
+        "episodes": 40,
+        "hitRate": 0.25,
+        "meanProgress": 0.020000003278255463,
+        "physicalWinRate": 0.0,
+        "rejectedActionRate": 0.0,
+        "successRate": 0.0
+      }
+    }
+  },
+  "format": "snowgym.geometry-probe-report.v0",
+  "gatesPassed": true,
+  "ppoUpdates": 0,
+  "qualificationEligible": false,
+  "trainingMethod": "supervised-only"
+}

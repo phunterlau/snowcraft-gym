@@ -2,6 +2,9 @@
 
 Date: 2026-09-04. Status: completed development diagnostic; R1 remains open.
 
+Follow-up: [R1i implemented and evaluated the matched geometry-feature probe](m7b_r1i_results.md).
+The next-step section below records the decision made after R1h.
+
 ## Result
 
 With teacher-style shots held fixed, replacing movement destinations recovers

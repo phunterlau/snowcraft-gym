@@ -1087,6 +1087,20 @@ No sampled action/PPO likelihood contract change, PPO updates, provider calls,
 qualification seeds, or promotion. If the fitting gate fails, archive it and
 stop before the 20-epoch run. Require full milestone tests before each commit.
 
+M7b-R1i result (2026-09-04): both disposable fitting gates passed (97.6% and
+98.4% loss reduction), followed by 20 supervised epochs per arm and 240 paired
+development episodes. Source/absolute/relative Engage success was 0/0/1 out
+of 40, with progress 6.6%/30.8%/26.3%; all had zero battle wins and rejected
+actions. Both new arms markedly improved HOLD separation. Throw-ray error fell
+from 45.65 degrees to 19.73/18.81 while move RMSE fell from 6.83 to 4.48/4.45.
+Inherited actor/critic tensors and classifier outputs remain exact, both new
+33,669-parameter modules changed, and checkpoint reloads are exact. Relative
+features show no clear advantage over the matched absolute control; neither
+checkpoint is promoted. Next: a predeclared relative-displacement/shot-direction
+decoder probe with matched controls, phase metrics, and HOLD checks; define and
+test any changed stochastic likelihood before PPO. Evidence:
+[R1i review](training/reviews/m7b_r1i_results.md). R1 remains open.
+
 #### M7c — full-fight fixed-plan composition
 
 - [ ] Hold one-, two-, and three-role plans throughout complete 3v3, 5v5, and

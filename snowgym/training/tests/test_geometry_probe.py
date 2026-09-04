@@ -180,3 +180,37 @@ def test_successful_runner_retains_final_checkpoints_and_paired_evaluations(inpu
         for condition in ("correct", "shuffled"):
             assert result["development"][arm][condition]["episodes"] == 40
     audit_artifact_manifest(tmp_path / "run", "manifest.json")
+
+
+def test_archived_geometry_run_provenance_frozen_source_and_paired_baseline(inputs):
+    root = ROOT / "runs/m7b_engage_r1i_geometry_probe_v0"
+    manifest = audit_artifact_manifest(root, "manifest.json")
+    assert manifest["manifestDigest"] == json_digest({k: v for k, v in manifest.items() if k != "manifestDigest"})
+    assert manifest["config"] == probe.load_config()
+    report = json.loads((root / "report.json").read_text())
+    gates = json.loads((root / "small-batch-gates.json").read_text())
+    assert report["gatesPassed"] and all(g["passed"] for g in gates.values())
+    assert report["ppoUpdates"] == report["criticUpdates"] == 0
+    assert not report["qualificationEligible"]
+    assert report["arms"]["absolute"]["newParameterCount"] == report["arms"]["relative"]["newParameterCount"]
+    assert report["arms"]["absolute"]["teacherAgreementBefore"] == report["arms"]["relative"]["teacherAgreementBefore"]
+    old = json.loads((ROOT / "runs/m7b_engage_r1f_supervised_probe_v0/development-evaluation.json").read_text())
+    source_rows = json.loads((root / "source-development.json").read_text())
+    for condition in ("correct", "shuffled"):
+        assert source_rows[condition] == old["missions"]["engage"][condition]
+    for arm in ("absolute", "relative"):
+        result = report["arms"][arm]
+        assert result["sourceUnchanged"] and result["checkpointReloadExact"]
+        assert result["newParameterL2Change"] > 0
+        assert len(result["epochs"]) == 20
+        initial, _ = probe.load_probe(root / f"{arm}-epoch-000")
+        model, _ = probe.load_probe(root / f"{arm}-epoch-020")
+        assert semantic_state_digest(model.source.state_dict()) == semantic_state_digest(inputs[1]["model"])
+        assert semantic_state_digest(initial.source.state_dict()) == semantic_state_digest(inputs[1]["model"])
+        with torch.no_grad():
+            assert torch.equal(model(inputs[3])["action_logits"], initial(inputs[3])["action_logits"])
+        rows = json.loads((root / f"{arm}-development.json").read_text())
+        for condition in ("correct", "shuffled"):
+            assert [r["seed"] for r in rows[condition]] == list(range(200000, 200040))
+            assert probe.summarize_rows(rows[condition]) == report["development"][arm][condition]
+            assert all(r["rejectedActions"] == 0 for r in rows[condition])

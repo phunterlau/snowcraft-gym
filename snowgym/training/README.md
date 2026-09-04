@@ -845,6 +845,14 @@ exactly. This prioritizes a relative movement/shot representation and gradient
 probe before more PPO; the oracle-assisted result does not qualify the learner.
 See [R1h results and next design decision](reviews/m7b_r1h_results.md).
 
+R1i fitted matched absolute/relative geometry residuals with the inherited actor
+and critic frozen. Both passed the small-batch gate and improved physical
+progress and HOLD separation after 20 supervised epochs. Development Engage
+success was 0/40 and 1/40, with no battle wins; neither is promoted. Relative
+features showed no clear advantage over the matched control. See
+[R1i results and next decoder probe](reviews/m7b_r1i_results.md) and the
+[headless command](src/snowgym_training/executor/GEOMETRY_PROBE.md#entry-point).
+
 The frozen `ppo_curriculum_v0.json` keeps training ranges disjoint from eight
 evaluation seeds per gate and sets thresholds before qualifying runs. Its order
 is 1v1 random, 1v1 easy scripted, 3v3 random, 3v3 easy scripted, 3v3 terrain on
