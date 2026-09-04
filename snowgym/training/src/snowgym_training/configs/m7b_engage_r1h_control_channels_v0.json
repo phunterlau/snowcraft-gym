@@ -1,0 +1,10 @@
+{
+  "format": "snowgym.engage-control-channels-config.v0",
+  "checkpointDigest": "sha256:10d924ecdfbc554a8e0324387d8d049b9ffe719e8d8f2768123e4886c265a697",
+  "seeds": [200000, 200039],
+  "arms": ["shot-only", "teacher-move", "teacher-choice", "teacher-choice-move", "teacher"],
+  "simulationVersion": "snowgym.sim.v2",
+  "stateHashVersion": "snowgym.state.v2",
+  "bootstrapSeed": 750001,
+  "bootstrapSamples": 10000
+}

@@ -1031,6 +1031,23 @@ selectivity checks before further PPO. No production actor redesign or promotion
 occurred. Artifacts: `training/runs/m7b_engage_r1g_throw_channels_v0/`;
 [results and design feedback](training/src/snowgym_training/executor/DESIGN_FEEDBACK_R1G.md).
 
+M7b-R1h predeclaration (2026-09-04): freeze R1f epoch-20 and development
+seeds 200000–200039 under simulation/state v2. Run a 2×2 no-training matrix:
+learned/teacher action choice crossed with learned/teacher movement destination.
+All four arms use the R1g direction-plus-power recommendation on executed throws;
+add a full production-teacher control. Action choice includes move/throw/hold/noop,
+not firing alone. Re-select the learned conditional target head after any type
+replacement. A scenario-scoped movement recommendation supplies the production
+Engage range/formation/cohesion destination, or immediate dodge destination,
+even when the teacher would throw; validate it against actual teacher move labels.
+Keep hold/noop persistence semantics unchanged. Before interpreting the matrix,
+require shot-only parity with R1g and combined-intervention parity with the full
+teacher. Record decision confusion, readiness, range, dodge-threat context,
+coverage, replacement counts, actions digests, and state-hash trajectories.
+Use paired development intervals for simple effects and interaction; no new
+training, provider calls, qualification seeds, architecture change, or promotion.
+Run targeted and full milestone tests before implementation and artifact commits.
+
 #### M7c — full-fight fixed-plan composition
 
 - [ ] Hold one-, two-, and three-role plans throughout complete 3v3, 5v5, and

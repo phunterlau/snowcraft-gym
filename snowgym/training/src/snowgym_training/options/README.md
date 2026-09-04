@@ -422,3 +422,46 @@ action-sequence digest. The report contains paired-bootstrap 95% intervals;
 these exploratory development comparisons are not multiplicity-adjusted or
 qualification evidence. The model state is hashed before and after to verify
 that no training occurred. Output directories are immutable.
+
+### R1h conditional action-choice and movement matrix
+
+From `snowgym/training`:
+
+```bash
+.venv/bin/python -m snowgym_training.options.control_channels \
+  --checkpoint runs/m7b_engage_r1f_supervised_probe_v0/epoch-020 \
+  --output runs/m7b_engage_r1h_control_channels_v0
+```
+
+The five arms share the frozen checkpoint, 40 development seeds, and open 5v5
+Engage scenario. No training or provider requests occur.
+
+| Arm | Action choice | Movement destination | Shot direction/power |
+| --- | --- | --- | --- |
+| `shot-only` | Learned | Learned | R1g recommendation |
+| `teacher-move` | Learned | Teacher-style conditional destination | R1g recommendation |
+| `teacher-choice` | Teacher | Learned conditional head | R1g recommendation |
+| `teacher-choice-move` | Teacher | Teacher-style conditional destination | R1g recommendation |
+| `teacher` | Full production teacher | Full production teacher | Full production teacher |
+
+Action choice covers all four action types, including hold/noop. It is broader
+than a firing gate. Conditional learned targets are selected after choosing the
+executed action type. The scenario-scoped movement oracle computes the Engage
+range, living-member formation, cohesion, arena clamp, and immediate dodge
+destination even where the teacher would throw. It never uses a teacher throw
+target as a movement label. Every encountered production move and throw is
+checked against its corresponding oracle. Recommendations are diagnostic-only.
+
+The runner requires combined-intervention/full-teacher state-hash parity before
+publishing a run. Shot-only/R1g baseline parity is checked by regression tests.
+The report retains paired simple effects and a difference-in-differences
+interaction for success and progress. Intervals are exploratory, unadjusted
+development comparisons; no qualification inference is permitted.
+
+Per-seed telemetry includes a living-unit confusion matrix (learner rows,
+teacher columns; noop/move/throw/hold), shot distance, readiness, threats,
+out-of-range shots, label coverage, and rejected actions. Context flags overlap
+and describe the visited state, not an exclusive causal explanation of each
+teacher decision. The older R0 action intervention did not reselect conditional
+heads after a type change; retain its historical artifacts but do not treat
+that action-only arm as equivalent to R1h.
