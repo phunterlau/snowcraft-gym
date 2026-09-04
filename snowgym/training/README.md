@@ -760,6 +760,18 @@ definitions can be used for PPO. Passing that construction test establishes
 that the objective is reachable; learned-policy qualification remains a
 separate 40-development/100-qualification paired-seed gate.
 
+Run the first fixed-option PPO infrastructure update from this directory:
+
+```bash
+uv sync --extra dev --extra learn
+.venv/bin/snowgym-train-option-ppo \
+  --option engage --worlds 2 --rollout-steps 4 --target-updates 1 \
+  --anchor-total-updates 100 --output /tmp/snowgym-m7b-engage-stage1
+```
+
+Exact-resume, staged-transfer, causal-fork, and qualification commands are in
+the [fixed-option README](./src/snowgym_training/options/README.md).
+
 The frozen `ppo_curriculum_v0.json` keeps training ranges disjoint from eight
 evaluation seeds per gate and sets thresholds before qualifying runs. Its order
 is 1v1 random, 1v1 easy scripted, 3v3 random, 3v3 easy scripted, 3v3 terrain on

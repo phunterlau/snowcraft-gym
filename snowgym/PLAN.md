@@ -755,6 +755,19 @@ actions. Support uses a pre-training 4+1, 30-by-20 proof scenario so the
 teacher's bounded support offset can enter the unchanged 8–18% band. This gate
 does not yet claim a trained or qualified M7b checkpoint.
 
+M7b training-bridge acceptance (2026-09-03): fixed-option rollouts now reset
+completed worlds selectively, reactivate the next content-bound plan, store
+production-teacher labels for the decaying BC anchor, and preserve separate
+reward sums. The option runner migrates the accepted target-only checkpoint,
+enforces staged parameter groups, applies BC and initializer-KL decay, supports
+exact resume and stage-1-to-stage-2 transfer, and emits immutable checkpointed
+manifests. A real two-world Engage update completed with finite nonzero
+gradients and zero rejected actions. The deterministic same-state Hold,
+Withdraw, and Advance fork has distinct reproducible v2 hash trajectories. A
+digest-validating all-mission qualifier implements the predeclared paired
+bootstrap and per-mission gates. These are infrastructure results; the ordered
+development training and untouched qualification run remain open.
+
 #### M7c — full-fight fixed-plan composition
 
 - [ ] Hold one-, two-, and three-role plans throughout complete 3v3, 5v5, and

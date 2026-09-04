@@ -44,6 +44,9 @@ snowgym-run-ppo-series = "snowgym_training.ppo_series:main"
 snowgym-run-ppo-config = "snowgym_training.ppo_series_config:main"
 snowgym-audit-ppo-series = "snowgym_training.ppo_series:audit_main"
 snowgym-demo-ppo = "snowgym_training.ppo_demo:main"
+snowgym-train-option-ppo = "snowgym_training.options.train:main"
+snowgym-option-causal-fork = "snowgym_training.options.causal_fork:main"
+snowgym-qualify-m7b = "snowgym_training.options.qualification:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/snowgym_training"]

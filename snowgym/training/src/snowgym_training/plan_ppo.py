@@ -178,6 +178,7 @@ def plan_ppo_update(
             if not bool(torch.isfinite(gradient_norm)):
                 raise ValueError("non-finite plan PPO gradient norm")
             optimizer.step()
+            maximum_gradient_norm = max(maximum_gradient_norm, float(gradient_norm))
             count = int(indices.numel())
             for name, value in {
                 "total": total,

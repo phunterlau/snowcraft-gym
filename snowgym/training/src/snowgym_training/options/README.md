@@ -57,3 +57,58 @@ arena. This scenario adjustment was made before PPO thresholds were frozen.
 
 Passing the teacher gate establishes achievability. It does not establish a
 learned-policy result or M7b qualification.
+
+## PPO infrastructure smoke
+
+From `snowgym/training`, install the updated entry points and run one immutable
+stage-1 artifact:
+
+```bash
+uv sync --extra dev --extra learn
+
+.venv/bin/snowgym-train-option-ppo \
+  --option engage \
+  --worlds 2 \
+  --rollout-steps 4 \
+  --target-updates 1 \
+  --anchor-total-updates 100 \
+  --output /tmp/snowgym-m7b-engage-stage1
+```
+
+The runner loads `runs/plan_bc_ablation_qual_v1/plan-conditioned`, migrates its
+policy to v3, freezes inherited parameters, and records the root initializer,
+plan/seed cursors, reward components, optimizer metrics, source revision, and
+semantic checkpoint digests. Exact resume uses `--resume`. A stage-2 run uses
+`--ppo-warm-start` with a stage-1 checkpoint and opens inherited action,
+move/throw target, and power heads at one tenth of the new-module learning
+rate. Stage 3 refuses to start unless both `--physical-gate-passed` and
+`--plan-gate-passed` are explicit.
+
+The BC anchor decays from 0.1 to zero over the first half of
+`--anchor-total-updates`; initializer KL decays from 0.01 to zero over its first
+three quarters. This total is frozen across exact resume and staged transfer.
+
+Generate the deterministic same-state causal fork:
+
+```bash
+.venv/bin/snowgym-option-causal-fork \
+  --seed 42001 \
+  --decisions 30 \
+  --output /tmp/snowgym-hold-withdraw-advance-fork.json
+```
+
+The artifact stores all semantic teacher actions and v2 state-hash sequences
+for Hold, Withdraw, and Advance from one identical initial physical state.
+
+Once a 100-seed-per-mission evaluation artifact exists, apply the strict
+all-mission gate with:
+
+```bash
+.venv/bin/snowgym-qualify-m7b \
+  --input path/to/m7b-evaluation.json \
+  --output path/to/m7b-qualification.json
+```
+
+The qualifier verifies the evaluation digest, paired seed alignment, learning
+rates, parameter change, bootstrap bound, mission progress, physical retention,
+and rejected-action rate. One failed mission fails the checkpoint.

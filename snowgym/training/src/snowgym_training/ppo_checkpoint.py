@@ -32,6 +32,7 @@ def save_ppo_checkpoint(
     collector_config: dict[str, Any],
     initialization: dict[str, Any],
     plan_schedule: dict[str, Any] | None = None,
+    option_schedule: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     destination = Path(path)
     if destination.exists():
@@ -48,6 +49,10 @@ def save_ppo_checkpoint(
     validate_initialization(initialization)
     if plan_schedule is not None:
         validate_plan_schedule(plan_schedule)
+    if option_schedule is not None:
+        validate_option_schedule(option_schedule)
+    if plan_schedule is not None and option_schedule is not None:
+        raise ValueError("PPO checkpoint cannot contain both plan and option schedules")
     state = {
         "model": model.state_dict(),
         "optimizer": optimizer.state_dict(),
@@ -69,6 +74,8 @@ def save_ppo_checkpoint(
     }
     if plan_schedule is not None:
         metadata["planSchedule"] = dict(plan_schedule)
+    if option_schedule is not None:
+        metadata["optionSchedule"] = dict(option_schedule)
     metadata["checkpointDigest"] = json_digest(metadata)
     destination.mkdir(parents=True)
     torch.save(state, destination / "state.pt")
@@ -151,7 +158,7 @@ def validate_ppo_checkpoint_metadata(value: Any) -> None:
         "stateDigest",
         "checkpointDigest",
     }
-    optional = {"planSchedule"}
+    optional = {"planSchedule", "optionSchedule"}
     if (
         not isinstance(value, dict)
         or not required <= set(value)
@@ -159,7 +166,7 @@ def validate_ppo_checkpoint_metadata(value: Any) -> None:
     ):
         raise ValueError(
             f"PPO checkpoint metadata must contain {sorted(required)} "
-            "and optionally planSchedule"
+            "and optionally one planSchedule or optionSchedule"
         )
     if value["format"] != PPO_CHECKPOINT_FORMAT:
         raise ValueError(f"PPO checkpoint format must be {PPO_CHECKPOINT_FORMAT}")
@@ -176,6 +183,10 @@ def validate_ppo_checkpoint_metadata(value: Any) -> None:
     validate_initialization(value["initialization"])
     if "planSchedule" in value:
         validate_plan_schedule(value["planSchedule"])
+    if "optionSchedule" in value:
+        validate_option_schedule(value["optionSchedule"])
+    if "planSchedule" in value and "optionSchedule" in value:
+        raise ValueError("PPO checkpoint cannot contain both plan and option schedules")
     source = {name: item for name, item in value.items() if name != "checkpointDigest"}
     if value["checkpointDigest"] != json_digest(source):
         raise ValueError("PPO checkpoint metadata digest mismatch")
@@ -223,16 +234,39 @@ def validate_seed_schedule(value: Any) -> None:
 
 def validate_collector_config(value: Any) -> None:
     required = {"gateId", "worlds", "rolloutSteps", "rewardMode"}
-    if not isinstance(value, dict) or set(value) != required:
-        raise ValueError(f"PPO collector config must contain exactly {sorted(required)}")
+    optional = {"option", "stage", "anchorTotalUpdates", "protocolDigest"}
+    if (
+        not isinstance(value, dict)
+        or not required <= set(value)
+        or set(value) - required - optional
+    ):
+        raise ValueError(
+            f"PPO collector config must contain {sorted(required)} with only "
+            f"optional fields {sorted(optional)}"
+        )
     if not isinstance(value["gateId"], str) or not value["gateId"]:
         raise ValueError("PPO collector gateId must be non-empty")
-    if value["rewardMode"] not in {"canonical", "health-potential"}:
+    if value["rewardMode"] not in {"canonical", "health-potential", "executor"}:
         raise ValueError("PPO collector rewardMode is invalid")
     for name in ("worlds", "rolloutSteps"):
         item = value[name]
         if not isinstance(item, int) or isinstance(item, bool) or item <= 0:
             raise ValueError(f"PPO collector {name} must be a positive integer")
+    if "option" in value and (
+        not isinstance(value["option"], str) or not value["option"]
+    ):
+        raise ValueError("PPO collector option must be non-empty")
+    for name in ("stage", "anchorTotalUpdates"):
+        if name in value and (
+            not isinstance(value[name], int)
+            or isinstance(value[name], bool)
+            or value[name] <= 0
+        ):
+            raise ValueError(f"PPO collector {name} must be a positive integer")
+    if "protocolDigest" in value and (
+        not isinstance(value["protocolDigest"], str) or not value["protocolDigest"]
+    ):
+        raise ValueError("PPO collector protocolDigest must be non-empty")
 
 
 def validate_initialization(value: Any) -> None:
@@ -277,3 +311,19 @@ def validate_plan_schedule(value: Any) -> None:
             raise ValueError(f"PPO plan schedule {name} must be an integer")
     if value["length"] <= 0 or not 0 <= value["nextIndex"] <= value["length"]:
         raise ValueError("PPO plan schedule cursor is outside its range")
+
+
+def validate_option_schedule(value: Any) -> None:
+    required = {"format", "digest", "prefix", "length", "nextIndex"}
+    if not isinstance(value, dict) or set(value) != required:
+        raise ValueError(f"PPO option schedule must contain exactly {sorted(required)}")
+    if value["format"] != "snowgym.option-schedule.v0":
+        raise ValueError("PPO option schedule format is invalid")
+    for name in ("digest", "prefix"):
+        if not isinstance(value[name], str) or not value[name]:
+            raise ValueError(f"PPO option schedule {name} must be non-empty")
+    for name in ("length", "nextIndex"):
+        if not isinstance(value[name], int) or isinstance(value[name], bool):
+            raise ValueError(f"PPO option schedule {name} must be an integer")
+    if value["length"] <= 0 or not 0 <= value["nextIndex"] <= value["length"]:
+        raise ValueError("PPO option schedule cursor is outside its range")

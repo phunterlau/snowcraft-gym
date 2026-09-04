@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from copy import deepcopy
 import math
+import torch
 
 from snowgym_client.batch import SnowGymBatchClient, SnowGymBatchEnv
 from snowgym_training.options import (
@@ -11,7 +12,17 @@ from snowgym_training.options import (
     OptionSpec,
     evaluate_teacher_option,
     load_option_protocol,
+    OptionEntry,
+    OptionSchedule,
+    collect_option_rollout,
+    qualify_m7b,
 )
+from snowgym_training.executor import ModelConfig
+from snowgym_training.plan_ppo import target_only_plan_ppo_config
+from snowgym_training.ppo import HybridActorCritic, PPOConfig
+from snowgym_training.ppo_collect import SeedSchedule
+from snowgym_training.options.causal_fork import run_causal_fork
+from snowgym_training.trajectory import json_digest
 
 
 def unit(identifier: int, x: float, y: float, *, alive: bool = True) -> dict[str, object]:
@@ -216,3 +227,122 @@ def test_frozen_option_protocol_has_disjoint_seed_partitions() -> None:
         "qualification": 100,
     }
     assert protocol["qualification"]["missionSuccessMinimum"] == 0.75
+
+
+def test_option_schedule_and_collector_restore_after_selective_timeout() -> None:
+    option_plan = plan("engage")
+    entries = tuple(
+        OptionEntry(option_plan, OptionSpec("engage", 1)) for _ in range(6)
+    )
+    schedule = OptionSchedule(entries, prefix="engage")
+    restored = OptionSchedule.restore(entries, schedule.state())
+    assert restored.state() == schedule.state()
+    base = ModelConfig(
+        16,
+        12,
+        24,
+        action_conditioned_targets=True,
+        plan_conditioned=True,
+        plan_target_only=True,
+        separate_target_actor=True,
+    )
+    torch.manual_seed(79)
+    model = HybridActorCritic(target_only_plan_ppo_config(base))
+    scenario = {
+        "blueUnits": 3,
+        "redUnits": 3,
+        "arenaWidth": 40,
+        "arenaHeight": 30,
+        "maxTicks": 300,
+        "decisionHz": 10,
+        "redDifficulty": "easy",
+        "redController": "random",
+    }
+    with SnowGymBatchClient() as client:
+        wrapped = FixedPlanOptionBatchEnv(
+            SnowGymBatchEnv(2, client=client, observation_version=3), gamma=0.99
+        )
+        collection = collect_option_rollout(
+            wrapped,
+            model,
+            scenario=scenario,
+            seed_schedule=SeedSchedule(60_000, 60_099),
+            option_schedule=schedule,
+            rollout_steps=3,
+            config=PPOConfig(update_epochs=1, minibatch_size=4),
+        )
+    assert collection.completed_options == 6
+    assert collection.successful_options == 0
+    assert collection.episode_seeds == tuple(range(60_000, 60_006))
+    assert collection.option_schedule["nextIndex"] == 6
+    assert collection.teacher_actions["action_type"].shape == (3, 2, 10)
+    assert collection.rollout.observations["plan_role_state"].shape == (3, 2, 3, 20)
+    assert collection.reward_sums["mission"] == -6
+    assert collection.reward_sums["executor"] == float(
+        collection.rollout.rewards.sum()
+    )
+
+
+def qualification_input() -> dict[str, object]:
+    def records(successes: int, progress: float, physical_wins: int):
+        return [
+            {
+                "seed": 300_000 + index,
+                "success": index < successes,
+                "progress": progress,
+                "physicalWin": index < physical_wins,
+                "rejectedActions": 0,
+                "totalActions": 100,
+            }
+            for index in range(100)
+        ]
+
+    value = {
+        "format": "snowgym.m7b-evaluation.v0",
+        "checkpointDigest": "sha256:" + "1" * 64,
+        "sourceDigest": "sha256:" + "2" * 64,
+        "protocolDigest": "sha256:" + "3" * 64,
+        "inheritedHeadLearningRate": 1e-5,
+        "newModuleLearningRate": 1e-4,
+        "parameterL2Change": 1.0,
+        "missions": {
+            name: {
+                "correct": records(80, 0.9, 70),
+                "shuffled": records(40, 0.1, 70),
+                "initializer": records(60, 0.5, 75),
+            }
+            for name in FROZEN_OPTION_SPECS
+        },
+    }
+    value["evaluationDigest"] = json_digest(value)
+    return value
+
+
+def test_m7b_qualification_requires_every_mission_independently() -> None:
+    passing = qualification_input()
+    report = qualify_m7b(passing)
+    assert report["passed"]
+    assert all(mission["passed"] for mission in report["missions"].values())
+
+    failing = qualification_input()
+    failing["missions"]["support"]["correct"] = [
+        {**row, "success": index < 70}
+        for index, row in enumerate(failing["missions"]["support"]["correct"])
+    ]
+    failing["evaluationDigest"] = json_digest(
+        {name: item for name, item in failing.items() if name != "evaluationDigest"}
+    )
+    failed = qualify_m7b(failing)
+    assert not failed["passed"]
+    assert not failed["missions"]["support"]["passed"]
+    assert failed["missions"]["engage"]["passed"]
+
+
+def test_same_state_hold_withdraw_advance_fork_is_deterministic_and_diverges() -> None:
+    first = run_causal_fork(seed=42_001, decisions=12)
+    second = run_causal_fork(seed=42_001, decisions=12)
+    assert first == second
+    assert first["rejectedActions"] == 0
+    traces = first["forks"]
+    assert len({tuple(trace["stateHashes"]) for trace in traces.values()}) == 3
+    assert all(trace["stateHashes"][0] == first["initialStateHash"] for trace in traces.values())
