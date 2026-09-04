@@ -999,6 +999,24 @@ capacity limit or PPO's causal effect. Evidence:
 `training/runs/m7b_engage_r1f_supervised_probe_v0/`; interpretation and next
 decision: `training/reviews/m7b_r1f_results.md`.
 
+M7b-R1g predeclaration (2026-09-04): freeze the R1f epoch-20 checkpoint and
+run a no-training matrix on development seeds 200000–200039: learner,
+teacher-style direction, teacher-style power, both, and full production teacher.
+Direction/power replacements apply only to learner-selected throws; all other
+action fields remain unchanged at that decision. Recompute recommendations
+from each arm's current state. For this fixed single-group Engage scenario,
+recommend the nearest living enemy (ID tie-break), lead by 0.18 seconds, and
+use the production medium-range power rule. Verify recommendations against
+actual production-teacher throw labels; never substitute a teacher move target
+as a throw label. The recommendation remains defined when the teacher chooses
+to move/dodge, and coverage/disagreement is recorded. Direction replacement
+includes implicit target selection, so it cannot isolate fine aim from enemy
+choice. Preserve all 40 paired records, state-hash trajectories, source digests,
+and paired-bootstrap intervals. No fitting, new seeds, threshold changes,
+qualification, or automatic architecture changes. Use the completed matrix to
+decide whether structured target selection, direction-aware loss, power control,
+or action/movement control should be the next design intervention.
+
 #### M7c — full-fight fixed-plan composition
 
 - [ ] Hold one-, two-, and three-role plans throughout complete 3v3, 5v5, and

@@ -388,3 +388,37 @@ model and optimizer with gate ID `m7b-engage-supervised-probe` and zero
 collected training-environment steps; it is not an option-PPO continuation.
 `qualificationEligible` stays false even if diagnostic bootstrap thresholds
 pass. Output directories are immutable and cannot be overwritten.
+
+### R1g no-training throw-channel matrix
+
+Run from `snowgym/training`:
+
+```bash
+.venv/bin/python -m snowgym_training.options.throw_channels \
+  --checkpoint runs/m7b_engage_r1f_supervised_probe_v0/epoch-020 \
+  --output runs/m7b_engage_r1g_throw_channels_v0
+```
+
+The frozen matrix contains learner, direction-only, power-only, direction+power,
+and full production-teacher arms on the same 40 development seeds. The three
+partial interventions retain the learner's action and movement policy. They
+replace only the named fields on learner-selected throws, with recommendations
+recomputed from each arm's current state. Later actions can differ as trajectories
+diverge; this measures a closed-loop channel intervention, not identical action
+sequences with different shots.
+
+The diagnostic oracle mirrors the production teacher's nearest-living-enemy,
+0.18-second lead, and medium-range power rule for the frozen single-group
+Engage scenario. It is checked against every actual teacher throw encountered.
+It remains defined when the teacher chooses move/dodge, so the harness never
+uses a teacher movement target as a throw target. Coverage and firing-choice
+disagreement counts are recorded. Direction replacement includes implicit enemy
+selection; power replacement uses the recommended enemy's distance even when
+the learner's aim points elsewhere. These limitations matter when interpreting
+the individual channels.
+
+Each arm retains per-seed metrics, per-decision state hashes, and an executed
+action-sequence digest. The report contains paired-bootstrap 95% intervals;
+these exploratory development comparisons are not multiplicity-adjusted or
+qualification evidence. The model state is hashed before and after to verify
+that no training occurred. Output directories are immutable.
