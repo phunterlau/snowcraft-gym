@@ -927,6 +927,15 @@ anchor magnitude alone does not preserve the successful teacher's coordinated
 move/throw state distribution. The digest-bound negative result is archived at
 `training/runs/m7b_engage_teacher_reservoir_r1c_bc_floor_v0/`.
 
+M7b-R1d predeclaration (2026-09-04): retain R1c's `0.05` BC floor and change
+only the auxiliary BC sample mixture from 50% to 90% successful-teacher
+reservoir states. The R1c learner-state teacher labels become dominated by
+movement as the closed loop loses contact, while the reservoir retains the
+successful move/throw sequence. PPO ratios, advantages, returns, and value
+targets remain exclusively learner-on-policy. Preserve all other optimizer,
+seed, reward, exploration, loss, checkpoint, and evaluation settings; retain
+updates 50, 75, and 100 and gate only update 100.
+
 #### M7c — full-fight fixed-plan composition
 
 - [ ] Hold one-, two-, and three-role plans throughout complete 3v3, 5v5, and

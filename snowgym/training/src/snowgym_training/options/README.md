@@ -286,3 +286,19 @@ contacts but only 1/40 hit, with no mission successes or physical wins. The BC
 floor prevents total contact collapse but does not preserve successful
 move/throw coordination. The immutable result is under
 `runs/m7b_engage_teacher_reservoir_r1c_bc_floor_v0/`.
+
+### R1d frozen reservoir mixture
+
+R1d retains the R1c `0.05` BC floor and changes only the BC sample mixture from
+50% to 90% successful-teacher reservoir states. Learner transitions remain the
+exclusive source of PPO ratios, advantages, returns, and value targets.
+
+```bash
+cd snowgym/training
+.venv/bin/snowgym-run-engage-r1d \
+  --reservoir runs/m7b_engage_teacher_reservoir_v0/teacher_states.npz \
+  --output runs/m7b_engage_teacher_reservoir_r1d_reservoir90_v0
+```
+
+The runner retains updates 50, 75, and 100 and gates only update 100 under the
+frozen `configs/m7b_engage_r1d_reservoir90_v0.json` protocol.

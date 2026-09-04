@@ -805,6 +805,9 @@ R1c reproduced the reference update-50 state exactly and retained contact at
 update 100, but hit rate fell to 2.5% and mission success remained zero. The
 artifact is retained as negative evidence; it does not advance R1.
 
+R1d retains the BC floor and changes only the auxiliary BC mixture from 50% to
+90% successful-teacher reservoir states. PPO remains entirely learner-on-policy.
+
 The frozen `ppo_curriculum_v0.json` keeps training ranges disjoint from eight
 evaluation seeds per gate and sets thresholds before qualifying runs. Its order
 is 1v1 random, 1v1 easy scripted, 3v3 random, 3v3 easy scripted, 3v3 terrain on
