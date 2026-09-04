@@ -24,7 +24,7 @@ from snowgym_training.plan_ppo import target_only_plan_ppo_config
 from snowgym_training.ppo import HybridActorCritic, PPOConfig, generalized_advantage_estimate
 from snowgym_training.ppo_collect import SeedSchedule
 from snowgym_training.options.causal_fork import run_causal_fork
-from snowgym_training.options.evaluate import resolve_evaluation_options
+from snowgym_training.options.evaluate import CONDITIONS, resolve_evaluation_options
 from snowgym_training.options.interventions import compose_intervention_action
 from snowgym_training.options.gradient_diagnostics import write_csv
 from snowgym_training.options.recovery_report import (
@@ -33,6 +33,11 @@ from snowgym_training.options.recovery_report import (
 )
 from snowgym_training.options.bootstrap import engage_bootstrap_report
 from snowgym_training.options.r1 import load_r1_config
+from snowgym_training.options.r1b import (
+    evaluation_summary,
+    load_r1b_config,
+    validate_r1b_inputs,
+)
 from snowgym_training.trajectory import json_digest
 
 
@@ -303,6 +308,47 @@ def test_frozen_engage_r1_config_and_bootstrap_gate() -> None:
     report = engage_bootstrap_report(value)
     assert report["passed"]
     assert report["metrics"]["firstContactRate"] == 0.9
+
+
+def test_frozen_engage_r1b_config_reuses_exact_stage1_source() -> None:
+    config = load_r1b_config()
+    training_root = Path(__file__).resolve().parents[1]
+    source = (
+        training_root
+        / "runs/m7b_engage_teacher_reservoir_r1_v0/stage1/checkpoint"
+    )
+    reservoir = training_root / "runs/m7b_engage_teacher_reservoir_v0/teacher_states.npz"
+    metadata, canonical_reservoir = validate_r1b_inputs(config, source, reservoir)
+    assert config["singleChange"] == "retain-stage-1-freeze-through-update-100"
+    assert config["retainedUpdates"] == [50, 75, 100]
+    assert metadata["collectorConfig"]["stage"] == 1
+    assert canonical_reservoir == Path(
+        metadata["collectorConfig"]["teacherReservoir"]["path"]
+    )
+
+
+def test_r1b_evaluation_summary_reports_each_frozen_condition() -> None:
+    rows = {
+        condition: [
+            {
+                "success": index == 0,
+                "progress": index / 10,
+                "physicalWin": index < 2,
+                "rejectedActions": 0,
+                "totalActions": 5,
+                "firstContactDecision": 3 if index < 3 else None,
+                "firstHitDecision": 7 if index < 2 else None,
+            }
+            for index in range(4)
+        ]
+        for condition in CONDITIONS
+    }
+    summary = evaluation_summary({"missions": {"engage": rows}})
+    assert set(summary) == set(CONDITIONS)
+    assert summary["correct"]["successRate"] == 0.25
+    assert summary["correct"]["contactRate"] == 0.75
+    assert summary["correct"]["hitRate"] == 0.5
+    assert summary["correct"]["rejectedActionRate"] == 0.0
 
 
 def test_archived_failed_engage_evidence_passes_digest_audit() -> None:

@@ -230,3 +230,24 @@ The first candidate is retained as negative evidence. Stage 1 reached contact
 on 28/40 seeds and hit on 10/40 but had no mission successes. The Stage-2
 checkpoint regressed to 0/40 contact, hits, and successes. R1 therefore remains
 open, and no later option or qualification run is authorized by this result.
+
+### R1b frozen Stage-1 hold
+
+R1b changes only the unfreezing schedule. It resumes the digest-bound update-50
+R1 Stage-1 checkpoint with its optimizer, RNG, seed schedule, plan schedule,
+reservoir, and anchor schedule intact. Inherited action, target, and power heads
+remain frozen through update 100. Updates 50, 75, and 100 are retained and
+evaluated on all 40 development seeds; only update 100 is eligible for the
+bootstrap decision.
+
+```bash
+cd snowgym/training
+.venv/bin/snowgym-run-engage-r1b \
+  --source-checkpoint runs/m7b_engage_teacher_reservoir_r1_v0/stage1/checkpoint \
+  --reservoir runs/m7b_engage_teacher_reservoir_v0/teacher_states.npz \
+  --output runs/m7b_engage_teacher_reservoir_r1b_stage1_hold_v0
+```
+
+The immutable configuration is
+`configs/m7b_engage_r1b_stage1_hold_v0.json`. Intermediate results describe
+the learning trajectory and cannot be selected after evaluation.

@@ -885,6 +885,15 @@ missions remain blocked. The negative run is preserved under
 must remain within the selected teacher-reservoir intervention and predeclare
 its sampling/anchor or unfreezing change before training.
 
+M7b-R1b predeclaration (2026-09-04): resume the exact update-50 Stage-1 R1
+checkpoint and change only the unfreezing schedule. Keep the reservoir, 50/50
+BC mixture, learner-only PPO transitions, optimizer and RNG state, training and
+development seeds, loss weights, exploration, reward, discount, and 200-update
+anchor schedule unchanged. Do not open inherited action, target, or power heads;
+retain and evaluate updates 50, 75, and 100. Intermediate checkpoints are
+diagnostic only. The frozen bootstrap gate applies exclusively to update 100,
+so the trajectory cannot be used for post-hoc checkpoint selection.
+
 #### M7c — full-fight fixed-plan composition
 
 - [ ] Hold one-, two-, and three-role plans throughout complete 3v3, 5v5, and

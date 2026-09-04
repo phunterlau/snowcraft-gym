@@ -786,6 +786,11 @@ two-stage runner. The first R1 candidate is a recorded negative result: partial
 contact/hit acquisition at Stage 1 regressed at Stage 2, so the Engage bootstrap
 gate and all later mission stages remain closed.
 
+The fixed-option README also predeclares R1b, which resumes the exact update-50
+Stage-1 state and keeps inherited fighter heads frozen through update 100.
+Updates 50, 75, and 100 are retained for trajectory diagnosis, while only the
+final checkpoint is allowed to pass or fail the bootstrap gate.
+
 The frozen `ppo_curriculum_v0.json` keeps training ranges disjoint from eight
 evaluation seeds per gate and sets thresholds before qualifying runs. Its order
 is 1v1 random, 1v1 easy scripted, 3v3 random, 3v3 easy scripted, 3v3 terrain on

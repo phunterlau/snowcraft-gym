@@ -55,6 +55,7 @@ snowgym-summarize-engage-recovery = "snowgym_training.options.recovery_report:ma
 snowgym-export-teacher-reservoir = "snowgym_training.options.export_reservoir:main"
 snowgym-qualify-engage-bootstrap = "snowgym_training.options.bootstrap:main"
 snowgym-run-engage-r1 = "snowgym_training.options.r1:main"
+snowgym-run-engage-r1b = "snowgym_training.options.r1b:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/snowgym_training"]
