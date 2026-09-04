@@ -236,7 +236,7 @@ def validate_collector_config(value: Any) -> None:
     required = {"gateId", "worlds", "rolloutSteps", "rewardMode"}
     optional = {
         "option", "stage", "anchorTotalUpdates", "protocolDigest",
-        "teacherReservoir", "reservoirBcFraction",
+        "teacherReservoir", "reservoirBcFraction", "bcAnchorFloor",
     }
     if (
         not isinstance(value, dict)
@@ -270,6 +270,12 @@ def validate_collector_config(value: Any) -> None:
         not isinstance(value["protocolDigest"], str) or not value["protocolDigest"]
     ):
         raise ValueError("PPO collector protocolDigest must be non-empty")
+    if "bcAnchorFloor" in value and (
+        not isinstance(value["bcAnchorFloor"], (int, float))
+        or isinstance(value["bcAnchorFloor"], bool)
+        or not 0 <= value["bcAnchorFloor"] <= 0.1
+    ):
+        raise ValueError("PPO collector bcAnchorFloor must be in [0,0.1]")
 
 
 def validate_initialization(value: Any) -> None:

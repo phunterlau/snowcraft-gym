@@ -259,3 +259,23 @@ wins. All evaluated conditions retained a zero rejected-action rate. This
 excludes Stage-2 head unfreezing as the sole cause of collapse and leaves R1
 open. The evidence is archived under
 `runs/m7b_engage_teacher_reservoir_r1b_stage1_hold_v0/`.
+
+### R1c frozen BC-anchor floor
+
+R1c retrains Stage 1 from update 0 and changes only the BC anchor schedule. The
+anchor follows the original decay until it reaches `0.05` at update 50, then
+holds that value through update 100. The initializer-KL schedule, reservoir
+mixture, PPO data, optimizer, seeds, reward, exploration, and losses remain
+unchanged. The update-50 state must exactly match the original R1 Stage-1 state
+before later training is accepted.
+
+```bash
+cd snowgym/training
+.venv/bin/snowgym-run-engage-r1c \
+  --reservoir runs/m7b_engage_teacher_reservoir_v0/teacher_states.npz \
+  --output runs/m7b_engage_teacher_reservoir_r1c_bc_floor_v0
+```
+
+Updates 50, 75, and 100 are retained, but only update 100 is eligible for the
+bootstrap gate. The protocol is frozen in
+`configs/m7b_engage_r1c_bc_floor_v0.json`.

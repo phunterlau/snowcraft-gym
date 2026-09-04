@@ -1,0 +1,46 @@
+{
+  "format": "snowgym.engage-r1c-config.v0",
+  "option": "engage",
+  "intervention": "successful-teacher-bc-reservoir",
+  "singleChange": "bc-anchor-floor-at-update-50-weight",
+  "bcAnchorFloor": 0.05,
+  "referenceUpdate50StateDigest": "sha256:89c1fc3dd6851322266470f65b7676269d5e3e561c62039e96a4a25e4575c255",
+  "retainedUpdates": [50, 75, 100],
+  "finalUpdate": 100,
+  "selectionPolicy": "final-update-only",
+  "reservoirBcFraction": 0.5,
+  "reservoirSeedPartition": "training",
+  "reservoirSeedCount": 40,
+  "worlds": 8,
+  "rolloutSteps": 200,
+  "anchorTotalUpdates": 200,
+  "trainingSeed": 91001,
+  "ppoConfig": {
+    "gamma": 0.9976921765,
+    "gae_lambda": 0.9885140204,
+    "clip_ratio": 0.2,
+    "value_weight": 0.5,
+    "entropy_weight": 0.01,
+    "learning_rate": 0.0003,
+    "max_grad_norm": 0.5,
+    "update_epochs": 4,
+    "minibatch_size": 1600,
+    "target_kl": null,
+    "initial_target_log_std": -1.0,
+    "initial_power_log_std": -1.0,
+    "ratio_mode": "per-unit"
+  },
+  "bcLossConfig": {
+    "action_weight": 1.0,
+    "target_weight": 5.0,
+    "power_weight": 0.5,
+    "throw_action_weight": 5.0
+  },
+  "bootstrapGates": {
+    "correctSuccessRate": 0.5,
+    "correctMinusShuffled": 0.2,
+    "correctMinusInitializer": 0.2,
+    "firstContactRate": 0.8,
+    "maximumRejectedActionRate": 0.001
+  }
+}

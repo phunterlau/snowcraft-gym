@@ -54,7 +54,12 @@ POLICY_NEW_PREFIXES = (
 )
 
 
-def plan_ppo_anchor_weights(update_index: int, total_updates: int) -> dict[str, float]:
+def plan_ppo_anchor_weights(
+    update_index: int,
+    total_updates: int,
+    *,
+    bc_floor: float = 0.0,
+) -> dict[str, float]:
     """Predeclared linear BC and initializer-KL decay schedules."""
     if (
         not isinstance(update_index, int)
@@ -63,11 +68,14 @@ def plan_ppo_anchor_weights(update_index: int, total_updates: int) -> dict[str, 
         or isinstance(total_updates, bool)
         or total_updates <= 0
         or not 0 <= update_index < total_updates
+        or not isinstance(bc_floor, (int, float))
+        or isinstance(bc_floor, bool)
+        or not 0 <= bc_floor <= 0.1
     ):
         raise ValueError("plan PPO anchor schedule indices are invalid")
     progress = update_index / total_updates
     return {
-        "bc": 0.1 * max(0.0, 1 - progress / 0.5),
+        "bc": max(bc_floor, 0.1 * max(0.0, 1 - progress / 0.5)),
         "initializerKl": 0.01 * max(0.0, 1 - progress / 0.75),
     }
 
@@ -126,9 +134,12 @@ def plan_ppo_update(
     total_updates: int,
     teacher_reservoir: TeacherBcReservoir | None = None,
     reservoir_bc_fraction: float = 0.5,
+    bc_anchor_floor: float = 0.0,
 ) -> dict[str, Any]:
     """Apply PPO with the frozen M7b BC and initializer-KL anchors."""
-    weights = plan_ppo_anchor_weights(update_index, total_updates)
+    weights = plan_ppo_anchor_weights(
+        update_index, total_updates, bc_floor=bc_anchor_floor
+    )
     flat = rollout.flatten()
     flattened_teacher = {
         name: value.flatten(0, 1) for name, value in teacher_actions.items()

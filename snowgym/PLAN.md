@@ -906,6 +906,16 @@ evidence and is not eligible for promotion. R1 remains open and R2 remains
 blocked. The digest-bound run is archived under
 `training/runs/m7b_engage_teacher_reservoir_r1b_stage1_hold_v0/`.
 
+M7b-R1c predeclaration (2026-09-04): retrain Stage 1 from update 0 and change
+only the BC anchor after update 50. Preserve the original linear decay until
+the anchor reaches `0.05`, then hold that floor through update 100; keep the
+initializer-KL decay unchanged. Require the update-50 model, optimizer, and RNG
+state digest to exactly match the original R1 Stage-1 artifact before accepting
+later results. The reservoir, 50/50 BC mixture, learner-only PPO data, seeds,
+losses, exploration, reward, discount, and benchmark remain fixed. Retain
+updates 50, 75, and 100 for diagnosis, with the bootstrap gate applied only to
+update 100.
+
 #### M7c — full-fight fixed-plan composition
 
 - [ ] Hold one-, two-, and three-role plans throughout complete 3v3, 5v5, and

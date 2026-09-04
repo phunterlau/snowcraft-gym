@@ -39,6 +39,7 @@ from snowgym_training.options.r1b import (
     load_r1b_config,
     validate_r1b_inputs,
 )
+from snowgym_training.options.r1c import load_r1c_config
 from snowgym_training.trajectory import json_digest
 
 
@@ -350,6 +351,21 @@ def test_r1b_evaluation_summary_reports_each_frozen_condition() -> None:
     assert summary["correct"]["contactRate"] == 0.75
     assert summary["correct"]["hitRate"] == 0.5
     assert summary["correct"]["rejectedActionRate"] == 0.0
+
+
+def test_frozen_engage_r1c_config_changes_only_late_bc_anchor() -> None:
+    r1 = load_r1_config()
+    r1c = load_r1c_config()
+    assert r1c["bcAnchorFloor"] == 0.05
+    assert r1c["referenceUpdate50StateDigest"] == (
+        "sha256:89c1fc3dd6851322266470f65b7676269d5e3e561c62039e96a4a25e4575c255"
+    )
+    for name in (
+        "option", "intervention", "reservoirBcFraction", "reservoirSeedPartition",
+        "reservoirSeedCount", "worlds", "rolloutSteps", "anchorTotalUpdates",
+        "trainingSeed", "ppoConfig", "bcLossConfig", "bootstrapGates",
+    ):
+        assert r1c[name] == r1[name]
 
 
 def test_archived_failed_engage_evidence_passes_digest_audit() -> None:

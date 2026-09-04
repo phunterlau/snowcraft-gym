@@ -209,6 +209,10 @@ def test_plan_ppo_anchor_decay_and_zero_initializer_kl() -> None:
     assert plan_ppo_anchor_weights(0, 20) == {"bc": 0.1, "initializerKl": 0.01}
     assert plan_ppo_anchor_weights(10, 20)["bc"] == 0
     assert plan_ppo_anchor_weights(15, 20)["initializerKl"] == 0
+    assert plan_ppo_anchor_weights(19, 20, bc_floor=0.05) == {
+        "bc": 0.05,
+        "initializerKl": 0.0,
+    }
     source = ModelConfig(
         16,
         12,

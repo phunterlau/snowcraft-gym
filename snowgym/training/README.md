@@ -796,6 +796,11 @@ collapsed to zero by update 100 without opening inherited heads. Its immutable
 trajectory and final bootstrap report are retained as negative evidence; the
 better intermediate checkpoint was not selected after evaluation.
 
+R1c is the next predeclared single-variable recovery experiment. It preserves
+the selected teacher reservoir and holds the BC anchor at the update-50 weight
+of `0.05`; an exact update-50 state-digest assertion proves the intervention
+does not alter the earlier trajectory.
+
 The frozen `ppo_curriculum_v0.json` keeps training ranges disjoint from eight
 evaluation seeds per gate and sets thresholds before qualifying runs. Its order
 is 1v1 random, 1v1 easy scripted, 3v3 random, 3v3 easy scripted, 3v3 terrain on

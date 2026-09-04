@@ -34,6 +34,7 @@ def test_option_ppo_smoke_and_exact_resume_match_uninterrupted(tmp_path) -> None
         git_commit="test",
         infrastructure_smoke=True,
         teacher_reservoir_path=teacher_reservoir,
+        bc_anchor_floor=0.05,
     )
     resumed = train_option_ppo(
         output=tmp_path / "resumed",
@@ -48,6 +49,7 @@ def test_option_ppo_smoke_and_exact_resume_match_uninterrupted(tmp_path) -> None
         git_commit="test",
         infrastructure_smoke=True,
         teacher_reservoir_path=teacher_reservoir,
+        bc_anchor_floor=0.05,
     )
     uninterrupted = train_option_ppo(
         output=tmp_path / "uninterrupted",
@@ -61,6 +63,7 @@ def test_option_ppo_smoke_and_exact_resume_match_uninterrupted(tmp_path) -> None
         git_commit="test",
         infrastructure_smoke=True,
         teacher_reservoir_path=teacher_reservoir,
+        bc_anchor_floor=0.05,
     )
     assert first["format"] == OPTION_PPO_RUN_FORMAT
     assert first["mode"] == "infrastructure-smoke"
@@ -75,6 +78,8 @@ def test_option_ppo_smoke_and_exact_resume_match_uninterrupted(tmp_path) -> None
         "teacherReservoirFraction": 0.5,
     }
     assert first["bcTeacherReservoir"]["samples"] == 5496
+    assert first["bcAnchorFloor"] == 0.05
+    assert first["checkpoint"]["collectorConfig"]["bcAnchorFloor"] == 0.05
     assert first["initialization"]["checkpointDigest"] == (
         "sha256:4119b9a3f8c0d3df69b704a8f3f813a1b38ab11ca56faffb4c4cebc2cb235133"
     )

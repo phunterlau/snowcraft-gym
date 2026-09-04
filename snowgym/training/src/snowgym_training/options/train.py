@@ -74,6 +74,7 @@ def train_option_ppo(
     teacher_reservoir_path: str | Path | None = None,
     teacher_reservoir_manifest: str | Path | None = None,
     reservoir_bc_fraction: float = 0.5,
+    bc_anchor_floor: float = 0.0,
 ) -> dict[str, Any]:
     destination = Path(output)
     if destination.exists():
@@ -93,6 +94,12 @@ def train_option_ppo(
         raise ValueError("exact resume and staged PPO transfer are mutually exclusive")
     if teacher_reservoir_path is not None and option != "engage":
         raise ValueError("the selected R1 teacher reservoir is Engage-only")
+    if (
+        not isinstance(bc_anchor_floor, (int, float))
+        or isinstance(bc_anchor_floor, bool)
+        or not 0 <= bc_anchor_floor <= 0.1
+    ):
+        raise ValueError("BC anchor floor must be in [0,0.1]")
     protocol = load_option_protocol()
     protocol_digest = json_digest(protocol)
     seed_start = int(protocol["seeds"]["training"][0]) + OPTION_ORDER.index(option) * 10_000
@@ -146,6 +153,8 @@ def train_option_ppo(
                 "reservoirBcFraction": reservoir_bc_fraction,
             }
         )
+    if bc_anchor_floor > 0:
+        collector_config["bcAnchorFloor"] = float(bc_anchor_floor)
     initialization = {
         "type": "behavior-clone",
         "checkpointDigest": source_metadata["checkpointDigest"],
@@ -261,6 +270,7 @@ def train_option_ppo(
                 total_updates=anchor_total_updates,
                 teacher_reservoir=teacher_reservoir,
                 reservoir_bc_fraction=reservoir_bc_fraction,
+                bc_anchor_floor=bc_anchor_floor,
             )
             environment_steps += worlds * rollout_steps
             updates.append(
@@ -324,6 +334,7 @@ def train_option_ppo(
                 group["name"]: group["lr"] for group in parameter_groups
             },
             "anchorTotalUpdates": anchor_total_updates,
+            "bcAnchorFloor": float(bc_anchor_floor),
             "trainingSeed": training_seed,
             "initialization": initialization,
             "rootInitializer": {
@@ -369,6 +380,7 @@ def main() -> None:
     parser.add_argument("--teacher-reservoir")
     parser.add_argument("--teacher-reservoir-manifest")
     parser.add_argument("--reservoir-bc-fraction", type=float, default=0.5)
+    parser.add_argument("--bc-anchor-floor", type=float, default=0.0)
     args = parser.parse_args()
     result = train_option_ppo(
         output=args.output,
@@ -388,6 +400,7 @@ def main() -> None:
         teacher_reservoir_path=args.teacher_reservoir,
         teacher_reservoir_manifest=args.teacher_reservoir_manifest,
         reservoir_bc_fraction=args.reservoir_bc_fraction,
+        bc_anchor_floor=args.bc_anchor_floor,
     )
     print(json.dumps(result, sort_keys=True))
 
