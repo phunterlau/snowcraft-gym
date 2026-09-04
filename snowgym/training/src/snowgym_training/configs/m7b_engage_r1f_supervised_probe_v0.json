@@ -1,0 +1,16 @@
+{
+  "format": "snowgym.engage-supervised-probe-config.v0",
+  "sourceCheckpointDigest": "sha256:5e4feb4e1f97d2ba3a5521bcb6b4a5df8f9194ed02d4badf4a1b96304196c80c",
+  "reservoirDigest": "sha256:a1410c32a718c53664b91878852a2203247454ae0bf2dcb4caeb904b0ac334a6",
+  "stage": 1,
+  "epochs": 20,
+  "retainedEpochs": [0, 10, 20],
+  "minibatchSize": 256,
+  "trainingSeed": 91001,
+  "learningRate": 0.0003,
+  "maxGradNorm": 0.5,
+  "bcLossConfig": {"action_weight": 1.0, "target_weight": 5.0, "power_weight": 0.5, "throw_action_weight": 5.0},
+  "trainingEvaluationSeeds": [100000, 100039],
+  "developmentEvaluationSeeds": [200000, 200039],
+  "selectionPolicy": "final-epoch-only"
+}

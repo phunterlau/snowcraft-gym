@@ -353,3 +353,38 @@ Measurement-repair verification: 325 TypeScript tests, build, 50 Gym-client
 tests, and 171 training tests passed on 2026-09-04. Added regressions cover
 initializer/RNG identity, repeated evaluation digests, stored initializer
 restoration, optimizer learning rates, exact resume, and plan-PPO KL stopping.
+
+### R1f supervised-only teacher-trajectory probe
+
+Run from `snowgym/training`:
+
+```bash
+.venv/bin/python -m snowgym_training.options.supervised_probe \
+  --source-checkpoint runs/m7b_engage_teacher_reservoir_r1e_continue200_v0/update-000200/checkpoint \
+  --reservoir runs/m7b_engage_teacher_reservoir_v0/teacher_states.npz \
+  --output runs/m7b_engage_r1f_supervised_probe_v0
+```
+
+The frozen configuration is `configs/m7b_engage_r1f_supervised_probe_v0.json`.
+The probe warm-starts the final R1e actor and fits only Stage-1 actor modules
+using fresh Adam, 20 epochs, minibatches of 256, and the existing BC component
+weights. It performs no PPO or critic updates. Epochs 0, 10, and 20 retain
+checkpoints and teacher-state diagnostics; only epoch 20 is the final result.
+Training-seed closed-loop results compare epochs 0 and 20. Final development
+evaluation uses all 40 existing paired seeds and correct/HOLD/initializer
+conditions. Qualification seeds are excluded.
+
+Phase diagnostics partition living unit labels into fire (teacher requests a
+throw), contact (other actions within 9 world units of a living enemy), and
+approach (remaining living labels). Confusion matrices use teacher rows and
+predicted columns in noop/move/throw/hold order. Conditional target and ray
+errors use the teacher's action branch regardless of classification. Undefined
+zero-length rays are counted separately. Distances use world coordinates.
+
+Outputs include `report.json`, per-epoch teacher agreement, per-seed training
+and development evaluations, diagnostic bootstrap results, and a recursively
+hashed manifest. The shared PPO checkpoint container stores the BC-trained
+model and optimizer with gate ID `m7b-engage-supervised-probe` and zero
+collected training-environment steps; it is not an option-PPO continuation.
+`qualificationEligible` stays false even if diagnostic bootstrap thresholds
+pass. Output directories are immutable and cannot be overwritten.
