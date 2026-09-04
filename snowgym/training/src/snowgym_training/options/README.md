@@ -308,3 +308,20 @@ Contact rose from 45% to 67.5% to 85%, hit rate rose from 12.5% to 22.5% to
 52.5%, and update-100 mean progress was 8.6%. No episode completed Engage or
 won the full battle. The audited run is retained at
 `runs/m7b_engage_teacher_reservoir_r1d_reservoir90_v0/`.
+
+### R1e exact continuation to update 200
+
+R1e changes only training duration. It resumes the exact R1d update-100
+checkpoint, including optimizer, RNG, seed schedule, and option schedule, then
+continues the same Stage-1, 90% reservoir, `0.05` BC-floor protocol.
+
+```bash
+cd snowgym/training
+.venv/bin/snowgym-run-engage-r1e \
+  --source-checkpoint runs/m7b_engage_teacher_reservoir_r1d_reservoir90_v0/update-000100/checkpoint \
+  --reservoir runs/m7b_engage_teacher_reservoir_v0/teacher_states.npz \
+  --output runs/m7b_engage_teacher_reservoir_r1e_continue200_v0
+```
+
+Updates 100, 150, and 200 are evaluated; only update 200 is eligible for the
+bootstrap gate.

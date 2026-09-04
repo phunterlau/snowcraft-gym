@@ -10,6 +10,7 @@ from typing import Any
 
 from ..loss import LossConfig
 from ..ppo import PPOConfig
+from ..ppo_checkpoint import load_ppo_checkpoint, normalized_ppo_config
 from ..trainer import resolve_git_commit
 from ..trajectory import json_digest
 from .bootstrap import engage_bootstrap_report
@@ -26,6 +27,7 @@ def run_engage_followup(
     output: str | Path,
     run_format: str,
     trajectory_format: str,
+    source_checkpoint: str | Path | None = None,
 ) -> dict[str, Any]:
     destination = Path(output)
     if destination.exists():
@@ -52,7 +54,41 @@ def run_engage_followup(
         checkpoints: dict[int, Path] = {}
         training_runs: dict[str, Any] = {}
         previous: Path | None = None
-        for update in config["retainedUpdates"]:
+        source_summary: dict[str, Any] | None = None
+        updates = list(config["retainedUpdates"])
+        if source_checkpoint is not None:
+            source, _ = load_ppo_checkpoint(source_checkpoint)
+            if (
+                source["checkpointDigest"] != config.get("sourceCheckpointDigest")
+                or source["updateIndex"] != config.get("sourceUpdate")
+                or normalized_ppo_config(source["ppoConfig"]) != config["ppoConfig"]
+            ):
+                raise ValueError("Engage follow-up source checkpoint changed")
+            collector = source["collectorConfig"]
+            expected = {
+                "worlds": config["worlds"],
+                "rolloutSteps": config["rolloutSteps"],
+                "option": "engage",
+                "stage": 1,
+                "anchorTotalUpdates": config["anchorTotalUpdates"],
+                "reservoirBcFraction": config["reservoirBcFraction"],
+                "bcAnchorFloor": config["bcAnchorFloor"],
+            }
+            if any(collector.get(name) != value for name, value in expected.items()):
+                raise ValueError("Engage follow-up source collector changed")
+            if collector.get("teacherReservoir") != reservoir.metadata:
+                raise ValueError("Engage follow-up source reservoir changed")
+            if updates[0] != source["updateIndex"]:
+                raise ValueError("Engage follow-up retained schedule omits its source")
+            checkpoints[source["updateIndex"]] = Path(source_checkpoint)
+            previous = Path(source_checkpoint)
+            source_summary = {
+                "checkpointDigest": source["checkpointDigest"],
+                "stateDigest": source["stateDigest"],
+                "updateIndex": source["updateIndex"],
+            }
+            updates = updates[1:]
+        for update in updates:
             run = train_option_ppo(
                 output=root / f"update-{update:06d}",
                 option="engage",
@@ -126,6 +162,7 @@ def run_engage_followup(
             "config": config,
             "configDigest": json_digest(config),
             "reservoir": reservoir.metadata,
+            "sourceCheckpoint": source_summary,
             "trainingRuns": training_runs,
             "evaluations": evaluations,
             "trajectoryDigest": trajectory["trajectoryDigest"],

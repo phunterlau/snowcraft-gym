@@ -41,6 +41,7 @@ from snowgym_training.options.r1b import (
 )
 from snowgym_training.options.r1c import load_r1c_config
 from snowgym_training.options.r1d import load_r1d_config
+from snowgym_training.options.r1e import load_r1e_config
 from snowgym_training.trajectory import json_digest
 
 
@@ -381,6 +382,21 @@ def test_frozen_engage_r1d_config_changes_only_reservoir_fraction() -> None:
         "ppoConfig", "bcLossConfig", "bootstrapGates",
     ):
         assert r1d[name] == r1c[name]
+
+
+def test_frozen_engage_r1e_config_only_extends_r1d_duration() -> None:
+    r1d = load_r1d_config()
+    r1e = load_r1e_config()
+    assert r1e["sourceUpdate"] == 100
+    assert r1e["retainedUpdates"] == [100, 150, 200]
+    assert r1e["finalUpdate"] == 200
+    for name in (
+        "option", "intervention", "bcAnchorFloor", "selectionPolicy",
+        "reservoirBcFraction", "reservoirSeedPartition", "reservoirSeedCount",
+        "worlds", "rolloutSteps", "anchorTotalUpdates", "trainingSeed",
+        "ppoConfig", "bcLossConfig", "bootstrapGates",
+    ):
+        assert r1e[name] == r1d[name]
 
 
 def test_archived_failed_engage_evidence_passes_digest_audit() -> None:

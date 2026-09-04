@@ -812,6 +812,9 @@ R1d reached 85% contact and 52.5% hit rate at update 100, with monotonic gains
 across retained checkpoints, but no Engage completion. It remains development
 evidence rather than a promoted executor.
 
+R1e continues the exact improving R1d trajectory from update 100 to update 200
+without changing its optimizer or learning mechanism. Only update 200 is gated.
+
 The frozen `ppo_curriculum_v0.json` keeps training ranges disjoint from eight
 evaluation seeds per gate and sets thresholds before qualifying runs. Its order
 is 1v1 random, 1v1 easy scripted, 3v3 random, 3v3 easy scripted, 3v3 terrain on

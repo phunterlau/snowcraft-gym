@@ -946,6 +946,13 @@ mechanism. The audited result is archived under
 `training/runs/m7b_engage_teacher_reservoir_r1d_reservoir90_v0/`; R1 remains
 open until a predeclared final checkpoint passes.
 
+M7b-R1e predeclaration (2026-09-04): change only training duration by resuming
+the exact R1d update-100 checkpoint, including model, optimizer, RNG, seed
+schedule, and option schedule, and continuing to update 200. Retain the same
+Stage-1 freeze, 90% successful-teacher BC mixture, `0.05` BC floor, learner-only
+PPO data, losses, exploration, reward, discount, and training seeds. Evaluate
+updates 100, 150, and 200 and apply the bootstrap gate only to update 200.
+
 #### M7c — full-fight fixed-plan composition
 
 - [ ] Hold one-, two-, and three-role plans throughout complete 3v3, 5v5, and

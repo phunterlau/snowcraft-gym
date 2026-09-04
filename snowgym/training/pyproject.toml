@@ -58,6 +58,7 @@ snowgym-run-engage-r1 = "snowgym_training.options.r1:main"
 snowgym-run-engage-r1b = "snowgym_training.options.r1b:main"
 snowgym-run-engage-r1c = "snowgym_training.options.r1c:main"
 snowgym-run-engage-r1d = "snowgym_training.options.r1d:main"
+snowgym-run-engage-r1e = "snowgym_training.options.r1e:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/snowgym_training"]
