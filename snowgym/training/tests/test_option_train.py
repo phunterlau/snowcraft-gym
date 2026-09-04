@@ -73,7 +73,7 @@ def test_option_ppo_smoke_and_exact_resume_match_uninterrupted(tmp_path) -> None
         "bcAction", "bcTarget", "bcPower", "bcOnPolicy", "bcReservoir",
         "targetStd", "powerStd"
     }
-    assert first["updates"][0]["metrics"]["bcSampleMixture"] == {
+    assert first["updates"][0]["metrics"]["bcLossWeights"] == {
         "onPolicyFraction": 0.5,
         "teacherReservoirFraction": 0.5,
     }
@@ -88,6 +88,11 @@ def test_option_ppo_smoke_and_exact_resume_match_uninterrupted(tmp_path) -> None
     assert resumed["seedSchedule"] == uninterrupted["seedSchedule"]
     assert resumed["optionSchedule"] == uninterrupted["optionSchedule"]
     assert resumed["checkpoint"]["stateDigest"] == uninterrupted["checkpoint"]["stateDigest"]
+    assert resumed["checkpoint"]["initializerDigest"] == first["checkpoint"]["initializerDigest"]
+    assert first["updates"][0]["metrics"]["bcSampleCounts"] == {"onPolicy": 2, "teacherReservoir": 2}
+    assert set(first["updates"][0]["metrics"]["ppoLossComponents"]) >= {
+        "policy", "value", "entropy", "mean_per_unit_kl", "max_per_unit_kl", "joint_approximate_kl",
+    }
     assert json.loads((tmp_path / "resumed" / "manifest.json").read_text()) == resumed
 
     metadata, state = load_ppo_checkpoint(tmp_path / "first" / "checkpoint")

@@ -12,7 +12,8 @@ from snowgym_training.plan_ppo import (
     plan_ppo_parameter_groups,
     target_only_plan_ppo_config,
 )
-from snowgym_training.ppo import HybridActorCritic, clip_separate_actor_critic_gradients
+from snowgym_training.ppo import HybridActorCritic, PPOConfig, RolloutBuffer, clip_separate_actor_critic_gradients
+from snowgym_training.plan_ppo import plan_ppo_update
 
 
 def source_observation(batch: int = 2, units: int = 3) -> dict[str, torch.Tensor]:
@@ -55,6 +56,35 @@ def target_observation(source: dict[str, torch.Tensor]) -> dict[str, torch.Tenso
         }
     )
     return result
+
+
+def test_plan_ppo_honors_kl_stop_and_reports_loss_components() -> None:
+    torch.manual_seed(7)
+    source = ModelConfig(16, 12, 24, action_conditioned_targets=True,
+                         plan_conditioned=True, plan_target_only=True, separate_target_actor=True)
+    model = HybridActorCritic(target_only_plan_ppo_config(source))
+    config = PPOConfig(update_epochs=4, minibatch_size=2, target_kl=1e-12)
+    optimizer = torch.optim.Adam(plan_ppo_parameter_groups(model, 1, new_module_learning_rate=0.01))
+    initial = freeze_initializer(model)
+    observation = target_observation(source_observation())
+    observation["allies"][..., 1] = 1
+    with torch.no_grad():
+        action, logp, value = model.act(observation)
+    buffer = RolloutBuffer(1, 2)
+    buffer.add(observation=observation, action=action, log_probability=logp,
+               value=value, reward=torch.tensor([1.0, -1.0]),
+               terminated=torch.ones(2, dtype=torch.bool), truncated=torch.zeros(2, dtype=torch.bool),
+               next_value=torch.zeros(2))
+    rollout = buffer.finish(config)
+    metrics = plan_ppo_update(model, optimizer, rollout,
+        {name: tensor.unsqueeze(0) for name, tensor in action.items()}, initial, config,
+        loss_config=LossConfig(), training_seed=7, update_index=0, total_updates=10)
+    assert metrics["earlyStopped"]
+    assert 1 <= metrics["minibatches"] < 4
+    assert metrics["finalPpoDiagnostics"]["mean_per_unit_kl"] > config.target_kl
+    assert set(metrics["ppoLossComponents"]) >= {"policy", "value", "entropy", "mean_per_unit_kl", "joint_clip_fraction"}
+    assert metrics["bcLossWeights"]["teacherReservoirFraction"] == 0
+    assert metrics["bcSampleCounts"]["teacherReservoir"] == 0
 
 
 def test_target_only_initializer_preserves_policy_outputs_with_zero_v3_fields() -> None:

@@ -33,6 +33,8 @@ def save_ppo_checkpoint(
     initialization: dict[str, Any],
     plan_schedule: dict[str, Any] | None = None,
     option_schedule: dict[str, Any] | None = None,
+    initializer: HybridActorCritic | None = None,
+    initializer_source_digest: str | None = None,
 ) -> dict[str, Any]:
     destination = Path(path)
     if destination.exists():
@@ -58,6 +60,12 @@ def save_ppo_checkpoint(
         "optimizer": optimizer.state_dict(),
         "torchRngState": torch.get_rng_state(),
     }
+    if (initializer is None) != (initializer_source_digest is None):
+        raise ValueError("initializer model and source digest must be provided together")
+    if initializer is not None:
+        if initializer.policy.config != model.policy.config:
+            raise ValueError("initializer architecture does not match model")
+        state["initializerModel"] = initializer.state_dict()
     metadata: dict[str, Any] = {
         "format": PPO_CHECKPOINT_FORMAT,
         "gitCommit": git_commit,
@@ -76,6 +84,9 @@ def save_ppo_checkpoint(
         metadata["planSchedule"] = dict(plan_schedule)
     if option_schedule is not None:
         metadata["optionSchedule"] = dict(option_schedule)
+    if initializer is not None:
+        metadata["initializerDigest"] = semantic_state_digest(state["initializerModel"])
+        metadata["initializerSourceDigest"] = initializer_source_digest
     metadata["checkpointDigest"] = json_digest(metadata)
     destination.mkdir(parents=True)
     torch.save(state, destination / "state.pt")
@@ -96,14 +107,15 @@ def load_ppo_checkpoint(path: str | Path) -> tuple[dict[str, Any], dict[str, Any
         state = torch.load(source / "state.pt", map_location="cpu", weights_only=True)
     except (OSError, RuntimeError, ValueError) as error:
         raise ValueError(f"cannot load PPO checkpoint state: {error}") from error
-    if not isinstance(state, dict) or set(state) != {
-        "model",
-        "optimizer",
-        "torchRngState",
-    }:
+    expected_fields = {"model", "optimizer", "torchRngState"}
+    if "initializerDigest" in metadata:
+        expected_fields.add("initializerModel")
+    if not isinstance(state, dict) or set(state) != expected_fields:
         raise ValueError("PPO checkpoint state fields are invalid")
     if semantic_state_digest(state) != metadata["stateDigest"]:
         raise ValueError("PPO checkpoint state digest mismatch")
+    if "initializerModel" in state and semantic_state_digest(state["initializerModel"]) != metadata["initializerDigest"]:
+        raise ValueError("PPO checkpoint initializer digest mismatch")
     return metadata, state
 
 
@@ -158,7 +170,7 @@ def validate_ppo_checkpoint_metadata(value: Any) -> None:
         "stateDigest",
         "checkpointDigest",
     }
-    optional = {"planSchedule", "optionSchedule"}
+    optional = {"planSchedule", "optionSchedule", "initializerDigest", "initializerSourceDigest"}
     if (
         not isinstance(value, dict)
         or not required <= set(value)
@@ -170,6 +182,14 @@ def validate_ppo_checkpoint_metadata(value: Any) -> None:
         )
     if value["format"] != PPO_CHECKPOINT_FORMAT:
         raise ValueError(f"PPO checkpoint format must be {PPO_CHECKPOINT_FORMAT}")
+    if ("initializerDigest" in value) != ("initializerSourceDigest" in value):
+        raise ValueError("PPO initializer provenance fields must occur together")
+    for name in ("initializerDigest", "initializerSourceDigest"):
+        if name in value and (
+            not isinstance(value[name], str) or not value[name].startswith("sha256:")
+            or len(value[name]) != 71
+        ):
+            raise ValueError(f"PPO checkpoint {name} is invalid")
     for name in ("gitCommit", "curriculumDigest", "stateDigest"):
         if not isinstance(value[name], str) or not value[name]:
             raise ValueError(f"PPO checkpoint {name} must be a non-empty string")

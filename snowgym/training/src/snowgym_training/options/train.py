@@ -214,6 +214,13 @@ def train_option_ppo(
         plan_gate_passed=plan_gate_passed,
     )
     optimizer = torch.optim.Adam(parameter_groups)
+    if resume is not None or ppo_warm_start is not None:
+        from .identity import recover_initializer
+
+        previous_metadata, previous_state = load_ppo_checkpoint(resume or ppo_warm_start)
+        initializer, _ = recover_initializer(
+            previous_metadata, previous_state, source_metadata, source_state
+        )
     if resume is not None:
         restored = restore_ppo_checkpoint(
             resume,
@@ -310,6 +317,8 @@ def train_option_ppo(
             collector_config=collector_config,
             initialization=initialization,
             option_schedule=option_schedule.state(),
+            initializer=initializer,
+            initializer_source_digest=source_metadata["checkpointDigest"],
         )
         manifest = {
             "format": OPTION_PPO_RUN_FORMAT,

@@ -289,8 +289,9 @@ move/throw coordination. The immutable result is under
 
 ### R1d frozen reservoir mixture
 
-R1d retains the R1c `0.05` BC floor and changes only the BC sample mixture from
-50% to 90% successful-teacher reservoir states. Learner transitions remain the
+R1d retains the R1c `0.05` BC floor and changes only the BC loss weighting from
+50% to 90% successful-teacher reservoir loss. Both sources retain equal sample
+counts per minibatch. Learner transitions remain the
 exclusive source of PPO ratios, advantages, returns, and value targets.
 
 ```bash
@@ -331,3 +332,24 @@ hits, and 14% mean progress, but no Engage completion or physical win. The
 exact continuation demonstrates that duration improves contact and damage but
 does not approach the frozen 80% target-health reduction. The audited result is
 under `runs/m7b_engage_teacher_reservoir_r1e_continue200_v0/`.
+
+### Measurement contract after the R1e review
+
+New option checkpoints preserve the complete expanded initializer and its
+source/state digests. Evaluation uses those weights; legacy checkpoints use a
+seeded reconstruction explicitly labeled in `initializerIdentity`. Legacy
+staged transfers without a recorded root identity are marked unverified.
+`parameterL2ChangeByGroup` separates inherited heads, new actor modules,
+remaining inherited actor parameters, and critic. Learning rates come from
+saved named optimizer groups.
+
+The active plan-PPO updater reports `ppoLossComponents`, post-update
+`finalPpoDiagnostics`, and optional `target_kl` early stopping.
+`bcLossWeights` and actual `bcSampleCounts` replace the ambiguous
+`bcSampleMixture` label. Existing artifact bytes remain unchanged; compare
+historical episode records separately from their old parameter-distance metric.
+
+Measurement-repair verification: 325 TypeScript tests, build, 50 Gym-client
+tests, and 171 training tests passed on 2026-09-04. Added regressions cover
+initializer/RNG identity, repeated evaluation digests, stored initializer
+restoration, optimizer learning rates, exact resume, and plan-PPO KL stopping.

@@ -14,8 +14,6 @@ import torch
 from snowgym_client.batch import SnowGymBatchClient, SnowGymBatchEnv
 
 from ..checkpoint import load_checkpoint
-from ..executor import model_config
-from ..plan_ppo import freeze_initializer, initialize_plan_ppo_policy
 from ..ppo import HybridActorCritic
 from ..ppo_checkpoint import load_ppo_checkpoint
 from ..ppo_collect import merge_observations, numpy_actions, tensor_dict
@@ -26,6 +24,7 @@ from .plans import teacher_option_plan, teacher_option_scenario
 from .protocol import load_option_protocol
 from .train import DEFAULT_INITIALIZER, OPTION_ORDER
 from .interventions import contact_distance, require_raw, team_health
+from .identity import checkpoint_model, recover_initializer, parameter_changes, optimizer_learning_rates
 
 CONDITIONS = ("correct", "shuffled", "initializer")
 SHUFFLED_OPTION = {
@@ -164,21 +163,11 @@ def evaluate_m7b_checkpoint(
     start = int(protocol["seeds"][split][0])
     checkpoint_metadata, checkpoint_state = load_ppo_checkpoint(checkpoint)
     source_metadata, source_state = load_checkpoint(initializer_path)
-    architecture = model_config(checkpoint_metadata["architecture"])
-    model = HybridActorCritic(
-        architecture,
-        initial_target_log_std=checkpoint_metadata["ppoConfig"]["initial_target_log_std"],
-        initial_power_log_std=checkpoint_metadata["ppoConfig"]["initial_power_log_std"],
-    ).eval()
+    model = checkpoint_model(checkpoint_metadata)
     model.load_state_dict(checkpoint_state["model"])
-    source_config = model_config(source_metadata["architecture"])
-    initializer = HybridActorCritic(
-        architecture,
-        initial_target_log_std=checkpoint_metadata["ppoConfig"]["initial_target_log_std"],
-        initial_power_log_std=checkpoint_metadata["ppoConfig"]["initial_power_log_std"],
-    ).eval()
-    initialize_plan_ppo_policy(initializer, source_state["model"])
-    initializer = freeze_initializer(initializer)
+    initializer, identity = recover_initializer(
+        checkpoint_metadata, checkpoint_state, source_metadata, source_state
+    )
     missions: dict[str, Any] = {}
     with SnowGymBatchClient() as client:
         for option in selected_options:
@@ -198,12 +187,8 @@ def evaluate_m7b_checkpoint(
                 ]
                 for condition in CONDITIONS
             }
-    difference = 0.0
-    initializer_state = initializer.policy.state_dict()
-    for name, value in model.policy.state_dict().items():
-        difference += float((value.detach() - initializer_state[name]).square().sum())
-    stage = int(checkpoint_metadata["collectorConfig"].get("stage", 0))
-    new_learning_rate = max(float(checkpoint_metadata["ppoConfig"]["learning_rate"]), 1e-4)
+    changes = parameter_changes(model, initializer)
+    rates = optimizer_learning_rates(checkpoint_state)
     value = {
         "format": (
             "snowgym.m7b-evaluation.v0"
@@ -214,9 +199,12 @@ def evaluate_m7b_checkpoint(
         "checkpointDigest": checkpoint_metadata["checkpointDigest"],
         "sourceDigest": source_metadata["checkpointDigest"],
         "protocolDigest": json_digest(protocol),
-        "inheritedHeadLearningRate": new_learning_rate / 10 if stage >= 2 else 0.0,
-        "newModuleLearningRate": new_learning_rate,
-        "parameterL2Change": math.sqrt(difference),
+        "inheritedHeadLearningRate": rates.get("heads", 0.0),
+        "newModuleLearningRate": rates["new"],
+        "optimizerLearningRates": rates,
+        "initializerIdentity": identity,
+        "parameterL2Change": changes["actorTotal"],
+        "parameterL2ChangeByGroup": changes,
         "evaluatedOptions": list(selected_options),
         "missions": missions,
     }

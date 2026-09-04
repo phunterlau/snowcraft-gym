@@ -177,6 +177,8 @@ def plan_ppo_update(
     maximum_critic_gradient_norm = 0.0
     actor_clipped = 0
     critic_clipped = 0
+    early_stopped = False
+    ppo_totals: dict[str, float] = {}
     model.train()
     initializer.eval()
     reservoir_cursor = 0
@@ -209,6 +211,9 @@ def plan_ppo_update(
                 normalize_advantages=False,
                 active_mask=living_unit_mask(observation),
             )
+            if config.target_kl is not None and float(base["mean_per_unit_kl"].detach()) > config.target_kl:
+                early_stopped = True
+                break
             bc_losses = behavior_clone_loss(
                 prediction, teacher, observation, loss_config
             )
@@ -272,6 +277,14 @@ def plan_ppo_update(
             actor_clipped += int(bool(clipping["actorClipped"]))
             critic_clipped += int(bool(clipping["criticClipped"]))
             count = int(indices.numel())
+            for name, value in base.items():
+                if name == "total":
+                    continue
+                number = float(value.detach())
+                if name in {"max_per_unit_kl", "joint_ratio_max"}:
+                    ppo_totals[name] = max(ppo_totals.get(name, 0.0), number)
+                else:
+                    ppo_totals[name] = ppo_totals.get(name, 0.0) + number * count
             for name, value in {
                 "total": total,
                 "ppo": base["total"],
@@ -290,9 +303,11 @@ def plan_ppo_update(
                 totals[name] += float(value.detach()) * count
             seen += count
             minibatches += 1
+        if early_stopped:
+            break
     with torch.no_grad():
         final_prediction = model(flat["observations"])
-        final_log_probability, _ = model.evaluate_actions(
+        final_log_probability, final_entropy = model.evaluate_actions(
             flat["observations"], flat["actions"], prediction=final_prediction
         )
         diagnostics = ratio_diagnostics(
@@ -300,16 +315,29 @@ def plan_ppo_update(
             flat["old_log_probability"],
             flat["observations"],
         )
+        final_losses = ppo_loss(
+            final_log_probability, flat["old_log_probability"], normalized,
+            final_prediction["value"], flat["returns"], final_entropy, config,
+            normalize_advantages=False, active_mask=living_unit_mask(flat["observations"]),
+        )
     return {
         "updateIndex": update_index,
         "samples": sample_count,
         "minibatches": minibatches,
         "anchorWeights": weights,
-        "bcSampleMixture": {
+        "bcLossWeights": {
             "onPolicyFraction": 1 - reservoir_bc_fraction,
             "teacherReservoirFraction": reservoir_bc_fraction,
         },
-        **{name: value / seen for name, value in totals.items()},
+        "bcSampleCounts": {"onPolicy": seen, "teacherReservoir": seen if teacher_reservoir is not None else 0},
+        "earlyStopped": early_stopped,
+        "targetKl": config.target_kl,
+        "ppoLossComponents": {
+            name: value if name in {"max_per_unit_kl", "joint_ratio_max"} else value / max(seen, 1)
+            for name, value in ppo_totals.items()
+        },
+        "finalPpoDiagnostics": {name: float(value) for name, value in final_losses.items()},
+        **{name: value / max(seen, 1) for name, value in totals.items()},
         "targetStd": model.target_log_std.detach().exp().tolist(),
         "powerStd": float(model.power_log_std.detach().exp()),
         "maximumGradientNormBeforeClip": maximum_gradient_norm,

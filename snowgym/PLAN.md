@@ -928,8 +928,9 @@ move/throw state distribution. The digest-bound negative result is archived at
 `training/runs/m7b_engage_teacher_reservoir_r1c_bc_floor_v0/`.
 
 M7b-R1d predeclaration (2026-09-04): retain R1c's `0.05` BC floor and change
-only the auxiliary BC sample mixture from 50% to 90% successful-teacher
-reservoir states. The R1c learner-state teacher labels become dominated by
+only the auxiliary BC loss weighting from 50% to 90% successful-teacher
+reservoir loss. Both sources retain equal sample counts per minibatch; earlier
+wording called this a sample mixture. The R1c learner-state teacher labels become dominated by
 movement as the closed loop loses contact, while the reservoir retains the
 successful move/throw sequence. PPO ratios, advantages, returns, and value
 targets remain exclusively learner-on-policy. Preserve all other optimizer,
@@ -963,6 +964,24 @@ probe that tests whether the trainable Stage-1 modules can reproduce the full
 teacher trajectory in deterministic closed loop and identifies the remaining
 action/target/power error by mission phase. Evidence is archived under
 `training/runs/m7b_engage_teacher_reservoir_r1e_continue200_v0/`.
+
+M7b-R1f predeclaration (2026-09-04): first repair expanded-initializer identity,
+optimizer-derived learning-rate reporting, active plan-PPO loss/KL diagnostics,
+and optional KL stopping. Retain historical artifact bytes. Then run one
+bounded supervised-only probe from the final R1e checkpoint: Stage-1 actor
+modules, fresh Adam at `3e-4`, 20 epochs, minibatches of 256, seed 91001, and
+the existing 5,367-state/40-training-seed successful-teacher reservoir. Keep
+the R1e BC component weights (action 1, target 5, power 0.5, throw class 5),
+with BC as the entire objective and no PPO, entropy, initializer-KL, or critic
+training. Preserve checkpoints/teacher-state diagnostics at epochs 0, 10,
+and 20; assess only epoch 20 as the final probe. Report action/target/ray/power
+errors by approach/contact/fire phase, deterministic closed-loop reproduction
+on all 40 reservoir training seeds at epochs 0 and 20, and final paired
+correct/HOLD/initializer controls on the existing 40 development seeds. No
+qualification seeds, provider calls, threshold changes, or automatic extra
+epochs. This capacity/optimization probe does not itself qualify R1 or isolate
+PPO's causal contribution. Decide the next intervention from the completed
+probe and its failure channels before another PPO run.
 
 #### M7c — full-fight fixed-plan composition
 
