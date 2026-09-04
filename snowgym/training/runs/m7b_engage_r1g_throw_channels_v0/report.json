@@ -1,0 +1,189 @@
+{
+  "format": "snowgym.engage-throw-channels-report.v0",
+  "interpretation": "Direction includes teacher-style enemy selection; intervals are paired development diagnostics, not qualification or multiplicity-adjusted inference.",
+  "modelUnchanged": true,
+  "qualificationEligible": false,
+  "summary": {
+    "direction": {
+      "contactRate": 0.875,
+      "directionReplacements": 1945,
+      "episodes": 40,
+      "hitRate": 0.95,
+      "learnerThrows": 1945,
+      "learnerThrowsWhileTeacherDoesNotThrow": 1766,
+      "meanProgress": 0.4669999971985817,
+      "pairedDifferences": {
+        "hit": {
+          "bootstrap95": [
+            0.275,
+            0.575
+          ],
+          "mean": 0.425
+        },
+        "progress": {
+          "bootstrap95": [
+            0.31999998983927075,
+            0.4839999914262444
+          ],
+          "mean": 0.40099999159574506
+        },
+        "success": {
+          "bootstrap95": [
+            0.075,
+            0.3
+          ],
+          "mean": 0.175
+        }
+      },
+      "powerReplacements": 0,
+      "rejectedActionRate": 0.0,
+      "successRate": 0.175,
+      "teacherThrowAgreements": 1201
+    },
+    "direction-power": {
+      "contactRate": 0.85,
+      "directionReplacements": 2010,
+      "episodes": 40,
+      "hitRate": 0.95,
+      "learnerThrows": 2010,
+      "learnerThrowsWhileTeacherDoesNotThrow": 1814,
+      "meanProgress": 0.5269999964162707,
+      "pairedDifferences": {
+        "hit": {
+          "bootstrap95": [
+            0.275,
+            0.575
+          ],
+          "mean": 0.425
+        },
+        "progress": {
+          "bootstrap95": [
+            0.38299998695962134,
+            0.5389999907556922
+          ],
+          "mean": 0.4609999908134341
+        },
+        "success": {
+          "bootstrap95": [
+            0.125,
+            0.4
+          ],
+          "mean": 0.25
+        }
+      },
+      "powerReplacements": 2010,
+      "rejectedActionRate": 0.0,
+      "successRate": 0.25,
+      "teacherThrowAgreements": 1200
+    },
+    "learner": {
+      "contactRate": 0.875,
+      "directionReplacements": 0,
+      "episodes": 40,
+      "hitRate": 0.525,
+      "learnerThrows": 1468,
+      "learnerThrowsWhileTeacherDoesNotThrow": 1105,
+      "meanProgress": 0.06600000560283661,
+      "pairedDifferences": {
+        "hit": {
+          "bootstrap95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        },
+        "progress": {
+          "bootstrap95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        },
+        "success": {
+          "bootstrap95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        }
+      },
+      "powerReplacements": 0,
+      "rejectedActionRate": 0.0,
+      "successRate": 0.0,
+      "teacherThrowAgreements": 1849
+    },
+    "power": {
+      "contactRate": 0.9,
+      "directionReplacements": 0,
+      "episodes": 40,
+      "hitRate": 0.425,
+      "learnerThrows": 1488,
+      "learnerThrowsWhileTeacherDoesNotThrow": 1152,
+      "meanProgress": 0.062000003457069394,
+      "pairedDifferences": {
+        "hit": {
+          "bootstrap95": [
+            -0.25,
+            0.05
+          ],
+          "mean": -0.1
+        },
+        "progress": {
+          "bootstrap95": [
+            -0.030025009848177412,
+            0.022999998927116395
+          ],
+          "mean": -0.004000002145767212
+        },
+        "success": {
+          "bootstrap95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        }
+      },
+      "powerReplacements": 1488,
+      "rejectedActionRate": 0.0,
+      "successRate": 0.0,
+      "teacherThrowAgreements": 1643
+    },
+    "teacher": {
+      "contactRate": 1.0,
+      "directionReplacements": 0,
+      "episodes": 40,
+      "hitRate": 1.0,
+      "learnerThrows": 2832,
+      "learnerThrowsWhileTeacherDoesNotThrow": 1969,
+      "meanProgress": 0.849000003375113,
+      "pairedDifferences": {
+        "hit": {
+          "bootstrap95": [
+            0.325,
+            0.625
+          ],
+          "mean": 0.475
+        },
+        "progress": {
+          "bootstrap95": [
+            0.7539999935775995,
+            0.8089999988721683
+          ],
+          "mean": 0.7829999977722764
+        },
+        "success": {
+          "bootstrap95": [
+            1.0,
+            1.0
+          ],
+          "mean": 1.0
+        }
+      },
+      "powerReplacements": 0,
+      "rejectedActionRate": 0.0,
+      "successRate": 1.0,
+      "teacherThrowAgreements": 1177
+    }
+  },
+  "trainingUpdates": 0
+}

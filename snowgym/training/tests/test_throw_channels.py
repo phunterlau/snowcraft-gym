@@ -119,3 +119,35 @@ def test_frozen_config_and_pipeline_artifacts(tmp_path, monkeypatch) -> None:
     assert manifest["seeds"] == list(range(200000, 200040))
     with pytest.raises(FileExistsError):
         channels.run_matrix(CHECKPOINT, output=output)
+
+
+def test_archived_matrix_integrity_pairing_and_baseline_parity() -> None:
+    root = ROOT / "runs/m7b_engage_r1g_throw_channels_v0"
+    manifest = audit_artifact_manifest(root, "manifest.json")
+    assert manifest["manifestDigest"] == json_digest({k: v for k, v in manifest.items() if k != "manifestDigest"})
+    assert manifest["config"] == channels.load_config()
+    records = {arm: json.loads((root / f"{arm}.json").read_text()) for arm in channels.ARMS}
+    report = json.loads((root / "report.json").read_text())
+    assert channels.summarize(records) == report["summary"]
+    assert report["modelUnchanged"] and report["trainingUpdates"] == 0
+    assert not report["qualificationEligible"]
+    for arm, rows in records.items():
+        assert [row["seed"] for row in rows] == list(range(200000, 200040))
+        assert sum(row["teacherThrowAgreements"] for row in rows) > 0
+        for index, row in enumerate(rows):
+            assert len(row["stateHashes"]) == row["decisions"] + 1
+            assert row["stateHashes"][0] == records["learner"][index]["stateHashes"][0]
+            assert row["rejectedActions"] == 0
+            # Some learner trajectories never reach a state where the teacher
+            # would fire. Agreement is checked only on actual teacher throws.
+            assert row["teacherThrowAgreements"] >= 0
+            if arm == "teacher":
+                assert row["teacherThrowAgreements"] > 0
+            assert row["directionReplacements"] == (row["learnerThrows"] if arm in {"direction", "direction-power"} else 0)
+            assert row["powerReplacements"] == (row["learnerThrows"] if arm in {"power", "direction-power"} else 0)
+    old = json.loads((ROOT / "runs/m7b_engage_r1f_supervised_probe_v0/development-evaluation.json").read_text())
+    for actual, expected in zip(records["learner"], old["missions"]["engage"]["correct"], strict=True):
+        for name in ("seed", "success", "progress", "firstContactDecision", "firstHitDecision"):
+            assert actual[name] == expected[name]
+    assert sum(row["success"] for row in records["teacher"]) == 40
+    assert sum(row["success"] for row in records["direction-power"]) == 10

@@ -107,7 +107,8 @@ role rows, and mission progress; it does not reuse the actor target pathway.
 M7 plan PPO starts from the accepted target-only checkpoint. Its legacy entity
 columns are copied into v3 encoders, appended columns are zero initialized, and
 a split first-layer calculation preserves inherited policy outputs exactly when
-the new fields are zero. Stage 1 trains only the shared residual and critic;
+the new fields are zero. Stage 1 trains the shared residual, v3 entity adapters,
+and critic while inherited actor parameters remain frozen;
 stage 2 opens action, target, and power heads at one tenth of the new-module
 learning rate; stage 3 opens final entity-encoder layers only after both
 physical and plan gates pass.
@@ -119,8 +120,15 @@ Representative committed artifacts are:
 | Artifact | Parameters | Status |
 | --- | ---: | --- |
 | `runs/plan_bc_ablation_qual_v1/plan-conditioned` | 47,649 | Passed the frozen offline plan-target qualification |
-| `runs/plan_directive_experts_v3_dev` | 145,269 | Latest mission-expert development checkpoint; retained negative closed-loop evidence |
-| `checkpoints/bc_10v10_terrain_relational_v0` | 23,495 | Successful 10v10 relational blue behavior-cloning initializer |
+| `runs/plan_directive_experts_v3_dev` | 145,269 | Historical mission-expert checkpoint; retained negative closed-loop evidence |
+| `checkpoints/bc_10v10_terrain_relational_v0` | 23,495 | Historical v1 random-opponent evidence; requires v2 requalification |
+
+The current R1 recovery checkpoint is
+`runs/m7b_engage_r1f_supervised_probe_v0/epoch-020`. It has zero Engage successes
+on 40 development seeds under `snowgym.sim.v2`. The frozen R1g intervention
+matrix identifies throw direction/implicit enemy selection as a major execution
+bottleneck; it does not qualify this checkpoint. See
+[R1g results and design feedback](DESIGN_FEEDBACK_R1G.md).
 
 These are small CPU-oriented policies. GPT-5.6 Luna is not embedded in any of
 these checkpoints.
@@ -170,18 +178,21 @@ but supervised variants have not jointly solved direct, flank, hold, withdraw,
 and support behavior in closed loop. The retained failures are evidence against
 continuing unguided behavior-cloning variants.
 
-The next M7 implementation is a plan-conditioned PPO collector. It must:
+The plan-aware collector and fixed-plan option trainer are implemented in
+[`options/train.py`](../options/train.py). They activate plans after resets,
+refresh plan and role observations, retain those inputs during PPO, restore
+selective resets, and track mission reward separately from canonical returns.
+Use the [option commands](../options/README.md) for this path; do not infer
+plan-aware collection from the generic `snowgym-train-ppo` command.
 
-1. activate a validated plan after each batch reset;
-2. retrieve fresh plan tensors and assignments before every decision;
-3. store those inputs in the immutable rollout buffer;
-4. re-activate plans after selective world resets;
-5. optimize mission-aware shaping while retaining canonical terminal returns;
-6. evaluate every retained checkpoint on frozen, disjoint mission suites.
-
-Until that bridge exists, the generic `snowgym-train-ppo` command must not be
-described as plan-conditioned training: its current collector consumes only the
-physical observation.
+R1e PPO and R1f supervised recovery both failed to complete Engage. R1g then
+tested frozen throw-channel replacements without training: learned execution
+passed 0/40, direction replacement 7/40, direction plus power 10/40, and the
+full teacher 40/40. The next design work is a conditional-action diagnostic
+followed by a separately versioned target-relative shot ablation, with gradient
+reachability and plan-selectivity gates. The
+[design feedback](DESIGN_FEEDBACK_R1G.md) specifies the evidence and limitations.
+Further PPO continuation and executor promotion remain gated.
 
 ## Design invariants
 

@@ -1017,6 +1017,20 @@ qualification, or automatic architecture changes. Use the completed matrix to
 decide whether structured target selection, direction-aware loss, power control,
 or action/movement control should be the next design intervention.
 
+M7b-R1g result (2026-09-04): all 200 episodes completed with no training and
+zero rejected actions. On 40 paired development seeds, learner/direction/power/
+both/full-teacher Engage successes were 0/7/0/10/40. Direction replacement
+raised hit rate from 52.5% to 95% and mean progress from 6.6% to 46.7%; adding
+power reached 52.7% progress. Power-only gave no supported improvement, and
+the incremental benefit of power over direction is uncertain. Direction includes
+enemy selection, so this does not isolate selection from fine aim. Both channel
+repairs still leave a large gap to the teacher. Next: predeclare a conditional
+action-choice versus movement diagnostic, then a separately versioned
+target-relative shot ablation with gradient-reachability, likelihood, and plan
+selectivity checks before further PPO. No production actor redesign or promotion
+occurred. Artifacts: `training/runs/m7b_engage_r1g_throw_channels_v0/`;
+[results and design feedback](training/src/snowgym_training/executor/DESIGN_FEEDBACK_R1G.md).
+
 #### M7c — full-fight fixed-plan composition
 
 - [ ] Hold one-, two-, and three-role plans throughout complete 3v3, 5v5, and

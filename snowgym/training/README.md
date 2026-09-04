@@ -829,6 +829,14 @@ throw-coordinate error improved while throw-direction error worsened from
 [headless reproduction command](src/snowgym_training/options/README.md#r1f-supervised-only-teacher-trajectory-probe).
 R1 remains open; the artifact is negative evidence, not a promoted executor.
 
+R1g completed 200 no-training throw-channel intervention episodes on that frozen
+checkpoint. Across 40 paired development seeds, Engage successes were 0/40 for
+the learner, 7/40 with teacher-style direction, 0/40 with teacher-style power,
+10/40 with both, and 40/40 for the full teacher. Direction includes implicit
+enemy selection. The result prioritizes a target-relative shot ablation and a
+separate firing-versus-movement diagnostic; it does not qualify an executor.
+See [R1g results and executor design feedback](src/snowgym_training/executor/DESIGN_FEEDBACK_R1G.md).
+
 The frozen `ppo_curriculum_v0.json` keeps training ranges disjoint from eight
 evaluation seeds per gate and sets thresholds before qualifying runs. Its order
 is 1v1 random, 1v1 easy scripted, 3v3 random, 3v3 easy scripted, 3v3 terrain on
