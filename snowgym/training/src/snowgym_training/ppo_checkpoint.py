@@ -168,9 +168,14 @@ def validate_ppo_checkpoint_metadata(value: Any) -> None:
 
 def normalized_ppo_config(value: Any) -> dict[str, Any]:
     current = set(asdict(PPOConfig()))
-    legacy = current - {"initial_target_log_std", "initial_power_log_std"}
+    optional_generations = (
+        {"initial_target_log_std", "initial_power_log_std", "ratio_mode", "target_kl"},
+        {"ratio_mode", "target_kl"},
+        set(),
+    )
+    accepted = {frozenset(current - omitted) for omitted in optional_generations}
     fields = frozenset(value) if isinstance(value, dict) else frozenset()
-    if not isinstance(value, dict) or fields not in {frozenset(current), frozenset(legacy)}:
+    if not isinstance(value, dict) or fields not in accepted:
         raise ValueError("PPO checkpoint ppoConfig fields are invalid")
     return asdict(PPOConfig(**value))
 

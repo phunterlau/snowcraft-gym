@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import pytest
 import torch
 
 from snowgym_training.checkpoint import semantic_state_digest
@@ -10,6 +11,7 @@ from snowgym_training.ppo import (
     PPOConfig,
     PPORollout,
     RolloutBuffer,
+    discount_manifest,
     generalized_advantage_estimate,
     health_potential,
     potential_shaped_reward,
@@ -24,10 +26,14 @@ from snowgym_training.ppo_checkpoint import (
 def synthetic_observation(batch: int = 3, units: int = 2) -> dict[str, torch.Tensor]:
     action_mask = torch.zeros((batch, units, 4), dtype=torch.int8)
     action_mask[:, 0] = torch.tensor([1, 1, 0, 1], dtype=torch.int8)
+    allies = torch.zeros((batch, units, 10))
+    enemies = torch.zeros((batch, units, 10))
+    allies[:, 0, 1] = 1
+    enemies[:, 0, 1] = 1
     return {
-        "allies": torch.zeros((batch, units, 10)),
+        "allies": allies,
         "ally_mask": torch.tensor([[1, 0]] * batch, dtype=torch.int8),
-        "enemies": torch.zeros((batch, units, 10)),
+        "enemies": enemies,
         "enemy_mask": torch.tensor([[1, 0]] * batch, dtype=torch.int8),
         "projectiles": torch.zeros((batch, 64, 8)),
         "projectile_mask": torch.zeros((batch, 64), dtype=torch.int8),
@@ -150,6 +156,20 @@ def test_ppo_config_rejects_unsafe_initial_exploration_scale() -> None:
         raise AssertionError("PPO accepted an unsafe initial exploration scale")
 
 
+def test_default_discounts_encode_the_declared_ten_hz_half_lives() -> None:
+    config = PPOConfig()
+    manifest = discount_manifest(config)
+
+    assert config.gamma == 0.9976921765
+    assert config.gae_lambda == 0.9885140204
+    assert manifest["derivedReturnHalfLifeSeconds"] == pytest.approx(30.0, rel=2e-8)
+    assert manifest["derivedTraceHalfLifeSeconds"] == pytest.approx(6.0, rel=1e-8)
+    assert manifest["developmentSweep"] == {
+        "returnSeconds": [15, 30, 60],
+        "traceSeconds": [2, 5, 10],
+    }
+
+
 def test_noop_joint_log_probability_ignores_continuous_values() -> None:
     observation = synthetic_observation(batch=1)
     model = HybridActorCritic(ModelConfig(16, 12, 24))
@@ -217,6 +237,7 @@ def test_ppo_loss_and_gradients_are_finite() -> None:
         torch.zeros(4),
         entropy,
         PPOConfig(),
+        active_mask=torch.tensor([[1, 0]] * 4, dtype=torch.bool),
     )
     losses["total"].backward()
     assert all(torch.isfinite(value) for value in losses.values())
@@ -224,6 +245,102 @@ def test_ppo_loss_and_gradients_are_finite() -> None:
         parameter.grad is None or torch.isfinite(parameter.grad).all()
         for parameter in model.parameters()
     )
+
+
+def test_per_unit_surrogate_is_invariant_to_roster_duplication() -> None:
+    config = PPOConfig(entropy_weight=0)
+    advantage = torch.tensor([1.0, -0.5])
+    values = torch.zeros(2)
+    returns = torch.zeros(2)
+
+    def loss(units: int) -> dict[str, torch.Tensor]:
+        old = torch.zeros((2, units))
+        new = torch.full((2, units), float(torch.log(torch.tensor(1.1))))
+        mask = torch.ones((2, units), dtype=torch.bool)
+        return ppo_loss(
+            new,
+            old,
+            advantage,
+            values,
+            returns,
+            torch.zeros_like(new),
+            config,
+            normalize_advantages=False,
+            active_mask=mask,
+        )
+
+    one = loss(1)
+    ten = loss(10)
+    torch.testing.assert_close(one["policy"], ten["policy"])
+    torch.testing.assert_close(one["mean_per_unit_kl"], ten["mean_per_unit_kl"])
+    torch.testing.assert_close(one["per_unit_clip_fraction"], ten["per_unit_clip_fraction"])
+    assert ten["joint_ratio_mean"] > one["joint_ratio_mean"]
+    legacy = ppo_loss(
+        torch.full((2, 10), float(torch.log(torch.tensor(1.1)))),
+        torch.zeros((2, 10)),
+        advantage,
+        values,
+        returns,
+        torch.zeros((2, 10)),
+        PPOConfig(entropy_weight=0, ratio_mode="joint-legacy"),
+        normalize_advantages=False,
+        active_mask=torch.ones((2, 10), dtype=torch.bool),
+    )
+    torch.testing.assert_close(legacy["policy"], legacy["legacy_joint_policy"])
+
+
+def test_per_decision_normalization_keeps_roster_gradient_mass_stable() -> None:
+    policy_values = []
+    gradient_mass = []
+    for units in (1, 3, 5, 10):
+        new = torch.full((1, units), 0.05, requires_grad=True)
+        losses = ppo_loss(
+            new,
+            torch.zeros_like(new),
+            torch.ones(1),
+            torch.zeros(1),
+            torch.zeros(1),
+            torch.zeros_like(new),
+            PPOConfig(entropy_weight=0),
+            normalize_advantages=False,
+            active_mask=torch.ones_like(new, dtype=torch.bool),
+        )
+        losses["policy"].backward()
+        policy_values.append(float(losses["policy"].detach()))
+        gradient_mass.append(float(new.grad.abs().sum()))
+
+    assert max(policy_values) - min(policy_values) < 1e-6
+    assert max(gradient_mass) - min(gradient_mass) < 1e-6
+
+
+def test_unused_hybrid_dimensions_have_zero_policy_gradient() -> None:
+    observation = synthetic_observation(batch=2)
+    model = HybridActorCritic(ModelConfig(16, 12, 24))
+    action = {
+        "action_type": torch.zeros((2, 2), dtype=torch.int64),
+        "target": torch.full((2, 2, 2), 0.999999),
+        "power": torch.full((2, 2), 0.999999),
+    }
+    prediction = model(observation)
+    log_probability, entropy = model.evaluate_actions(
+        observation, action, prediction=prediction
+    )
+    losses = ppo_loss(
+        log_probability,
+        log_probability.detach() - 0.01,
+        torch.ones(2),
+        prediction["value"],
+        prediction["value"].detach(),
+        entropy,
+        PPOConfig(value_weight=0, entropy_weight=0),
+        normalize_advantages=False,
+        active_mask=torch.tensor([[1, 0], [1, 0]], dtype=torch.bool),
+    )
+    losses["total"].backward()
+
+    assert torch.count_nonzero(model.policy.target_head.weight.grad) == 0
+    assert torch.count_nonzero(model.policy.power_head.weight.grad) == 0
+    assert torch.isfinite(losses["total"])
 
 
 def test_curriculum_freezes_disjoint_training_and_evaluation_seeds() -> None:
@@ -264,6 +381,19 @@ def test_potential_shaping_is_opt_in_and_zeroes_terminal_bootstrap() -> None:
     torch.testing.assert_close(shaped, torch.tensor([0.6]))
 
 
+def test_health_potential_is_normalized_by_each_initial_roster() -> None:
+    one = synthetic_observation(batch=1, units=1)
+    one["allies"][0, 0, 6] = 0.8
+    one["enemies"][0, 0, 6] = 0.4
+    two = synthetic_observation(batch=1, units=2)
+    two["ally_mask"][:] = 1
+    two["enemy_mask"][:] = 1
+    two["allies"][:, :, 6] = 0.8
+    two["enemies"][:, :, 6] = 0.4
+
+    torch.testing.assert_close(health_potential(one), health_potential(two))
+
+
 def test_rollout_buffer_snapshots_computes_gae_and_flattens() -> None:
     buffer = RolloutBuffer(steps=2, batch_size=2)
     observation = synthetic_observation(batch=2)
@@ -275,7 +405,7 @@ def test_rollout_buffer_snapshots_computes_gae_and_flattens() -> None:
     buffer.add(
         observation=observation,
         action=action,
-        log_probability=torch.tensor([-0.1, -0.2]),
+        log_probability=torch.tensor([[-0.1, 0.0], [-0.2, 0.0]]),
         value=torch.tensor([0.2, 0.4]),
         reward=torch.tensor([0.0, 0.0]),
         terminated=torch.tensor([False, False]),
@@ -286,7 +416,7 @@ def test_rollout_buffer_snapshots_computes_gae_and_flattens() -> None:
     buffer.add(
         observation=synthetic_observation(batch=2),
         action=action,
-        log_probability=torch.tensor([-0.3, -0.4]),
+        log_probability=torch.tensor([[-0.3, 0.0], [-0.4, 0.0]]),
         value=torch.tensor([0.3, 0.5]),
         reward=torch.tensor([1.0, -1.0]),
         terminated=torch.tensor([True, False]),
@@ -298,12 +428,13 @@ def test_rollout_buffer_snapshots_computes_gae_and_flattens() -> None:
     assert rollout.steps == 2
     assert rollout.batch_size == 2
     assert rollout.observations["allies"].shape == (2, 2, 2, 10)
-    assert rollout.observations["allies"][0].max().item() == 0
+    assert rollout.observations["allies"][0].max().item() == 1
     torch.testing.assert_close(rollout.advantages[1], torch.tensor([0.7, -0.87]))
     torch.testing.assert_close(rollout.advantages[0], torch.tensor([0.7, -0.733]))
     flattened = rollout.flatten()
     assert flattened["observations"]["allies"].shape == (4, 2, 10)
     assert flattened["actions"]["target"].shape == (4, 2, 2)
+    assert flattened["old_log_probability"].shape == (4, 2)
     assert flattened["advantages"].shape == (4,)
 
 
@@ -326,7 +457,7 @@ def test_rollout_buffer_rejects_incomplete_or_inconsistent_transitions() -> None
         buffer.add(
             observation=observation,
             action={**action, "target": torch.zeros((2, 2, 3))},
-            log_probability=torch.zeros(2),
+            log_probability=torch.zeros((2, 2)),
             value=torch.zeros(2),
             reward=torch.zeros(2),
             terminated=torch.zeros(2, dtype=torch.bool),
@@ -372,6 +503,20 @@ def test_ppo_update_is_deterministic_and_reports_clipping_diagnostics() -> None:
     assert first_metrics["samples"] == 4
     assert first_metrics["minibatches"] == 4
     assert first_metrics["maximumGradientNormAfterClip"] <= config.max_grad_norm
+    assert first_metrics["ratioByLivingUnits"].keys() == {"1"}
+    assert first_metrics["ratioByRosterSize"].keys() == {"1"}
+    assert first_metrics["ratioByCasualties"].keys() == {"0"}
+    for name in (
+        "mean_per_unit_kl",
+        "max_per_unit_kl",
+        "per_unit_clip_fraction",
+        "joint_approximate_kl",
+        "joint_clip_fraction",
+        "joint_ratio_mean",
+        "joint_ratio_max",
+        "legacy_joint_policy",
+    ):
+        assert name in first_metrics
     assert all(
         torch.equal(first.state_dict()[name], second.state_dict()[name])
         for name in first.state_dict()

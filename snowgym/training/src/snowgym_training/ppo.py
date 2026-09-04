@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import math
 from typing import Any
 
 import torch
@@ -16,12 +17,16 @@ from .executor.model import entity_encoder, masked_mean_max
 from .plan_data import PLAN_FEATURE_VECTOR_SIZE, PLAN_GROUP_SLOTS
 
 EPSILON = 1e-6
+DEVELOPMENT_HALF_LIFE_SWEEP = {
+    "returnSeconds": (15, 30, 60),
+    "traceSeconds": (2, 5, 10),
+}
 
 
 @dataclass(frozen=True)
 class PPOConfig:
-    gamma: float = 0.99
-    gae_lambda: float = 0.95
+    gamma: float = 0.9976921765
+    gae_lambda: float = 0.9885140204
     clip_ratio: float = 0.2
     value_weight: float = 0.5
     entropy_weight: float = 0.01
@@ -31,6 +36,8 @@ class PPOConfig:
     minibatch_size: int = 256
     initial_target_log_std: float = -1.0
     initial_power_log_std: float = -1.0
+    ratio_mode: str = "per-unit"
+    target_kl: float | None = None
 
     def __post_init__(self) -> None:
         unit_interval = {
@@ -54,6 +61,10 @@ class PPOConfig:
             value = getattr(self, name)
             if not isinstance(value, int) or isinstance(value, bool) or value <= 0:
                 raise ValueError(f"PPO {name} must be a positive integer")
+        if self.ratio_mode not in {"per-unit", "joint-legacy"}:
+            raise ValueError("PPO ratio_mode must be per-unit or joint-legacy")
+        if self.target_kl is not None and self.target_kl <= 0:
+            raise ValueError("PPO target_kl must be positive when provided")
 
 
 @dataclass(frozen=True)
@@ -151,13 +162,16 @@ class RolloutBuffer:
         if action["power"].shape != unit_shape:
             raise ValueError("action.power must have shape [batch, units]")
         scalars = {
-            "log_probability": log_probability,
             "value": value,
             "reward": reward,
             "terminated": terminated,
             "truncated": truncated,
             "next_value": next_value,
         }
+        if log_probability.shape != unit_shape:
+            raise ValueError("log_probability must have shape [batch, units]")
+        if not bool(torch.isfinite(log_probability).all()):
+            raise ValueError("log_probability must be finite")
         for name, tensor in scalars.items():
             if tensor.shape != (self.batch_size,):
                 raise ValueError(f"{name} must have shape [batch]")
@@ -167,6 +181,7 @@ class RolloutBuffer:
             {
                 "observation": snapshot(observation),
                 "action": snapshot(action),
+                "log_probability": log_probability.detach().clone(),
                 **{name: tensor.detach().clone() for name, tensor in scalars.items()},
             }
         )
@@ -285,7 +300,7 @@ class HybridActorCritic(nn.Module):
             "target": torch.tanh(target_raw),
             "power": torch.sigmoid(power_raw),
         }
-        log_probability, entropy = self.evaluate_actions(
+        log_probability, _ = self.evaluate_actions(
             observation, action, prediction=prediction
         )
         return action, log_probability, prediction["value"]
@@ -298,7 +313,7 @@ class HybridActorCritic(nn.Module):
         prediction: dict[str, Tensor] | None = None,
     ) -> tuple[Tensor, Tensor]:
         output = prediction if prediction is not None else self(observation)
-        present = observation["ally_mask"].bool()
+        present = living_unit_mask(observation)
         action_type = action["action_type"].long()
         categorical = Categorical(logits=output["action_logits"])
         type_log_prob = categorical.log_prob(action_type) * present
@@ -328,17 +343,33 @@ class HybridActorCritic(nn.Module):
             power_value * (1 - power_value) + EPSILON
         )
         throw_mask = present & (action_type == ACTION_THROW)
-        joint_log_prob = (
+        per_unit_log_prob = (
             type_log_prob
             + target_log_prob * target_mask
             + power_log_prob * throw_mask
-        ).sum(dim=-1)
-        entropy = (
+        ) * present
+        probabilities = categorical.probs
+        move_probability = probabilities[..., ACTION_MOVE]
+        throw_probability = probabilities[..., ACTION_THROW]
+        per_unit_entropy = (
             type_entropy
-            + target_entropy * target_mask
-            + power_normal.entropy() * throw_mask
-        ).sum(dim=-1)
-        return joint_log_prob, entropy
+            + move_probability * target_entropy
+            + throw_probability * (target_entropy + power_normal.entropy())
+        ) * present
+        return per_unit_log_prob, per_unit_entropy
+
+    def evaluate_joint_actions(
+        self,
+        observation: dict[str, Tensor],
+        action: dict[str, Tensor],
+        *,
+        prediction: dict[str, Tensor] | None = None,
+    ) -> tuple[Tensor, Tensor]:
+        """Legacy squad sums retained only for diagnostics and ablations."""
+        per_unit_log_prob, per_unit_entropy = self.evaluate_actions(
+            observation, action, prediction=prediction
+        )
+        return per_unit_log_prob.sum(dim=-1), per_unit_entropy.sum(dim=-1)
 
 
 class RoleAwareCentralCritic(nn.Module):
@@ -486,29 +517,68 @@ def ppo_loss(
     config: PPOConfig,
     *,
     normalize_advantages: bool = True,
+    active_mask: Tensor | None = None,
 ) -> dict[str, Tensor]:
+    if new_log_probability.ndim == 1:
+        new_log_probability = new_log_probability.unsqueeze(-1)
+        old_log_probability = old_log_probability.unsqueeze(-1)
+    if new_log_probability.shape != old_log_probability.shape:
+        raise ValueError("PPO log probabilities must have equal [decision, unit] shapes")
+    if active_mask is None:
+        active_mask = torch.ones_like(new_log_probability, dtype=torch.bool)
+    if active_mask.shape != new_log_probability.shape:
+        raise ValueError("PPO active mask must match per-unit log probabilities")
+    active = active_mask.to(new_log_probability.dtype)
+    counts = active.sum(dim=-1).clamp_min(1.0)
     normalized = advantages
     if normalize_advantages:
         normalized = (advantages - advantages.mean()) / advantages.std(
             unbiased=False
         ).clamp_min(1e-8)
-    ratio = (new_log_probability - old_log_probability).exp()
-    policy = -torch.minimum(
-        ratio * normalized,
-        ratio.clamp(1 - config.clip_ratio, 1 + config.clip_ratio) * normalized,
+    log_ratio = (new_log_probability - old_log_probability) * active
+    ratio = log_ratio.exp()
+    unit_advantage = normalized.unsqueeze(-1)
+    surrogate = torch.minimum(
+        ratio * unit_advantage,
+        ratio.clamp(1 - config.clip_ratio, 1 + config.clip_ratio) * unit_advantage,
+    )
+    per_unit_policy = -((surrogate * active).sum(dim=-1) / counts).mean()
+    joint_log_ratio = log_ratio.sum(dim=-1)
+    joint_ratio = joint_log_ratio.exp()
+    joint_policy = -torch.minimum(
+        joint_ratio * normalized,
+        joint_ratio.clamp(1 - config.clip_ratio, 1 + config.clip_ratio) * normalized,
     ).mean()
+    policy = joint_policy if config.ratio_mode == "joint-legacy" else per_unit_policy
     value = 0.5 * (new_values - returns).square().mean()
-    entropy_loss = entropy.mean()
+    if entropy.ndim == 1:
+        entropy = entropy.unsqueeze(-1)
+    if entropy.shape != active.shape:
+        raise ValueError("PPO entropy must match per-unit log probabilities")
+    entropy_loss = ((entropy * active).sum(dim=-1) / counts).mean()
     total = policy + config.value_weight * value - config.entropy_weight * entropy_loss
-    approximate_kl = (old_log_probability - new_log_probability).mean()
-    clip_fraction = ((ratio - 1).abs() > config.clip_ratio).float().mean()
+    unit_kl = (ratio - 1 - log_ratio) * active
+    approximate_kl = (unit_kl.sum(dim=-1) / counts).mean()
+    maximum_kl = unit_kl.max()
+    clipped = ((ratio - 1).abs() > config.clip_ratio).to(active.dtype) * active
+    clip_fraction = (clipped.sum(dim=-1) / counts).mean()
+    joint_kl = (joint_ratio - 1 - joint_log_ratio).mean()
+    joint_clip_fraction = ((joint_ratio - 1).abs() > config.clip_ratio).float().mean()
     return {
         "total": total,
         "policy": policy,
         "value": value,
         "entropy": entropy_loss,
         "approximate_kl": approximate_kl,
+        "mean_per_unit_kl": approximate_kl,
+        "max_per_unit_kl": maximum_kl,
         "clip_fraction": clip_fraction,
+        "per_unit_clip_fraction": clip_fraction,
+        "joint_approximate_kl": joint_kl,
+        "joint_clip_fraction": joint_clip_fraction,
+        "joint_ratio_mean": joint_ratio.mean(),
+        "joint_ratio_max": joint_ratio.max(),
+        "legacy_joint_policy": joint_policy,
     }
 
 
@@ -520,7 +590,7 @@ def ppo_update(
     *,
     training_seed: int,
     update_index: int,
-) -> dict[str, float | int]:
+) -> dict[str, Any]:
     """Run one reproducibly ordered PPO update over a completed rollout."""
     if not isinstance(training_seed, int) or isinstance(training_seed, bool):
         raise ValueError("training_seed must be an integer")
@@ -543,6 +613,14 @@ def ppo_update(
         "entropy",
         "approximate_kl",
         "clip_fraction",
+        "mean_per_unit_kl",
+        "max_per_unit_kl",
+        "per_unit_clip_fraction",
+        "joint_approximate_kl",
+        "joint_clip_fraction",
+        "joint_ratio_mean",
+        "joint_ratio_max",
+        "legacy_joint_policy",
     )
     totals = {name: 0.0 for name in metric_names}
     observations = flat["observations"]
@@ -551,6 +629,7 @@ def ppo_update(
     minibatches = 0
     maximum_gradient_norm = 0.0
     model.train()
+    stopped_early = False
     for _ in range(config.update_epochs):
         permutation = torch.randperm(sample_count, generator=generator)
         for start in range(0, sample_count, config.minibatch_size):
@@ -570,6 +649,7 @@ def ppo_update(
                 entropy,
                 config,
                 normalize_advantages=False,
+                active_mask=living_unit_mask(batch_observation),
             )
             if not all(bool(torch.isfinite(value)) for value in losses.values()):
                 raise ValueError("non-finite PPO loss")
@@ -590,24 +670,98 @@ def ppo_update(
             maximum_gradient_norm = max(maximum_gradient_norm, float(gradient_norm))
             minibatches += 1
             seen += count
+            if (
+                config.target_kl is not None
+                and float(losses["mean_per_unit_kl"].detach()) > config.target_kl
+            ):
+                stopped_early = True
+                break
+        if stopped_early:
+            break
+    with torch.no_grad():
+        final_prediction = model(observations)
+        final_log_probability, _ = model.evaluate_actions(
+            observations, actions, prediction=final_prediction
+        )
+        conditioned = ratio_diagnostics(
+            final_log_probability,
+            flat["old_log_probability"],
+            observations,
+        )
     return {
         "updateIndex": update_index,
         "samples": sample_count,
         "epochs": config.update_epochs,
         "minibatches": minibatches,
+        "stoppedEarly": stopped_early,
         **{name: value / seen for name, value in totals.items()},
         "maximumGradientNormBeforeClip": maximum_gradient_norm,
         "maximumGradientNormAfterClip": min(maximum_gradient_norm, config.max_grad_norm),
+        **conditioned,
     }
+
+
+def living_unit_mask(observation: dict[str, Tensor]) -> Tensor:
+    """Mask currently living roster slots; defeated units do not form PPO agents."""
+    return observation["ally_mask"].bool() & (observation["allies"][..., 1].float() > 0.5)
+
+
+def ratio_diagnostics(
+    new_log_probability: Tensor,
+    old_log_probability: Tensor,
+    observation: dict[str, Tensor],
+) -> dict[str, dict[str, float]]:
+    mask = living_unit_mask(observation)
+    ratios = (new_log_probability - old_log_probability).exp()
+    counts = mask.sum(dim=-1)
+    decision_ratio = (ratios * mask).sum(dim=-1) / counts.clamp_min(1)
+    rosters = observation["ally_mask"].bool().sum(dim=-1)
+    casualties = rosters - counts
+    return {
+        "ratioByLivingUnits": grouped_means(decision_ratio, counts),
+        "ratioByRosterSize": grouped_means(decision_ratio, rosters),
+        "ratioByCasualties": grouped_means(decision_ratio, casualties),
+    }
+
+
+def grouped_means(values: Tensor, groups: Tensor) -> dict[str, float]:
+    result: dict[str, float] = {}
+    for group in torch.unique(groups, sorted=True).tolist():
+        selected = values[groups == group]
+        result[str(int(group))] = float(selected.mean())
+    return result
+
+
+def discount_manifest(config: PPOConfig, decision_hz: int = 10) -> dict[str, Any]:
+    if not isinstance(decision_hz, int) or isinstance(decision_hz, bool) or decision_hz <= 0:
+        raise ValueError("decision_hz must be a positive integer")
+    return {
+        "decisionHz": decision_hz,
+        "declaredReturnHalfLifeSeconds": 30,
+        "declaredTraceHalfLifeSeconds": 5,
+        "gamma": config.gamma,
+        "gaeLambda": config.gae_lambda,
+        "derivedReturnHalfLifeSeconds": half_life(config.gamma, decision_hz),
+        "derivedTraceHalfLifeSeconds": half_life(config.gae_lambda, decision_hz),
+        "developmentSweep": {
+            name: list(values) for name, values in DEVELOPMENT_HALF_LIFE_SWEEP.items()
+        },
+    }
+
+
+def half_life(discount: float, decision_hz: int) -> float | None:
+    if discount == 1:
+        return None
+    return math.log(0.5) / (decision_hz * math.log(discount))
 
 
 def health_potential(observation: dict[str, Tensor]) -> Tensor:
     ally_health = observation["allies"][..., 6]
     enemy_health = observation["enemies"][..., 6]
-    ally = (ally_health * observation["ally_mask"].to(ally_health.dtype)).sum(dim=-1)
-    enemy = (enemy_health * observation["enemy_mask"].to(enemy_health.dtype)).sum(
-        dim=-1
-    )
+    ally_mask = observation["ally_mask"].to(ally_health.dtype)
+    enemy_mask = observation["enemy_mask"].to(enemy_health.dtype)
+    ally = (ally_health * ally_mask).sum(dim=-1) / ally_mask.sum(dim=-1).clamp_min(1.0)
+    enemy = (enemy_health * enemy_mask).sum(dim=-1) / enemy_mask.sum(dim=-1).clamp_min(1.0)
     return ally - enemy
 
 

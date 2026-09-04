@@ -18,7 +18,7 @@ from snowgym_client.batch import SnowGymBatchClient, SnowGymBatchEnv
 from .curriculum import load_curriculum
 from .checkpoint import load_checkpoint
 from .executor import ModelConfig
-from .ppo import HybridActorCritic, PPOConfig, ppo_update
+from .ppo import HybridActorCritic, PPOConfig, discount_manifest, ppo_update
 from .ppo_checkpoint import load_ppo_checkpoint, restore_ppo_checkpoint, save_ppo_checkpoint
 from .ppo_collect import SeedSchedule, collect_rollout
 from .trainer import resolve_git_commit
@@ -209,6 +209,9 @@ def train_ppo(
             "gate": gate,
             "architecture": architecture.as_dict(),
             "ppoConfig": asdict(config),
+            "discounting": discount_manifest(
+                config, int(gate["scenario"].get("decisionHz", 10))
+            ),
             "trainingSeed": training_seed,
             "worlds": worlds,
             "rolloutSteps": rollout_steps,

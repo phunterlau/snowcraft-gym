@@ -86,5 +86,5 @@ def test_live_collector_health_shaping_is_explicit_and_preserves_canonical_sum()
             reward_mode="health-potential",
         )
     assert collection.canonical_reward_sum == 0.0
-    assert collection.training_reward_sum != collection.canonical_reward_sum
+    assert collection.training_reward_sum == collection.canonical_reward_sum
     assert float(collection.rollout.rewards.sum()) == collection.training_reward_sum

@@ -686,7 +686,12 @@ http://127.0.0.1:5173/replay.html?recording=/replays/ppo_1v1_bc_v0-seed-3101.jso
 
 `ppo.py` defines the centralized hybrid actor-critic used by the next training
 stage. Action masks apply before categorical sampling; target terms contribute
-to joint log probability only for move/throw and power only for throw. GAE
+to each unit's log probability only for move/throw and power only for throw.
+The primary clipped surrogate averages active units inside each decision and
+then averages decisions, so casualties do not change the PPO ratio scale. The
+former squad-product ratio remains available as the explicit `joint-legacy`
+ablation and as diagnostics. Entropy weights move and throw dimensions by
+categorical action probabilities. GAE
 bootstraps time-limit truncation but not true terminal states. The optional
 health potential is a training signal only and never replaces terminal-only
 benchmark reward.
@@ -697,6 +702,13 @@ with coordinated movement may choose a narrower value in its frozen config;
 the selected values are retained in checkpoint and run provenance. Exact
 resume restores checkpoint state, while PPO-to-PPO transfer restores the
 source distribution parameters.
+
+At 10 Hz the defaults are `gamma=0.9976921765` and
+`gae_lambda=0.9885140204`. Run manifests record both values, their calculated
+effective half-lives, and the predeclared 15/30/60-second return by
+2/5/10-second trace development sweep. The supplied lambda evaluates to an
+effective 6-second trace half-life at 10 Hz, so manifests retain the requested
+5-second label and the calculated value separately.
 
 `RolloutBuffer` owns a fixed number of decisions from a fixed number of
 persistent worlds. Every transition is validated and detached on insertion;
@@ -715,8 +727,9 @@ keeps resume exact without claiming that hidden live simulator state is stored.
 `ppo_update` normalizes advantages once over the complete rollout, derives
 epoch permutations from the training seed and update index, and applies the
 hybrid clipped objective in deterministic minibatches. It rejects non-finite
-losses or gradients, clips the aggregate gradient norm, and returns
-sample-weighted policy/value/entropy/KL/clip diagnostics.
+losses or gradients, clips the aggregate gradient norm, and returns per-unit
+mean/max KL and clipping, living-roster and casualty-conditioned ratios, legacy
+joint-ratio diagnostics, and gradient norms.
 
 `snowgym.ppo-checkpoint.v0` persists model and optimizer tensors, Torch RNG
 state, architecture and PPO configuration, training seed, curriculum digest,
