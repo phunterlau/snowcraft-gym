@@ -441,10 +441,10 @@ partial observation, or self-play confounds.
       sparse learning blocks the smoke test, add an opt-in training wrapper with
       potential-based own-minus-enemy health shaping and test that it leaves
       terminal benchmark results unchanged.
-- [ ] Use a gated curriculum: 1v1 random, 1v1 easy scripted, 3v3 random, 3v3
+- [x] Use a gated curriculum: 1v1 random, 1v1 easy scripted, 3v3 random, 3v3
       scripted, 3v3 terrain, then 5v5 and 10v10. Do not advance a stage without
       fixed held-out evaluation evidence.
-- [ ] Keep training and evaluation seeds disjoint. Evaluate checkpoint series,
+- [x] Keep training and evaluation seeds disjoint. Evaluate checkpoint series,
       not only the best checkpoint, against masked-random, native random, and
       scripted baselines using the versioned suite.
 - [x] Freeze a headless PPO checkpoint evaluator over each gate's disjoint
@@ -679,6 +679,70 @@ Goal: train the fast learned controller to follow the existing slow
 M7 exit: plan-conditioned policies produce reproducibly distinct, intended
 behavior under counterfactual plans for the same initial state and outperform
 the no-plan ablation on frozen objective-completion metrics.
+
+#### M7a — fighter contract repair
+
+The fighter review in `refs/snowgym_fighter_rl_review_next_milestones.md`
+identified four contract blockers before another large training run: hidden
+persistent controller state, incomplete physical role summaries, roster-sized
+PPO updates, and a terminal objective that does not define mission obedience.
+The accepted implementation order is:
+
+- [ ] Register `SnowGym/Squad-v3` with actuator-complete unit/projectile and
+      decision-horizon fields while preserving v0-v2 tensor contracts.
+- [ ] Introduce `snowgym.state.v2` over the complete public state and retain a
+      v1 verifier for committed replay artifacts.
+- [ ] Keep the `[3,38]` command tensor stable; add a masked `[3,20]` physical
+      role-state tensor and freeze current-position/region anchors at plan
+      activation while entity-backed objectives remain late-bound.
+- [ ] Replace the training default's squad-product PPO clip with masked
+      per-unit clipping averaged inside each decision; normalize entropy and
+      health shaping by active/initial roster and derive discounting from
+      physical-time half-lives.
+- [ ] Migrate the accepted target-only initializer by zero-extending its unit
+      encoder, add shared zero-output plan residuals, and train a separate
+      role-aware centralized critic.
+- [ ] Extend the persistent batch client with the existing simultaneous
+      `stepJoint` contract and collect authoritative plan/role tensors after
+      every reset and before every policy decision.
+
+M7a exit: v3 state/action transitions and v2 hashes are deterministic, legacy
+replays still verify, migrated zero-extension preserves legacy policy outputs,
+1/3/5/10-unit PPO statistics are roster-stable, and interrupted plan-aware
+collection resumes exactly.
+
+#### M7b — fixed-plan option PPO
+
+- [ ] Add fixed-plan option episodes with separate mission, combat, potential,
+      and canonical reward components. Commander scheduling and plan
+      replacement remain disabled.
+- [ ] Validate engage, advance, hold, withdraw, flank, focus/distributed fire,
+      and support definitions with the production plan-aware teacher before
+      freezing learner thresholds.
+- [ ] Train in that order from the migrated target-only initializer using
+      staged unfreezing plus decaying BC and initializer-KL anchors.
+- [ ] Qualify one checkpoint on 100 untouched paired seeds per mission against
+      zero-plan and shuffled-plan controls. Every mission must pass separately;
+      aggregate success cannot hide a failed directive.
+
+M7b exit: every mission reaches at least 75% success, exceeds shuffled-plan
+success by at least 20 percentage points with a positive paired-bootstrap 95%
+lower bound, improves paired mission progress on at least 70% of seeds, retains
+physical win rate within 10 percentage points, and rejects fewer than 0.1% of
+physical actions under a nontrivial PPO update.
+
+#### M7c — full-fight fixed-plan composition
+
+- [ ] Hold one-, two-, and three-role plans throughout complete 3v3, 5v5, and
+      10v10 battles with casualties, terrain, and target replacement.
+- [ ] Compare correct, zero, shuffled, and random-valid plans using disjoint
+      paired seeds and per-role mission metrics.
+- [ ] Freeze the first checkpoint that passes every predeclared mission and
+      physical-competence gate; do not select a best checkpoint post hoc.
+
+M7c exit: one frozen executor retains distinct role behavior and useful plan
+effects across roster sizes. Only then may M8 local CTDE and M9 online commander
+comparisons advance.
 
 M7 synthetic curriculum foundation (2026-09-02):
 `training/plan/SyntheticPlanCurriculum.ts` deterministically samples all five
