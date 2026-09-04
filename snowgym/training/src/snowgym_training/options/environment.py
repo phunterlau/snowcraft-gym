@@ -104,10 +104,10 @@ class FixedPlanOptionBatchEnv:
                 )
             )
         option_terminated = np.asarray(
-            [step.done and not step.timed_out for step in steps], dtype=np.bool_
+            [step.done for step in steps], dtype=np.bool_
         )
         option_truncated = np.asarray(
-            [step.timed_out for step in steps], dtype=np.bool_
+            [False for _ in steps], dtype=np.bool_
         )
         enriched = []
         for info, step in zip(infos, steps, strict=True):

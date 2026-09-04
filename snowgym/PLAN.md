@@ -808,6 +808,54 @@ zero mean progress, and zero physical wins; each condition executed 60,000
 accepted actions with no rejection. The checkpoint is retained only as a
 negative diagnostic and is not eligible for M7b promotion.
 
+M7b recovery decision (2026-09-04): the implementation review in
+`refs/snowgym_m7b_engage_review_and_recovery_instructions.md` found that the
+staged actor cannot train the zero-initialized v3 extension columns, option
+timeouts bootstrap reset-state values, temporal option counters can advance
+twice, terminal shaping retains a nonzero next potential, and the fresh critic
+shares a global gradient clip with the actor. The failed Stage-1/Stage-2
+checkpoints and 40-seed evaluation are preserved under
+`snowgym/training/runs/m7b_engage_failed_v0/` as negative evidence.
+
+The recovery milestones are now:
+
+- [ ] **M7b-R0 — correctness and attribution:** repair the actor-side v3 path,
+      option terminal/tracker/PBRS semantics, actor/critic clipping, and
+      discount metadata; then run deterministic action-channel interventions,
+      teacher/stochastic/deterministic state-distribution exports, and
+      read-only component-gradient diagnostics.
+- [ ] **M7b-R1 — Engage bootstrap:** choose exactly one learning intervention
+      from R0 evidence and pass the frozen 40-seed bootstrap gate. Teacher
+      transitions, if selected, supervise only the BC auxiliary path and never
+      enter PPO ratios or advantages.
+- [ ] **M7b-R2 — Engage promotion:** retain the unchanged full-distance 5v5
+      benchmark and pass the stricter development promotion gate with material
+      improvement over both shuffled plans and the initializer.
+- [ ] **M7b-R3 — ordered single-role options:** advance, hold, withdraw, flank,
+      focus, distributed, then support; each mission must pass separately.
+- [ ] **M7b-R4 — universal fixed-plan executor:** one checkpoint passes all
+      eight development gates without mission-specific checkpoint switching,
+      followed by the untouched 100-seed-per-mission qualification.
+
+No new Engage training, later option, M7c composition, or commander experiment
+starts until R0 identifies the failed action channel and R1 passes its gate.
+
+During R0, the paired-seed audit also found that the semantic `RandomAgent`
+returned Red actions that the simulator never applied. The SnowGym host now
+applies that controller once per team decision; scripted Red retains its
+per-physics-tick execution. Distinct random-controller seeds therefore produce
+distinct state-hash trajectories. This behavior change is identified as
+`snowgym.sim.v2`; legacy v1 replay artifacts remain loadable and hash-verifiable.
+All R0 artifacts are regenerated after this repair.
+
+Research correction (2026-09-04): all earlier acceptance claims against a
+`redController: random` scenario were measured with an inert Red opponent.
+Those artifacts remain immutable evidence of the v1 implementation, but they
+do not qualify a fighter under v2. Gates 1, 3, 5, 6, and 7 are reopened for
+v2 requalification. Scripted-Red gates 2 and 4 remain valid because their
+controller path was unchanged. Historical random-opponent replay tests now
+assert the observed v2 losses rather than preserving obsolete blue-win claims.
+
 #### M7c — full-fight fixed-plan composition
 
 - [ ] Hold one-, two-, and three-role plans throughout complete 3v3, 5v5, and

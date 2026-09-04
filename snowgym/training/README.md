@@ -776,6 +776,11 @@ That workflow also documents `snowgym-evaluate-m7b`, which generates paired
 correct/shuffled/initializer mission and complete-battle records from a frozen
 checkpoint without a browser or provider call.
 
+The same README documents the M7b-R0 no-training recovery commands. They export
+the six-arm Engage intervention matrix, teacher/stochastic/deterministic state
+datasets, and per-loss gradient norms/cosines, then create one digest-bound
+intervention recommendation before any new PPO run.
+
 The frozen `ppo_curriculum_v0.json` keeps training ranges disjoint from eight
 evaluation seeds per gate and sets thresholds before qualifying runs. Its order
 is 1v1 random, 1v1 easy scripted, 3v3 random, 3v3 easy scripted, 3v3 terrain on

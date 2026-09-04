@@ -28,6 +28,12 @@ describe('SnowEnvironment red controllers', () => {
     expect(first.winner).not.toBeNull();
   });
 
+  it('applies random red actions and produces distinct seeded trajectories', () => {
+    const first = runEpisode({ seed: 7, redController: 'random' });
+    const second = runEpisode({ seed: 8, redController: 'random' });
+    expect(second).not.toEqual(first);
+  });
+
   it('produces a different episode for random versus scripted red at the same seed', () => {
     const scripted = runEpisode({ seed: 7, redController: 'scripted' });
     const random = runEpisode({ seed: 7, redController: 'random' });

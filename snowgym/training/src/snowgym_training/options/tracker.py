@@ -30,6 +30,20 @@ class OptionStep:
     metrics: dict[str, float]
 
 
+@dataclass(frozen=True)
+class MissionSnapshot:
+    living: tuple[dict[str, Any], ...]
+    living_fraction: float
+    objective_health: float
+    advance_inside: bool
+    advance_fraction: float
+    hold_inside: bool
+    withdraw_inside: bool
+    support_qualified: bool
+    signed_lateral: float
+    support_distance: float | None
+
+
 class FixedOptionTracker:
     """Evaluate an immutable plan without commander lifecycle replacement."""
 
@@ -91,7 +105,9 @@ class FixedOptionTracker:
         self.consecutive = 0
         self.flank_reached_at: int | None = None
         self.flank_damage_at_reach = 0.0
-        self.previous_progress = self._progress(observation, plan_observation)
+        self.previous_progress = self._progress(
+            self._mission_snapshot(observation, plan_observation)
+        )
 
     def update(
         self,
@@ -127,17 +143,20 @@ class FixedOptionTracker:
                 1,
             )
         )
-        success = self._success(observation, plan_observation)
-        progress = self._progress(observation, plan_observation)
-        living = len(_assigned(observation, self.assigned_ids, living=True))
+        snapshot = self._mission_snapshot(observation, plan_observation)
+        self._advance_temporal_state(snapshot)
+        success = self._success(snapshot)
+        progress = self._progress(snapshot)
+        living = len(snapshot.living)
         timed_out = self.decision >= self.spec.horizon and not success
         failed = living == 0 or timed_out
         if environment_done and not success:
             failed = True
         done = success or failed
         mission_reward = 1.0 if success else -1.0 if failed else 0.0
-        shaping = gamma * progress - self.previous_progress
-        self.previous_progress = progress
+        next_potential = 0.0 if done else progress
+        shaping = gamma * next_potential - self.previous_progress
+        self.previous_progress = next_potential
         return OptionStep(
             mission_reward=mission_reward,
             combat_reward=combat,
@@ -150,7 +169,7 @@ class FixedOptionTracker:
             done=done,
             timed_out=timed_out,
             decision=self.decision,
-            metrics=self._metrics(observation, plan_observation),
+            metrics=self._metrics(snapshot),
         )
 
     def _validate_command(self) -> None:
@@ -178,64 +197,90 @@ class FixedOptionTracker:
             center[1] + row[9] * float(observation["arena"]["height"]),
         )
 
-    def _progress(
+    def _mission_snapshot(
         self, observation: dict[str, Any], plan_observation: dict[str, Any]
-    ) -> float:
+    ) -> MissionSnapshot:
+        living = tuple(_assigned(observation, self.assigned_ids, living=True))
+        advance_fraction = _fraction_within(
+            list(living), self.objective_anchor, 0.1 * self.diagonal
+        )
+        support_distance = self._support_distance(observation)
+        supported_living = len(_assigned(observation, self.supported_ids, living=True))
+        living_fraction = len(living) / self.initial_assigned
+        support_healthy = living_fraction >= 0.5 and (
+            self.initial_supported > 0
+            and supported_living / self.initial_supported >= 0.5
+        )
+        return MissionSnapshot(
+            living=living,
+            living_fraction=living_fraction,
+            objective_health=_role_row(plan_observation, self.spec.role)[11],
+            advance_inside=advance_fraction >= 0.8,
+            advance_fraction=advance_fraction,
+            hold_inside=_fraction_within(
+                list(living), self.activation_anchor, 0.08 * self.diagonal
+            ) >= 1.0,
+            withdraw_inside=advance_fraction >= 0.8,
+            support_qualified=support_healthy
+            and support_distance is not None
+            and 0.08 * self.diagonal <= support_distance <= 0.18 * self.diagonal,
+            signed_lateral=self._signed_lateral(list(living)),
+            support_distance=support_distance,
+        )
+
+    def _advance_temporal_state(self, snapshot: MissionSnapshot) -> None:
         name = self.spec.name
-        row = _role_row(plan_observation, self.spec.role)
-        living = _assigned(observation, self.assigned_ids, living=True)
-        if name == "engage":
-            return float(np.clip(1 - row[11], 0, 1))
         if name == "advance":
-            return _fraction_within(living, self.objective_anchor, 0.1 * self.diagonal)
+            self.consecutive = self.consecutive + 1 if snapshot.advance_inside else 0
+        elif name == "hold":
+            self.inside_count += int(snapshot.hold_inside)
+        elif name == "withdraw":
+            self.consecutive = self.consecutive + 1 if snapshot.withdraw_inside else 0
+        elif name == "support":
+            self.consecutive = self.consecutive + 1 if snapshot.support_qualified else 0
+        elif name == "flank" and (
+            self.flank_reached_at is None
+            and snapshot.signed_lateral >= 0.2 * self.lateral_extent
+        ):
+            self.flank_reached_at = self.decision
+            self.flank_damage_at_reach = self._total_damage()
+
+    def _progress(self, snapshot: MissionSnapshot) -> float:
+        name = self.spec.name
+        if name == "engage":
+            return float(np.clip(1 - snapshot.objective_health, 0, 1))
+        if name == "advance":
+            return snapshot.advance_fraction
         if name == "hold":
-            current = _fraction_within(living, self.activation_anchor, 0.08 * self.diagonal)
-            return (self.inside_count + current) / self.spec.horizon
+            return self.inside_count / self.spec.horizon
         if name == "withdraw":
-            inside = _fraction_within(living, self.objective_anchor, 0.1 * self.diagonal) >= 0.8
-            return min((self.consecutive + int(inside)) / 20, 1.0)
+            return min(self.consecutive / 20, 1.0)
         if name == "flank":
-            lateral = self._signed_lateral(living)
-            geometry = float(np.clip(lateral / max(0.2 * self.lateral_extent, 1e-9), 0, 1))
+            geometry = float(np.clip(snapshot.signed_lateral / max(0.2 * self.lateral_extent, 1e-9), 0, 1))
             return 0.5 * geometry + (0.5 if self._total_damage() > self.flank_damage_at_reach and self.flank_reached_at is not None else 0)
         if name == "focus":
             return self._hhi() * min(self._total_damage() / max(self._meaningful_damage(), 1e-9), 1)
         if name == "distributed":
             return self._entropy()
         if name == "support":
-            inside = self._support_in_band(observation)
-            return min((self.consecutive + int(inside)) / 30, 1.0)
+            return min(self.consecutive / 30, 1.0)
         raise AssertionError(name)
 
-    def _success(
-        self, observation: dict[str, Any], plan_observation: dict[str, Any]
-    ) -> bool:
+    def _success(self, snapshot: MissionSnapshot) -> bool:
         name = self.spec.name
-        living = _assigned(observation, self.assigned_ids, living=True)
-        living_fraction = len(living) / self.initial_assigned
         if name == "engage":
-            return _role_row(plan_observation, self.spec.role)[11] <= 0.2
+            return snapshot.objective_health <= 0.2
         if name == "advance":
-            inside = _fraction_within(living, self.objective_anchor, 0.1 * self.diagonal) >= 0.8
-            self.consecutive = self.consecutive + 1 if inside else 0
             return self.consecutive >= 10
         if name == "hold":
-            inside = _fraction_within(living, self.activation_anchor, 0.08 * self.diagonal) >= 1.0
-            self.inside_count += int(inside)
             return (
                 self.decision >= self.spec.horizon
                 and self.inside_count / self.spec.horizon >= 0.9
-                and living_fraction >= 0.5
+                and snapshot.living_fraction >= 0.5
             )
         if name == "withdraw":
-            inside = _fraction_within(living, self.objective_anchor, 0.1 * self.diagonal) >= 0.8
-            self.consecutive = self.consecutive + 1 if inside else 0
-            return self.consecutive >= 20 and living_fraction >= 0.5
+            return self.consecutive >= 20 and snapshot.living_fraction >= 0.5
         if name == "flank":
-            lateral = self._signed_lateral(living)
-            if self.flank_reached_at is None and lateral >= 0.2 * self.lateral_extent:
-                self.flank_reached_at = self.decision
-                self.flank_damage_at_reach = self._total_damage()
             if self.flank_reached_at is None:
                 return False
             if self.decision - self.flank_reached_at > 50:
@@ -247,13 +292,6 @@ class FixedOptionTracker:
             damaged = sum(damage > 0 for damage in self.target_damage.values())
             return damaged >= 2 and self._total_damage() >= 2 * self._meaningful_damage() and self._entropy() >= 0.65
         if name == "support":
-            supported_living = len(_assigned(observation, self.supported_ids, living=True))
-            healthy = living_fraction >= 0.5 and (
-                self.initial_supported > 0
-                and supported_living / self.initial_supported >= 0.5
-            )
-            inside = healthy and self._support_in_band(observation)
-            self.consecutive = self.consecutive + 1 if inside else 0
             return self.consecutive >= 30
         raise AssertionError(name)
 
@@ -300,22 +338,20 @@ class FixedOptionTracker:
             if damage > 0
         ) / math.log(count)
 
-    def _metrics(
-        self, observation: dict[str, Any], plan_observation: dict[str, Any]
-    ) -> dict[str, float]:
-        living = _assigned(observation, self.assigned_ids, living=True)
-        support_distance = self._support_distance(observation)
+    def _metrics(self, snapshot: MissionSnapshot) -> dict[str, float]:
         return {
-            "assignedLivingFraction": len(living) / self.initial_assigned,
-            "objectiveHealth": _role_row(plan_observation, self.spec.role)[11],
+            "assignedLivingFraction": snapshot.living_fraction,
+            "objectiveHealth": snapshot.objective_health,
             "targetDamage": self._total_damage(),
             "targetDamageHhi": self._hhi(),
             "targetDamageEntropy": self._entropy(),
             "holdFraction": self.inside_count / max(self.decision, 1),
             "consecutiveQualified": float(self.consecutive),
-            "signedFlankSeparation": self._signed_lateral(living),
+            "signedFlankSeparation": snapshot.signed_lateral,
             "supportDistanceFraction": (
-                support_distance / self.diagonal if support_distance is not None else 0.0
+                snapshot.support_distance / self.diagonal
+                if snapshot.support_distance is not None
+                else 0.0
             ),
         }
 

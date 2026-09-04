@@ -70,7 +70,7 @@ def evaluate_option_episode(
         policy_observation = observation
         if condition == "shuffled":
             preview, _, _ = base.preview_plans(
-                [f"shuffle-{option}-{seed}-{decision}"], [alternative]
+                [f"shuffle-{option}-{seed}"], [alternative]
             )
             physical = {
                 name: value

@@ -22,6 +22,11 @@ the corresponding team’s initial maximum health. Mission success produces
 `+1`. Assigned-group elimination, battle failure before success, or the option
 horizon produces `-1`.
 
+All of those option boundaries are absorbing terminals for GAE. `truncated`
+is reserved for an artificial collector cutoff that would otherwise continue
+the same option world. Potential shaping uses a zero next potential at every
+terminal boundary.
+
 ## Frozen definitions
 
 | Option | Success condition | Horizon |
@@ -141,10 +146,11 @@ Generate the paired input artifact directly from a staged checkpoint:
 
 For every mission and seed, the evaluator completes the battle and records
 mission success/progress, physical win/loss, and rejected actions. The correct
-condition uses the active grounded plan; the shuffled condition previews and
-grounds a deterministic valid alternative at every state without replacing
-the tracker’s intended objective; the initializer condition runs the migrated
-accepted policy. Qualification mode consumes exactly 100 untouched seeds per
+condition uses the active grounded plan; the shuffled condition binds a
+deterministic valid alternative to one preview ID at reset, preserves its
+stable assignment, and refreshes only its late-bound objective projection.
+The initializer condition runs the migrated accepted policy. Qualification
+mode consumes exactly 100 untouched seeds per
 mission and emits `snowgym.m7b-evaluation.v0` for the strict qualifier.
 Development may repeat `--option` to evaluate only the missions trained so
 far. Qualification rejects every subset and always evaluates all eight frozen
@@ -154,3 +160,46 @@ missions.
 training order. A new option starts its own preallocated 10,000-seed range and
 option schedule while preserving model state, global update count, anchor
 decay, environment-step count, and source checkpoint lineage.
+
+## M7b-R0 Engage recovery
+
+The failed Engage Stage-1/Stage-2 checkpoints, optimizer states, 40-seed
+evaluation, and recovery evidence are immutable under
+`runs/m7b_engage_failed_v0`. They are negative diagnostic evidence and cannot
+be promoted.
+
+Reproduce the no-training evidence from `snowgym/training`:
+
+```bash
+.venv/bin/snowgym-engage-interventions \
+  --checkpoint runs/m7b_engage_failed_v0/stage2/checkpoint \
+  --output /tmp/snowgym-engage-intervention-matrix-v0.json
+
+.venv/bin/snowgym-export-engage-diagnostics \
+  --checkpoint runs/m7b_engage_failed_v0/stage2/checkpoint \
+  --output /tmp/snowgym-engage-diagnostics
+
+.venv/bin/snowgym-engage-gradient-diagnostics \
+  --checkpoint runs/m7b_engage_failed_v0/stage2/checkpoint \
+  --dataset /tmp/snowgym-engage-diagnostics/stochastic_learner_states.npz \
+  --output /tmp/snowgym-engage-gradients
+
+.venv/bin/snowgym-summarize-engage-recovery \
+  --matrix /tmp/snowgym-engage-intervention-matrix-v0.json \
+  --diagnostics /tmp/snowgym-engage-diagnostics \
+  --gradients /tmp/snowgym-engage-gradients \
+  --output /tmp/snowgym-engage-recovery-report.json
+```
+
+These commands use only the 40 development seeds. They never update the model,
+touch qualification seeds, invoke a provider, or require a browser. The frozen
+R0 report attributes the failure to an action/movement/throw interaction plus
+missing successful-state support and selects one R1 intervention: a successful
+production-teacher reservoir used only by the auxiliary BC loss. PPO rollouts
+remain on-policy.
+
+The R0 audit also repaired a simulator defect: semantic Random Red actions were
+previously sampled but not applied. Evidence created after the repair reports
+`snowgym.sim.v2`. Earlier random-opponent qualification artifacts remain
+available as v1 history, but require v2 requalification before reuse as fighter
+performance evidence. Scripted-Red results are unaffected.

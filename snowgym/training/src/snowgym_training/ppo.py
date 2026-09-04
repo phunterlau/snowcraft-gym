@@ -13,7 +13,12 @@ from torch.distributions import Categorical, Normal
 from snowgym_client.encoding import ACTION_MOVE, ACTION_THROW
 
 from .executor import EntityPolicy, ModelConfig, select_action_target
-from .executor.model import entity_encoder, masked_mean_max
+from .executor.model import (
+    entity_encoder,
+    masked_mean_max,
+    v3_scalar_features,
+    zero_output_adapter,
+)
 from .plan_data import PLAN_FEATURE_VECTOR_SIZE, PLAN_GROUP_SLOTS
 
 EPSILON = 1e-6
@@ -377,6 +382,7 @@ class RoleAwareCentralCritic(nn.Module):
 
     def __init__(self, config: ModelConfig) -> None:
         super().__init__()
+        self.config = config
         embedding = config.entity_embedding
         unit_features = 21 if config.observation_version == 3 else 10
         projectile_features = 9 if config.observation_version == 3 else 8
@@ -384,6 +390,10 @@ class RoleAwareCentralCritic(nn.Module):
         self.enemy_encoder = entity_encoder(unit_features, config)
         self.projectile_encoder = entity_encoder(projectile_features, config)
         self.obstacle_encoder = entity_encoder(9, config)
+        if config.v3_extension_adapters:
+            self.v3_scalar_adapter = zero_output_adapter(
+                4, config.entity_hidden, 3
+            )
         self.plan_encoder = nn.Sequential(
             nn.Linear(
                 PLAN_GROUP_SLOTS * PLAN_FEATURE_VECTOR_SIZE + PLAN_GROUP_SLOTS,
@@ -465,6 +475,10 @@ class RoleAwareCentralCritic(nn.Module):
             ],
             dim=-1,
         )
+        if self.config.v3_extension_adapters:
+            scalars = scalars + self.v3_scalar_adapter(
+                v3_scalar_features(observation)
+            )
         return self.value(torch.cat([*entity_context, plan, role, scalars], dim=-1)).squeeze(-1)
 
 
@@ -732,10 +746,49 @@ def grouped_means(values: Tensor, groups: Tensor) -> dict[str, float]:
     return result
 
 
+def clip_separate_actor_critic_gradients(
+    model: HybridActorCritic, max_norm: float
+) -> dict[str, float | bool]:
+    """Clip the independent plan actor and centralized critic without cross-scaling."""
+    if not hasattr(model, "role_aware_critic"):
+        raise ValueError("separate clipping requires an independent role-aware critic")
+    actor = [
+        parameter
+        for name, parameter in model.named_parameters()
+        if not name.startswith("role_aware_critic.")
+        and parameter.requires_grad
+        and parameter.grad is not None
+    ]
+    critic = [
+        parameter
+        for name, parameter in model.named_parameters()
+        if name.startswith("role_aware_critic.")
+        and parameter.requires_grad
+        and parameter.grad is not None
+    ]
+    if not actor or not critic:
+        raise ValueError("separate clipping requires actor and critic gradients")
+    actor_before = float(nn.utils.clip_grad_norm_(actor, max_norm))
+    critic_before = float(nn.utils.clip_grad_norm_(critic, max_norm))
+    if not math.isfinite(actor_before) or not math.isfinite(critic_before):
+        raise ValueError("non-finite separate gradient norm")
+    return {
+        "actorBefore": actor_before,
+        "actorAfter": min(actor_before, max_norm),
+        "criticBefore": critic_before,
+        "criticAfter": min(critic_before, max_norm),
+        "actorScale": min(1.0, max_norm / max(actor_before, 1e-12)),
+        "criticScale": min(1.0, max_norm / max(critic_before, 1e-12)),
+        "actorClipped": actor_before > max_norm,
+        "criticClipped": critic_before > max_norm,
+    }
+
+
 def discount_manifest(config: PPOConfig, decision_hz: int = 10) -> dict[str, Any]:
     if not isinstance(decision_hz, int) or isinstance(decision_hz, bool) or decision_hz <= 0:
         raise ValueError("decision_hz must be a positive integer")
     return {
+        "discountManifestVersion": 2,
         "decisionHz": decision_hz,
         "declaredReturnHalfLifeSeconds": 30,
         "declaredTraceHalfLifeSeconds": 5,
@@ -743,6 +796,11 @@ def discount_manifest(config: PPOConfig, decision_hz: int = 10) -> dict[str, Any
         "gaeLambda": config.gae_lambda,
         "derivedReturnHalfLifeSeconds": half_life(config.gamma, decision_hz),
         "derivedTraceHalfLifeSeconds": half_life(config.gae_lambda, decision_hz),
+        "derivedLambdaHalfLifeSeconds": half_life(config.gae_lambda, decision_hz),
+        "traceDecayFactor": config.gamma * config.gae_lambda,
+        "derivedGaeTraceHalfLifeSeconds": half_life(
+            config.gamma * config.gae_lambda, decision_hz
+        ),
         "developmentSweep": {
             name: list(values) for name, values in DEVELOPMENT_HALF_LIFE_SWEEP.items()
         },

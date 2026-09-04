@@ -1,5 +1,5 @@
 /** Version of deterministic simulation behavior, independent of HTTP/Gym versions. */
-export const SIMULATION_VERSION = 'snowgym.sim.v1' as const;
+export const SIMULATION_VERSION = 'snowgym.sim.v2' as const;
 
 /** SnowCraft commit from which the SnowGym extension work began. */
 export const UPSTREAM_BASE_COMMIT = '7d9fca5' as const;

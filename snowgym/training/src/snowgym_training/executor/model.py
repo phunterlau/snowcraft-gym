@@ -52,6 +52,7 @@ class ModelConfig:
     observation_version: int = 2
     physical_role_state_conditioned: bool = False
     plan_ppo_residuals: bool = False
+    v3_extension_adapters: bool = False
 
     def as_dict(self) -> dict[str, int | bool]:
         value: dict[str, int | bool] = {
@@ -89,6 +90,8 @@ class ModelConfig:
             value["physical_role_state_conditioned"] = True
         if self.plan_ppo_residuals:
             value["plan_ppo_residuals"] = True
+        if self.v3_extension_adapters:
+            value["v3_extension_adapters"] = True
         return value
 
 
@@ -113,6 +116,21 @@ class EntityPolicy(nn.Module):
             legacy_features=8 if config.observation_version == 3 else None,
         )
         self.obstacle_encoder = entity_encoder(9, config)
+        if config.v3_extension_adapters:
+            if config.observation_version != 3:
+                raise ValueError("v3 extension adapters require observation version 3")
+            self.ally_v3_adapter = zero_output_adapter(
+                11, config.entity_hidden, embedding
+            )
+            self.enemy_v3_adapter = zero_output_adapter(
+                11, config.entity_hidden, embedding
+            )
+            self.projectile_v3_adapter = zero_output_adapter(
+                1, config.entity_hidden, embedding
+            )
+            self.v3_scalar_adapter = zero_output_adapter(
+                4, config.entity_hidden, 3
+            )
         global_features = embedding * 8 + 3
         self.plan_conditioned = config.plan_conditioned
         self.plan_target_only = config.plan_target_only
@@ -231,6 +249,8 @@ class EntityPolicy(nn.Module):
         logits = self.action_head(action_hidden).masked_fill(
             ~action_mask, torch.finfo(action_hidden.dtype).min
         )
+        base_action_logits = logits
+        base_power_raw = power_raw
         plan_ppo_residual = None
         if self.config.plan_ppo_residuals:
             plan_embedding = self.encode_plan(observation, action_hidden.shape[0])
@@ -276,11 +296,15 @@ class EntityPolicy(nn.Module):
             logits = logits + action_residual.masked_fill(~action_mask, 0)
         result = {
             "action_logits": logits,
+            "base_action_logits": base_action_logits,
             "power": torch.sigmoid(power_raw),
             "power_raw": power_raw,
+            "base_power_raw": base_power_raw,
             "hidden": target_hidden,
             "action_hidden": action_hidden,
         }
+        if plan_ppo_residual is not None:
+            result["plan_ppo_residual"] = plan_ppo_residual
         if self.action_conditioned_targets:
             zeros = torch.zeros(
                 (*target_hidden.shape[:-1], 2),
@@ -311,6 +335,9 @@ class EntityPolicy(nn.Module):
                 if self.nearest_enemy_throw_target
                 else self.throw_target_head(target_hidden)
             )
+            base_target_raw_by_action = torch.stack(
+                [zeros, predicted_move_target, throw_target, zeros], dim=-2
+            )
             if plan_ppo_residual is not None:
                 move_target = move_target + plan_ppo_residual[..., 4:6]
                 supervised_move_target = (
@@ -337,6 +364,7 @@ class EntityPolicy(nn.Module):
                     "target_raw": target_raw,
                     "target_by_action": torch.tanh(target_raw_by_action),
                     "target_raw_by_action": target_raw_by_action,
+                    "base_target_raw_by_action": base_target_raw_by_action,
                     "supervised_target_by_action": torch.tanh(
                         supervised_target_raw_by_action
                     ),
@@ -353,6 +381,16 @@ class EntityPolicy(nn.Module):
         allies = self.ally_encoder(observation["allies"].float())
         enemies = self.enemy_encoder(observation["enemies"].float())
         projectiles = self.projectile_encoder(observation["projectiles"].float())
+        if self.config.v3_extension_adapters:
+            allies = allies + self.ally_v3_adapter(
+                observation["allies"][..., 10:].float()
+            )
+            enemies = enemies + self.enemy_v3_adapter(
+                observation["enemies"][..., 10:].float()
+            )
+            projectiles = projectiles + self.projectile_v3_adapter(
+                observation["projectiles"][..., 8:].float()
+            )
         obstacles = self.obstacle_encoder(observation["obstacles"].float())
         ally_mask = observation["ally_mask"].bool()
         actor_inputs = [allies]
@@ -384,6 +422,18 @@ class EntityPolicy(nn.Module):
                 :, None, None
             ].to(relational.dtype)
             actor_inputs.append(relational)
+        scalar_context = torch.cat(
+            [
+                observation["team_alive"].float()
+                / max(int(observation["allies"].shape[1]), 1),
+                torch.log1p(observation["tick"].float()) / 10.0,
+            ],
+            dim=-1,
+        )
+        if self.config.v3_extension_adapters:
+            scalar_context = scalar_context + self.v3_scalar_adapter(
+                v3_scalar_features(observation)
+            )
         global_inputs = [
                 *masked_mean_max(allies, ally_mask),
                 *masked_mean_max(enemies, observation["enemy_mask"].bool()),
@@ -391,9 +441,7 @@ class EntityPolicy(nn.Module):
                     projectiles, observation["projectile_mask"].bool()
                 ),
                 *masked_mean_max(obstacles, observation["obstacle_mask"].bool()),
-                observation["team_alive"].float()
-                / max(int(observation["allies"].shape[1]), 1),
-                torch.log1p(observation["tick"].float()) / 10.0,
+                scalar_context,
             ]
         plan_embedding = None
         if self.plan_conditioned:
@@ -615,6 +663,7 @@ def model_config(value: Any) -> ModelConfig:
         "observation_version",
         "physical_role_state_conditioned",
         "plan_ppo_residuals",
+        "v3_extension_adapters",
         "pairwise_enemy_attention",
         "action_conditioned_targets",
         "last_enemy_move_target",
@@ -709,6 +758,8 @@ def model_config(value: Any) -> ModelConfig:
             "architecture plan_ppo_residuals requires v3 learned move/throw heads "
             "and the plan target-only separate-target architecture"
         )
+    if value.get("v3_extension_adapters", False) and observation_version != 3:
+        raise ValueError("v3 extension adapters require observation version 3")
     if (
         value.get("separate_target_actor", False)
         and value.get("plan_conditioned", False)
@@ -775,3 +826,25 @@ def zero_output_adapter(inputs: int, hidden: int, outputs: int) -> nn.Sequential
     nn.init.zeros_(adapter[-1].weight)
     nn.init.zeros_(adapter[-1].bias)
     return adapter
+
+
+def v3_scalar_features(observation: dict[str, Tensor]) -> Tensor:
+    """Normalize the four v3 decision-horizon scalars for adapter input."""
+    required = ("decision_hz", "decision_dt", "max_ticks", "remaining_fraction")
+    batch = observation["allies"].shape[0]
+    values: list[Tensor] = []
+    for name in required:
+        value = observation.get(name)
+        if value is None or value.shape != (batch, 1):
+            raise ValueError(f"v3 extension adapter requires {name} [batch,1]")
+        values.append(value.float())
+    decision_hz, decision_dt, max_ticks, remaining = values
+    return torch.cat(
+        [
+            decision_hz / 60.0,
+            decision_dt,
+            torch.log1p(max_ticks) / 10.0,
+            remaining,
+        ],
+        dim=-1,
+    )

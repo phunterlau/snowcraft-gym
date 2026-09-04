@@ -7,7 +7,6 @@ from typing import Any
 
 import torch
 from torch import Tensor
-from torch import nn
 from torch.nn import functional as F
 
 from .executor import ModelConfig
@@ -19,6 +18,7 @@ from .ppo import (
     living_unit_mask,
     ppo_loss,
     ratio_diagnostics,
+    clip_separate_actor_critic_gradients,
 )
 
 EXPANDABLE_V3_INPUTS = {
@@ -37,6 +37,19 @@ FINAL_ENTITY_LAYER_PREFIXES = (
     "policy.enemy_encoder.2.",
     "policy.projectile_encoder.2.",
     "policy.obstacle_encoder.2.",
+)
+V3_EXTENSION_PREFIXES = (
+    "policy.ally_v3_adapter.",
+    "policy.enemy_v3_adapter.",
+    "policy.projectile_v3_adapter.",
+    "policy.v3_scalar_adapter.",
+)
+POLICY_NEW_PREFIXES = (
+    "plan_ppo_residual.",
+    "ally_v3_adapter.",
+    "enemy_v3_adapter.",
+    "projectile_v3_adapter.",
+    "v3_scalar_adapter.",
 )
 
 
@@ -140,6 +153,10 @@ def plan_ppo_update(
     seen = 0
     minibatches = 0
     maximum_gradient_norm = 0.0
+    maximum_actor_gradient_norm = 0.0
+    maximum_critic_gradient_norm = 0.0
+    actor_clipped = 0
+    critic_clipped = 0
     model.train()
     initializer.eval()
     for _ in range(config.update_epochs):
@@ -185,11 +202,23 @@ def plan_ppo_update(
                 for parameter in model.parameters()
             ):
                 raise ValueError("non-finite plan PPO gradient")
-            gradient_norm = nn.utils.clip_grad_norm_(model.parameters(), config.max_grad_norm)
-            if not bool(torch.isfinite(gradient_norm)):
-                raise ValueError("non-finite plan PPO gradient norm")
+            clipping = clip_separate_actor_critic_gradients(
+                model, config.max_grad_norm
+            )
             optimizer.step()
-            maximum_gradient_norm = max(maximum_gradient_norm, float(gradient_norm))
+            maximum_actor_gradient_norm = max(
+                maximum_actor_gradient_norm, float(clipping["actorBefore"])
+            )
+            maximum_critic_gradient_norm = max(
+                maximum_critic_gradient_norm, float(clipping["criticBefore"])
+            )
+            maximum_gradient_norm = max(
+                maximum_gradient_norm,
+                float(clipping["actorBefore"]),
+                float(clipping["criticBefore"]),
+            )
+            actor_clipped += int(bool(clipping["actorClipped"]))
+            critic_clipped += int(bool(clipping["criticClipped"]))
             count = int(indices.numel())
             for name, value in {
                 "total": total,
@@ -222,6 +251,16 @@ def plan_ppo_update(
         "targetStd": model.target_log_std.detach().exp().tolist(),
         "powerStd": float(model.power_log_std.detach().exp()),
         "maximumGradientNormBeforeClip": maximum_gradient_norm,
+        "maximumActorGradientNormBeforeClip": maximum_actor_gradient_norm,
+        "maximumActorGradientNormAfterClip": min(
+            maximum_actor_gradient_norm, config.max_grad_norm
+        ),
+        "maximumCriticGradientNormBeforeClip": maximum_critic_gradient_norm,
+        "maximumCriticGradientNormAfterClip": min(
+            maximum_critic_gradient_norm, config.max_grad_norm
+        ),
+        "actorClipFraction": actor_clipped / max(minibatches, 1),
+        "criticClipFraction": critic_clipped / max(minibatches, 1),
         **diagnostics,
     }
 
@@ -250,6 +289,7 @@ def target_only_plan_ppo_config(source: ModelConfig) -> ModelConfig:
         separate_target_actor=True,
         observation_version=3,
         plan_ppo_residuals=True,
+        v3_extension_adapters=True,
     )
 
 
@@ -260,9 +300,10 @@ def initialize_plan_ppo_policy(
     if not model.policy.config.plan_ppo_residuals:
         raise ValueError("target model does not enable plan PPO residuals")
     target_state = model.policy.state_dict()
-    inherited = set(target_state) - {
-        name for name in target_state if name.startswith("plan_ppo_residual.")
+    new_tensors = {
+        name for name in target_state if name.startswith(POLICY_NEW_PREFIXES)
     }
+    inherited = set(target_state) - new_tensors
     if set(source_state) != inherited:
         raise ValueError(
             "initializer fields differ from inherited plan PPO policy: "
@@ -305,6 +346,7 @@ def initialize_plan_ppo_policy(
         "copiedTensors": len(inherited),
         "expandedInputTensors": expanded,
         "newResidualTensors": sorted(residual),
+        "newExtensionTensors": sorted(new_tensors - set(residual)),
     }
 
 
@@ -327,7 +369,9 @@ def plan_ppo_parameter_groups(
     groups: dict[str, list[Tensor]] = {"new": [], "heads": [], "encoder-final": []}
     for name, parameter in model.named_parameters():
         group = None
-        if name.startswith(("role_aware_critic.", "policy.plan_ppo_residual.")):
+        if name.startswith(
+            ("role_aware_critic.", "policy.plan_ppo_residual.", *V3_EXTENSION_PREFIXES)
+        ):
             group = "new"
         elif stage >= 2 and name.startswith(INHERITED_HEAD_PREFIXES):
             group = "heads"

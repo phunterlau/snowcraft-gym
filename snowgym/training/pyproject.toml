@@ -48,6 +48,10 @@ snowgym-train-option-ppo = "snowgym_training.options.train:main"
 snowgym-option-causal-fork = "snowgym_training.options.causal_fork:main"
 snowgym-qualify-m7b = "snowgym_training.options.qualification:main"
 snowgym-evaluate-m7b = "snowgym_training.options.evaluate:main"
+snowgym-engage-interventions = "snowgym_training.options.interventions:main"
+snowgym-export-engage-diagnostics = "snowgym_training.options.diagnostics:main"
+snowgym-engage-gradient-diagnostics = "snowgym_training.options.gradient_diagnostics:main"
+snowgym-summarize-engage-recovery = "snowgym_training.options.recovery_report:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/snowgym_training"]

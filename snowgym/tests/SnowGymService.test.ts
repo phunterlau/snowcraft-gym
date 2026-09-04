@@ -116,6 +116,7 @@ describe('SnowGymService', () => {
         action: { actions: expect.arrayContaining([expect.objectContaining({ unitId: 1 })]) },
       },
     });
+    const previewAssignments = (preview.body as typeof body).assignments;
     expect(service.handle('GET', '/plan-observation')).toMatchObject({
       status: 200,
       body: { planId: 'test-plan', version: 1, stateHash: reset.status.stateHash },
@@ -132,6 +133,14 @@ describe('SnowGymService', () => {
       expectedStateHash: reset.status.stateHash,
       idempotencyKey: 'advance-plan-test',
     });
+    const refreshedPreview = service.handle('POST', '/preview-plan', {
+      planId: 'preview-plan',
+      plan: commandedTenVsTenPlan(),
+      expectedStateHash: (service.handle('GET', '/status').body as {
+        status: { stateHash: string };
+      }).status.stateHash,
+    });
+    expect((refreshedPreview.body as typeof body).assignments).toEqual(previewAssignments);
     const current = service.handle('GET', '/plan-observation').body as typeof body;
     expect(current.tick).toBe(6);
     expect(current.stateHash).not.toBe(reset.status.stateHash);

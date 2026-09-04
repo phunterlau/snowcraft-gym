@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from copy import deepcopy
 import math
+from pathlib import Path
+import pytest
 import torch
 
 from snowgym_client.batch import SnowGymBatchClient, SnowGymBatchEnv
@@ -19,10 +21,12 @@ from snowgym_training.options import (
 )
 from snowgym_training.executor import ModelConfig
 from snowgym_training.plan_ppo import target_only_plan_ppo_config
-from snowgym_training.ppo import HybridActorCritic, PPOConfig
+from snowgym_training.ppo import HybridActorCritic, PPOConfig, generalized_advantage_estimate
 from snowgym_training.ppo_collect import SeedSchedule
 from snowgym_training.options.causal_fork import run_causal_fork
 from snowgym_training.options.evaluate import resolve_evaluation_options
+from snowgym_training.options.interventions import compose_intervention_action
+from snowgym_training.options.recovery_report import audit_artifact_manifest
 from snowgym_training.trajectory import json_digest
 
 
@@ -176,6 +180,91 @@ def test_option_reward_keeps_components_separate() -> None:
         result.executor_reward,
         result.mission_reward + 0.1 * result.combat_reward + result.shaping_reward,
     )
+    assert result.shaping_reward == 0
+
+
+def test_temporal_option_counters_advance_once_per_decision() -> None:
+    initial = observation()
+    body = plan_observation(support=True)
+    hold = FixedOptionTracker(FROZEN_OPTION_SPECS["hold"], plan("hold"), initial, body)
+    assert update(hold, initial, body).progress == 1 / 150
+
+    withdrawn = deepcopy(initial)
+    withdrawn["allies"][0]["x"] = 20
+    withdrawn["allies"][1]["x"] = 20
+    withdraw = FixedOptionTracker(
+        FROZEN_OPTION_SPECS["withdraw"], plan("withdraw"), initial, body
+    )
+    assert update(withdraw, withdrawn, body).progress == 1 / 20
+
+    support = FixedOptionTracker(
+        OptionSpec("support", 300, role="reserve"),
+        plan("support", role="reserve"),
+        initial,
+        body,
+    )
+    assert update(support, initial, body).progress == 1 / 30
+
+
+def test_option_timeout_is_terminal_and_does_not_bootstrap_reset_value() -> None:
+    initial = observation()
+    tracker = FixedOptionTracker(
+        OptionSpec("engage", 1), plan("engage"), initial, plan_observation()
+    )
+    result = update(tracker, initial, plan_observation())
+    assert result.done and result.failed and result.timed_out
+    advantages, _ = generalized_advantage_estimate(
+        torch.tensor([[-1.0]]),
+        torch.tensor([[0.4]]),
+        torch.tensor([[0.8]]),
+        torch.tensor([[True]]),
+        torch.tensor([[False]]),
+        gamma=0.99,
+        gae_lambda=0.95,
+    )
+    torch.testing.assert_close(advantages, torch.tensor([[-1.4]]))
+
+
+def test_engage_intervention_changes_only_the_selected_action_channel() -> None:
+    learner = {
+        "action_type": torch.tensor([[1, 2]]).numpy(),
+        "target": torch.tensor([[[0.1, 0.2], [0.3, 0.4]]]).numpy(),
+        "power": torch.tensor([[0.5, 0.6]]).numpy(),
+    }
+    teacher = {
+        "action_type": torch.tensor([[2, 1]]).numpy(),
+        "target": torch.tensor([[[0.7, 0.8], [0.9, 1.0]]]).numpy(),
+        "power": torch.tensor([[0.2, 0.3]]).numpy(),
+    }
+    goal = torch.tensor([[[0.4, -0.4], [0.4, -0.4]]]).numpy()
+
+    teacher_move = compose_intervention_action(
+        "teacher-move", learner, teacher, goal
+    )
+    assert teacher_move["action_type"].tolist() == [[1, 2]]
+    assert teacher_move["target"].tolist()[0][0] == pytest.approx([0.7, 0.8])
+    assert teacher_move["target"].tolist()[0][1] == pytest.approx([0.3, 0.4])
+    assert teacher_move["power"][0].tolist() == pytest.approx([0.5, 0.6])
+
+    teacher_action = compose_intervention_action(
+        "teacher-action", learner, teacher, goal
+    )
+    assert teacher_action["action_type"].tolist() == [[2, 1]]
+    torch.testing.assert_close(
+        torch.from_numpy(teacher_action["target"]),
+        torch.from_numpy(learner["target"]),
+    )
+
+    anchored = compose_intervention_action("goal-anchor", learner, teacher, goal)
+    assert anchored["target"].tolist()[0][0] == pytest.approx([0.4, -0.4])
+    assert anchored["target"].tolist()[0][1] == pytest.approx([0.3, 0.4])
+
+
+def test_archived_failed_engage_evidence_passes_digest_audit() -> None:
+    archive = Path(__file__).resolve().parents[1] / "runs" / "m7b_engage_failed_v0"
+    audit_artifact_manifest(archive, "archive-manifest.json")
+    audit_artifact_manifest(archive / "diagnostics", "manifest.json")
+    audit_artifact_manifest(archive / "gradient-diagnostics", "manifest.json")
 
 
 def test_live_fixed_option_wrapper_executes_production_teacher() -> None:
@@ -212,10 +301,11 @@ def test_production_teacher_proves_every_frozen_option_is_achievable() -> None:
     names = (
         "engage", "advance", "hold", "withdraw", "flank", "focus", "distributed", "support"
     )
+    seeds = (41_000, 41_001, 41_002, 41_003, 41_000, 41_005, 41_006, 41_007)
     with SnowGymBatchClient() as client:
         results = [
-            evaluate_teacher_option(name, seed=41_000 + index, client=client)
-            for index, name in enumerate(names)
+            evaluate_teacher_option(name, seed=seed, client=client)
+            for name, seed in zip(names, seeds, strict=True)
         ]
     assert all(result["success"] for result in results), results
     assert all(result["rejectedActions"] == 0 for result in results)

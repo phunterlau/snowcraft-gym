@@ -241,8 +241,15 @@ export class SnowEnvironment {
   }
 
   private advanceDecision(runRedController: boolean): void {
+    if (runRedController && this.redControllerType === 'random') {
+      const action = this.redController.act(
+        this.observe(Team.Enemy),
+        1 / this.decisionHz,
+      );
+      this.actionAdapter.apply(Team.Enemy, action);
+    }
     for (let i = 0; i < this.ticksPerDecision && !this.round.isOver; i++) {
-      this.physicsStep(runRedController);
+      this.physicsStep(runRedController && this.redControllerType === 'scripted');
       if (this.tick >= this.scenario.maxTicks) {
         this.truncated = !this.round.isOver;
         break;
@@ -252,13 +259,9 @@ export class SnowEnvironment {
 
   private physicsStep(runRedController: boolean): void {
     this.world.time += SIM.dt;
-    // The red TeamController holds internal per-tick state (decision timers,
-    // dodges), so physicsStep delegates to the composed red behavior rather
-    // than calling controller.act once per decision. The reported semantic
-    // actions stay on the controller for inspection; applying them through the
-    // adapter is unnecessary for the scripted bridge (its orders already
-    // reached the world) and tryThrow cannot be re-issued without
-    // double-firing a snowball.
+    // Scripted AI owns internal per-tick timers and applies its own orders.
+    // The semantic RandomAgent is applied once at decision cadence in
+    // advanceDecision, so it must not be sampled again during physics slices.
     if (runRedController) {
       this.redController.act(this.observe(Team.Enemy), SIM.dt);
     }

@@ -12,7 +12,7 @@ from snowgym_training.plan_ppo import (
     plan_ppo_parameter_groups,
     target_only_plan_ppo_config,
 )
-from snowgym_training.ppo import HybridActorCritic
+from snowgym_training.ppo import HybridActorCritic, clip_separate_actor_critic_gradients
 
 
 def source_observation(batch: int = 2, units: int = 3) -> dict[str, torch.Tensor]:
@@ -102,7 +102,16 @@ def test_plan_ppo_architecture_validation_and_staged_unfreezing() -> None:
     assert [group["name"] for group in stage1] == ["new"]
     assert all(
         parameter.requires_grad
-        == name.startswith(("role_aware_critic.", "policy.plan_ppo_residual."))
+        == name.startswith(
+            (
+                "role_aware_critic.",
+                "policy.plan_ppo_residual.",
+                "policy.ally_v3_adapter.",
+                "policy.enemy_v3_adapter.",
+                "policy.projectile_v3_adapter.",
+                "policy.v3_scalar_adapter.",
+            )
+        )
         for name, parameter in model.named_parameters()
     )
 
@@ -125,6 +134,75 @@ def test_plan_ppo_architecture_validation_and_staged_unfreezing() -> None:
         "new", "heads", "encoder-final"
     ]
     assert model.policy.ally_encoder[2].weight.requires_grad
+
+
+def test_stage1_v3_adapters_learn_while_legacy_backbone_stays_frozen() -> None:
+    torch.manual_seed(107)
+    source_config = ModelConfig(
+        16,
+        12,
+        24,
+        action_conditioned_targets=True,
+        plan_conditioned=True,
+        plan_target_only=True,
+        separate_target_actor=True,
+    )
+    source = EntityPolicy(source_config).eval()
+    model = HybridActorCritic(target_only_plan_ppo_config(source_config))
+    initialize_plan_ppo_policy(model, source.state_dict())
+    groups = plan_ppo_parameter_groups(model, 1)
+    optimizer = torch.optim.SGD(groups, lr=0.1)
+    observation = target_observation(source_observation())
+    observation["allies"][..., 10:] = 0.25
+    observation["enemies"][..., 10:] = -0.2
+    observation["projectiles"][..., 8:] = 0.4
+    before = model.policy(observation)["action_logits"].detach().clone()
+    prediction = model(observation)
+    loss = prediction["action_logits"][..., 0].mean() + prediction[
+        "target_raw_by_action"
+    ][..., 1, :].square().mean()
+    optimizer.zero_grad(set_to_none=True)
+    loss.backward()
+    for name in (
+        "ally_v3_adapter",
+        "enemy_v3_adapter",
+        "projectile_v3_adapter",
+        "v3_scalar_adapter",
+    ):
+        gradient = getattr(model.policy, name)[2].weight.grad
+        assert gradient is not None
+        assert bool(gradient.abs().sum() > 0)
+    assert model.policy.ally_encoder[0].weight.grad is None
+    assert model.policy.enemy_encoder[0].weight.grad is None
+    assert model.policy.projectile_encoder[0].weight.grad is None
+    optimizer.step()
+    after = model.policy(observation)["action_logits"].detach()
+    assert not torch.equal(after, before)
+
+
+def test_actor_and_critic_gradients_are_clipped_independently() -> None:
+    source = ModelConfig(
+        16,
+        12,
+        24,
+        action_conditioned_targets=True,
+        plan_conditioned=True,
+        plan_target_only=True,
+        separate_target_actor=True,
+    )
+    model = HybridActorCritic(target_only_plan_ppo_config(source))
+    plan_ppo_parameter_groups(model, 1)
+    for name, parameter in model.named_parameters():
+        if not parameter.requires_grad:
+            continue
+        parameter.grad = torch.full_like(
+            parameter, 100.0 if name.startswith("role_aware_critic.") else 0.001
+        )
+    report = clip_separate_actor_critic_gradients(model, 0.5)
+    assert not report["actorClipped"]
+    assert report["criticClipped"]
+    assert report["actorScale"] == 1
+    assert report["criticScale"] < 1
 
 
 def test_plan_ppo_anchor_decay_and_zero_initializer_kl() -> None:

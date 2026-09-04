@@ -164,6 +164,12 @@ def test_default_discounts_encode_the_declared_ten_hz_half_lives() -> None:
     assert config.gae_lambda == 0.9885140204
     assert manifest["derivedReturnHalfLifeSeconds"] == pytest.approx(30.0, rel=2e-8)
     assert manifest["derivedTraceHalfLifeSeconds"] == pytest.approx(6.0, rel=1e-8)
+    assert manifest["discountManifestVersion"] == 2
+    assert manifest["derivedLambdaHalfLifeSeconds"] == pytest.approx(6.0, rel=1e-8)
+    assert manifest["derivedGaeTraceHalfLifeSeconds"] == pytest.approx(5.0, rel=1e-8)
+    assert manifest["traceDecayFactor"] == pytest.approx(
+        config.gamma * config.gae_lambda
+    )
     assert manifest["developmentSweep"] == {
         "returnSeconds": [15, 30, 60],
         "traceSeconds": [2, 5, 10],

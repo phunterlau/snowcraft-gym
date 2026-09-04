@@ -39,6 +39,7 @@ export interface ServiceResponse {
 export class SnowGymService {
   private readonly bluePolicy = new SimpleBlueAgent();
   private readonly mutationCache = new Map<string, CachedMutation>();
+  private readonly previewStores = new Map<string, CachedPreviewPlan>();
   private environment: SnowEnvironment;
   private planStore: PlanStore | null = null;
 
@@ -183,7 +184,22 @@ export class SnowGymService {
 
   private previewPlan(planId: string, plan: CommandPlan): object {
     const observation = this.environment.observe(Team.Player);
-    const store = new PlanStore(this.groundPlan(planId, plan, observation), observation.tick);
+    const fingerprint = JSON.stringify(plan);
+    const cached = this.previewStores.get(planId);
+    if (cached && cached.fingerprint !== fingerprint) {
+      throw new RequestValidationError(
+        `preview planId ${planId} is already bound to different plan content`,
+      );
+    }
+    const store = cached?.store
+      ?? new PlanStore(this.groundPlan(planId, plan, observation), observation.tick);
+    if (!cached) {
+      this.previewStores.set(planId, { fingerprint, store });
+      if (this.previewStores.size > 64) {
+        const oldest = this.previewStores.keys().next().value as string | undefined;
+        if (oldest) this.previewStores.delete(oldest);
+      }
+    }
     return {
       ...this.planObservation(store),
       action: this.planTeacherAction(store).action,
@@ -261,6 +277,7 @@ export class SnowGymService {
       this.environment.reset(request.seed);
     }
     this.mutationCache.clear();
+    this.previewStores.clear();
     this.planStore = null;
     return this.snapshot();
   }
@@ -325,6 +342,11 @@ export class SnowGymService {
 }
 
 class RequestValidationError extends Error {}
+
+interface CachedPreviewPlan {
+  readonly fingerprint: string;
+  readonly store: PlanStore;
+}
 
 class StateConflictError extends Error {
   constructor(
