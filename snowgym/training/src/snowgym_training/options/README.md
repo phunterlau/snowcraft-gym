@@ -112,3 +112,25 @@ all-mission gate with:
 The qualifier verifies the evaluation digest, paired seed alignment, learning
 rates, parameter change, bootstrap bound, mission progress, physical retention,
 and rejected-action rate. One failed mission fails the checkpoint.
+
+Generate the paired input artifact directly from a staged checkpoint:
+
+```bash
+.venv/bin/snowgym-evaluate-m7b \
+  --checkpoint path/to/checkpoint \
+  --split development \
+  --output /tmp/snowgym-m7b-development.json
+```
+
+For every mission and seed, the evaluator completes the battle and records
+mission success/progress, physical win/loss, and rejected actions. The correct
+condition uses the active grounded plan; the shuffled condition previews and
+grounds a deterministic valid alternative at every state without replacing
+the tracker’s intended objective; the initializer condition runs the migrated
+accepted policy. Qualification mode consumes exactly 100 untouched seeds per
+mission and emits `snowgym.m7b-evaluation.v0` for the strict qualifier.
+
+`--ppo-warm-start` may transfer a checkpoint into the next option in the frozen
+training order. A new option starts its own preallocated 10,000-seed range and
+option schedule while preserving model state, global update count, anchor
+decay, environment-step count, and source checkpoint lineage.

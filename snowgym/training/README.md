@@ -771,6 +771,9 @@ uv sync --extra dev --extra learn
 
 Exact-resume, staged-transfer, causal-fork, and qualification commands are in
 the [fixed-option README](./src/snowgym_training/options/README.md).
+That workflow also documents `snowgym-evaluate-m7b`, which generates paired
+correct/shuffled/initializer mission and complete-battle records from a frozen
+checkpoint without a browser or provider call.
 
 The frozen `ppo_curriculum_v0.json` keeps training ranges disjoint from eight
 evaluation seeds per gate and sets thresholds before qualifying runs. Its order

@@ -768,6 +768,17 @@ digest-validating all-mission qualifier implements the predeclared paired
 bootstrap and per-mission gates. These are infrastructure results; the ordered
 development training and untouched qualification run remain open.
 
+M7b paired-evaluation bridge (2026-09-03): the headless evaluator holds the
+intended option tracker fixed while comparing correct grounded tensors,
+state-matched previews of a deterministic shuffled valid plan, and the
+migrated initializer. It continues each episode through the battle boundary so
+physical win retention is measured independently of early option completion.
+Every record includes the paired seed, success, progress, win outcome, rejected
+actions, and total actions under an audited artifact digest. Staged PPO transfer
+can now advance to the next mission while changing to its disjoint training
+seed range. No development or qualification threshold is marked passed by this
+infrastructure change.
+
 #### M7c — full-fight fixed-plan composition
 
 - [ ] Hold one-, two-, and three-role plans throughout complete 3v3, 5v5, and

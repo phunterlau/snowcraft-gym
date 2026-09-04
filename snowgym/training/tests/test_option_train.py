@@ -3,8 +3,15 @@ from __future__ import annotations
 import json
 import math
 
+from snowgym_client.batch import SnowGymBatchClient
+from snowgym_training.checkpoint import load_checkpoint
+from snowgym_training.executor import model_config
+from snowgym_training.options.evaluate import evaluate_option_episode
 from snowgym_training.options.train import OPTION_PPO_RUN_FORMAT, train_option_ppo
-from snowgym_training.ppo import PPOConfig
+from snowgym_training.options.train import DEFAULT_INITIALIZER
+from snowgym_training.plan_ppo import freeze_initializer, initialize_plan_ppo_policy
+from snowgym_training.ppo import HybridActorCritic, PPOConfig
+from snowgym_training.ppo_checkpoint import load_ppo_checkpoint
 
 
 def test_option_ppo_smoke_and_exact_resume_match_uninterrupted(tmp_path) -> None:
@@ -54,6 +61,29 @@ def test_option_ppo_smoke_and_exact_resume_match_uninterrupted(tmp_path) -> None
     assert resumed["optionSchedule"] == uninterrupted["optionSchedule"]
     assert resumed["checkpoint"]["stateDigest"] == uninterrupted["checkpoint"]["stateDigest"]
     assert json.loads((tmp_path / "resumed" / "manifest.json").read_text()) == resumed
+
+    metadata, state = load_ppo_checkpoint(tmp_path / "first" / "checkpoint")
+    architecture = model_config(metadata["architecture"])
+    model = HybridActorCritic(architecture)
+    model.load_state_dict(state["model"])
+    _, source_state = load_checkpoint(DEFAULT_INITIALIZER)
+    initializer = HybridActorCritic(architecture)
+    initialize_plan_ppo_policy(initializer, source_state["model"])
+    initializer = freeze_initializer(initializer)
+    with SnowGymBatchClient() as client:
+        episode = evaluate_option_episode(
+            model,
+            initializer,
+            option="engage",
+            seed=200_000,
+            condition="correct",
+            client=client,
+        )
+    assert set(episode) == {
+        "seed", "success", "progress", "physicalWin", "rejectedActions", "totalActions"
+    }
+    assert episode["rejectedActions"] == 0
+    assert episode["totalActions"] > 0
 
 
 def test_option_ppo_stage_three_requires_recorded_gates(tmp_path) -> None:
@@ -111,3 +141,22 @@ def test_option_ppo_stage_two_transfers_state_and_opens_inherited_heads(tmp_path
     assert second["learningRates"]["new"] == 0.0003
     assert math.isclose(second["learningRates"]["heads"], 0.00003)
     assert second["seedSchedule"]["nextSeed"] == first["seedSchedule"]["nextSeed"] + 1
+    third = train_option_ppo(
+        output=tmp_path / "hold-stage2",
+        option="hold",
+        worlds=1,
+        rollout_steps=1,
+        target_updates=3,
+        anchor_total_updates=4,
+        stage=2,
+        ppo_config=config,
+        ppo_warm_start=tmp_path / "stage2" / "checkpoint",
+        git_commit="test",
+    )
+    assert third["startUpdate"] == 2
+    assert third["seedSchedule"] == {
+        "minimum": 120_000,
+        "maximum": 129_999,
+        "nextSeed": 120_001,
+    }
+    assert third["optionSchedule"]["prefix"] == "m7b-hold"

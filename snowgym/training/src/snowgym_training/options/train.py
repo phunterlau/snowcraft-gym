@@ -142,19 +142,18 @@ def train_option_ppo(
         if transfer_metadata["curriculumDigest"] != protocol_digest:
             raise ValueError("staged PPO transfer protocol changed")
         source_collector = transfer_metadata["collectorConfig"]
-        if source_collector.get("option") != option:
-            raise ValueError("staged PPO transfer option changed")
         model.load_state_dict(transfer_state["model"])
-        schedule_state = transfer_metadata["seedSchedule"]
-        schedule = SeedSchedule(
-            schedule_state["minimum"],
-            schedule_state["maximum"],
-            schedule_state["nextSeed"],
-        )
-        option_state = transfer_metadata.get("optionSchedule")
-        if not isinstance(option_state, dict):
-            raise ValueError("staged PPO transfer has no option schedule")
-        option_schedule = OptionSchedule.restore(entries, option_state)
+        if source_collector.get("option") == option:
+            schedule_state = transfer_metadata["seedSchedule"]
+            schedule = SeedSchedule(
+                schedule_state["minimum"],
+                schedule_state["maximum"],
+                schedule_state["nextSeed"],
+            )
+            option_state = transfer_metadata.get("optionSchedule")
+            if not isinstance(option_state, dict):
+                raise ValueError("staged PPO transfer has no option schedule")
+            option_schedule = OptionSchedule.restore(entries, option_state)
         start_update = int(transfer_metadata["updateIndex"])
         environment_steps = int(transfer_metadata["environmentSteps"])
         initialization = {
