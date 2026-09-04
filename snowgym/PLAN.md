@@ -726,10 +726,10 @@ exactly before the zero-output plan residual is trained.
 
 #### M7b — fixed-plan option PPO
 
-- [ ] Add fixed-plan option episodes with separate mission, combat, potential,
+- [x] Add fixed-plan option episodes with separate mission, combat, potential,
       and canonical reward components. Commander scheduling and plan
       replacement remain disabled.
-- [ ] Validate engage, advance, hold, withdraw, flank, focus/distributed fire,
+- [x] Validate engage, advance, hold, withdraw, flank, focus/distributed fire,
       and support definitions with the production plan-aware teacher before
       freezing learner thresholds.
 - [ ] Train in that order from the migrated target-only initializer using
@@ -743,6 +743,17 @@ success by at least 20 percentage points with a positive paired-bootstrap 95%
 lower bound, improves paired mission progress on at least 70% of seeds, retains
 physical win rate within 10 percentage points, and rejects fewer than 0.1% of
 physical actions under a nontrivial PPO update.
+
+M7b option-contract acceptance (2026-09-03): the v3 fixed-plan batch wrapper
+tracks immutable group assignments and anchors, terminates on the eight frozen
+mission definitions, and emits mission, combat, shaping, canonical, and
+executor reward fields separately. The committed protocol predeclares disjoint
+training, 40-seed-per-mission development, 100-seed-per-mission qualification,
+plan-generation, and sealed-map partitions. Live subprocess tests prove every
+option achievable with the production plan-aware teacher and zero rejected
+actions. Support uses a pre-training 4+1, 30-by-20 proof scenario so the
+teacher's bounded support offset can enter the unchanged 8–18% band. This gate
+does not yet claim a trained or qualified M7b checkpoint.
 
 #### M7c — full-fight fixed-plan composition
 

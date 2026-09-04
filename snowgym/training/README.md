@@ -752,6 +752,14 @@ The batch adapter also exposes symmetric `step_joint` for later two-policy
 training while the fixed-plan collector retains the configured server-side Red
 controller.
 
+The fixed-plan mission objective and frozen thresholds are documented in the
+[`options` package](./src/snowgym_training/options/README.md). Its live gate
+runs the production plan-aware teacher through Engage, Advance, Hold,
+Withdraw, signed Flank, Focus, Distributed, and Support episodes before those
+definitions can be used for PPO. Passing that construction test establishes
+that the objective is reachable; learned-policy qualification remains a
+separate 40-development/100-qualification paired-seed gate.
+
 The frozen `ppo_curriculum_v0.json` keeps training ranges disjoint from eight
 evaluation seeds per gate and sets thresholds before qualifying runs. Its order
 is 1v1 random, 1v1 easy scripted, 3v3 random, 3v3 easy scripted, 3v3 terrain on

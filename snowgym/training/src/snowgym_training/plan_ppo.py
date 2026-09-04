@@ -2,13 +2,24 @@
 
 from __future__ import annotations
 
+from copy import deepcopy
 from typing import Any
 
 import torch
 from torch import Tensor
+from torch import nn
+from torch.nn import functional as F
 
 from .executor import ModelConfig
-from .ppo import HybridActorCritic
+from .loss import LossConfig, behavior_clone_loss
+from .ppo import (
+    HybridActorCritic,
+    PPOConfig,
+    PPORollout,
+    living_unit_mask,
+    ppo_loss,
+    ratio_diagnostics,
+)
 
 EXPANDABLE_V3_INPUTS = {
     "ally_encoder.0.weight",
@@ -27,6 +38,175 @@ FINAL_ENTITY_LAYER_PREFIXES = (
     "policy.projectile_encoder.2.",
     "policy.obstacle_encoder.2.",
 )
+
+
+def plan_ppo_anchor_weights(update_index: int, total_updates: int) -> dict[str, float]:
+    """Predeclared linear BC and initializer-KL decay schedules."""
+    if (
+        not isinstance(update_index, int)
+        or isinstance(update_index, bool)
+        or not isinstance(total_updates, int)
+        or isinstance(total_updates, bool)
+        or total_updates <= 0
+        or not 0 <= update_index < total_updates
+    ):
+        raise ValueError("plan PPO anchor schedule indices are invalid")
+    progress = update_index / total_updates
+    return {
+        "bc": 0.1 * max(0.0, 1 - progress / 0.5),
+        "initializerKl": 0.01 * max(0.0, 1 - progress / 0.75),
+    }
+
+
+def freeze_initializer(model: HybridActorCritic) -> HybridActorCritic:
+    initializer = deepcopy(model).eval()
+    for parameter in initializer.parameters():
+        parameter.requires_grad_(False)
+    return initializer
+
+
+def initializer_policy_kl(
+    model: HybridActorCritic,
+    prediction: dict[str, Tensor],
+    initializer_prediction: dict[str, Tensor],
+    observation: dict[str, Tensor],
+) -> Tensor:
+    """KL of the masked categorical plus conditional Gaussian policy."""
+    present = living_unit_mask(observation)
+    current_log = F.log_softmax(prediction["action_logits"], dim=-1)
+    initial_log = F.log_softmax(initializer_prediction["action_logits"], dim=-1)
+    probabilities = current_log.exp()
+    categorical = (probabilities * (current_log - initial_log)).sum(dim=-1)
+    target_variance = model.target_log_std.exp().square().view(1, 1, 2)
+    target_delta = (
+        prediction["target_raw_by_action"] - initializer_prediction["target_raw_by_action"]
+    ).square() / (2 * target_variance.unsqueeze(-2))
+    target_kl = target_delta.sum(dim=-1)
+    move_throw = (
+        probabilities[..., 1] * target_kl[..., 1]
+        + probabilities[..., 2] * target_kl[..., 2]
+    )
+    power_variance = model.power_log_std.exp().square()
+    power_kl = (
+        probabilities[..., 2]
+        * (prediction["power_raw"] - initializer_prediction["power_raw"]).square()
+        / (2 * power_variance)
+    )
+    per_unit = (categorical + move_throw + power_kl) * present
+    return (
+        per_unit.sum(dim=-1) / present.sum(dim=-1).clamp_min(1)
+    ).mean()
+
+
+def plan_ppo_update(
+    model: HybridActorCritic,
+    optimizer: torch.optim.Optimizer,
+    rollout: PPORollout,
+    teacher_actions: dict[str, Tensor],
+    initializer: HybridActorCritic,
+    config: PPOConfig,
+    *,
+    loss_config: LossConfig,
+    training_seed: int,
+    update_index: int,
+    total_updates: int,
+) -> dict[str, Any]:
+    """Apply PPO with the frozen M7b BC and initializer-KL anchors."""
+    weights = plan_ppo_anchor_weights(update_index, total_updates)
+    flat = rollout.flatten()
+    flattened_teacher = {
+        name: value.flatten(0, 1) for name, value in teacher_actions.items()
+    }
+    if set(flattened_teacher) != {"action_type", "target", "power"}:
+        raise ValueError("plan PPO teacher action fields are invalid")
+    if any(value.shape[0] != flat["advantages"].shape[0] for value in flattened_teacher.values()):
+        raise ValueError("plan PPO teacher actions do not align with rollout")
+    advantages = flat["advantages"]
+    normalized = (advantages - advantages.mean()) / advantages.std(
+        unbiased=False
+    ).clamp_min(1e-8)
+    generator = torch.Generator(device="cpu")
+    generator.manual_seed(training_seed + update_index * 1_000_003)
+    sample_count = int(advantages.shape[0])
+    totals = {"total": 0.0, "ppo": 0.0, "bc": 0.0, "initializerKl": 0.0}
+    seen = 0
+    minibatches = 0
+    maximum_gradient_norm = 0.0
+    model.train()
+    initializer.eval()
+    for _ in range(config.update_epochs):
+        permutation = torch.randperm(sample_count, generator=generator)
+        for start in range(0, sample_count, config.minibatch_size):
+            indices = permutation[start : start + config.minibatch_size]
+            observation = {
+                name: value[indices] for name, value in flat["observations"].items()
+            }
+            actions = {name: value[indices] for name, value in flat["actions"].items()}
+            teacher = {name: value[indices] for name, value in flattened_teacher.items()}
+            prediction = model(observation)
+            log_probability, entropy = model.evaluate_actions(
+                observation, actions, prediction=prediction
+            )
+            base = ppo_loss(
+                log_probability,
+                flat["old_log_probability"][indices],
+                normalized[indices],
+                prediction["value"],
+                flat["returns"][indices],
+                entropy,
+                config,
+                normalize_advantages=False,
+                active_mask=living_unit_mask(observation),
+            )
+            bc = behavior_clone_loss(prediction, teacher, observation, loss_config)["total"]
+            with torch.no_grad():
+                initial_prediction = initializer(observation)
+            initial_kl = initializer_policy_kl(
+                model, prediction, initial_prediction, observation
+            )
+            total = base["total"] + weights["bc"] * bc + weights["initializerKl"] * initial_kl
+            if not bool(torch.isfinite(total)):
+                raise ValueError("non-finite plan PPO loss")
+            optimizer.zero_grad(set_to_none=True)
+            total.backward()
+            if not all(
+                parameter.grad is None or bool(torch.isfinite(parameter.grad).all())
+                for parameter in model.parameters()
+            ):
+                raise ValueError("non-finite plan PPO gradient")
+            gradient_norm = nn.utils.clip_grad_norm_(model.parameters(), config.max_grad_norm)
+            if not bool(torch.isfinite(gradient_norm)):
+                raise ValueError("non-finite plan PPO gradient norm")
+            optimizer.step()
+            count = int(indices.numel())
+            for name, value in {
+                "total": total,
+                "ppo": base["total"],
+                "bc": bc,
+                "initializerKl": initial_kl,
+            }.items():
+                totals[name] += float(value.detach()) * count
+            seen += count
+            minibatches += 1
+    with torch.no_grad():
+        final_prediction = model(flat["observations"])
+        final_log_probability, _ = model.evaluate_actions(
+            flat["observations"], flat["actions"], prediction=final_prediction
+        )
+        diagnostics = ratio_diagnostics(
+            final_log_probability,
+            flat["old_log_probability"],
+            flat["observations"],
+        )
+    return {
+        "updateIndex": update_index,
+        "samples": sample_count,
+        "minibatches": minibatches,
+        "anchorWeights": weights,
+        **{name: value / seen for name, value in totals.items()},
+        "maximumGradientNormBeforeClip": maximum_gradient_norm,
+        **diagnostics,
+    }
 
 
 def target_only_plan_ppo_config(source: ModelConfig) -> ModelConfig:

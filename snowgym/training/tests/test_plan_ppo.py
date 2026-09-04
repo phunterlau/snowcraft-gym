@@ -4,7 +4,10 @@ import torch
 
 from snowgym_training.executor import EntityPolicy, ModelConfig, model_config
 from snowgym_training.plan_ppo import (
+    freeze_initializer,
     initialize_plan_ppo_policy,
+    initializer_policy_kl,
+    plan_ppo_anchor_weights,
     plan_ppo_parameter_groups,
     target_only_plan_ppo_config,
 )
@@ -121,3 +124,28 @@ def test_plan_ppo_architecture_validation_and_staged_unfreezing() -> None:
         "new", "heads", "encoder-final"
     ]
     assert model.policy.ally_encoder[2].weight.requires_grad
+
+
+def test_plan_ppo_anchor_decay_and_zero_initializer_kl() -> None:
+    assert plan_ppo_anchor_weights(0, 20) == {"bc": 0.1, "initializerKl": 0.01}
+    assert plan_ppo_anchor_weights(10, 20)["bc"] == 0
+    assert plan_ppo_anchor_weights(15, 20)["initializerKl"] == 0
+    source = ModelConfig(
+        16,
+        12,
+        24,
+        action_conditioned_targets=True,
+        plan_conditioned=True,
+        plan_target_only=True,
+        separate_target_actor=True,
+    )
+    model = HybridActorCritic(target_only_plan_ppo_config(source))
+    initializer = freeze_initializer(model)
+    observation = target_observation(source_observation())
+    prediction = model(observation)
+    with torch.no_grad():
+        initial = initializer(observation)
+    torch.testing.assert_close(
+        initializer_policy_kl(model, prediction, initial, observation),
+        torch.zeros(()),
+    )

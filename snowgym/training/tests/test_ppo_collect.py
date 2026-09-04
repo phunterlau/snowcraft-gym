@@ -3,9 +3,15 @@ from __future__ import annotations
 import torch
 
 from snowgym_client.batch import SnowGymBatchClient, SnowGymBatchEnv
+from snowgym_training.loss import LossConfig
 from snowgym_training.model import ModelConfig
 from snowgym_training.ppo import HybridActorCritic, PPOConfig
-from snowgym_training.plan_ppo import target_only_plan_ppo_config
+from snowgym_training.plan_ppo import (
+    freeze_initializer,
+    plan_ppo_parameter_groups,
+    plan_ppo_update,
+    target_only_plan_ppo_config,
+)
 from snowgym_training.ppo_collect import (
     PlanSchedule,
     SeedSchedule,
@@ -158,6 +164,8 @@ def test_plan_collector_refreshes_v3_state_and_restores_plans_after_selective_re
     )
     torch.manual_seed(29)
     model = HybridActorCritic(target_only_plan_ppo_config(base))
+    initializer = freeze_initializer(model)
+    config = PPOConfig(update_epochs=1, minibatch_size=4)
     schedule = PlanSchedule(tuple(fixed_plan() for _ in range(6)), prefix="fixed")
     with SnowGymBatchClient() as client:
         collection = collect_plan_rollout(
@@ -167,7 +175,7 @@ def test_plan_collector_refreshes_v3_state_and_restores_plans_after_selective_re
             seed_schedule=SeedSchedule(30_000, 30_099),
             plan_schedule=schedule,
             rollout_steps=3,
-            config=PPOConfig(update_epochs=1, minibatch_size=4),
+            config=config,
         )
     assert collection.episode_plan_ids == (
         "fixed-000000", "fixed-000001", "fixed-000002", "fixed-000003"
@@ -177,5 +185,27 @@ def test_plan_collector_refreshes_v3_state_and_restores_plans_after_selective_re
     assert collection.rollout.observations["allies"].shape == (3, 2, 10, 21)
     assert collection.rollout.observations["plan_role_state"].shape == (3, 2, 3, 20)
     assert collection.rollout.observations["mission_progress"].shape == (3, 2, 3)
+    assert collection.teacher_actions is not None
+    assert collection.teacher_actions["action_type"].shape == (3, 2, 10)
+    assert collection.teacher_actions["target"].shape == (3, 2, 10, 2)
     assert collection.completed_episodes == 2
     assert collection.rejected_actions == 0
+    inherited_before = model.policy.actor[0].weight.detach().clone()
+    residual_before = model.policy.plan_ppo_residual[2].weight.detach().clone()
+    optimizer = torch.optim.Adam(plan_ppo_parameter_groups(model, 1))
+    assert collection.teacher_actions is not None
+    metrics = plan_ppo_update(
+        model,
+        optimizer,
+        collection.rollout,
+        collection.teacher_actions,
+        initializer,
+        config,
+        loss_config=LossConfig(),
+        training_seed=29,
+        update_index=0,
+        total_updates=4,
+    )
+    assert metrics["anchorWeights"] == {"bc": 0.1, "initializerKl": 0.01}
+    torch.testing.assert_close(model.policy.actor[0].weight, inherited_before)
+    assert not torch.equal(model.policy.plan_ppo_residual[2].weight, residual_before)

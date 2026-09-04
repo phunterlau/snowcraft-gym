@@ -113,6 +113,21 @@ def test_batch_joint_step_controls_both_teams_symmetrically() -> None:
         )
 
 
+def test_batch_can_execute_plan_teacher_semantic_actions() -> None:
+    with SnowGymBatchClient() as client:
+        environment = SnowGymBatchEnv(1, client=client, observation_version=3)
+        environment.reset([23], [scenario()])
+        environment.activate_plans(["teacher-plan"], [one_group_plan()])
+        actions = environment.plan_teacher_actions()
+        observation, _, terminated, truncated, infos = environment.step_team_actions(
+            actions
+        )
+        assert observation["tick"].tolist() == [[6]]
+        assert not terminated.any()
+        assert not truncated.any()
+        assert all(result["accepted"] for result in infos[0]["actionResults"])
+
+
 def test_batch_plan_tensors_are_host_owned_and_follow_world_ticks() -> None:
     with SnowGymBatchClient() as client:
         assert "activatePlan" in client.capabilities["operations"]

@@ -16,6 +16,7 @@ from .encoding import (
     GymObservation,
     encode_action,
     encode_observation,
+    decode_action,
     make_action_space,
 )
 
@@ -247,6 +248,49 @@ class SnowGymBatchEnv:
             [payload["info"] for payload in payloads],
         )
 
+    def step_team_actions(
+        self, actions: list[dict[str, Any]]
+    ) -> tuple[
+        dict[str, np.ndarray],
+        np.ndarray,
+        np.ndarray,
+        np.ndarray,
+        list[dict[str, Any]],
+    ]:
+        """Advance explicit semantic Blue actions, including teacher outputs."""
+        if len(actions) != self.batch_size or any(
+            not isinstance(action, dict) for action in actions
+        ):
+            raise ValueError("semantic actions must match batch_size")
+        self._step_index += 1
+        items = []
+        for index, (world_id, action) in enumerate(
+            zip(self.world_ids, actions, strict=True)
+        ):
+            state_hash = self.state_hashes[index]
+            if state_hash is None:
+                raise RuntimeError(
+                    "reset() must initialize every batch slot before step_team_actions()"
+                )
+            items.append(
+                {
+                    "worldId": world_id,
+                    "body": {
+                        "action": action,
+                        "expectedStateHash": state_hash,
+                        "idempotencyKey": f"batch-semantic-{self._step_index}-{world_id}",
+                    },
+                }
+            )
+        payloads = self._consume_results(self.client.request("step", items))
+        return (
+            self._stack_observations(),
+            np.asarray([payload["reward"] for payload in payloads], dtype=np.float32),
+            np.asarray([payload["terminated"] for payload in payloads], dtype=np.bool_),
+            np.asarray([payload["truncated"] for payload in payloads], dtype=np.bool_),
+            [payload["info"] for payload in payloads],
+        )
+
     def step_joint(
         self,
         blue_actions: dict[str, np.ndarray],
@@ -384,6 +428,20 @@ class SnowGymBatchEnv:
                 raise RuntimeError("batch plan teacher stateHash does not match world state")
             actions.append(body["action"])
         return actions
+
+    def plan_teacher_tensor_actions(self) -> dict[str, np.ndarray]:
+        """Read teacher labels aligned to the current fixed-capacity Blue slots."""
+        semantic = self.plan_teacher_actions()
+        decoded = []
+        for index, action in enumerate(semantic):
+            raw = self.raw_observations[index]
+            if raw is None:
+                raise RuntimeError("batch teacher tensor encoding requires a raw observation")
+            decoded.append(decode_action(action, raw, self.max_team_units))
+        return {
+            name: np.stack([action[name] for action in decoded])
+            for name in ("action_type", "target", "power")
+        }
 
     def preview_plans(
         self, plan_ids: list[str], plans: list[dict[str, Any]]

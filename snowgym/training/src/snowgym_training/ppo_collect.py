@@ -134,6 +134,7 @@ class RolloutCollection:
     seed_schedule: dict[str, int]
     plan_schedule: dict[str, Any] | None = None
     episode_plan_ids: tuple[str, ...] = ()
+    teacher_actions: dict[str, torch.Tensor] | None = None
 
 
 def collect_rollout(
@@ -264,11 +265,13 @@ def collect_plan_rollout(
     canonical_reward_sum = 0.0
     training_reward_sum = 0.0
     model.eval()
+    teacher_batches: list[dict[str, torch.Tensor]] = []
 
     for step in range(rollout_steps):
         plan_observation, _ = environment.plan_observations()
         observation = merge_observations(physical_observation, plan_observation)
         tensor_observation = tensor_dict(observation)
+        teacher_batches.append(tensor_dict(environment.plan_teacher_tensor_actions()))
         with torch.no_grad():
             action, log_probability, value = model.act(tensor_observation)
         next_physical, reward, terminated, truncated, infos = environment.step(
@@ -344,6 +347,10 @@ def collect_plan_rollout(
         seed_schedule=seed_schedule.state(),
         plan_schedule=plan_schedule.state(),
         episode_plan_ids=tuple(episode_plan_ids),
+        teacher_actions={
+            name: torch.stack([batch[name] for batch in teacher_batches])
+            for name in teacher_batches[0]
+        },
     )
 
 

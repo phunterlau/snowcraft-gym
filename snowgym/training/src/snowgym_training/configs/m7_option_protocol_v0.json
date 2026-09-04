@@ -1,0 +1,38 @@
+{
+  "format": "snowgym.m7-option-protocol.v0",
+  "decisionHz": 10,
+  "reward": {
+    "formula": "mission + 0.1 * combat + gamma * nextPotential - potential",
+    "combatClip": [-1.0, 1.0],
+    "combatRosterNormalization": "initial-team-max-health"
+  },
+  "options": {
+    "engage": {"horizon": 200, "objectiveHealthMaximum": 0.2},
+    "advance": {"horizon": 150, "arrivalRadiusDiagonalFraction": 0.1, "livingMemberFraction": 0.8, "consecutiveDecisions": 10},
+    "hold": {"horizon": 150, "anchorRadiusDiagonalFraction": 0.08, "requiredDecisionFraction": 0.9, "minimumLivingFraction": 0.5},
+    "withdraw": {"horizon": 200, "arrivalRadiusDiagonalFraction": 0.1, "livingMemberFraction": 0.8, "settledDecisions": 20, "minimumLivingFraction": 0.5},
+    "flank": {"horizon": 200, "signedLateralExtentFraction": 0.2, "damageWindowDecisions": 50},
+    "focus": {"horizon": 200, "meaningfulDamageEnemyHealthFraction": 0.1, "targetDamageHhiMinimum": 0.65},
+    "distributed": {"horizon": 200, "meaningfulDamagePerTargetHealthFraction": 0.1, "minimumDamagedTargets": 2, "normalizedTargetDamageEntropyMinimum": 0.65},
+    "support": {"horizon": 300, "minimumDistanceDiagonalFraction": 0.08, "maximumDistanceDiagonalFraction": 0.18, "consecutiveDecisions": 30, "minimumLivingFractionPerGroup": 0.5}
+  },
+  "seeds": {
+    "teacherProof": [41000, 41007],
+    "training": [100000, 179999],
+    "development": [200000, 200319],
+    "qualification": [300000, 300799],
+    "planGeneration": [400000, 400999],
+    "sealedMaps": [500000, 500019]
+  },
+  "pairedSeedsPerMission": {"development": 40, "qualification": 100},
+  "qualification": {
+    "missionSuccessMinimum": 0.75,
+    "shuffledPlanImprovementMinimum": 0.2,
+    "pairedBootstrapLowerBoundMinimum": 0.0,
+    "pairedProgressWinFractionMinimum": 0.7,
+    "physicalWinRateRetentionTolerance": 0.1,
+    "rejectedActionRateMaximum": 0.001,
+    "inheritedHeadLearningRateMinimum": 0.00001,
+    "newModuleLearningRateMinimum": 0.0001
+  }
+}
