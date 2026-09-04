@@ -279,3 +279,10 @@ cd snowgym/training
 Updates 50, 75, and 100 are retained, but only update 100 is eligible for the
 bootstrap gate. The protocol is frozen in
 `configs/m7b_engage_r1c_bc_floor_v0.json`.
+
+R1c passed its update-50 causal parity assertion but failed the final gate.
+Update 75 reached 26/40 contacts and 12/40 hits; update 100 retained 26/40
+contacts but only 1/40 hit, with no mission successes or physical wins. The BC
+floor prevents total contact collapse but does not preserve successful
+move/throw coordination. The immutable result is under
+`runs/m7b_engage_teacher_reservoir_r1c_bc_floor_v0/`.

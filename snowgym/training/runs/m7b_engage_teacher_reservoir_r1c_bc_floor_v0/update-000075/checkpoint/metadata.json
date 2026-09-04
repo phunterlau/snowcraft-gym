@@ -1,0 +1,80 @@
+{
+  "architecture": {
+    "action_conditioned_targets": true,
+    "actor_hidden": 64,
+    "entity_embedding": 24,
+    "entity_hidden": 32,
+    "observation_version": 3,
+    "plan_conditioned": true,
+    "plan_ppo_residuals": true,
+    "plan_target_only": true,
+    "separate_target_actor": true,
+    "v3_extension_adapters": true
+  },
+  "checkpointDigest": "sha256:3a01ab0c1faa0c87c1ce192d3f8013255acbad716c15cfea9700e2e4c1bd92fd",
+  "collectorConfig": {
+    "anchorTotalUpdates": 200,
+    "bcAnchorFloor": 0.05,
+    "gateId": "m7b-engage-stage1",
+    "option": "engage",
+    "protocolDigest": "sha256:54c1fa4217c5bd663c3b60e967a10c9b058da3c2decb2329407860340de7748c",
+    "reservoirBcFraction": 0.5,
+    "rewardMode": "executor",
+    "rolloutSteps": 200,
+    "stage": 1,
+    "teacherReservoir": {
+      "digest": "sha256:a1410c32a718c53664b91878852a2203247454ae0bf2dcb4caeb904b0ac334a6",
+      "episodes": 40,
+      "format": "snowgym.teacher-bc-reservoir.v0",
+      "implementationGitCommit": "1c479e4d0dd87bcfcda2488be0cbe6c328196b71",
+      "manifestDigest": "sha256:faa5e14b9de79a0a49d524bcd958a9a7b9ab536f30c454657ce6f713f31b15ec",
+      "manifestPath": "runs/m7b_engage_teacher_reservoir_v0/manifest.json",
+      "path": "runs/m7b_engage_teacher_reservoir_v0/teacher_states.npz",
+      "samples": 5367,
+      "simulationVersion": "snowgym.sim.v2",
+      "sourceCheckpointDigest": null,
+      "stateHashVersion": "snowgym.state.v2"
+    },
+    "worlds": 8
+  },
+  "curriculumDigest": "sha256:54c1fa4217c5bd663c3b60e967a10c9b058da3c2decb2329407860340de7748c",
+  "environmentSteps": 120000,
+  "format": "snowgym.ppo-checkpoint.v0",
+  "gitCommit": "4560b035962ad8cd30f457c3719f91e79897a0f9",
+  "initialization": {
+    "checkpointDigest": "sha256:4119b9a3f8c0d3df69b704a8f3f813a1b38ab11ca56faffb4c4cebc2cb235133",
+    "datasetManifestHash": "sha256:f64e30e6458ca3d9c9a6e110aae7ae3248e6e2715a938ce323732b1e658d61e6",
+    "stateDigest": "sha256:34de1e9e5882b0c764aa8dd6596ed6ba87e395d7eb9e455036fc10a721d8c50d",
+    "type": "behavior-clone"
+  },
+  "optionSchedule": {
+    "digest": "sha256:92e6d9ef3f12a5cabc184d0ddc194726310896a919d6683728946bb10b1bfade",
+    "format": "snowgym.option-schedule.v0",
+    "length": 10000,
+    "nextIndex": 600,
+    "prefix": "m7b-engage"
+  },
+  "ppoConfig": {
+    "clip_ratio": 0.2,
+    "entropy_weight": 0.01,
+    "gae_lambda": 0.9885140204,
+    "gamma": 0.9976921765,
+    "initial_power_log_std": -1.0,
+    "initial_target_log_std": -1.0,
+    "learning_rate": 0.0003,
+    "max_grad_norm": 0.5,
+    "minibatch_size": 1600,
+    "ratio_mode": "per-unit",
+    "target_kl": null,
+    "update_epochs": 4,
+    "value_weight": 0.5
+  },
+  "seedSchedule": {
+    "maximum": 109999,
+    "minimum": 100000,
+    "nextSeed": 100600
+  },
+  "stateDigest": "sha256:766b7d0b045048e09287190c83585ff2e2acbd28de06eb05d2b00343e408c63f",
+  "trainingSeed": 91001,
+  "updateIndex": 75
+}

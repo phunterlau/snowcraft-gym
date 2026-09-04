@@ -1,0 +1,90 @@
+{
+  "format": "snowgym.engage-r1c-trajectory.v0",
+  "retainedUpdates": [
+    50,
+    75,
+    100
+  ],
+  "selectionPolicy": "final-update-only",
+  "summaries": {
+    "100": {
+      "correct": {
+        "contactRate": 0.65,
+        "hitRate": 0.025,
+        "meanProgress": 0.0040000006556510925,
+        "physicalWinRate": 0.0,
+        "rejectedActionRate": 0.0,
+        "successRate": 0.0
+      },
+      "initializer": {
+        "contactRate": 0.0,
+        "hitRate": 0.0,
+        "meanProgress": 0.0,
+        "physicalWinRate": 0.0,
+        "rejectedActionRate": 0.0,
+        "successRate": 0.0
+      },
+      "shuffled": {
+        "contactRate": 0.0,
+        "hitRate": 0.0,
+        "meanProgress": 0.0,
+        "physicalWinRate": 0.0,
+        "rejectedActionRate": 0.0,
+        "successRate": 0.0
+      }
+    },
+    "50": {
+      "correct": {
+        "contactRate": 0.7,
+        "hitRate": 0.25,
+        "meanProgress": 0.03900000154972076,
+        "physicalWinRate": 0.0,
+        "rejectedActionRate": 0.0,
+        "successRate": 0.0
+      },
+      "initializer": {
+        "contactRate": 0.0,
+        "hitRate": 0.0,
+        "meanProgress": 0.0,
+        "physicalWinRate": 0.0,
+        "rejectedActionRate": 0.0,
+        "successRate": 0.0
+      },
+      "shuffled": {
+        "contactRate": 0.0,
+        "hitRate": 0.0,
+        "meanProgress": 0.0,
+        "physicalWinRate": 0.0,
+        "rejectedActionRate": 0.0,
+        "successRate": 0.0
+      }
+    },
+    "75": {
+      "correct": {
+        "contactRate": 0.65,
+        "hitRate": 0.3,
+        "meanProgress": 0.033000001311302186,
+        "physicalWinRate": 0.0,
+        "rejectedActionRate": 0.0,
+        "successRate": 0.0
+      },
+      "initializer": {
+        "contactRate": 0.0,
+        "hitRate": 0.0,
+        "meanProgress": 0.0,
+        "physicalWinRate": 0.0,
+        "rejectedActionRate": 0.0,
+        "successRate": 0.0
+      },
+      "shuffled": {
+        "contactRate": 0.0,
+        "hitRate": 0.0,
+        "meanProgress": 0.0,
+        "physicalWinRate": 0.0,
+        "rejectedActionRate": 0.0,
+        "successRate": 0.0
+      }
+    }
+  },
+  "trajectoryDigest": "sha256:1512fa8992c196115b3214af2a67cd03ef2e759a104f3277f20de7ddfa8aa338"
+}

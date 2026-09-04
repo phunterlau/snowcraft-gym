@@ -916,6 +916,17 @@ losses, exploration, reward, discount, and benchmark remain fixed. Retain
 updates 50, 75, and 100 for diagnosis, with the bootstrap gate applied only to
 update 100.
 
+M7b-R1c result (2026-09-04): update 50 reproduced the original model,
+optimizer, and RNG state digest exactly. The `0.05` BC floor prevented the
+complete locomotion collapse: update 100 retained contact on 26/40 seeds, but
+hit only 1/40 and completed 0/40 missions. Update 75 reached 12/40 hits but also
+completed no missions. All conditions retained zero rejected actions and zero
+physical wins. The final bootstrap gate failed, so R1 remains open. This
+isolates anchor decay as a contributor to contact collapse while showing that
+anchor magnitude alone does not preserve the successful teacher's coordinated
+move/throw state distribution. The digest-bound negative result is archived at
+`training/runs/m7b_engage_teacher_reservoir_r1c_bc_floor_v0/`.
+
 #### M7c — full-fight fixed-plan composition
 
 - [ ] Hold one-, two-, and three-role plans throughout complete 3v3, 5v5, and

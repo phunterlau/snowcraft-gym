@@ -801,6 +801,10 @@ the selected teacher reservoir and holds the BC anchor at the update-50 weight
 of `0.05`; an exact update-50 state-digest assertion proves the intervention
 does not alter the earlier trajectory.
 
+R1c reproduced the reference update-50 state exactly and retained contact at
+update 100, but hit rate fell to 2.5% and mission success remained zero. The
+artifact is retained as negative evidence; it does not advance R1.
+
 The frozen `ppo_curriculum_v0.json` keeps training ranges disjoint from eight
 evaluation seeds per gate and sets thresholds before qualifying runs. Its order
 is 1v1 random, 1v1 easy scripted, 3v3 random, 3v3 easy scripted, 3v3 terrain on
