@@ -26,6 +26,7 @@ def test_option_ppo_smoke_and_exact_resume_match_uninterrupted(tmp_path) -> None
         ppo_config=config,
         training_seed=93_001,
         git_commit="test",
+        infrastructure_smoke=True,
     )
     resumed = train_option_ppo(
         output=tmp_path / "resumed",
@@ -38,6 +39,7 @@ def test_option_ppo_smoke_and_exact_resume_match_uninterrupted(tmp_path) -> None
         training_seed=93_001,
         resume=tmp_path / "first" / "checkpoint",
         git_commit="test",
+        infrastructure_smoke=True,
     )
     uninterrupted = train_option_ppo(
         output=tmp_path / "uninterrupted",
@@ -49,9 +51,15 @@ def test_option_ppo_smoke_and_exact_resume_match_uninterrupted(tmp_path) -> None
         ppo_config=config,
         training_seed=93_001,
         git_commit="test",
+        infrastructure_smoke=True,
     )
     assert first["format"] == OPTION_PPO_RUN_FORMAT
     assert first["mode"] == "infrastructure-smoke"
+    assert sum(first["updates"][0]["actionCounts"].values()) == 10
+    assert sum(first["updates"][0]["teacherActionCounts"].values()) == 10
+    assert set(first["updates"][0]["metrics"]) >= {
+        "bcAction", "bcTarget", "bcPower", "targetStd", "powerStd"
+    }
     assert first["initialization"]["checkpointDigest"] == (
         "sha256:4119b9a3f8c0d3df69b704a8f3f813a1b38ab11ca56faffb4c4cebc2cb235133"
     )
@@ -97,11 +105,29 @@ def test_option_ppo_stage_three_requires_recorded_gates(tmp_path) -> None:
             stage=3,
             ppo_config=PPOConfig(update_epochs=1, minibatch_size=1),
             git_commit="test",
+            infrastructure_smoke=True,
         )
     except ValueError as error:
         assert "both physical and plan gates" in str(error)
     else:
         raise AssertionError("stage 3 trained without physical and plan gates")
+
+
+def test_option_ppo_research_run_cannot_reset_before_option_horizon(tmp_path) -> None:
+    try:
+        train_option_ppo(
+            output=tmp_path / "partial",
+            option="support",
+            worlds=1,
+            rollout_steps=32,
+            target_updates=1,
+            ppo_config=PPOConfig(update_epochs=1, minibatch_size=1),
+            git_commit="test",
+        )
+    except ValueError as error:
+        assert "full option horizon" in str(error)
+    else:
+        raise AssertionError("research run accepted a partial option horizon")
 
 
 def test_option_ppo_stage_two_transfers_state_and_opens_inherited_heads(tmp_path) -> None:
@@ -116,6 +142,7 @@ def test_option_ppo_stage_two_transfers_state_and_opens_inherited_heads(tmp_path
         stage=1,
         ppo_config=config,
         git_commit="test",
+        infrastructure_smoke=True,
     )
     second = train_option_ppo(
         output=tmp_path / "stage2",
@@ -128,6 +155,7 @@ def test_option_ppo_stage_two_transfers_state_and_opens_inherited_heads(tmp_path
         ppo_config=config,
         ppo_warm_start=tmp_path / "stage1" / "checkpoint",
         git_commit="test",
+        infrastructure_smoke=True,
     )
     assert second["startUpdate"] == 1
     assert second["initialization"] == {
@@ -152,6 +180,7 @@ def test_option_ppo_stage_two_transfers_state_and_opens_inherited_heads(tmp_path
         ppo_config=config,
         ppo_warm_start=tmp_path / "stage2" / "checkpoint",
         git_commit="test",
+        infrastructure_smoke=True,
     )
     assert third["startUpdate"] == 2
     assert third["seedSchedule"] == {

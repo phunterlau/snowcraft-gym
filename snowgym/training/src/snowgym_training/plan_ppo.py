@@ -128,7 +128,15 @@ def plan_ppo_update(
     generator = torch.Generator(device="cpu")
     generator.manual_seed(training_seed + update_index * 1_000_003)
     sample_count = int(advantages.shape[0])
-    totals = {"total": 0.0, "ppo": 0.0, "bc": 0.0, "initializerKl": 0.0}
+    totals = {
+        "total": 0.0,
+        "ppo": 0.0,
+        "bc": 0.0,
+        "bcAction": 0.0,
+        "bcTarget": 0.0,
+        "bcPower": 0.0,
+        "initializerKl": 0.0,
+    }
     seen = 0
     minibatches = 0
     maximum_gradient_norm = 0.0
@@ -158,7 +166,10 @@ def plan_ppo_update(
                 normalize_advantages=False,
                 active_mask=living_unit_mask(observation),
             )
-            bc = behavior_clone_loss(prediction, teacher, observation, loss_config)["total"]
+            bc_losses = behavior_clone_loss(
+                prediction, teacher, observation, loss_config
+            )
+            bc = bc_losses["total"]
             with torch.no_grad():
                 initial_prediction = initializer(observation)
             initial_kl = initializer_policy_kl(
@@ -184,6 +195,9 @@ def plan_ppo_update(
                 "total": total,
                 "ppo": base["total"],
                 "bc": bc,
+                "bcAction": bc_losses["action"],
+                "bcTarget": bc_losses["target"],
+                "bcPower": bc_losses["power"],
                 "initializerKl": initial_kl,
             }.items():
                 totals[name] += float(value.detach()) * count
@@ -205,6 +219,8 @@ def plan_ppo_update(
         "minibatches": minibatches,
         "anchorWeights": weights,
         **{name: value / seen for name, value in totals.items()},
+        "targetStd": model.target_log_std.detach().exp().tolist(),
+        "powerStd": float(model.power_log_std.detach().exp()),
         "maximumGradientNormBeforeClip": maximum_gradient_norm,
         **diagnostics,
     }

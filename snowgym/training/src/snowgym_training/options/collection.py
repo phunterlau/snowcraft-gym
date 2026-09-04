@@ -16,6 +16,9 @@ from .definitions import OptionSpec
 from .environment import FixedPlanOptionBatchEnv
 
 
+ACTION_NAMES = ("noop", "move", "throw", "hold")
+
+
 @dataclass(frozen=True)
 class OptionEntry:
     plan: dict[str, Any]
@@ -114,6 +117,8 @@ class OptionRolloutCollection:
     rejected_actions: int
     boundary_truncations: int
     reward_sums: dict[str, float]
+    action_counts: dict[str, int]
+    teacher_action_counts: dict[str, int]
     seed_schedule: dict[str, int]
     option_schedule: dict[str, Any]
 
@@ -154,14 +159,21 @@ def collect_option_rollout(
         "canonical": 0.0,
         "executor": 0.0,
     }
+    action_counts = {name: 0 for name in ACTION_NAMES}
+    teacher_action_counts = {name: 0 for name in ACTION_NAMES}
     model.eval()
     for step_index in range(rollout_steps):
         tensor_observation = tensor_dict(observation)
-        teachers.append(
-            tensor_dict(environment.environment.plan_teacher_tensor_actions())
-        )
+        teacher = tensor_dict(environment.environment.plan_teacher_tensor_actions())
+        teachers.append(teacher)
         with torch.no_grad():
             action, log_probability, value = model.act(tensor_observation)
+        present = tensor_observation["ally_mask"].bool()
+        for index, name in enumerate(ACTION_NAMES):
+            action_counts[name] += int(((action["action_type"] == index) & present).sum())
+            teacher_action_counts[name] += int(
+                ((teacher["action_type"] == index) & present).sum()
+            )
         next_observation, reward, terminated, truncated, infos = environment.step(
             numpy_actions(action)
         )
@@ -232,6 +244,8 @@ def collect_option_rollout(
         rejected_actions=rejected,
         boundary_truncations=boundary_truncations,
         reward_sums=reward_sums,
+        action_counts=action_counts,
+        teacher_action_counts=teacher_action_counts,
         seed_schedule=seed_schedule.state(),
         option_schedule=option_schedule.state(),
     )

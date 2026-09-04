@@ -779,6 +779,17 @@ can now advance to the next mission while changing to its disjoint training
 seed range. No development or qualification threshold is marked passed by this
 infrastructure change.
 
+M7b rollout-horizon correction (2026-09-03): research-mode updates now span
+the selected option's complete frozen horizon by default. Short rollouts reset
+the world before sparse mission outcomes and are therefore accepted only when
+explicitly labeled `infrastructure-smoke`. Per-update manifests now retain
+learner and teacher action histograms, action/target/power BC components, and
+the hybrid policy exploration scales. A 50-update Engage development probe
+remained at zero success: its action class converged toward the teacher, while
+its move target remained short of the teacher objective and no combat began.
+This negative result is diagnostic; it does not advance the ordered-training
+or qualification checkboxes.
+
 #### M7c — full-fight fixed-plan composition
 
 - [ ] Hold one-, two-, and three-role plans throughout complete 3v3, 5v5, and

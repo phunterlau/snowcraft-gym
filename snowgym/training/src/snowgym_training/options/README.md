@@ -72,6 +72,7 @@ uv sync --extra dev --extra learn
   --rollout-steps 4 \
   --target-updates 1 \
   --anchor-total-updates 100 \
+  --infrastructure-smoke \
   --output /tmp/snowgym-m7b-engage-stage1
 ```
 
@@ -83,6 +84,17 @@ semantic checkpoint digests. Exact resume uses `--resume`. A stage-2 run uses
 move/throw target, and power heads at one tenth of the new-module learning
 rate. Stage 3 refuses to start unless both `--physical-gate-passed` and
 `--plan-gate-passed` are explicit.
+
+Development mode defaults `--rollout-steps` to the selected option horizon and
+rejects shorter values. This guarantees each update can observe mission
+success or horizon failure before the restartable checkpoint boundary. Only an
+explicit `--infrastructure-smoke` may use a shorter rollout, and its manifest
+cannot be confused with development evidence.
+
+Every update records learner and production-teacher action histograms,
+separate action/target/power behavior-cloning losses, and target/power
+exploration scales. These fields distinguish command classification from
+physical target learning when mission reward remains sparse.
 
 The BC anchor decays from 0.1 to zero over the first half of
 `--anchor-total-updates`; initializer KL decays from 0.01 to zero over its first

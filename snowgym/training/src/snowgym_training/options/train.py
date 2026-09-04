@@ -56,7 +56,7 @@ def train_option_ppo(
     output: str | Path,
     option: str,
     worlds: int = 8,
-    rollout_steps: int = 32,
+    rollout_steps: int | None = None,
     target_updates: int = 1,
     anchor_total_updates: int = 100,
     stage: int = 1,
@@ -69,6 +69,7 @@ def train_option_ppo(
     git_commit: str | None = None,
     physical_gate_passed: bool = False,
     plan_gate_passed: bool = False,
+    infrastructure_smoke: bool = False,
 ) -> dict[str, Any]:
     destination = Path(output)
     if destination.exists():
@@ -77,7 +78,6 @@ def train_option_ppo(
         raise ValueError(f"unknown M7b option {option!r}")
     for name, value in {
         "worlds": worlds,
-        "rollout_steps": rollout_steps,
         "target_updates": target_updates,
         "anchor_total_updates": anchor_total_updates,
     }.items():
@@ -92,6 +92,19 @@ def train_option_ppo(
     seed_start = int(protocol["seeds"]["training"][0]) + OPTION_ORDER.index(option) * 10_000
     seed_end = seed_start + 9_999
     plan, spec = teacher_option_plan(option)
+    if rollout_steps is None:
+        rollout_steps = spec.horizon
+    if (
+        not isinstance(rollout_steps, int)
+        or isinstance(rollout_steps, bool)
+        or rollout_steps <= 0
+    ):
+        raise ValueError("rollout_steps must be a positive integer")
+    if rollout_steps < spec.horizon and not infrastructure_smoke:
+        raise ValueError(
+            "research option rollouts must span the full option horizon; "
+            "use infrastructure_smoke only for plumbing tests"
+        )
     entries = tuple(OptionEntry(plan, spec) for _ in range(seed_end - seed_start + 1))
     source_metadata, source_state = load_checkpoint(initializer_path)
     source_config = model_config(source_metadata["architecture"])
@@ -239,6 +252,8 @@ def train_option_ppo(
                     "boundaryTruncations": collection.boundary_truncations,
                     "rejectedActions": collection.rejected_actions,
                     "rewardSums": collection.reward_sums,
+                    "actionCounts": collection.action_counts,
+                    "teacherActionCounts": collection.teacher_action_counts,
                     "metrics": metrics,
                 }
             )
@@ -266,7 +281,7 @@ def train_option_ppo(
         )
         manifest = {
             "format": OPTION_PPO_RUN_FORMAT,
-            "mode": "infrastructure-smoke" if target_updates == 1 else "development",
+            "mode": "infrastructure-smoke" if infrastructure_smoke else "development",
             "gitCommit": commit,
             "protocolDigest": protocol_digest,
             "option": option,
@@ -312,7 +327,7 @@ def main() -> None:
     parser.add_argument("--output", required=True)
     parser.add_argument("--option", required=True, choices=OPTION_ORDER)
     parser.add_argument("--worlds", type=int, default=8)
-    parser.add_argument("--rollout-steps", type=int, default=32)
+    parser.add_argument("--rollout-steps", type=int)
     parser.add_argument("--target-updates", type=int, default=1)
     parser.add_argument("--anchor-total-updates", type=int, default=100)
     parser.add_argument("--stage", type=int, default=1, choices=(1, 2, 3))
@@ -322,6 +337,7 @@ def main() -> None:
     parser.add_argument("--ppo-warm-start")
     parser.add_argument("--physical-gate-passed", action="store_true")
     parser.add_argument("--plan-gate-passed", action="store_true")
+    parser.add_argument("--infrastructure-smoke", action="store_true")
     args = parser.parse_args()
     result = train_option_ppo(
         output=args.output,
@@ -337,6 +353,7 @@ def main() -> None:
         ppo_warm_start=args.ppo_warm_start,
         physical_gate_passed=args.physical_gate_passed,
         plan_gate_passed=args.plan_gate_passed,
+        infrastructure_smoke=args.infrastructure_smoke,
     )
     print(json.dumps(result, sort_keys=True))
 

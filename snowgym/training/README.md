@@ -766,7 +766,8 @@ Run the first fixed-option PPO infrastructure update from this directory:
 uv sync --extra dev --extra learn
 .venv/bin/snowgym-train-option-ppo \
   --option engage --worlds 2 --rollout-steps 4 --target-updates 1 \
-  --anchor-total-updates 100 --output /tmp/snowgym-m7b-engage-stage1
+  --anchor-total-updates 100 --infrastructure-smoke \
+  --output /tmp/snowgym-m7b-engage-stage1
 ```
 
 Exact-resume, staged-transfer, causal-fork, and qualification commands are in
