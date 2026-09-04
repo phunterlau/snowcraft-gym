@@ -791,6 +791,11 @@ Stage-1 state and keeps inherited fighter heads frozen through update 100.
 Updates 50, 75, and 100 are retained for trajectory diagnosis, while only the
 final checkpoint is allowed to pass or fail the bootstrap gate.
 
+R1b also failed: partial contact and hit behavior remained at update 75, then
+collapsed to zero by update 100 without opening inherited heads. Its immutable
+trajectory and final bootstrap report are retained as negative evidence; the
+better intermediate checkpoint was not selected after evaluation.
+
 The frozen `ppo_curriculum_v0.json` keeps training ranges disjoint from eight
 evaluation seeds per gate and sets thresholds before qualifying runs. Its order
 is 1v1 random, 1v1 easy scripted, 3v3 random, 3v3 easy scripted, 3v3 terrain on

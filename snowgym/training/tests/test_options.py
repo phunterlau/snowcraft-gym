@@ -23,6 +23,7 @@ from snowgym_training.executor import ModelConfig
 from snowgym_training.plan_ppo import target_only_plan_ppo_config
 from snowgym_training.ppo import HybridActorCritic, PPOConfig, generalized_advantage_estimate
 from snowgym_training.ppo_collect import SeedSchedule
+from snowgym_training.ppo_checkpoint import load_ppo_checkpoint
 from snowgym_training.options.causal_fork import run_causal_fork
 from snowgym_training.options.evaluate import CONDITIONS, resolve_evaluation_options
 from snowgym_training.options.interventions import compose_intervention_action
@@ -368,6 +369,28 @@ def test_failed_engage_r1_candidate_passes_digest_audit() -> None:
     assert reservoir_manifest["seedPartition"] == "training"
     assert reservoir_manifest["allSuccessful"]
     assert not run_manifest["passed"]
+
+
+def test_failed_engage_r1b_candidate_passes_digest_audit() -> None:
+    root = (
+        Path(__file__).resolve().parents[1]
+        / "runs/m7b_engage_teacher_reservoir_r1b_stage1_hold_v0"
+    )
+    manifest = audit_artifact_manifest(root, "manifest.json")
+    load_digested_json(root / "manifest.json", "manifestDigest")
+    trajectory = load_digested_json(
+        root / "evaluation-trajectory.json", "trajectoryDigest"
+    )
+    bootstrap = load_digested_json(root / "bootstrap-report.json", "reportDigest")
+    update_75, _ = load_ppo_checkpoint(root / "update-000075/checkpoint")
+    update_100, _ = load_ppo_checkpoint(root / "update-000100/checkpoint")
+    assert manifest["config"]["selectionPolicy"] == "final-update-only"
+    assert trajectory["summaries"]["75"]["correct"]["contactRate"] == 0.675
+    assert trajectory["summaries"]["100"]["correct"]["contactRate"] == 0.0
+    assert update_75["collectorConfig"]["stage"] == 1
+    assert update_100["collectorConfig"]["stage"] == 1
+    assert not bootstrap["passed"]
+    assert not manifest["passed"]
 
 
 def test_live_fixed_option_wrapper_executes_production_teacher() -> None:

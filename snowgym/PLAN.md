@@ -894,6 +894,18 @@ retain and evaluate updates 50, 75, and 100. Intermediate checkpoints are
 diagnostic only. The frozen bootstrap gate applies exclusively to update 100,
 so the trajectory cannot be used for post-hoc checkpoint selection.
 
+M7b-R1b result (2026-09-04): keeping Stage 1 active preserved partial behavior
+at update 75, with 27/40 contacts and 8/40 hits, but no mission success. By the
+predeclared final update 100, contact, hit, progress, mission success, and
+physical-win rates were all zero. Rejected-action rate remained zero throughout.
+The final bootstrap gate failed. Opening inherited heads at update 50 is
+therefore excluded as the sole explanation for R1's collapse; continued
+optimization under the unchanged reservoir/anchor schedule can also erase the
+partial Stage-1 behavior. The intermediate checkpoint is negative diagnostic
+evidence and is not eligible for promotion. R1 remains open and R2 remains
+blocked. The digest-bound run is archived under
+`training/runs/m7b_engage_teacher_reservoir_r1b_stage1_hold_v0/`.
+
 #### M7c — full-fight fixed-plan composition
 
 - [ ] Hold one-, two-, and three-role plans throughout complete 3v3, 5v5, and

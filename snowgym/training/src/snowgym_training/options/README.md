@@ -251,3 +251,11 @@ cd snowgym/training
 The immutable configuration is
 `configs/m7b_engage_r1b_stage1_hold_v0.json`. Intermediate results describe
 the learning trajectory and cannot be selected after evaluation.
+
+The frozen run failed. Update 50 reached 28/40 contacts and 10/40 hits; update
+75 retained 27/40 contacts and 8/40 hits; neither checkpoint completed Engage.
+Update 100 then reached zero contacts, hits, progress, successes, or physical
+wins. All evaluated conditions retained a zero rejected-action rate. This
+excludes Stage-2 head unfreezing as the sole cause of collapse and leaves R1
+open. The evidence is archived under
+`runs/m7b_engage_teacher_reservoir_r1b_stage1_hold_v0/`.
