@@ -77,6 +77,7 @@ def evaluate_option_episode(
     first_hit: int | None = None
     maximum_decisions = math.ceil(int(scenario["maxTicks"]) / 6)
     for decision in range(maximum_decisions):
+        option_was_active = not option_done
         policy_observation = observation
         if condition == "shuffled":
             preview, _, _ = base.preview_plans(
@@ -104,9 +105,17 @@ def evaluate_option_episode(
             observation = merge_observations(physical, plan_tensors)
         final_info = infos[0]
         raw = require_raw(base)
-        if first_contact is None and contact_distance(raw, assigned) <= 9.0:
+        if (
+            option_was_active
+            and first_contact is None
+            and contact_distance(raw, assigned) <= 9.0
+        ):
             first_contact = decision + 1
-        if first_hit is None and team_health(raw["enemies"]) < initial_enemy_health:
+        if (
+            option_was_active
+            and first_hit is None
+            and team_health(raw["enemies"]) < initial_enemy_health
+        ):
             first_hit = decision + 1
         action_results = final_info.get("actionResults", [])
         rejected += sum(
