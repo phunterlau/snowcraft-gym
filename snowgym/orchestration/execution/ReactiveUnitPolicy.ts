@@ -200,15 +200,15 @@ function dodgeAction(
   };
 }
 
-function canMove(unit: UnitObservation): boolean {
+export function canMove(unit: UnitObservation): boolean {
   return unit.alive && ['idle', 'moving', 'recovering'].includes(unit.state);
 }
 
-function canThrow(unit: UnitObservation): boolean {
+export function canThrow(unit: UnitObservation): boolean {
   return unit.throwCooldown <= 0 && ['idle', 'moving', 'preparingThrow'].includes(unit.state);
 }
 
-function throwRange(range: PreferredRange): number {
+export function throwRange(range: PreferredRange): number {
   if (range === 'close') return 8;
   if (range === 'medium') return 9;
   return 10.5;

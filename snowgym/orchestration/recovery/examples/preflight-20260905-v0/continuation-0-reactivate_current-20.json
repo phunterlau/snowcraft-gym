@@ -1,0 +1,1156 @@
+{
+  "format": "snowgym.commander-recovery.v0",
+  "fixtureDigest": "sha256:3ad7dc292bd25a6ddb9cfa41011197d7a9206791478da8ae475333ed09171a09",
+  "family": "recent_casualties",
+  "delayDecisions": 20,
+  "horizon": 300,
+  "activationStatus": "accepted",
+  "activationError": null,
+  "activationTick": 642,
+  "sourceAgeAtActivationSeconds": 2,
+  "planChanged": false,
+  "planReactivated": true,
+  "actions": [
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -0.6589683347458217,
+          "y": 1.4442618660291655
+        },
+        {
+          "type": "move",
+          "unitId": 2,
+          "x": -0.8272839167641971,
+          "y": 2.5786628984658115
+        },
+        {
+          "type": "move",
+          "unitId": 3,
+          "x": -1.2995330099741869,
+          "y": 6.555084212266513
+        },
+        {
+          "type": "move",
+          "unitId": 5,
+          "x": -0.42940687573319997,
+          "y": 8.127026021976926
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -6.538259591014808,
+          "y": 0.24893859302992727
+        },
+        {
+          "type": "move",
+          "unitId": 2,
+          "x": -0.9787176903211814,
+          "y": 2.4564087519994313
+        },
+        {
+          "type": "move",
+          "unitId": 3,
+          "x": -1.4068347100512648,
+          "y": 6.546640404221318
+        },
+        {
+          "type": "move",
+          "unitId": 5,
+          "x": -0.5136973019649212,
+          "y": 8.099400158124812
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "noop",
+          "unitId": 1
+        },
+        {
+          "type": "move",
+          "unitId": 2,
+          "x": -1.0866395067136745,
+          "y": 2.564086841466553
+        },
+        {
+          "type": "move",
+          "unitId": 3,
+          "x": -1.623068877290857,
+          "y": 6.6863091196346405
+        },
+        {
+          "type": "move",
+          "unitId": 5,
+          "x": -0.7110105236666924,
+          "y": 8.314830603409138
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "noop",
+          "unitId": 1
+        },
+        {
+          "type": "move",
+          "unitId": 2,
+          "x": -1.1159734293136463,
+          "y": 2.7206096247971447
+        },
+        {
+          "type": "throw",
+          "unitId": 3,
+          "x": 4.662442609177168,
+          "y": 6.339787488886933,
+          "power": 0.9354899120373645
+        },
+        {
+          "type": "move",
+          "unitId": 5,
+          "x": -0.8578291454620123,
+          "y": 8.536752189490633
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "noop",
+          "unitId": 1
+        },
+        {
+          "type": "move",
+          "unitId": 2,
+          "x": -7.695967562033776,
+          "y": -0.24546583625096907
+        },
+        {
+          "type": "noop",
+          "unitId": 3
+        },
+        {
+          "type": "move",
+          "unitId": 5,
+          "x": -1.0158346383580636,
+          "y": 8.747061745956064
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "noop",
+          "unitId": 1
+        },
+        {
+          "type": "noop",
+          "unitId": 2
+        },
+        {
+          "type": "move",
+          "unitId": 3,
+          "x": -2.313714326034864,
+          "y": 9.116013230521704
+        },
+        {
+          "type": "move",
+          "unitId": 5,
+          "x": -1.128906798662193,
+          "y": 8.882657468523611
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -1.2332357808894034,
+          "y": 1.9993586130157008
+        },
+        {
+          "type": "noop",
+          "unitId": 2
+        },
+        {
+          "type": "noop",
+          "unitId": 3
+        },
+        {
+          "type": "move",
+          "unitId": 5,
+          "x": -1.1520648356559533,
+          "y": 8.933595244698703
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -1.2794052743771638,
+          "y": 1.6881914636217217
+        },
+        {
+          "type": "noop",
+          "unitId": 2
+        },
+        {
+          "type": "noop",
+          "unitId": 3
+        },
+        {
+          "type": "move",
+          "unitId": 5,
+          "x": -0.9063592744543605,
+          "y": 8.742791106652014
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -1.2597955813922335,
+          "y": 1.5578637174854577
+        },
+        {
+          "type": "noop",
+          "unitId": 2
+        },
+        {
+          "type": "noop",
+          "unitId": 3
+        },
+        {
+          "type": "move",
+          "unitId": 5,
+          "x": -0.7632718154834828,
+          "y": 8.717827915005303
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -1.2486918099594828,
+          "y": 1.498467738120356
+        },
+        {
+          "type": "move",
+          "unitId": 2,
+          "x": -1.0588554864791115,
+          "y": 2.5311337249149184
+        },
+        {
+          "type": "move",
+          "unitId": 3,
+          "x": -5.063357793120657,
+          "y": 7.519640824848369
+        },
+        {
+          "type": "move",
+          "unitId": 5,
+          "x": -7.053057207254357,
+          "y": 9.517312880061002
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -4.650440733568425,
+          "y": 1.37394822183514
+        },
+        {
+          "type": "move",
+          "unitId": 2,
+          "x": -7.5715901140502115,
+          "y": -0.47241854108453274
+        },
+        {
+          "type": "noop",
+          "unitId": 3
+        },
+        {
+          "type": "move",
+          "unitId": 5,
+          "x": -0.6110015625461668,
+          "y": 8.884769151072147
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "noop",
+          "unitId": 1
+        },
+        {
+          "type": "move",
+          "unitId": 2,
+          "x": -1.1025564421093033,
+          "y": 2.5801567431622394
+        },
+        {
+          "type": "noop",
+          "unitId": 3
+        },
+        {
+          "type": "move",
+          "unitId": 5,
+          "x": -0.5898736283961934,
+          "y": 8.971782397716185
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "noop",
+          "unitId": 1
+        },
+        {
+          "type": "move",
+          "unitId": 2,
+          "x": -0.9603082241405957,
+          "y": 3.0393993449806618
+        },
+        {
+          "type": "move",
+          "unitId": 5,
+          "x": -1.040305760254656,
+          "y": 8.492940803751043
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "noop",
+          "unitId": 1
+        },
+        {
+          "type": "move",
+          "unitId": 2,
+          "x": -1.0344179583215893,
+          "y": 3.003601411328943
+        },
+        {
+          "type": "throw",
+          "unitId": 5,
+          "x": 4.749214611539747,
+          "y": 4.751297885628926,
+          "power": 0.9391735981509447
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "noop",
+          "unitId": 1
+        },
+        {
+          "type": "move",
+          "unitId": 2,
+          "x": -7.724249960443737,
+          "y": 0.43695443619816904
+        },
+        {
+          "type": "noop",
+          "unitId": 5
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -4.476717937999824,
+          "y": 1.1231296823109111
+        },
+        {
+          "type": "move",
+          "unitId": 2,
+          "x": -7.792433201825396,
+          "y": 0.36151198480432717
+        },
+        {
+          "type": "move",
+          "unitId": 5,
+          "x": -4.355987835242542,
+          "y": 9.169711493058795
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -1.56818367711029,
+          "y": 1.55053915674495
+        },
+        {
+          "type": "noop",
+          "unitId": 2
+        },
+        {
+          "type": "noop",
+          "unitId": 5
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -1.8647993368007978,
+          "y": 1.253164639478365
+        },
+        {
+          "type": "noop",
+          "unitId": 2
+        },
+        {
+          "type": "noop",
+          "unitId": 5
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -2.1570258620605545,
+          "y": 0.941272029125201
+        },
+        {
+          "type": "noop",
+          "unitId": 2
+        },
+        {
+          "type": "noop",
+          "unitId": 5
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -2.4026702067860035,
+          "y": 0.6542837330818468
+        },
+        {
+          "type": "throw",
+          "unitId": 2,
+          "x": 3.5848031171661603,
+          "y": 2.726270710529858,
+          "power": 0.9991416273283877
+        },
+        {
+          "type": "noop",
+          "unitId": 5
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -2.4561643577669443,
+          "y": 0.5725344320634905
+        },
+        {
+          "type": "noop",
+          "unitId": 2
+        },
+        {
+          "type": "noop",
+          "unitId": 5
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -2.3630321847096996,
+          "y": 0.6924682542659979
+        },
+        {
+          "type": "move",
+          "unitId": 2,
+          "x": -0.40331504070121216,
+          "y": 5.207793321731513
+        },
+        {
+          "type": "noop",
+          "unitId": 5
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -3.9065373680047677,
+          "y": 1.3865742808308608
+        },
+        {
+          "type": "move",
+          "unitId": 2,
+          "x": -0.46655734461522336,
+          "y": 5.30163115834873
+        },
+        {
+          "type": "noop",
+          "unitId": 5
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -3.780413681662776,
+          "y": 1.5796672814150279
+        },
+        {
+          "type": "move",
+          "unitId": 2,
+          "x": -7.764194727858111,
+          "y": 1.279345731676322
+        },
+        {
+          "type": "noop",
+          "unitId": 5
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "noop",
+          "unitId": 1
+        },
+        {
+          "type": "move",
+          "unitId": 2,
+          "x": -0.7437563168568999,
+          "y": 5.183289269838663
+        },
+        {
+          "type": "noop",
+          "unitId": 5
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "noop",
+          "unitId": 1
+        },
+        {
+          "type": "move",
+          "unitId": 2,
+          "x": -1.1163172809802415,
+          "y": 5.384960580057756
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "noop",
+          "unitId": 1
+        },
+        {
+          "type": "move",
+          "unitId": 2,
+          "x": -1.2783187040799626,
+          "y": 5.350797478487091
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "noop",
+          "unitId": 1
+        },
+        {
+          "type": "move",
+          "unitId": 2,
+          "x": -1.4398949147957,
+          "y": 5.358418256381589
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -1.770775210777096,
+          "y": 0.8157230285919197
+        },
+        {
+          "type": "move",
+          "unitId": 2,
+          "x": -1.5480123930986784,
+          "y": 5.371727584548932
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -1.875507972046932,
+          "y": 0.7398522059721843
+        },
+        {
+          "type": "throw",
+          "unitId": 2,
+          "x": 3.7666362336513077,
+          "y": 8.377453504484798,
+          "power": 0.959481519946178
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -2.33196907788364,
+          "y": 0.7701991735722782
+        },
+        {
+          "type": "noop",
+          "unitId": 2
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "throw",
+          "unitId": 1,
+          "x": 2.9756779440865593,
+          "y": 1.2964125716692807,
+          "power": 0.9750354250718253
+        },
+        {
+          "type": "move",
+          "unitId": 2,
+          "x": -2.080701537475743,
+          "y": 5.157727534437429
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "noop",
+          "unitId": 1
+        },
+        {
+          "type": "move",
+          "unitId": 2,
+          "x": -2.062976149055421,
+          "y": 5.194401984942987
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -4.855723633770088,
+          "y": 3.499229411504468
+        },
+        {
+          "type": "move",
+          "unitId": 2,
+          "x": -1.842848959347873,
+          "y": 5.346012828954905
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 1,
+          "x": -4.869777487983375,
+          "y": 3.7325627448378014
+        },
+        {
+          "type": "move",
+          "unitId": 2,
+          "x": -1.7636641832922806,
+          "y": 5.435293909409259
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 2,
+          "x": 0.2788073512323468,
+          "y": 4.912379501511653
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 2,
+          "x": 0.6178855142012498,
+          "y": 4.889261287231014
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "noop",
+          "unitId": 2
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "noop",
+          "unitId": 2
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "noop",
+          "unitId": 2
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "throw",
+          "unitId": 2,
+          "x": 4.056629501121834,
+          "y": 1.4503605681557217,
+          "power": 0.6178590534150815
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "noop",
+          "unitId": 2
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "move",
+          "unitId": 2,
+          "x": 2.2163637356867434,
+          "y": 5.2295020764457725
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "noop",
+          "unitId": 2
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "noop",
+          "unitId": 2
+        }
+      ]
+    }
+  ],
+  "stateHashes": [
+    "fnv1a64:ce6b54256123b14c",
+    "fnv1a64:02f683f69f0df0c0",
+    "fnv1a64:db67450fb0ee8274",
+    "fnv1a64:faa99b7e05a7052b",
+    "fnv1a64:e0ab9e93b5de3782",
+    "fnv1a64:92b0e2b5eb9a12ea",
+    "fnv1a64:a0f6938f26e6ecd9",
+    "fnv1a64:31ca275e3f999fca",
+    "fnv1a64:c8b5175aa0823e92",
+    "fnv1a64:68a7e01aa0b75727",
+    "fnv1a64:bae6f0acf267e8cf",
+    "fnv1a64:fe872fd98ca1e3be",
+    "fnv1a64:77f78bb275337323",
+    "fnv1a64:45ec5ab72d31a276",
+    "fnv1a64:7141f76efb202045",
+    "fnv1a64:d4afefa8a0a8b0b8",
+    "fnv1a64:3a0e706a81f5f7e3",
+    "fnv1a64:34a2049b317ea27d",
+    "fnv1a64:5b54feb5b45c6a56",
+    "fnv1a64:3add02e992809a54",
+    "fnv1a64:4b09fb89309f2ead",
+    "fnv1a64:8e116112f533f144",
+    "fnv1a64:f3ebc44ec38444f8",
+    "fnv1a64:79474d3a1f575d43",
+    "fnv1a64:60012ac944181dbd",
+    "fnv1a64:8f3bff89303812bb",
+    "fnv1a64:1a8ee6f6ae840ba6",
+    "fnv1a64:f1e619635f44e481",
+    "fnv1a64:bb9f866ac4eb2d28",
+    "fnv1a64:b87d5982185c375b",
+    "fnv1a64:91c7ac8077f94d27",
+    "fnv1a64:213c85d71d83ea9f",
+    "fnv1a64:299a7b8c75f065f0",
+    "fnv1a64:e51977da1b6cea84",
+    "fnv1a64:17c2a79b1bf22ce9",
+    "fnv1a64:141c5e8ffbbe2d5f",
+    "fnv1a64:881e6520cf3bda55",
+    "fnv1a64:e2ad64e2317928aa",
+    "fnv1a64:8ac880c59d80c3aa",
+    "fnv1a64:ee99817c156cc7de",
+    "fnv1a64:fe066a6826409d29",
+    "fnv1a64:2124e3daff800505",
+    "fnv1a64:f396f118fd376ff8",
+    "fnv1a64:ddae945d2b131df6",
+    "fnv1a64:4796de321896bb91",
+    "fnv1a64:adaea5affe64e688"
+  ],
+  "stages": [
+    {
+      "decision": 1,
+      "tick": 528,
+      "stage": 0,
+      "inRangeFraction": 0
+    },
+    {
+      "decision": 2,
+      "tick": 534,
+      "stage": 0,
+      "inRangeFraction": 0
+    },
+    {
+      "decision": 3,
+      "tick": 540,
+      "stage": 1,
+      "inRangeFraction": 0.25
+    },
+    {
+      "decision": 4,
+      "tick": 546,
+      "stage": 1,
+      "inRangeFraction": 0.25
+    },
+    {
+      "decision": 5,
+      "tick": 552,
+      "stage": 1,
+      "inRangeFraction": 0.25
+    },
+    {
+      "decision": 6,
+      "tick": 558,
+      "stage": 1,
+      "inRangeFraction": 0.25
+    },
+    {
+      "decision": 7,
+      "tick": 564,
+      "stage": 2,
+      "inRangeFraction": 0.25
+    },
+    {
+      "decision": 8,
+      "tick": 570,
+      "stage": 2,
+      "inRangeFraction": 0.25
+    },
+    {
+      "decision": 9,
+      "tick": 576,
+      "stage": 2,
+      "inRangeFraction": 0.25
+    },
+    {
+      "decision": 10,
+      "tick": 582,
+      "stage": 2,
+      "inRangeFraction": 0.25
+    },
+    {
+      "decision": 11,
+      "tick": 588,
+      "stage": 2,
+      "inRangeFraction": 0.25
+    },
+    {
+      "decision": 12,
+      "tick": 594,
+      "stage": 2,
+      "inRangeFraction": 0
+    },
+    {
+      "decision": 13,
+      "tick": 600,
+      "stage": 2,
+      "inRangeFraction": 0.3333333333333333
+    },
+    {
+      "decision": 14,
+      "tick": 606,
+      "stage": 2,
+      "inRangeFraction": 0.3333333333333333
+    },
+    {
+      "decision": 15,
+      "tick": 612,
+      "stage": 2,
+      "inRangeFraction": 0.3333333333333333
+    },
+    {
+      "decision": 16,
+      "tick": 618,
+      "stage": 2,
+      "inRangeFraction": 0.3333333333333333
+    },
+    {
+      "decision": 17,
+      "tick": 624,
+      "stage": 2,
+      "inRangeFraction": 0.3333333333333333
+    },
+    {
+      "decision": 18,
+      "tick": 630,
+      "stage": 2,
+      "inRangeFraction": 0.3333333333333333
+    },
+    {
+      "decision": 19,
+      "tick": 636,
+      "stage": 2,
+      "inRangeFraction": 0.6666666666666666
+    },
+    {
+      "decision": 20,
+      "tick": 642,
+      "stage": 2,
+      "inRangeFraction": 0.3333333333333333
+    },
+    {
+      "decision": 21,
+      "tick": 648,
+      "stage": 2,
+      "inRangeFraction": 0.3333333333333333
+    },
+    {
+      "decision": 22,
+      "tick": 654,
+      "stage": 2,
+      "inRangeFraction": 0.3333333333333333
+    },
+    {
+      "decision": 23,
+      "tick": 660,
+      "stage": 2,
+      "inRangeFraction": 0.3333333333333333
+    },
+    {
+      "decision": 24,
+      "tick": 666,
+      "stage": 2,
+      "inRangeFraction": 0.3333333333333333
+    },
+    {
+      "decision": 25,
+      "tick": 672,
+      "stage": 2,
+      "inRangeFraction": 0
+    },
+    {
+      "decision": 26,
+      "tick": 678,
+      "stage": 2,
+      "inRangeFraction": 0
+    },
+    {
+      "decision": 27,
+      "tick": 684,
+      "stage": 2,
+      "inRangeFraction": 0.5
+    },
+    {
+      "decision": 28,
+      "tick": 690,
+      "stage": 2,
+      "inRangeFraction": 0.5
+    },
+    {
+      "decision": 29,
+      "tick": 696,
+      "stage": 2,
+      "inRangeFraction": 0.5
+    },
+    {
+      "decision": 30,
+      "tick": 702,
+      "stage": 2,
+      "inRangeFraction": 0.5
+    },
+    {
+      "decision": 31,
+      "tick": 708,
+      "stage": 2,
+      "inRangeFraction": 1
+    },
+    {
+      "decision": 32,
+      "tick": 714,
+      "stage": 2,
+      "inRangeFraction": 1
+    },
+    {
+      "decision": 33,
+      "tick": 720,
+      "stage": 2,
+      "inRangeFraction": 1
+    },
+    {
+      "decision": 34,
+      "tick": 726,
+      "stage": 2,
+      "inRangeFraction": 1
+    },
+    {
+      "decision": 35,
+      "tick": 732,
+      "stage": 3,
+      "inRangeFraction": 1
+    },
+    {
+      "decision": 36,
+      "tick": 738,
+      "stage": 3,
+      "inRangeFraction": 1
+    },
+    {
+      "decision": 37,
+      "tick": 744,
+      "stage": 3,
+      "inRangeFraction": 1
+    },
+    {
+      "decision": 38,
+      "tick": 750,
+      "stage": 3,
+      "inRangeFraction": 1
+    },
+    {
+      "decision": 39,
+      "tick": 756,
+      "stage": 3,
+      "inRangeFraction": 1
+    },
+    {
+      "decision": 40,
+      "tick": 762,
+      "stage": 3,
+      "inRangeFraction": 1
+    },
+    {
+      "decision": 41,
+      "tick": 768,
+      "stage": 3,
+      "inRangeFraction": 1
+    },
+    {
+      "decision": 42,
+      "tick": 774,
+      "stage": 3,
+      "inRangeFraction": 1
+    },
+    {
+      "decision": 43,
+      "tick": 780,
+      "stage": 3,
+      "inRangeFraction": 1
+    },
+    {
+      "decision": 44,
+      "tick": 786,
+      "stage": 3,
+      "inRangeFraction": 1
+    },
+    {
+      "decision": 45,
+      "tick": 787,
+      "stage": 3,
+      "inRangeFraction": 0
+    }
+  ],
+  "metrics": {
+    "winner": "red",
+    "censored": false,
+    "decisions": 45,
+    "blueAlive": 0,
+    "redAlive": 5,
+    "damageDealt": 80,
+    "damageReceived": 380,
+    "maximumStage": 3,
+    "stageFirstDecision": [
+      0,
+      3,
+      7,
+      35,
+      null
+    ],
+    "frozenTargetAlreadyEliminatedAtRequest": false,
+    "issuedActions": 117,
+    "rejectedActions": 0,
+    "rejectedActionRate": 0
+  }
+}

@@ -3,6 +3,7 @@ import type { LifecycleTrigger } from '../lifecycle/PlanLifecycle';
 import type { StrategicSummary } from './StrategicSummary';
 import type { TrajectoryDigest } from '../trajectory/TrajectoryMonitor';
 import type { PlanOutcomeSummary } from '../trajectory/PlanOutcome';
+import type { RecoveryEvidence } from '../recovery/RecoveryEvidence';
 
 export interface CommanderRequest {
   readonly requestId: string;
@@ -13,9 +14,13 @@ export interface CommanderRequest {
   readonly trajectory?: TrajectoryDigest;
   /** Explicit host-owned history; no provider conversation state is required. */
   readonly previousPlanOutcome?: PlanOutcomeSummary;
+  /** Opt-in diagnostic input; does not alter the command schema or legacy requests. */
+  readonly recoveryEvidence?: RecoveryEvidence;
 }
 
 export interface CommanderResponseMetadata {
+  readonly requestedModel?: string;
+  readonly reasoningEffort?: string;
   readonly model?: string;
   readonly latencyMs?: number;
   readonly tokensIn?: number;

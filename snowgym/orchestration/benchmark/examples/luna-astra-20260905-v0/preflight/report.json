@@ -1,0 +1,107 @@
+{
+  "format": "snowgym.commander-backend-benchmark.v0",
+  "attempts": 0,
+  "summaries": [],
+  "paired": [
+    {
+      "caseId": "open-5v5-opening",
+      "baseline": {
+        "decisions": 50,
+        "finalTick": 295,
+        "winner": "blue",
+        "terminated": true,
+        "truncated": false,
+        "censored": false,
+        "blueAlive": 5,
+        "redAlive": 0,
+        "damageDealt": 500,
+        "damageReceived": 60,
+        "normalizedDamageDealt": 1,
+        "normalizedDamageReceived": 0.12,
+        "netNormalizedDamage": 0.88,
+        "issuedActions": 250,
+        "rejectedActions": 0,
+        "rejectedActionRate": 0,
+        "canonicalReturn": 1
+      },
+      "arms": []
+    },
+    {
+      "caseId": "open-5v5-contact",
+      "baseline": {
+        "decisions": 33,
+        "finalTick": 375,
+        "winner": "blue",
+        "terminated": true,
+        "truncated": false,
+        "censored": false,
+        "blueAlive": 5,
+        "redAlive": 0,
+        "damageDealt": 320,
+        "damageReceived": 20,
+        "normalizedDamageDealt": 0.64,
+        "normalizedDamageReceived": 0.04,
+        "netNormalizedDamage": 0.6,
+        "issuedActions": 165,
+        "rejectedActions": 0,
+        "rejectedActionRate": 0,
+        "canonicalReturn": 1
+      },
+      "arms": []
+    },
+    {
+      "caseId": "terrain-10v10",
+      "baseline": {
+        "decisions": 239,
+        "finalTick": 1671,
+        "winner": "red",
+        "terminated": true,
+        "truncated": false,
+        "censored": false,
+        "blueAlive": 0,
+        "redAlive": 3,
+        "damageDealt": 820,
+        "damageReceived": 1000,
+        "normalizedDamageDealt": 0.82,
+        "normalizedDamageReceived": 1,
+        "netNormalizedDamage": -0.18000000000000005,
+        "issuedActions": 1048,
+        "rejectedActions": 0,
+        "rejectedActionRate": 0,
+        "canonicalReturn": -1
+      },
+      "arms": []
+    },
+    {
+      "caseId": "terrain-6v10-history",
+      "baseline": {
+        "decisions": 54,
+        "finalTick": 684,
+        "winner": "red",
+        "terminated": true,
+        "truncated": false,
+        "censored": false,
+        "blueAlive": 0,
+        "redAlive": 9,
+        "damageDealt": 120,
+        "damageReceived": 560,
+        "normalizedDamageDealt": 0.12,
+        "normalizedDamageReceived": 0.9333333333333333,
+        "netNormalizedDamage": -0.8133333333333334,
+        "issuedActions": 190,
+        "rejectedActions": 0,
+        "rejectedActionRate": 0,
+        "canonicalReturn": -1
+      },
+      "arms": []
+    }
+  ],
+  "limitations": [
+    "Four illustrative cases, one provider sample per arm and case; no superiority or generalization claim.",
+    "Same-state zero-delay static-plan comparison; online replanning and latency-injected play are separate experiments.",
+    "Red is scripted and deterministic under exact action replay, but may take different actions after trajectories diverge.",
+    "Combat horizon censoring is reported; accepted-plan summaries exclude fallback continuations.",
+    "Token means use known usage only; unknown usage is not zero. Cached tokens and reasoning tokens are reported separately.",
+    "Latency p95 is interpolated over four observations and is descriptive, not a stable tail estimate."
+  ]
+}

@@ -1,15 +1,13 @@
 import { parseArgs } from 'node:util';
-import {
-  OPENAI_COMMANDER_MODEL,
-  OpenAICommanderClient,
-  type OpenAICommanderReasoningEffort,
-} from '../providers/OpenAICommanderClient';
+import { OpenAICommanderClient } from '../providers/OpenAICommanderClient';
+import { commanderBackend, DEFAULT_COMMANDER_BACKEND } from '../providers/CommanderBackend';
 import { runSingleRequestCommanderBattle } from './OpenAICommandedBattle';
 
 const { values } = parseArgs({
   options: {
     seed: { type: 'string', default: '42' },
-    reasoning: { type: 'string', default: 'medium' },
+    backend: { type: 'string', default: DEFAULT_COMMANDER_BACKEND },
+    reasoning: { type: 'string' },
     'pace-ms': { type: 'string', default: '100' },
     'max-decisions': { type: 'string', default: '10000' },
     json: { type: 'boolean', default: false },
@@ -26,27 +24,27 @@ Usage:
 
 Options:
   --seed INTEGER
-  --reasoning low|medium|high|xhigh|max
+  --backend luna|astra     Default: astra/low; explicit luna defaults to medium
+  --reasoning light|low|medium|high|xhigh|max
   --pace-ms INTEGER       Wall-clock delay per 10 Hz decision (default: 100)
   --max-decisions INTEGER
   --json`);
   process.exit(0);
 }
 
-const result = await runSingleRequestCommanderBattle(
-  new OpenAICommanderClient({ reasoningEffort: reasoning(values.reasoning) }),
-  {
-    seed: integer(values.seed, 'seed'),
-    paceMs: nonNegativeInteger(values['pace-ms'], 'pace-ms'),
-    maxDecisions: positiveInteger(values['max-decisions'], 'max-decisions'),
-  },
-);
+const backend = commanderBackend(values.backend, values.reasoning);
+const result = await runSingleRequestCommanderBattle(new OpenAICommanderClient(backend), {
+  seed: integer(values.seed, 'seed'),
+  paceMs: nonNegativeInteger(values['pace-ms'], 'pace-ms'),
+  maxDecisions: positiveInteger(values['max-decisions'], 'max-decisions'),
+});
 const response = result.schedulerEvents.find(({ type }) => type === 'response_processed');
 const summary = {
+  backend: backend.backend,
+  reasoningEffort: backend.reasoningEffort,
   ok: response?.type === 'response_processed' && response.status !== 'rejected',
   commanderRequests: result.schedulerEvents.filter(({ type }) => type === 'request_started').length,
-  model:
-    response?.type === 'response_processed' ? response.metadata?.model : OPENAI_COMMANDER_MODEL,
+  model: response?.type === 'response_processed' ? response.metadata?.model : backend.model,
   map: 'arena6.json',
   seed: result.seed,
   paceMs: result.paceMs,
@@ -78,19 +76,6 @@ else {
   console.log(`  decisions:   ${summary.decisions}`);
   console.log(`  survivors:   blue=${summary.blueAlive} red=${summary.redAlive}`);
   console.log(`  winner:      ${summary.winner}`);
-}
-
-function reasoning(value: string | undefined): OpenAICommanderReasoningEffort {
-  if (
-    value === 'low' ||
-    value === 'medium' ||
-    value === 'high' ||
-    value === 'xhigh' ||
-    value === 'max'
-  ) {
-    return value;
-  }
-  throw new RangeError('reasoning must be low, medium, high, xhigh, or max');
 }
 
 function integer(value: string | undefined, name: string): number {

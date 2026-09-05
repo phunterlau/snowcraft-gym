@@ -1,0 +1,380 @@
+{
+  "format": "snowgym.commander-backend-benchmark.v0",
+  "mode": "dry-run",
+  "arms": [
+    {
+      "backend": "luna",
+      "model": "gpt-5.6-luna",
+      "reasoningEffort": "low"
+    },
+    {
+      "backend": "luna",
+      "model": "gpt-5.6-luna",
+      "reasoningEffort": "medium"
+    },
+    {
+      "backend": "astra",
+      "model": "gpt-6-astra",
+      "reasoningEffort": "low"
+    },
+    {
+      "backend": "astra",
+      "model": "gpt-6-astra",
+      "reasoningEffort": "medium"
+    }
+  ],
+  "schedule": [
+    {
+      "caseIndex": 0,
+      "arm": {
+        "backend": "luna",
+        "model": "gpt-5.6-luna",
+        "reasoningEffort": "low"
+      }
+    },
+    {
+      "caseIndex": 0,
+      "arm": {
+        "backend": "luna",
+        "model": "gpt-5.6-luna",
+        "reasoningEffort": "medium"
+      }
+    },
+    {
+      "caseIndex": 0,
+      "arm": {
+        "backend": "astra",
+        "model": "gpt-6-astra",
+        "reasoningEffort": "low"
+      }
+    },
+    {
+      "caseIndex": 0,
+      "arm": {
+        "backend": "astra",
+        "model": "gpt-6-astra",
+        "reasoningEffort": "medium"
+      }
+    },
+    {
+      "caseIndex": 1,
+      "arm": {
+        "backend": "luna",
+        "model": "gpt-5.6-luna",
+        "reasoningEffort": "medium"
+      }
+    },
+    {
+      "caseIndex": 1,
+      "arm": {
+        "backend": "astra",
+        "model": "gpt-6-astra",
+        "reasoningEffort": "low"
+      }
+    },
+    {
+      "caseIndex": 1,
+      "arm": {
+        "backend": "astra",
+        "model": "gpt-6-astra",
+        "reasoningEffort": "medium"
+      }
+    },
+    {
+      "caseIndex": 1,
+      "arm": {
+        "backend": "luna",
+        "model": "gpt-5.6-luna",
+        "reasoningEffort": "low"
+      }
+    },
+    {
+      "caseIndex": 2,
+      "arm": {
+        "backend": "astra",
+        "model": "gpt-6-astra",
+        "reasoningEffort": "low"
+      }
+    },
+    {
+      "caseIndex": 2,
+      "arm": {
+        "backend": "astra",
+        "model": "gpt-6-astra",
+        "reasoningEffort": "medium"
+      }
+    },
+    {
+      "caseIndex": 2,
+      "arm": {
+        "backend": "luna",
+        "model": "gpt-5.6-luna",
+        "reasoningEffort": "low"
+      }
+    },
+    {
+      "caseIndex": 2,
+      "arm": {
+        "backend": "luna",
+        "model": "gpt-5.6-luna",
+        "reasoningEffort": "medium"
+      }
+    },
+    {
+      "caseIndex": 3,
+      "arm": {
+        "backend": "astra",
+        "model": "gpt-6-astra",
+        "reasoningEffort": "medium"
+      }
+    },
+    {
+      "caseIndex": 3,
+      "arm": {
+        "backend": "luna",
+        "model": "gpt-5.6-luna",
+        "reasoningEffort": "low"
+      }
+    },
+    {
+      "caseIndex": 3,
+      "arm": {
+        "backend": "luna",
+        "model": "gpt-5.6-luna",
+        "reasoningEffort": "medium"
+      }
+    },
+    {
+      "caseIndex": 3,
+      "arm": {
+        "backend": "astra",
+        "model": "gpt-6-astra",
+        "reasoningEffort": "low"
+      }
+    }
+  ],
+  "horizon": 300,
+  "maxOutputTokens": 4096,
+  "timeoutMs": 60000,
+  "maxRequests": 16,
+  "attemptsPlanned": 0,
+  "decisionHz": 10,
+  "redDifficulty": "normal",
+  "executor": "PlanAwareTeamController/ReactiveUnitPolicy",
+  "activation": "one static plan; no lifecycle replacement; zero simulated API delay",
+  "autonomousQualificationEligible": false,
+  "retries": 0,
+  "payloadBoundary": "strategic summary, current plan, optional aggregate trajectory and previous-plan outcome; shared prompt and CommandPlan schema",
+  "nodeVersion": "v25.8.1",
+  "createdAt": "2026-09-05T17:49:37.279Z",
+  "gitHead": "5eed90372f094e14d320d54101854f023c0b6155",
+  "sources": {
+    "package-lock.json": "sha256:8234e1a6e6c57868d117dd3e7a75bdeb5785f146ee5de749fceccc09f89c4242",
+    "package.json": "sha256:ce016c197d9da784a02b79e6804ac0ff71ec4b26ef34875d96a8b2a102a59dab",
+    "snowgym/PLAN.md": "sha256:d53e313fd597038cf174c85d2c4f985b474b3c2e6b25eb4dace88e0b2bc38e0e",
+    "snowgym/actions/UnitAction.ts": "sha256:00e308065f42a8e3fb63d374ce4a41b94b9bab572323a5cd746d75c0ed8be507",
+    "snowgym/adapters/SnowCraftActionAdapter.ts": "sha256:f772f5e00733dc76a0d4beb534e2927a4e7b941d17fce4ba5a60570f259be8c5",
+    "snowgym/agents/RandomAgent.ts": "sha256:fe92e38e76b7f3cfc0c1e363ab575a7bf55bec25bf859603ab9b3f9d45dd54c0",
+    "snowgym/agents/ScriptedAiAgent.ts": "sha256:0e375968f62d874a3401040e281efedbd523f39c327ee9f15c40f3bd5cf591e2",
+    "snowgym/agents/SimpleBlueAgent.ts": "sha256:7957a471bf997817b3cc3b8f15d6b5452a059913ad574351d2ac224e6cb9f50c",
+    "snowgym/agents/TeamController.ts": "sha256:7912d5fb36e4f85780b720da27fe4dd49122d79b39b7e41101d6966837b1c2d9",
+    "snowgym/agents/opponents.ts": "sha256:055ce4cb67134e3a02ec32260ce89ee258b8719531626befdbcd9d5043f1b2f4",
+    "snowgym/batch/BatchHost.ts": "sha256:5f6692a6f9ac29a8bfd83d2be3fc576437c8414c7e49eaf008a97f4899a9f6b2",
+    "snowgym/batch/main.ts": "sha256:eca8a40271fe3da8d4e78a7f3deeeb688939857b91916b2f2c866ada60fff91c",
+    "snowgym/core/SnowEnvironment.ts": "sha256:ec46042a1cc7dc2590ea70f88b7f85fbc58f686b5c22af5039e65ddc4c4f7018",
+    "snowgym/core/TeamControllerSystem.ts": "sha256:dc84b74abbc4d225af131072e17407b7342056abe8732847f0564749af14a764",
+    "snowgym/examples/ExampleBuilder.ts": "sha256:6c7ef671c7b9083ad14e6574a940482b26ade1f2801c192a1db4b426a3bf4c03",
+    "snowgym/examples/main.ts": "sha256:d8d5cea2e30db214f42ca661c11c0685a567d408d630c0b6ad3e3a017fa5539e",
+    "snowgym/mapgen/ArtifactStore.ts": "sha256:dab7ce456f486bfa790479b7e7d09f1e5eb860bc5bdb07518c54643122e5e2be",
+    "snowgym/mapgen/DeterministicControl.ts": "sha256:3f26516178e073061839aa10950697fb10cb1a51c76462094dc12f4ad951d340",
+    "snowgym/mapgen/GeneratedScenario.ts": "sha256:3345217ddec0ce79e24b8265b6d2a5d84810464b8ca18e1a0a1129fdd7448863",
+    "snowgym/mapgen/GenerationRequest.ts": "sha256:4742b1b0889fcfadbc08e2dbe802174d4eb0400bd6898679c3a6837499639b03",
+    "snowgym/mapgen/MapEvaluator.ts": "sha256:5d8c122859f923736e6d2cf7c4399b6e94970586712bd74b60b61b26e00b8345",
+    "snowgym/mapgen/MapGenerationService.ts": "sha256:95b5405958f6dcf8099d0cda2b0d17bb8efeb90a259f0eff63b545399ab8874d",
+    "snowgym/mapgen/MapValidator.ts": "sha256:ebfb8ef0329d157d407b487d71df009c6b981021ee9bee770ba1049b1c7bbcd0",
+    "snowgym/mapgen/OpenAIMapGeneratorClient.ts": "sha256:61e5846fcb7426f58110e2f76bc8911ebbbee432b77132404353176be7d3db90",
+    "snowgym/mapgen/Promotion.ts": "sha256:e1bbb38d4732290474120edbbf614fee5e57142b40bcaf41012bfe257abb022b",
+    "snowgym/mapgen/main.ts": "sha256:574b514dbb3c3818c4e786ec012da9de120725bd4a8628758f68087a193af857",
+    "snowgym/mapgen/map-candidate.schema.json": "sha256:f2dd42f00fd64d63a33bb5f1a704fc81ac30342044e6837e689714b4e2e178b9",
+    "snowgym/mapgen/types.ts": "sha256:669840205c61ee80fd157da91f3ed75a9846f39447f2f5fb9d8429e9fd759af5",
+    "snowgym/observations/Observation.ts": "sha256:d05f65f3031b3c789c2222f9e03a1044f3f5a35ca5d9bfd2cfbf69d3f86dc1b1",
+    "snowgym/orchestration/benchmark/BackendBenchmarkArtifacts.ts": "sha256:78765d0dc95d5bce834473d4952723edad2a11cfb0e1650c3e11566a33717684",
+    "snowgym/orchestration/benchmark/CommanderBackendBenchmark.ts": "sha256:e843866e9ed186f2c9e99c2ab4c0cc8c48fdad5829678e03dad83748e164fb05",
+    "snowgym/orchestration/benchmark/CommanderLatencyBenchmark.ts": "sha256:e3f8047c9dde80c7c8c2a21270cdf8e144f1194a295e66347a505892269f72f9",
+    "snowgym/orchestration/command/CommandPlan.ts": "sha256:8d3a2856f9c3f7d433dd91d3564be75785db3d7fdbcd3ea8d7a84c5c4f9322a4",
+    "snowgym/orchestration/command/PlanValidator.ts": "sha256:05e9b0ed4064b11b9e511e46158b5de26b6443487007a592dd201e639804dfa7",
+    "snowgym/orchestration/command/command-plan.schema.json": "sha256:96a2ed7279c98d3131647eb6c724e6cf4e8a972d3d110c9783b45482df634c6e",
+    "snowgym/orchestration/commander/CommanderClient.ts": "sha256:29dbcba747a53cea54992855405f2eb10acad9c5f77317f45984ba10aa50f978",
+    "snowgym/orchestration/commander/MockCommander.ts": "sha256:f9948d368edf3a7031c9ff31e5d64018739569ee1112bb5ef34c317a246f320b",
+    "snowgym/orchestration/commander/StrategicSummary.ts": "sha256:80346fe5b1fbc643b85107b0562ac9eceac503e92aebd4b984056345bdc4ce5e",
+    "snowgym/orchestration/examples/CommandedReplayExample.ts": "sha256:15f5b3ab62d724be8f1d2a8c81e2a200b5c79dfb2085700750d98904058d8648",
+    "snowgym/orchestration/examples/DelayedMockCommanderExample.ts": "sha256:b0eb5232df652874b390883e53f1865288ef23af64fa02e77a6f86e36f042e19",
+    "snowgym/orchestration/examples/OpenAICommandedBattle.ts": "sha256:7909ebae983fa728e05ad354a9cac7c0f76f115ae8beece85a35b7e9f5e8e850",
+    "snowgym/orchestration/examples/TrajectoryCommanderBattle.ts": "sha256:ac87c6ee7d23b72ffa622235cb4328c3374fc6c42b07bf29369381f8529aac5a",
+    "snowgym/orchestration/examples/TrajectoryMockCommanderExample.ts": "sha256:5ea8c40babb44a3e5af0a37e9986dde60ac2f84a449f9209363482f8a7184e36",
+    "snowgym/orchestration/examples/commanded-10v10.ts": "sha256:95771c679f81d9d44da7887eaff194cec834b9db2b261db5fa4b17f78e438dda",
+    "snowgym/orchestration/examples/commander-backend-benchmark.ts": "sha256:4737e5ee91e9d6f32818615f46b96b8fb205f067fde37ae4d8aef02c4cbfb269",
+    "snowgym/orchestration/examples/commander-latency-benchmark.ts": "sha256:06a540c6654b0915d4f3499a9ebf97533b2c2d57b9eb06a2d0048a3af818d857",
+    "snowgym/orchestration/examples/delayed-mock-10v10.ts": "sha256:09116b368702eb4b543c7822ac5e4d1a450cd75f3329a754ff24e210ffacc43c",
+    "snowgym/orchestration/examples/openai-commanded-10v10.ts": "sha256:1e15203517580198dfe850d7e9835b6b8a43af901e414f635464be99e99ef46a",
+    "snowgym/orchestration/examples/openai-commander-smoke.ts": "sha256:6cca23f8bc21d971cfa1eb56e8c1cb0e1df56c7644240cc3d0de3106b27520ed",
+    "snowgym/orchestration/examples/openai-trajectory-10v10.ts": "sha256:d84063bdac9169df6fe75b02a8f0a6b7249c17fa9ca19d9371d873d88a988080",
+    "snowgym/orchestration/examples/trajectory-mock-10v10.ts": "sha256:8761f4ab871186b4363b4e988f5c241b4cff08edf5dde9f7b02ebfb0c0ef9fbc",
+    "snowgym/orchestration/execution/PlanAwareTeamController.ts": "sha256:4f120b7c68575b6b6e3b13b2cf7a3ebfce6c062281b2f2426e07fec8e66a3df0",
+    "snowgym/orchestration/execution/ReactiveUnitPolicy.ts": "sha256:8abfee6bc9c15ef732dd016c94fce73a47c391d742ca879fdcb4f2d44d295b24",
+    "snowgym/orchestration/execution/UnitPolicy.ts": "sha256:2eae2b46a8ee7b4d4bc1258ac54829104764a8a56eafe445759fa2828751102a",
+    "snowgym/orchestration/grounding/GroupAllocator.ts": "sha256:60924d5de8e4cb8f33a95121c7c758f1d57c675ed21dfe8abcc08386809c03e5",
+    "snowgym/orchestration/grounding/PlanGrounder.ts": "sha256:825663c1ed399971e5f70a8f856dec6cde5f7685b89574bdc84459cec1cae5e0",
+    "snowgym/orchestration/grounding/TacticalFrame.ts": "sha256:f9416705073c6fbfa64253aee2b36e3c113b5fc7b142d618af294b5da39da551",
+    "snowgym/orchestration/grounding/TargetResolver.ts": "sha256:eff46b159b6308bb9e799310d3fc9aef6a5358b560f5064187fbabece1848744",
+    "snowgym/orchestration/index.ts": "sha256:bb3f31312794ea875dab93d1941f6137f38e20641a10a3e8fbffe5ecba425662",
+    "snowgym/orchestration/lifecycle/FallbackPlan.ts": "sha256:949dd1abc0b0aa20d225330b06c9e2c89ffdec38fceab931b47a3b9910ffddd2",
+    "snowgym/orchestration/lifecycle/PlanLifecycle.ts": "sha256:441f4862759d13527cc6d1342290812953bd2d2d1d28a530c5bc416567484613",
+    "snowgym/orchestration/lifecycle/PlanReconciler.ts": "sha256:a58d4b6fb087e3bdfd73cd1bc20c5a250ad08b2943f088376d35408aa61d33f7",
+    "snowgym/orchestration/providers/CommanderBackend.ts": "sha256:d486296b3ccb845ab2b4133dd423bf3f50649054e629ab38b696d0dd6f2d17eb",
+    "snowgym/orchestration/providers/OpenAICommanderClient.ts": "sha256:b66a21388c83f5612d2a78382364d7e08ae5740e63a34499cb0b985cdde76be0",
+    "snowgym/orchestration/runtime/PlanProjection.ts": "sha256:76ddbf28adecf25e1f0af0f5dbbe4732bd8da54852c8da42e17aa13ecb28f1b1",
+    "snowgym/orchestration/runtime/PlanStore.ts": "sha256:ea837395124563a6c472a257dd456b08a41e714d0f2608129fa4e85a5fd505e8",
+    "snowgym/orchestration/scheduler/CommanderScheduler.ts": "sha256:14eefb46bc491cdaa791e26ff7189288f6a3f45d75a5e46d60548184300d16fc",
+    "snowgym/orchestration/trace/CommanderTrace.ts": "sha256:983eca5a1faf2998865003f215bacd880db49a8087b0d1437df869ab725e3ecb",
+    "snowgym/orchestration/trajectory/PlanOutcome.ts": "sha256:26dfaf325b0f7558a256affd68e26d8ccb97e7be71e9e45f45ba0e126a1b047d",
+    "snowgym/orchestration/trajectory/TrajectoryMonitor.ts": "sha256:fe166ff7e91d62f3cb796fe757c58d79e0b007f56446db468e2068b759a0aae5",
+    "snowgym/orchestration/trajectory/TrajectorySignals.ts": "sha256:b216270fc5cb3b86c6ff19d00928550c805e14daca309be784d8619d5fb7437a",
+    "snowgym/protocol/Capabilities.ts": "sha256:bba7bc1be99a03edb81537cffe05cc641792df347e475bb79b177e544752976b",
+    "snowgym/protocol/Version.ts": "sha256:0baff7271af4e729f938e8908c7b60cac5e90fa9b66bffc4ba83b5871b42c5d8",
+    "snowgym/replay/CommanderOverlay.ts": "sha256:e09077639a0f55af40a5cede85f25da2ab6a5da382ecc40b43e1c61bfcd8989e",
+    "snowgym/replay/ReplayRecording.ts": "sha256:b5afac3c1bb018ab70266efdaefe431810b3cb5229fc8b12bbde4057ba0aa3c3",
+    "snowgym/replay/ReplayWorld.ts": "sha256:d273a690ddcdb0734322f73c671cbb4289283e1f9062ef73ce1703a7f64908e3",
+    "snowgym/replay/main.ts": "sha256:f9d03183162b2a9323002b393343d6159888e42601a44fd0c7796b304438f19a",
+    "snowgym/reproducibility/StateHash.ts": "sha256:e166a35baa5e6ef905bc0d316f5a71da6d217b9e6735de8d00778d24b6406189",
+    "snowgym/scenarios/Scenario.ts": "sha256:3167961718d83c66e381961c0f03177e6a6d982b542249db6bcbb14b2e82dbef",
+    "snowgym/scenarios/maps.ts": "sha256:763f7f90ca3b277b0d3fde6560b4cc595fede6f5a9481ede10402ec59b08cd1a",
+    "snowgym/server/SnowGymService.ts": "sha256:4bbe1cce04e1975a62cee482fadfc388e065c56ee844f1f47b4931a0901bc80b",
+    "snowgym/server/main.ts": "sha256:83d5dfd33d0189b2a86c89d05b4eaf5930a4b06e4a56cc7b7d6d65470084940b",
+    "snowgym/tests/BatchHost.test.ts": "sha256:0b1c304207e3cb4e3942ae5beafe0dd63ea6de94eef7ec316180a15e8e69ff84",
+    "snowgym/tests/CommandPlan.test.ts": "sha256:e3b4b05da04eab05d952727417a1f3dac40d228b0b3df0514f1694709200a3e8",
+    "snowgym/tests/CommandedReplayExample.test.ts": "sha256:2e95ce2b27300fbc30594303828e4475e3c42e8c1aa83befc089e346e94045ac",
+    "snowgym/tests/CommanderBackendBenchmark.test.ts": "sha256:50ed40cf964d0740152f972a51b8dd5396a95c1ab8ed0b70f8bb82ead60c831d",
+    "snowgym/tests/CommanderLatencyBenchmark.test.ts": "sha256:2fc814f71077c1702079368aa0d1b9856692dde3978d9d5deecab8105087ab7c",
+    "snowgym/tests/CommanderScheduler.test.ts": "sha256:a91211c2a2b8fee6d68bc9b94fcb78fdebd81d582a9de6e1020ba1127697f3a2",
+    "snowgym/tests/DelayedMockCommanderExample.test.ts": "sha256:3b6c34b2a2abd8cfdb6a0d2a20172a7fb06841e6fcc22c8cdd3177948ebfc620",
+    "snowgym/tests/ExampleBuilder.test.ts": "sha256:18fa8baaf6b4829edcc41b37f80c59d3a9c88b56f7719f69f0145fac98778d97",
+    "snowgym/tests/GroupAllocator.test.ts": "sha256:df471c78b7bf4e934105040ebb8d7a1792702974286e00232b9c195f8a637c7e",
+    "snowgym/tests/MapGenerator.test.ts": "sha256:c9aabcc75d9717d5b497f52f7b7d618f0d1bef848ed0dbf45c9f0a17307cd5f6",
+    "snowgym/tests/Observation.test.ts": "sha256:eded800f6bce3059dda6a2e405c1d4f08fa218d130e4d17813af5a655cb048d0",
+    "snowgym/tests/OpenAICommandedBattle.test.ts": "sha256:6079fef945d044dfd2fdb74b3a299ed48f94009e41c3e0609196a54de6a4999a",
+    "snowgym/tests/OpenAICommanderClient.test.ts": "sha256:c309d6acb6ed3f1597e2aa054af63c3349e8c63cfe62d20aac356b2f9b03283e",
+    "snowgym/tests/PlanAwareTeamController.test.ts": "sha256:be52235da1d1f5c397e8368e38e0c345a838262f70addb4c4718671e58477be5",
+    "snowgym/tests/PlanGrounder.test.ts": "sha256:853fb7faf0892a5b61a24b5bf664d7e53ea0eb7599e3ac3d76e4ff09badb2b0f",
+    "snowgym/tests/PlanLifecycle.test.ts": "sha256:61cf445d94a4bb98d1b959998e44780864180142a97e0ee949e1c499b8c9c5df",
+    "snowgym/tests/PlanOutcome.test.ts": "sha256:20aa6019ffd29f7d8cefd4f3c23466977dd56d15d7a496becbc04e37a296bbce",
+    "snowgym/tests/PlanReconciler.test.ts": "sha256:6f34c71b4aa7a2ccc07fccacf6afab8319bcdc0bca0b76e8a6a88fed79b49062",
+    "snowgym/tests/PlanRolloutDataset.test.ts": "sha256:48726d1d7958458dad7a720f256363b37a26476757786bb4d7719f008e8a9ef8",
+    "snowgym/tests/PlanStore.test.ts": "sha256:85eaf86137f7f480231bad449b534cb9166420e0c7950c2ec239c03bbe03f879",
+    "snowgym/tests/PlanTensorDataset.test.ts": "sha256:4028dfb041c0a5daadc61a601d8f78ba8f86b1d9c5a09c50d963db3365bcdbe4",
+    "snowgym/tests/PlanTensorEncoder.test.ts": "sha256:f648a71ec457b6004dacd7115a3eb6dff73dd9faf516c2c4a8b9aece96ab88fe",
+    "snowgym/tests/ReplayRecording.test.ts": "sha256:05c5b462b11ab4e0021a3a2ba5da38283389c0c46c4ed9ae5673764b57b8d381",
+    "snowgym/tests/Scenario.test.ts": "sha256:803e01b7903e4ca2c1577e3ca65bf80b42e54dae9780f0cc1015d84e328903d3",
+    "snowgym/tests/SimpleBlueAgent.test.ts": "sha256:bc4cfe2df7b429fb650cb15a269aa1b026d35d3cf281ebd5f3a1b84c25be68c8",
+    "snowgym/tests/SnowCraftActionAdapter.test.ts": "sha256:bf146edf784cacbc7183b130f9e443d745cbd7b87ef9e7e74085addb41ba947d",
+    "snowgym/tests/SnowEnvironment.test.ts": "sha256:bb59f0a214d825f427e6f8fabd4de3768174498ca939faac5910dbbe394f4f9f",
+    "snowgym/tests/SnowEnvironmentControllers.test.ts": "sha256:a2ca334d047d8ed547d1ecc5b54d8f96f03ad93f0027f62309c25c3d1240939a",
+    "snowgym/tests/SnowEnvironmentMaps.test.ts": "sha256:424c4eee3ca2577f174d4007e86490bf41f68f7686fe7bd78df07271dab3d027",
+    "snowgym/tests/SnowGymService.test.ts": "sha256:743e81571a39f13a0a88769eb47425f867bf49e6fb95803e3a68ffaad1213589",
+    "snowgym/tests/StateHash.test.ts": "sha256:233a7b714164981e93fc4c8fc3beb4a7298c90ac7a09ebf74cfba13df5de7554",
+    "snowgym/tests/StrategicSummary.test.ts": "sha256:5c86da42398bb380beebc023e6ce8d9873f678cbaf15e49466044a6fe83dcae5",
+    "snowgym/tests/SyntheticPlanCurriculum.test.ts": "sha256:e7169b700ed7ceac0cc05903214603292bdc7485d86c5b1747c298dac489ab30",
+    "snowgym/tests/TargetResolver.test.ts": "sha256:352504e16614dd527633dd3437b58e8a095d066f2320fe3f69be97801ab6ebbc",
+    "snowgym/tests/TrajectoryCommanderBattle.test.ts": "sha256:68d9709b4c2f95c22e113be94e973b48d0176d35d4a5df9b683c33175ec47e6a",
+    "snowgym/tests/TrajectoryMockCommanderExample.test.ts": "sha256:04f2c2a374a07f99a93f06b8df233829639145cc4e79a95e83dd71161e7d1ee6",
+    "snowgym/tests/TrajectoryMonitor.test.ts": "sha256:14599a63c6dbdc9cae9852f331c1ae6c3d11f567797110b0dd471ac408b71216",
+    "snowgym/tests/TrajectoryScheduler.test.ts": "sha256:e8897867c60962fe673412210d7d0464baa40a21121b3a2c38e63d734738ee7f",
+    "snowgym/tests/TrajectorySignals.test.ts": "sha256:b7f840a3554a6c9a24828a41f4ff0e505348a8a02185cd83a31e711b168072d6",
+    "snowgym/tests/orchestrationTestHelpers.ts": "sha256:e51bc75c1c9ade85ba4dfbe121259215e3550e19ac358d6940058c8c61193f3e",
+    "snowgym/training/plan/PlanRolloutDataset.ts": "sha256:fde2d6e2f34bf652796e544297711c630b2716e90abc519ff45168075e9b4c18",
+    "snowgym/training/plan/PlanTensorDataset.ts": "sha256:34bda56e82eeb2b3b516ae51376d0f37345cf31679a57057dd8a68ed261ab892",
+    "snowgym/training/plan/PlanTensorEncoder.ts": "sha256:40eb092206d4aa3ea0d48612eed5ca066c4468d3964f2d457b4b837fded85e7c",
+    "snowgym/training/plan/RoleStateEncoder.ts": "sha256:857bf421eb187b776a1573a34aea29ed64f77c5d6b09223bfe224358a6829488",
+    "snowgym/training/plan/SyntheticPlanCurriculum.ts": "sha256:f7d36c09ff3b45420af3abc2cd435bf833ea5ba6b510bf1e4c72a4746e63ed2c",
+    "snowgym/training/plan/export-plan-rollouts.ts": "sha256:2dde9ae56f4ced118134a7df04e77abcbf1aa7ce1047f425e422eef06c4156f6",
+    "snowgym/training/plan/export-plan-tensors.ts": "sha256:508108be392671bd6498b56a37244833769e399e3325489cedcf88005a7f881a",
+    "src/core/EventBus.ts": "sha256:19b42c30b6d54b0f07240d1ca1e8cbb52cf335aafcb63347f7d06d0cf63efc51",
+    "src/core/Game.ts": "sha256:5e1c012fe3fe853fa6053ea94b0aa74ce0037214a057f528dd68984074f9b462",
+    "src/core/GameLoop.ts": "sha256:68292b24a131f798258215aead09cef16094c4fbecdc4260099e5d7180fb4f73",
+    "src/core/commands.ts": "sha256:c0b5c54b8e0c040494b3459a5237ab087c56542acfacc50d099f3946b4dcf231",
+    "src/core/events.ts": "sha256:db274863e67c14aff34fe66e03d7448680ec46f2b6af737dc5b4ca220f081ce6",
+    "src/ecs/Component.ts": "sha256:e74e881411254d097b24230ea2030bf173cf1512b15330e00f8ad9c009bf588c",
+    "src/ecs/Entity.ts": "sha256:2ada0b29207389543f57beeaec60c1f6834450d33bcbd5cba8f58a860223cf49",
+    "src/ecs/System.ts": "sha256:1c438bfcaba53bbf9151e0b7025d4c9b20b834c24e9cc4023440b73a8383ffaf",
+    "src/engine/AssetManager.ts": "sha256:1771acdb4dff7a726e4e99d2d4263cb434b4381ca0214f5e783c293da5f06105",
+    "src/engine/AudioManager.ts": "sha256:7f8bef58f91352b5747e82404b3bcca7ee40280a93240c4c1aabd8d8e2fe9896",
+    "src/engine/CameraController.test.ts": "sha256:d09fa7d269871455ae5e3665680bbca0d34c45f533b7cd246af326d742b2a7be",
+    "src/engine/CameraController.ts": "sha256:53149a30c838a7be35f6eb91481c4423afe8a599ecdc95017b03fe57c872a96a",
+    "src/engine/InputManager.ts": "sha256:397541c6d590b5afe79ffce3cc3035220e0cbbb812e26db7e54f3fe66bd1a8b9",
+    "src/engine/Renderer.ts": "sha256:33ba880a3ce3186353432cd55bbe25709dc851815d0ec79e3acd2a8a118f75da",
+    "src/engine/Settings.test.ts": "sha256:08fe34594ac650d136c773baa883ca0c98b506ee796523bf3957c849be1f4a3b",
+    "src/engine/Settings.ts": "sha256:5ea2c89255892a2dd985706243121656f8358985dbd34c98ae70a0e7e4d0561e",
+    "src/game/Arena.ts": "sha256:2067e5385568922bad8b28b66db43cde3b6cdd13d69913f0acee46fbd88f91e0",
+    "src/game/MapLoader.ts": "sha256:8c326e3c809357bc6e4417ae8fdcdc94364b3ad0cf78a2a13ac16dd3b8928df9",
+    "src/game/Obstacle.ts": "sha256:5e30633ecd0ff7d4360926693308842439ea6755a3288657c5d32c2e98ac5976",
+    "src/game/Player.test.ts": "sha256:e3002bee5b04e4f17678f246be0fc402e016342b8a888ec6bee9f8b7e6c24665",
+    "src/game/Player.ts": "sha256:556174a37d2b5846443f69e7bc7a2413b3f6e57cf2a57e2f823c7584d96d7175",
+    "src/game/Snowball.ts": "sha256:5d460a976163960089aa134384a04bbc49552e64dd064d17acd3f7a40cf05328",
+    "src/game/World.ts": "sha256:313bbb8a602c2a2e89ece697f44e751f12fb22d36647b866c064842105832bf1",
+    "src/game/config.ts": "sha256:9d4cf84eaed91267c0ff4ecfc74fca1d70c9f86653b4ae4a085ba61423b30768",
+    "src/game/score.test.ts": "sha256:9a077f4e00d456be9ceab771dcc0e1ede4b8a8b2772341c0855c3b87b1173447",
+    "src/game/score.ts": "sha256:f1d2f244d49f509517f20110fe09e798098ac8719522830459202e9fd7012808",
+    "src/game/trajectory.test.ts": "sha256:c850bbeb6f7e41e4abc6f2bad3bd2fcb6612c4c0149d0499e0ce524098facf7b",
+    "src/game/trajectory.ts": "sha256:9ca53107ca6bdfb7dd8e214e35c9f690679d3c2f6f5025214c069132706265fd",
+    "src/game/types.ts": "sha256:d879d3a0de1abc7b662d0865c67e3ca9a4e2da99f4eb1d423b5ccf36826ee92c",
+    "src/main.ts": "sha256:0c52e8d57420b13c531b154e43fc2bedf041951b3a1ddb3cc6ccb3fe0cd7e22c",
+    "src/physics/Collision.test.ts": "sha256:2ce20af13fb99d98b695c84b2c14ce76d20b1bde9a0ee79bac92332767a81eab",
+    "src/physics/Collision.ts": "sha256:9de74a8ab474788a4d0da23629b1acd3de6b4bec5d74f6a33c7ee247747cf701",
+    "src/physics/LineOfSight.test.ts": "sha256:d311b106ba949e6b7cabbb1e63054e473a364d6a33caf4be231dbbacae5590df",
+    "src/physics/LineOfSight.ts": "sha256:21aaf7853b1590cb26e4ca9cc0789c3aad4773b3e60fd9f6dfb22c1dbe1f75e0",
+    "src/physics/Pathfinding.test.ts": "sha256:bd9191745882400f3ee90b807dcd7e8f074adde61f60fd11001d90a1ee105598",
+    "src/physics/Pathfinding.ts": "sha256:2dd55712f9d29c8f442bf04a4b84e3e9c7b423913eb9c15f9ace74db1fdf0b79",
+    "src/physics/SpatialHash.test.ts": "sha256:0700b17d79e65e9d8d2f36db1ed172b6947d33ef204e36dfee49696da5277a88",
+    "src/physics/SpatialHash.ts": "sha256:69d732a92b4881c2bbb30a82573c22fcc531203c3cb364deb19b2c0a6f96983b",
+    "src/physics/shapes.ts": "sha256:897ae3d92f8e7bd763e4b18df486316f91a796cebbe6f348e1bf006625e28888",
+    "src/render/AimIndicatorRenderer.ts": "sha256:b00998228e9de5e1df7818d0e2fa1c40071b65c5a8a937086617623f997a8a4e",
+    "src/render/ArenaRenderer.ts": "sha256:9c9fdf6efdd6b5bc331ffed505c6da4fcdac18ae9ec3425e5221b68caffec60b",
+    "src/render/NavIndicatorRenderer.ts": "sha256:b2812cca18e95c7eaed1d939e271ff90ceb7d277c5a63f38016eb0b179304818",
+    "src/render/ParticleRenderer.ts": "sha256:e9f76e3e25340e6bf204183badcd80f8308ca7cf500491ff5536c68217ed2957",
+    "src/render/PickupRenderer.ts": "sha256:535f36eaf30069d9c4e0b8e4e50599c0ef41fe1322a3d157437499275d9f0aab",
+    "src/render/PlayerRenderer.ts": "sha256:ab6b3f932e49ed3e6f6f16618e080559e0cb4d69e51072d7e670a4dd1313e177",
+    "src/render/coords.ts": "sha256:10e7e2678d8bf0eb3e8aec38f1fe5be9960e4dd59699f187c7cff89002cde00f",
+    "src/systems/AISystem.test.ts": "sha256:3bfee3d64489f096be9e372d21efceff4dd5fa3462237b3d6c82ccd02b4d73c8",
+    "src/systems/AISystem.ts": "sha256:be5171a13a6768db7cf926b79e5e83e40b18efa4e3dfbaa6baad0dcbddf9ed9f",
+    "src/systems/AnimationSystem.test.ts": "sha256:3c7bcd5aad5996d92fbc0e2f3e54a57fd6e936a17cd8d492847da853cac6e21a",
+    "src/systems/AnimationSystem.ts": "sha256:79d621108216c3f56c3f8c8789b569ea03ba0177cd3950248b78ab7a8eaa4004",
+    "src/systems/AutoSelectSystem.test.ts": "sha256:e9cc43bc767c8a0e73fb63b12955a94bbb8f4b9531b21b8b0f65a659fe23a4b0",
+    "src/systems/AutoSelectSystem.ts": "sha256:e562ccc2c2e639472c70e7dc7c41be51eb43834aab4190c4d61823efabc927e4",
+    "src/systems/CollisionSystem.test.ts": "sha256:d5cf4c34c5ec0548cfd0ecab4903571a4774c214bc50b4b8ff3b2bd7ad055646",
+    "src/systems/CollisionSystem.ts": "sha256:29f4c4f03a8116272feee698ed17f3f76e05acff92fd5a9d8b1df5f1c3736d41",
+    "src/systems/DamageSystem.test.ts": "sha256:0a469cd627cd51e9863924dbfd364f6aa94ecf517a5f88ee1b980b5c0fe50e0f",
+    "src/systems/DamageSystem.ts": "sha256:249dd1183e12bd986ba0f6503797cfd7065bc0f6d4060626208a86aa36136cef",
+    "src/systems/MovementSystem.test.ts": "sha256:6fa8e2da20758e93349ca5198a08cb23e4ca5ab43d400321e29992df6bb100f2",
+    "src/systems/MovementSystem.ts": "sha256:bb9db2c416984010a756ab74c5cac5e910223f13d506dce1d2c7687ae0c96fc3",
+    "src/systems/PickupSystem.test.ts": "sha256:85f14894bcc877ca6da23883bd20d5bf9ae0e84b7a9c94056da5ff4542d3deae",
+    "src/systems/PickupSystem.ts": "sha256:2444e62b30b448c3c71a775e0eefaa9a67688dfcc84c3c76a47ff704992e66bf",
+    "src/systems/ProjectileSystem.ts": "sha256:1f54b5f7f8de70b986a162a1a1aa91da46268b890072ed387c10733f18b41a16",
+    "src/systems/RespawnSystem.test.ts": "sha256:b4458e96dd80eca9d9a67c1373aca41c1d6c86207e6bf94a374da919e38101ac",
+    "src/systems/RespawnSystem.ts": "sha256:655d6243f28be26a9f3f99c1bb2cc539edd8bd6a7e782ff101392145ea20f918",
+    "src/systems/RoundSystem.test.ts": "sha256:5a6cf31a0b5e957518f2d26d583b2aaeb4e687e862e955ecfd2c0e716199afe7",
+    "src/systems/RoundSystem.ts": "sha256:3e82b1864ddc7d89898e288fb1139a13f1cda9705c8c10e824c9176333b08e09",
+    "src/systems/SelectionSystem.test.ts": "sha256:7b6a38eccdf7a9dcffa903b9a9b6c299ee7fd7b54166324c52331ab703bff810",
+    "src/systems/SelectionSystem.ts": "sha256:0560606593b88dbf514479afcff72717cd5c60caa7e30316ad894edadbbefe92",
+    "src/systems/ThrowSystem.test.ts": "sha256:3bfdcfc5eb44f83acafbb95b69cd0ab55d7639b830c635e451d79399d2922df1",
+    "src/systems/ThrowSystem.ts": "sha256:a8b19a1c6d863fca119f0f52405eae9cf1b34b29ca0cfe235e85e90c5ed5690e",
+    "src/ui/Minimap.ts": "sha256:363dc76d612713ce3ae14c91308d2af0b9d516f7d5a4814860fb537060ee0dd8",
+    "src/utils/ObjectPool.ts": "sha256:d26f5775a1038236f69c45099ea58b353c120038fd7cce53a24f71048f797d63",
+    "src/utils/Random.ts": "sha256:11f2d28505d3c33811f701eda65fcceac892896e89f5a239c45e92060a017a32",
+    "src/utils/Vector2.test.ts": "sha256:a327a6193e8b7bdc2c5e179254e9518e9a121b7700823b4138d946bf7c472be1",
+    "src/utils/Vector2.ts": "sha256:f2a7f1dd4bee5686802cd3e66b1907a80072fe275d31b907a78a78b63ff03ce7",
+    "src/utils/math.ts": "sha256:715e6fe86552252252e3a1bad726b284d33892036e6bfd4c28907481fb39adf5",
+    "src/vite-env.d.ts": "sha256:65996936fbb042915f7b74a200fcdde7e410f32a669b1ab9597cfaa4b0faddb5",
+    "tsconfig.json": "sha256:7b3903c3945ef154cdfc5433f8fe8b7c5904fa0d43c695e23957cc6d6b34b09a"
+  },
+  "sourceDigest": "sha256:62dfca4777be482e7a1f6766c03287fb0a8b918555a80e5c984c527f4bd5cdef"
+}

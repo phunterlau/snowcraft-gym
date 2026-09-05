@@ -1,0 +1,27 @@
+{
+  "format": "snowgym.commander-backend-benchmark.v0",
+  "files": {
+    "baselines.json": "sha256:322ab42296d520eb6eb3f1f25e1ec52c5a09888013de936527a2898a73e6818a",
+    "configuration.json": "sha256:463bcf0eec8a6a36a9132d02bca94d8d78f110f402c32ab6259adcf7339082a9",
+    "fixtures.json": "sha256:31412d736549aab6f624b21af4b4fafd2bf65370e811713b4d0b155f645dc37f",
+    "report.json": "sha256:34b0b367775aa78229cff87b23fc6a4b7c20207ed9220568c8ca88382e56614d",
+    "requests.json": "sha256:dbe861178f1a7efe2c0cd9c67ae63798eee9088bfabf1bae7fe3f8a423732407",
+    "response-01.json": "sha256:3954a6775b27d6a318742c9088ca3ac4575d05652f525e848512f0c7946d49c7",
+    "response-02.json": "sha256:65da341a6f5512fe8de0c3546380efa0136f8383e489318b4d1410ebdf511a90",
+    "response-03.json": "sha256:4b257f007f024e060a30b616dea5f8d02fc8be7878374dce0821b61ad171e4d7",
+    "response-04.json": "sha256:247475e96da8e5f30ae94c2e0166eb0b0b5aeabc437b987efde819e150b3db51",
+    "response-05.json": "sha256:81d600f51d60676433e9aacc6cc61fabffcab6d3da66a505c2766b552815d5cb",
+    "response-06.json": "sha256:a41fea832860ae0f1c74b0d26b355c63fc6ba6cdf7c2d907824b85b5b2ca31b9",
+    "response-07.json": "sha256:4193c1b6f5c0f9cacd3885bc831f779155f6be266e5ba8f2b0bda77bfe3f17f4",
+    "response-08.json": "sha256:3ce368e171d4e1b5f993ada2fca1a30e3ade058ec81004e771dd1ace463fa2b5",
+    "response-09.json": "sha256:df76e353bfd0cad59bdfa3cb30aaf527e6f3b26a0d2aee141915ba80072ad004",
+    "response-10.json": "sha256:12b8cc1c23774e88da25eb81d3e0bbc146556e79f37b0338d7c3fd3c472ec81e",
+    "response-11.json": "sha256:49c20f3ebee76dc35db5d3c63753ad3630942e64dec9aed90739e0ebd3339820",
+    "response-12.json": "sha256:7a2b5dd5f5e95f97217711f570ed2503aa2a16f27a7abb6f1c3d4833253108a4",
+    "response-13.json": "sha256:ea66c6e695acac023fdf6cedfc5be3e067d36d874ebf2035134648cd282a65df",
+    "response-14.json": "sha256:79edc5c99d6cbe5c1217a05340f7bff31fd17e8bb10674bbbd48db8dc2ed33c5",
+    "response-15.json": "sha256:e25d3919771a31a39fea8232502566f0d80ed3d18e5f93caefe5026f94e65ae1",
+    "response-16.json": "sha256:1b23dec2bde0e4d4e4de54df759dfe5c3c0ef8091b7b13108310609636e08659"
+  },
+  "manifestDigest": "sha256:3ee39010d20a5104677b2ba86b7a37ebf314caff98c7fc8e2e213c22b2e566d8"
+}

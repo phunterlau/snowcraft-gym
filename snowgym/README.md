@@ -1,5 +1,10 @@
 # SnowGym
 
+The LLM commander defaults to **GPT-6 Astra / low reasoning**, with GPT-5.6 Luna available and CLI-selectable
+reasoning and a [matched headless backend benchmark](orchestration/benchmark/README.md).
+See the [Astra planning review](orchestration/ASTRA_PLANNING_REVIEW.md) for capabilities and next experiments.
+The [commander recovery preflight](orchestration/recovery/README.md) tests progress-aware server inputs and delayed execution without API calls.
+
 SnowGym is an extension layer over SnowCraft for autonomous teams and future RL
 environments. Code in this directory may import the upstream engine in `src/`;
 the upstream engine must not import SnowGym.

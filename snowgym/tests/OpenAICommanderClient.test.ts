@@ -1,4 +1,7 @@
 import { describe, expect, it } from 'vitest';
+import { readFileSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
+import { commanderBackend } from '../orchestration/providers/CommanderBackend';
 import { COMMAND_PLAN_VERSION, type CommandPlan } from '../orchestration/command/CommandPlan';
 import type { CommanderRequest } from '../orchestration/commander/CommanderClient';
 import { STRATEGIC_SUMMARY_VERSION } from '../orchestration/commander/StrategicSummary';
@@ -15,7 +18,168 @@ import {
 } from '../orchestration/providers/OpenAICommanderClient';
 
 describe('OpenAICommanderClient', () => {
-  it('sends a stateless Luna reasoning request with strict structured output', async () => {
+  it.each([
+    { options: {}, model: 'gpt-6-astra', effort: 'low' },
+    { options: { reasoningEffort: 'medium' as const }, model: 'gpt-6-astra', effort: 'medium' },
+    { options: { model: 'gpt-5.6-luna' as const }, model: 'gpt-5.6-luna', effort: 'medium' },
+    {
+      options: { model: 'gpt-5.6-luna' as const, reasoningEffort: 'low' as const },
+      model: 'gpt-5.6-luna',
+      effort: 'low',
+    },
+  ])(
+    'sends the effective $model / $effort through the client and body builder',
+    async ({ options, model, effort }) => {
+      let sent: Record<string, unknown> = {};
+      const response = await new OpenAICommanderClient({
+        ...options,
+        apiKey: 'mock-key',
+        fetch: async (_url, init) => {
+          sent = JSON.parse(String(init?.body));
+          return jsonResponse({ ...successPayload(), model });
+        },
+      }).plan(commanderRequest());
+      expect(sent).toMatchObject({ model, reasoning: { effort } });
+      expect(sent).toEqual(
+        openAIRequestBody(commanderRequest(), options.reasoningEffort, 4096, options.model),
+      );
+      expect(response.metadata).toMatchObject({ requestedModel: model, reasoningEffort: effort });
+    },
+  );
+
+  it('preserves every explicit wire body from the immutable Luna/Astra pilot', () => {
+    const directory = 'snowgym/orchestration/benchmark/examples/luna-astra-20260905-v0/live';
+    const fixtures = JSON.parse(readFileSync(`${directory}/fixtures.json`, 'utf8'));
+    const requests = JSON.parse(readFileSync(`${directory}/requests.json`, 'utf8'));
+    expect(requests).toHaveLength(16);
+    for (const row of requests) {
+      const fixture = fixtures.find(
+        (item: { configuration: { id: string } }) => item.configuration.id === row.caseId,
+      );
+      expect(
+        openAIRequestBody(
+          fixture.request,
+          row.reasoningEffort,
+          row.body.max_output_tokens,
+          row.model,
+        ),
+      ).toEqual(row.body);
+    }
+  });
+
+  it('advertises Astra low as the default in all live CLI help without credentials', () => {
+    for (const script of [
+      'openai-commander-smoke',
+      'openai-commanded-10v10',
+      'openai-trajectory-10v10',
+    ]) {
+      const output = execFileSync(
+        process.execPath,
+        ['--import', 'tsx', `snowgym/orchestration/examples/${script}.ts`, '--help'],
+        { encoding: 'utf8', env: { ...process.env, OPENAI_API_KEY: '' } },
+      );
+      expect(output).toContain('Default: astra/low; explicit luna defaults to medium');
+    }
+  });
+
+  it('defaults to Astra low while preserving explicit Luna and effort overrides', () => {
+    expect(commanderBackend()).toEqual({
+      backend: 'astra',
+      model: 'gpt-6-astra',
+      reasoningEffort: 'low',
+    });
+    expect(commanderBackend('luna')).toEqual({
+      backend: 'luna',
+      model: 'gpt-5.6-luna',
+      reasoningEffort: 'medium',
+    });
+    expect(commanderBackend('astra')).toEqual({
+      backend: 'astra',
+      model: 'gpt-6-astra',
+      reasoningEffort: 'low',
+    });
+    expect(commanderBackend('astra', 'light')).toEqual(commanderBackend('astra', 'low'));
+    expect(commanderBackend('astra', 'medium').reasoningEffort).toBe('medium');
+    expect(() => commanderBackend('unknown')).toThrow('backend must be');
+    expect(() => commanderBackend('astra', 'none')).toThrow();
+    expect(
+      () => new OpenAICommanderClient({ apiKey: 'test', model: 'gpt-other' as never }),
+    ).toThrow();
+  });
+
+  it('sends identical schema, prompt, and evidence to both backends and both reasoning levels', async () => {
+    const reference = openAIRequestBody(commanderRequest());
+    for (const name of ['luna', 'astra']) {
+      for (const effort of ['low', 'medium']) {
+        const config = commanderBackend(name, effort);
+        const body = openAIRequestBody(
+          commanderRequest(),
+          config.reasoningEffort,
+          4096,
+          config.model,
+        );
+        expect({ ...body, model: reference.model, reasoning: reference.reasoning }).toEqual(
+          reference,
+        );
+        let sent: Record<string, unknown> = {};
+        const response = await new OpenAICommanderClient({
+          ...config,
+          apiKey: 'test',
+          fetch: async (_url, init) => {
+            sent = JSON.parse(String(init?.body));
+            return jsonResponse({ ...successPayload(), model: config.model });
+          },
+        }).plan(commanderRequest());
+        expect(sent).toEqual(body);
+        expect(response.metadata).toMatchObject({
+          requestedModel: config.model,
+          model: config.model,
+          reasoningEffort: effort,
+        });
+      }
+    }
+  });
+
+  it('preserves billed usage for incomplete responses and redacts echoed credentials', async () => {
+    const client = new OpenAICommanderClient({
+      apiKey: 'echo-secret',
+      model: 'gpt-6-astra',
+      fetch: async () =>
+        jsonResponse({
+          ...successPayload(),
+          model: 'gpt-6-astra',
+          status: 'incomplete',
+          incomplete_details: { reason: 'echo-secret' },
+        }),
+    });
+    const error = await capturedError(client.plan(commanderRequest()));
+    expect(error.message).not.toContain('echo-secret');
+    expect((error as OpenAICommanderError).metadata).toMatchObject({
+      tokensIn: 120,
+      tokensOut: 80,
+      requestedModel: 'gpt-6-astra',
+      reasoningEffort: 'low',
+    });
+  });
+
+  it('rejects an unexpected model while accepting dated snapshots of the selected family', async () => {
+    const wrong = new OpenAICommanderClient({
+      model: 'gpt-6-astra',
+      apiKey: 'test-key',
+      fetch: async () => jsonResponse({ ...successPayload(), model: 'gpt-5.6-luna' }),
+    });
+    await expect(wrong.plan(commanderRequest())).rejects.toThrow('unexpected model');
+    const snapshot = new OpenAICommanderClient({
+      model: 'gpt-6-astra',
+      apiKey: 'test-key',
+      fetch: async () => jsonResponse({ ...successPayload(), model: 'gpt-6-astra-2026-09-01' }),
+    });
+    await expect(snapshot.plan(commanderRequest())).resolves.toMatchObject({
+      metadata: { model: 'gpt-6-astra-2026-09-01' },
+    });
+  });
+
+  it('sends a stateless default-model request with explicit reasoning and strict structured output', async () => {
     const calls: Array<{ input: RequestInfo | URL; init?: RequestInit }> = [];
     const fetchMock: typeof fetch = async (input, init) => {
       calls.push({ input, init });
@@ -80,6 +244,8 @@ describe('OpenAICommanderClient', () => {
     expect(response).toEqual({
       decision: oneGroupPlan(),
       metadata: {
+        requestedModel: OPENAI_COMMANDER_MODEL,
+        reasoningEffort: 'high',
         model: OPENAI_COMMANDER_MODEL,
         latencyMs: 25,
         tokensIn: 120,
@@ -93,7 +259,7 @@ describe('OpenAICommanderClient', () => {
   });
 
   it('builds the exact requested model and configurable reasoning body without credentials', () => {
-    const body = openAIRequestBody(commanderRequest(), 'medium', 2_048);
+    const body = openAIRequestBody(commanderRequest(), 'medium', 2_048, 'gpt-5.6-luna');
     expect(body).toMatchObject({
       model: 'gpt-5.6-luna',
       reasoning: { effort: 'medium' },

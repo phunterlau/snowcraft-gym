@@ -1,0 +1,896 @@
+{
+  "format": "snowgym.commander-recovery.v0",
+  "providerAttempts": 0,
+  "fixtures": 3,
+  "missingFamilies": [
+    "blocked_advance",
+    "target_eliminated",
+    "throws_without_damage"
+  ],
+  "scenarioCoveragePassed": false,
+  "providerReady": false,
+  "nextGate": "Review coverage and predicate validity; predeclare paired provider budget before live comparison.",
+  "deterministicRerunsPassed": true,
+  "rows": [
+    {
+      "fixtureDigest": "sha256:3ad7dc292bd25a6ddb9cfa41011197d7a9206791478da8ae475333ed09171a09",
+      "family": "recent_casualties",
+      "control": "keep",
+      "delaySeconds": 0,
+      "filename": "continuation-0-keep-0.json",
+      "activationStatus": "kept",
+      "metrics": {
+        "winner": "red",
+        "censored": false,
+        "decisions": 49,
+        "blueAlive": 0,
+        "redAlive": 5,
+        "damageDealt": 40,
+        "damageReceived": 380,
+        "maximumStage": 2,
+        "stageFirstDecision": [
+          0,
+          3,
+          7,
+          null,
+          null
+        ],
+        "frozenTargetAlreadyEliminatedAtRequest": false,
+        "issuedActions": 128,
+        "rejectedActions": 0,
+        "rejectedActionRate": 0
+      }
+    },
+    {
+      "fixtureDigest": "sha256:3ad7dc292bd25a6ddb9cfa41011197d7a9206791478da8ae475333ed09171a09",
+      "family": "recent_casualties",
+      "control": "keep",
+      "delaySeconds": 1,
+      "filename": "continuation-0-keep-10.json",
+      "activationStatus": "kept",
+      "metrics": {
+        "winner": "red",
+        "censored": false,
+        "decisions": 49,
+        "blueAlive": 0,
+        "redAlive": 5,
+        "damageDealt": 40,
+        "damageReceived": 380,
+        "maximumStage": 2,
+        "stageFirstDecision": [
+          0,
+          3,
+          7,
+          null,
+          null
+        ],
+        "frozenTargetAlreadyEliminatedAtRequest": false,
+        "issuedActions": 128,
+        "rejectedActions": 0,
+        "rejectedActionRate": 0
+      }
+    },
+    {
+      "fixtureDigest": "sha256:3ad7dc292bd25a6ddb9cfa41011197d7a9206791478da8ae475333ed09171a09",
+      "family": "recent_casualties",
+      "control": "keep",
+      "delaySeconds": 2,
+      "filename": "continuation-0-keep-20.json",
+      "activationStatus": "kept",
+      "metrics": {
+        "winner": "red",
+        "censored": false,
+        "decisions": 49,
+        "blueAlive": 0,
+        "redAlive": 5,
+        "damageDealt": 40,
+        "damageReceived": 380,
+        "maximumStage": 2,
+        "stageFirstDecision": [
+          0,
+          3,
+          7,
+          null,
+          null
+        ],
+        "frozenTargetAlreadyEliminatedAtRequest": false,
+        "issuedActions": 128,
+        "rejectedActions": 0,
+        "rejectedActionRate": 0
+      }
+    },
+    {
+      "fixtureDigest": "sha256:3ad7dc292bd25a6ddb9cfa41011197d7a9206791478da8ae475333ed09171a09",
+      "family": "recent_casualties",
+      "control": "keep",
+      "delaySeconds": 4,
+      "filename": "continuation-0-keep-40.json",
+      "activationStatus": "kept",
+      "metrics": {
+        "winner": "red",
+        "censored": false,
+        "decisions": 49,
+        "blueAlive": 0,
+        "redAlive": 5,
+        "damageDealt": 40,
+        "damageReceived": 380,
+        "maximumStage": 2,
+        "stageFirstDecision": [
+          0,
+          3,
+          7,
+          null,
+          null
+        ],
+        "frozenTargetAlreadyEliminatedAtRequest": false,
+        "issuedActions": 128,
+        "rejectedActions": 0,
+        "rejectedActionRate": 0
+      }
+    },
+    {
+      "fixtureDigest": "sha256:3ad7dc292bd25a6ddb9cfa41011197d7a9206791478da8ae475333ed09171a09",
+      "family": "recent_casualties",
+      "control": "keep",
+      "delaySeconds": 8,
+      "filename": "continuation-0-keep-80.json",
+      "activationStatus": "not_reached",
+      "metrics": {
+        "winner": "red",
+        "censored": false,
+        "decisions": 49,
+        "blueAlive": 0,
+        "redAlive": 5,
+        "damageDealt": 40,
+        "damageReceived": 380,
+        "maximumStage": 2,
+        "stageFirstDecision": [
+          0,
+          3,
+          7,
+          null,
+          null
+        ],
+        "frozenTargetAlreadyEliminatedAtRequest": false,
+        "issuedActions": 128,
+        "rejectedActions": 0,
+        "rejectedActionRate": 0
+      }
+    },
+    {
+      "fixtureDigest": "sha256:3ad7dc292bd25a6ddb9cfa41011197d7a9206791478da8ae475333ed09171a09",
+      "family": "recent_casualties",
+      "control": "reactivate_current",
+      "delaySeconds": 0,
+      "filename": "continuation-0-reactivate_current-0.json",
+      "activationStatus": "accepted",
+      "metrics": {
+        "winner": "blue",
+        "censored": false,
+        "decisions": 98,
+        "blueAlive": 2,
+        "redAlive": 0,
+        "damageDealt": 480,
+        "damageReceived": 220,
+        "maximumStage": 4,
+        "stageFirstDecision": [
+          0,
+          null,
+          4,
+          10,
+          80
+        ],
+        "frozenTargetAlreadyEliminatedAtRequest": false,
+        "issuedActions": 314,
+        "rejectedActions": 0,
+        "rejectedActionRate": 0
+      }
+    },
+    {
+      "fixtureDigest": "sha256:3ad7dc292bd25a6ddb9cfa41011197d7a9206791478da8ae475333ed09171a09",
+      "family": "recent_casualties",
+      "control": "reactivate_current",
+      "delaySeconds": 1,
+      "filename": "continuation-0-reactivate_current-10.json",
+      "activationStatus": "accepted",
+      "metrics": {
+        "winner": "red",
+        "censored": false,
+        "decisions": 129,
+        "blueAlive": 0,
+        "redAlive": 2,
+        "damageDealt": 400,
+        "damageReceived": 380,
+        "maximumStage": 4,
+        "stageFirstDecision": [
+          0,
+          3,
+          7,
+          25,
+          31
+        ],
+        "frozenTargetAlreadyEliminatedAtRequest": false,
+        "issuedActions": 291,
+        "rejectedActions": 0,
+        "rejectedActionRate": 0
+      }
+    },
+    {
+      "fixtureDigest": "sha256:3ad7dc292bd25a6ddb9cfa41011197d7a9206791478da8ae475333ed09171a09",
+      "family": "recent_casualties",
+      "control": "reactivate_current",
+      "delaySeconds": 2,
+      "filename": "continuation-0-reactivate_current-20.json",
+      "activationStatus": "accepted",
+      "metrics": {
+        "winner": "red",
+        "censored": false,
+        "decisions": 45,
+        "blueAlive": 0,
+        "redAlive": 5,
+        "damageDealt": 80,
+        "damageReceived": 380,
+        "maximumStage": 3,
+        "stageFirstDecision": [
+          0,
+          3,
+          7,
+          35,
+          null
+        ],
+        "frozenTargetAlreadyEliminatedAtRequest": false,
+        "issuedActions": 117,
+        "rejectedActions": 0,
+        "rejectedActionRate": 0
+      }
+    },
+    {
+      "fixtureDigest": "sha256:3ad7dc292bd25a6ddb9cfa41011197d7a9206791478da8ae475333ed09171a09",
+      "family": "recent_casualties",
+      "control": "reactivate_current",
+      "delaySeconds": 4,
+      "filename": "continuation-0-reactivate_current-40.json",
+      "activationStatus": "accepted",
+      "metrics": {
+        "winner": "red",
+        "censored": false,
+        "decisions": 45,
+        "blueAlive": 0,
+        "redAlive": 5,
+        "damageDealt": 40,
+        "damageReceived": 380,
+        "maximumStage": 2,
+        "stageFirstDecision": [
+          0,
+          3,
+          7,
+          null,
+          null
+        ],
+        "frozenTargetAlreadyEliminatedAtRequest": false,
+        "issuedActions": 124,
+        "rejectedActions": 0,
+        "rejectedActionRate": 0
+      }
+    },
+    {
+      "fixtureDigest": "sha256:3ad7dc292bd25a6ddb9cfa41011197d7a9206791478da8ae475333ed09171a09",
+      "family": "recent_casualties",
+      "control": "reactivate_current",
+      "delaySeconds": 8,
+      "filename": "continuation-0-reactivate_current-80.json",
+      "activationStatus": "not_reached",
+      "metrics": {
+        "winner": "red",
+        "censored": false,
+        "decisions": 49,
+        "blueAlive": 0,
+        "redAlive": 5,
+        "damageDealt": 40,
+        "damageReceived": 380,
+        "maximumStage": 2,
+        "stageFirstDecision": [
+          0,
+          3,
+          7,
+          null,
+          null
+        ],
+        "frozenTargetAlreadyEliminatedAtRequest": false,
+        "issuedActions": 128,
+        "rejectedActions": 0,
+        "rejectedActionRate": 0
+      }
+    },
+    {
+      "fixtureDigest": "sha256:5f2c50564c6a9c7960936e6175f3d77c9723ed328ca55b3ed98164f798ab250a",
+      "family": "recent_casualties",
+      "control": "keep",
+      "delaySeconds": 0,
+      "filename": "continuation-1-keep-0.json",
+      "activationStatus": "kept",
+      "metrics": {
+        "winner": "blue",
+        "censored": false,
+        "decisions": 64,
+        "blueAlive": 6,
+        "redAlive": 0,
+        "damageDealt": 600,
+        "damageReceived": 340,
+        "maximumStage": 4,
+        "stageFirstDecision": [
+          0,
+          null,
+          1,
+          2,
+          64
+        ],
+        "frozenTargetAlreadyEliminatedAtRequest": false,
+        "issuedActions": 455,
+        "rejectedActions": 0,
+        "rejectedActionRate": 0
+      }
+    },
+    {
+      "fixtureDigest": "sha256:5f2c50564c6a9c7960936e6175f3d77c9723ed328ca55b3ed98164f798ab250a",
+      "family": "recent_casualties",
+      "control": "keep",
+      "delaySeconds": 1,
+      "filename": "continuation-1-keep-10.json",
+      "activationStatus": "kept",
+      "metrics": {
+        "winner": "blue",
+        "censored": false,
+        "decisions": 64,
+        "blueAlive": 6,
+        "redAlive": 0,
+        "damageDealt": 600,
+        "damageReceived": 340,
+        "maximumStage": 4,
+        "stageFirstDecision": [
+          0,
+          null,
+          1,
+          2,
+          64
+        ],
+        "frozenTargetAlreadyEliminatedAtRequest": false,
+        "issuedActions": 455,
+        "rejectedActions": 0,
+        "rejectedActionRate": 0
+      }
+    },
+    {
+      "fixtureDigest": "sha256:5f2c50564c6a9c7960936e6175f3d77c9723ed328ca55b3ed98164f798ab250a",
+      "family": "recent_casualties",
+      "control": "keep",
+      "delaySeconds": 2,
+      "filename": "continuation-1-keep-20.json",
+      "activationStatus": "kept",
+      "metrics": {
+        "winner": "blue",
+        "censored": false,
+        "decisions": 64,
+        "blueAlive": 6,
+        "redAlive": 0,
+        "damageDealt": 600,
+        "damageReceived": 340,
+        "maximumStage": 4,
+        "stageFirstDecision": [
+          0,
+          null,
+          1,
+          2,
+          64
+        ],
+        "frozenTargetAlreadyEliminatedAtRequest": false,
+        "issuedActions": 455,
+        "rejectedActions": 0,
+        "rejectedActionRate": 0
+      }
+    },
+    {
+      "fixtureDigest": "sha256:5f2c50564c6a9c7960936e6175f3d77c9723ed328ca55b3ed98164f798ab250a",
+      "family": "recent_casualties",
+      "control": "keep",
+      "delaySeconds": 4,
+      "filename": "continuation-1-keep-40.json",
+      "activationStatus": "kept",
+      "metrics": {
+        "winner": "blue",
+        "censored": false,
+        "decisions": 64,
+        "blueAlive": 6,
+        "redAlive": 0,
+        "damageDealt": 600,
+        "damageReceived": 340,
+        "maximumStage": 4,
+        "stageFirstDecision": [
+          0,
+          null,
+          1,
+          2,
+          64
+        ],
+        "frozenTargetAlreadyEliminatedAtRequest": false,
+        "issuedActions": 455,
+        "rejectedActions": 0,
+        "rejectedActionRate": 0
+      }
+    },
+    {
+      "fixtureDigest": "sha256:5f2c50564c6a9c7960936e6175f3d77c9723ed328ca55b3ed98164f798ab250a",
+      "family": "recent_casualties",
+      "control": "keep",
+      "delaySeconds": 8,
+      "filename": "continuation-1-keep-80.json",
+      "activationStatus": "not_reached",
+      "metrics": {
+        "winner": "blue",
+        "censored": false,
+        "decisions": 64,
+        "blueAlive": 6,
+        "redAlive": 0,
+        "damageDealt": 600,
+        "damageReceived": 340,
+        "maximumStage": 4,
+        "stageFirstDecision": [
+          0,
+          null,
+          1,
+          2,
+          64
+        ],
+        "frozenTargetAlreadyEliminatedAtRequest": false,
+        "issuedActions": 455,
+        "rejectedActions": 0,
+        "rejectedActionRate": 0
+      }
+    },
+    {
+      "fixtureDigest": "sha256:5f2c50564c6a9c7960936e6175f3d77c9723ed328ca55b3ed98164f798ab250a",
+      "family": "recent_casualties",
+      "control": "reactivate_current",
+      "delaySeconds": 0,
+      "filename": "continuation-1-reactivate_current-0.json",
+      "activationStatus": "accepted",
+      "metrics": {
+        "winner": null,
+        "censored": true,
+        "decisions": 300,
+        "blueAlive": 1,
+        "redAlive": 3,
+        "damageDealt": 440,
+        "damageReceived": 700,
+        "maximumStage": 3,
+        "stageFirstDecision": [
+          0,
+          null,
+          1,
+          2,
+          null
+        ],
+        "frozenTargetAlreadyEliminatedAtRequest": false,
+        "issuedActions": 641,
+        "rejectedActions": 0,
+        "rejectedActionRate": 0
+      }
+    },
+    {
+      "fixtureDigest": "sha256:5f2c50564c6a9c7960936e6175f3d77c9723ed328ca55b3ed98164f798ab250a",
+      "family": "recent_casualties",
+      "control": "reactivate_current",
+      "delaySeconds": 1,
+      "filename": "continuation-1-reactivate_current-10.json",
+      "activationStatus": "accepted",
+      "metrics": {
+        "winner": "blue",
+        "censored": false,
+        "decisions": 123,
+        "blueAlive": 4,
+        "redAlive": 0,
+        "damageDealt": 600,
+        "damageReceived": 560,
+        "maximumStage": 4,
+        "stageFirstDecision": [
+          0,
+          null,
+          1,
+          2,
+          123
+        ],
+        "frozenTargetAlreadyEliminatedAtRequest": false,
+        "issuedActions": 695,
+        "rejectedActions": 0,
+        "rejectedActionRate": 0
+      }
+    },
+    {
+      "fixtureDigest": "sha256:5f2c50564c6a9c7960936e6175f3d77c9723ed328ca55b3ed98164f798ab250a",
+      "family": "recent_casualties",
+      "control": "reactivate_current",
+      "delaySeconds": 2,
+      "filename": "continuation-1-reactivate_current-20.json",
+      "activationStatus": "accepted",
+      "metrics": {
+        "winner": "blue",
+        "censored": false,
+        "decisions": 108,
+        "blueAlive": 4,
+        "redAlive": 0,
+        "damageDealt": 600,
+        "damageReceived": 540,
+        "maximumStage": 4,
+        "stageFirstDecision": [
+          0,
+          null,
+          1,
+          2,
+          108
+        ],
+        "frozenTargetAlreadyEliminatedAtRequest": false,
+        "issuedActions": 664,
+        "rejectedActions": 0,
+        "rejectedActionRate": 0
+      }
+    },
+    {
+      "fixtureDigest": "sha256:5f2c50564c6a9c7960936e6175f3d77c9723ed328ca55b3ed98164f798ab250a",
+      "family": "recent_casualties",
+      "control": "reactivate_current",
+      "delaySeconds": 4,
+      "filename": "continuation-1-reactivate_current-40.json",
+      "activationStatus": "accepted",
+      "metrics": {
+        "winner": "blue",
+        "censored": false,
+        "decisions": 62,
+        "blueAlive": 7,
+        "redAlive": 0,
+        "damageDealt": 600,
+        "damageReceived": 300,
+        "maximumStage": 4,
+        "stageFirstDecision": [
+          0,
+          null,
+          1,
+          2,
+          62
+        ],
+        "frozenTargetAlreadyEliminatedAtRequest": false,
+        "issuedActions": 457,
+        "rejectedActions": 0,
+        "rejectedActionRate": 0
+      }
+    },
+    {
+      "fixtureDigest": "sha256:5f2c50564c6a9c7960936e6175f3d77c9723ed328ca55b3ed98164f798ab250a",
+      "family": "recent_casualties",
+      "control": "reactivate_current",
+      "delaySeconds": 8,
+      "filename": "continuation-1-reactivate_current-80.json",
+      "activationStatus": "not_reached",
+      "metrics": {
+        "winner": "blue",
+        "censored": false,
+        "decisions": 64,
+        "blueAlive": 6,
+        "redAlive": 0,
+        "damageDealt": 600,
+        "damageReceived": 340,
+        "maximumStage": 4,
+        "stageFirstDecision": [
+          0,
+          null,
+          1,
+          2,
+          64
+        ],
+        "frozenTargetAlreadyEliminatedAtRequest": false,
+        "issuedActions": 455,
+        "rejectedActions": 0,
+        "rejectedActionRate": 0
+      }
+    },
+    {
+      "fixtureDigest": "sha256:3332efb21be496271fcc262e9f42aa679825f5c647b955b9b9d8ac1c858315d4",
+      "family": "recent_casualties",
+      "control": "keep",
+      "delaySeconds": 0,
+      "filename": "continuation-2-keep-0.json",
+      "activationStatus": "kept",
+      "metrics": {
+        "winner": "red",
+        "censored": false,
+        "decisions": 102,
+        "blueAlive": 0,
+        "redAlive": 4,
+        "damageDealt": 540,
+        "damageReceived": 420,
+        "maximumStage": 3,
+        "stageFirstDecision": [
+          0,
+          null,
+          1,
+          2,
+          null
+        ],
+        "frozenTargetAlreadyEliminatedAtRequest": false,
+        "issuedActions": 320,
+        "rejectedActions": 0,
+        "rejectedActionRate": 0
+      }
+    },
+    {
+      "fixtureDigest": "sha256:3332efb21be496271fcc262e9f42aa679825f5c647b955b9b9d8ac1c858315d4",
+      "family": "recent_casualties",
+      "control": "keep",
+      "delaySeconds": 1,
+      "filename": "continuation-2-keep-10.json",
+      "activationStatus": "kept",
+      "metrics": {
+        "winner": "red",
+        "censored": false,
+        "decisions": 102,
+        "blueAlive": 0,
+        "redAlive": 4,
+        "damageDealt": 540,
+        "damageReceived": 420,
+        "maximumStage": 3,
+        "stageFirstDecision": [
+          0,
+          null,
+          1,
+          2,
+          null
+        ],
+        "frozenTargetAlreadyEliminatedAtRequest": false,
+        "issuedActions": 320,
+        "rejectedActions": 0,
+        "rejectedActionRate": 0
+      }
+    },
+    {
+      "fixtureDigest": "sha256:3332efb21be496271fcc262e9f42aa679825f5c647b955b9b9d8ac1c858315d4",
+      "family": "recent_casualties",
+      "control": "keep",
+      "delaySeconds": 2,
+      "filename": "continuation-2-keep-20.json",
+      "activationStatus": "kept",
+      "metrics": {
+        "winner": "red",
+        "censored": false,
+        "decisions": 102,
+        "blueAlive": 0,
+        "redAlive": 4,
+        "damageDealt": 540,
+        "damageReceived": 420,
+        "maximumStage": 3,
+        "stageFirstDecision": [
+          0,
+          null,
+          1,
+          2,
+          null
+        ],
+        "frozenTargetAlreadyEliminatedAtRequest": false,
+        "issuedActions": 320,
+        "rejectedActions": 0,
+        "rejectedActionRate": 0
+      }
+    },
+    {
+      "fixtureDigest": "sha256:3332efb21be496271fcc262e9f42aa679825f5c647b955b9b9d8ac1c858315d4",
+      "family": "recent_casualties",
+      "control": "keep",
+      "delaySeconds": 4,
+      "filename": "continuation-2-keep-40.json",
+      "activationStatus": "kept",
+      "metrics": {
+        "winner": "red",
+        "censored": false,
+        "decisions": 102,
+        "blueAlive": 0,
+        "redAlive": 4,
+        "damageDealt": 540,
+        "damageReceived": 420,
+        "maximumStage": 3,
+        "stageFirstDecision": [
+          0,
+          null,
+          1,
+          2,
+          null
+        ],
+        "frozenTargetAlreadyEliminatedAtRequest": false,
+        "issuedActions": 320,
+        "rejectedActions": 0,
+        "rejectedActionRate": 0
+      }
+    },
+    {
+      "fixtureDigest": "sha256:3332efb21be496271fcc262e9f42aa679825f5c647b955b9b9d8ac1c858315d4",
+      "family": "recent_casualties",
+      "control": "keep",
+      "delaySeconds": 8,
+      "filename": "continuation-2-keep-80.json",
+      "activationStatus": "kept",
+      "metrics": {
+        "winner": "red",
+        "censored": false,
+        "decisions": 102,
+        "blueAlive": 0,
+        "redAlive": 4,
+        "damageDealt": 540,
+        "damageReceived": 420,
+        "maximumStage": 3,
+        "stageFirstDecision": [
+          0,
+          null,
+          1,
+          2,
+          null
+        ],
+        "frozenTargetAlreadyEliminatedAtRequest": false,
+        "issuedActions": 320,
+        "rejectedActions": 0,
+        "rejectedActionRate": 0
+      }
+    },
+    {
+      "fixtureDigest": "sha256:3332efb21be496271fcc262e9f42aa679825f5c647b955b9b9d8ac1c858315d4",
+      "family": "recent_casualties",
+      "control": "reactivate_current",
+      "delaySeconds": 0,
+      "filename": "continuation-2-reactivate_current-0.json",
+      "activationStatus": "accepted",
+      "metrics": {
+        "winner": "red",
+        "censored": false,
+        "decisions": 104,
+        "blueAlive": 0,
+        "redAlive": 4,
+        "damageDealt": 580,
+        "damageReceived": 420,
+        "maximumStage": 3,
+        "stageFirstDecision": [
+          0,
+          null,
+          1,
+          2,
+          null
+        ],
+        "frozenTargetAlreadyEliminatedAtRequest": false,
+        "issuedActions": 345,
+        "rejectedActions": 0,
+        "rejectedActionRate": 0
+      }
+    },
+    {
+      "fixtureDigest": "sha256:3332efb21be496271fcc262e9f42aa679825f5c647b955b9b9d8ac1c858315d4",
+      "family": "recent_casualties",
+      "control": "reactivate_current",
+      "delaySeconds": 1,
+      "filename": "continuation-2-reactivate_current-10.json",
+      "activationStatus": "accepted",
+      "metrics": {
+        "winner": "red",
+        "censored": false,
+        "decisions": 119,
+        "blueAlive": 0,
+        "redAlive": 4,
+        "damageDealt": 640,
+        "damageReceived": 420,
+        "maximumStage": 3,
+        "stageFirstDecision": [
+          0,
+          null,
+          1,
+          2,
+          null
+        ],
+        "frozenTargetAlreadyEliminatedAtRequest": false,
+        "issuedActions": 320,
+        "rejectedActions": 0,
+        "rejectedActionRate": 0
+      }
+    },
+    {
+      "fixtureDigest": "sha256:3332efb21be496271fcc262e9f42aa679825f5c647b955b9b9d8ac1c858315d4",
+      "family": "recent_casualties",
+      "control": "reactivate_current",
+      "delaySeconds": 2,
+      "filename": "continuation-2-reactivate_current-20.json",
+      "activationStatus": "accepted",
+      "metrics": {
+        "winner": "red",
+        "censored": false,
+        "decisions": 119,
+        "blueAlive": 0,
+        "redAlive": 4,
+        "damageDealt": 640,
+        "damageReceived": 420,
+        "maximumStage": 3,
+        "stageFirstDecision": [
+          0,
+          null,
+          1,
+          2,
+          null
+        ],
+        "frozenTargetAlreadyEliminatedAtRequest": false,
+        "issuedActions": 320,
+        "rejectedActions": 0,
+        "rejectedActionRate": 0
+      }
+    },
+    {
+      "fixtureDigest": "sha256:3332efb21be496271fcc262e9f42aa679825f5c647b955b9b9d8ac1c858315d4",
+      "family": "recent_casualties",
+      "control": "reactivate_current",
+      "delaySeconds": 4,
+      "filename": "continuation-2-reactivate_current-40.json",
+      "activationStatus": "accepted",
+      "metrics": {
+        "winner": "red",
+        "censored": false,
+        "decisions": 102,
+        "blueAlive": 0,
+        "redAlive": 4,
+        "damageDealt": 560,
+        "damageReceived": 420,
+        "maximumStage": 3,
+        "stageFirstDecision": [
+          0,
+          null,
+          1,
+          2,
+          null
+        ],
+        "frozenTargetAlreadyEliminatedAtRequest": false,
+        "issuedActions": 318,
+        "rejectedActions": 0,
+        "rejectedActionRate": 0
+      }
+    },
+    {
+      "fixtureDigest": "sha256:3332efb21be496271fcc262e9f42aa679825f5c647b955b9b9d8ac1c858315d4",
+      "family": "recent_casualties",
+      "control": "reactivate_current",
+      "delaySeconds": 8,
+      "filename": "continuation-2-reactivate_current-80.json",
+      "activationStatus": "accepted",
+      "metrics": {
+        "winner": "red",
+        "censored": false,
+        "decisions": 102,
+        "blueAlive": 0,
+        "redAlive": 4,
+        "damageDealt": 540,
+        "damageReceived": 420,
+        "maximumStage": 3,
+        "stageFirstDecision": [
+          0,
+          null,
+          1,
+          2,
+          null
+        ],
+        "frozenTargetAlreadyEliminatedAtRequest": false,
+        "issuedActions": 320,
+        "rejectedActions": 0,
+        "rejectedActionRate": 0
+      }
+    }
+  ],
+  "limitations": [
+    "First qualifying event per family/world; multiple families from one world are correlated.",
+    "The observation is provider input only in aggregate; exact prefixes and physical snapshots remain local.",
+    "Straight-line AABB obstruction is a conservative proxy, not route reachability or ballistic cover.",
+    "Enemy health loss is team-level; throws without damage can reflect flight time, cover, range or aim.",
+    "Stage 4 scores the original frozen target and may already be true at request time.",
+    "No online multi-request recovery, calibrated affordance model or causal model superiority tested.",
+    "Keeping a plan preserves activation anchors; reactivating identical symbols can change their grounding.",
+    "Red may choose different actions after candidate trajectories diverge."
+  ]
+}

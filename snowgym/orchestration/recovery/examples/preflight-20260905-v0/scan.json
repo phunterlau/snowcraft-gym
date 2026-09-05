@@ -1,0 +1,60 @@
+[
+  {
+    "configuration": {
+      "id": "recovery-open-5v5",
+      "seed": 620001,
+      "blueUnits": 5,
+      "redUnits": 5,
+      "map": null,
+      "prefixDecisions": 0
+    },
+    "decisions": 50,
+    "found": [],
+    "finalStateHash": "fnv1a64:9622b8439e5cf67f"
+  },
+  {
+    "configuration": {
+      "id": "recovery-terrain-5v5",
+      "seed": 620002,
+      "blueUnits": 5,
+      "redUnits": 5,
+      "map": "arena6.json",
+      "prefixDecisions": 0
+    },
+    "decisions": 136,
+    "found": [
+      "recent_casualties"
+    ],
+    "finalStateHash": "fnv1a64:61431cfaf3a4abf2"
+  },
+  {
+    "configuration": {
+      "id": "recovery-terrain-10v10",
+      "seed": 620003,
+      "blueUnits": 10,
+      "redUnits": 10,
+      "map": "arena6.json",
+      "prefixDecisions": 0
+    },
+    "decisions": 139,
+    "found": [
+      "recent_casualties"
+    ],
+    "finalStateHash": "fnv1a64:298e8132cada3f5c"
+  },
+  {
+    "configuration": {
+      "id": "recovery-terrain-6v10",
+      "seed": 620004,
+      "blueUnits": 6,
+      "redUnits": 10,
+      "map": "arena6.json",
+      "prefixDecisions": 0
+    },
+    "decisions": 183,
+    "found": [
+      "recent_casualties"
+    ],
+    "finalStateHash": "fnv1a64:c73e6190d25b16ff"
+  }
+]

@@ -1,0 +1,1450 @@
+{
+  "caseId": "terrain-6v10-history",
+  "arm": "astra-medium",
+  "backend": "astra",
+  "model": "gpt-6-astra",
+  "reasoningEffort": "medium",
+  "fixtureDigest": "sha256:13a1198e1060e972f273e085754fff18188cde5faab9044ab4a7c555620e9947",
+  "requestDigest": "sha256:d208ea0e293f268ff877c169023086bad5b170939e62b867e6856faa1191bbf1",
+  "latencyMs": 5627.200375,
+  "schemaValid": false,
+  "modelMatches": null,
+  "error": "$.intentSummary: must not have leading or trailing whitespace",
+  "timedOut": false,
+  "metadata": {
+    "requestedModel": "gpt-6-astra",
+    "reasoningEffort": "medium",
+    "model": "gpt-6-astra",
+    "latencyMs": 5626.673582999996,
+    "tokensIn": 1459,
+    "tokensOut": 265,
+    "reasoningTokens": 75,
+    "cachedInputTokens": 0,
+    "responseId": "resp_03e3a41b1fa74edc016a9c581e0a5087d0a2640abb262eb10f",
+    "providerRequestId": "req_0163e1af68804a9284402b48829ccebc"
+  },
+  "decision": {
+    "schemaVersion": "snowgym.command-plan.v0",
+    "intentSummary": "Stop the backfield advance: it has cost health without damaging the enemy. Regroup toward own backfield as one cohesive force, avoiding the center and favoring ",
+    "groups": [
+      {
+        "role": "main",
+        "allocationWeight": 1,
+        "selection": "balanced",
+        "order": {
+          "mission": "withdraw",
+          "objective": {
+            "kind": "region",
+            "region": "own_backfield"
+          },
+          "approach": "avoid_center",
+          "engagement": {
+            "posture": "conservative",
+            "fire": "focus",
+            "preferredRange": "long",
+            "cohesion": "tight"
+          }
+        }
+      }
+    ]
+  },
+  "continuation": {
+    "activationStatus": "fallback",
+    "repairs": [],
+    "activationError": null,
+    "fallbackUsed": true,
+    "activePlan": {
+      "plan": {
+        "envelope": {
+          "planId": "fallback-360-1",
+          "source": {
+            "requestId": "fallback-backend-pilot-fallback-360-1",
+            "sourceTick": 360,
+            "sourceStateHash": "fnv1a64:1d39fd81c2ed031f"
+          },
+          "decision": {
+            "schemaVersion": "snowgym.command-plan.v0",
+            "intentSummary": "Deterministic fallback: backend_pilot_fallback",
+            "groups": [
+              {
+                "role": "main",
+                "allocationWeight": 1,
+                "selection": "balanced",
+                "order": {
+                  "mission": "engage",
+                  "objective": {
+                    "kind": "enemy_cluster",
+                    "select": "nearest"
+                  },
+                  "approach": "direct",
+                  "engagement": {
+                    "posture": "balanced",
+                    "fire": "distributed",
+                    "preferredRange": "medium",
+                    "cohesion": "normal"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "groups": [
+          {
+            "role": "main",
+            "command": {
+              "role": "main",
+              "allocationWeight": 1,
+              "selection": "balanced",
+              "order": {
+                "mission": "engage",
+                "objective": {
+                  "kind": "enemy_cluster",
+                  "select": "nearest"
+                },
+                "approach": "direct",
+                "engagement": {
+                  "posture": "balanced",
+                  "fire": "distributed",
+                  "preferredRange": "medium",
+                  "cohesion": "normal"
+                }
+              }
+            },
+            "assignment": {
+              "role": "main",
+              "unitIds": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ]
+            },
+            "objective": {
+              "kind": "enemy_cluster",
+              "selector": "nearest",
+              "anchor": {
+                "x": 2.8441596864015954,
+                "y": -10.63144866902389
+              },
+              "enemyIds": [
+                7,
+                8,
+                9,
+                10,
+                11
+              ]
+            },
+            "activationAnchor": {
+              "x": -8.204946626938431,
+              "y": -3.2069721734732908
+            }
+          }
+        ]
+      },
+      "activatedAtTick": 360,
+      "version": 3
+    },
+    "actions": [
+      {
+        "actions": [
+          {
+            "type": "move",
+            "unitId": 1,
+            "x": -4.211312752854583,
+            "y": -16.170641772809184
+          },
+          {
+            "type": "noop",
+            "unitId": 2
+          },
+          {
+            "type": "throw",
+            "unitId": 3,
+            "x": 1.1632401491016555,
+            "y": -9.75535488776159,
+            "power": 0.9567418609270523
+          },
+          {
+            "type": "move",
+            "unitId": 4,
+            "x": -3.3381742068333473,
+            "y": -6.9208212627826
+          },
+          {
+            "type": "move",
+            "unitId": 5,
+            "x": 2.5614555038883973,
+            "y": -1.9642086230087337
+          },
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -1.278867626673216,
+            "y": -6.859328740742468
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "move",
+            "unitId": 1,
+            "x": -4.124558958306149,
+            "y": -16.303780745606318
+          },
+          {
+            "type": "noop",
+            "unitId": 2
+          },
+          {
+            "type": "noop",
+            "unitId": 3
+          },
+          {
+            "type": "move",
+            "unitId": 4,
+            "x": -3.3492153924395915,
+            "y": -6.9168393753432325
+          },
+          {
+            "type": "move",
+            "unitId": 5,
+            "x": -6.302492679413628,
+            "y": 9.054398072740973
+          },
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -1.1419803065948848,
+            "y": -7.012335755518152
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "move",
+            "unitId": 1,
+            "x": -4.168128486158967,
+            "y": -16.46095638794365
+          },
+          {
+            "type": "noop",
+            "unitId": 2
+          },
+          {
+            "type": "move",
+            "unitId": 3,
+            "x": -6.066183983539546,
+            "y": -5.099726947042633
+          },
+          {
+            "type": "move",
+            "unitId": 4,
+            "x": -3.624156461519269,
+            "y": -6.846355939189154
+          },
+          {
+            "type": "noop",
+            "unitId": 5
+          },
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -1.1214300809243765,
+            "y": -7.213534083953453
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "move",
+            "unitId": 1,
+            "x": -4.3922706458395115,
+            "y": -16.71714021914775
+          },
+          {
+            "type": "noop",
+            "unitId": 2
+          },
+          {
+            "type": "move",
+            "unitId": 3,
+            "x": -5.275681918197101,
+            "y": -7.66750476707305
+          },
+          {
+            "type": "move",
+            "unitId": 4,
+            "x": -3.9967132499715174,
+            "y": -6.636777825409684
+          },
+          {
+            "type": "noop",
+            "unitId": 5
+          },
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -1.198945250600183,
+            "y": -7.618665669501988
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "move",
+            "unitId": 1,
+            "x": -4.604147592061644,
+            "y": -17.00233860799943
+          },
+          {
+            "type": "noop",
+            "unitId": 2
+          },
+          {
+            "type": "move",
+            "unitId": 3,
+            "x": -5.0405260210213,
+            "y": -7.58163367643492
+          },
+          {
+            "type": "move",
+            "unitId": 4,
+            "x": -9.991872454623323,
+            "y": -9.754550534785732
+          },
+          {
+            "type": "noop",
+            "unitId": 5
+          },
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -1.2736524880365518,
+            "y": -8.10186411906815
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "move",
+            "unitId": 1,
+            "x": -4.756201047708757,
+            "y": -17.262045893070642
+          },
+          {
+            "type": "noop",
+            "unitId": 2
+          },
+          {
+            "type": "move",
+            "unitId": 3,
+            "x": -3.8486638061218494,
+            "y": -5.659452506614619
+          },
+          {
+            "type": "move",
+            "unitId": 4,
+            "x": -3.8897300400621813,
+            "y": -6.276843436222214
+          },
+          {
+            "type": "noop",
+            "unitId": 5
+          },
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -1.3429784950181478,
+            "y": -8.537090177910434
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "move",
+            "unitId": 1,
+            "x": -4.885571356328543,
+            "y": -17.492867376884792
+          },
+          {
+            "type": "noop",
+            "unitId": 2
+          },
+          {
+            "type": "throw",
+            "unitId": 3,
+            "x": 1.24804621228306,
+            "y": -9.789507167025624,
+            "power": 0.7984514985113561
+          },
+          {
+            "type": "move",
+            "unitId": 4,
+            "x": -3.9638343909599247,
+            "y": -6.250530123806957
+          },
+          {
+            "type": "noop",
+            "unitId": 5
+          },
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -1.3842183102101124,
+            "y": -8.921616318789379
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "move",
+            "unitId": 1,
+            "x": -5.021220921631478,
+            "y": -17.699291657407613
+          },
+          {
+            "type": "noop",
+            "unitId": 2
+          },
+          {
+            "type": "noop",
+            "unitId": 3
+          },
+          {
+            "type": "move",
+            "unitId": 4,
+            "x": -4.422523342318202,
+            "y": -6.176780234241229
+          },
+          {
+            "type": "noop",
+            "unitId": 5
+          },
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -1.4071514799443747,
+            "y": -9.224251124257712
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "throw",
+            "unitId": 1,
+            "x": 0.3632772348892481,
+            "y": -15.799714330315913,
+            "power": 0.9401710585841567
+          },
+          {
+            "type": "noop",
+            "unitId": 2
+          },
+          {
+            "type": "hold",
+            "unitId": 3
+          },
+          {
+            "type": "move",
+            "unitId": 4,
+            "x": -4.954320559730073,
+            "y": -6.12115179428892
+          },
+          {
+            "type": "noop",
+            "unitId": 5
+          },
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -1.533060932158554,
+            "y": -9.268486378744667
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "noop",
+            "unitId": 1
+          },
+          {
+            "type": "move",
+            "unitId": 2,
+            "x": -4.429210265794578,
+            "y": -10.114070397852378
+          },
+          {
+            "type": "hold",
+            "unitId": 3
+          },
+          {
+            "type": "throw",
+            "unitId": 4,
+            "x": 1.2276547718980313,
+            "y": -5.996535287837521,
+            "power": 0.9799247847339345
+          },
+          {
+            "type": "noop",
+            "unitId": 5
+          },
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -1.643406873862194,
+            "y": -9.261716101199056
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "move",
+            "unitId": 1,
+            "x": -5.338691716079135,
+            "y": -18.23734684025418
+          },
+          {
+            "type": "move",
+            "unitId": 2,
+            "x": -4.4572865939367645,
+            "y": -10.298991264800259
+          },
+          {
+            "type": "move",
+            "unitId": 3,
+            "x": -4.771759810438839,
+            "y": -3.946358387543868
+          },
+          {
+            "type": "noop",
+            "unitId": 4
+          },
+          {
+            "type": "noop",
+            "unitId": 5
+          },
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -1.6601285824870975,
+            "y": -9.279779596024715
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "move",
+            "unitId": 1,
+            "x": -5.6653561475518925,
+            "y": -17.805391096616464
+          },
+          {
+            "type": "move",
+            "unitId": 3,
+            "x": -3.137796654092174,
+            "y": -10.076423614872418
+          },
+          {
+            "type": "move",
+            "unitId": 4,
+            "x": -4.39591710796313,
+            "y": -6.96622613095828
+          },
+          {
+            "type": "noop",
+            "unitId": 5
+          },
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -0.27361081338749405,
+            "y": -1.637323493976296
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "move",
+            "unitId": 1,
+            "x": -5.3210000238500035,
+            "y": -17.545401299441405
+          },
+          {
+            "type": "move",
+            "unitId": 3,
+            "x": -2.607157137529256,
+            "y": -4.355077574992714
+          },
+          {
+            "type": "move",
+            "unitId": 4,
+            "x": -8.039137018474909,
+            "y": -7.907209929057865
+          },
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -2.203326607186287,
+            "y": -0.8400024943383768
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "hold",
+            "unitId": 1
+          },
+          {
+            "type": "move",
+            "unitId": 3,
+            "x": -3.0060763845850937,
+            "y": -8.859584977138793
+          },
+          {
+            "type": "move",
+            "unitId": 4,
+            "x": -4.593750306647903,
+            "y": -6.606458325745598
+          },
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -1.9938200051935324,
+            "y": -1.148292398029149
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "throw",
+            "unitId": 1,
+            "x": 0.789965357961611,
+            "y": -16.31377497226609,
+            "power": 0.7360930069822095
+          },
+          {
+            "type": "move",
+            "unitId": 3,
+            "x": -2.9214573458025557,
+            "y": -8.615701648960197
+          },
+          {
+            "type": "move",
+            "unitId": 4,
+            "x": -4.587926856111049,
+            "y": -6.549682108107128
+          },
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -1.784072212392964,
+            "y": -1.323428408581589
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "noop",
+            "unitId": 1
+          },
+          {
+            "type": "move",
+            "unitId": 3,
+            "x": -2.920108016808807,
+            "y": -8.783161247738418
+          },
+          {
+            "type": "throw",
+            "unitId": 4,
+            "x": 1.788678479409642,
+            "y": -9.767395938561569,
+            "power": 0.8348211272602929
+          },
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -1.758842822269126,
+            "y": -1.3968127456121275
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "move",
+            "unitId": 1,
+            "x": -7.2473773495363245,
+            "y": -15.457128072915216
+          },
+          {
+            "type": "move",
+            "unitId": 3,
+            "x": -2.7915825190103223,
+            "y": -9.101852569944034
+          },
+          {
+            "type": "noop",
+            "unitId": 4
+          },
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -1.783790182156673,
+            "y": -1.4425399248371544
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "move",
+            "unitId": 1,
+            "x": -7.302602619295825,
+            "y": -15.251481371283989
+          },
+          {
+            "type": "move",
+            "unitId": 3,
+            "x": -3.0935425292387952,
+            "y": -3.934028272372506
+          },
+          {
+            "type": "move",
+            "unitId": 4,
+            "x": -5.935682920381611,
+            "y": -9.104479067286718
+          },
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -1.8102742778565095,
+            "y": -1.4655457654249884
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "move",
+            "unitId": 1,
+            "x": -5.13737994804006,
+            "y": -17.14070446477715
+          },
+          {
+            "type": "noop",
+            "unitId": 3
+          },
+          {
+            "type": "move",
+            "unitId": 4,
+            "x": -4.959124250661448,
+            "y": -6.374288869934556
+          },
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -1.8288824401330421,
+            "y": -1.461617933456763
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "move",
+            "unitId": 1,
+            "x": -4.996674829294301,
+            "y": -17.03926995372683
+          },
+          {
+            "type": "noop",
+            "unitId": 3
+          },
+          {
+            "type": "move",
+            "unitId": 4,
+            "x": -4.841619968403403,
+            "y": -6.4906013102059585
+          },
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -1.9221108619196037,
+            "y": -1.3647244146004232
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "throw",
+            "unitId": 1,
+            "x": 1.1286609250525568,
+            "y": -18.38816250109405,
+            "power": 0.7830586187109853
+          },
+          {
+            "type": "noop",
+            "unitId": 3
+          },
+          {
+            "type": "move",
+            "unitId": 4,
+            "x": -4.747924815889983,
+            "y": -6.398144198476672
+          },
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -2.0961585333933,
+            "y": -1.3696518009296619
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "noop",
+            "unitId": 1
+          },
+          {
+            "type": "noop",
+            "unitId": 3
+          },
+          {
+            "type": "throw",
+            "unitId": 4,
+            "x": 1.7364519438739623,
+            "y": -9.52641339395333,
+            "power": 0.7932993679617935
+          },
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -2.270773873171809,
+            "y": -1.496709822601707
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "noop",
+            "unitId": 1
+          },
+          {
+            "type": "move",
+            "unitId": 3,
+            "x": -2.611440233244541,
+            "y": -8.86776002237184
+          },
+          {
+            "type": "noop",
+            "unitId": 4
+          },
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -2.5451912320972863,
+            "y": -1.5973069071687673
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "noop",
+            "unitId": 1
+          },
+          {
+            "type": "move",
+            "unitId": 3,
+            "x": -2.916606080862434,
+            "y": -3.3854200892391173
+          },
+          {
+            "type": "move",
+            "unitId": 4,
+            "x": -5.476811484598648,
+            "y": -8.96429383033254
+          },
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -2.759060704291073,
+            "y": -1.5291985667436425
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "noop",
+            "unitId": 1
+          },
+          {
+            "type": "noop",
+            "unitId": 3
+          },
+          {
+            "type": "move",
+            "unitId": 4,
+            "x": -5.6614502904777435,
+            "y": -9.106878414665056
+          },
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -2.955200421991311,
+            "y": -1.1953729607803625
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "noop",
+            "unitId": 1
+          },
+          {
+            "type": "noop",
+            "unitId": 3
+          },
+          {
+            "type": "move",
+            "unitId": 4,
+            "x": -4.601839568429473,
+            "y": -6.80500368173716
+          },
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -2.9654748902807713,
+            "y": -0.87601294364597
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "noop",
+            "unitId": 1
+          },
+          {
+            "type": "noop",
+            "unitId": 3
+          },
+          {
+            "type": "move",
+            "unitId": 4,
+            "x": -4.6170387220016975,
+            "y": -7.041420682274035
+          },
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -2.9829390605779658,
+            "y": -0.6691215620958018
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "throw",
+            "unitId": 1,
+            "x": 1.6187931578673835,
+            "y": -16.092807093838,
+            "power": 0.8101057312694822
+          },
+          {
+            "type": "noop",
+            "unitId": 3
+          },
+          {
+            "type": "throw",
+            "unitId": 4,
+            "x": 2.0487458885642096,
+            "y": -9.7670206240227,
+            "power": 0.8026263265156098
+          },
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -3.0200666079904077,
+            "y": -0.6638966435995912
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "noop",
+            "unitId": 1
+          },
+          {
+            "type": "move",
+            "unitId": 3,
+            "x": -1.7627056145110283,
+            "y": -10.05262173158385
+          },
+          {
+            "type": "noop",
+            "unitId": 4
+          },
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -3.0451666312996446,
+            "y": -0.6592506045136368
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "noop",
+            "unitId": 1
+          },
+          {
+            "type": "move",
+            "unitId": 3,
+            "x": -3.0540726742122932,
+            "y": -2.5667424569987225
+          },
+          {
+            "type": "hold",
+            "unitId": 4
+          },
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -3.126726505155464,
+            "y": -0.5782650259222708
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "noop",
+            "unitId": 1
+          },
+          {
+            "type": "noop",
+            "unitId": 3
+          },
+          {
+            "type": "hold",
+            "unitId": 4
+          },
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -9.981919165070305,
+            "y": 5.69699603747223
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "noop",
+            "unitId": 1
+          },
+          {
+            "type": "move",
+            "unitId": 4,
+            "x": -3.4741251449781307,
+            "y": -9.241284651608092
+          },
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -9.617482998877456,
+            "y": 5.254306349021823
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "noop",
+            "unitId": 1
+          },
+          {
+            "type": "move",
+            "unitId": 4,
+            "x": -4.977486540580016,
+            "y": -9.834626905991694
+          },
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -4.167642968164832,
+            "y": -1.474854798139613
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "throw",
+            "unitId": 1,
+            "x": 1.365499488399194,
+            "y": -17.581887036684453,
+            "power": 0.7868049929158261
+          },
+          {
+            "type": "throw",
+            "unitId": 4,
+            "x": 0.9318253442682758,
+            "y": -14.257124155550654,
+            "power": 0.8952663353642135
+          },
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -10.070070742541052,
+            "y": 4.033540292260744
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "noop",
+            "unitId": 1
+          },
+          {
+            "type": "noop",
+            "unitId": 4
+          },
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -9.94102744962034,
+            "y": 3.558282908634507
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "move",
+            "unitId": 4,
+            "x": -2.800278446584138,
+            "y": -11.529196666004225
+          },
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -1.9355699642428512,
+            "y": -9.289410752556664
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "move",
+            "unitId": 4,
+            "x": -3.4430713860247417,
+            "y": -11.009004019795157
+          },
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -1.9475221780745624,
+            "y": -9.708228777863482
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "noop",
+            "unitId": 4
+          },
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -8.413905217527683,
+            "y": 3.5560886973871018
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "noop",
+            "unitId": 4
+          },
+          {
+            "type": "noop",
+            "unitId": 6
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "noop",
+            "unitId": 4
+          },
+          {
+            "type": "noop",
+            "unitId": 6
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "noop",
+            "unitId": 4
+          },
+          {
+            "type": "noop",
+            "unitId": 6
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "noop",
+            "unitId": 4
+          },
+          {
+            "type": "noop",
+            "unitId": 6
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "noop",
+            "unitId": 4
+          },
+          {
+            "type": "noop",
+            "unitId": 6
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "noop",
+            "unitId": 4
+          },
+          {
+            "type": "noop",
+            "unitId": 6
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "noop",
+            "unitId": 4
+          },
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -1.9643323656524987,
+            "y": -10.697469050748932
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "noop",
+            "unitId": 4
+          },
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -1.9735604458259492,
+            "y": -10.766732212255853
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "noop",
+            "unitId": 4
+          },
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -2.0490059479712732,
+            "y": -10.842748207716
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -3.6337210059770153,
+            "y": -10.313403172187686
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -3.8769669066565284,
+            "y": -9.884694896210739
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -4.077698800275616,
+            "y": -9.43604821716254
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "move",
+            "unitId": 6,
+            "x": -6.9768406243736685,
+            "y": -0.002385538963185274
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "noop",
+            "unitId": 6
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "noop",
+            "unitId": 6
+          }
+        ]
+      },
+      {
+        "actions": [
+          {
+            "type": "noop",
+            "unitId": 6
+          }
+        ]
+      }
+    ],
+    "stateHashes": [
+      "fnv1a64:1d39fd81c2ed031f",
+      "fnv1a64:4869fe2a8f27da60",
+      "fnv1a64:ce86cbfb447151b9",
+      "fnv1a64:0547c84955811880",
+      "fnv1a64:02080bca245141e9",
+      "fnv1a64:029a8be77180c7ac",
+      "fnv1a64:d4018ede3a55c78c",
+      "fnv1a64:251e5901d4f56001",
+      "fnv1a64:ae4d16f65b4d1181",
+      "fnv1a64:d4183dc1ee77d84f",
+      "fnv1a64:1256343f28090659",
+      "fnv1a64:0735353a6408bc31",
+      "fnv1a64:ed65c3c55c4a1f30",
+      "fnv1a64:f84e26e304f2f7d2",
+      "fnv1a64:2d7a87ffebb02633",
+      "fnv1a64:f09fb6a476cf7273",
+      "fnv1a64:cf201b6fcf78c425",
+      "fnv1a64:88297bdf1d08bbf1",
+      "fnv1a64:31ac0e64beb1cdf8",
+      "fnv1a64:d3e91e5d7985a66b",
+      "fnv1a64:8b5fbaad13ae0a64",
+      "fnv1a64:373b65ab28061951",
+      "fnv1a64:3a73953acf378f03",
+      "fnv1a64:acc474f982c41f56",
+      "fnv1a64:f9f440bf00914874",
+      "fnv1a64:c6bd735aca13aa27",
+      "fnv1a64:42bde85bd944e8b9",
+      "fnv1a64:114c8441eb1c94ed",
+      "fnv1a64:f937e9dfef2d3907",
+      "fnv1a64:7705600a179e9732",
+      "fnv1a64:d508fc7d529dd819",
+      "fnv1a64:06ddafe034ba884e",
+      "fnv1a64:28a86a07c7d2c42e",
+      "fnv1a64:88490bb6dd0a38dc",
+      "fnv1a64:21906ffcfb09bab4",
+      "fnv1a64:a8b0c50fefb6ed72",
+      "fnv1a64:59abc654da0c956a",
+      "fnv1a64:06d9521413c3a69c",
+      "fnv1a64:b5774841f9f01100",
+      "fnv1a64:3f034e3f8781ec85",
+      "fnv1a64:58e7e7894b632d85",
+      "fnv1a64:887c6ee21e40dad5",
+      "fnv1a64:26df06838af937ea",
+      "fnv1a64:568e28e69a50b240",
+      "fnv1a64:25eb72a70c9c363d",
+      "fnv1a64:0054568cd29c5654",
+      "fnv1a64:38623a2bceee47bd",
+      "fnv1a64:d58a8b58b9a3b99f",
+      "fnv1a64:e6c919004a29f810",
+      "fnv1a64:675fa89bcee76018",
+      "fnv1a64:3bff210278c4e1fb",
+      "fnv1a64:cf478527ea7e036a",
+      "fnv1a64:2d03c5dfaa3b900a",
+      "fnv1a64:11233fa8adddeaf5",
+      "fnv1a64:5db441417c0680dc"
+    ],
+    "metrics": {
+      "decisions": 54,
+      "finalTick": 684,
+      "winner": "red",
+      "terminated": true,
+      "truncated": false,
+      "censored": false,
+      "blueAlive": 0,
+      "redAlive": 9,
+      "damageDealt": 120,
+      "damageReceived": 560,
+      "normalizedDamageDealt": 0.12,
+      "normalizedDamageReceived": 0.9333333333333333,
+      "netNormalizedDamage": -0.8133333333333334,
+      "issuedActions": 190,
+      "rejectedActions": 0,
+      "rejectedActionRate": 0,
+      "canonicalReturn": -1
+    }
+  }
+}

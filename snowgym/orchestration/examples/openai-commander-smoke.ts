@@ -6,17 +6,15 @@ import type { CommanderRequest } from '../commander/CommanderClient';
 import { summarizeStrategy } from '../commander/StrategicSummary';
 import { PlanGrounder } from '../grounding/PlanGrounder';
 import { createFallbackEnvelope } from '../lifecycle/FallbackPlan';
-import {
-  OPENAI_COMMANDER_MODEL,
-  OpenAICommanderClient,
-  type OpenAICommanderReasoningEffort,
-} from '../providers/OpenAICommanderClient';
+import { OpenAICommanderClient } from '../providers/OpenAICommanderClient';
+import { commanderBackend, DEFAULT_COMMANDER_BACKEND } from '../providers/CommanderBackend';
 import { PlanStore } from '../runtime/PlanStore';
 
 const { values } = parseArgs({
   options: {
     seed: { type: 'string', default: '42' },
-    reasoning: { type: 'string', default: 'medium' },
+    backend: { type: 'string', default: DEFAULT_COMMANDER_BACKEND },
+    reasoning: { type: 'string' },
     json: { type: 'boolean', default: false },
     help: { type: 'boolean', short: 'h', default: false },
   },
@@ -31,7 +29,8 @@ Usage:
 
 Options:
   --seed INTEGER
-  --reasoning low|medium|high|xhigh|max
+  --backend luna|astra     Default: astra/low; explicit luna defaults to medium
+  --reasoning light|low|medium|high|xhigh|max
   --json`);
   process.exit(0);
 }
@@ -51,13 +50,14 @@ const request: CommanderRequest = {
   summary: summarizeStrategy(observation, store.current()),
   currentPlan: store.current().plan.envelope.decision,
 };
-const response = await new OpenAICommanderClient({
-  reasoningEffort: reasoning(values.reasoning),
-}).plan(request);
+const backend = commanderBackend(values.backend, values.reasoning);
+const response = await new OpenAICommanderClient(backend).plan(request);
 const decision = parseCommandPlan(response.decision);
 const summary = {
   ok: true,
-  model: response.metadata?.model ?? OPENAI_COMMANDER_MODEL,
+  backend: backend.backend,
+  reasoningEffort: backend.reasoningEffort,
+  model: response.metadata?.model ?? backend.model,
   latencyMs: response.metadata?.latencyMs,
   tokensIn: response.metadata?.tokensIn,
   tokensOut: response.metadata?.tokensOut,
@@ -74,19 +74,6 @@ else {
   console.log(`  tokens:     in=${summary.tokensIn ?? '?'} out=${summary.tokensOut ?? '?'}`);
   console.log(`  reasoning:  ${summary.reasoningTokens ?? '?'} tokens`);
   console.log(`  plan:       ${JSON.stringify(summary.plan)}`);
-}
-
-function reasoning(value: string | undefined): OpenAICommanderReasoningEffort {
-  if (
-    value === 'low' ||
-    value === 'medium' ||
-    value === 'high' ||
-    value === 'xhigh' ||
-    value === 'max'
-  ) {
-    return value;
-  }
-  throw new RangeError('reasoning must be low, medium, high, xhigh, or max');
 }
 
 function integer(value: string | undefined, name: string): number {

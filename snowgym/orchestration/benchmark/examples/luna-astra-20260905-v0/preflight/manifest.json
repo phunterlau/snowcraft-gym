@@ -1,0 +1,11 @@
+{
+  "format": "snowgym.commander-backend-benchmark.v0",
+  "files": {
+    "baselines.json": "sha256:322ab42296d520eb6eb3f1f25e1ec52c5a09888013de936527a2898a73e6818a",
+    "configuration.json": "sha256:1dc6c2b375d32b7e771b1862b4cbcc7b9f645e588813dd51f89b5dd2fa030210",
+    "fixtures.json": "sha256:31412d736549aab6f624b21af4b4fafd2bf65370e811713b4d0b155f645dc37f",
+    "report.json": "sha256:3a1da595e096c0d8ce02b10ea658c42034e3f754e3c9496e08209bca34342686",
+    "requests.json": "sha256:dbe861178f1a7efe2c0cd9c67ae63798eee9088bfabf1bae7fe3f8a423732407"
+  },
+  "manifestDigest": "sha256:3ce4b1a1bedba299539b2eeae0629d73e0d8b11a67403b7a56ff0027ee1ff7a8"
+}

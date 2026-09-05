@@ -1,5 +1,14 @@
 # SnowGym hierarchical command contract
 
+The default commander is **GPT-6 Astra with low reasoning**. GPT-5.6 Luna remains
+available with the same command schema. See the
+[backend selection and matched benchmark guide](benchmark/README.md) for CLI
+parameters, offline preflight, and bounded live comparison.
+The [Astra planning review](ASTRA_PLANNING_REVIEW.md) separates verified API
+capabilities, pilot findings, and proposed planning improvements.
+The [progress-aware recovery preflight](recovery/README.md) adds optional
+server-derived execution evidence and exact-prefix delayed control experiments.
+
 This directory is the renderer-free boundary between a slow strategic
 commander and SnowGym's synchronous unit controllers. The initial C0 milestone
 contains no model SDK, network request, wall-clock scheduler, or browser code.
@@ -159,8 +168,8 @@ contract.
 ## C4 provider adapter and live-test boundary
 
 `providers/OpenAICommanderClient.ts` is the server-only adapter. It
-uses the exact `gpt-5.6-luna` model, the Responses API, configurable reasoning
-(`medium` by default), `store: false`, and the existing command-plan JSON Schema
+uses `gpt-6-astra` (default) or explicitly selected `gpt-5.6-luna`, the Responses API, configurable reasoning
+(`medium` by default for Luna, `low` for Astra), `store: false`, and the existing command-plan JSON Schema
 as strict `text.format`. It reads `OPENAI_API_KEY` only at runtime and performs
 defensive response/refusal/incomplete/usage parsing before the normal host-side
 plan validation and reconciliation.

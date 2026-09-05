@@ -3,11 +3,8 @@ import { dirname, resolve } from 'node:path';
 import { parseArgs } from 'node:util';
 import type { AiDifficulty } from '../../../src/systems/AISystem';
 import { MAP_IDS } from '../../scenarios/maps';
-import {
-  OPENAI_COMMANDER_MODEL,
-  OpenAICommanderClient,
-  type OpenAICommanderReasoningEffort,
-} from '../providers/OpenAICommanderClient';
+import { OpenAICommanderClient } from '../providers/OpenAICommanderClient';
+import { commanderBackend, DEFAULT_COMMANDER_BACKEND } from '../providers/CommanderBackend';
 import { runTrajectoryCommanderBattle } from './TrajectoryCommanderBattle';
 
 const { values } = parseArgs({
@@ -17,7 +14,8 @@ const { values } = parseArgs({
     'red-units': { type: 'string', default: '10' },
     map: { type: 'string', default: 'arena6.json' },
     'red-difficulty': { type: 'string', default: 'easy' },
-    reasoning: { type: 'string', default: 'medium' },
+    backend: { type: 'string', default: DEFAULT_COMMANDER_BACKEND },
+    reasoning: { type: 'string' },
     'pace-ms': { type: 'string', default: '100' },
     'max-decisions': { type: 'string', default: '10000' },
     'max-requests': { type: 'string', default: '3' },
@@ -31,7 +29,7 @@ const { values } = parseArgs({
 });
 
 if (values.help) {
-  console.log(`Run a paced, renderer-free C5 trajectory-aware Luna M-v-N demo.
+  console.log(`Run a paced, renderer-free C5 trajectory-aware OpenAI M-v-N demo.
 
 Usage:
   OPENAI_API_KEY=... npx tsx snowgym/orchestration/examples/openai-trajectory-10v10.ts [options]
@@ -42,7 +40,8 @@ Options:
   --red-units INTEGER
   --map MAP_ID            Bundled map (${MAP_IDS.join(', ')})
   --red-difficulty LEVEL  easy, normal, or hard
-  --reasoning low|medium|high|xhigh|max
+  --backend luna|astra     Default: astra/low; explicit luna defaults to medium
+  --reasoning light|low|medium|high|xhigh|max
   --pace-ms INTEGER       Wall-clock delay per 10 Hz decision (default: 100)
   --max-decisions INTEGER
   --max-requests INTEGER  Hard provider-attempt cap (default: 3)
@@ -53,19 +52,7 @@ Options:
   process.exit(0);
 }
 
-const result = await runTrajectoryCommanderBattle(
-  new OpenAICommanderClient({ reasoningEffort: reasoning(values.reasoning) }),
-  {
-    seed: integer(values.seed, 'seed'),
-    blueUnits: positiveInteger(values['blue-units'], 'blue-units'),
-    redUnits: positiveInteger(values['red-units'], 'red-units'),
-    map: values.map,
-    redDifficulty: difficulty(values['red-difficulty']),
-    paceMs: nonNegativeInteger(values['pace-ms'], 'pace-ms'),
-    maxDecisions: positiveInteger(values['max-decisions'], 'max-decisions'),
-    maximumRequests: positiveInteger(values['max-requests'], 'max-requests'),
-  },
-);
+const backend = commanderBackend(values.backend, values.reasoning);
 const output = values.output ? resolve(values.output) : null;
 const traceOutput = values['trace-output'] ? resolve(values['trace-output']) : null;
 if (output && traceOutput && output === traceOutput) {
@@ -76,6 +63,16 @@ for (const path of [output, traceOutput]) {
     throw new Error(`refusing to overwrite ${path}; pass --force to replace it`);
   }
 }
+const result = await runTrajectoryCommanderBattle(new OpenAICommanderClient(backend), {
+  seed: integer(values.seed, 'seed'),
+  blueUnits: positiveInteger(values['blue-units'], 'blue-units'),
+  redUnits: positiveInteger(values['red-units'], 'red-units'),
+  map: values.map,
+  redDifficulty: difficulty(values['red-difficulty']),
+  paceMs: nonNegativeInteger(values['pace-ms'], 'pace-ms'),
+  maxDecisions: positiveInteger(values['max-decisions'], 'max-decisions'),
+  maximumRequests: positiveInteger(values['max-requests'], 'max-requests'),
+});
 if (output) writeJson(output, result.replay);
 if (traceOutput) writeJson(traceOutput, result.commanderTrace);
 const signals = result.schedulerEvents.filter(({ type }) => type === 'trajectory_signal');
@@ -84,11 +81,13 @@ const failures = result.schedulerEvents.filter(
   ({ type }) => type === 'request_failed' || type === 'request_timed_out',
 );
 const summary = {
+  backend: backend.backend,
+  reasoningEffort: backend.reasoningEffort,
   ok:
     signals.length > 0 &&
     responses.some(({ status }) => status !== 'rejected') &&
     result.rejectedActions === 0,
-  model: responses[0]?.metadata?.model ?? OPENAI_COMMANDER_MODEL,
+  model: responses[0]?.metadata?.model ?? backend.model,
   blueUnits: result.replay.configuration?.blueUnits,
   redUnits: result.replay.configuration?.redUnits,
   map: result.replay.configuration?.map,
@@ -145,19 +144,6 @@ function isProcessedResponse(
   event: (typeof result.schedulerEvents)[number],
 ): event is Extract<(typeof result.schedulerEvents)[number], { type: 'response_processed' }> {
   return event.type === 'response_processed';
-}
-
-function reasoning(value: string | undefined): OpenAICommanderReasoningEffort {
-  if (
-    value === 'low' ||
-    value === 'medium' ||
-    value === 'high' ||
-    value === 'xhigh' ||
-    value === 'max'
-  ) {
-    return value;
-  }
-  throw new RangeError('reasoning must be low, medium, high, xhigh, or max');
 }
 
 function integer(value: string | undefined, name: string): number {

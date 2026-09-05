@@ -19,6 +19,41 @@ configuration on 2026-09-01.
 
 ## Milestones
 
+### Side diagnostic — progress-aware commander recovery (2026-09-05)
+
+Preserve the scripted executor and `CommandPlan` output contract. This work
+does not qualify a learned fighter or bypass the M7c gate. Astra-low remains
+the operational default; compare Luna-low and Astra-medium explicitly.
+
+1. Add optional, versioned, ID-free server evidence: activation-relative force
+   health, frozen target completion, readiness, objective range, conservative
+   direct-path obstruction, and bounded execution progress. Geometry proxies
+   must not be presented as pathfinding, hit probability, or learned affordances.
+2. Collect exact-prefix recovery opportunities using predeclared predicates for
+   blocked advance, target elimination, recent casualties, and throws without
+   damage. Report missing families rather than inventing disturbances or labels.
+3. Compare unchanged versus enriched input on identical snapshots, with the
+   same prompt/schema/executor. Archive no-change controls and deterministic
+   0/1/2/4/8-second delayed activation before any provider comparison.
+4. Gate a bounded provider pilot on successful reconstruction and scenario
+   coverage. Separate physical execution, plan validity, recovery progress,
+   and eventual battle outcome; all outputs remain immutable and digest-bound.
+
+The first delivery is the provider-independent evidence/fixture/latency gate.
+Multi-request closed-loop battles, calibrated skill-success estimates, and
+event-driven scheduling comparisons follow this gate; they are not implied
+by a successful single-opportunity continuation.
+
+First delivery implemented: `orchestration/recovery/` and
+`orchestration/examples/commander-recovery-benchmark.ts`. Optional evidence,
+exact-prefix reconstruction, semantic tamper checks, old/enriched request
+freezing and 0/1/2/4/8-second keep/reactivate controls are implemented. The
+four-world discovery scan found three recent-casualty opportunities and no
+examples of the other three families. Preserve this negative coverage result;
+declare purpose-built scenarios before a provider comparison. No new API calls
+were made. Full gates passed: 355 TypeScript tests, 51 Python client tests,
+257 Python training tests, and build. Existing pilot request bodies are exact.
+
 ### M0 — autonomous blue control and server status (current)
 
 - [x] Canonical `UnitAction` / `TeamAction` types, free of UI inputs
@@ -1983,6 +2018,43 @@ M8 exit: MAPPO beats its unit-random baseline in frozen 3v3 and 5v5 suites and
 the command-conditioned shared actor remains valid under local observations.
 
 ### M9 — slow commander over a learned team
+
+Side experiment authorized 2026-09-05: add OpenAI GPT-6 Astra as a secondary
+commander backend alongside GPT-5.6 Luna, preserving the existing symbolic
+CommandPlan, prompt, grounder, and scripted executor. CLI selection exposes
+backend and reasoning; Astra defaults to low ("light"), with medium available.
+Run a bounded 16-request 2×2 pilot (Luna/Astra × low/medium) on four frozen
+scenario requests, without retries. Record request/response provenance,
+latency, token usage, validation/repair/fallback rates, and matched headless
+continuation outcomes. Provider latency and zero-delay tactical consequences
+are separate measurements. This authorized side comparison does not reopen
+LLM-over-learned-fighter experiments or relax the M7c/M9 qualification gates.
+
+Implementation status: CLI selection and matched-snapshot benchmark are ready;
+338 TypeScript, 51 Python client, and 257 Python training tests plus the build
+passed. The offline fixtures and scripted baselines are archived in
+`orchestration/benchmark/examples/luna-astra-20260905-v0/preflight/`.
+The user explicitly approved the 16-request payload/budget after the initial
+permission block. The live pilot completed with eight Luna and eight Astra
+calls, no retries or timeouts. Fifteen plans passed host validation; Astra-medium
+had one trailing-whitespace rejection in the trace-only intent summary and
+used fallback. All 16 continuations replayed exactly and issued zero rejected
+physical actions. Luna-low and Astra-low each won 3/4 cases at mean latencies
+of 3.576 s and 3.564 s. Luna-low's remaining case was horizon-censored; no arm
+won the 6v10 case. These four-case results do not establish model superiority.
+See `orchestration/benchmark/examples/luna-astra-20260905-v0/README.md` and its
+immutable `live/` artifacts. The schema/host whitespace mismatch is recorded
+for a separately versioned repair; the pilot contract was not changed.
+
+User-selected operational default (2026-09-05): Astra with low reasoning for
+the commander client and live CLIs. Explicit Luna selection retains medium
+reasoning unless overridden. The matched benchmark axes, archived artifacts,
+map generator, schema, prompt, and executor stay unchanged. Review Astra's
+planning opportunities separately from this default-selection change; new
+provider experiments and learned-fighter qualification remain gated.
+The completed review is `orchestration/ASTRA_PLANNING_REVIEW.md`. Default-switch
+verification passed 344 TypeScript, 51 client, and 257 training tests plus the
+build; explicit pilot request bodies and artifact checksums remain unchanged.
 
 Goal: connect the already-tested asynchronous commander only after freezing a
 competent learned executor.

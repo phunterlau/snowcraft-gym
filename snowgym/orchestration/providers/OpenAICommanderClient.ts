@@ -3,13 +3,17 @@ import type {
   CommanderClient,
   CommanderRequest,
   CommanderResponse,
+  CommanderResponseMetadata,
 } from '../commander/CommanderClient';
 
-export const OPENAI_COMMANDER_MODEL = 'gpt-5.6-luna' as const;
+export const OPENAI_COMMANDER_MODEL = 'gpt-6-astra' as const;
+export const OPENAI_COMMANDER_MODELS = ['gpt-5.6-luna', 'gpt-6-astra'] as const;
+export type OpenAICommanderModel = (typeof OPENAI_COMMANDER_MODELS)[number];
 export type OpenAICommanderReasoningEffort = 'low' | 'medium' | 'high' | 'xhigh' | 'max';
 
 export interface OpenAICommanderClientOptions {
   readonly apiKey?: string;
+  readonly model?: OpenAICommanderModel;
   readonly reasoningEffort?: OpenAICommanderReasoningEffort;
   readonly maxOutputTokens?: number;
   readonly endpoint?: string;
@@ -20,6 +24,7 @@ export interface OpenAICommanderClientOptions {
 /** Server-only Responses API adapter. Never import this module from browser code. */
 export class OpenAICommanderClient implements CommanderClient {
   private readonly apiKey: string;
+  private readonly model: OpenAICommanderModel;
   private readonly reasoningEffort: OpenAICommanderReasoningEffort;
   private readonly maxOutputTokens: number;
   private readonly endpoint: string;
@@ -32,7 +37,10 @@ export class OpenAICommanderClient implements CommanderClient {
       throw new OpenAICommanderError('OPENAI_API_KEY is required');
     }
     this.apiKey = apiKey.trim();
-    this.reasoningEffort = validReasoningEffort(options.reasoningEffort ?? 'medium');
+    this.model = validModel(options.model ?? OPENAI_COMMANDER_MODEL);
+    this.reasoningEffort = validReasoningEffort(
+      options.reasoningEffort ?? defaultCommanderReasoning(this.model),
+    );
     this.maxOutputTokens = positiveInteger(options.maxOutputTokens ?? 4_096, 'maxOutputTokens');
     this.endpoint = validEndpoint(options.endpoint ?? 'https://api.openai.com/v1/responses');
     this.fetch = options.fetch ?? globalThis.fetch;
@@ -50,26 +58,69 @@ export class OpenAICommanderClient implements CommanderClient {
           'content-type': 'application/json',
         },
         body: JSON.stringify(
-          openAIRequestBody(request, this.reasoningEffort, this.maxOutputTokens),
+          openAIRequestBody(request, this.reasoningEffort, this.maxOutputTokens, this.model),
         ),
         signal,
       });
     } catch (error) {
       if (signal?.aborted) throw error;
-      throw new OpenAICommanderError(`OpenAI request failed: ${errorMessage(error)}`);
+      throw new OpenAICommanderError(
+        `OpenAI request failed: ${errorMessage(error).replaceAll(this.apiKey, '[redacted]')}`,
+      );
     }
 
     const providerRequestId = response.headers.get('x-request-id') ?? undefined;
-    const payload = await readJson(response);
+    let payload: unknown;
+    try {
+      payload = await readJson(response);
+    } catch (error) {
+      throw new OpenAICommanderError(errorMessage(error).replaceAll(this.apiKey, '[redacted]'), {
+        requestedModel: this.model,
+        reasoningEffort: this.reasoningEffort,
+        latencyMs: Math.max(0, this.now() - startedAt),
+        providerRequestId,
+      });
+    }
     if (!response.ok) {
       throw new OpenAICommanderError(
-        `OpenAI request failed with HTTP ${response.status}${providerRequestId ? ` (${providerRequestId})` : ''}: ${apiErrorMessage(payload)}`,
+        `OpenAI request failed with HTTP ${response.status}${providerRequestId ? ` (${providerRequestId})` : ''}: ${apiErrorMessage(payload).replaceAll(this.apiKey, '[redacted]')}`,
+        {
+          requestedModel: this.model,
+          reasoningEffort: this.reasoningEffort,
+          latencyMs: Math.max(0, this.now() - startedAt),
+          providerRequestId,
+        },
       );
     }
-    const parsed = parseResponse(payload);
+    let parsed: ParsedResponse;
+    try {
+      parsed = parseResponse(payload);
+      if (parsed.model !== this.model && !parsed.model.startsWith(`${this.model}-`)) {
+        throw new OpenAICommanderError(
+          `OpenAI returned unexpected model ${parsed.model}; requested ${this.model}`,
+        );
+      }
+    } catch (error) {
+      const failed = recordOrNull(payload);
+      const usage = parseUsage(failed?.usage);
+      throw new OpenAICommanderError(errorMessage(error).replaceAll(this.apiKey, '[redacted]'), {
+        requestedModel: this.model,
+        reasoningEffort: this.reasoningEffort,
+        latencyMs: Math.max(0, this.now() - startedAt),
+        providerRequestId,
+        model: typeof failed?.model === 'string' ? failed.model : undefined,
+        responseId: typeof failed?.id === 'string' ? failed.id : undefined,
+        tokensIn: usage?.inputTokens,
+        tokensOut: usage?.outputTokens,
+        reasoningTokens: usage?.reasoningTokens,
+        cachedInputTokens: usage?.cachedInputTokens,
+      });
+    }
     return {
       decision: parsed.decision,
       metadata: {
+        requestedModel: this.model,
+        reasoningEffort: this.reasoningEffort,
         model: parsed.model,
         latencyMs: Math.max(0, this.now() - startedAt),
         tokensIn: parsed.usage?.inputTokens,
@@ -84,7 +135,10 @@ export class OpenAICommanderClient implements CommanderClient {
 }
 
 export class OpenAICommanderError extends Error {
-  constructor(message: string) {
+  constructor(
+    message: string,
+    readonly metadata?: CommanderResponseMetadata,
+  ) {
     super(message);
     this.name = 'OpenAICommanderError';
   }
@@ -92,13 +146,16 @@ export class OpenAICommanderError extends Error {
 
 export function openAIRequestBody(
   request: CommanderRequest,
-  reasoningEffort: OpenAICommanderReasoningEffort = 'medium',
+  reasoningEffort?: OpenAICommanderReasoningEffort,
   maxOutputTokens = 4_096,
+  model: OpenAICommanderModel = OPENAI_COMMANDER_MODEL,
 ): Record<string, unknown> {
   return {
-    model: OPENAI_COMMANDER_MODEL,
+    model: validModel(model),
     store: false,
-    reasoning: { effort: reasoningEffort },
+    reasoning: {
+      effort: validReasoningEffort(reasoningEffort ?? defaultCommanderReasoning(model)),
+    },
     max_output_tokens: positiveInteger(maxOutputTokens, 'maxOutputTokens'),
     instructions: COMMANDER_INSTRUCTIONS,
     input: [
@@ -112,6 +169,7 @@ export function openAIRequestBody(
               triggers: request.triggers,
               strategicSummary: request.summary,
               currentPlan: request.currentPlan,
+              ...(request.recoveryEvidence ? { recoveryEvidence: request.recoveryEvidence } : {}),
               ...(request.trajectory ? { trajectory: request.trajectory } : {}),
               ...(request.previousPlanOutcome
                 ? { previousPlanOutcome: request.previousPlanOutcome }
@@ -282,7 +340,13 @@ function validEndpoint(value: string): string {
   return url.toString();
 }
 
-function validReasoningEffort(value: string): OpenAICommanderReasoningEffort {
+export function defaultCommanderReasoning(
+  model: OpenAICommanderModel,
+): OpenAICommanderReasoningEffort {
+  return validModel(model) === 'gpt-6-astra' ? 'low' : 'medium';
+}
+
+export function validReasoningEffort(value: string): OpenAICommanderReasoningEffort {
   if (
     value === 'low' ||
     value === 'medium' ||
@@ -293,6 +357,11 @@ function validReasoningEffort(value: string): OpenAICommanderReasoningEffort {
     return value;
   }
   throw new RangeError('reasoningEffort must be low, medium, high, xhigh, or max');
+}
+
+function validModel(value: string): OpenAICommanderModel {
+  if (value === 'gpt-5.6-luna' || value === 'gpt-6-astra') return value;
+  throw new RangeError('commander model must be gpt-5.6-luna or gpt-6-astra');
 }
 
 function errorMessage(error: unknown): string {
