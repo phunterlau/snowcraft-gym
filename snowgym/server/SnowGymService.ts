@@ -222,6 +222,12 @@ export class SnowGymService {
       planGroupMask: [...tensor.groupMask],
       planRoleState: [...physical.roleState],
       missionProgress: [...physical.missionProgress],
+      // Scoring uses activation membership even when tactical targeting refreshes.
+      activationObjectives: store.current().plan.groups.map(({ role, objective }) => ({
+        role,
+        kind: objective.kind,
+        ...(objective.kind === 'enemy_cluster' ? { enemyIds: [...objective.enemyIds] } : {}),
+      })),
       assignments: snapshot.plan.groups.map(({ role, assignment }) => ({
         role,
         unitIds: [...assignment.unitIds],

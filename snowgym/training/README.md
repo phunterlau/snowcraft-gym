@@ -865,6 +865,11 @@ R1l adds the [matched corrective-data factorial](src/snowgym_training/executor/C
 and [archived negative result](reviews/m7b_r1l_results.md): all four arms scored
 0/40 on each development set. No optimizer-seed replication or promotion passed.
 
+The [R1m movement-only contract](src/snowgym_training/executor/SCOPED_MOVEMENT.md)
+adds frozen-target option scoring, explicit budget state, and exact-resumable
+latent movement collection. Its corrected shots are runtime teacher assistance;
+these checkpoints are excluded from autonomous qualification.
+
 R1k adds a frozen-reference learner-opportunity audit: exact teacher-reservoir
 reconstruction, separate conditional geometry labels, episode-capped paired
 simulator branches, gradient/Jacobian checks, and a disposable hard-state fit.

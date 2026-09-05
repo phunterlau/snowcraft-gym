@@ -1207,6 +1207,15 @@ data or fitting budget. The separately scoped R1m movement mechanism remains
 teacher-assisted and ineligible for qualification. See the
 [R1l review](training/reviews/m7b_r1l_results.md).
 
+R1m contract milestone (2026-09-05): additive authoritative activation-target
+membership, versioned three-field option state, frozen-target scoring, separate
+option-aware critic, movement-only latent density, exact prefix restoration,
+selective reset, and immutable partial-collection checkpoints are implemented.
+Legacy option scoring is retained explicitly for historical R1h reproduction.
+All four test suites and live Gym v0–v3 compatibility passed. This is a contract
+gate only; the 100-update assisted experiment and result gate remain pending.
+See [scoped movement](training/src/snowgym_training/executor/SCOPED_MOVEMENT.md).
+
 #### M7c — full-fight fixed-plan composition
 
 - [ ] Hold one-, two-, and three-role plans throughout complete 3v3, 5v5, and

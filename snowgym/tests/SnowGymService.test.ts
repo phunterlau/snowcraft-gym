@@ -64,6 +64,7 @@ describe('SnowGymService', () => {
       planRoleState: number[];
       missionProgress: number[];
       assignments: Array<{ role: string; unitIds: number[] }>;
+      activationObjectives: Array<{ role: string; kind: string; enemyIds?: number[] }>;
     };
 
     expect(activated.status).toBe(200);
@@ -77,6 +78,9 @@ describe('SnowGymService', () => {
     expect(body.planGroups).toHaveLength(114);
     expect(body.planRoleState).toHaveLength(60);
     expect(body.missionProgress).toHaveLength(3);
+    const activationObjectives = structuredClone(body.activationObjectives);
+    expect(activationObjectives).toHaveLength(3);
+    expect(activationObjectives.some((entry) => entry.enemyIds?.length)).toBe(true);
     expect(
       body.planGroups.every((value) => Number.isFinite(value) && value >= -1 && value <= 1),
     ).toBe(true);
@@ -143,6 +147,7 @@ describe('SnowGymService', () => {
     expect((refreshedPreview.body as typeof body).assignments).toEqual(previewAssignments);
     const current = service.handle('GET', '/plan-observation').body as typeof body;
     expect(current.tick).toBe(6);
+    expect(current.activationObjectives).toEqual(activationObjectives);
     expect(current.stateHash).not.toBe(reset.status.stateHash);
     for (const value of [current.planGroups[37], current.planGroups[75], current.planGroups[113]]) {
       expect(value).toBeCloseTo(1 / 300);

@@ -188,9 +188,22 @@ class SnowGymBatchEnv:
         np.ndarray,
         list[dict[str, Any]],
     ]:
+        return self.step_indices(list(range(self.batch_size)), actions)
+
+    def step_indices(self, indices: list[int], actions: dict[str, np.ndarray]):
+        """Advance only selected worlds; action rows follow the supplied index order."""
+        if not indices or len(set(indices)) != len(indices) or any(
+            type(index) is not int or index < 0 or index >= self.batch_size for index in indices
+        ):
+            raise ValueError("selective step indices are invalid")
+        if set(actions) != {"action_type", "target", "power"} or any(
+            len(value) != len(indices) for value in actions.values()
+        ):
+            raise ValueError("selective step actions must match selected slots")
         self._step_index += 1
         items = []
-        for index, world_id in enumerate(self.world_ids):
+        for batch_index, index in enumerate(indices):
+            world_id = self.world_ids[index]
             raw = self.raw_observations[index]
             state_hash = self.state_hashes[index]
             if raw is None or state_hash is None:
@@ -199,16 +212,16 @@ class SnowGymBatchEnv:
                 {
                     "worldId": world_id,
                     "body": {
-                        "action": self._batch_action(actions, index, raw),
+                        "action": self._batch_action(actions, batch_index, raw),
                         "expectedStateHash": state_hash,
                         "idempotencyKey": f"batch-{self._step_index}-{world_id}",
                     },
                 }
             )
         results = self.client.request("step", items)
-        payloads = self._consume_results(results)
+        payloads = self._consume_results(results, indices)
         return (
-            self._stack_observations(),
+            self._stack_observations(indices),
             np.asarray([payload["reward"] for payload in payloads], dtype=np.float32),
             np.asarray([payload["terminated"] for payload in payloads], dtype=np.bool_),
             np.asarray([payload["truncated"] for payload in payloads], dtype=np.bool_),

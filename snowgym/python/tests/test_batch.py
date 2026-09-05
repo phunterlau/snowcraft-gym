@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import numpy as np
+import pytest
 
 from snowgym_client.batch import SnowGymBatchClient, SnowGymBatchEnv
 
@@ -87,6 +88,22 @@ def test_batch_scripted_step_uses_native_blue_policy() -> None:
         assert not truncated.any()
         assert infos[0]["tick"] == 6
         assert all(result["accepted"] for result in infos[0]["actionResults"])
+
+
+def test_selected_step_preserves_other_worlds_and_row_order():
+    with SnowGymBatchClient() as client:
+        environment = SnowGymBatchEnv(3, client=client, observation_version=3)
+        environment.reset([21, 22, 23], [scenario()] * 3)
+        before = list(environment.state_hashes)
+        observations, _, _, _, _ = environment.step_indices([2, 0], noop_actions(2))
+        assert observations["tick"].tolist() == [[6], [6]]
+        assert environment.state_hashes[1] == before[1]
+        assert environment._observations[1]["tick"].tolist() == [0]
+        for indices in ([], [0, 0], [3], [-1], [True]):
+            with pytest.raises(ValueError, match="indices"):
+                environment.step_indices(indices, noop_actions(len(indices)))
+        with pytest.raises(ValueError, match="actions"):
+            environment.step_indices([1], noop_actions(2))
 
 
 def test_batch_joint_step_controls_both_teams_symmetrically() -> None:
