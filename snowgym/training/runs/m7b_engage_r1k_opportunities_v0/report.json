@@ -1,0 +1,1090 @@
+{
+  "branches": {
+    "aim": {
+      "bootstrapUnit": "episode means; selected hard opportunities",
+      "effects": {
+        "damageDealt": {
+          "ci95": [
+            18.47826086956522,
+            35.43478260869565
+          ],
+          "episodes": 23,
+          "mean": 26.666666666666664
+        },
+        "damageReceived": {
+          "ci95": [
+            -15.144927536231886,
+            0.289855072463768
+          ],
+          "episodes": 23,
+          "mean": -7.753623188405798
+        },
+        "netDamage": {
+          "ci95": [
+            25.217391304347824,
+            43.91304347826087
+          ],
+          "episodes": 23,
+          "mean": 34.42028985507246
+        },
+        "progress": {
+          "ci95": [
+            0.03695652371515398,
+            0.0708695689054287
+          ],
+          "episodes": 23,
+          "mean": 0.053333333652952446
+        },
+        "rangeErrorImprovement": {
+          "ci95": [
+            -0.1958973641718089,
+            0.3366732043871063
+          ],
+          "episodes": 23,
+          "mean": 0.08184931824540213
+        }
+      },
+      "episodes": 23,
+      "opportunities": 64,
+      "useful": true
+    },
+    "move": {
+      "bootstrapUnit": "episode means; selected hard opportunities",
+      "effects": {
+        "damageDealt": {
+          "ci95": [
+            -7.17391304347826,
+            9.927536231884057
+          ],
+          "episodes": 23,
+          "mean": 1.811594202898551
+        },
+        "damageReceived": {
+          "ci95": [
+            -19.565217391304348,
+            -2.7536231884057973
+          ],
+          "episodes": 23,
+          "mean": -10.797101449275361
+        },
+        "netDamage": {
+          "ci95": [
+            0.289855072463768,
+            25.217391304347824
+          ],
+          "episodes": 23,
+          "mean": 12.608695652173912
+        },
+        "progress": {
+          "ci95": [
+            -0.014347829038034315,
+            0.019855072100957234
+          ],
+          "episodes": 23,
+          "mean": 0.0036231864621673808
+        },
+        "rangeErrorImprovement": {
+          "ci95": [
+            1.0407558605510947,
+            2.7638199512469126
+          ],
+          "episodes": 23,
+          "mean": 1.8395210318985422
+        }
+      },
+      "episodes": 23,
+      "opportunities": 64,
+      "useful": true
+    },
+    "power": {
+      "bootstrapUnit": "episode means; selected hard opportunities",
+      "effects": {
+        "damageDealt": {
+          "ci95": [
+            -8.333333333333334,
+            2.361111111111111
+          ],
+          "episodes": 24,
+          "mean": -2.7777777777777772
+        },
+        "damageReceived": {
+          "ci95": [
+            -7.222222222222224,
+            1.8055555555555554
+          ],
+          "episodes": 24,
+          "mean": -2.6388888888888893
+        },
+        "netDamage": {
+          "ci95": [
+            -6.666666666666667,
+            7.152777777777778
+          ],
+          "episodes": 24,
+          "mean": -0.13888888888888928
+        },
+        "progress": {
+          "ci95": [
+            -0.01666665946961277,
+            0.004722228289271394
+          ],
+          "episodes": 24,
+          "mean": -0.005555552533931202
+        },
+        "rangeErrorImprovement": {
+          "ci95": [
+            -0.2479505583625889,
+            0.031213635878899616
+          ],
+          "episodes": 24,
+          "mean": -0.1095695829782203
+        }
+      },
+      "episodes": 24,
+      "opportunities": 64,
+      "useful": false
+    }
+  },
+  "decision": "predeclare R1l factorial",
+  "format": "snowgym.opportunity-audit-report.v0",
+  "freshHoldoutsUsed": false,
+  "hardFitPassed": true,
+  "learnerCrossTabs": {
+    "cells": {
+      "0:0": {
+        "angleDegrees": {
+          "count": 4233,
+          "max": 179.9912360927351,
+          "mean": 59.43614143706638,
+          "p50": 47.634876415325515,
+          "p90": 131.21730361151398,
+          "p99": 175.45519363968876
+        },
+        "chordMissWorld": {
+          "count": 4233,
+          "max": 47.984791639506795,
+          "mean": 7.045567888889276,
+          "p50": 5.240620298040277,
+          "p90": 15.71803703023337,
+          "p99": 26.73740880605461
+        },
+        "count": 4233,
+        "deploymentFraction": 0.11101786042120171,
+        "moveAvailable": 4233,
+        "moveErrorWorld": {
+          "count": 4233,
+          "max": 27.893899949892266,
+          "mean": 8.981671239739667,
+          "p50": 8.387633914906804,
+          "p90": 15.396229582031552,
+          "p99": 22.011724496019156
+        },
+        "moveLegal": 0,
+        "powerError": {
+          "count": 4233,
+          "max": 0.8848119974136353,
+          "mean": 0.27641258151317755,
+          "p50": 0.19486761093139648,
+          "p90": 0.672427248954773,
+          "p99": 0.8060573935508728
+        },
+        "shotAvailable": 4233,
+        "shotLegal": 0
+      },
+      "0:1": {
+        "angleDegrees": null,
+        "chordMissWorld": null,
+        "count": 0,
+        "deploymentFraction": 0.0,
+        "moveAvailable": 0,
+        "moveErrorWorld": null,
+        "moveLegal": 0,
+        "powerError": null,
+        "shotAvailable": 0,
+        "shotLegal": 0
+      },
+      "0:2": {
+        "angleDegrees": null,
+        "chordMissWorld": null,
+        "count": 0,
+        "deploymentFraction": 0.0,
+        "moveAvailable": 0,
+        "moveErrorWorld": null,
+        "moveLegal": 0,
+        "powerError": null,
+        "shotAvailable": 0,
+        "shotLegal": 0
+      },
+      "0:3": {
+        "angleDegrees": null,
+        "chordMissWorld": null,
+        "count": 0,
+        "deploymentFraction": 0.0,
+        "moveAvailable": 0,
+        "moveErrorWorld": null,
+        "moveLegal": 0,
+        "powerError": null,
+        "shotAvailable": 0,
+        "shotLegal": 0
+      },
+      "1:0": {
+        "angleDegrees": null,
+        "chordMissWorld": null,
+        "count": 0,
+        "deploymentFraction": 0.0,
+        "moveAvailable": 0,
+        "moveErrorWorld": null,
+        "moveLegal": 0,
+        "powerError": null,
+        "shotAvailable": 0,
+        "shotLegal": 0
+      },
+      "1:1": {
+        "angleDegrees": {
+          "count": 28253,
+          "max": 179.9903862311511,
+          "mean": 33.39639451280606,
+          "p50": 18.802575748580207,
+          "p90": 84.96623092350804,
+          "p99": 167.47273399610253
+        },
+        "chordMissWorld": {
+          "count": 28253,
+          "max": 69.56486122813872,
+          "mean": 7.698803280721703,
+          "p50": 5.920223996815013,
+          "p90": 16.555453041563627,
+          "p99": 32.37973787212689
+        },
+        "count": 28253,
+        "deploymentFraction": 0.7409845524403997,
+        "moveAvailable": 28253,
+        "moveErrorWorld": {
+          "count": 28253,
+          "max": 31.53484026380776,
+          "mean": 8.481492330448134,
+          "p50": 7.532377181818694,
+          "p90": 15.479808319217263,
+          "p99": 23.321183791238703
+        },
+        "moveLegal": 28253,
+        "powerError": {
+          "count": 28253,
+          "max": 0.8803529739379883,
+          "mean": 0.10395168809178858,
+          "p50": 0.029390037059783936,
+          "p90": 0.32284961938858014,
+          "p99": 0.7769126749038696
+        },
+        "shotAvailable": 28253,
+        "shotLegal": 18181
+      },
+      "1:2": {
+        "angleDegrees": {
+          "count": 1787,
+          "max": 179.7368193027099,
+          "mean": 53.447878219270066,
+          "p50": 44.03209178836254,
+          "p90": 113.57501953656657,
+          "p99": 170.84381740310496
+        },
+        "chordMissWorld": {
+          "count": 1787,
+          "max": 50.742907522052775,
+          "mean": 10.151199540909564,
+          "p50": 8.149682952138274,
+          "p90": 21.11472820023681,
+          "p99": 34.76518930505136
+        },
+        "count": 1787,
+        "deploymentFraction": 0.04686721393165307,
+        "moveAvailable": 1787,
+        "moveErrorWorld": {
+          "count": 1787,
+          "max": 29.91709360253384,
+          "mean": 9.529014159698724,
+          "p50": 8.86434129879064,
+          "p90": 16.4139271801505,
+          "p99": 23.695923220285508
+        },
+        "moveLegal": 1787,
+        "powerError": {
+          "count": 1787,
+          "max": 0.8153862953186035,
+          "mean": 0.13062365914298357,
+          "p50": 0.06345188617706299,
+          "p90": 0.33825087547302257,
+          "p99": 0.7328619670867915
+        },
+        "shotAvailable": 1787,
+        "shotLegal": 1787
+      },
+      "1:3": {
+        "angleDegrees": {
+          "count": 1228,
+          "max": 179.9460066366951,
+          "mean": 53.14915274942748,
+          "p50": 38.1881765478205,
+          "p90": 137.16484932930788,
+          "p99": 174.52876908028924
+        },
+        "chordMissWorld": {
+          "count": 1228,
+          "max": 33.98474375508942,
+          "mean": 7.113376819860969,
+          "p50": 5.317668948545154,
+          "p90": 17.038928899059872,
+          "p99": 24.893410964003834
+        },
+        "count": 1228,
+        "deploymentFraction": 0.03220645702745942,
+        "moveAvailable": 1228,
+        "moveErrorWorld": {
+          "count": 1228,
+          "max": 22.93427450125047,
+          "mean": 8.33698020019923,
+          "p50": 7.783998905727849,
+          "p90": 14.567852332195537,
+          "p99": 19.94498130883149
+        },
+        "moveLegal": 1228,
+        "powerError": {
+          "count": 1228,
+          "max": 0.6721758842468262,
+          "mean": 0.26954315500849624,
+          "p50": 0.28958216309547424,
+          "p90": 0.42358288764953606,
+          "p99": 0.6067523688077927
+        },
+        "shotAvailable": 1228,
+        "shotLegal": 0
+      },
+      "2:0": {
+        "angleDegrees": null,
+        "chordMissWorld": null,
+        "count": 0,
+        "deploymentFraction": 0.0,
+        "moveAvailable": 0,
+        "moveErrorWorld": null,
+        "moveLegal": 0,
+        "powerError": null,
+        "shotAvailable": 0,
+        "shotLegal": 0
+      },
+      "2:1": {
+        "angleDegrees": {
+          "count": 1002,
+          "max": 179.74385582281903,
+          "mean": 63.88789204353318,
+          "p50": 52.64369788343134,
+          "p90": 143.19475826330313,
+          "p99": 176.35397360637282
+        },
+        "chordMissWorld": {
+          "count": 1002,
+          "max": 18.8349789917716,
+          "mean": 5.444193210586562,
+          "p50": 4.8098416606300445,
+          "p90": 10.695042078651698,
+          "p99": 16.45153597279677
+        },
+        "count": 1002,
+        "deploymentFraction": 0.026279210050093104,
+        "moveAvailable": 1002,
+        "moveErrorWorld": {
+          "count": 1002,
+          "max": 22.940269228822,
+          "mean": 9.93697567846937,
+          "p50": 10.202052106590205,
+          "p90": 15.026798441699237,
+          "p99": 18.297456095381765
+        },
+        "moveLegal": 1002,
+        "powerError": {
+          "count": 1002,
+          "max": 0.818915069103241,
+          "mean": 0.34671610367750216,
+          "p50": 0.30397915840148926,
+          "p90": 0.7428779244422912,
+          "p99": 0.8176985210180283
+        },
+        "shotAvailable": 1002,
+        "shotLegal": 1002
+      },
+      "2:2": {
+        "angleDegrees": {
+          "count": 1335,
+          "max": 179.8976790301241,
+          "mean": 62.551098826669346,
+          "p50": 51.11376466567733,
+          "p90": 135.513269987037,
+          "p99": 175.59449699355528
+        },
+        "chordMissWorld": {
+          "count": 1335,
+          "max": 18.49468954792193,
+          "mean": 5.031388729381139,
+          "p50": 4.048391332316177,
+          "p90": 10.958763790987172,
+          "p99": 15.886742794250475
+        },
+        "count": 1335,
+        "deploymentFraction": 0.03501271997692045,
+        "moveAvailable": 1335,
+        "moveErrorWorld": {
+          "count": 1335,
+          "max": 26.59685203727454,
+          "mean": 8.127088317367294,
+          "p50": 7.611636635896161,
+          "p90": 14.034301125161123,
+          "p99": 19.065984550474802
+        },
+        "moveLegal": 1335,
+        "powerError": {
+          "count": 1335,
+          "max": 0.8180868029594421,
+          "mean": 0.3590565090322316,
+          "p50": 0.32463324069976807,
+          "p90": 0.7423925876617433,
+          "p99": 0.8113452196121216
+        },
+        "shotAvailable": 1335,
+        "shotLegal": 1335
+      },
+      "2:3": {
+        "angleDegrees": {
+          "count": 2,
+          "max": 113.76223159624587,
+          "mean": 91.80864058942018,
+          "p50": 91.80864058942018,
+          "p90": 109.37151339488074,
+          "p99": 113.32315977610935
+        },
+        "chordMissWorld": {
+          "count": 2,
+          "max": 2.1853596298300912,
+          "mean": 1.7504056911639663,
+          "p50": 1.7504056911639663,
+          "p90": 2.0983688420968662,
+          "p99": 2.1766605510567687
+        },
+        "count": 2,
+        "deploymentFraction": 5.245351307403813e-05,
+        "moveAvailable": 2,
+        "moveErrorWorld": {
+          "count": 2,
+          "max": 10.462937856329477,
+          "mean": 6.534236175544653,
+          "p50": 6.534236175544653,
+          "p90": 9.677197520172513,
+          "p99": 10.38436382271378
+        },
+        "moveLegal": 2,
+        "powerError": {
+          "count": 2,
+          "max": 0.5461438894271851,
+          "mean": 0.5377632975578308,
+          "p50": 0.5377632975578308,
+          "p90": 0.5444677710533142,
+          "p99": 0.5459762775897979
+        },
+        "shotAvailable": 2,
+        "shotLegal": 2
+      },
+      "3:0": {
+        "angleDegrees": null,
+        "chordMissWorld": null,
+        "count": 0,
+        "deploymentFraction": 0.0,
+        "moveAvailable": 0,
+        "moveErrorWorld": null,
+        "moveLegal": 0,
+        "powerError": null,
+        "shotAvailable": 0,
+        "shotLegal": 0
+      },
+      "3:1": {
+        "angleDegrees": {
+          "count": 253,
+          "max": 179.24325671741994,
+          "mean": 57.332586998056925,
+          "p50": 47.17775204600407,
+          "p90": 128.6424140055832,
+          "p99": 171.58257826451006
+        },
+        "chordMissWorld": {
+          "count": 253,
+          "max": 18.197355034923685,
+          "mean": 5.861187723359848,
+          "p50": 4.635992852659487,
+          "p90": 11.838739965348433,
+          "p99": 17.53319607606131
+        },
+        "count": 253,
+        "deploymentFraction": 0.006635369403865824,
+        "moveAvailable": 253,
+        "moveErrorWorld": {
+          "count": 253,
+          "max": 18.374599459411343,
+          "mean": 7.309438685807448,
+          "p50": 7.051566270257107,
+          "p90": 13.245312964497217,
+          "p99": 17.558852167305318
+        },
+        "moveLegal": 253,
+        "powerError": {
+          "count": 253,
+          "max": 0.5740271806716919,
+          "mean": 0.2205930561887417,
+          "p50": 0.19936305284500122,
+          "p90": 0.39979017972946174,
+          "p99": 0.5392349147796629
+        },
+        "shotAvailable": 253,
+        "shotLegal": 0
+      },
+      "3:2": {
+        "angleDegrees": null,
+        "chordMissWorld": null,
+        "count": 0,
+        "deploymentFraction": 0.0,
+        "moveAvailable": 0,
+        "moveErrorWorld": null,
+        "moveLegal": 0,
+        "powerError": null,
+        "shotAvailable": 0,
+        "shotLegal": 0
+      },
+      "3:3": {
+        "angleDegrees": {
+          "count": 36,
+          "max": 117.00046217127601,
+          "mean": 49.47126598447156,
+          "p50": 45.082106869760736,
+          "p90": 102.80506546062256,
+          "p99": 116.7858633640323
+        },
+        "chordMissWorld": {
+          "count": 36,
+          "max": 13.236641380787038,
+          "mean": 5.70601883044552,
+          "p50": 5.027863559943183,
+          "p90": 10.876486212502968,
+          "p99": 13.195378333405131
+        },
+        "count": 36,
+        "deploymentFraction": 0.0009441632353326864,
+        "moveAvailable": 36,
+        "moveErrorWorld": {
+          "count": 36,
+          "max": 19.510080900632648,
+          "mean": 7.721137867177564,
+          "p50": 7.718320824634729,
+          "p90": 11.461387309585593,
+          "p99": 17.59646867916247
+        },
+        "moveLegal": 36,
+        "powerError": {
+          "count": 36,
+          "max": 0.18187665939331055,
+          "mean": 0.06476578613122304,
+          "p50": 0.05446389317512512,
+          "p90": 0.12415164709091187,
+          "p99": 0.17080320417881006
+        },
+        "shotAvailable": 36,
+        "shotLegal": 0
+      }
+    },
+    "oldMaskExclusion": {
+      "move": {
+        "fraction": 0.04253083909448285,
+        "oldMaskExcluded": 1255,
+        "used": 29508
+      },
+      "shot": {
+        "fraction": 0.5723894939141576,
+        "oldMaskExcluded": 1787,
+        "used": 3122
+      }
+    },
+    "orientation": "teacher:learner"
+  },
+  "learnerOpportunities": 38129,
+  "learnerStates": 8000,
+  "learnerSuccesses": 0,
+  "limitations": [
+    "Recommendations are scenario-specific and not asserted optimal.",
+    "Hard-state episode bootstrap is conditional on selected opportunities, not population coverage proof.",
+    "Same reset seed does not imply identical opponent actions after a substitution.",
+    "Eight audit-validation episodes were held out of this fit, not necessarily source training.",
+    "Damage per legal throw is not projectile hit probability."
+  ],
+  "productionUpdates": 0,
+  "qualificationEligible": false,
+  "r1lAllowed": true,
+  "sourceUnchanged": true,
+  "teacherCrossTabs": {
+    "cells": {
+      "0:0": {
+        "angleDegrees": {
+          "count": 1716,
+          "max": 107.83316194806989,
+          "mean": 21.446741856209655,
+          "p50": 17.262525778223598,
+          "p90": 44.01743616152427,
+          "p99": 77.91811801189657
+        },
+        "chordMissWorld": {
+          "count": 1716,
+          "max": 19.03212589302068,
+          "mean": 3.098156275578112,
+          "p50": 2.508110651356534,
+          "p90": 6.294080560287224,
+          "p99": 12.05068922269464
+        },
+        "count": 1716,
+        "deploymentFraction": 0.06399403319037852,
+        "moveAvailable": 1716,
+        "moveErrorWorld": {
+          "count": 1716,
+          "max": 23.915009108779586,
+          "mean": 5.5040315889342555,
+          "p50": 4.914454605406128,
+          "p90": 9.791853421837551,
+          "p99": 15.671486941844972
+        },
+        "moveLegal": 0,
+        "powerError": {
+          "count": 1716,
+          "max": 0.4973251223564148,
+          "mean": 0.09548566695346143,
+          "p50": 0.07216417789459229,
+          "p90": 0.2026681900024414,
+          "p99": 0.386105614900589
+        },
+        "shotAvailable": 1716,
+        "shotLegal": 0
+      },
+      "0:1": {
+        "angleDegrees": null,
+        "chordMissWorld": null,
+        "count": 0,
+        "deploymentFraction": 0.0,
+        "moveAvailable": 0,
+        "moveErrorWorld": null,
+        "moveLegal": 0,
+        "powerError": null,
+        "shotAvailable": 0,
+        "shotLegal": 0
+      },
+      "0:2": {
+        "angleDegrees": null,
+        "chordMissWorld": null,
+        "count": 0,
+        "deploymentFraction": 0.0,
+        "moveAvailable": 0,
+        "moveErrorWorld": null,
+        "moveLegal": 0,
+        "powerError": null,
+        "shotAvailable": 0,
+        "shotLegal": 0
+      },
+      "0:3": {
+        "angleDegrees": null,
+        "chordMissWorld": null,
+        "count": 0,
+        "deploymentFraction": 0.0,
+        "moveAvailable": 0,
+        "moveErrorWorld": null,
+        "moveLegal": 0,
+        "powerError": null,
+        "shotAvailable": 0,
+        "shotLegal": 0
+      },
+      "1:0": {
+        "angleDegrees": null,
+        "chordMissWorld": null,
+        "count": 0,
+        "deploymentFraction": 0.0,
+        "moveAvailable": 0,
+        "moveErrorWorld": null,
+        "moveLegal": 0,
+        "powerError": null,
+        "shotAvailable": 0,
+        "shotLegal": 0
+      },
+      "1:1": {
+        "angleDegrees": {
+          "count": 21436,
+          "max": 105.02229221609036,
+          "mean": 12.421798123868479,
+          "p50": 9.2871243495255,
+          "p90": 27.522245030050684,
+          "p99": 50.11119151074775
+        },
+        "chordMissWorld": {
+          "count": 21436,
+          "max": 33.58904121449736,
+          "mean": 4.553329576255027,
+          "p50": 3.8453120971981036,
+          "p90": 9.258550491050638,
+          "p99": 15.275218702833001
+        },
+        "count": 21436,
+        "deploymentFraction": 0.799403319037852,
+        "moveAvailable": 21436,
+        "moveErrorWorld": {
+          "count": 21436,
+          "max": 25.359410331130885,
+          "mean": 3.715813291560415,
+          "p50": 3.3052121349657595,
+          "p90": 6.564621989995249,
+          "p99": 11.682676968020447
+        },
+        "moveLegal": 21436,
+        "powerError": {
+          "count": 21436,
+          "max": 0.47633206844329834,
+          "mean": 0.039266973049877786,
+          "p50": 0.025299251079559326,
+          "p90": 0.08347782492637634,
+          "p99": 0.23965471982955958
+        },
+        "shotAvailable": 21436,
+        "shotLegal": 17877
+      },
+      "1:2": {
+        "angleDegrees": {
+          "count": 1858,
+          "max": 109.50595088229359,
+          "mean": 23.204713732652724,
+          "p50": 20.8794763124316,
+          "p90": 45.606121817813495,
+          "p99": 75.7930270977773
+        },
+        "chordMissWorld": {
+          "count": 1858,
+          "max": 19.97486999774621,
+          "mean": 4.378817175760465,
+          "p50": 3.7905932398881634,
+          "p90": 8.705572107550765,
+          "p99": 14.07129569219597
+        },
+        "count": 1858,
+        "deploymentFraction": 0.06928957672944247,
+        "moveAvailable": 1858,
+        "moveErrorWorld": {
+          "count": 1858,
+          "max": 15.01920075511713,
+          "mean": 4.803431073922376,
+          "p50": 4.491016543864208,
+          "p90": 8.340236956118911,
+          "p99": 11.858083798424726
+        },
+        "moveLegal": 1858,
+        "powerError": {
+          "count": 1858,
+          "max": 0.46175509691238403,
+          "mean": 0.05656657626990738,
+          "p50": 0.042275428771972656,
+          "p90": 0.11735774874687195,
+          "p99": 0.2536212444305421
+        },
+        "shotAvailable": 1858,
+        "shotLegal": 1858
+      },
+      "1:3": {
+        "angleDegrees": {
+          "count": 140,
+          "max": 113.07529806375801,
+          "mean": 32.57156609753565,
+          "p50": 26.336924151327604,
+          "p90": 69.24263230018398,
+          "p99": 103.93400399137208
+        },
+        "chordMissWorld": {
+          "count": 140,
+          "max": 36.66800714173024,
+          "mean": 5.2367792938810025,
+          "p50": 4.184994800708681,
+          "p90": 11.518135265129198,
+          "p99": 25.713687232733186
+        },
+        "count": 140,
+        "deploymentFraction": 0.00522095841879545,
+        "moveAvailable": 140,
+        "moveErrorWorld": {
+          "count": 140,
+          "max": 16.459099069997027,
+          "mean": 7.166142862822326,
+          "p50": 7.099884475921332,
+          "p90": 11.867402680931708,
+          "p99": 16.265495773016774
+        },
+        "moveLegal": 140,
+        "powerError": {
+          "count": 140,
+          "max": 0.5281221866607666,
+          "mean": 0.2307053538305419,
+          "p50": 0.21721461415290833,
+          "p90": 0.4159951508045198,
+          "p99": 0.5126482868194578
+        },
+        "shotAvailable": 140,
+        "shotLegal": 0
+      },
+      "2:0": {
+        "angleDegrees": null,
+        "chordMissWorld": null,
+        "count": 0,
+        "deploymentFraction": 0.0,
+        "moveAvailable": 0,
+        "moveErrorWorld": null,
+        "moveLegal": 0,
+        "powerError": null,
+        "shotAvailable": 0,
+        "shotLegal": 0
+      },
+      "2:1": {
+        "angleDegrees": {
+          "count": 283,
+          "max": 80.44031123004686,
+          "mean": 19.20738642496609,
+          "p50": 16.256731255296184,
+          "p90": 36.67421346211749,
+          "p99": 63.446204046326116
+        },
+        "chordMissWorld": {
+          "count": 283,
+          "max": 10.022216556518272,
+          "mean": 2.769878310250824,
+          "p50": 2.3562769840028146,
+          "p90": 5.273203492182262,
+          "p99": 9.424080187703309
+        },
+        "count": 283,
+        "deploymentFraction": 0.01055379451799366,
+        "moveAvailable": 283,
+        "moveErrorWorld": {
+          "count": 283,
+          "max": 13.102178044290769,
+          "mean": 5.296192475650878,
+          "p50": 4.996305963724663,
+          "p90": 8.71354123111066,
+          "p99": 10.976022908764396
+        },
+        "moveLegal": 283,
+        "powerError": {
+          "count": 283,
+          "max": 0.4385196566581726,
+          "mean": 0.06027694704675843,
+          "p50": 0.03251856565475464,
+          "p90": 0.17017480134963991,
+          "p99": 0.3335472309589386
+        },
+        "shotAvailable": 283,
+        "shotLegal": 283
+      },
+      "2:2": {
+        "angleDegrees": {
+          "count": 879,
+          "max": 92.67981427896413,
+          "mean": 19.896754410610697,
+          "p50": 16.510533458184305,
+          "p90": 39.936183423846366,
+          "p99": 70.98289688339761
+        },
+        "chordMissWorld": {
+          "count": 879,
+          "max": 12.356864290893224,
+          "mean": 2.6954813579328865,
+          "p50": 2.3404839100178476,
+          "p90": 5.484461532815831,
+          "p99": 9.163408537229754
+        },
+        "count": 879,
+        "deploymentFraction": 0.03278016035800858,
+        "moveAvailable": 879,
+        "moveErrorWorld": {
+          "count": 879,
+          "max": 18.11851964817956,
+          "mean": 5.214303733349542,
+          "p50": 4.85202167203792,
+          "p90": 8.955591305609339,
+          "p99": 12.788502674676883
+        },
+        "moveLegal": 879,
+        "powerError": {
+          "count": 879,
+          "max": 0.42037540674209595,
+          "mean": 0.09942262178123744,
+          "p50": 0.07168436050415039,
+          "p90": 0.22434601783752445,
+          "p99": 0.3305628347396851
+        },
+        "shotAvailable": 879,
+        "shotLegal": 879
+      },
+      "2:3": {
+        "angleDegrees": null,
+        "chordMissWorld": null,
+        "count": 0,
+        "deploymentFraction": 0.0,
+        "moveAvailable": 0,
+        "moveErrorWorld": null,
+        "moveLegal": 0,
+        "powerError": null,
+        "shotAvailable": 0,
+        "shotLegal": 0
+      },
+      "3:0": {
+        "angleDegrees": null,
+        "chordMissWorld": null,
+        "count": 0,
+        "deploymentFraction": 0.0,
+        "moveAvailable": 0,
+        "moveErrorWorld": null,
+        "moveLegal": 0,
+        "powerError": null,
+        "shotAvailable": 0,
+        "shotLegal": 0
+      },
+      "3:1": {
+        "angleDegrees": {
+          "count": 311,
+          "max": 92.71525290431354,
+          "mean": 23.872295440974128,
+          "p50": 18.882047820476004,
+          "p90": 53.35619119143431,
+          "p99": 83.44360531394632
+        },
+        "chordMissWorld": {
+          "count": 311,
+          "max": 9.963925380196235,
+          "mean": 2.933750088460324,
+          "p50": 2.401628451332263,
+          "p90": 6.271234231622799,
+          "p99": 9.231898206552954
+        },
+        "count": 311,
+        "deploymentFraction": 0.011597986201752751,
+        "moveAvailable": 311,
+        "moveErrorWorld": {
+          "count": 311,
+          "max": 20.298026555779913,
+          "mean": 5.762483767998076,
+          "p50": 4.891793192601137,
+          "p90": 10.157235707698117,
+          "p99": 17.01707113583559
+        },
+        "moveLegal": 311,
+        "powerError": {
+          "count": 311,
+          "max": 0.4118354022502899,
+          "mean": 0.129894405411754,
+          "p50": 0.118644118309021,
+          "p90": 0.2421596646308899,
+          "p99": 0.361978483200073
+        },
+        "shotAvailable": 311,
+        "shotLegal": 1
+      },
+      "3:2": {
+        "angleDegrees": {
+          "count": 6,
+          "max": 40.271568460412816,
+          "mean": 25.967221970798775,
+          "p50": 21.69607870921366,
+          "p90": 36.833860576132125,
+          "p99": 39.92779767198475
+        },
+        "chordMissWorld": {
+          "count": 6,
+          "max": 6.107069345704267,
+          "mean": 4.040537010987886,
+          "p50": 3.4164157147117726,
+          "p90": 5.649920620467684,
+          "p99": 6.061354473180609
+        },
+        "count": 6,
+        "deploymentFraction": 0.0002237553608055193,
+        "moveAvailable": 6,
+        "moveErrorWorld": {
+          "count": 6,
+          "max": 8.766267802926981,
+          "mean": 6.811065839467511,
+          "p50": 6.819367826132263,
+          "p90": 8.070637755523961,
+          "p99": 8.69670479818668
+        },
+        "moveLegal": 6,
+        "powerError": {
+          "count": 6,
+          "max": 0.34726232290267944,
+          "mean": 0.21957274278004965,
+          "p50": 0.23073801398277283,
+          "p90": 0.33042117953300476,
+          "p99": 0.345578208565712
+        },
+        "shotAvailable": 6,
+        "shotLegal": 6
+      },
+      "3:3": {
+        "angleDegrees": {
+          "count": 186,
+          "max": 90.07713465109106,
+          "mean": 33.485976578293446,
+          "p50": 28.56782751350827,
+          "p90": 66.66668244589623,
+          "p99": 89.2774325273212
+        },
+        "chordMissWorld": {
+          "count": 186,
+          "max": 10.831401847977855,
+          "mean": 4.143238909128701,
+          "p50": 3.6878590452565945,
+          "p90": 8.052218748348656,
+          "p99": 10.191998331456603
+        },
+        "count": 186,
+        "deploymentFraction": 0.006936416184971098,
+        "moveAvailable": 186,
+        "moveErrorWorld": {
+          "count": 186,
+          "max": 28.632465699510764,
+          "mean": 8.61472458934896,
+          "p50": 7.7218431105410765,
+          "p90": 15.957253685548366,
+          "p99": 23.1099174809235
+        },
+        "moveLegal": 186,
+        "powerError": {
+          "count": 186,
+          "max": 0.5765376091003418,
+          "mean": 0.190825707970127,
+          "p50": 0.1699644923210144,
+          "p90": 0.34798091650009155,
+          "p99": 0.5157788991928104
+        },
+        "shotAvailable": 186,
+        "shotLegal": 0
+      }
+    },
+    "oldMaskExclusion": {
+      "move": {
+        "fraction": 0.02696323195642306,
+        "oldMaskExcluded": 594,
+        "used": 22030
+      },
+      "shot": {
+        "fraction": 0.6795479402114473,
+        "oldMaskExcluded": 1864,
+        "used": 2743
+      }
+    },
+    "orientation": "teacher:learner"
+  },
+  "teacherReservoirExact": true,
+  "teacherStates": 5367
+}

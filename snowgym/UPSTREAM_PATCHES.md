@@ -103,6 +103,12 @@ identical terrain and spawn definitions.
 
 ## `AGENTS.md` and `.agents/skills/snowgym/`
 
+Related review documentation (2026-09-04): preserve the supplied R1j review at
+`refs/snowgym_r1j_review_and_next_rl_experiments.md` and its standalone handoff
+`refs/snowgym_rl_recovery_r1j_handoff_for_gpt_pro_2026-09-04.md`. Correct the
+handoff's seed-exposure description using R1e's archived continuation manifest.
+These documentation-only changes do not alter the upstream game.
+
 Reason: coding agents and LLM policy operators need one discoverable source for
 the repository boundary, safe mutation workflow, environment versions, and
 verification commands.

@@ -861,6 +861,18 @@ label-coverage/error audit before any fixed-architecture corrective-data fit or
 PPO continuation. See [R1j review](reviews/m7b_r1j_results.md) and the
 [decoder-probe command](src/snowgym_training/executor/DECODER_PROBE.md#entry-point).
 
+R1k adds a frozen-reference learner-opportunity audit: exact teacher-reservoir
+reconstruction, separate conditional geometry labels, episode-capped paired
+simulator branches, gradient/Jacobian checks, and a disposable hard-state fit.
+The [headless command and gate definitions](src/snowgym_training/executor/OPPORTUNITY_AUDIT.md)
+produce immutable data and a report that explicitly permits or blocks R1l.
+The approved next sequence is a matched corrective-data factorial (R1l),
+teacher-assisted movement-only PPO (R1m), and autonomous requalification (R1n).
+Neither diagnostic teacher assistance nor an improved fitting loss closes R1.
+The [R1k result](reviews/m7b_r1k_results.md) passes the audit gate: independent
+movement/aim substitutions help on hard states, and disposable fitting improves
+held-out loss. The frozen reference remains at 0/40 autonomous Engage success.
+
 The frozen `ppo_curriculum_v0.json` keeps training ranges disjoint from eight
 evaluation seeds per gate and sets thresholds before qualifying runs. Its order
 is 1v1 random, 1v1 easy scripted, 3v3 random, 3v3 easy scripted, 3v3 terrain on

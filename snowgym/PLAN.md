@@ -1137,6 +1137,63 @@ a fixed-architecture corrective-data fit with an old-data control. Do not assume
 data coverage is the proven cause or restart PPO yet. Evidence:
 [R1j review](training/reviews/m7b_r1j_results.md). R1 remains open.
 
+M7b recovery through R1n (approved 2026-09-04): preserve the supplied review
+at `refs/snowgym_r1j_review_and_next_rl_experiments.md`. The fully learned
+fighter remains the qualification target; runtime teacher geometry is allowed
+only in explicitly labeled diagnostic experiments.
+
+- [x] **R1k — conditional opportunity audit:** freeze R1i absolute epoch 20;
+      collect all living-unit opportunities on training seeds 100000–100039,
+      reconstruct and verify the original teacher reservoir, audit independent
+      head labels, gradients, and one-decision/one-fighter substitutions. Replay
+      action prefixes from reset and verify physical, plan, and tracker state.
+      Use at most 64 opportunities per channel, 30-decision branches, and a
+      disposable 200-step hard-state fit (32 training / 8 validation episodes).
+      R1l requires useful physical substitutions, at least 50% hard-fit loss
+      reduction, finite reachable gradients, and held-out improvement.
+- [ ] **R1l — matched corrective-data factorial:** original versus augmented
+      state support crossed with teacher-selected versus independent conditional
+      labels; same R1i weights, 420 Adam steps, batch 256, learning rate 3e-4,
+      clip 0.5, unchanged loss, frozen inherited actor. Episode-balanced sampling;
+      augmented arms use equal source counts. Run A–D with RNG seed 93001, then
+      replicate predeclared D and A with 93002/93003 only if D improves autonomous
+      success without rejection regression. Never select the best arm post hoc.
+- [ ] **R1m — assisted movement PPO:** first repair frozen option target scoring
+      and expose option budget/state. Reproduce exact R1h corrected-shot baseline;
+      freeze action choice and shot geometry, train movement and a separate critic.
+      Log exact Normal latent movement samples (fixed std 0.02); 8 worlds × 200
+      decisions × 100 updates, 4 epochs, minibatch 400, LR 3e-4, clip ratio 0.2,
+      separate gradient clips 0.5, movement KL stop 0.01, no BC or entropy bonus.
+      Require +20 pp assisted success, positive paired interval, parameter change,
+      and rejection rate <0.001; replicate successful runs with two further RNGs.
+      Assisted evidence cannot qualify an autonomous executor.
+- [ ] **R1n — autonomous Engage:** separately predeclare aiming/composition after
+      movement evidence, remove all runtime teacher overrides, and pass unchanged
+      R1 gates plus fresh replication before later M7b/M7c work.
+
+Lineage correction: 40 episodes describes the successful-teacher reservoir and
+probe evaluation subset, not all prior PPO exposure. R1e's final continuation
+records 401 distinct episode seeds through 101600. Preserve historical
+development 200000–200039; reserve replication development 210000–210039.
+Proposed fresh training-pool teacher/learner holdouts 108000–108039 and
+108100–108139 require a complete ancestry/seed audit before use; collisions or
+unresolved ancestry fail preflight. No qualification seeds, provider calls,
+new commander vocabulary, or broad PPO/decoder sweep is authorized here.
+Archive failed gates and stop the affected branch. Run targeted tests and all
+four implementation gates (TypeScript, build, Python client, Python training)
+before each implementation commit; preserve unrelated working-tree changes.
+
+R1k result (2026-09-04): exact reconstruction verified all 5,367 reservoir
+states. The frozen reference produced 8,000 learner states / 38,129 living-unit
+opportunities and 0/40 Engage successes. Teacher-action masking excludes 57.24%
+of invoked throws and 4.25% of moves. Across 64 hard opportunities per channel,
+one-decision aim and movement substitutions had positive paired net-damage
+intervals; power did not. Disposable hard fitting reduced loss 97.88%, improved
+episode-held-out loss, and passed encoder/Jacobian checks without changing the
+reference. R1k passes and permits R1l; autonomous R1 remains open. See the
+[R1k report](training/reviews/m7b_r1k_results.md). Fresh-holdout ancestry must
+still pass before R1l collects those episodes.
+
 #### M7c — full-fight fixed-plan composition
 
 - [ ] Hold one-, two-, and three-role plans throughout complete 3v3, 5v5, and
