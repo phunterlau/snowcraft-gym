@@ -1,0 +1,19 @@
+{
+  "assistType": "teacher-shot-direction-and-power",
+  "assistVersion": "snowgym.r1h-corrected-shots.v0",
+  "auditSourceDigest": "sha256:05cadb1081d85668f1a98672174c7d8ffff88b3f04b977367980e9080c05977e",
+  "autonomousQualificationEligible": false,
+  "declarationDigest": "sha256:0d19abb794ab310ced6f99cba3f78dabb5b06a35f692d69b4d08d6960d552f8e",
+  "gitCommit": "5977ba0b1e7a748ae78349759a22f551f90f35ef",
+  "sourceManifest": "sha256:b62014d0cd7ff0148b318308c300c789c03992adc8e437589c111eb2e5ba9a85",
+  "trainingRngs": [
+    94101,
+    94102,
+    94103
+  ],
+  "updates": [
+    1,
+    11,
+    21
+  ]
+}

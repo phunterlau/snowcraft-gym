@@ -1,0 +1,1378 @@
+{
+  "assistType": "teacher-shot-direction-and-power",
+  "assistVersion": "snowgym.r1h-corrected-shots.v0",
+  "autonomousQualificationEligible": false,
+  "common": [
+    {
+      "checkpoint": "initial",
+      "summary": {
+        "closerFraction": {
+          "count": 54,
+          "mean": 0.0,
+          "median": 0.0,
+          "p90": 0.0
+        },
+        "gapReduction": {
+          "count": 54,
+          "mean": 0.0,
+          "median": 0.0,
+          "p90": 0.0
+        },
+        "recommendationGap": {
+          "count": 54,
+          "mean": 7.816947647393768,
+          "median": 7.250193231632904,
+          "p90": 12.443175563772845
+        },
+        "worldShift": {
+          "count": 54,
+          "mean": 0.0,
+          "median": 0.0,
+          "p90": 0.0
+        }
+      },
+      "trainingRng": 94101
+    },
+    {
+      "checkpoint": "update-010",
+      "summary": {
+        "closerFraction": {
+          "count": 54,
+          "mean": 0.6209876543209875,
+          "median": 0.75,
+          "p90": 1.0
+        },
+        "gapReduction": {
+          "count": 54,
+          "mean": 0.07976384254305495,
+          "median": 0.05356659288533592,
+          "p90": 0.40254404412231337
+        },
+        "recommendationGap": {
+          "count": 54,
+          "mean": 7.737183804850713,
+          "median": 7.3491240702063045,
+          "p90": 12.444625340748347
+        },
+        "worldShift": {
+          "count": 54,
+          "mean": 0.39854841394415813,
+          "median": 0.3935547326817338,
+          "p90": 0.5435541291580879
+        }
+      },
+      "trainingRng": 94101
+    },
+    {
+      "checkpoint": "update-020",
+      "summary": {
+        "closerFraction": {
+          "count": 54,
+          "mean": 0.648148148148148,
+          "median": 0.8,
+          "p90": 1.0
+        },
+        "gapReduction": {
+          "count": 54,
+          "mean": 0.16472980912588114,
+          "median": 0.160834986110792,
+          "p90": 0.6526270182611884
+        },
+        "recommendationGap": {
+          "count": 54,
+          "mean": 7.652217838267887,
+          "median": 7.23806374784151,
+          "p90": 12.478930728103254
+        },
+        "worldShift": {
+          "count": 54,
+          "mean": 0.5878708369820826,
+          "median": 0.5725891368745495,
+          "p90": 0.7307722856272694
+        }
+      },
+      "trainingRng": 94101
+    },
+    {
+      "checkpoint": "final",
+      "summary": {
+        "closerFraction": {
+          "count": 54,
+          "mean": 0.6564814814814814,
+          "median": 0.8,
+          "p90": 1.0
+        },
+        "gapReduction": {
+          "count": 54,
+          "mean": 0.08261883841323187,
+          "median": 0.07835737464662898,
+          "p90": 0.3129506947068635
+        },
+        "recommendationGap": {
+          "count": 54,
+          "mean": 7.734328808980536,
+          "median": 7.311772107930535,
+          "p90": 12.412341336935217
+        },
+        "worldShift": {
+          "count": 54,
+          "mean": 0.30240325727726747,
+          "median": 0.26055152427790074,
+          "p90": 0.4567505050708947
+        }
+      },
+      "trainingRng": 94101
+    },
+    {
+      "checkpoint": "initial",
+      "summary": {
+        "closerFraction": {
+          "count": 54,
+          "mean": 0.0,
+          "median": 0.0,
+          "p90": 0.0
+        },
+        "gapReduction": {
+          "count": 54,
+          "mean": 0.0,
+          "median": 0.0,
+          "p90": 0.0
+        },
+        "recommendationGap": {
+          "count": 54,
+          "mean": 7.816947647393768,
+          "median": 7.250193231632904,
+          "p90": 12.443175563772845
+        },
+        "worldShift": {
+          "count": 54,
+          "mean": 0.0,
+          "median": 0.0,
+          "p90": 0.0
+        }
+      },
+      "trainingRng": 94102
+    },
+    {
+      "checkpoint": "update-010",
+      "summary": {
+        "closerFraction": {
+          "count": 54,
+          "mean": 0.5555555555555556,
+          "median": 0.6666666666666666,
+          "p90": 1.0
+        },
+        "gapReduction": {
+          "count": 54,
+          "mean": 0.01970768106948149,
+          "median": 0.03483411391802408,
+          "p90": 0.2475993626586847
+        },
+        "recommendationGap": {
+          "count": 54,
+          "mean": 7.797239966324287,
+          "median": 7.004125078941959,
+          "p90": 12.416663462859763
+        },
+        "worldShift": {
+          "count": 54,
+          "mean": 0.32977590935375184,
+          "median": 0.32775038014876867,
+          "p90": 0.3626885825584981
+        }
+      },
+      "trainingRng": 94102
+    },
+    {
+      "checkpoint": "update-020",
+      "summary": {
+        "closerFraction": {
+          "count": 54,
+          "mean": 0.7203703703703703,
+          "median": 1.0,
+          "p90": 1.0
+        },
+        "gapReduction": {
+          "count": 54,
+          "mean": 0.14694244121733113,
+          "median": 0.2173909371613812,
+          "p90": 0.4356220972865954
+        },
+        "recommendationGap": {
+          "count": 54,
+          "mean": 7.670005206176438,
+          "median": 7.108149602965824,
+          "p90": 12.45876182408516
+        },
+        "worldShift": {
+          "count": 54,
+          "mean": 0.42595469783402923,
+          "median": 0.43257730847112796,
+          "p90": 0.4750296824082142
+        }
+      },
+      "trainingRng": 94102
+    },
+    {
+      "checkpoint": "final",
+      "summary": {
+        "closerFraction": {
+          "count": 54,
+          "mean": 0.6679012345679013,
+          "median": 0.9,
+          "p90": 1.0
+        },
+        "gapReduction": {
+          "count": 54,
+          "mean": 0.2357768222322786,
+          "median": 0.36222553618195896,
+          "p90": 0.6857608306307706
+        },
+        "recommendationGap": {
+          "count": 54,
+          "mean": 7.5811708251614895,
+          "median": 7.1586012092973945,
+          "p90": 12.33260373757429
+        },
+        "worldShift": {
+          "count": 54,
+          "mean": 0.7051041965120682,
+          "median": 0.7190631950109807,
+          "p90": 0.7662816918356425
+        }
+      },
+      "trainingRng": 94102
+    },
+    {
+      "checkpoint": "initial",
+      "summary": {
+        "closerFraction": {
+          "count": 54,
+          "mean": 0.0,
+          "median": 0.0,
+          "p90": 0.0
+        },
+        "gapReduction": {
+          "count": 54,
+          "mean": 0.0,
+          "median": 0.0,
+          "p90": 0.0
+        },
+        "recommendationGap": {
+          "count": 54,
+          "mean": 7.816947647393768,
+          "median": 7.250193231632904,
+          "p90": 12.443175563772845
+        },
+        "worldShift": {
+          "count": 54,
+          "mean": 0.0,
+          "median": 0.0,
+          "p90": 0.0
+        }
+      },
+      "trainingRng": 94103
+    },
+    {
+      "checkpoint": "update-010",
+      "summary": {
+        "closerFraction": {
+          "count": 54,
+          "mean": 0.5407407407407407,
+          "median": 0.5833333333333333,
+          "p90": 1.0
+        },
+        "gapReduction": {
+          "count": 54,
+          "mean": 0.016764518520484044,
+          "median": 0.07764457252417667,
+          "p90": 0.43519759839176897
+        },
+        "recommendationGap": {
+          "count": 54,
+          "mean": 7.800183128873285,
+          "median": 7.0139197883393685,
+          "p90": 12.574231286617273
+        },
+        "worldShift": {
+          "count": 54,
+          "mean": 0.6134512573846664,
+          "median": 0.6150742984095332,
+          "p90": 0.6743858447990507
+        }
+      },
+      "trainingRng": 94103
+    },
+    {
+      "checkpoint": "update-020",
+      "summary": {
+        "closerFraction": {
+          "count": 54,
+          "mean": 0.38765432098765434,
+          "median": 0.2,
+          "p90": 1.0
+        },
+        "gapReduction": {
+          "count": 54,
+          "mean": -0.13908459618718585,
+          "median": -0.16987308175008256,
+          "p90": 0.37292356480508215
+        },
+        "recommendationGap": {
+          "count": 54,
+          "mean": 7.956032243580954,
+          "median": 7.139489450415626,
+          "p90": 12.951670227110652
+        },
+        "worldShift": {
+          "count": 54,
+          "mean": 0.8413749523595468,
+          "median": 0.8445575227066697,
+          "p90": 0.9315414140727215
+        }
+      },
+      "trainingRng": 94103
+    },
+    {
+      "checkpoint": "final",
+      "summary": {
+        "closerFraction": {
+          "count": 54,
+          "mean": 0.3830246913580247,
+          "median": 0.2,
+          "p90": 1.0
+        },
+        "gapReduction": {
+          "count": 54,
+          "mean": -0.1871839558223799,
+          "median": -0.22602556046494687,
+          "p90": 0.5547583870453652
+        },
+        "recommendationGap": {
+          "count": 54,
+          "mean": 8.00413160321615,
+          "median": 7.137306951886307,
+          "p90": 13.08473700251432
+        },
+        "worldShift": {
+          "count": 54,
+          "mean": 1.1340712253529166,
+          "median": 1.120147245581284,
+          "p90": 1.2452949267487348
+        }
+      },
+      "trainingRng": 94103
+    }
+  ],
+  "format": "snowgym.recovery-audit.v0",
+  "updates": [
+    {
+      "all": {
+        "decisionSummedScore": {
+          "count": 232,
+          "mean": 0.09345052973818839,
+          "median": 0.268330280681882,
+          "p90": 6.96200203522139
+        },
+        "decisionsWithMoves": 232,
+        "mahalanobis": {
+          "count": 942,
+          "mean": 11.778201759527855,
+          "median": 11.550238319105421,
+          "p90": 19.439289629307265
+        },
+        "opportunities": 942,
+        "positiveScoreFraction": 0.5106157112526539,
+        "recommendationMeanShiftKl": {
+          "count": 942,
+          "mean": 83.84461845458745,
+          "median": 66.70403679577879,
+          "p90": 188.94321499825946
+        },
+        "recommendationWorldGap": {
+          "count": 942,
+          "mean": 9.08905608478749,
+          "median": 9.253915355031669,
+          "p90": 14.195233095804578
+        },
+        "sampleAdvantageCorrelation": 0.006255392603941246,
+        "sampleCloserFraction": 0.45222929936305734,
+        "sampleTowardRecommendation": {
+          "count": 942,
+          "mean": -0.050371792376239906,
+          "median": -0.058233554178842975,
+          "p90": 0.9787294039296621
+        },
+        "sampleWorldDisplacement": {
+          "count": 942,
+          "mean": 1.0022545059911212,
+          "median": 0.9311853257453587,
+          "p90": 1.76832042814824
+        },
+        "saturatedCoordinateFraction": 0.0,
+        "trajectoriesWithMoves": 8,
+        "uniqueSeeds": 8,
+        "withinThreeSigmaFraction": 0.04670912951167728,
+        "worldScoreProjection": {
+          "count": 942,
+          "mean": 0.02301541709050924,
+          "median": 0.0398239276835623,
+          "p90": 3.565106756224052
+        }
+      },
+      "decisions": 240,
+      "firstMinibatch": {
+        "decisionSummedScore": {
+          "count": 118,
+          "mean": 1.0800256619945545,
+          "median": 1.2336868255087974,
+          "p90": 8.100755591242217
+        },
+        "decisionsWithMoves": 118,
+        "mahalanobis": {
+          "count": 479,
+          "mean": 11.343331523144577,
+          "median": 11.023576327699011,
+          "p90": 18.695610294448496
+        },
+        "opportunities": 479,
+        "positiveScoreFraction": 0.5260960334029228,
+        "recommendationMeanShiftKl": {
+          "count": 479,
+          "mean": 78.8373581961885,
+          "median": 60.75961752630301,
+          "p90": 174.76693736887907
+        },
+        "recommendationWorldGap": {
+          "count": 479,
+          "mean": 8.789813009937081,
+          "median": 8.531347700100854,
+          "p90": 14.072856779072513
+        },
+        "sampleAdvantageCorrelation": 0.07145935144044008,
+        "sampleCloserFraction": 0.44676409185803756,
+        "sampleTowardRecommendation": {
+          "count": 479,
+          "mean": -0.06649031637654174,
+          "median": -0.0565484453693722,
+          "p90": 1.0221553576861249
+        },
+        "sampleWorldDisplacement": {
+          "count": 479,
+          "mean": 1.0399403417885167,
+          "median": 0.957786707761997,
+          "p90": 1.8566961722710054
+        },
+        "saturatedCoordinateFraction": 0.0,
+        "trajectoriesWithMoves": 8,
+        "uniqueSeeds": 8,
+        "withinThreeSigmaFraction": 0.05219206680584551,
+        "worldScoreProjection": {
+          "count": 479,
+          "mean": 0.2660606014934393,
+          "median": 0.11152891327106268,
+          "p90": 4.113406708766581
+        }
+      },
+      "trainingRng": 94101,
+      "trajectories": 8,
+      "update": 1
+    },
+    {
+      "all": {
+        "decisionSummedScore": {
+          "count": 236,
+          "mean": -0.4003900547150998,
+          "median": -0.15606104742031962,
+          "p90": 3.8544494584667666
+        },
+        "decisionsWithMoves": 236,
+        "mahalanobis": {
+          "count": 915,
+          "mean": 12.165405383843378,
+          "median": 11.251259884960625,
+          "p90": 21.047054805556595
+        },
+        "opportunities": 915,
+        "positiveScoreFraction": 0.48743169398907105,
+        "recommendationMeanShiftKl": {
+          "count": 915,
+          "mean": 95.90538884136608,
+          "median": 63.29542449946209,
+          "p90": 221.48943962092116
+        },
+        "recommendationWorldGap": {
+          "count": 915,
+          "mean": 9.202196381523033,
+          "median": 8.489476126814147,
+          "p90": 15.901603493354973
+        },
+        "sampleAdvantageCorrelation": -0.03598078524892351,
+        "sampleCloserFraction": 0.4721311475409836,
+        "sampleTowardRecommendation": {
+          "count": 915,
+          "mean": -0.008280689564967053,
+          "median": -0.002448185366930533,
+          "p90": 0.9531593444560401
+        },
+        "sampleWorldDisplacement": {
+          "count": 915,
+          "mean": 0.9417759475550697,
+          "median": 0.8827925141358409,
+          "p90": 1.6214789766017987
+        },
+        "saturatedCoordinateFraction": 0.0,
+        "trajectoriesWithMoves": 8,
+        "uniqueSeeds": 8,
+        "withinThreeSigmaFraction": 0.060109289617486336,
+        "worldScoreProjection": {
+          "count": 915,
+          "mean": -0.10327000318334813,
+          "median": -0.023661595904709513,
+          "p90": 2.2344358196721537
+        }
+      },
+      "decisions": 240,
+      "firstMinibatch": {
+        "decisionSummedScore": {
+          "count": 118,
+          "mean": -0.828737621593056,
+          "median": -0.3907283933033793,
+          "p90": 4.074406268093264
+        },
+        "decisionsWithMoves": 118,
+        "mahalanobis": {
+          "count": 462,
+          "mean": 12.14119126931617,
+          "median": 11.604281972259383,
+          "p90": 20.884529099174046
+        },
+        "opportunities": 462,
+        "positiveScoreFraction": 0.4675324675324675,
+        "recommendationMeanShiftKl": {
+          "count": 462,
+          "mean": 95.34972472408805,
+          "median": 67.3299641049158,
+          "p90": 218.08305048297274
+        },
+        "recommendationWorldGap": {
+          "count": 462,
+          "mean": 9.154599967271148,
+          "median": 8.674799559127322,
+          "p90": 15.756243598534677
+        },
+        "sampleAdvantageCorrelation": -0.07202760742310148,
+        "sampleCloserFraction": 0.47186147186147187,
+        "sampleTowardRecommendation": {
+          "count": 462,
+          "mean": -0.02200224630688026,
+          "median": 0.01618187415260927,
+          "p90": 0.9664074026616533
+        },
+        "sampleWorldDisplacement": {
+          "count": 462,
+          "mean": 0.9906959282644007,
+          "median": 0.9235794252912087,
+          "p90": 1.7215527022917323
+        },
+        "saturatedCoordinateFraction": 0.0,
+        "trajectoriesWithMoves": 8,
+        "uniqueSeeds": 8,
+        "withinThreeSigmaFraction": 0.07792207792207792,
+        "worldScoreProjection": {
+          "count": 462,
+          "mean": -0.2116689163376204,
+          "median": -0.08337882284451223,
+          "p90": 2.3347332587554135
+        }
+      },
+      "trainingRng": 94101,
+      "trajectories": 8,
+      "update": 11
+    },
+    {
+      "all": {
+        "decisionSummedScore": {
+          "count": 227,
+          "mean": -0.5520023096602836,
+          "median": -0.4969176669172362,
+          "p90": 6.231273588835653
+        },
+        "decisionsWithMoves": 227,
+        "mahalanobis": {
+          "count": 836,
+          "mean": 11.207858216532,
+          "median": 10.775494488317172,
+          "p90": 19.578508954894104
+        },
+        "opportunities": 836,
+        "positiveScoreFraction": 0.48086124401913877,
+        "recommendationMeanShiftKl": {
+          "count": 836,
+          "mean": 79.2760063260322,
+          "median": 58.05566986884109,
+          "p90": 191.65902344629143
+        },
+        "recommendationWorldGap": {
+          "count": 836,
+          "mean": 8.62751303371695,
+          "median": 8.221615743653913,
+          "p90": 14.979897337672067
+        },
+        "sampleAdvantageCorrelation": -0.04984266385914315,
+        "sampleCloserFraction": 0.4569377990430622,
+        "sampleTowardRecommendation": {
+          "count": 836,
+          "mean": -0.03912646379879001,
+          "median": -0.026714485326720928,
+          "p90": 0.910014674242384
+        },
+        "sampleWorldDisplacement": {
+          "count": 836,
+          "mean": 0.970024373414598,
+          "median": 0.9084538269309448,
+          "p90": 1.6566909403420944
+        },
+        "saturatedCoordinateFraction": 0.0,
+        "trajectoriesWithMoves": 8,
+        "uniqueSeeds": 7,
+        "withinThreeSigmaFraction": 0.06937799043062201,
+        "worldScoreProjection": {
+          "count": 836,
+          "mean": -0.14988579460871332,
+          "median": -0.13818832756911742,
+          "p90": 3.7086431702778873
+        }
+      },
+      "decisions": 240,
+      "firstMinibatch": {
+        "decisionSummedScore": {
+          "count": 110,
+          "mean": -0.1325735617288413,
+          "median": -0.007101550302643506,
+          "p90": 6.004266169332372
+        },
+        "decisionsWithMoves": 110,
+        "mahalanobis": {
+          "count": 400,
+          "mean": 11.298281840950976,
+          "median": 10.754253004186383,
+          "p90": 19.8112595465005
+        },
+        "opportunities": 400,
+        "positiveScoreFraction": 0.5,
+        "recommendationMeanShiftKl": {
+          "count": 400,
+          "mean": 80.35803335381281,
+          "median": 57.827071427992976,
+          "p90": 196.24383046067976
+        },
+        "recommendationWorldGap": {
+          "count": 400,
+          "mean": 8.700445350348529,
+          "median": 8.160491485971043,
+          "p90": 15.032362462283594
+        },
+        "sampleAdvantageCorrelation": -0.013831666990876281,
+        "sampleCloserFraction": 0.4625,
+        "sampleTowardRecommendation": {
+          "count": 400,
+          "mean": -0.04768202832746113,
+          "median": -0.014944696757841663,
+          "p90": 0.8488609810983169
+        },
+        "sampleWorldDisplacement": {
+          "count": 400,
+          "mean": 0.9863447081366445,
+          "median": 0.8904812791804126,
+          "p90": 1.7190696166658241
+        },
+        "saturatedCoordinateFraction": 0.0,
+        "trajectoriesWithMoves": 8,
+        "uniqueSeeds": 7,
+        "withinThreeSigmaFraction": 0.08,
+        "worldScoreProjection": {
+          "count": 400,
+          "mean": -0.03645772947543136,
+          "median": -0.00990035891488849,
+          "p90": 3.715091609660137
+        }
+      },
+      "trainingRng": 94101,
+      "trajectories": 8,
+      "update": 21
+    },
+    {
+      "all": {
+        "decisionSummedScore": {
+          "count": 231,
+          "mean": -0.5429808525893428,
+          "median": -0.7357711180201106,
+          "p90": 8.892981580044426
+        },
+        "decisionsWithMoves": 231,
+        "mahalanobis": {
+          "count": 877,
+          "mean": 12.818922333374179,
+          "median": 12.65293898967802,
+          "p90": 21.047896048832403
+        },
+        "opportunities": 877,
+        "positiveScoreFraction": 0.4697833523375142,
+        "recommendationMeanShiftKl": {
+          "count": 877,
+          "mean": 100.87263514060183,
+          "median": 80.04843253825712,
+          "p90": 221.50754399221918
+        },
+        "recommendationWorldGap": {
+          "count": 877,
+          "mean": 9.818406879844614,
+          "median": 9.678517738722366,
+          "p90": 15.78676138133484
+        },
+        "sampleAdvantageCorrelation": -0.03158386513347427,
+        "sampleCloserFraction": 0.5017103762827823,
+        "sampleTowardRecommendation": {
+          "count": 877,
+          "mean": 0.05221979352942077,
+          "median": 0.048093056440817405,
+          "p90": 1.113859902452619
+        },
+        "sampleWorldDisplacement": {
+          "count": 877,
+          "mean": 0.9698346697188513,
+          "median": 0.907701646736714,
+          "p90": 1.6898969864092337
+        },
+        "saturatedCoordinateFraction": 0.0,
+        "trajectoriesWithMoves": 8,
+        "uniqueSeeds": 7,
+        "withinThreeSigmaFraction": 0.05131128848346636,
+        "worldScoreProjection": {
+          "count": 877,
+          "mean": -0.14302004213014619,
+          "median": -0.1759349813856943,
+          "p90": 4.225132446993204
+        }
+      },
+      "decisions": 240,
+      "firstMinibatch": {
+        "decisionSummedScore": {
+          "count": 114,
+          "mean": 0.2131757411998899,
+          "median": -0.009008305786592313,
+          "p90": 9.829177706373974
+        },
+        "decisionsWithMoves": 114,
+        "mahalanobis": {
+          "count": 426,
+          "mean": 12.73749727491833,
+          "median": 12.338141813007248,
+          "p90": 21.103024617993217
+        },
+        "opportunities": 426,
+        "positiveScoreFraction": 0.4859154929577465,
+        "recommendationMeanShiftKl": {
+          "count": 426,
+          "mean": 101.13433318422477,
+          "median": 76.11509158416737,
+          "p90": 222.66891402208427
+        },
+        "recommendationWorldGap": {
+          "count": 426,
+          "mean": 9.774288191663846,
+          "median": 9.512661865568338,
+          "p90": 15.87798171122866
+        },
+        "sampleAdvantageCorrelation": 0.026416426981416608,
+        "sampleCloserFraction": 0.4812206572769953,
+        "sampleTowardRecommendation": {
+          "count": 426,
+          "mean": 0.052085562596957034,
+          "median": 0.01756977895958406,
+          "p90": 1.1623868532951227
+        },
+        "sampleWorldDisplacement": {
+          "count": 426,
+          "mean": 0.9596604253662236,
+          "median": 0.9010034670466328,
+          "p90": 1.6692900371241834
+        },
+        "saturatedCoordinateFraction": 0.0,
+        "trajectoriesWithMoves": 8,
+        "uniqueSeeds": 7,
+        "withinThreeSigmaFraction": 0.056338028169014086,
+        "worldScoreProjection": {
+          "count": 426,
+          "mean": 0.057047029335181784,
+          "median": -0.09369543784918018,
+          "p90": 4.673275810815076
+        }
+      },
+      "trainingRng": 94102,
+      "trajectories": 8,
+      "update": 1
+    },
+    {
+      "all": {
+        "decisionSummedScore": {
+          "count": 193,
+          "mean": 0.3311191663812729,
+          "median": -0.23307798881125863,
+          "p90": 9.519102620538764
+        },
+        "decisionsWithMoves": 193,
+        "mahalanobis": {
+          "count": 733,
+          "mean": 9.66869375953859,
+          "median": 9.695986150841984,
+          "p90": 16.270991806123256
+        },
+        "opportunities": 733,
+        "positiveScoreFraction": 0.49386084583901774,
+        "recommendationMeanShiftKl": {
+          "count": 733,
+          "mean": 58.93404369222083,
+          "median": 47.00607371865978,
+          "p90": 132.3737380270104
+        },
+        "recommendationWorldGap": {
+          "count": 733,
+          "mean": 7.300603974931826,
+          "median": 7.29063904848993,
+          "p90": 12.120841882492945
+        },
+        "sampleAdvantageCorrelation": 0.012416170009776191,
+        "sampleCloserFraction": 0.49931787175989084,
+        "sampleTowardRecommendation": {
+          "count": 733,
+          "mean": 0.04554919147761979,
+          "median": 0.0643397469708682,
+          "p90": 1.0367868343506934
+        },
+        "sampleWorldDisplacement": {
+          "count": 733,
+          "mean": 0.9821999718453648,
+          "median": 0.9007324116134126,
+          "p90": 1.688486144217721
+        },
+        "saturatedCoordinateFraction": 0.0,
+        "trajectoriesWithMoves": 8,
+        "uniqueSeeds": 6,
+        "withinThreeSigmaFraction": 0.08731241473396999,
+        "worldScoreProjection": {
+          "count": 733,
+          "mean": 0.08718417341280445,
+          "median": -0.03500397363014196,
+          "p90": 5.162813445374044
+        }
+      },
+      "decisions": 196,
+      "firstMinibatch": {
+        "decisionSummedScore": {
+          "count": 118,
+          "mean": -0.5043514371443875,
+          "median": -0.055949065627440286,
+          "p90": 7.076194047188089
+        },
+        "decisionsWithMoves": 118,
+        "mahalanobis": {
+          "count": 453,
+          "mean": 9.744329164266457,
+          "median": 9.85802128606339,
+          "p90": 16.397689246646706
+        },
+        "opportunities": 453,
+        "positiveScoreFraction": 0.4922737306843267,
+        "recommendationMeanShiftKl": {
+          "count": 453,
+          "mean": 60.11398624544658,
+          "median": 48.59029183823945,
+          "p90": 134.4421154849822
+        },
+        "recommendationWorldGap": {
+          "count": 453,
+          "mean": 7.377274830159696,
+          "median": 7.367270131428569,
+          "p90": 12.168303527518129
+        },
+        "sampleAdvantageCorrelation": -0.03410225712691207,
+        "sampleCloserFraction": 0.5033112582781457,
+        "sampleTowardRecommendation": {
+          "count": 453,
+          "mean": 0.06658173316057643,
+          "median": 0.06548473392331502,
+          "p90": 1.0899380865990251
+        },
+        "sampleWorldDisplacement": {
+          "count": 453,
+          "mean": 0.9606227374370383,
+          "median": 0.8798185544962107,
+          "p90": 1.647282237033079
+        },
+        "saturatedCoordinateFraction": 0.0,
+        "trajectoriesWithMoves": 8,
+        "uniqueSeeds": 6,
+        "withinThreeSigmaFraction": 0.09492273730684327,
+        "worldScoreProjection": {
+          "count": 453,
+          "mean": -0.13137631254533716,
+          "median": -0.0609965050200314,
+          "p90": 3.9184215003465215
+        }
+      },
+      "trainingRng": 94102,
+      "trajectories": 8,
+      "update": 11
+    },
+    {
+      "all": {
+        "decisionSummedScore": {
+          "count": 210,
+          "mean": -0.2822689354325747,
+          "median": -0.21376098868954313,
+          "p90": 6.489557222192773
+        },
+        "decisionsWithMoves": 210,
+        "mahalanobis": {
+          "count": 863,
+          "mean": 9.947172539938164,
+          "median": 9.298467488166121,
+          "p90": 17.21478219182104
+        },
+        "opportunities": 863,
+        "positiveScoreFraction": 0.4901506373117034,
+        "recommendationMeanShiftKl": {
+          "count": 863,
+          "mean": 63.36703081178553,
+          "median": 43.23074881424119,
+          "p90": 148.17438140881112
+        },
+        "recommendationWorldGap": {
+          "count": 863,
+          "mean": 7.589299723647771,
+          "median": 7.086645685871979,
+          "p90": 13.170711100649775
+        },
+        "sampleAdvantageCorrelation": -0.016468564762115622,
+        "sampleCloserFraction": 0.47740440324449596,
+        "sampleTowardRecommendation": {
+          "count": 863,
+          "mean": -0.010392731197438613,
+          "median": 0.003550768985633647,
+          "p90": 0.9400368145807172
+        },
+        "sampleWorldDisplacement": {
+          "count": 863,
+          "mean": 0.9413577122644179,
+          "median": 0.8741140979380039,
+          "p90": 1.6487541501076899
+        },
+        "saturatedCoordinateFraction": 0.0,
+        "trajectoriesWithMoves": 8,
+        "uniqueSeeds": 7,
+        "withinThreeSigmaFraction": 0.08111239860950174,
+        "worldScoreProjection": {
+          "count": 863,
+          "mean": -0.06868653121766008,
+          "median": -0.05801858419663605,
+          "p90": 3.4503215666208757
+        }
+      },
+      "decisions": 218,
+      "firstMinibatch": {
+        "decisionSummedScore": {
+          "count": 119,
+          "mean": 0.09542894690417744,
+          "median": -0.052112590936826325,
+          "p90": 6.179250089284937
+        },
+        "decisionsWithMoves": 119,
+        "mahalanobis": {
+          "count": 480,
+          "mean": 9.916694135482722,
+          "median": 9.839410517550892,
+          "p90": 16.446572380506776
+        },
+        "opportunities": 480,
+        "positiveScoreFraction": 0.5083333333333333,
+        "recommendationMeanShiftKl": {
+          "count": 480,
+          "mean": 61.71807356512299,
+          "median": 48.40699989055945,
+          "p90": 135.24487253796744
+        },
+        "recommendationWorldGap": {
+          "count": 480,
+          "mean": 7.586368199048165,
+          "median": 7.5169467503317176,
+          "p90": 12.685430663428487
+        },
+        "sampleAdvantageCorrelation": 0.006270286263107163,
+        "sampleCloserFraction": 0.46458333333333335,
+        "sampleTowardRecommendation": {
+          "count": 480,
+          "mean": -0.04562080115964425,
+          "median": -0.057487764620192006,
+          "p90": 0.9174440361403131
+        },
+        "sampleWorldDisplacement": {
+          "count": 480,
+          "mean": 0.9492009383834596,
+          "median": 0.8785234954238865,
+          "p90": 1.6993954200930903
+        },
+        "saturatedCoordinateFraction": 0.0,
+        "trajectoriesWithMoves": 8,
+        "uniqueSeeds": 7,
+        "withinThreeSigmaFraction": 0.08541666666666667,
+        "worldScoreProjection": {
+          "count": 480,
+          "mean": 0.02365842641999396,
+          "median": 0.081688059451128,
+          "p90": 3.3488663605226345
+        }
+      },
+      "trainingRng": 94102,
+      "trajectories": 8,
+      "update": 21
+    },
+    {
+      "all": {
+        "decisionSummedScore": {
+          "count": 239,
+          "mean": 0.691809980516935,
+          "median": 0.12253132638584407,
+          "p90": 8.024963919067941
+        },
+        "decisionsWithMoves": 239,
+        "mahalanobis": {
+          "count": 942,
+          "mean": 11.877969800449048,
+          "median": 11.59673626931426,
+          "p90": 19.469275997101033
+        },
+        "opportunities": 942,
+        "positiveScoreFraction": 0.5116772823779193,
+        "recommendationMeanShiftKl": {
+          "count": 942,
+          "mean": 84.99001653910301,
+          "median": 67.24214758890261,
+          "p90": 189.52636029026863
+        },
+        "recommendationWorldGap": {
+          "count": 942,
+          "mean": 9.015418986101265,
+          "median": 8.946779734286586,
+          "p90": 14.266106005211132
+        },
+        "sampleAdvantageCorrelation": 0.05737357112729949,
+        "sampleCloserFraction": 0.4734607218683652,
+        "sampleTowardRecommendation": {
+          "count": 942,
+          "mean": -0.0019067372583296237,
+          "median": 0.009480825702471676,
+          "p90": 1.009045189045507
+        },
+        "sampleWorldDisplacement": {
+          "count": 942,
+          "mean": 0.9743117549767918,
+          "median": 0.9064753831806511,
+          "p90": 1.6861045595455162
+        },
+        "saturatedCoordinateFraction": 0.0,
+        "trajectoriesWithMoves": 8,
+        "uniqueSeeds": 8,
+        "withinThreeSigmaFraction": 0.041401273885350316,
+        "worldScoreProjection": {
+          "count": 942,
+          "mean": 0.17552291437743894,
+          "median": 0.0183660160297321,
+          "p90": 3.223313342957186
+        }
+      },
+      "decisions": 240,
+      "firstMinibatch": {
+        "decisionSummedScore": {
+          "count": 119,
+          "mean": 0.35032344203763355,
+          "median": -0.05220044862433637,
+          "p90": 5.073293829652959
+        },
+        "decisionsWithMoves": 119,
+        "mahalanobis": {
+          "count": 473,
+          "mean": 11.986146093148406,
+          "median": 11.598490628581297,
+          "p90": 19.967002558586568
+        },
+        "opportunities": 473,
+        "positiveScoreFraction": 0.5116279069767442,
+        "recommendationMeanShiftKl": {
+          "count": 473,
+          "mean": 86.26110169610332,
+          "median": 67.26249243064409,
+          "p90": 199.34064999411146
+        },
+        "recommendationWorldGap": {
+          "count": 473,
+          "mean": 9.104476754318789,
+          "median": 8.952016225306124,
+          "p90": 14.492844175810385
+        },
+        "sampleAdvantageCorrelation": 0.02683673848580402,
+        "sampleCloserFraction": 0.4820295983086681,
+        "sampleTowardRecommendation": {
+          "count": 473,
+          "mean": -0.020544243647742468,
+          "median": 0.0061127437303500134,
+          "p90": 0.9772776385942762
+        },
+        "sampleWorldDisplacement": {
+          "count": 473,
+          "mean": 0.9650524496160736,
+          "median": 0.8770505398808085,
+          "p90": 1.6961225783038858
+        },
+        "saturatedCoordinateFraction": 0.0,
+        "trajectoriesWithMoves": 8,
+        "uniqueSeeds": 8,
+        "withinThreeSigmaFraction": 0.040169133192389,
+        "worldScoreProjection": {
+          "count": 473,
+          "mean": 0.08813634165428834,
+          "median": 0.020199914359374623,
+          "p90": 3.21999940381314
+        }
+      },
+      "trainingRng": 94103,
+      "trajectories": 8,
+      "update": 1
+    },
+    {
+      "all": {
+        "decisionSummedScore": {
+          "count": 226,
+          "mean": 0.17046517497277708,
+          "median": 0.0016211108423878945,
+          "p90": 5.799683267475309
+        },
+        "decisionsWithMoves": 226,
+        "mahalanobis": {
+          "count": 875,
+          "mean": 10.461419921960994,
+          "median": 10.140769110152455,
+          "p90": 17.211956824147357
+        },
+        "opportunities": 875,
+        "positiveScoreFraction": 0.5005714285714286,
+        "recommendationMeanShiftKl": {
+          "count": 875,
+          "mean": 69.02028668566308,
+          "median": 51.417599072711106,
+          "p90": 148.12573789600143
+        },
+        "recommendationWorldGap": {
+          "count": 875,
+          "mean": 8.00197163298686,
+          "median": 7.775632310677867,
+          "p90": 13.044878075592715
+        },
+        "sampleAdvantageCorrelation": 0.012664892421386237,
+        "sampleCloserFraction": 0.4662857142857143,
+        "sampleTowardRecommendation": {
+          "count": 875,
+          "mean": -0.00725209992922792,
+          "median": -0.01046243045846873,
+          "p90": 0.9814674205514927
+        },
+        "sampleWorldDisplacement": {
+          "count": 875,
+          "mean": 0.951091375025295,
+          "median": 0.8935982105247321,
+          "p90": 1.6618613249984837
+        },
+        "saturatedCoordinateFraction": 0.0,
+        "trajectoriesWithMoves": 8,
+        "uniqueSeeds": 8,
+        "withinThreeSigmaFraction": 0.072,
+        "worldScoreProjection": {
+          "count": 875,
+          "mean": 0.04402871947868299,
+          "median": 0.00022435110698297567,
+          "p90": 3.188528631489876
+        }
+      },
+      "decisions": 240,
+      "firstMinibatch": {
+        "decisionSummedScore": {
+          "count": 116,
+          "mean": -0.42781074722061746,
+          "median": -0.21600052920793172,
+          "p90": 5.312435019598409
+        },
+        "decisionsWithMoves": 116,
+        "mahalanobis": {
+          "count": 469,
+          "mean": 10.841888501083432,
+          "median": 11.064566228180006,
+          "p90": 16.936779394652067
+        },
+        "opportunities": 469,
+        "positiveScoreFraction": 0.47761194029850745,
+        "recommendationMeanShiftKl": {
+          "count": 469,
+          "mean": 72.0589788893487,
+          "median": 61.21231290889076,
+          "p90": 143.4272986944096
+        },
+        "recommendationWorldGap": {
+          "count": 469,
+          "mean": 8.467514865276167,
+          "median": 8.551827769969224,
+          "p90": 13.205229632661299
+        },
+        "sampleAdvantageCorrelation": -0.03707736358499346,
+        "sampleCloserFraction": 0.464818763326226,
+        "sampleTowardRecommendation": {
+          "count": 469,
+          "mean": -0.005978140817990683,
+          "median": -0.03317120413793212,
+          "p90": 0.9719972045610406
+        },
+        "sampleWorldDisplacement": {
+          "count": 469,
+          "mean": 0.9571315187009675,
+          "median": 0.8935982105247321,
+          "p90": 1.6733722918840168
+        },
+        "saturatedCoordinateFraction": 0.0,
+        "trajectoriesWithMoves": 8,
+        "uniqueSeeds": 8,
+        "withinThreeSigmaFraction": 0.06396588486140725,
+        "worldScoreProjection": {
+          "count": 469,
+          "mean": -0.10581246626352152,
+          "median": -0.10333556519488063,
+          "p90": 3.293126446674902
+        }
+      },
+      "trainingRng": 94103,
+      "trajectories": 8,
+      "update": 11
+    },
+    {
+      "all": {
+        "decisionSummedScore": {
+          "count": 233,
+          "mean": -0.24063072887437972,
+          "median": -0.4885394776511043,
+          "p90": 6.508514243159662
+        },
+        "decisionsWithMoves": 233,
+        "mahalanobis": {
+          "count": 891,
+          "mean": 10.781293197534394,
+          "median": 10.121859760041806,
+          "p90": 18.024244508428524
+        },
+        "opportunities": 891,
+        "positiveScoreFraction": 0.4781144781144781,
+        "recommendationMeanShiftKl": {
+          "count": 891,
+          "mean": 75.15717260935432,
+          "median": 51.22602250097678,
+          "p90": 162.4366950498079
+        },
+        "recommendationWorldGap": {
+          "count": 891,
+          "mean": 8.213785046656758,
+          "median": 7.669575028136652,
+          "p90": 13.659085770967087
+        },
+        "sampleAdvantageCorrelation": -0.020288793884593977,
+        "sampleCloserFraction": 0.46464646464646464,
+        "sampleTowardRecommendation": {
+          "count": 891,
+          "mean": -0.008831974626092915,
+          "median": -0.004336589868481122,
+          "p90": 0.9372729022402155
+        },
+        "sampleWorldDisplacement": {
+          "count": 891,
+          "mean": 0.9680604983451312,
+          "median": 0.9196813726927385,
+          "p90": 1.702434845974571
+        },
+        "saturatedCoordinateFraction": 0.0,
+        "trajectoriesWithMoves": 8,
+        "uniqueSeeds": 8,
+        "withinThreeSigmaFraction": 0.05723905723905724,
+        "worldScoreProjection": {
+          "count": 891,
+          "mean": -0.06292588083920365,
+          "median": -0.14977006774738266,
+          "p90": 3.9125510217941635
+        }
+      },
+      "decisions": 240,
+      "firstMinibatch": {
+        "decisionSummedScore": {
+          "count": 117,
+          "mean": 0.23154898083239958,
+          "median": -0.10007785201053432,
+          "p90": 6.777721410980095
+        },
+        "decisionsWithMoves": 117,
+        "mahalanobis": {
+          "count": 440,
+          "mean": 10.728458648164034,
+          "median": 10.009592486014935,
+          "p90": 18.806682659471388
+        },
+        "opportunities": 440,
+        "positiveScoreFraction": 0.49318181818181817,
+        "recommendationMeanShiftKl": {
+          "count": 440,
+          "mean": 74.98586669340236,
+          "median": 50.095998002775545,
+          "p90": 176.8461974955968
+        },
+        "recommendationWorldGap": {
+          "count": 440,
+          "mean": 8.218521034243823,
+          "median": 7.612975099992182,
+          "p90": 14.00108274936633
+        },
+        "sampleAdvantageCorrelation": 0.013449529765199688,
+        "sampleCloserFraction": 0.46136363636363636,
+        "sampleTowardRecommendation": {
+          "count": 440,
+          "mean": -0.04366867396950421,
+          "median": -0.012650358281654193,
+          "p90": 0.9288162729842699
+        },
+        "sampleWorldDisplacement": {
+          "count": 440,
+          "mean": 1.0015348723128232,
+          "median": 0.930331470131142,
+          "p90": 1.7281156081345121
+        },
+        "saturatedCoordinateFraction": 0.0,
+        "trajectoriesWithMoves": 8,
+        "uniqueSeeds": 8,
+        "withinThreeSigmaFraction": 0.056818181818181816,
+        "worldScoreProjection": {
+          "count": 440,
+          "mean": 0.061570978994069894,
+          "median": -0.055153378471780624,
+          "p90": 4.167828082014992
+        }
+      },
+      "trainingRng": 94103,
+      "trajectories": 8,
+      "update": 21
+    }
+  ]
+}

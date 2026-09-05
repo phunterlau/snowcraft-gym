@@ -10,6 +10,9 @@ R1m-S4 is the frozen exploration/advantage audit described in its
 
 It replays existing learner windows and performs inference only; it makes no
 optimizer updates and never promotes an audited checkpoint.
+The [completed S4 review](../../../reviews/m7b_r1m_s4_results.md) reports exact
+reconstruction, limited exploration coverage and inconsistent local advantage
+alignment. Use a new output path to rerun; archived artifacts are immutable.
 
 R1m-S3 trains a short movement-recovery policy with an explicit recovery-time
 input and an actual frozen-policy tail return. Its

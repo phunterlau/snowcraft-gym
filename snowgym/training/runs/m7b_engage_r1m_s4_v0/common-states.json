@@ -1,0 +1,5858 @@
+[
+  {
+    "checkpoint": "initial",
+    "snapshots": [
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 9.840106228847374,
+        "seed": 100000,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 3,
+        "recommendationGap": 6.818103249044145,
+        "seed": 100002,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 3,
+        "recommendationGap": 2.634524182287082,
+        "seed": 100003,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 4,
+        "recommendationGap": 4.480320437285748,
+        "seed": 100004,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 2,
+        "recommendationGap": 4.620320766436318,
+        "seed": 100005,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 4,
+        "recommendationGap": 6.634856443240165,
+        "seed": 100006,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 3,
+        "recommendationGap": 4.274253122535069,
+        "seed": 100007,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 7.924345078240231,
+        "seed": 100008,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 14.819268863221666,
+        "seed": 100009,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 4,
+        "recommendationGap": 4.322796825462289,
+        "seed": 100010,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 5.866817289341896,
+        "seed": 100011,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 11.42458197686913,
+        "seed": 100012,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 2.959105809957177,
+        "seed": 100013,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 16.649530798719194,
+        "seed": 100014,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 6.083107920058278,
+        "seed": 100015,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 8.27524482357918,
+        "seed": 100016,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 13.901017401883923,
+        "seed": 100017,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 4,
+        "recommendationGap": 5.373912414159973,
+        "seed": 100018,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 4,
+        "recommendationGap": 7.089297298037389,
+        "seed": 100019,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 12.362116407989324,
+        "seed": 100020,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 1,
+        "recommendationGap": 5.642961938971085,
+        "seed": 100021,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 8.808474482231365,
+        "seed": 100022,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 4,
+        "recommendationGap": 6.390387598808303,
+        "seed": 100023,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 12.477915201965782,
+        "seed": 100024,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 3,
+        "recommendationGap": 3.0798299200757895,
+        "seed": 100025,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 6.73721121694267,
+        "seed": 100026,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 6.625881540112802,
+        "seed": 100028,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 3,
+        "recommendationGap": 7.747262766732946,
+        "seed": 100029,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 2,
+        "recommendationGap": 9.51254982498926,
+        "seed": 100032,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 11.233841442778266,
+        "seed": 100034,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 13.137008387694067,
+        "seed": 100036,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 4,
+        "recommendationGap": 3.344391142108986,
+        "seed": 100037,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 6.87825662383262,
+        "seed": 100038,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 9.73542615482327,
+        "seed": 100039,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 3.291138110138675,
+        "seed": 100040,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 4,
+        "recommendationGap": 8.053473827212315,
+        "seed": 100041,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 3.4362162243668037,
+        "seed": 100042,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 3,
+        "recommendationGap": 12.28686680533759,
+        "seed": 100043,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 3,
+        "recommendationGap": 3.5059276058788362,
+        "seed": 100044,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 7.411089165228421,
+        "seed": 100045,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": null,
+        "gapReduction": null,
+        "moves": 0,
+        "recommendationGap": null,
+        "seed": 100046,
+        "worldShift": null
+      },
+      {
+        "closerFraction": null,
+        "gapReduction": null,
+        "moves": 0,
+        "recommendationGap": null,
+        "seed": 100047,
+        "worldShift": null
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 2,
+        "recommendationGap": 10.275983156071586,
+        "seed": 100049,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 13.322771285819442,
+        "seed": 100050,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": null,
+        "gapReduction": null,
+        "moves": 0,
+        "recommendationGap": null,
+        "seed": 100051,
+        "worldShift": null
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 3,
+        "recommendationGap": 9.679604256663705,
+        "seed": 100052,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 4.753027487552353,
+        "seed": 100053,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 9.671594923511401,
+        "seed": 100054,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 4,
+        "recommendationGap": 5.468844397645361,
+        "seed": 100055,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 4,
+        "recommendationGap": 5.478973547413224,
+        "seed": 100056,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 5.422690878520927,
+        "seed": 100057,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 3,
+        "recommendationGap": 7.870848250715601,
+        "seed": 100058,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 12.30812866315444,
+        "seed": 100059,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 3,
+        "recommendationGap": 5.346622963421114,
+        "seed": 100060,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 11.397704331141792,
+        "seed": 100061,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 7.9003563812211315,
+        "seed": 100062,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 3,
+        "recommendationGap": 7.528285118986016,
+        "seed": 100063,
+        "worldShift": 0.0
+      }
+    ],
+    "summary": {
+      "closerFraction": {
+        "count": 54,
+        "mean": 0.0,
+        "median": 0.0,
+        "p90": 0.0
+      },
+      "gapReduction": {
+        "count": 54,
+        "mean": 0.0,
+        "median": 0.0,
+        "p90": 0.0
+      },
+      "recommendationGap": {
+        "count": 54,
+        "mean": 7.816947647393768,
+        "median": 7.250193231632904,
+        "p90": 12.443175563772845
+      },
+      "worldShift": {
+        "count": 54,
+        "mean": 0.0,
+        "median": 0.0,
+        "p90": 0.0
+      }
+    },
+    "trainingRng": 94101
+  },
+  {
+    "checkpoint": "update-010",
+    "snapshots": [
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.4195065692308207,
+        "moves": 5,
+        "recommendationGap": 9.420599659616553,
+        "seed": 100000,
+        "worldShift": 0.4933730271088071
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.20726106261056407,
+        "moves": 3,
+        "recommendationGap": 7.025364311654709,
+        "seed": 100002,
+        "worldShift": 0.2648880141603377
+      },
+      {
+        "closerFraction": 0.3333333333333333,
+        "gapReduction": -0.10734604643806926,
+        "moves": 3,
+        "recommendationGap": 2.7418702287251513,
+        "seed": 100003,
+        "worldShift": 0.2972691967325551
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.15147230742168638,
+        "moves": 4,
+        "recommendationGap": 4.631792744707434,
+        "seed": 100004,
+        "worldShift": 0.3232010183668934
+      },
+      {
+        "closerFraction": 0.5,
+        "gapReduction": -0.035963856032106944,
+        "moves": 2,
+        "recommendationGap": 4.656284622468426,
+        "seed": 100005,
+        "worldShift": 0.3137896623661771
+      },
+      {
+        "closerFraction": 0.75,
+        "gapReduction": 0.056734392680125145,
+        "moves": 4,
+        "recommendationGap": 6.57812205056004,
+        "seed": 100006,
+        "worldShift": 0.2681410392243557
+      },
+      {
+        "closerFraction": 0.3333333333333333,
+        "gapReduction": -0.030839687909264946,
+        "moves": 3,
+        "recommendationGap": 4.305092810444333,
+        "seed": 100007,
+        "worldShift": 0.4673057915587589
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.2491700186014283,
+        "moves": 5,
+        "recommendationGap": 8.17351509684166,
+        "seed": 100008,
+        "worldShift": 0.2714773178284959
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.13403523991610947,
+        "moves": 5,
+        "recommendationGap": 14.685233623305555,
+        "seed": 100009,
+        "worldShift": 0.39159428215779746
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.22121702336114368,
+        "moves": 4,
+        "recommendationGap": 4.544013848823433,
+        "seed": 100010,
+        "worldShift": 0.30329281260545865
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.3671360520707996,
+        "moves": 5,
+        "recommendationGap": 5.499681237271097,
+        "seed": 100011,
+        "worldShift": 0.47271322288852524
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.18278044735624874,
+        "moves": 5,
+        "recommendationGap": 11.241801529512882,
+        "seed": 100012,
+        "worldShift": 0.38649538373465314
+      },
+      {
+        "closerFraction": 0.8,
+        "gapReduction": 0.1820851415431579,
+        "moves": 5,
+        "recommendationGap": 2.777020668414019,
+        "seed": 100013,
+        "worldShift": 0.34570153875625975
+      },
+      {
+        "closerFraction": 0.6,
+        "gapReduction": -0.018897932951669104,
+        "moves": 5,
+        "recommendationGap": 16.668428731670865,
+        "seed": 100014,
+        "worldShift": 0.4525079227658441
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.29203019355776794,
+        "moves": 5,
+        "recommendationGap": 5.791077726500509,
+        "seed": 100015,
+        "worldShift": 0.4311996770759102
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.14949697208837112,
+        "moves": 5,
+        "recommendationGap": 8.125747851490807,
+        "seed": 100016,
+        "worldShift": 0.39753446613430193
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.33586205581488215,
+        "moves": 5,
+        "recommendationGap": 13.565155346069043,
+        "seed": 100017,
+        "worldShift": 0.3652262497160006
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.10346532502227967,
+        "moves": 4,
+        "recommendationGap": 5.477377739182252,
+        "seed": 100018,
+        "worldShift": 0.2588464585516269
+      },
+      {
+        "closerFraction": 0.25,
+        "gapReduction": -0.09689461894425322,
+        "moves": 4,
+        "recommendationGap": 7.186191916981642,
+        "seed": 100019,
+        "worldShift": 0.38069857973683296
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.22073195555096703,
+        "moves": 5,
+        "recommendationGap": 12.141384452438357,
+        "seed": 100020,
+        "worldShift": 0.4275594255884985
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.39610707801313616,
+        "moves": 1,
+        "recommendationGap": 5.246854860957948,
+        "seed": 100021,
+        "worldShift": 0.6343297580674595
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.40530274388338927,
+        "moves": 5,
+        "recommendationGap": 8.403171738347975,
+        "seed": 100022,
+        "worldShift": 0.5292365553476361
+      },
+      {
+        "closerFraction": 0.25,
+        "gapReduction": -0.17361817794222212,
+        "moves": 4,
+        "recommendationGap": 6.564005776750525,
+        "seed": 100023,
+        "worldShift": 0.5085491386122056
+      },
+      {
+        "closerFraction": 0.8,
+        "gapReduction": 0.05039879309054669,
+        "moves": 5,
+        "recommendationGap": 12.427516408875235,
+        "seed": 100024,
+        "worldShift": 0.6917977391357096
+      },
+      {
+        "closerFraction": 0.3333333333333333,
+        "gapReduction": -0.13241001690143728,
+        "moves": 3,
+        "recommendationGap": 3.2122399369772263,
+        "seed": 100025,
+        "worldShift": 0.48141674734709766
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.2916997721792926,
+        "moves": 5,
+        "recommendationGap": 6.445511444763378,
+        "seed": 100026,
+        "worldShift": 0.4730556220079519
+      },
+      {
+        "closerFraction": 0.6,
+        "gapReduction": -0.03623133434759853,
+        "moves": 5,
+        "recommendationGap": 6.662112874460402,
+        "seed": 100028,
+        "worldShift": 0.3608293826942543
+      },
+      {
+        "closerFraction": 0.6666666666666666,
+        "gapReduction": 0.017100614139544962,
+        "moves": 3,
+        "recommendationGap": 7.730162152593402,
+        "seed": 100029,
+        "worldShift": 0.2178541439185142
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.5442522109761727,
+        "moves": 2,
+        "recommendationGap": 8.968297614013087,
+        "seed": 100032,
+        "worldShift": 0.5496902322197099
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.4781177772652573,
+        "moves": 5,
+        "recommendationGap": 10.755723665513006,
+        "seed": 100034,
+        "worldShift": 0.4866042347689197
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.1529730683534563,
+        "moves": 5,
+        "recommendationGap": 12.98403531934061,
+        "seed": 100036,
+        "worldShift": 0.610131897031503
+      },
+      {
+        "closerFraction": 0.25,
+        "gapReduction": -0.16746850815974645,
+        "moves": 4,
+        "recommendationGap": 3.5118596502687325,
+        "seed": 100037,
+        "worldShift": 0.48841759478832103
+      },
+      {
+        "closerFraction": 0.6,
+        "gapReduction": 0.04255334872041949,
+        "moves": 5,
+        "recommendationGap": 6.8357032751122,
+        "seed": 100038,
+        "worldShift": 0.3955151832056701
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.2914816029311165,
+        "moves": 5,
+        "recommendationGap": 9.443944551892152,
+        "seed": 100039,
+        "worldShift": 0.3591268465048821
+      },
+      {
+        "closerFraction": 0.8,
+        "gapReduction": 0.16541633616642493,
+        "moves": 5,
+        "recommendationGap": 3.1257217739722503,
+        "seed": 100040,
+        "worldShift": 0.44421647991523283
+      },
+      {
+        "closerFraction": 0.25,
+        "gapReduction": -0.04332666784143069,
+        "moves": 4,
+        "recommendationGap": 8.096800495053746,
+        "seed": 100041,
+        "worldShift": 0.3336018348746709
+      },
+      {
+        "closerFraction": 0.2,
+        "gapReduction": -0.17912420940833812,
+        "moves": 5,
+        "recommendationGap": 3.6153404337751427,
+        "seed": 100042,
+        "worldShift": 0.3825617836464804
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.1650909347849462,
+        "moves": 3,
+        "recommendationGap": 12.451957740122538,
+        "seed": 100043,
+        "worldShift": 0.2548584233102739
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.09463223520716824,
+        "moves": 3,
+        "recommendationGap": 3.411295370671668,
+        "seed": 100044,
+        "worldShift": 0.2391697579935823
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.23480646588317916,
+        "moves": 5,
+        "recommendationGap": 7.6458956311116,
+        "seed": 100045,
+        "worldShift": 0.30904487686620774
+      },
+      {
+        "closerFraction": null,
+        "gapReduction": null,
+        "moves": 0,
+        "recommendationGap": null,
+        "seed": 100046,
+        "worldShift": null
+      },
+      {
+        "closerFraction": null,
+        "gapReduction": null,
+        "moves": 0,
+        "recommendationGap": null,
+        "seed": 100047,
+        "worldShift": null
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.18386245386688316,
+        "moves": 2,
+        "recommendationGap": 10.45984560993847,
+        "seed": 100049,
+        "worldShift": 0.2523388616255121
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.5181738962404048,
+        "moves": 5,
+        "recommendationGap": 12.804597389579039,
+        "seed": 100050,
+        "worldShift": 0.6109372187537219
+      },
+      {
+        "closerFraction": null,
+        "gapReduction": null,
+        "moves": 0,
+        "recommendationGap": null,
+        "seed": 100051,
+        "worldShift": null
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.21732133692864627,
+        "moves": 3,
+        "recommendationGap": 9.46228291973506,
+        "seed": 100052,
+        "worldShift": 0.5751183384402303
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.19370098848815687,
+        "moves": 5,
+        "recommendationGap": 4.559326499064196,
+        "seed": 100053,
+        "worldShift": 0.25306603820812795
+      },
+      {
+        "closerFraction": 0.6,
+        "gapReduction": 0.01179193051624292,
+        "moves": 5,
+        "recommendationGap": 9.659802992995157,
+        "seed": 100054,
+        "worldShift": 0.414530482337142
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.2815937134650286,
+        "moves": 4,
+        "recommendationGap": 5.750438111110389,
+        "seed": 100055,
+        "worldShift": 0.34554869944682326
+      },
+      {
+        "closerFraction": 0.75,
+        "gapReduction": 0.0663098421698412,
+        "moves": 4,
+        "recommendationGap": 5.412663705243382,
+        "seed": 100056,
+        "worldShift": 0.21089756711043856
+      },
+      {
+        "closerFraction": 0.4,
+        "gapReduction": -0.0904258973549235,
+        "moves": 5,
+        "recommendationGap": 5.513116775875851,
+        "seed": 100057,
+        "worldShift": 0.42049547268191667
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.21445440715818945,
+        "moves": 3,
+        "recommendationGap": 7.656393843557413,
+        "seed": 100058,
+        "worldShift": 0.42364586305926655
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.4109551984198646,
+        "moves": 5,
+        "recommendationGap": 11.897173464734575,
+        "seed": 100059,
+        "worldShift": 0.4520870712365165
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.02487585651426098,
+        "moves": 3,
+        "recommendationGap": 5.371498819935375,
+        "seed": 100060,
+        "worldShift": 0.31826161652249924
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.2108015674546376,
+        "moves": 5,
+        "recommendationGap": 11.186902763687154,
+        "seed": 100061,
+        "worldShift": 0.4393770011956469
+      },
+      {
+        "closerFraction": 0.8,
+        "gapReduction": 0.11243694942121989,
+        "moves": 5,
+        "recommendationGap": 7.787919431799912,
+        "seed": 100062,
+        "worldShift": 0.41433062164494905
+      },
+      {
+        "closerFraction": 0.6666666666666666,
+        "gapReduction": 0.016228895555049583,
+        "moves": 3,
+        "recommendationGap": 7.5120562234309665,
+        "seed": 100063,
+        "worldShift": 0.3281561814073719
+      }
+    ],
+    "summary": {
+      "closerFraction": {
+        "count": 54,
+        "mean": 0.6209876543209875,
+        "median": 0.75,
+        "p90": 1.0
+      },
+      "gapReduction": {
+        "count": 54,
+        "mean": 0.07976384254305495,
+        "median": 0.05356659288533592,
+        "p90": 0.40254404412231337
+      },
+      "recommendationGap": {
+        "count": 54,
+        "mean": 7.737183804850713,
+        "median": 7.3491240702063045,
+        "p90": 12.444625340748347
+      },
+      "worldShift": {
+        "count": 54,
+        "mean": 0.39854841394415813,
+        "median": 0.3935547326817338,
+        "p90": 0.5435541291580879
+      }
+    },
+    "trainingRng": 94101
+  },
+  {
+    "checkpoint": "update-020",
+    "snapshots": [
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.6964457073728614,
+        "moves": 5,
+        "recommendationGap": 9.143660521474512,
+        "seed": 100000,
+        "worldShift": 0.7493508957607645
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.1574266848523509,
+        "moves": 3,
+        "recommendationGap": 6.975529933896496,
+        "seed": 100002,
+        "worldShift": 0.5286684084724592
+      },
+      {
+        "closerFraction": 0.6666666666666666,
+        "gapReduction": -0.012905610119659627,
+        "moves": 3,
+        "recommendationGap": 2.647429792406742,
+        "seed": 100003,
+        "worldShift": 0.525102809396604
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.46598367099522287,
+        "moves": 4,
+        "recommendationGap": 4.946304108280971,
+        "seed": 100004,
+        "worldShift": 0.5500762927217817
+      },
+      {
+        "closerFraction": 0.5,
+        "gapReduction": 0.09268032835416529,
+        "moves": 2,
+        "recommendationGap": 4.5276404380821536,
+        "seed": 100005,
+        "worldShift": 0.5178412042159894
+      },
+      {
+        "closerFraction": 0.75,
+        "gapReduction": -0.08839137224013993,
+        "moves": 4,
+        "recommendationGap": 6.723247815480305,
+        "seed": 100006,
+        "worldShift": 0.4205878874931453
+      },
+      {
+        "closerFraction": 0.3333333333333333,
+        "gapReduction": -0.07511102343344127,
+        "moves": 3,
+        "recommendationGap": 4.34936414596851,
+        "seed": 100007,
+        "worldShift": 0.5574312872772094
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.3227479726443718,
+        "moves": 5,
+        "recommendationGap": 8.247093050884605,
+        "seed": 100008,
+        "worldShift": 0.5141706439901796
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.362272495801453,
+        "moves": 5,
+        "recommendationGap": 14.456996367420214,
+        "seed": 100009,
+        "worldShift": 0.5724688093784596
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.2948506527143944,
+        "moves": 4,
+        "recommendationGap": 4.617647478176684,
+        "seed": 100010,
+        "worldShift": 0.5017026279820557
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.6589104262601575,
+        "moves": 5,
+        "recommendationGap": 5.207906863081739,
+        "seed": 100011,
+        "worldShift": 0.7256745513733518
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.4163093481909346,
+        "moves": 5,
+        "recommendationGap": 11.008272628678196,
+        "seed": 100012,
+        "worldShift": 0.5711379203176147
+      },
+      {
+        "closerFraction": 0.8,
+        "gapReduction": 0.35272337846406365,
+        "moves": 5,
+        "recommendationGap": 2.606382431493114,
+        "seed": 100013,
+        "worldShift": 0.5727094643706393
+      },
+      {
+        "closerFraction": 0.8,
+        "gapReduction": 0.1522181100219555,
+        "moves": 5,
+        "recommendationGap": 16.497312688697242,
+        "seed": 100014,
+        "worldShift": 0.6186595963988897
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.5519403322795498,
+        "moves": 5,
+        "recommendationGap": 5.531167587778728,
+        "seed": 100015,
+        "worldShift": 0.6625811722312772
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.361151502450204,
+        "moves": 5,
+        "recommendationGap": 7.914093321128975,
+        "seed": 100016,
+        "worldShift": 0.5798841909055736
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.5784147952744615,
+        "moves": 5,
+        "recommendationGap": 13.322602606609461,
+        "seed": 100017,
+        "worldShift": 0.5867967461743082
+      },
+      {
+        "closerFraction": 0.25,
+        "gapReduction": -0.18760178188299048,
+        "moves": 4,
+        "recommendationGap": 5.561514196042963,
+        "seed": 100018,
+        "worldShift": 0.4888063812888443
+      },
+      {
+        "closerFraction": 0.5,
+        "gapReduction": 0.049467218684910996,
+        "moves": 4,
+        "recommendationGap": 7.039830079352478,
+        "seed": 100019,
+        "worldShift": 0.5583054628213184
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.47096636496829697,
+        "moves": 5,
+        "recommendationGap": 11.891150043021028,
+        "seed": 100020,
+        "worldShift": 0.6107338251413653
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.20898059568425342,
+        "moves": 1,
+        "recommendationGap": 5.433981343286831,
+        "seed": 100021,
+        "worldShift": 0.6416529930524293
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.6379657329302602,
+        "moves": 5,
+        "recommendationGap": 8.170508749301103,
+        "seed": 100022,
+        "worldShift": 0.7290735522487286
+      },
+      {
+        "closerFraction": 0.25,
+        "gapReduction": -0.17087444642020166,
+        "moves": 4,
+        "recommendationGap": 6.561262045228505,
+        "seed": 100023,
+        "worldShift": 0.593875728246712
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.15493557775878095,
+        "moves": 5,
+        "recommendationGap": 12.322979624207,
+        "seed": 100024,
+        "worldShift": 0.840299941221313
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.22679188339548606,
+        "moves": 3,
+        "recommendationGap": 3.306621803471275,
+        "seed": 100025,
+        "worldShift": 0.577391512409985
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.4703912763142851,
+        "moves": 5,
+        "recommendationGap": 6.266819940628386,
+        "seed": 100026,
+        "worldShift": 0.6597732840524768
+      },
+      {
+        "closerFraction": 0.8,
+        "gapReduction": 0.11249306321157611,
+        "moves": 5,
+        "recommendationGap": 6.513388476901227,
+        "seed": 100028,
+        "worldShift": 0.5438483648410698
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.08623489156397095,
+        "moves": 3,
+        "recommendationGap": 7.833497658296918,
+        "seed": 100029,
+        "worldShift": 0.33209575891436327
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.7773841478937102,
+        "moves": 2,
+        "recommendationGap": 8.73516567709555,
+        "seed": 100032,
+        "worldShift": 0.7799452709344699
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.7131305639712149,
+        "moves": 5,
+        "recommendationGap": 10.52071087880705,
+        "seed": 100034,
+        "worldShift": 0.7315003142180725
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.34439994692034726,
+        "moves": 5,
+        "recommendationGap": 12.79260844077372,
+        "seed": 100036,
+        "worldShift": 0.8325478644378752
+      },
+      {
+        "closerFraction": 0.25,
+        "gapReduction": -0.16911158543986782,
+        "moves": 4,
+        "recommendationGap": 3.5135027275488535,
+        "seed": 100037,
+        "worldShift": 0.6050697232051783
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.2639431611778259,
+        "moves": 5,
+        "recommendationGap": 6.614313462654795,
+        "seed": 100038,
+        "worldShift": 0.5704607069088501
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.5578019099106122,
+        "moves": 5,
+        "recommendationGap": 9.177624244912653,
+        "seed": 100039,
+        "worldShift": 0.5805426994582027
+      },
+      {
+        "closerFraction": 0.8,
+        "gapReduction": 0.2684323114664745,
+        "moves": 5,
+        "recommendationGap": 3.0227057986722006,
+        "seed": 100040,
+        "worldShift": 0.5394841179157914
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.16673439446280303,
+        "moves": 4,
+        "recommendationGap": 7.886739432749511,
+        "seed": 100041,
+        "worldShift": 0.5508728866085857
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.35411926901365487,
+        "moves": 5,
+        "recommendationGap": 3.7903354933804594,
+        "seed": 100042,
+        "worldShift": 0.5916724523833681
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.4824829458281948,
+        "moves": 3,
+        "recommendationGap": 12.769349751165786,
+        "seed": 100043,
+        "worldShift": 0.506255724082745
+      },
+      {
+        "closerFraction": 0.3333333333333333,
+        "gapReduction": -0.03199940948624084,
+        "moves": 3,
+        "recommendationGap": 3.5379270153650775,
+        "seed": 100044,
+        "worldShift": 0.38939891652439546
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.2023829533813986,
+        "moves": 5,
+        "recommendationGap": 7.613472118609819,
+        "seed": 100045,
+        "worldShift": 0.5139180163882966
+      },
+      {
+        "closerFraction": null,
+        "gapReduction": null,
+        "moves": 0,
+        "recommendationGap": null,
+        "seed": 100046,
+        "worldShift": null
+      },
+      {
+        "closerFraction": null,
+        "gapReduction": null,
+        "moves": 0,
+        "recommendationGap": null,
+        "seed": 100047,
+        "worldShift": null
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.5084017107801584,
+        "moves": 2,
+        "recommendationGap": 10.784384866851745,
+        "seed": 100049,
+        "worldShift": 0.5126091635322687
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.7770043703320795,
+        "moves": 5,
+        "recommendationGap": 12.545766915487361,
+        "seed": 100050,
+        "worldShift": 0.8357478953567311
+      },
+      {
+        "closerFraction": null,
+        "gapReduction": null,
+        "moves": 0,
+        "recommendationGap": null,
+        "seed": 100051,
+        "worldShift": null
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.3763201565135752,
+        "moves": 3,
+        "recommendationGap": 9.30328410015013,
+        "seed": 100052,
+        "worldShift": 0.701977127215236
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.4279069405694126,
+        "moves": 5,
+        "recommendationGap": 4.32512054698294,
+        "seed": 100053,
+        "worldShift": 0.5423661492411369
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.20849439586089283,
+        "moves": 5,
+        "recommendationGap": 9.463100527650507,
+        "seed": 100054,
+        "worldShift": 0.6114705399674427
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.24672903229192533,
+        "moves": 4,
+        "recommendationGap": 5.715573429937287,
+        "seed": 100055,
+        "worldShift": 0.5070686286444124
+      },
+      {
+        "closerFraction": 0.5,
+        "gapReduction": -0.02514163336420816,
+        "moves": 4,
+        "recommendationGap": 5.504115180777431,
+        "seed": 100056,
+        "worldShift": 0.4654840340771059
+      },
+      {
+        "closerFraction": 0.8,
+        "gapReduction": 0.09687761883485853,
+        "moves": 5,
+        "recommendationGap": 5.325813259686068,
+        "seed": 100057,
+        "worldShift": 0.6192461217317435
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.39158582029789724,
+        "moves": 3,
+        "recommendationGap": 7.479262430417705,
+        "seed": 100058,
+        "worldShift": 0.5444361115660493
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.6635888922315001,
+        "moves": 5,
+        "recommendationGap": 11.644539770922938,
+        "seed": 100059,
+        "worldShift": 0.6736252712484645
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.22246182924711122,
+        "moves": 3,
+        "recommendationGap": 5.5690847926682245,
+        "seed": 100060,
+        "worldShift": 0.4793830736216651
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.44654406597796276,
+        "moves": 5,
+        "recommendationGap": 10.951160265163827,
+        "seed": 100061,
+        "worldShift": 0.632564904074119
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.32675739879376264,
+        "moves": 5,
+        "recommendationGap": 7.57359898242737,
+        "seed": 100062,
+        "worldShift": 0.5881181133048108
+      },
+      {
+        "closerFraction": 0.6666666666666666,
+        "gapReduction": 0.09198770265547355,
+        "moves": 3,
+        "recommendationGap": 7.436297416330542,
+        "seed": 100063,
+        "worldShift": 0.5085580576865313
+      }
+    ],
+    "summary": {
+      "closerFraction": {
+        "count": 54,
+        "mean": 0.648148148148148,
+        "median": 0.8,
+        "p90": 1.0
+      },
+      "gapReduction": {
+        "count": 54,
+        "mean": 0.16472980912588114,
+        "median": 0.160834986110792,
+        "p90": 0.6526270182611884
+      },
+      "recommendationGap": {
+        "count": 54,
+        "mean": 7.652217838267887,
+        "median": 7.23806374784151,
+        "p90": 12.478930728103254
+      },
+      "worldShift": {
+        "count": 54,
+        "mean": 0.5878708369820826,
+        "median": 0.5725891368745495,
+        "p90": 0.7307722856272694
+      }
+    },
+    "trainingRng": 94101
+  },
+  {
+    "checkpoint": "final",
+    "snapshots": [
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.40475938490299496,
+        "moves": 5,
+        "recommendationGap": 9.435346843944378,
+        "seed": 100000,
+        "worldShift": 0.44592161852608275
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.11553706180019348,
+        "moves": 3,
+        "recommendationGap": 6.933640310844338,
+        "seed": 100002,
+        "worldShift": 0.1782742127566788
+      },
+      {
+        "closerFraction": 0.3333333333333333,
+        "gapReduction": -0.055938611184823316,
+        "moves": 3,
+        "recommendationGap": 2.690462793471905,
+        "seed": 100003,
+        "worldShift": 0.22398407669563983
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.1654450642850407,
+        "moves": 4,
+        "recommendationGap": 4.645765501570789,
+        "seed": 100004,
+        "worldShift": 0.2674065837305154
+      },
+      {
+        "closerFraction": 0.5,
+        "gapReduction": -0.010874891182201196,
+        "moves": 2,
+        "recommendationGap": 4.63119565761852,
+        "seed": 100005,
+        "worldShift": 0.24953971182109053
+      },
+      {
+        "closerFraction": 0.75,
+        "gapReduction": 0.05144459540123436,
+        "moves": 4,
+        "recommendationGap": 6.5834118478389305,
+        "seed": 100006,
+        "worldShift": 0.2138252066428145
+      },
+      {
+        "closerFraction": 0.3333333333333333,
+        "gapReduction": -0.026074419831591495,
+        "moves": 3,
+        "recommendationGap": 4.30032754236666,
+        "seed": 100007,
+        "worldShift": 0.37632024257440394
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.15215111768048323,
+        "moves": 5,
+        "recommendationGap": 8.076496195920715,
+        "seed": 100008,
+        "worldShift": 0.1890345725762145
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.11532734836195609,
+        "moves": 5,
+        "recommendationGap": 14.70394151485971,
+        "seed": 100009,
+        "worldShift": 0.24365995391633377
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.1461132527785528,
+        "moves": 4,
+        "recommendationGap": 4.468910078240842,
+        "seed": 100010,
+        "worldShift": 0.2085250599351956
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.37115651428261404,
+        "moves": 5,
+        "recommendationGap": 5.4956607750592825,
+        "seed": 100011,
+        "worldShift": 0.4324650419105609
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.12181960342905125,
+        "moves": 5,
+        "recommendationGap": 11.302762373440078,
+        "seed": 100012,
+        "worldShift": 0.21716714583326752
+      },
+      {
+        "closerFraction": 0.8,
+        "gapReduction": 0.19763578740870363,
+        "moves": 5,
+        "recommendationGap": 2.761470022548474,
+        "seed": 100013,
+        "worldShift": 0.32930111411886837
+      },
+      {
+        "closerFraction": 0.6,
+        "gapReduction": 0.012684551990548697,
+        "moves": 5,
+        "recommendationGap": 16.636846246728645,
+        "seed": 100014,
+        "worldShift": 0.29014374158864176
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.2878747283015427,
+        "moves": 5,
+        "recommendationGap": 5.795233191756735,
+        "seed": 100015,
+        "worldShift": 0.36989344210937003
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.11425252819132722,
+        "moves": 5,
+        "recommendationGap": 8.160992295387851,
+        "seed": 100016,
+        "worldShift": 0.2804268233419211
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.19709744391451736,
+        "moves": 5,
+        "recommendationGap": 13.703919957969408,
+        "seed": 100017,
+        "worldShift": 0.2060777489845858
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.08792317884438483,
+        "moves": 4,
+        "recommendationGap": 5.4618355930043565,
+        "seed": 100018,
+        "worldShift": 0.22596670568325655
+      },
+      {
+        "closerFraction": 0.25,
+        "gapReduction": -0.03812401652416875,
+        "moves": 4,
+        "recommendationGap": 7.127421314561557,
+        "seed": 100019,
+        "worldShift": 0.2034282569628368
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.16804944791863505,
+        "moves": 5,
+        "recommendationGap": 12.194066960070689,
+        "seed": 100020,
+        "worldShift": 0.2621781011081766
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.24889784693254313,
+        "moves": 1,
+        "recommendationGap": 5.394064092038541,
+        "seed": 100021,
+        "worldShift": 0.5536981726856174
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.31779357641989475,
+        "moves": 5,
+        "recommendationGap": 8.49068090581147,
+        "seed": 100022,
+        "worldShift": 0.38281466623723814
+      },
+      {
+        "closerFraction": 0.25,
+        "gapReduction": -0.12013332651685582,
+        "moves": 4,
+        "recommendationGap": 6.510520925325159,
+        "seed": 100023,
+        "worldShift": 0.38444720218217526
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.10625674071999995,
+        "moves": 5,
+        "recommendationGap": 12.371658461245783,
+        "seed": 100024,
+        "worldShift": 0.5573902103479516
+      },
+      {
+        "closerFraction": 0.3333333333333333,
+        "gapReduction": -0.11558766881502702,
+        "moves": 3,
+        "recommendationGap": 3.195417588890816,
+        "seed": 100025,
+        "worldShift": 0.3944362224679177
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.2620812342151734,
+        "moves": 5,
+        "recommendationGap": 6.4751299827274975,
+        "seed": 100026,
+        "worldShift": 0.3814833629264474
+      },
+      {
+        "closerFraction": 0.8,
+        "gapReduction": -0.005974114237038109,
+        "moves": 5,
+        "recommendationGap": 6.63185565434984,
+        "seed": 100028,
+        "worldShift": 0.2490103133168367
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.10188207100026621,
+        "moves": 3,
+        "recommendationGap": 7.645380695732681,
+        "seed": 100029,
+        "worldShift": 0.1629582044000272
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.527398745041423,
+        "moves": 2,
+        "recommendationGap": 8.985151079947837,
+        "seed": 100032,
+        "worldShift": 0.527494727821903
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.38175530155523385,
+        "moves": 5,
+        "recommendationGap": 10.85208614122303,
+        "seed": 100034,
+        "worldShift": 0.38578454795733463
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.265612462337285,
+        "moves": 5,
+        "recommendationGap": 12.871395925356783,
+        "seed": 100036,
+        "worldShift": 0.5946494266038576
+      },
+      {
+        "closerFraction": 0.25,
+        "gapReduction": -0.12485266192312494,
+        "moves": 4,
+        "recommendationGap": 3.4692438040321107,
+        "seed": 100037,
+        "worldShift": 0.4207822445355309
+      },
+      {
+        "closerFraction": 0.8,
+        "gapReduction": 0.054832678292991766,
+        "moves": 5,
+        "recommendationGap": 6.823423945539628,
+        "seed": 100038,
+        "worldShift": 0.2500790903287734
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.17513082214249281,
+        "moves": 5,
+        "recommendationGap": 9.560295332680774,
+        "seed": 100039,
+        "worldShift": 0.1968885283684943
+      },
+      {
+        "closerFraction": 0.8,
+        "gapReduction": 0.15628544704409922,
+        "moves": 5,
+        "recommendationGap": 3.1348526630945757,
+        "seed": 100040,
+        "worldShift": 0.39706325403838016
+      },
+      {
+        "closerFraction": 0.5,
+        "gapReduction": 0.005899465184439734,
+        "moves": 4,
+        "recommendationGap": 8.047574362027875,
+        "seed": 100041,
+        "worldShift": 0.20176177207364648
+      },
+      {
+        "closerFraction": 0.2,
+        "gapReduction": -0.15948831264212998,
+        "moves": 5,
+        "recommendationGap": 3.5957045370089347,
+        "seed": 100042,
+        "worldShift": 0.31711917596485767
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.14291004975024238,
+        "moves": 3,
+        "recommendationGap": 12.429776855087832,
+        "seed": 100043,
+        "worldShift": 0.19130605436100565
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.1155519447770101,
+        "moves": 3,
+        "recommendationGap": 3.3903756611018263,
+        "seed": 100044,
+        "worldShift": 0.18501787991337604
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.15926470458490166,
+        "moves": 5,
+        "recommendationGap": 7.570353869813323,
+        "seed": 100045,
+        "worldShift": 0.2350226042045079
+      },
+      {
+        "closerFraction": null,
+        "gapReduction": null,
+        "moves": 0,
+        "recommendationGap": null,
+        "seed": 100046,
+        "worldShift": null
+      },
+      {
+        "closerFraction": null,
+        "gapReduction": null,
+        "moves": 0,
+        "recommendationGap": null,
+        "seed": 100047,
+        "worldShift": null
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.15626745159631739,
+        "moves": 2,
+        "recommendationGap": 10.432250607667903,
+        "seed": 100049,
+        "worldShift": 0.19104357317116163
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.5119605951789232,
+        "moves": 5,
+        "recommendationGap": 12.810810690640519,
+        "seed": 100050,
+        "worldShift": 0.5498846538138854
+      },
+      {
+        "closerFraction": null,
+        "gapReduction": null,
+        "moves": 0,
+        "recommendationGap": null,
+        "seed": 100051,
+        "worldShift": null
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.22968838544770462,
+        "moves": 3,
+        "recommendationGap": 9.449915871216001,
+        "seed": 100052,
+        "worldShift": 0.4613914564472426
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.14242062704857936,
+        "moves": 5,
+        "recommendationGap": 4.610606860503774,
+        "seed": 100053,
+        "worldShift": 0.1735815455891138
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.04670463406343224,
+        "moves": 5,
+        "recommendationGap": 9.624890289447968,
+        "seed": 100054,
+        "worldShift": 0.2589249474476249
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.1805117993789257,
+        "moves": 4,
+        "recommendationGap": 5.649356197024287,
+        "seed": 100055,
+        "worldShift": 0.24368996839171692
+      },
+      {
+        "closerFraction": 0.75,
+        "gapReduction": 0.04905024029486765,
+        "moves": 4,
+        "recommendationGap": 5.429923307118356,
+        "seed": 100056,
+        "worldShift": 0.1407334563088574
+      },
+      {
+        "closerFraction": 0.4,
+        "gapReduction": -0.03320171267833656,
+        "moves": 5,
+        "recommendationGap": 5.455892591199264,
+        "seed": 100057,
+        "worldShift": 0.29430563917968133
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.11092576670016403,
+        "moves": 3,
+        "recommendationGap": 7.759922484015437,
+        "seed": 100058,
+        "worldShift": 0.2515675479851364
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.3016506373764571,
+        "moves": 5,
+        "recommendationGap": 12.006478025777984,
+        "seed": 100059,
+        "worldShift": 0.31479712486899486
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.018861674407889994,
+        "moves": 3,
+        "recommendationGap": 5.365484637829003,
+        "seed": 100060,
+        "worldShift": 0.2504276786474522
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.17704482435993044,
+        "moves": 5,
+        "recommendationGap": 11.22065950678186,
+        "seed": 100061,
+        "worldShift": 0.2986551122615374
+      },
+      {
+        "closerFraction": 0.8,
+        "gapReduction": 0.11356416703420953,
+        "moves": 5,
+        "recommendationGap": 7.786792214186922,
+        "seed": 100062,
+        "worldShift": 0.2850268050707986
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.03216221768650277,
+        "moves": 3,
+        "recommendationGap": 7.496122901299512,
+        "seed": 100063,
+        "worldShift": 0.23299936223690534
+      }
+    ],
+    "summary": {
+      "closerFraction": {
+        "count": 54,
+        "mean": 0.6564814814814814,
+        "median": 0.8,
+        "p90": 1.0
+      },
+      "gapReduction": {
+        "count": 54,
+        "mean": 0.08261883841323187,
+        "median": 0.07835737464662898,
+        "p90": 0.3129506947068635
+      },
+      "recommendationGap": {
+        "count": 54,
+        "mean": 7.734328808980536,
+        "median": 7.311772107930535,
+        "p90": 12.412341336935217
+      },
+      "worldShift": {
+        "count": 54,
+        "mean": 0.30240325727726747,
+        "median": 0.26055152427790074,
+        "p90": 0.4567505050708947
+      }
+    },
+    "trainingRng": 94101
+  },
+  {
+    "checkpoint": "initial",
+    "snapshots": [
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 9.840106228847374,
+        "seed": 100000,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 3,
+        "recommendationGap": 6.818103249044145,
+        "seed": 100002,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 3,
+        "recommendationGap": 2.634524182287082,
+        "seed": 100003,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 4,
+        "recommendationGap": 4.480320437285748,
+        "seed": 100004,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 2,
+        "recommendationGap": 4.620320766436318,
+        "seed": 100005,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 4,
+        "recommendationGap": 6.634856443240165,
+        "seed": 100006,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 3,
+        "recommendationGap": 4.274253122535069,
+        "seed": 100007,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 7.924345078240231,
+        "seed": 100008,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 14.819268863221666,
+        "seed": 100009,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 4,
+        "recommendationGap": 4.322796825462289,
+        "seed": 100010,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 5.866817289341896,
+        "seed": 100011,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 11.42458197686913,
+        "seed": 100012,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 2.959105809957177,
+        "seed": 100013,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 16.649530798719194,
+        "seed": 100014,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 6.083107920058278,
+        "seed": 100015,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 8.27524482357918,
+        "seed": 100016,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 13.901017401883923,
+        "seed": 100017,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 4,
+        "recommendationGap": 5.373912414159973,
+        "seed": 100018,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 4,
+        "recommendationGap": 7.089297298037389,
+        "seed": 100019,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 12.362116407989324,
+        "seed": 100020,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 1,
+        "recommendationGap": 5.642961938971085,
+        "seed": 100021,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 8.808474482231365,
+        "seed": 100022,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 4,
+        "recommendationGap": 6.390387598808303,
+        "seed": 100023,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 12.477915201965782,
+        "seed": 100024,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 3,
+        "recommendationGap": 3.0798299200757895,
+        "seed": 100025,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 6.73721121694267,
+        "seed": 100026,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 6.625881540112802,
+        "seed": 100028,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 3,
+        "recommendationGap": 7.747262766732946,
+        "seed": 100029,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 2,
+        "recommendationGap": 9.51254982498926,
+        "seed": 100032,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 11.233841442778266,
+        "seed": 100034,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 13.137008387694067,
+        "seed": 100036,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 4,
+        "recommendationGap": 3.344391142108986,
+        "seed": 100037,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 6.87825662383262,
+        "seed": 100038,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 9.73542615482327,
+        "seed": 100039,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 3.291138110138675,
+        "seed": 100040,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 4,
+        "recommendationGap": 8.053473827212315,
+        "seed": 100041,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 3.4362162243668037,
+        "seed": 100042,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 3,
+        "recommendationGap": 12.28686680533759,
+        "seed": 100043,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 3,
+        "recommendationGap": 3.5059276058788362,
+        "seed": 100044,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 7.411089165228421,
+        "seed": 100045,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": null,
+        "gapReduction": null,
+        "moves": 0,
+        "recommendationGap": null,
+        "seed": 100046,
+        "worldShift": null
+      },
+      {
+        "closerFraction": null,
+        "gapReduction": null,
+        "moves": 0,
+        "recommendationGap": null,
+        "seed": 100047,
+        "worldShift": null
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 2,
+        "recommendationGap": 10.275983156071586,
+        "seed": 100049,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 13.322771285819442,
+        "seed": 100050,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": null,
+        "gapReduction": null,
+        "moves": 0,
+        "recommendationGap": null,
+        "seed": 100051,
+        "worldShift": null
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 3,
+        "recommendationGap": 9.679604256663705,
+        "seed": 100052,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 4.753027487552353,
+        "seed": 100053,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 9.671594923511401,
+        "seed": 100054,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 4,
+        "recommendationGap": 5.468844397645361,
+        "seed": 100055,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 4,
+        "recommendationGap": 5.478973547413224,
+        "seed": 100056,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 5.422690878520927,
+        "seed": 100057,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 3,
+        "recommendationGap": 7.870848250715601,
+        "seed": 100058,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 12.30812866315444,
+        "seed": 100059,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 3,
+        "recommendationGap": 5.346622963421114,
+        "seed": 100060,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 11.397704331141792,
+        "seed": 100061,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 7.9003563812211315,
+        "seed": 100062,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 3,
+        "recommendationGap": 7.528285118986016,
+        "seed": 100063,
+        "worldShift": 0.0
+      }
+    ],
+    "summary": {
+      "closerFraction": {
+        "count": 54,
+        "mean": 0.0,
+        "median": 0.0,
+        "p90": 0.0
+      },
+      "gapReduction": {
+        "count": 54,
+        "mean": 0.0,
+        "median": 0.0,
+        "p90": 0.0
+      },
+      "recommendationGap": {
+        "count": 54,
+        "mean": 7.816947647393768,
+        "median": 7.250193231632904,
+        "p90": 12.443175563772845
+      },
+      "worldShift": {
+        "count": 54,
+        "mean": 0.0,
+        "median": 0.0,
+        "p90": 0.0
+      }
+    },
+    "trainingRng": 94102
+  },
+  {
+    "checkpoint": "update-010",
+    "snapshots": [
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.12076235102735851,
+        "moves": 5,
+        "recommendationGap": 9.960868579874733,
+        "seed": 100000,
+        "worldShift": 0.32422783014489703
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.3249488480346881,
+        "moves": 3,
+        "recommendationGap": 6.493154401009458,
+        "seed": 100002,
+        "worldShift": 0.35449036864641065
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.20656054838586643,
+        "moves": 3,
+        "recommendationGap": 2.4279636339012156,
+        "seed": 100003,
+        "worldShift": 0.3599239215005762
+      },
+      {
+        "closerFraction": 0.25,
+        "gapReduction": -0.1523155780426807,
+        "moves": 4,
+        "recommendationGap": 4.632636015328429,
+        "seed": 100004,
+        "worldShift": 0.33766551208058054
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.2229815930630601,
+        "moves": 2,
+        "recommendationGap": 4.3973391733732585,
+        "seed": 100005,
+        "worldShift": 0.347534196396647
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.28391401446550457,
+        "moves": 4,
+        "recommendationGap": 6.918770457705669,
+        "seed": 100006,
+        "worldShift": 0.3656875715280534
+      },
+      {
+        "closerFraction": 0.6666666666666666,
+        "gapReduction": -0.025818837614287826,
+        "moves": 3,
+        "recommendationGap": 4.300071960149356,
+        "seed": 100007,
+        "worldShift": 0.32616824020335683
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.18364360803506,
+        "moves": 5,
+        "recommendationGap": 7.740701470205171,
+        "seed": 100008,
+        "worldShift": 0.3311281749352136
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.1269698496215838,
+        "moves": 5,
+        "recommendationGap": 14.692299013600081,
+        "seed": 100009,
+        "worldShift": 0.28831490979756863
+      },
+      {
+        "closerFraction": 0.75,
+        "gapReduction": 0.16685423972898217,
+        "moves": 4,
+        "recommendationGap": 4.155942585733308,
+        "seed": 100010,
+        "worldShift": 0.3505041630058747
+      },
+      {
+        "closerFraction": 0.4,
+        "gapReduction": -0.06270250362501831,
+        "moves": 5,
+        "recommendationGap": 5.929519792966915,
+        "seed": 100011,
+        "worldShift": 0.31638006917629385
+      },
+      {
+        "closerFraction": 0.8,
+        "gapReduction": 0.0976770864700887,
+        "moves": 5,
+        "recommendationGap": 11.326904890399042,
+        "seed": 100012,
+        "worldShift": 0.3143420952846291
+      },
+      {
+        "closerFraction": 0.4,
+        "gapReduction": -0.04636373358440245,
+        "moves": 5,
+        "recommendationGap": 3.0054695435415795,
+        "seed": 100013,
+        "worldShift": 0.3488845206331817
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.19619886722391514,
+        "moves": 5,
+        "recommendationGap": 16.453331931495278,
+        "seed": 100014,
+        "worldShift": 0.2842921761919559
+      },
+      {
+        "closerFraction": 0.2,
+        "gapReduction": -0.023149447659999288,
+        "moves": 5,
+        "recommendationGap": 6.1062573677182765,
+        "seed": 100015,
+        "worldShift": 0.3064667138456554
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.11152012184346435,
+        "moves": 5,
+        "recommendationGap": 8.163724701735713,
+        "seed": 100016,
+        "worldShift": 0.34754158829460335
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.11240983733777057,
+        "moves": 5,
+        "recommendationGap": 14.013427239221693,
+        "seed": 100017,
+        "worldShift": 0.3600724351729033
+      },
+      {
+        "closerFraction": 0.5,
+        "gapReduction": 0.0615009509645249,
+        "moves": 4,
+        "recommendationGap": 5.312411463195447,
+        "seed": 100018,
+        "worldShift": 0.3583337353374765
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.2637138803999277,
+        "moves": 4,
+        "recommendationGap": 6.825583417637461,
+        "seed": 100019,
+        "worldShift": 0.3041303089785736
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.0708313151375723,
+        "moves": 5,
+        "recommendationGap": 12.291285092851753,
+        "seed": 100020,
+        "worldShift": 0.29591061158207366
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.29769789758792875,
+        "moves": 1,
+        "recommendationGap": 5.940659836559013,
+        "seed": 100021,
+        "worldShift": 0.3375240018345888
+      },
+      {
+        "closerFraction": 0.2,
+        "gapReduction": -0.06381243170472102,
+        "moves": 5,
+        "recommendationGap": 8.872286913936085,
+        "seed": 100022,
+        "worldShift": 0.3138200271877264
+      },
+      {
+        "closerFraction": 0.75,
+        "gapReduction": 0.1113486586315231,
+        "moves": 4,
+        "recommendationGap": 6.279038940176781,
+        "seed": 100023,
+        "worldShift": 0.2891142905028682
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.1352866111804918,
+        "moves": 5,
+        "recommendationGap": 12.342628590785292,
+        "seed": 100024,
+        "worldShift": 0.31724983838769605
+      },
+      {
+        "closerFraction": 0.3333333333333333,
+        "gapReduction": -0.04980502586349145,
+        "moves": 3,
+        "recommendationGap": 3.1296349459392805,
+        "seed": 100025,
+        "worldShift": 0.3135590863489004
+      },
+      {
+        "closerFraction": 0.4,
+        "gapReduction": -0.04886545107581437,
+        "moves": 5,
+        "recommendationGap": 6.786076668018485,
+        "seed": 100026,
+        "worldShift": 0.3185218140737266
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.25814983534252367,
+        "moves": 5,
+        "recommendationGap": 6.367731704770279,
+        "seed": 100028,
+        "worldShift": 0.34084335669347054
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.2836574363470306,
+        "moves": 3,
+        "recommendationGap": 8.030920203079978,
+        "seed": 100029,
+        "worldShift": 0.32903969407212275
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.2465744938746175,
+        "moves": 2,
+        "recommendationGap": 9.759124318863877,
+        "seed": 100032,
+        "worldShift": 0.3638097885808959
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.19065665803049542,
+        "moves": 5,
+        "recommendationGap": 11.424498100808758,
+        "seed": 100034,
+        "worldShift": 0.3209456640738907
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.10388329020585516,
+        "moves": 5,
+        "recommendationGap": 13.03312509748821,
+        "seed": 100036,
+        "worldShift": 0.3080964607492339
+      },
+      {
+        "closerFraction": 0.75,
+        "gapReduction": 0.1531499751534401,
+        "moves": 4,
+        "recommendationGap": 3.1912411669555456,
+        "seed": 100037,
+        "worldShift": 0.3556019322036915
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.185823400720225,
+        "moves": 5,
+        "recommendationGap": 6.692433223112394,
+        "seed": 100038,
+        "worldShift": 0.3082723818076543
+      },
+      {
+        "closerFraction": 0.4,
+        "gapReduction": -0.044649024573990205,
+        "moves": 5,
+        "recommendationGap": 9.780075179397258,
+        "seed": 100039,
+        "worldShift": 0.35907327704059505
+      },
+      {
+        "closerFraction": 0.4,
+        "gapReduction": -0.04563283324623853,
+        "moves": 5,
+        "recommendationGap": 3.3367709433849138,
+        "seed": 100040,
+        "worldShift": 0.3667279055555691
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.2667844306371667,
+        "moves": 4,
+        "recommendationGap": 7.786689396575149,
+        "seed": 100041,
+        "worldShift": 0.31875845351504584
+      },
+      {
+        "closerFraction": 0.4,
+        "gapReduction": -0.00805473126455949,
+        "moves": 5,
+        "recommendationGap": 3.4442709556313638,
+        "seed": 100042,
+        "worldShift": 0.334742727661827
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.13123913991876415,
+        "moves": 3,
+        "recommendationGap": 12.418105945256356,
+        "seed": 100043,
+        "worldShift": 0.33127002275644285
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.34969311285794197,
+        "moves": 3,
+        "recommendationGap": 3.8556207187367786,
+        "seed": 100044,
+        "worldShift": 0.3641902342474486
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.3216094650501726,
+        "moves": 5,
+        "recommendationGap": 7.089479700178248,
+        "seed": 100045,
+        "worldShift": 0.35466483595600307
+      },
+      {
+        "closerFraction": null,
+        "gapReduction": null,
+        "moves": 0,
+        "recommendationGap": null,
+        "seed": 100046,
+        "worldShift": null
+      },
+      {
+        "closerFraction": null,
+        "gapReduction": null,
+        "moves": 0,
+        "recommendationGap": null,
+        "seed": 100047,
+        "worldShift": null
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.09820954533697712,
+        "moves": 2,
+        "recommendationGap": 10.374192701408564,
+        "seed": 100049,
+        "worldShift": 0.34168138567641704
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.12052767001837417,
+        "moves": 5,
+        "recommendationGap": 13.443298955837815,
+        "seed": 100050,
+        "worldShift": 0.31652625751988345
+      },
+      {
+        "closerFraction": null,
+        "gapReduction": null,
+        "moves": 0,
+        "recommendationGap": null,
+        "seed": 100051,
+        "worldShift": null
+      },
+      {
+        "closerFraction": 0.6666666666666666,
+        "gapReduction": 0.040986728212940804,
+        "moves": 3,
+        "recommendationGap": 9.638617528450764,
+        "seed": 100052,
+        "worldShift": 0.32646106622541465
+      },
+      {
+        "closerFraction": 0.6,
+        "gapReduction": -0.03712173785284891,
+        "moves": 5,
+        "recommendationGap": 4.790149225405201,
+        "seed": 100053,
+        "worldShift": 0.3838314071356832
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.17308793441613074,
+        "moves": 5,
+        "recommendationGap": 9.49850698909527,
+        "seed": 100054,
+        "worldShift": 0.27695623103021394
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.31106808872888586,
+        "moves": 4,
+        "recommendationGap": 5.157776308916475,
+        "seed": 100055,
+        "worldShift": 0.32046388208553805
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.31733778484813385,
+        "moves": 4,
+        "recommendationGap": 5.796311332261357,
+        "seed": 100056,
+        "worldShift": 0.3767776630619841
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.19695613348622937,
+        "moves": 5,
+        "recommendationGap": 5.225734745034698,
+        "seed": 100057,
+        "worldShift": 0.2676937933609239
+      },
+      {
+        "closerFraction": 0.6666666666666666,
+        "gapReduction": 0.02868149962310736,
+        "moves": 3,
+        "recommendationGap": 7.8421667510924955,
+        "seed": 100058,
+        "worldShift": 0.3131931329199691
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.10516900744660482,
+        "moves": 5,
+        "recommendationGap": 12.413297670601043,
+        "seed": 100059,
+        "worldShift": 0.3069728320067949
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.2609476916760458,
+        "moves": 3,
+        "recommendationGap": 5.60757065509716,
+        "seed": 100060,
+        "worldShift": 0.3525964673257566
+      },
+      {
+        "closerFraction": 0.8,
+        "gapReduction": 0.06364377855053079,
+        "moves": 5,
+        "recommendationGap": 11.334060552591263,
+        "seed": 100061,
+        "worldShift": 0.29881272709220374
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.13390980615245773,
+        "moves": 5,
+        "recommendationGap": 7.766446575068675,
+        "seed": 100062,
+        "worldShift": 0.30585918712224697
+      },
+      {
+        "closerFraction": 0.6666666666666666,
+        "gapReduction": 0.07353220963318652,
+        "moves": 3,
+        "recommendationGap": 7.4547529093528295,
+        "seed": 100063,
+        "worldShift": 0.35224813655363946
+      }
+    ],
+    "summary": {
+      "closerFraction": {
+        "count": 54,
+        "mean": 0.5555555555555556,
+        "median": 0.6666666666666666,
+        "p90": 1.0
+      },
+      "gapReduction": {
+        "count": 54,
+        "mean": 0.01970768106948149,
+        "median": 0.03483411391802408,
+        "p90": 0.2475993626586847
+      },
+      "recommendationGap": {
+        "count": 54,
+        "mean": 7.797239966324287,
+        "median": 7.004125078941959,
+        "p90": 12.416663462859763
+      },
+      "worldShift": {
+        "count": 54,
+        "mean": 0.32977590935375184,
+        "median": 0.32775038014876867,
+        "p90": 0.3626885825584981
+      }
+    },
+    "trainingRng": 94102
+  },
+  {
+    "checkpoint": "update-020",
+    "snapshots": [
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.21558804031451384,
+        "moves": 5,
+        "recommendationGap": 9.62451818853286,
+        "seed": 100000,
+        "worldShift": 0.3753147128509166
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.11698983369522449,
+        "moves": 3,
+        "recommendationGap": 6.701113415348921,
+        "seed": 100002,
+        "worldShift": 0.3783876586168726
+      },
+      {
+        "closerFraction": 0.6666666666666666,
+        "gapReduction": 0.1708739170912894,
+        "moves": 3,
+        "recommendationGap": 2.4636502651957923,
+        "seed": 100003,
+        "worldShift": 0.4406431403930895
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.4042979548377853,
+        "moves": 4,
+        "recommendationGap": 4.884618392123533,
+        "seed": 100004,
+        "worldShift": 0.44763883795568266
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.28207549276448396,
+        "moves": 2,
+        "recommendationGap": 4.338245273671834,
+        "seed": 100005,
+        "worldShift": 0.39762595203214324
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.33702133833907766,
+        "moves": 4,
+        "recommendationGap": 6.971877781579242,
+        "seed": 100006,
+        "worldShift": 0.4018703958485726
+      },
+      {
+        "closerFraction": 0.3333333333333333,
+        "gapReduction": -0.08738448414309523,
+        "moves": 3,
+        "recommendationGap": 4.361637606678164,
+        "seed": 100007,
+        "worldShift": 0.4291591173411004
+      },
+      {
+        "closerFraction": 0.2,
+        "gapReduction": -0.0413494843825994,
+        "moves": 5,
+        "recommendationGap": 7.965694562622831,
+        "seed": 100008,
+        "worldShift": 0.4550134778124596
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.4417240820349928,
+        "moves": 5,
+        "recommendationGap": 14.377544781186671,
+        "seed": 100009,
+        "worldShift": 0.4469708893582981
+      },
+      {
+        "closerFraction": 0.5,
+        "gapReduction": -0.03133028787225564,
+        "moves": 4,
+        "recommendationGap": 4.354127113334545,
+        "seed": 100010,
+        "worldShift": 0.5035539813791998
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.25467659081202976,
+        "moves": 5,
+        "recommendationGap": 5.612140698529867,
+        "seed": 100011,
+        "worldShift": 0.34359225882838
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.4345105193052611,
+        "moves": 5,
+        "recommendationGap": 10.990071457563868,
+        "seed": 100012,
+        "worldShift": 0.4646848764749629
+      },
+      {
+        "closerFraction": 0.8,
+        "gapReduction": 0.13796729178491898,
+        "moves": 5,
+        "recommendationGap": 2.8211385181722584,
+        "seed": 100013,
+        "worldShift": 0.42620574613479195
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.4405845582169139,
+        "moves": 5,
+        "recommendationGap": 16.20894624050228,
+        "seed": 100014,
+        "worldShift": 0.4589094225042235
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.2773271918253206,
+        "moves": 5,
+        "recommendationGap": 5.805780728232956,
+        "seed": 100015,
+        "worldShift": 0.3999104018689962
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.3939794767379066,
+        "moves": 5,
+        "recommendationGap": 7.881265346841272,
+        "seed": 100016,
+        "worldShift": 0.4028125600720004
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.2862036766772295,
+        "moves": 5,
+        "recommendationGap": 13.614813725206693,
+        "seed": 100017,
+        "worldShift": 0.4880393550225703
+      },
+      {
+        "closerFraction": 0.5,
+        "gapReduction": -0.04995001188983472,
+        "moves": 4,
+        "recommendationGap": 5.423862426049807,
+        "seed": 100018,
+        "worldShift": 0.4123820720655169
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.3775988730093216,
+        "moves": 4,
+        "recommendationGap": 6.711698425028068,
+        "seed": 100019,
+        "worldShift": 0.46463293796725214
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.43609848785002436,
+        "moves": 5,
+        "recommendationGap": 11.9260179201393,
+        "seed": 100020,
+        "worldShift": 0.4549961876513769
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.4295524958550718,
+        "moves": 1,
+        "recommendationGap": 6.072514434826156,
+        "seed": 100021,
+        "worldShift": 0.4531759661504272
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.3468989284047522,
+        "moves": 5,
+        "recommendationGap": 8.461575553826611,
+        "seed": 100022,
+        "worldShift": 0.5024924890971377
+      },
+      {
+        "closerFraction": 0.5,
+        "gapReduction": 0.03565198678461545,
+        "moves": 4,
+        "recommendationGap": 6.354735612023688,
+        "seed": 100023,
+        "worldShift": 0.47022968170326923
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.49820063010161275,
+        "moves": 5,
+        "recommendationGap": 11.979714571864168,
+        "seed": 100024,
+        "worldShift": 0.5073284538808391
+      },
+      {
+        "closerFraction": 0.3333333333333333,
+        "gapReduction": -0.1507275047514746,
+        "moves": 3,
+        "recommendationGap": 3.2305574248272637,
+        "seed": 100025,
+        "worldShift": 0.4433638709109191
+      },
+      {
+        "closerFraction": 0.8,
+        "gapReduction": 0.25619934176425047,
+        "moves": 5,
+        "recommendationGap": 6.48101187517842,
+        "seed": 100026,
+        "worldShift": 0.47578269156365327
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.3969676680784951,
+        "moves": 5,
+        "recommendationGap": 6.228913872034307,
+        "seed": 100028,
+        "worldShift": 0.4359954996011556
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.21735913672092386,
+        "moves": 3,
+        "recommendationGap": 7.964621903453871,
+        "seed": 100029,
+        "worldShift": 0.23874442163847065
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.08833095788002776,
+        "moves": 2,
+        "recommendationGap": 9.424218867109232,
+        "seed": 100032,
+        "worldShift": 0.4134686432423865
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.15830524890462455,
+        "moves": 5,
+        "recommendationGap": 11.07553619387364,
+        "seed": 100034,
+        "worldShift": 0.4225944560557995
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.3925645697568655,
+        "moves": 5,
+        "recommendationGap": 12.744443817937201,
+        "seed": 100036,
+        "worldShift": 0.40845166805997346
+      },
+      {
+        "closerFraction": 0.75,
+        "gapReduction": 0.19144244803790766,
+        "moves": 4,
+        "recommendationGap": 3.1529486940710783,
+        "seed": 100037,
+        "worldShift": 0.4498250998676257
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.460717955839852,
+        "moves": 5,
+        "recommendationGap": 6.417538667992768,
+        "seed": 100038,
+        "worldShift": 0.47327266104552307
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.31126378150716005,
+        "moves": 5,
+        "recommendationGap": 9.424162373316106,
+        "seed": 100039,
+        "worldShift": 0.4173368922547815
+      },
+      {
+        "closerFraction": 0.8,
+        "gapReduction": 0.16400588819556083,
+        "moves": 5,
+        "recommendationGap": 3.127132221943114,
+        "seed": 100040,
+        "worldShift": 0.44925772776056416
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.3470186415318759,
+        "moves": 4,
+        "recommendationGap": 7.706455185680438,
+        "seed": 100041,
+        "worldShift": 0.3970745212022323
+      },
+      {
+        "closerFraction": 0.2,
+        "gapReduction": -0.2331253977759579,
+        "moves": 5,
+        "recommendationGap": 3.6693416221427624,
+        "seed": 100042,
+        "worldShift": 0.46358177602336337
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.35192639991961155,
+        "moves": 3,
+        "recommendationGap": 12.638793205257201,
+        "seed": 100043,
+        "worldShift": 0.3830489151415837
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.25538898964191875,
+        "moves": 3,
+        "recommendationGap": 3.7613165955207553,
+        "seed": 100044,
+        "worldShift": 0.36048337533624614
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.16666774087601563,
+        "moves": 5,
+        "recommendationGap": 7.244421424352405,
+        "seed": 100045,
+        "worldShift": 0.4683613582228894
+      },
+      {
+        "closerFraction": null,
+        "gapReduction": null,
+        "moves": 0,
+        "recommendationGap": null,
+        "seed": 100046,
+        "worldShift": null
+      },
+      {
+        "closerFraction": null,
+        "gapReduction": null,
+        "moves": 0,
+        "recommendationGap": null,
+        "seed": 100047,
+        "worldShift": null
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.34329098398422,
+        "moves": 2,
+        "recommendationGap": 10.619274140055806,
+        "seed": 100049,
+        "worldShift": 0.3902226408145441
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.2654439043099899,
+        "moves": 5,
+        "recommendationGap": 13.057327381509452,
+        "seed": 100050,
+        "worldShift": 0.4415112879793746
+      },
+      {
+        "closerFraction": null,
+        "gapReduction": null,
+        "moves": 0,
+        "recommendationGap": null,
+        "seed": 100051,
+        "worldShift": null
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.42183189367238977,
+        "moves": 3,
+        "recommendationGap": 9.257772362991316,
+        "seed": 100052,
+        "worldShift": 0.4919711318835042
+      },
+      {
+        "closerFraction": 0.6,
+        "gapReduction": 0.21919383400824852,
+        "moves": 5,
+        "recommendationGap": 4.533833653544104,
+        "seed": 100053,
+        "worldShift": 0.4211978884375435
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.3516966869661628,
+        "moves": 5,
+        "recommendationGap": 9.319898236545239,
+        "seed": 100054,
+        "worldShift": 0.3772680371828848
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.17277447954857333,
+        "moves": 4,
+        "recommendationGap": 5.296069918096787,
+        "seed": 100055,
+        "worldShift": 0.46740586929337624
+      },
+      {
+        "closerFraction": 0.25,
+        "gapReduction": -0.1641667795596921,
+        "moves": 4,
+        "recommendationGap": 5.643140326972915,
+        "seed": 100056,
+        "worldShift": 0.35438174564944114
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.27168103592801846,
+        "moves": 5,
+        "recommendationGap": 5.1510098425929085,
+        "seed": 100057,
+        "worldShift": 0.3382934286266387
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.3770796197014488,
+        "moves": 3,
+        "recommendationGap": 7.493768631014153,
+        "seed": 100058,
+        "worldShift": 0.40850248931682226
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.26944006180404967,
+        "moves": 5,
+        "recommendationGap": 12.03868860135039,
+        "seed": 100059,
+        "worldShift": 0.43990581743933577
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.402473819186316,
+        "moves": 3,
+        "recommendationGap": 5.74909678260743,
+        "seed": 100060,
+        "worldShift": 0.40660877022184455
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.4026154675387644,
+        "moves": 5,
+        "recommendationGap": 10.995088863603026,
+        "seed": 100061,
+        "worldShift": 0.422421869548398
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.44273152053378234,
+        "moves": 5,
+        "recommendationGap": 7.457624860687349,
+        "seed": 100062,
+        "worldShift": 0.46559447351823247
+      },
+      {
+        "closerFraction": 0.6666666666666666,
+        "gapReduction": 0.1593145708012408,
+        "moves": 3,
+        "recommendationGap": 7.368970548184776,
+        "seed": 100063,
+        "worldShift": 0.350054082188391
+      }
+    ],
+    "summary": {
+      "closerFraction": {
+        "count": 54,
+        "mean": 0.7203703703703703,
+        "median": 1.0,
+        "p90": 1.0
+      },
+      "gapReduction": {
+        "count": 54,
+        "mean": 0.14694244121733113,
+        "median": 0.2173909371613812,
+        "p90": 0.4356220972865954
+      },
+      "recommendationGap": {
+        "count": 54,
+        "mean": 7.670005206176438,
+        "median": 7.108149602965824,
+        "p90": 12.45876182408516
+      },
+      "worldShift": {
+        "count": 54,
+        "mean": 0.42595469783402923,
+        "median": 0.43257730847112796,
+        "p90": 0.4750296824082142
+      }
+    },
+    "trainingRng": 94102
+  },
+  {
+    "checkpoint": "final",
+    "snapshots": [
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.6612984620325847,
+        "moves": 5,
+        "recommendationGap": 9.178807766814788,
+        "seed": 100000,
+        "worldShift": 0.7190466810697255
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.2804692515691931,
+        "moves": 3,
+        "recommendationGap": 7.098572500613339,
+        "seed": 100002,
+        "worldShift": 0.7490780877225757
+      },
+      {
+        "closerFraction": 0.6666666666666666,
+        "gapReduction": 0.029714022867854222,
+        "moves": 3,
+        "recommendationGap": 2.604810159419228,
+        "seed": 100003,
+        "worldShift": 0.7658264445147757
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.6945545443940343,
+        "moves": 4,
+        "recommendationGap": 5.174874981679783,
+        "seed": 100004,
+        "worldShift": 0.7549313783328898
+      },
+      {
+        "closerFraction": 0.5,
+        "gapReduction": 0.2639531451090904,
+        "moves": 2,
+        "recommendationGap": 4.356367621327228,
+        "seed": 100005,
+        "worldShift": 0.708930160586752
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.2955383957588733,
+        "moves": 4,
+        "recommendationGap": 6.930394838999038,
+        "seed": 100006,
+        "worldShift": 0.6019982665937578
+      },
+      {
+        "closerFraction": 0.3333333333333333,
+        "gapReduction": -0.13768153262572,
+        "moves": 3,
+        "recommendationGap": 4.411934655160789,
+        "seed": 100007,
+        "worldShift": 0.6198854954058638
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.38675847818480324,
+        "moves": 5,
+        "recommendationGap": 8.311103556425035,
+        "seed": 100008,
+        "worldShift": 0.7076016917967578
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.6374629166511312,
+        "moves": 5,
+        "recommendationGap": 14.181805946570535,
+        "seed": 100009,
+        "worldShift": 0.7154302810341301
+      },
+      {
+        "closerFraction": 0.25,
+        "gapReduction": -0.3213530737758405,
+        "moves": 4,
+        "recommendationGap": 4.64414989923813,
+        "seed": 100010,
+        "worldShift": 0.719079708952236
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.6506032357300882,
+        "moves": 5,
+        "recommendationGap": 5.216214053611807,
+        "seed": 100011,
+        "worldShift": 0.6771523554452447
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.6679849880093801,
+        "moves": 5,
+        "recommendationGap": 10.756596988859751,
+        "seed": 100012,
+        "worldShift": 0.7387798857057352
+      },
+      {
+        "closerFraction": 0.8,
+        "gapReduction": 0.3528441937661793,
+        "moves": 5,
+        "recommendationGap": 2.6062616161909977,
+        "seed": 100013,
+        "worldShift": 0.7238723090525783
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.49392636902266424,
+        "moves": 5,
+        "recommendationGap": 16.15560442969653,
+        "seed": 100014,
+        "worldShift": 0.7397265623078495
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.658537782895612,
+        "moves": 5,
+        "recommendationGap": 5.424570137162665,
+        "seed": 100015,
+        "worldShift": 0.7567670278276039
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.6450470245340835,
+        "moves": 5,
+        "recommendationGap": 7.630197799045097,
+        "seed": 100016,
+        "worldShift": 0.7562422795114441
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.6863201144405899,
+        "moves": 5,
+        "recommendationGap": 13.214697287443334,
+        "seed": 100017,
+        "worldShift": 0.7437288362576793
+      },
+      {
+        "closerFraction": 0.5,
+        "gapReduction": -0.219962384618541,
+        "moves": 4,
+        "recommendationGap": 5.593874798778513,
+        "seed": 100018,
+        "worldShift": 0.6716116541723682
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.2990288517372224,
+        "moves": 4,
+        "recommendationGap": 6.790268446300167,
+        "seed": 100019,
+        "worldShift": 0.788646925705749
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.7159227268668186,
+        "moves": 5,
+        "recommendationGap": 11.646193681122506,
+        "seed": 100020,
+        "worldShift": 0.7610864650052904
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.2792488242431821,
+        "moves": 1,
+        "recommendationGap": 5.922210763214267,
+        "seed": 100021,
+        "worldShift": 0.611279639405639
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.7602579082717763,
+        "moves": 5,
+        "recommendationGap": 8.04821657395959,
+        "seed": 100022,
+        "worldShift": 0.8093458424007871
+      },
+      {
+        "closerFraction": 0.5,
+        "gapReduction": -0.119930820292655,
+        "moves": 4,
+        "recommendationGap": 6.510318419100958,
+        "seed": 100023,
+        "worldShift": 0.6586095018292251
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.6389546907302641,
+        "moves": 5,
+        "recommendationGap": 11.838960511235518,
+        "seed": 100024,
+        "worldShift": 0.7372576849757383
+      },
+      {
+        "closerFraction": 0.3333333333333333,
+        "gapReduction": -0.27230330027471217,
+        "moves": 3,
+        "recommendationGap": 3.352133220350501,
+        "seed": 100025,
+        "worldShift": 0.6170404206885861
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.586298876106772,
+        "moves": 5,
+        "recommendationGap": 6.150912340835898,
+        "seed": 100026,
+        "worldShift": 0.7884569672231837
+      },
+      {
+        "closerFraction": 0.8,
+        "gapReduction": 0.3720858380273828,
+        "moves": 5,
+        "recommendationGap": 6.253795702085419,
+        "seed": 100028,
+        "worldShift": 0.7050272835451156
+      },
+      {
+        "closerFraction": 0.3333333333333333,
+        "gapReduction": -0.05542955827257442,
+        "moves": 3,
+        "recommendationGap": 7.802692325005521,
+        "seed": 100029,
+        "worldShift": 0.4522256473334007
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.5983407764126856,
+        "moves": 2,
+        "recommendationGap": 8.914209048576573,
+        "seed": 100032,
+        "worldShift": 0.7664767978302998
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.6685863572234417,
+        "moves": 5,
+        "recommendationGap": 10.565255085554824,
+        "seed": 100034,
+        "worldShift": 0.8103806037110324
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.5928432674031612,
+        "moves": 5,
+        "recommendationGap": 12.544165120290904,
+        "seed": 100036,
+        "worldShift": 0.6512000145979705
+      },
+      {
+        "closerFraction": 0.75,
+        "gapReduction": 0.06278396277775766,
+        "moves": 4,
+        "recommendationGap": 3.2816071793312283,
+        "seed": 100037,
+        "worldShift": 0.6335625678615698
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.5486651804578726,
+        "moves": 5,
+        "recommendationGap": 6.329591443374747,
+        "seed": 100038,
+        "worldShift": 0.7372847283357188
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.7345116862298593,
+        "moves": 5,
+        "recommendationGap": 9.000914468593407,
+        "seed": 100039,
+        "worldShift": 0.7565195912948616
+      },
+      {
+        "closerFraction": 0.8,
+        "gapReduction": 0.37160687859773867,
+        "moves": 5,
+        "recommendationGap": 2.9195312315409363,
+        "seed": 100040,
+        "worldShift": 0.6254418281602665
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.31366995388688645,
+        "moves": 4,
+        "recommendationGap": 7.739803873325429,
+        "seed": 100041,
+        "worldShift": 0.7564246091147111
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.48822354029396636,
+        "moves": 5,
+        "recommendationGap": 3.9244397646607707,
+        "seed": 100042,
+        "worldShift": 0.7414558612697497
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.6216116714452552,
+        "moves": 3,
+        "recommendationGap": 12.908478476782847,
+        "seed": 100043,
+        "worldShift": 0.6441499829350422
+      },
+      {
+        "closerFraction": 0.3333333333333333,
+        "gapReduction": -0.1333408032318615,
+        "moves": 3,
+        "recommendationGap": 3.639268409110698,
+        "seed": 100044,
+        "worldShift": 0.6018830705705877
+      },
+      {
+        "closerFraction": 0.2,
+        "gapReduction": -0.13246185934193394,
+        "moves": 5,
+        "recommendationGap": 7.543551024570354,
+        "seed": 100045,
+        "worldShift": 0.737479212208502
+      },
+      {
+        "closerFraction": null,
+        "gapReduction": null,
+        "moves": 0,
+        "recommendationGap": null,
+        "seed": 100046,
+        "worldShift": null
+      },
+      {
+        "closerFraction": null,
+        "gapReduction": null,
+        "moves": 0,
+        "recommendationGap": null,
+        "seed": 100047,
+        "worldShift": null
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.642862142503188,
+        "moves": 2,
+        "recommendationGap": 10.918845298574773,
+        "seed": 100049,
+        "worldShift": 0.650591787575158
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.695791931351376,
+        "moves": 5,
+        "recommendationGap": 12.626979354468066,
+        "seed": 100050,
+        "worldShift": 0.7349173847134246
+      },
+      {
+        "closerFraction": null,
+        "gapReduction": null,
+        "moves": 0,
+        "recommendationGap": null,
+        "seed": 100051,
+        "worldShift": null
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.6844558350745255,
+        "moves": 3,
+        "recommendationGap": 8.99514842158918,
+        "seed": 100052,
+        "worldShift": 0.7152379547271761
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.49497696009848485,
+        "moves": 5,
+        "recommendationGap": 4.258050527453868,
+        "seed": 100053,
+        "worldShift": 0.6543827640018223
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.4085810538464251,
+        "moves": 5,
+        "recommendationGap": 9.263013869664977,
+        "seed": 100054,
+        "worldShift": 0.7095334402330933
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.13435779918520535,
+        "moves": 4,
+        "recommendationGap": 5.603202196830566,
+        "seed": 100055,
+        "worldShift": 0.7328664357909401
+      },
+      {
+        "closerFraction": 0.5,
+        "gapReduction": 0.05289896680357903,
+        "moves": 4,
+        "recommendationGap": 5.426074580609645,
+        "seed": 100056,
+        "worldShift": 0.6146177283710978
+      },
+      {
+        "closerFraction": 0.8,
+        "gapReduction": 0.2371132220475332,
+        "moves": 5,
+        "recommendationGap": 5.185577656473394,
+        "seed": 100057,
+        "worldShift": 0.7352310535596821
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.6522183327341526,
+        "moves": 3,
+        "recommendationGap": 7.218629917981449,
+        "seed": 100058,
+        "worldShift": 0.7011293950813742
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.731174403727325,
+        "moves": 5,
+        "recommendationGap": 11.576954259427115,
+        "seed": 100059,
+        "worldShift": 0.7833941601880589
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.5252508704951676,
+        "moves": 3,
+        "recommendationGap": 5.871873833916282,
+        "seed": 100060,
+        "worldShift": 0.6934847747270454
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.6363983866671301,
+        "moves": 5,
+        "recommendationGap": 10.76130594447466,
+        "seed": 100061,
+        "worldShift": 0.6824924912805358
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.6422512852282264,
+        "moves": 5,
+        "recommendationGap": 7.258105095992906,
+        "seed": 100062,
+        "worldShift": 0.7505061045931802
+      },
+      {
+        "closerFraction": 0.6666666666666666,
+        "gapReduction": 0.22617766368209757,
+        "moves": 3,
+        "recommendationGap": 7.3021074553039185,
+        "seed": 100063,
+        "worldShift": 0.6563167845160982
+      }
+    ],
+    "summary": {
+      "closerFraction": {
+        "count": 54,
+        "mean": 0.6679012345679013,
+        "median": 0.9,
+        "p90": 1.0
+      },
+      "gapReduction": {
+        "count": 54,
+        "mean": 0.2357768222322786,
+        "median": 0.36222553618195896,
+        "p90": 0.6857608306307706
+      },
+      "recommendationGap": {
+        "count": 54,
+        "mean": 7.5811708251614895,
+        "median": 7.1586012092973945,
+        "p90": 12.33260373757429
+      },
+      "worldShift": {
+        "count": 54,
+        "mean": 0.7051041965120682,
+        "median": 0.7190631950109807,
+        "p90": 0.7662816918356425
+      }
+    },
+    "trainingRng": 94102
+  },
+  {
+    "checkpoint": "initial",
+    "snapshots": [
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 9.840106228847374,
+        "seed": 100000,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 3,
+        "recommendationGap": 6.818103249044145,
+        "seed": 100002,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 3,
+        "recommendationGap": 2.634524182287082,
+        "seed": 100003,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 4,
+        "recommendationGap": 4.480320437285748,
+        "seed": 100004,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 2,
+        "recommendationGap": 4.620320766436318,
+        "seed": 100005,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 4,
+        "recommendationGap": 6.634856443240165,
+        "seed": 100006,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 3,
+        "recommendationGap": 4.274253122535069,
+        "seed": 100007,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 7.924345078240231,
+        "seed": 100008,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 14.819268863221666,
+        "seed": 100009,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 4,
+        "recommendationGap": 4.322796825462289,
+        "seed": 100010,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 5.866817289341896,
+        "seed": 100011,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 11.42458197686913,
+        "seed": 100012,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 2.959105809957177,
+        "seed": 100013,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 16.649530798719194,
+        "seed": 100014,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 6.083107920058278,
+        "seed": 100015,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 8.27524482357918,
+        "seed": 100016,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 13.901017401883923,
+        "seed": 100017,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 4,
+        "recommendationGap": 5.373912414159973,
+        "seed": 100018,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 4,
+        "recommendationGap": 7.089297298037389,
+        "seed": 100019,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 12.362116407989324,
+        "seed": 100020,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 1,
+        "recommendationGap": 5.642961938971085,
+        "seed": 100021,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 8.808474482231365,
+        "seed": 100022,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 4,
+        "recommendationGap": 6.390387598808303,
+        "seed": 100023,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 12.477915201965782,
+        "seed": 100024,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 3,
+        "recommendationGap": 3.0798299200757895,
+        "seed": 100025,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 6.73721121694267,
+        "seed": 100026,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 6.625881540112802,
+        "seed": 100028,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 3,
+        "recommendationGap": 7.747262766732946,
+        "seed": 100029,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 2,
+        "recommendationGap": 9.51254982498926,
+        "seed": 100032,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 11.233841442778266,
+        "seed": 100034,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 13.137008387694067,
+        "seed": 100036,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 4,
+        "recommendationGap": 3.344391142108986,
+        "seed": 100037,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 6.87825662383262,
+        "seed": 100038,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 9.73542615482327,
+        "seed": 100039,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 3.291138110138675,
+        "seed": 100040,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 4,
+        "recommendationGap": 8.053473827212315,
+        "seed": 100041,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 3.4362162243668037,
+        "seed": 100042,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 3,
+        "recommendationGap": 12.28686680533759,
+        "seed": 100043,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 3,
+        "recommendationGap": 3.5059276058788362,
+        "seed": 100044,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 7.411089165228421,
+        "seed": 100045,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": null,
+        "gapReduction": null,
+        "moves": 0,
+        "recommendationGap": null,
+        "seed": 100046,
+        "worldShift": null
+      },
+      {
+        "closerFraction": null,
+        "gapReduction": null,
+        "moves": 0,
+        "recommendationGap": null,
+        "seed": 100047,
+        "worldShift": null
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 2,
+        "recommendationGap": 10.275983156071586,
+        "seed": 100049,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 13.322771285819442,
+        "seed": 100050,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": null,
+        "gapReduction": null,
+        "moves": 0,
+        "recommendationGap": null,
+        "seed": 100051,
+        "worldShift": null
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 3,
+        "recommendationGap": 9.679604256663705,
+        "seed": 100052,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 4.753027487552353,
+        "seed": 100053,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 9.671594923511401,
+        "seed": 100054,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 4,
+        "recommendationGap": 5.468844397645361,
+        "seed": 100055,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 4,
+        "recommendationGap": 5.478973547413224,
+        "seed": 100056,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 5.422690878520927,
+        "seed": 100057,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 3,
+        "recommendationGap": 7.870848250715601,
+        "seed": 100058,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 12.30812866315444,
+        "seed": 100059,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 3,
+        "recommendationGap": 5.346622963421114,
+        "seed": 100060,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 11.397704331141792,
+        "seed": 100061,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 5,
+        "recommendationGap": 7.9003563812211315,
+        "seed": 100062,
+        "worldShift": 0.0
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": 0.0,
+        "moves": 3,
+        "recommendationGap": 7.528285118986016,
+        "seed": 100063,
+        "worldShift": 0.0
+      }
+    ],
+    "summary": {
+      "closerFraction": {
+        "count": 54,
+        "mean": 0.0,
+        "median": 0.0,
+        "p90": 0.0
+      },
+      "gapReduction": {
+        "count": 54,
+        "mean": 0.0,
+        "median": 0.0,
+        "p90": 0.0
+      },
+      "recommendationGap": {
+        "count": 54,
+        "mean": 7.816947647393768,
+        "median": 7.250193231632904,
+        "p90": 12.443175563772845
+      },
+      "worldShift": {
+        "count": 54,
+        "mean": 0.0,
+        "median": 0.0,
+        "p90": 0.0
+      }
+    },
+    "trainingRng": 94103
+  },
+  {
+    "checkpoint": "update-010",
+    "snapshots": [
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.250142728016807,
+        "moves": 5,
+        "recommendationGap": 10.090248956864183,
+        "seed": 100000,
+        "worldShift": 0.5458715082387026
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.6272632431113466,
+        "moves": 3,
+        "recommendationGap": 6.190840005932799,
+        "seed": 100002,
+        "worldShift": 0.6538134419444336
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.3403496176915577,
+        "moves": 3,
+        "recommendationGap": 2.2941745645955245,
+        "seed": 100003,
+        "worldShift": 0.6626660295323782
+      },
+      {
+        "closerFraction": 0.25,
+        "gapReduction": -0.19829546523613029,
+        "moves": 4,
+        "recommendationGap": 4.678615902521878,
+        "seed": 100004,
+        "worldShift": 0.6093109997406976
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.3714238275552979,
+        "moves": 2,
+        "recommendationGap": 4.24889693888102,
+        "seed": 100005,
+        "worldShift": 0.6151416030601917
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.5206080051650492,
+        "moves": 4,
+        "recommendationGap": 7.155464448405214,
+        "seed": 100006,
+        "worldShift": 0.6701772063962623
+      },
+      {
+        "closerFraction": 0.3333333333333333,
+        "gapReduction": -0.08108125179743819,
+        "moves": 3,
+        "recommendationGap": 4.355334374332507,
+        "seed": 100007,
+        "worldShift": 0.646686480732492
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.39108641578827824,
+        "moves": 5,
+        "recommendationGap": 7.533258662451954,
+        "seed": 100008,
+        "worldShift": 0.6003663613411501
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.17694899284194143,
+        "moves": 5,
+        "recommendationGap": 14.642319870379726,
+        "seed": 100009,
+        "worldShift": 0.5519178217135714
+      },
+      {
+        "closerFraction": 0.75,
+        "gapReduction": 0.348317579130493,
+        "moves": 4,
+        "recommendationGap": 3.9744792463317964,
+        "seed": 100010,
+        "worldShift": 0.6637172002272376
+      },
+      {
+        "closerFraction": 0.2,
+        "gapReduction": -0.1628878251172406,
+        "moves": 5,
+        "recommendationGap": 6.029705114459136,
+        "seed": 100011,
+        "worldShift": 0.5406472529039401
+      },
+      {
+        "closerFraction": 0.8,
+        "gapReduction": 0.12889447519730676,
+        "moves": 5,
+        "recommendationGap": 11.295687501671825,
+        "seed": 100012,
+        "worldShift": 0.6240559782462028
+      },
+      {
+        "closerFraction": 0.4,
+        "gapReduction": -0.16826532152538157,
+        "moves": 5,
+        "recommendationGap": 3.127371131482559,
+        "seed": 100013,
+        "worldShift": 0.5985179861693719
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.3521067850857449,
+        "moves": 5,
+        "recommendationGap": 16.297424013633453,
+        "seed": 100014,
+        "worldShift": 0.5651355539721863
+      },
+      {
+        "closerFraction": 0.2,
+        "gapReduction": -0.12333524120521559,
+        "moves": 5,
+        "recommendationGap": 6.206443161263493,
+        "seed": 100015,
+        "worldShift": 0.552770850615876
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.176121907737471,
+        "moves": 5,
+        "recommendationGap": 8.099122915841708,
+        "seed": 100016,
+        "worldShift": 0.6616597206655903
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.25601327948296027,
+        "moves": 5,
+        "recommendationGap": 14.157030681366882,
+        "seed": 100017,
+        "worldShift": 0.6729223565718603
+      },
+      {
+        "closerFraction": 0.5,
+        "gapReduction": 0.11252732069659732,
+        "moves": 4,
+        "recommendationGap": 5.2613850934633755,
+        "seed": 100018,
+        "worldShift": 0.6317118573671587
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.4919917789265438,
+        "moves": 4,
+        "recommendationGap": 6.597305519110845,
+        "seed": 100019,
+        "worldShift": 0.6210555719937478
+      },
+      {
+        "closerFraction": 0.8,
+        "gapReduction": 0.06702843496595748,
+        "moves": 5,
+        "recommendationGap": 12.295087973023367,
+        "seed": 100020,
+        "worldShift": 0.5681033732667673
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.6295996913056818,
+        "moves": 1,
+        "recommendationGap": 6.272561630276766,
+        "seed": 100021,
+        "worldShift": 0.6478602635941128
+      },
+      {
+        "closerFraction": 0.2,
+        "gapReduction": -0.18079354931388297,
+        "moves": 5,
+        "recommendationGap": 8.989268031545247,
+        "seed": 100022,
+        "worldShift": 0.5851176042368829
+      },
+      {
+        "closerFraction": 0.75,
+        "gapReduction": 0.19901889501879055,
+        "moves": 4,
+        "recommendationGap": 6.191368703789513,
+        "seed": 100023,
+        "worldShift": 0.6076513194777031
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.30589101231262034,
+        "moves": 5,
+        "recommendationGap": 12.172024189653161,
+        "seed": 100024,
+        "worldShift": 0.5861386896391196
+      },
+      {
+        "closerFraction": 0.3333333333333333,
+        "gapReduction": -0.14360450501474517,
+        "moves": 3,
+        "recommendationGap": 3.2234344250905345,
+        "seed": 100025,
+        "worldShift": 0.6225101367834767
+      },
+      {
+        "closerFraction": 0.4,
+        "gapReduction": -0.13516391133085187,
+        "moves": 5,
+        "recommendationGap": 6.872375128273522,
+        "seed": 100026,
+        "worldShift": 0.5730351083630465
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.4541023909361219,
+        "moves": 5,
+        "recommendationGap": 6.171779149176681,
+        "seed": 100028,
+        "worldShift": 0.6370229295537138
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.5887351716750245,
+        "moves": 3,
+        "recommendationGap": 8.33599793840797,
+        "seed": 100029,
+        "worldShift": 0.630778785293518
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.4588736227598833,
+        "moves": 2,
+        "recommendationGap": 9.971423447749142,
+        "seed": 100032,
+        "worldShift": 0.6101110090997544
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.42966158415903377,
+        "moves": 5,
+        "recommendationGap": 11.663503026937297,
+        "seed": 100034,
+        "worldShift": 0.5869459723030971
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.17629164149494975,
+        "moves": 5,
+        "recommendationGap": 12.960716746199116,
+        "seed": 100036,
+        "worldShift": 0.4876008040846451
+      },
+      {
+        "closerFraction": 0.75,
+        "gapReduction": 0.2994737001897553,
+        "moves": 4,
+        "recommendationGap": 3.0449174419192304,
+        "seed": 100037,
+        "worldShift": 0.6595495925291711
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.3328634950007957,
+        "moves": 5,
+        "recommendationGap": 6.545393128831823,
+        "seed": 100038,
+        "worldShift": 0.6093462904931867
+      },
+      {
+        "closerFraction": 0.2,
+        "gapReduction": -0.16258530577168315,
+        "moves": 5,
+        "recommendationGap": 9.89801146059495,
+        "seed": 100039,
+        "worldShift": 0.6871474948791612
+      },
+      {
+        "closerFraction": 0.4,
+        "gapReduction": -0.1343501385801025,
+        "moves": 5,
+        "recommendationGap": 3.425488248718777,
+        "seed": 100040,
+        "worldShift": 0.6848321633527145
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.4592856115444892,
+        "moves": 4,
+        "recommendationGap": 7.594188215667827,
+        "seed": 100041,
+        "worldShift": 0.6088520966457946
+      },
+      {
+        "closerFraction": 0.4,
+        "gapReduction": 0.008039208960683686,
+        "moves": 5,
+        "recommendationGap": 3.4281770154061206,
+        "seed": 100042,
+        "worldShift": 0.6186740339252115
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.2458857132686821,
+        "moves": 3,
+        "recommendationGap": 12.532752518606273,
+        "seed": 100043,
+        "worldShift": 0.6445222109227249
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.6467788677215953,
+        "moves": 3,
+        "recommendationGap": 4.152706473600432,
+        "seed": 100044,
+        "worldShift": 0.6750130540392751
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.6429210115553279,
+        "moves": 5,
+        "recommendationGap": 6.768168153673093,
+        "seed": 100045,
+        "worldShift": 0.683761402373551
+      },
+      {
+        "closerFraction": null,
+        "gapReduction": null,
+        "moves": 0,
+        "recommendationGap": null,
+        "seed": 100046,
+        "worldShift": null
+      },
+      {
+        "closerFraction": null,
+        "gapReduction": null,
+        "moves": 0,
+        "recommendationGap": null,
+        "seed": 100047,
+        "worldShift": null
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.18675056554731917,
+        "moves": 2,
+        "recommendationGap": 10.462733721618905,
+        "seed": 100049,
+        "worldShift": 0.6549409934514877
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.20268936114528985,
+        "moves": 5,
+        "recommendationGap": 13.525460646964731,
+        "seed": 100050,
+        "worldShift": 0.5217323538644085
+      },
+      {
+        "closerFraction": null,
+        "gapReduction": null,
+        "moves": 0,
+        "recommendationGap": null,
+        "seed": 100051,
+        "worldShift": null
+      },
+      {
+        "closerFraction": 0.6666666666666666,
+        "gapReduction": 0.12117625125498499,
+        "moves": 3,
+        "recommendationGap": 9.55842800540872,
+        "seed": 100052,
+        "worldShift": 0.5977440034225247
+      },
+      {
+        "closerFraction": 0.4,
+        "gapReduction": -0.11695366659682227,
+        "moves": 5,
+        "recommendationGap": 4.869981154149174,
+        "seed": 100053,
+        "worldShift": 0.6883806672084709
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.2906375891870594,
+        "moves": 5,
+        "recommendationGap": 9.380957334324341,
+        "seed": 100054,
+        "worldShift": 0.5233460771892386
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.6091566889803665,
+        "moves": 4,
+        "recommendationGap": 4.859687708664994,
+        "seed": 100055,
+        "worldShift": 0.6150069937588747
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.589894682843489,
+        "moves": 4,
+        "recommendationGap": 6.0688682302567125,
+        "seed": 100056,
+        "worldShift": 0.6843300323955976
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.3331562271690503,
+        "moves": 5,
+        "recommendationGap": 5.089534651351877,
+        "seed": 100057,
+        "worldShift": 0.5191816650006968
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.11580195235667852,
+        "moves": 3,
+        "recommendationGap": 7.755046298358924,
+        "seed": 100058,
+        "worldShift": 0.6131061464692062
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.283879238324689,
+        "moves": 5,
+        "recommendationGap": 12.59200790147913,
+        "seed": 100059,
+        "worldShift": 0.5774999416805261
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.5009901825215521,
+        "moves": 3,
+        "recommendationGap": 5.847613145942666,
+        "seed": 100060,
+        "worldShift": 0.662519088186691
+      },
+      {
+        "closerFraction": 0.8,
+        "gapReduction": 0.09493193417299536,
+        "moves": 5,
+        "recommendationGap": 11.302772396968797,
+        "seed": 100061,
+        "worldShift": 0.5469649091692482
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.18803417658708765,
+        "moves": 5,
+        "recommendationGap": 7.712322204634044,
+        "seed": 100062,
+        "worldShift": 0.5838780563615191
+      },
+      {
+        "closerFraction": 0.6666666666666666,
+        "gapReduction": 0.08826071008239585,
+        "moves": 3,
+        "recommendationGap": 7.4400244089036205,
+        "seed": 100063,
+        "worldShift": 0.6350168543238225
+      }
+    ],
+    "summary": {
+      "closerFraction": {
+        "count": 54,
+        "mean": 0.5407407407407407,
+        "median": 0.5833333333333333,
+        "p90": 1.0
+      },
+      "gapReduction": {
+        "count": 54,
+        "mean": 0.016764518520484044,
+        "median": 0.07764457252417667,
+        "p90": 0.43519759839176897
+      },
+      "recommendationGap": {
+        "count": 54,
+        "mean": 7.800183128873285,
+        "median": 7.0139197883393685,
+        "p90": 12.574231286617273
+      },
+      "worldShift": {
+        "count": 54,
+        "mean": 0.6134512573846664,
+        "median": 0.6150742984095332,
+        "p90": 0.6743858447990507
+      }
+    },
+    "trainingRng": 94103
+  },
+  {
+    "checkpoint": "update-020",
+    "snapshots": [
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.6796355481547568,
+        "moves": 5,
+        "recommendationGap": 10.51974177700213,
+        "seed": 100000,
+        "worldShift": 0.8185445979716853
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.8682047557139075,
+        "moves": 3,
+        "recommendationGap": 5.949898493330237,
+        "seed": 100002,
+        "worldShift": 0.8894087753966953
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.3095714046081915,
+        "moves": 3,
+        "recommendationGap": 2.3249527776788903,
+        "seed": 100003,
+        "worldShift": 0.9017448683088559
+      },
+      {
+        "closerFraction": 0.5,
+        "gapReduction": 0.10585344316996748,
+        "moves": 4,
+        "recommendationGap": 4.374466994115781,
+        "seed": 100004,
+        "worldShift": 0.8474543335926696
+      },
+      {
+        "closerFraction": 0.5,
+        "gapReduction": 0.24967911833757683,
+        "moves": 2,
+        "recommendationGap": 4.370641648098742,
+        "seed": 100005,
+        "worldShift": 0.8177202821373397
+      },
+      {
+        "closerFraction": 0.25,
+        "gapReduction": -0.4231237656778517,
+        "moves": 4,
+        "recommendationGap": 7.057980208918017,
+        "seed": 100006,
+        "worldShift": 0.8513999693069919
+      },
+      {
+        "closerFraction": 0.6666666666666666,
+        "gapReduction": -0.03852595481131423,
+        "moves": 3,
+        "recommendationGap": 4.312779077346383,
+        "seed": 100007,
+        "worldShift": 0.7978773056432876
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.6989774878531796,
+        "moves": 5,
+        "recommendationGap": 7.225367590387052,
+        "seed": 100008,
+        "worldShift": 0.7840773617288598
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.1748351578205245,
+        "moves": 5,
+        "recommendationGap": 14.99410402104219,
+        "seed": 100009,
+        "worldShift": 0.8463047756810695
+      },
+      {
+        "closerFraction": 0.75,
+        "gapReduction": 0.5431627670477356,
+        "moves": 4,
+        "recommendationGap": 3.779634058414554,
+        "seed": 100010,
+        "worldShift": 0.87988220574917
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.6101826353171372,
+        "moves": 5,
+        "recommendationGap": 6.476999924659033,
+        "seed": 100011,
+        "worldShift": 0.8405782855739761
+      },
+      {
+        "closerFraction": 0.2,
+        "gapReduction": -0.27927937865083974,
+        "moves": 5,
+        "recommendationGap": 11.70386135551997,
+        "seed": 100012,
+        "worldShift": 0.9334963786132928
+      },
+      {
+        "closerFraction": 0.2,
+        "gapReduction": -0.4788609231453453,
+        "moves": 5,
+        "recommendationGap": 3.4379667331025225,
+        "seed": 100013,
+        "worldShift": 0.7947173257557824
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.1251811040016822,
+        "moves": 5,
+        "recommendationGap": 16.524349694717515,
+        "seed": 100014,
+        "worldShift": 0.8578913507323384
+      },
+      {
+        "closerFraction": 0.2,
+        "gapReduction": -0.5241378839051937,
+        "moves": 5,
+        "recommendationGap": 6.607245803963471,
+        "seed": 100015,
+        "worldShift": 0.8268844352785301
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.232794190576913,
+        "moves": 5,
+        "recommendationGap": 8.508039014156093,
+        "seed": 100016,
+        "worldShift": 0.9277371023109502
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.7384385737476016,
+        "moves": 5,
+        "recommendationGap": 14.639455975631526,
+        "seed": 100017,
+        "worldShift": 0.9443359963067532
+      },
+      {
+        "closerFraction": 0.5,
+        "gapReduction": 0.21443529070589595,
+        "moves": 4,
+        "recommendationGap": 5.159477123454076,
+        "seed": 100018,
+        "worldShift": 0.7637107051441958
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.39635811384534914,
+        "moves": 4,
+        "recommendationGap": 6.692939184192039,
+        "seed": 100019,
+        "worldShift": 0.9580615764551613
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.3523625530313506,
+        "moves": 5,
+        "recommendationGap": 12.714478961020674,
+        "seed": 100020,
+        "worldShift": 0.8827302115122923
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.5337938836314429,
+        "moves": 1,
+        "recommendationGap": 6.176755822602527,
+        "seed": 100021,
+        "worldShift": 0.6771594123709271
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.6054184354507719,
+        "moves": 5,
+        "recommendationGap": 9.413892917682137,
+        "seed": 100022,
+        "worldShift": 0.8250560465116207
+      },
+      {
+        "closerFraction": 0.75,
+        "gapReduction": 0.2950416455948437,
+        "moves": 4,
+        "recommendationGap": 6.09534595321346,
+        "seed": 100023,
+        "worldShift": 0.7760563201583675
+      },
+      {
+        "closerFraction": 0.6,
+        "gapReduction": -0.003732246929643779,
+        "moves": 5,
+        "recommendationGap": 12.481647448895426,
+        "seed": 100024,
+        "worldShift": 0.7083076998772255
+      },
+      {
+        "closerFraction": 0.3333333333333333,
+        "gapReduction": -0.09843110262363908,
+        "moves": 3,
+        "recommendationGap": 3.1782610226994286,
+        "seed": 100025,
+        "worldShift": 0.7357229657259955
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.4837874749705646,
+        "moves": 5,
+        "recommendationGap": 7.220998691913235,
+        "seed": 100026,
+        "worldShift": 0.7760812867908105
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.217264669993828,
+        "moves": 5,
+        "recommendationGap": 6.4086168701189745,
+        "seed": 100028,
+        "worldShift": 0.8708664067755298
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.5599891491514434,
+        "moves": 3,
+        "recommendationGap": 8.307251915884391,
+        "seed": 100029,
+        "worldShift": 0.8069151095597157
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.7977618690340877,
+        "moves": 2,
+        "recommendationGap": 10.310311694023348,
+        "seed": 100032,
+        "worldShift": 0.8104453622119956
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.8526235072403111,
+        "moves": 5,
+        "recommendationGap": 12.086464950018575,
+        "seed": 100034,
+        "worldShift": 0.8886437804255362
+      },
+      {
+        "closerFraction": 0.2,
+        "gapReduction": -0.15139787470392463,
+        "moves": 5,
+        "recommendationGap": 13.28840626239799,
+        "seed": 100036,
+        "worldShift": 0.6356071744163605
+      },
+      {
+        "closerFraction": 0.75,
+        "gapReduction": 0.19856524995103075,
+        "moves": 4,
+        "recommendationGap": 3.145825892157955,
+        "seed": 100037,
+        "worldShift": 0.7853834140903972
+      },
+      {
+        "closerFraction": 0.6,
+        "gapReduction": 0.008728457226127783,
+        "moves": 5,
+        "recommendationGap": 6.869528166606491,
+        "seed": 100038,
+        "worldShift": 0.8835970497914474
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.6412224989002777,
+        "moves": 5,
+        "recommendationGap": 10.376648653723546,
+        "seed": 100039,
+        "worldShift": 1.0068393798447155
+      },
+      {
+        "closerFraction": 0.2,
+        "gapReduction": -0.44154495902601754,
+        "moves": 5,
+        "recommendationGap": 3.7326830691646924,
+        "seed": 100040,
+        "worldShift": 0.8338861238694596
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.3182429503777918,
+        "moves": 4,
+        "recommendationGap": 7.735230876834523,
+        "seed": 100041,
+        "worldShift": 0.9173709017649936
+      },
+      {
+        "closerFraction": 0.6,
+        "gapReduction": 0.24932200609190952,
+        "moves": 5,
+        "recommendationGap": 3.1868942182748947,
+        "seed": 100042,
+        "worldShift": 0.8195509132523988
+      },
+      {
+        "closerFraction": 0.6666666666666666,
+        "gapReduction": 0.10355195772240637,
+        "moves": 3,
+        "recommendationGap": 12.183314847615184,
+        "seed": 100043,
+        "worldShift": 0.8147948529142609
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.7562992979190755,
+        "moves": 3,
+        "recommendationGap": 4.262226903797912,
+        "seed": 100044,
+        "worldShift": 0.8802342515406961
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.8333894060684756,
+        "moves": 5,
+        "recommendationGap": 6.577699759159944,
+        "seed": 100045,
+        "worldShift": 0.9624221336800467
+      },
+      {
+        "closerFraction": null,
+        "gapReduction": null,
+        "moves": 0,
+        "recommendationGap": null,
+        "seed": 100046,
+        "worldShift": null
+      },
+      {
+        "closerFraction": null,
+        "gapReduction": null,
+        "moves": 0,
+        "recommendationGap": null,
+        "seed": 100047,
+        "worldShift": null
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.19584127806521678,
+        "moves": 2,
+        "recommendationGap": 10.08014187800637,
+        "seed": 100049,
+        "worldShift": 0.8249566712029199
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.6112079163930695,
+        "moves": 5,
+        "recommendationGap": 13.933979202212509,
+        "seed": 100050,
+        "worldShift": 0.7245201061258395
+      },
+      {
+        "closerFraction": null,
+        "gapReduction": null,
+        "moves": 0,
+        "recommendationGap": null,
+        "seed": 100051,
+        "worldShift": null
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.2535292402199711,
+        "moves": 3,
+        "recommendationGap": 9.933133496883677,
+        "seed": 100052,
+        "worldShift": 0.7529618039239385
+      },
+      {
+        "closerFraction": 0.2,
+        "gapReduction": -0.49809263184247127,
+        "moves": 5,
+        "recommendationGap": 5.251120119394824,
+        "seed": 100053,
+        "worldShift": 0.933171833399195
+      },
+      {
+        "closerFraction": 0.6,
+        "gapReduction": 0.05610632326479124,
+        "moves": 5,
+        "recommendationGap": 9.61548860024661,
+        "seed": 100054,
+        "worldShift": 0.8812605262464548
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.7772159803903494,
+        "moves": 4,
+        "recommendationGap": 4.691628417255012,
+        "seed": 100055,
+        "worldShift": 0.8786086620002509
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.752580725641341,
+        "moves": 4,
+        "recommendationGap": 6.231554273054564,
+        "seed": 100056,
+        "worldShift": 0.9154346634929171
+      },
+      {
+        "closerFraction": 0.8,
+        "gapReduction": 0.19418778942599016,
+        "moves": 5,
+        "recommendationGap": 5.2285030890949376,
+        "seed": 100057,
+        "worldShift": 0.8131747116532274
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.3093160101910444,
+        "moves": 3,
+        "recommendationGap": 8.180164260906647,
+        "seed": 100058,
+        "worldShift": 0.8793195967885853
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.745194963709061,
+        "moves": 5,
+        "recommendationGap": 13.053323626863499,
+        "seed": 100059,
+        "worldShift": 0.882070901490103
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.32866261896981314,
+        "moves": 3,
+        "recommendationGap": 5.675285582390927,
+        "seed": 100060,
+        "worldShift": 0.8461831447738147
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.3176812910943291,
+        "moves": 5,
+        "recommendationGap": 11.715385622236122,
+        "seed": 100061,
+        "worldShift": 0.8429319006395246
+      },
+      {
+        "closerFraction": 0.2,
+        "gapReduction": -0.16491100567964062,
+        "moves": 5,
+        "recommendationGap": 8.065267386900771,
+        "seed": 100062,
+        "worldShift": 0.829922108661477
+      },
+      {
+        "closerFraction": 0.6666666666666666,
+        "gapReduction": -0.030094125403513416,
+        "moves": 3,
+        "recommendationGap": 7.55837924438953,
+        "seed": 100063,
+        "worldShift": 0.8502323682448797
+      }
+    ],
+    "summary": {
+      "closerFraction": {
+        "count": 54,
+        "mean": 0.38765432098765434,
+        "median": 0.2,
+        "p90": 1.0
+      },
+      "gapReduction": {
+        "count": 54,
+        "mean": -0.13908459618718585,
+        "median": -0.16987308175008256,
+        "p90": 0.37292356480508215
+      },
+      "recommendationGap": {
+        "count": 54,
+        "mean": 7.956032243580954,
+        "median": 7.139489450415626,
+        "p90": 12.951670227110652
+      },
+      "worldShift": {
+        "count": 54,
+        "mean": 0.8413749523595468,
+        "median": 0.8445575227066697,
+        "p90": 0.9315414140727215
+      }
+    },
+    "trainingRng": 94103
+  },
+  {
+    "checkpoint": "final",
+    "snapshots": [
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.8682083070722542,
+        "moves": 5,
+        "recommendationGap": 10.70831453591963,
+        "seed": 100000,
+        "worldShift": 1.0969593800384874
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 1.1947341652464416,
+        "moves": 3,
+        "recommendationGap": 5.623369083797702,
+        "seed": 100002,
+        "worldShift": 1.2014169448903973
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.39162816113417204,
+        "moves": 3,
+        "recommendationGap": 2.24289602115291,
+        "seed": 100003,
+        "worldShift": 1.220479516917924
+      },
+      {
+        "closerFraction": 0.25,
+        "gapReduction": -0.0010302437676666942,
+        "moves": 4,
+        "recommendationGap": 4.481350681053415,
+        "seed": 100004,
+        "worldShift": 1.137082114428642
+      },
+      {
+        "closerFraction": 0.5,
+        "gapReduction": 0.3981121609518321,
+        "moves": 2,
+        "recommendationGap": 4.222208605484486,
+        "seed": 100005,
+        "worldShift": 1.1021749950489865
+      },
+      {
+        "closerFraction": 0.25,
+        "gapReduction": -0.6234701076820264,
+        "moves": 4,
+        "recommendationGap": 7.258326550922192,
+        "seed": 100006,
+        "worldShift": 1.1716562377821709
+      },
+      {
+        "closerFraction": 0.6666666666666666,
+        "gapReduction": -0.0944382349440529,
+        "moves": 3,
+        "recommendationGap": 4.368691357479121,
+        "seed": 100007,
+        "worldShift": 1.0761883796112983
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.9080577253898072,
+        "moves": 5,
+        "recommendationGap": 7.016287352850424,
+        "seed": 100008,
+        "worldShift": 1.059161774319034
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.17024356040105068,
+        "moves": 5,
+        "recommendationGap": 14.989512423622717,
+        "seed": 100009,
+        "worldShift": 1.114973168107198
+      },
+      {
+        "closerFraction": 0.75,
+        "gapReduction": 0.6557179515916101,
+        "moves": 4,
+        "recommendationGap": 3.66707887387068,
+        "seed": 100010,
+        "worldShift": 1.186243011726609
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.7235028722352904,
+        "moves": 5,
+        "recommendationGap": 6.5903201615771865,
+        "seed": 100011,
+        "worldShift": 1.1030197759460276
+      },
+      {
+        "closerFraction": 0.2,
+        "gapReduction": -0.3000955248076835,
+        "moves": 5,
+        "recommendationGap": 11.724677501676812,
+        "seed": 100012,
+        "worldShift": 1.226992770850187
+      },
+      {
+        "closerFraction": 0.2,
+        "gapReduction": -0.672156412187139,
+        "moves": 5,
+        "recommendationGap": 3.6312622221443163,
+        "seed": 100013,
+        "worldShift": 1.089358012874626
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.20229388626607517,
+        "moves": 5,
+        "recommendationGap": 16.44723691245312,
+        "seed": 100014,
+        "worldShift": 1.1425993201565965
+      },
+      {
+        "closerFraction": 0.2,
+        "gapReduction": -0.6544687732804629,
+        "moves": 5,
+        "recommendationGap": 6.73757669333874,
+        "seed": 100015,
+        "worldShift": 1.1006289548830108
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.2337372736466632,
+        "moves": 5,
+        "recommendationGap": 8.508982097225843,
+        "seed": 100016,
+        "worldShift": 1.2299823956766633
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.9159404541028205,
+        "moves": 5,
+        "recommendationGap": 14.816957855986743,
+        "seed": 100017,
+        "worldShift": 1.2518574400653366
+      },
+      {
+        "closerFraction": 0.5,
+        "gapReduction": 0.26487965590544993,
+        "moves": 4,
+        "recommendationGap": 5.109032758254522,
+        "seed": 100018,
+        "worldShift": 1.0441017207666032
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.5726972840487836,
+        "moves": 4,
+        "recommendationGap": 6.5166000139886044,
+        "seed": 100019,
+        "worldShift": 1.2650073950077627
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.3871948372702601,
+        "moves": 5,
+        "recommendationGap": 12.749311245259586,
+        "seed": 100020,
+        "worldShift": 1.142595195565757
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.7363787063496945,
+        "moves": 1,
+        "recommendationGap": 6.379340645320779,
+        "seed": 100021,
+        "worldShift": 1.0075429487247667
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.7940068275580803,
+        "moves": 5,
+        "recommendationGap": 9.602481309789443,
+        "seed": 100022,
+        "worldShift": 1.115681201700353
+      },
+      {
+        "closerFraction": 0.75,
+        "gapReduction": 0.39037026434299127,
+        "moves": 4,
+        "recommendationGap": 6.000017334465312,
+        "seed": 100023,
+        "worldShift": 1.0527051478418357
+      },
+      {
+        "closerFraction": 0.2,
+        "gapReduction": -0.08892997478309077,
+        "moves": 5,
+        "recommendationGap": 12.566845176748872,
+        "seed": 100024,
+        "worldShift": 1.0336054527304372
+      },
+      {
+        "closerFraction": 0.3333333333333333,
+        "gapReduction": -0.21831384728323058,
+        "moves": 3,
+        "recommendationGap": 3.29814376735902,
+        "seed": 100025,
+        "worldShift": 0.9990838651282591
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.6539543514621409,
+        "moves": 5,
+        "recommendationGap": 7.391165568404811,
+        "seed": 100026,
+        "worldShift": 1.0510270724350599
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.3417793132694914,
+        "moves": 5,
+        "recommendationGap": 6.284102226843311,
+        "seed": 100028,
+        "worldShift": 1.1595350451387436
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.8176089418818661,
+        "moves": 3,
+        "recommendationGap": 8.564871708614813,
+        "seed": 100029,
+        "worldShift": 1.107352483215249
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -1.081160051552132,
+        "moves": 2,
+        "recommendationGap": 10.593709876541393,
+        "seed": 100032,
+        "worldShift": 1.1165971007727342
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -1.0871459574496725,
+        "moves": 5,
+        "recommendationGap": 12.320987400227938,
+        "seed": 100034,
+        "worldShift": 1.1673460946447711
+      },
+      {
+        "closerFraction": 0.2,
+        "gapReduction": -0.23745019971846731,
+        "moves": 5,
+        "recommendationGap": 13.374458587412533,
+        "seed": 100036,
+        "worldShift": 0.9394669977896987
+      },
+      {
+        "closerFraction": 0.75,
+        "gapReduction": 0.20476945010027892,
+        "moves": 4,
+        "recommendationGap": 3.1396216920087068,
+        "seed": 100037,
+        "worldShift": 1.1104691106888223
+      },
+      {
+        "closerFraction": 0.6,
+        "gapReduction": 0.06256376429227561,
+        "moves": 5,
+        "recommendationGap": 6.815692859540344,
+        "seed": 100038,
+        "worldShift": 1.1517778988737228
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.7654359143580777,
+        "moves": 5,
+        "recommendationGap": 10.500862069181345,
+        "seed": 100039,
+        "worldShift": 1.3372133997872087
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.7358239566234068,
+        "moves": 5,
+        "recommendationGap": 4.026962066762081,
+        "seed": 100040,
+        "worldShift": 1.1728616375250467
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.5129009607040548,
+        "moves": 4,
+        "recommendationGap": 7.54057286650826,
+        "seed": 100041,
+        "worldShift": 1.1950201172932213
+      },
+      {
+        "closerFraction": 0.6,
+        "gapReduction": 0.27546494319495857,
+        "moves": 5,
+        "recommendationGap": 3.160751281171846,
+        "seed": 100042,
+        "worldShift": 1.1236973903898335
+      },
+      {
+        "closerFraction": 0.6666666666666666,
+        "gapReduction": -0.022990106965091073,
+        "moves": 3,
+        "recommendationGap": 12.30985691230268,
+        "seed": 100043,
+        "worldShift": 1.1148725515026403
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -1.0633043203312869,
+        "moves": 3,
+        "recommendationGap": 4.569231926210123,
+        "seed": 100044,
+        "worldShift": 1.2106891456931697
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 1.1336216041525056,
+        "moves": 5,
+        "recommendationGap": 6.277467561075914,
+        "seed": 100045,
+        "worldShift": 1.2912909150773477
+      },
+      {
+        "closerFraction": null,
+        "gapReduction": null,
+        "moves": 0,
+        "recommendationGap": null,
+        "seed": 100046,
+        "worldShift": null
+      },
+      {
+        "closerFraction": null,
+        "gapReduction": null,
+        "moves": 0,
+        "recommendationGap": null,
+        "seed": 100047,
+        "worldShift": null
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.10374694161694631,
+        "moves": 2,
+        "recommendationGap": 10.172236214454639,
+        "seed": 100049,
+        "worldShift": 1.113619070969944
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.8391535031482341,
+        "moves": 5,
+        "recommendationGap": 14.161924788967672,
+        "seed": 100050,
+        "worldShift": 1.0103441414812575
+      },
+      {
+        "closerFraction": null,
+        "gapReduction": null,
+        "moves": 0,
+        "recommendationGap": null,
+        "seed": 100051,
+        "worldShift": null
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.40331300092315026,
+        "moves": 3,
+        "recommendationGap": 10.082917257586855,
+        "seed": 100052,
+        "worldShift": 1.0475039777610322
+      },
+      {
+        "closerFraction": 0.2,
+        "gapReduction": -0.6084517049381188,
+        "moves": 5,
+        "recommendationGap": 5.361479192490473,
+        "seed": 100053,
+        "worldShift": 1.256876765272044
+      },
+      {
+        "closerFraction": 0.8,
+        "gapReduction": 0.1589912292503886,
+        "moves": 5,
+        "recommendationGap": 9.512603694261013,
+        "seed": 100054,
+        "worldShift": 1.1119778776236349
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 1.0410255657910663,
+        "moves": 4,
+        "recommendationGap": 4.427818831854294,
+        "seed": 100055,
+        "worldShift": 1.1663294561186033
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -1.0723705288722531,
+        "moves": 4,
+        "recommendationGap": 6.551344076285478,
+        "seed": 100056,
+        "worldShift": 1.2536213029781915
+      },
+      {
+        "closerFraction": 1.0,
+        "gapReduction": 0.350118128123407,
+        "moves": 5,
+        "recommendationGap": 5.07257275039752,
+        "seed": 100057,
+        "worldShift": 1.0465802445880816
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.354119503648171,
+        "moves": 3,
+        "recommendationGap": 8.224967754363773,
+        "seed": 100058,
+        "worldShift": 1.1532852103507596
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.920362235326191,
+        "moves": 5,
+        "recommendationGap": 13.228490898480633,
+        "seed": 100059,
+        "worldShift": 1.1520246302223252
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.5516255928982198,
+        "moves": 3,
+        "recommendationGap": 5.898248556319333,
+        "seed": 100060,
+        "worldShift": 1.1515097058154302
+      },
+      {
+        "closerFraction": 0.0,
+        "gapReduction": -0.3485056050419761,
+        "moves": 5,
+        "recommendationGap": 11.746209936183769,
+        "seed": 100061,
+        "worldShift": 1.0988061780400966
+      },
+      {
+        "closerFraction": 0.4,
+        "gapReduction": -0.18378413721600212,
+        "moves": 5,
+        "recommendationGap": 8.084140518437135,
+        "seed": 100062,
+        "worldShift": 1.0991039544748165
+      },
+      {
+        "closerFraction": 0.6666666666666666,
+        "gapReduction": -0.0427312000551258,
+        "moves": 3,
+        "recommendationGap": 7.571016319041142,
+        "seed": 100063,
+        "worldShift": 1.1579495717450277
+      }
+    ],
+    "summary": {
+      "closerFraction": {
+        "count": 54,
+        "mean": 0.3830246913580247,
+        "median": 0.2,
+        "p90": 1.0
+      },
+      "gapReduction": {
+        "count": 54,
+        "mean": -0.1871839558223799,
+        "median": -0.22602556046494687,
+        "p90": 0.5547583870453652
+      },
+      "recommendationGap": {
+        "count": 54,
+        "mean": 8.00413160321615,
+        "median": 7.137306951886307,
+        "p90": 13.08473700251432
+      },
+      "worldShift": {
+        "count": 54,
+        "mean": 1.1340712253529166,
+        "median": 1.120147245581284,
+        "p90": 1.2452949267487348
+      }
+    },
+    "trainingRng": 94103
+  }
+]

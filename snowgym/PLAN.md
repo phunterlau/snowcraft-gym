@@ -19,13 +19,20 @@ configuration on 2026-09-01.
 
 ## Milestones
 
-### R1m-S4 — frozen exploration/advantage audit (declared)
+### R1m-S4 — frozen exploration/advantage audit (complete 2026-09-05)
 
 Follow `training/reviews/m7b_r1m_s4_declaration.md`: reconstruct 72 archived S3
 trajectories at updates 1/11/21 and compare saved policies on the same 57 training
 snapshots. Measure physical exploration, recommendation distance, actual policy
 drift and frozen output-space advantage direction separately. No optimization,
 new continuation, provider call or promotion; declare any intervention afterward.
+
+All 72 trajectories reconstructed with zero sampled-log-probability and initial
+minibatch-loss discrepancy. Mean sampled target shifts were 0.94–1.00 world units
+against recommendation gaps of 7.30–9.82; local advantage alignment was weak and
+mixed. Final common-state corrections were small/inconsistent. See
+`training/reviews/m7b_r1m_s4_results.md`. A paired training-only exploration-scale
+physical probe is proposed; its protocol must be declared before execution.
 
 ### R1m-S3 — learned short movement recovery (complete; gate failed 2026-09-05)
 

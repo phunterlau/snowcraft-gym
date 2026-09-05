@@ -1,0 +1,30 @@
+{
+  "artifacts": {
+    "common-states.json": "sha256:eb5b3856fcec56e78f8a541972d4fef81f5ea28af61a29860b39ba3bf01fd986",
+    "declaration.json": "sha256:64efb5882445518c7a2e878c2607de3a69bca290e8b5378584cb290edb4d203d",
+    "opportunities-94101-001.jsonl.gz": "sha256:5ea8812aba32f088e392963d5f41a5c2fff20b55e99d0a57d73b7a9d9e69ccb1",
+    "opportunities-94101-011.jsonl.gz": "sha256:11a2f4514bf1b1f354bd8135dbe717e7d3208dec2d0ca251b4c171d5a3edf8e4",
+    "opportunities-94101-021.jsonl.gz": "sha256:ff7bb64c52913446a2cc8cdf04cc2442425f71ff35735f1f22a680415fef5965",
+    "opportunities-94102-001.jsonl.gz": "sha256:2842647fbe48c84db539022b6f24a06127d1c7f61942f10f2194b58b957d72af",
+    "opportunities-94102-011.jsonl.gz": "sha256:7d25904b5d9a3a3b2c461ebfe897f2a9e7d18f967a65a91b33caec9b4088064b",
+    "opportunities-94102-021.jsonl.gz": "sha256:43e407f1c25efb63740fc4417e4debfa55cc2f9a91ef564c1015f81b630497f8",
+    "opportunities-94103-001.jsonl.gz": "sha256:295d9a0dc4994d033c36ed3f1d14c472c34f241147301e75924ba87f9df4a3ad",
+    "opportunities-94103-011.jsonl.gz": "sha256:cc80f3b281b9c1b24ce6829f8976529c7c6c4d9509aa5cd2e281e00b608ebc2b",
+    "opportunities-94103-021.jsonl.gz": "sha256:bdf197e889e9212cbc658fd04c7b50b7f37d9641356336ac5cb03592b9f5c285",
+    "reconstruction-94101-001.json": "sha256:9687ed7592d95c1765f85f672fbca8081ad27ca78e7d1e93e42763f5a9934d74",
+    "reconstruction-94101-011.json": "sha256:9890bec839824cd6b3d4f06ab809d40cc766f52eb197fbcb5b4503fd15af7371",
+    "reconstruction-94101-021.json": "sha256:bdc3817483f64031f02b6db417920f36f36ae16408bc8dc9704e8a132d7833c2",
+    "reconstruction-94102-001.json": "sha256:32357b4cbee47d5cbee26c6604ccf49fb81bf2cc9de48079843f8aaa5d7ab31b",
+    "reconstruction-94102-011.json": "sha256:709ecea0512c4305fc423c3976c953bf205988032cb5987a35f2a646662e1e59",
+    "reconstruction-94102-021.json": "sha256:050f4cfb8f5c536a019b954220d023583955c06bbe1d080c7ad6e0538c7a8403",
+    "reconstruction-94103-001.json": "sha256:2d439af04ecfb27f35c6f66f6ef2f0f07cc73b3891cd213c8b94d0c8339f49b0",
+    "reconstruction-94103-011.json": "sha256:e6858cf482b408442d86dc8de4c988928ad5b0aa2e1a91c619e0cefdfcac4ff3",
+    "reconstruction-94103-021.json": "sha256:052480776caed1d162fa203a4868c63396185564de79d0157bf19ac712a8f731",
+    "report.json": "sha256:6049d6a11beb2b2a09120837e5526a863cd224de263eaa99ede82416d2723610"
+  },
+  "assistType": "teacher-shot-direction-and-power",
+  "assistVersion": "snowgym.r1h-corrected-shots.v0",
+  "autonomousQualificationEligible": false,
+  "format": "snowgym.recovery-audit-manifest.v0",
+  "manifestDigest": "sha256:0a1464c9fdabfbaf05d8446aff8e910fa66fdf9a0db78fbfc52fd78b04ffa91e"
+}
