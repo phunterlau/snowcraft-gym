@@ -19,6 +19,14 @@ configuration on 2026-09-01.
 
 ## Milestones
 
+### R1m-S4 — frozen exploration/advantage audit (declared)
+
+Follow `training/reviews/m7b_r1m_s4_declaration.md`: reconstruct 72 archived S3
+trajectories at updates 1/11/21 and compare saved policies on the same 57 training
+snapshots. Measure physical exploration, recommendation distance, actual policy
+drift and frozen output-space advantage direction separately. No optimization,
+new continuation, provider call or promotion; declare any intervention afterward.
+
 ### R1m-S3 — learned short movement recovery (complete; gate failed 2026-09-05)
 
 Follow `training/reviews/m7b_r1m_s3_declaration.md`: training-only first-hit

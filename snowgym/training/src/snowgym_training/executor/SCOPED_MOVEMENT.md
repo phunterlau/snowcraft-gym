@@ -1,5 +1,16 @@
 # R1m scoped movement contract
 
+R1m-S4 is the frozen exploration/advantage audit described in its
+[declaration](../../../reviews/m7b_r1m_s4_declaration.md). From `snowgym/training`:
+
+```bash
+.venv/bin/python -m snowgym_training.options.recovery_audit \
+  --output runs/m7b_engage_r1m_s4_v0
+```
+
+It replays existing learner windows and performs inference only; it makes no
+optimizer updates and never promotes an audited checkpoint.
+
 R1m-S3 trains a short movement-recovery policy with an explicit recovery-time
 input and an actual frozen-policy tail return. Its
 [declaration](../../../reviews/m7b_r1m_s3_declaration.md) fixes snapshots and budget.
