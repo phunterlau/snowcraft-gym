@@ -19,7 +19,7 @@ configuration on 2026-09-01.
 
 ## Milestones
 
-### Selective tactical repair — approved mechanism audit (2026-09-05)
+### Selective tactical repair — completed mechanism audit (2026-09-05)
 
 Declaration: `refs/snowgym_selective_repair_review_and_plan.md`. Compare keep,
 binding-only refresh, bounded opportunistic fire and full reactivation on the
@@ -35,9 +35,16 @@ promotion or changes to R1n/M7c qualification are included.
 Harness implemented: `orchestration/examples/selective-repair-audit.ts` has
 read-only seed preflight, immutable compressed traces, isolated interventions,
 exact historical/delayed-prefix parity and paired-bootstrap analysis. The harness
-gate passed 367 TypeScript, 51 client and 257 training tests plus build. Fresh
-collection is pending. See the recovery
-README for commands and registered same-experiment seed reuse semantics.
+gate passed 367 TypeScript, 51 client and 257 training tests plus build. The sealed
+run `orchestration/recovery/examples/selective-repair-20260905-v0` has 117 fresh
+casualty cases (37/40, 40/40, 40/40), three historical cases and 2,400 branches,
+each rerun exactly; 1,046,237 recorded action results had zero rejections.
+Binding refresh matched full reactivation in all 600 physical trajectory pairs.
+At zero delay it raised 6v10 wins from 0/40 to 5/40 but lowered 10v10 wins from
+33/40 to 15/40. Local fire's 5v5 win-rate gain remains uncertain; its condition
+never activated in fresh 10v10/6v10 cases. No default was promoted. See
+`orchestration/recovery/SELECTIVE_REPAIR_RESULTS.md` for intervals, delay effects,
+scope limitations and a proposed separately declared retain/repair gate.
 
 ### Side diagnostic — progress-aware commander recovery (2026-09-05)
 

@@ -3,6 +3,8 @@
 The implemented, opt-in experiment is the
 [selective-repair mechanism audit](../../../refs/snowgym_selective_repair_review_and_plan.md),
 which separates binding refresh, local firing and full reactivation.
+The [completed audit and review](SELECTIVE_REPAIR_RESULTS.md) includes 117 fresh
+casualty cases, 2,400 branches and both positive and negative outcomes.
 
 ## Selective-repair audit
 
