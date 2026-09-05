@@ -11,6 +11,8 @@ From `snowgym/training`, run it once into a new output directory:
 
 It runs six 20-update assisted experiments and refuses existing output paths.
 It makes no provider calls and does not promote an autonomous fighter.
+The completed run failed its consistency gate; see the
+[results](../../../reviews/m7b_r1m_s1_results.md). Keep the coupled default.
 
 New option PPO uses `EngageOptionBatchV1` and
 `snowgym.engage-option-state.v1`. Its three fractions encode remaining option

@@ -19,7 +19,7 @@ configuration on 2026-09-01.
 
 ## Milestones
 
-### R1m-S1 — critic-schedule isolation (declared 2026-09-05)
+### R1m-S1 — critic-schedule isolation (complete; gate failed 2026-09-05)
 
 Resume the fighter recovery track with the bounded matched experiment in
 `training/reviews/m7b_r1m_s1_declaration.md`: three RNGs, coupled versus independent
@@ -27,6 +27,14 @@ critic scheduling, 20 updates per arm. Preserve corrected-shot assistance and
 the actor KL stop. Verify identical first-rollout actor/optimizer/RNG behavior
 before collection, then report final paired development effects. R1m replication
 remains failed and R1n remains open. No provider calls or qualification promotion.
+
+All six declared runs completed. Independent scheduling improved common-rollout
+critic fitting with exact first-update actor/Adam/RNG parity, but replication-
+development success differences were −5, −2.5 and +20 percentage points across
+the three RNGs. The mean +4.17-point gain and two negative estimates failed the
+predeclared consistency gate. Keep the coupled default and archive the positive
+and negative evidence; no budget extension or checkpoint promotion. See
+`training/reviews/m7b_r1m_s1_results.md` and `training/runs/m7b_engage_r1m_s1_v0`.
 
 ### Selective tactical repair — completed mechanism audit (2026-09-05)
 

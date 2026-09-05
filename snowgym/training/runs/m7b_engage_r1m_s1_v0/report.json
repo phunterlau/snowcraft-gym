@@ -1,0 +1,203 @@
+{
+  "assistType": "teacher-shot-direction-and-power",
+  "assistVersion": "snowgym.r1h-corrected-shots.v0",
+  "autonomousQualificationEligible": false,
+  "comparisons": [
+    {
+      "development": {
+        "candidateSuccesses": 17,
+        "controlSuccesses": 21,
+        "effect": {
+          "physicalWin": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "mean": 0.0
+          },
+          "progress": {
+            "ci95": [
+              -0.10500000000000001,
+              0.022000000000000002
+            ],
+            "mean": -0.041
+          },
+          "progressWinFraction": 0.275,
+          "success": {
+            "ci95": [
+              -0.25062499999999943,
+              0.075
+            ],
+            "mean": -0.1
+          }
+        },
+        "rejectedActionRate": 0.0
+      },
+      "replicationDevelopment": {
+        "candidateSuccesses": 23,
+        "controlSuccesses": 25,
+        "effect": {
+          "physicalWin": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "mean": 0.0
+          },
+          "progress": {
+            "ci95": [
+              -0.076,
+              0.05500000000000001
+            ],
+            "mean": -0.014000000000000004
+          },
+          "progressWinFraction": 0.175,
+          "success": {
+            "ci95": [
+              -0.2,
+              0.1
+            ],
+            "mean": -0.05
+          }
+        },
+        "rejectedActionRate": 0.0
+      },
+      "seed": 94001
+    },
+    {
+      "development": {
+        "candidateSuccesses": 17,
+        "controlSuccesses": 14,
+        "effect": {
+          "physicalWin": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "mean": 0.0
+          },
+          "progress": {
+            "ci95": [
+              -0.012,
+              0.129
+            ],
+            "mean": 0.05800000000000001
+          },
+          "progressWinFraction": 0.475,
+          "success": {
+            "ci95": [
+              -0.075,
+              0.225
+            ],
+            "mean": 0.075
+          }
+        },
+        "rejectedActionRate": 0.0
+      },
+      "replicationDevelopment": {
+        "candidateSuccesses": 16,
+        "controlSuccesses": 17,
+        "effect": {
+          "physicalWin": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "mean": 0.0
+          },
+          "progress": {
+            "ci95": [
+              -0.06500000000000002,
+              0.119
+            ],
+            "mean": 0.02999999999999998
+          },
+          "progressWinFraction": 0.475,
+          "success": {
+            "ci95": [
+              -0.225,
+              0.175
+            ],
+            "mean": -0.025
+          }
+        },
+        "rejectedActionRate": 0.0
+      },
+      "seed": 94002
+    },
+    {
+      "development": {
+        "candidateSuccesses": 19,
+        "controlSuccesses": 11,
+        "effect": {
+          "physicalWin": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "mean": 0.0
+          },
+          "progress": {
+            "ci95": [
+              0.046,
+              0.174
+            ],
+            "mean": 0.10900000000000001
+          },
+          "progressWinFraction": 0.55,
+          "success": {
+            "ci95": [
+              0.025,
+              0.375
+            ],
+            "mean": 0.2
+          }
+        },
+        "rejectedActionRate": 0.0
+      },
+      "replicationDevelopment": {
+        "candidateSuccesses": 21,
+        "controlSuccesses": 13,
+        "effect": {
+          "physicalWin": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "mean": 0.0
+          },
+          "progress": {
+            "ci95": [
+              0.06500000000000002,
+              0.16999999999999998
+            ],
+            "mean": 0.11699999999999999
+          },
+          "progressWinFraction": 0.55,
+          "success": {
+            "ci95": [
+              0.05,
+              0.35
+            ],
+            "mean": 0.2
+          }
+        },
+        "rejectedActionRate": 0.0
+      },
+      "seed": 94003
+    }
+  ],
+  "decision": {
+    "assistType": "teacher-shot-direction-and-power",
+    "assistVersion": "snowgym.r1h-corrected-shots.v0",
+    "autonomousQualificationEligible": false,
+    "criteria": {
+      "allFreshGainsNonnegative": false,
+      "meanFreshGainAtLeastTenPoints": false,
+      "onePositiveFreshLowerBound": true,
+      "rejections": true
+    },
+    "promising": false
+  },
+  "format": "snowgym.movement-stability-report.v0"
+}
