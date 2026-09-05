@@ -4,6 +4,9 @@ R1j tests output geometry after R1i found no clear advantage from relative input
 features. This experiment is deterministic-only and does not modify production
 PPO, the Gym action schema, or the inherited classifier/critic.
 
+The frozen run is complete. [R1j results](../../../reviews/m7b_r1j_results.md)
+show no recovery qualification and no clear improvement over the absolute control.
+
 ## Controlled matrix
 
 All arms use R1i's absolute entity features, 33,669 new parameters, zero-output

@@ -853,6 +853,14 @@ features showed no clear advantage over the matched control. See
 [R1i results and next decoder probe](reviews/m7b_r1i_results.md) and the
 [headless command](src/snowgym_training/executor/GEOMETRY_PROBE.md#entry-point).
 
+R1j completed four matched decoder fits and 400 evaluation episodes. All four
+arms failed Engage qualification; mean progress was 30.8% for the absolute
+control, 25.3% with displacement correction, 25.5% with direction correction,
+and 22.0% with both. The control reproduces R1i exactly. Next is a learner-state
+label-coverage/error audit before any fixed-architecture corrective-data fit or
+PPO continuation. See [R1j review](reviews/m7b_r1j_results.md) and the
+[decoder-probe command](src/snowgym_training/executor/DECODER_PROBE.md#entry-point).
+
 The frozen `ppo_curriculum_v0.json` keeps training ranges disjoint from eight
 evaluation seeds per gate and sets thresholds before qualifying runs. Its order
 is 1v1 random, 1v1 easy scripted, 3v3 random, 3v3 easy scripted, 3v3 terrain on

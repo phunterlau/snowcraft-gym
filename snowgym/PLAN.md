@@ -1123,6 +1123,20 @@ progress simple effects/interaction with 10,000 paired bootstrap draws, seed
 custom checkpoint reloads, and all milestone gates before committing. No PPO,
 provider calls, qualification seeds, production policy change, or promotion.
 
+M7b-R1j result (2026-09-04): all four gates passed, then four 20-epoch fits
+and 400 paired development episodes completed. Absolute/displacement/direction/
+both scored 0/40 Engage successes each, with progress 30.8%/25.3%/25.5%/22.0%.
+All had zero battle wins and rejected actions. Displacement weakened HOLD
+separation; direction reduced endpoint error but worsened ray error to 26.5
+degrees versus 19.7 for the control. Paired progress intervals support no clear
+positive decoder effect. The absolute final model state and evaluation records
+exactly reproduce R1i. Retain that model only as a development reference; no
+decoder is promoted. Next: audit per-head errors, conditional-label coverage,
+and gradient magnitudes on learner-visited training states before predeclaring
+a fixed-architecture corrective-data fit with an old-data control. Do not assume
+data coverage is the proven cause or restart PPO yet. Evidence:
+[R1j review](training/reviews/m7b_r1j_results.md). R1 remains open.
+
 #### M7c — full-fight fixed-plan composition
 
 - [ ] Hold one-, two-, and three-role plans throughout complete 3v3, 5v5, and

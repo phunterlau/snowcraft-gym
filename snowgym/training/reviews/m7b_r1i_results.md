@@ -2,6 +2,9 @@
 
 Date: 2026-09-04. Status: completed supervised development probe; R1 remains open.
 
+Follow-up: [R1j completed the matched decoder experiment](m7b_r1j_results.md).
+The next-step section below records the decision made after R1i.
+
 ## Main finding
 
 Trainable geometry residuals improve physical execution and Engage/HOLD

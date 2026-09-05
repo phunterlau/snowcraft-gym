@@ -204,11 +204,14 @@ features showed no clear advantage over the matched control. See the
 [result and next decoder-probe decision](../../../reviews/m7b_r1i_results.md).
 Its custom checkpoints are deterministic-only and remain separate from PPO.
 
-## Design invariants
+The [R1j decoder probe](DECODER_PROBE.md) is complete: all four fitted arms
+scored 0/40 Engage successes, and no decoder improved mean progress over the
+absolute control. Keep the R1i absolute model as a development reference and
+audit learner-state per-head errors and label coverage before a corrective-data
+fit. See [R1j results](../../../reviews/m7b_r1j_results.md). No production
+controller changed; custom checkpoints remain deterministic-only.
 
-The [R1j decoder probe](DECODER_PROBE.md) implements the next controlled test:
-world-displacement and shot-direction corrections in a matched 2×2 matrix.
-Its custom checkpoints are also deterministic-only, with no production change.
+## Design invariants
 
 - Preserve legacy checkpoint shapes unless an architecture flag explicitly
   introduces a new path.

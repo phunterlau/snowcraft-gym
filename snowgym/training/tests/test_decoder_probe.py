@@ -184,3 +184,40 @@ def test_passing_pipeline_preserves_arm_checkpoint_contracts(inputs, tmp_path, m
         assert model.arm == metadata["arm"] == arm
         assert metadata["ppoCompatible"] is False
     audit_artifact_manifest(tmp_path / "run", "manifest.json")
+
+
+def test_archived_decoder_matrix_and_r1i_control_parity(inputs):
+    root = ROOT / "runs/m7b_engage_r1j_decoder_probe_v0"
+    previous = ROOT / "runs/m7b_engage_r1i_geometry_probe_v0"
+    manifest = audit_artifact_manifest(root, "manifest.json")
+    assert manifest["manifestDigest"] == json_digest({k: v for k, v in manifest.items() if k != "manifestDigest"})
+    assert manifest["config"] == probe.load_config()
+    report = json.loads((root / "report.json").read_text())
+    gates = json.loads((root / "small-batch-gates.json").read_text())
+    assert report["gatesPassed"] and all(g["passed"] for g in gates.values())
+    assert not report["qualificationEligible"] and report["ppoUpdates"] == report["criticUpdates"] == 0
+    records = {arm: json.loads((root / f"{arm}-development.json").read_text()) for arm in ("source", *ARMS)}
+    for arm in ("source", "absolute"):
+        assert records[arm] == json.loads((previous / f"{arm}-development.json").read_text())
+    old, _ = geometry.load_probe(previous / "absolute-epoch-020")
+    control, _ = probe.load_probe(root / "absolute-epoch-020")
+    assert semantic_state_digest(old.state_dict()) == semantic_state_digest(control.state_dict())
+    assert report["pairedContrasts"] == probe.contrasts(records, probe.load_config())
+    for arm in ARMS:
+        stats = report["arms"][arm]
+        assert stats["sourceUnchanged"] and stats["checkpointReloadExact"]
+        assert stats["newParameterCount"] == 33669 and stats["newParameterL2Change"] > 0
+        assert len(stats["epochs"]) == 20
+        assert stats["teacherAgreementBefore"] == report["arms"]["absolute"]["teacherAgreementBefore"]
+        model, _ = probe.load_probe(root / f"{arm}-epoch-020")
+        assert semantic_state_digest(model.source.state_dict()) == semantic_state_digest(inputs[1]["model"])
+        initial, _ = probe.load_probe(root / f"{arm}-epoch-000")
+        with torch.no_grad():
+            actual, _, _ = initial.act(inputs[3], deterministic=True)
+            expected, _, _ = initial.source.act(inputs[3], deterministic=True)
+            assert all(torch.equal(actual[k], expected[k]) for k in actual)
+            assert torch.equal(model(inputs[3])["action_logits"], initial(inputs[3])["action_logits"])
+        for condition in ("correct", "shuffled"):
+            assert [r["seed"] for r in records[arm][condition]] == list(range(200000, 200040))
+            assert probe.summarize_rows(records[arm][condition]) == report["development"][arm][condition]
+            assert all(r["rejectedActions"] == 0 for r in records[arm][condition])
