@@ -1,0 +1,894 @@
+{
+  "baselineFit": {
+    "learner": {
+      "conditional": {
+        "direction": 0.2224950885400176,
+        "endpoint": 0.11128618028014899,
+        "move": 0.02720040436834097,
+        "power": 0.030666520970407875,
+        "total": 0.2761573724448681
+      },
+      "old": {
+        "direction": 0.6129965538159012,
+        "endpoint": 0.17242907118052245,
+        "move": 0.027410460449755192,
+        "power": 0.1708866288419813,
+        "total": 0.7430932400282473
+      }
+    },
+    "teacher": {
+      "conditional": {
+        "direction": 0.048113955184817314,
+        "endpoint": 0.0749476581811905,
+        "move": 0.005772718391381204,
+        "power": 0.0020457226870348676,
+        "total": 0.06240430166944862
+      },
+      "old": {
+        "direction": 0.11173935486003757,
+        "endpoint": 0.08641813695430756,
+        "move": 0.005475210415897891,
+        "power": 0.014979217923246324,
+        "total": 0.13334598913788795
+      }
+    }
+  },
+  "bootstrapGates": {
+    "A-93001": {
+      "historical": {
+        "criteria": {
+          "contactMinimum": true,
+          "initializerImprovement": false,
+          "rejections": true,
+          "successMinimum": false,
+          "wrongPlanImprovement": false
+        },
+        "passed": false
+      },
+      "replication": {
+        "criteria": {
+          "contactMinimum": true,
+          "initializerImprovement": false,
+          "rejections": true,
+          "successMinimum": false,
+          "wrongPlanImprovement": false
+        },
+        "passed": false
+      }
+    },
+    "B-93001": {
+      "historical": {
+        "criteria": {
+          "contactMinimum": true,
+          "initializerImprovement": false,
+          "rejections": true,
+          "successMinimum": false,
+          "wrongPlanImprovement": false
+        },
+        "passed": false
+      },
+      "replication": {
+        "criteria": {
+          "contactMinimum": true,
+          "initializerImprovement": false,
+          "rejections": true,
+          "successMinimum": false,
+          "wrongPlanImprovement": false
+        },
+        "passed": false
+      }
+    },
+    "C-93001": {
+      "historical": {
+        "criteria": {
+          "contactMinimum": true,
+          "initializerImprovement": false,
+          "rejections": true,
+          "successMinimum": false,
+          "wrongPlanImprovement": false
+        },
+        "passed": false
+      },
+      "replication": {
+        "criteria": {
+          "contactMinimum": true,
+          "initializerImprovement": false,
+          "rejections": true,
+          "successMinimum": false,
+          "wrongPlanImprovement": false
+        },
+        "passed": false
+      }
+    },
+    "D-93001": {
+      "historical": {
+        "criteria": {
+          "contactMinimum": true,
+          "initializerImprovement": false,
+          "rejections": true,
+          "successMinimum": false,
+          "wrongPlanImprovement": false
+        },
+        "passed": false
+      },
+      "replication": {
+        "criteria": {
+          "contactMinimum": true,
+          "initializerImprovement": false,
+          "rejections": true,
+          "successMinimum": false,
+          "wrongPlanImprovement": false
+        },
+        "passed": false
+      }
+    }
+  },
+  "contrasts": {
+    "historical": {
+      "B-A": {
+        "physicalWin": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        },
+        "progress": {
+          "ci95": [
+            -0.05100000277161598,
+            0.06802500626072251
+          ],
+          "mean": 0.00899999812245369
+        },
+        "progressWinFraction": 0.5,
+        "success": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        }
+      },
+      "C-A": {
+        "physicalWin": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        },
+        "progress": {
+          "ci95": [
+            -0.02199999989941716,
+            0.08799999728798866
+          ],
+          "mean": 0.033000003546476364
+        },
+        "progressWinFraction": 0.575,
+        "success": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        }
+      },
+      "D-A": {
+        "physicalWin": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        },
+        "progress": {
+          "ci95": [
+            -0.02800000160932541,
+            0.10200000630691647
+          ],
+          "mean": 0.0369999997317791
+        },
+        "progressWinFraction": 0.55,
+        "success": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        }
+      },
+      "D-B": {
+        "physicalWin": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        },
+        "progress": {
+          "ci95": [
+            -0.04299999849870801,
+            0.09700000289827586
+          ],
+          "mean": 0.02800000160932541
+        },
+        "progressWinFraction": 0.525,
+        "success": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        }
+      },
+      "D-C": {
+        "physicalWin": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        },
+        "progress": {
+          "ci95": [
+            -0.06700000554323196,
+            0.07500000074505805
+          ],
+          "mean": 0.0039999961853027345
+        },
+        "progressWinFraction": 0.475,
+        "success": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        }
+      },
+      "interaction-D-C-B+A": {
+        "physicalWin": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        },
+        "progress": {
+          "ci95": [
+            -0.09799999821931124,
+            0.0860250070318576
+          ],
+          "mean": -0.005000001937150955
+        },
+        "progressWinFraction": 0.475,
+        "success": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        }
+      }
+    },
+    "replication": {
+      "B-A": {
+        "physicalWin": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        },
+        "progress": {
+          "ci95": [
+            -0.026000005006790162,
+            0.1050000019557774
+          ],
+          "mean": 0.037999998033046725
+        },
+        "progressWinFraction": 0.45,
+        "success": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        }
+      },
+      "C-A": {
+        "physicalWin": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        },
+        "progress": {
+          "ci95": [
+            -0.018999994564801455,
+            0.07500000670552254
+          ],
+          "mean": 0.027000004798173903
+        },
+        "progressWinFraction": 0.4,
+        "success": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        }
+      },
+      "D-A": {
+        "physicalWin": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        },
+        "progress": {
+          "ci95": [
+            0.0009999990463256836,
+            0.09699998877942562
+          ],
+          "mean": 0.04800000041723251
+        },
+        "progressWinFraction": 0.6,
+        "success": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        }
+      },
+      "D-B": {
+        "physicalWin": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        },
+        "progress": {
+          "ci95": [
+            -0.04102500667795537,
+            0.06000000312924385
+          ],
+          "mean": 0.010000002384185792
+        },
+        "progressWinFraction": 0.575,
+        "success": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        }
+      },
+      "D-C": {
+        "physicalWin": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        },
+        "progress": {
+          "ci95": [
+            -0.033000005036592485,
+            0.07499999405816198
+          ],
+          "mean": 0.02099999561905861
+        },
+        "progressWinFraction": 0.5,
+        "success": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        }
+      },
+      "interaction-D-C-B+A": {
+        "physicalWin": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        },
+        "progress": {
+          "ci95": [
+            -0.09600000532343983,
+            0.05999998830258846
+          ],
+          "mean": -0.017000002413988115
+        },
+        "progressWinFraction": 0.5,
+        "success": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        }
+      }
+    }
+  },
+  "format": "snowgym.corrective-data-report.v0",
+  "initializerIdentity": {
+    "method": "stored-expanded-state",
+    "sourceCheckpointDigest": "sha256:4119b9a3f8c0d3df69b704a8f3f813a1b38ab11ca56faffb4c4cebc2cb235133",
+    "sourceIdentityVerified": true,
+    "stateDigest": "sha256:74603580e19e66fd70f1cd650dc834fa54887933b6f2706fa2b8928951c5bfac",
+    "trainingSeed": 91001
+  },
+  "ppoUpdates": 0,
+  "predeclaredCandidate": "D",
+  "qualificationEligible": false,
+  "referenceComparisons": {
+    "A-93001": {
+      "historical": {
+        "physicalWin": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        },
+        "progress": {
+          "ci95": [
+            -0.04999999852851034,
+            0.04299999177455902
+          ],
+          "mean": -0.005000003427267074
+        },
+        "progressWinFraction": 0.425,
+        "success": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        }
+      },
+      "replication": {
+        "physicalWin": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        },
+        "progress": {
+          "ci95": [
+            -0.10900000037625432,
+            0.006999996323138475
+          ],
+          "mean": -0.047999999672174457
+        },
+        "progressWinFraction": 0.35,
+        "success": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        }
+      }
+    },
+    "B-93001": {
+      "historical": {
+        "physicalWin": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        },
+        "progress": {
+          "ci95": [
+            -0.06299999730661511,
+            0.07099999714642764
+          ],
+          "mean": 0.003999994695186615
+        },
+        "progressWinFraction": 0.55,
+        "success": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        }
+      },
+      "replication": {
+        "physicalWin": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        },
+        "progress": {
+          "ci95": [
+            -0.07899999622255564,
+            0.059999997206032274
+          ],
+          "mean": -0.010000001639127731
+        },
+        "progressWinFraction": 0.425,
+        "success": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        }
+      }
+    },
+    "C-93001": {
+      "historical": {
+        "physicalWin": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        },
+        "progress": {
+          "ci95": [
+            -0.03299999983981252,
+            0.08699999526143073
+          ],
+          "mean": 0.02800000011920929
+        },
+        "progressWinFraction": 0.575,
+        "success": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        }
+      },
+      "replication": {
+        "physicalWin": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        },
+        "progress": {
+          "ci95": [
+            -0.0799999975413084,
+            0.03600000968202949
+          ],
+          "mean": -0.02099999487400055
+        },
+        "progressWinFraction": 0.35,
+        "success": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        }
+      }
+    },
+    "D-93001": {
+      "historical": {
+        "physicalWin": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        },
+        "progress": {
+          "ci95": [
+            -0.03300000205636024,
+            0.0949999943561852
+          ],
+          "mean": 0.03199999630451202
+        },
+        "progressWinFraction": 0.475,
+        "success": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        }
+      },
+      "replication": {
+        "physicalWin": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        },
+        "progress": {
+          "ci95": [
+            -0.0539999969303608,
+            0.05300000311806798
+          ],
+          "mean": 7.450580596923829e-10
+        },
+        "progressWinFraction": 0.45,
+        "success": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        }
+      }
+    }
+  },
+  "replicated": false,
+  "runtimeAssistance": false,
+  "selectionPolicy": "final-step-only; D replication decided on historical success versus A",
+  "sourceUnchanged": true,
+  "summary": {
+    "A-93001": {
+      "historical": {
+        "correct": {
+          "contactRate": 0.975,
+          "episodes": 40,
+          "hitRate": 0.975,
+          "meanProgress": 0.302999996393919,
+          "physicalWinRate": 0.0,
+          "rejectedActionRate": 0.0,
+          "successRate": 0.0
+        },
+        "shuffled": {
+          "contactRate": 0.0,
+          "episodes": 40,
+          "hitRate": 0.0,
+          "meanProgress": 0.0,
+          "physicalWinRate": 0.0,
+          "rejectedActionRate": 0.0,
+          "successRate": 0.0
+        }
+      },
+      "replication": {
+        "correct": {
+          "contactRate": 1.0,
+          "episodes": 40,
+          "hitRate": 1.0,
+          "meanProgress": 0.2779999978840351,
+          "physicalWinRate": 0.0,
+          "rejectedActionRate": 0.0,
+          "successRate": 0.0
+        },
+        "shuffled": {
+          "contactRate": 0.0,
+          "episodes": 40,
+          "hitRate": 0.0,
+          "meanProgress": 0.0,
+          "physicalWinRate": 0.0,
+          "rejectedActionRate": 0.0,
+          "successRate": 0.0
+        }
+      }
+    },
+    "B-93001": {
+      "historical": {
+        "correct": {
+          "contactRate": 1.0,
+          "episodes": 40,
+          "hitRate": 0.95,
+          "meanProgress": 0.31199999451637267,
+          "physicalWinRate": 0.0,
+          "rejectedActionRate": 0.0,
+          "successRate": 0.0
+        },
+        "shuffled": {
+          "contactRate": 0.25,
+          "episodes": 40,
+          "hitRate": 0.0,
+          "meanProgress": 0.0,
+          "physicalWinRate": 0.0,
+          "rejectedActionRate": 0.0,
+          "successRate": 0.0
+        }
+      },
+      "replication": {
+        "correct": {
+          "contactRate": 1.0,
+          "episodes": 40,
+          "hitRate": 1.0,
+          "meanProgress": 0.31599999591708183,
+          "physicalWinRate": 0.0,
+          "rejectedActionRate": 0.0,
+          "successRate": 0.0
+        },
+        "shuffled": {
+          "contactRate": 0.325,
+          "episodes": 40,
+          "hitRate": 0.15,
+          "meanProgress": 0.014000001549720763,
+          "physicalWinRate": 0.0,
+          "rejectedActionRate": 0.0,
+          "successRate": 0.0
+        }
+      }
+    },
+    "C-93001": {
+      "historical": {
+        "correct": {
+          "contactRate": 1.0,
+          "episodes": 40,
+          "hitRate": 1.0,
+          "meanProgress": 0.33599999994039537,
+          "physicalWinRate": 0.0,
+          "rejectedActionRate": 0.0,
+          "successRate": 0.0
+        },
+        "shuffled": {
+          "contactRate": 0.0,
+          "episodes": 40,
+          "hitRate": 0.0,
+          "meanProgress": 0.0,
+          "physicalWinRate": 0.0,
+          "rejectedActionRate": 0.0,
+          "successRate": 0.0
+        }
+      },
+      "replication": {
+        "correct": {
+          "contactRate": 1.0,
+          "episodes": 40,
+          "hitRate": 0.95,
+          "meanProgress": 0.305000002682209,
+          "physicalWinRate": 0.0,
+          "rejectedActionRate": 0.0,
+          "successRate": 0.0
+        },
+        "shuffled": {
+          "contactRate": 0.0,
+          "episodes": 40,
+          "hitRate": 0.0,
+          "meanProgress": 0.0,
+          "physicalWinRate": 0.0,
+          "rejectedActionRate": 0.0,
+          "successRate": 0.0
+        }
+      }
+    },
+    "D-93001": {
+      "historical": {
+        "correct": {
+          "contactRate": 1.0,
+          "episodes": 40,
+          "hitRate": 0.95,
+          "meanProgress": 0.3399999961256981,
+          "physicalWinRate": 0.0,
+          "rejectedActionRate": 0.0,
+          "successRate": 0.0
+        },
+        "shuffled": {
+          "contactRate": 0.2,
+          "episodes": 40,
+          "hitRate": 0.05,
+          "meanProgress": 0.006000000238418579,
+          "physicalWinRate": 0.0,
+          "rejectedActionRate": 0.0,
+          "successRate": 0.0
+        }
+      },
+      "replication": {
+        "correct": {
+          "contactRate": 1.0,
+          "episodes": 40,
+          "hitRate": 1.0,
+          "meanProgress": 0.32599999830126764,
+          "physicalWinRate": 0.0,
+          "rejectedActionRate": 0.0,
+          "successRate": 0.0
+        },
+        "shuffled": {
+          "contactRate": 0.175,
+          "episodes": 40,
+          "hitRate": 0.1,
+          "meanProgress": 0.012000000476837159,
+          "physicalWinRate": 0.0,
+          "rejectedActionRate": 0.0,
+          "successRate": 0.0
+        }
+      }
+    },
+    "initializer": {
+      "historical": {
+        "correct": {
+          "contactRate": 0.0,
+          "episodes": 40,
+          "hitRate": 0.0,
+          "meanProgress": 0.0,
+          "physicalWinRate": 0.0,
+          "rejectedActionRate": 0.0,
+          "successRate": 0.0
+        },
+        "shuffled": {
+          "contactRate": 0.0,
+          "episodes": 40,
+          "hitRate": 0.0,
+          "meanProgress": 0.0,
+          "physicalWinRate": 0.0,
+          "rejectedActionRate": 0.0,
+          "successRate": 0.0
+        }
+      },
+      "replication": {
+        "correct": {
+          "contactRate": 0.0,
+          "episodes": 40,
+          "hitRate": 0.0,
+          "meanProgress": 0.0,
+          "physicalWinRate": 0.0,
+          "rejectedActionRate": 0.0,
+          "successRate": 0.0
+        },
+        "shuffled": {
+          "contactRate": 0.0,
+          "episodes": 40,
+          "hitRate": 0.0,
+          "meanProgress": 0.0,
+          "physicalWinRate": 0.0,
+          "rejectedActionRate": 0.0,
+          "successRate": 0.0
+        }
+      }
+    },
+    "reference": {
+      "historical": {
+        "correct": {
+          "contactRate": 1.0,
+          "episodes": 40,
+          "hitRate": 1.0,
+          "meanProgress": 0.3079999998211861,
+          "physicalWinRate": 0.0,
+          "rejectedActionRate": 0.0,
+          "successRate": 0.0
+        },
+        "shuffled": {
+          "contactRate": 0.0,
+          "episodes": 40,
+          "hitRate": 0.0,
+          "meanProgress": 0.0,
+          "physicalWinRate": 0.0,
+          "rejectedActionRate": 0.0,
+          "successRate": 0.0
+        }
+      },
+      "replication": {
+        "correct": {
+          "contactRate": 1.0,
+          "episodes": 40,
+          "hitRate": 0.975,
+          "meanProgress": 0.32599999755620956,
+          "physicalWinRate": 0.0,
+          "rejectedActionRate": 0.0,
+          "successRate": 0.0
+        },
+        "shuffled": {
+          "contactRate": 0.125,
+          "episodes": 40,
+          "hitRate": 0.025,
+          "meanProgress": 0.001000000536441803,
+          "physicalWinRate": 0.0,
+          "rejectedActionRate": 0.0,
+          "successRate": 0.0
+        }
+      }
+    }
+  },
+  "trainingRngs": [
+    93001
+  ]
+}

@@ -1151,7 +1151,7 @@ only in explicitly labeled diagnostic experiments.
       disposable 200-step hard-state fit (32 training / 8 validation episodes).
       R1l requires useful physical substitutions, at least 50% hard-fit loss
       reduction, finite reachable gradients, and held-out improvement.
-- [ ] **R1l — matched corrective-data factorial:** original versus augmented
+- [x] **R1l — matched corrective-data factorial:** original versus augmented
       state support crossed with teacher-selected versus independent conditional
       labels; same R1i weights, 420 Adam steps, batch 256, learning rate 3e-4,
       clip 0.5, unchanged loss, frozen inherited actor. Episode-balanced sampling;
@@ -1193,6 +1193,19 @@ episode-held-out loss, and passed encoder/Jacobian checks without changing the
 reference. R1k passes and permits R1l; autonomous R1 remains open. See the
 [R1k report](training/reviews/m7b_r1k_results.md). Fresh-holdout ancestry must
 still pass before R1l collects those episodes.
+
+R1l result (2026-09-05): ancestry passed after recovering the original BC
+training dataset with its exact archived digest. All four final-step arms
+completed 420 updates and both 40-seed development sets: every arm had 0/40
+Engage successes, with zero rejected actions. D did not improve success over A;
+the predeclared replication gate failed and no extra optimizer seeds ran.
+On fresh development D improved progress over A by 0.048 (paired interval
+[0.001, 0.097]), but matched the immediate R1i reference's mean progress.
+Conditional fitting has not recovered sustained autonomous combat. Stop this
+supervised branch and retain the evidence for diagnosis; do not increase its
+data or fitting budget. The separately scoped R1m movement mechanism remains
+teacher-assisted and ineligible for qualification. See the
+[R1l review](training/reviews/m7b_r1l_results.md).
 
 #### M7c — full-fight fixed-plan composition
 

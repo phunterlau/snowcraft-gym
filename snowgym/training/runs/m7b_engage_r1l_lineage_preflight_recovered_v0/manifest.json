@@ -1,0 +1,8 @@
+{
+  "artifacts": {
+    "report.json": "sha256:d91022d4356d6d34b26ad08eff5bbff283a5de350648bcef44369729ea88cf3a"
+  },
+  "format": "snowgym.recovery-lineage-run.v0",
+  "manifestDigest": "sha256:17f3f6a0243ac826f5e3914333b7c42336a0c7359e56f6f8c27684d2fe8e4287",
+  "sourceFileDigest": "sha256:1a8b38da26f0794d06e7fd8b94bf52766a20d16318e6fcf38535518c14581c7b"
+}

@@ -1,0 +1,21 @@
+{
+  "format": "snowgym.corrective-data-config.v0",
+  "checkpointDigest": "sha256:774102a64d32997cb346ff374bf6e219dba6a3028af9aa32f9b9961a438b9203",
+  "arms": ["A", "B", "C", "D"],
+  "trainingSeeds": [93001, 93002, 93003],
+  "replicationCandidate": "D",
+  "optimizerSteps": 420,
+  "minibatchSize": 256,
+  "learningRate": 0.0003,
+  "maxGradNorm": 0.5,
+  "learnerFraction": 0.5,
+  "developmentSeeds": [200000, 200039],
+  "replicationDevelopmentSeeds": [210000, 210039],
+  "teacherRegressionSeeds": [108000, 108039],
+  "learnerValidationSeeds": [108100, 108139],
+  "selection": "final-step-only",
+  "bootstrapSamples": 10000,
+  "bootstrapSeed": 790001,
+  "ppoUpdates": 0,
+  "runtimeAssistance": false
+}
