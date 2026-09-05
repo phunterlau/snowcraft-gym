@@ -61,6 +61,11 @@ def make_wrapper(client, count, gamma):
 
 
 def ppo_update(model, optimizer, rollout, config):
+    if config.get("criticSchedule") == "independent-after-actor-stop":
+        from .movement_stability import independent_update
+        return independent_update(model, optimizer, rollout, config)
+    if config.get("criticSchedule", "coupled") != "coupled":
+        raise ValueError("unknown critic schedule")
     size = len(rollout["advantage"])
     traces = []
     stopped = False

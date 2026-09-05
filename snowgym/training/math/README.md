@@ -14,7 +14,7 @@ slots. Masks distinguish populated slots from padding.
 | Symbol | Meaning |
 | --- | --- |
 | $s_t$ | Detached environment observation at decision $t$ |
-| $m_i$ | Presence mask for ally slot $i$ |
+| $m_i$ | Living-unit mask for PPO; presence mask for supervised losses |
 | $a_i$ | Discrete action type for ally slot $i$ |
 | $x_i$ | Two-dimensional normalized move or throw target |
 | $p_i$ | Throw power in $[0,1]$ |
@@ -170,7 +170,7 @@ $$
 -\log(p_i(1-p_i)+\varepsilon).
 $$
 
-### 4.4 Joint log probability
+### 4.4 Per-unit log probability and entropy
 
 Define
 
@@ -180,35 +180,38 @@ I_i^x=\mathbf{1}[a_i\in\{\text{move},\text{throw}\}],
 I_i^p=\mathbf{1}[a_i=\text{throw}].
 $$
 
-The squad log probability used by PPO is
+PPO stores one log probability per living unit:
 
 $$
-\log\pi_\theta(A_t\mid s_t)=
-\sum_{i=1}^{U}m_i\left[
+\ell_{ti}=m_i\left[
 \log\pi_i^{\mathrm{type}}(a_i\mid s_t)
 +I_i^x\log\pi_i^x(x_i\mid a_i,s_t)
 +I_i^p\log\pi_i^p(p_i\mid s_t)
 \right].
 $$
 
-The entropy bonus sums categorical entropy and the base Gaussian entropies
-under the same presence and conditional-action masks. The implementation uses
-Gaussian entropy before the tanh and sigmoid transformations.
+The joint diagnostic is $\sum_i\ell_{ti}$. Entropy uses action probabilities:
+
+$$
+H_i=H_i^{\mathrm{type}}+\pi_i(\mathrm{move})H_i^{\mathrm{move}}
++\pi_i(\mathrm{throw})(H_i^{\mathrm{throw}}+H_i^{\mathrm{power}}).
+$$
+
+Continuous terms use Gaussian entropy before tanh/sigmoid transformations.
+The bonus averages living units within each decision, then decisions.
 
 ## 5. Centralized value function
 
-The value head pools the per-ally target-path hidden states:
+The role-aware critic has independent entity encoders and global pools. With
+physical role rows $S\in\mathbb{R}^{3\times20}$ and mission progress $M$:
 
 $$
-\bar h_t=
-\frac{\sum_i m_i h_i^{\mathrm{target}}}
-     {\max(1,\sum_i m_i)},
-\qquad
-V_\phi(s_t)=w_V^\top\bar h_t+b_V.
+V_\phi(s_t,P_t)=f_\phi(\mathrm{pools}_\phi(s_t),e_{P,\phi},e_{S,\phi},M_t).
 $$
 
 The actor produces per-unit actions. The critic produces one scalar for the
-whole blue squad.
+whole blue squad. Legacy checkpoints retain their original value path. The
+assisted option critic additionally receives the three option-state features.
 
 ## 6. Rewards
 
@@ -227,8 +230,11 @@ Training can enable health-potential shaping. With normalized unit health
 $H_i$ and masks $m_i^{B},m_j^{R}$,
 
 $$
-\Phi(s)=\sum_i m_i^{B}H_i^{B}-\sum_j m_j^{R}H_j^{R}.
+\Phi(s)=\frac{1}{N_B^0}\sum_i m_i^{B}H_i^{B}
+-\frac{1}{N_R^0}\sum_j m_j^{R}H_j^{R}.
 $$
+
+$N_B^0,N_R^0$ are the initial roster sizes; deaths do not shrink denominators.
 
 The shaped reward is
 
@@ -280,12 +286,10 @@ $$
 ## 8. PPO objective
 
 For stored behavior-policy log probability $\log\pi_{\mathrm{old}}$ and current
-log probability $\log\pi_\theta$, the importance ratio is
+log probability $\log\pi_\theta$, the per-unit importance ratio is
 
 $$
-\rho_t(\theta)=
-\exp\left(\log\pi_\theta(A_t\mid s_t)
--\log\pi_{\mathrm{old}}(A_t\mid s_t)\right).
+\rho_{ti}(\theta)=\exp(\ell_{ti}^{\theta}-\ell_{ti}^{\mathrm{old}}).
 $$
 
 With clip radius $\epsilon$, the implemented policy loss is
@@ -293,9 +297,10 @@ With clip radius $\epsilon$, the implemented policy loss is
 $$
 L_{\mathrm{policy}}(\theta)=
 -\mathbb{E}_t\left[
+\frac{1}{\max(1,N_t)}\sum_i m_{ti}
 \min\left(
-\rho_t\tilde A_t,
-\mathrm{clip}(\rho_t,1-\epsilon,1+\epsilon)\tilde A_t
+\rho_{ti}\tilde A_t,
+\mathrm{clip}(\rho_{ti},1-\epsilon,1+\epsilon)\tilde A_t
 \right)
 \right].
 $$
@@ -316,16 +321,19 @@ L_{\mathrm{PPO}}=
 L_{\mathrm{policy}}+c_VL_V-c_H\mathcal{H}.
 $$
 
-Default values are $\gamma=0.99$, $\lambda=0.95$, $\epsilon=0.2$,
+At 10 Hz, defaults are $\gamma=2^{-0.1/30}=0.9976921765$,
+$\lambda=2^{-0.1/5}=0.9885140204$, $\epsilon=0.2$,
 $c_V=0.5$, and $c_H=0.01$. Gradients are clipped to global norm $0.5$ by
 default. Diagnostics include
 
 $$
 \widehat{D}_{\mathrm{KL}}=
-\mathbb{E}_t[\log\pi_{\mathrm{old}}-\log\pi_\theta]
+\mathbb{E}_t\left[\frac{\sum_i m_{ti}[(\rho_{ti}-1)-\log\rho_{ti}]}{\max(1,N_t)}\right]
 $$
 
-and the fraction of samples satisfying $|\rho_t-1|>\epsilon$.
+and per-unit clipping, roster/casualty-conditioned ratios and the legacy joint
+ratio $\exp(\sum_i(\ell_{ti}^{\theta}-\ell_{ti}^{\mathrm{old}}))$.
+The joint surrogate is an explicit legacy ablation.
 
 ## 9. Behavior cloning
 
@@ -437,13 +445,13 @@ index. Exact resume restores the optimizer and Torch random state.
 | Counterfactual DAgger | Same physical state under two host-resolved plans | $L_{\mathrm{pair}}$ |
 | Centralized PPO | Persistent vector worlds | $L_{\mathrm{PPO}}$ |
 
-## 14. M7 plan-conditioned PPO extension
+## 14. Plan-conditioned and scoped option PPO
 
-The current PPO collector stores physical observations. M7 will extend its
-state input to
+The plan-aware collector refreshes physical, symbolic and role state before
+each decision. Its state input includes
 
 $$
-\tilde s_t=(s_t,G_t,q_t,C_t),
+\tilde s_t=(s_t,G_t,q_t,C_t,S_t,M_t),
 $$
 
 with fresh host-resolved plan tensors at every decision. The policy and value
@@ -459,3 +467,20 @@ $$
 Each mission potential, coefficient, seed range, and acceptance threshold must
 be fixed in a versioned configuration before a qualifying run. Canonical
 terminal returns remain the evaluation measure.
+
+R1m uses a narrower teacher-assisted movement experiment. Its option state
+contains remaining budget, frozen-target health fraction and assigned-group
+living fraction. The actor samples only movement latents with fixed standard
+deviation $0.02$; corrected throws and categorical choices are frozen. Stored
+latent Normal densities give the PPO ratio directly because the common tanh
+Jacobian cancels. Non-movement units contribute zero actor loss, while the
+normalizing count remains all living units. Advantages are normalized per
+minibatch in this scoped implementation. There is no BC or entropy bonus.
+Its value term is $0.5\mathbb{E}[(V-\hat R)^2]$. Option timeout is terminal,
+with zero next potential; artificial collection cuts bootstrap.
+
+R1m-S1 compares stopping both actor and critic on movement KL against continuing
+critic-only updates after the actor stops. Actor parameters, optimizer state and
+subsequent collection RNG are preserved during those extra updates. See the
+[frozen declaration](../reviews/m7b_r1m_s1_declaration.md). Both arms remain
+teacher-assisted and ineligible for autonomous qualification.

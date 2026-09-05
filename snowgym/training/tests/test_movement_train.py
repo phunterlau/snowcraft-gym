@@ -28,7 +28,8 @@ def test_frozen_movement_configuration_and_existing_output(tmp_path):
         run_experiment(output=tmp_path)
 
 
-def test_reward_only_updates_resume_identically_and_preserve_source(tmp_path):
+@pytest.mark.parametrize("schedule", ["coupled", "independent-after-actor-stop"])
+def test_reward_only_updates_resume_identically_and_preserve_source(tmp_path, schedule):
     torch.set_num_threads(1)
     torch.use_deterministic_algorithms(True)
     metadata, state = load_ppo_checkpoint(REFERENCE)
@@ -36,7 +37,7 @@ def test_reward_only_updates_resume_identically_and_preserve_source(tmp_path):
     source.load_state_dict(state["model"])
     original = semantic_state_digest(source.state_dict())
     # Explicit small contract test, not a run eligible for experiment reporting.
-    config = {**load_config(), "updates": 2, "batchSize": 2, "rolloutDecisions": 4,
+    config = {**load_config(), "criticSchedule": schedule, "updates": 2, "batchSize": 2, "rolloutDecisions": 4,
               "minibatchSize": 4, "epochs": 2}
     with SnowGymBatchClient() as client:
         for name in ("full", "partial", "resumed"):

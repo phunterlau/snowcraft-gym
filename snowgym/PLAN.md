@@ -19,6 +19,15 @@ configuration on 2026-09-01.
 
 ## Milestones
 
+### R1m-S1 — critic-schedule isolation (declared 2026-09-05)
+
+Resume the fighter recovery track with the bounded matched experiment in
+`training/reviews/m7b_r1m_s1_declaration.md`: three RNGs, coupled versus independent
+critic scheduling, 20 updates per arm. Preserve corrected-shot assistance and
+the actor KL stop. Verify identical first-rollout actor/optimizer/RNG behavior
+before collection, then report final paired development effects. R1m replication
+remains failed and R1n remains open. No provider calls or qualification promotion.
+
 ### Selective tactical repair — completed mechanism audit (2026-09-05)
 
 Declaration: `refs/snowgym_selective_repair_review_and_plan.md`. Compare keep,

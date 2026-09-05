@@ -1,5 +1,17 @@
 # R1m scoped movement contract
 
+The bounded R1m-S1 critic-schedule diagnostic is declared in
+[`m7b_r1m_s1_declaration.md`](../../../reviews/m7b_r1m_s1_declaration.md).
+From `snowgym/training`, run it once into a new output directory:
+
+```bash
+.venv/bin/python -m snowgym_training.options.movement_stability \
+  --output runs/m7b_engage_r1m_s1_v0
+```
+
+It runs six 20-update assisted experiments and refuses existing output paths.
+It makes no provider calls and does not promote an autonomous fighter.
+
 New option PPO uses `EngageOptionBatchV1` and
 `snowgym.engage-option-state.v1`. Its three fractions encode remaining option
 budget, activated-target health divided by activation health, and living
