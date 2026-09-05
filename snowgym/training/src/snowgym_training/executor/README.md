@@ -206,6 +206,10 @@ Its custom checkpoints are deterministic-only and remain separate from PPO.
 
 ## Design invariants
 
+The [R1j decoder probe](DECODER_PROBE.md) implements the next controlled test:
+world-displacement and shot-direction corrections in a matched 2×2 matrix.
+Its custom checkpoints are also deterministic-only, with no production change.
+
 - Preserve legacy checkpoint shapes unless an architecture flag explicitly
   introduces a new path.
 - Keep fixed-size tensors and masks stable across roster sizes.

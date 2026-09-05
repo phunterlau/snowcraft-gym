@@ -474,3 +474,11 @@ checkpoint. A disposable small-batch gate precedes 20 supervised epochs and
 paired Engage/HOLD development evaluation. There are no teacher execution
 overrides, PPO updates, or provider calls. Custom deterministic-only checkpoints
 cannot be resumed through the PPO trainer.
+
+### R1j matched decoder fitting
+
+The [R1j design and command](../executor/DECODER_PROBE.md) isolate movement
+displacement and shot-direction corrections while retaining R1i's absolute
+feature inputs and training conditions. All four disposable fitting gates must
+pass before full fits and paired Engage/HOLD development evaluation. The probe
+does not add a stochastic likelihood or modify production PPO.

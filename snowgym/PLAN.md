@@ -1101,6 +1101,28 @@ decoder probe with matched controls, phase metrics, and HOLD checks; define and
 test any changed stochastic likelihood before PPO. Evidence:
 [R1i review](training/reviews/m7b_r1i_results.md). R1 remains open.
 
+M7b-R1j predeclaration (2026-09-04): matched 2×2 deterministic decoder probe
+from frozen R1f with R1i absolute input features and identical 33,669-parameter
+modules. Arms: absolute, displacement, direction, both. Movement replacement
+adds a per-axis correction of 10*tanh(residual) world units to the inherited
+target, then clips to arena bounds. Shot replacement corrects the inherited
+unit ray, renormalizes it, retains inherited ray length (one-unit fallback for
+degenerate rays), and clips along that ray to stay inside the arena. Zero
+residuals must exactly preserve the inherited targets, logits, and power.
+These are geometric correction priors around the source, not teacher/nearest-
+enemy tactical references. Power remains the same learned sigmoid residual.
+Keep R1i's loss, 32-state disposable gate (50% reduction in 200 steps at 1e-3),
+20-epoch fitting budget, batch 256, Adam 3e-4, norm clip 0.5, seed 92001,
+5367-state audited training reservoir, and final-epoch-only selection unchanged.
+All four gates must pass before fitting fresh arms. Retain epochs 0/20 and all
+phase-conditioned agreement metrics; evaluate source and final arms on the same
+40 paired development seeds with correct and HOLD-preview inputs. Require
+absolute-control parity with R1i before interpretation. Predeclare success and
+progress simple effects/interaction with 10,000 paired bootstrap draws, seed
+770001. Check boundary/zero-ray gradients, conditional heads, unchanged source,
+custom checkpoint reloads, and all milestone gates before committing. No PPO,
+provider calls, qualification seeds, production policy change, or promotion.
+
 #### M7c — full-fight fixed-plan composition
 
 - [ ] Hold one-, two-, and three-role plans throughout complete 3v3, 5v5, and
