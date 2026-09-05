@@ -19,7 +19,7 @@ configuration on 2026-09-01.
 
 ## Milestones
 
-### R1m-S3 — learned short movement recovery (declared 2026-09-05)
+### R1m-S3 — learned short movement recovery (complete; gate failed 2026-09-05)
 
 Follow `training/reviews/m7b_r1m_s3_declaration.md`: training-only first-hit
 snapshots, 30 learned movement decisions followed by frozen continuation, three
@@ -27,6 +27,15 @@ RNGs × 30 PPO updates. Preserve tail rewards and expose recovery time through a
 new trainable input/checkpoint contract. Evaluate final checkpoints on both
 already exposed development sets. No shot-assistance removal or autonomous
 promotion; R1n remains open. Freeze the protocol before collection.
+
+All three 30-update runs completed on 57 training-only snapshots. Final success
+was 14/38, 14/38 and 11/38 on historical development (initializer 13/38), and
+19/36, 17/36 and 17/36 on replication-development (initializer 16/36). Every
+paired success interval included zero; no run passed the assisted learning gate.
+Source preservation, tail-return accounting, likelihoods and resume checks passed.
+Stop at the declared budget; do not promote a checkpoint. See
+`training/reviews/m7b_r1m_s3_results.md`. A frozen exploration/advantage-alignment
+audit is proposed before another PPO intervention; no new training is declared.
 
 ### R1m-S2 — post-hit continuation diagnostic (completed 2026-09-05)
 

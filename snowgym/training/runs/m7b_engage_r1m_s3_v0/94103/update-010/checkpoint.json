@@ -1,0 +1,805 @@
+{
+  "assistType": "teacher-shot-direction-and-power",
+  "assistVersion": "snowgym.r1h-corrected-shots.v0",
+  "autonomousQualificationEligible": false,
+  "checkpointDigest": "sha256:61467beea9ce3aafdfcbbff2ae07756c5e6dcca1bf800a220b466eb4e6f8cac6",
+  "config": {
+    "actorGradClip": 0.5,
+    "batchSize": 8,
+    "bcCoefficient": 0,
+    "bootstrapSamples": 10000,
+    "bootstrapSeed": 970001,
+    "calibrationDecisions": 200,
+    "calibrationSeed": 100000,
+    "checkpointDigest": "sha256:10d924ecdfbc554a8e0324387d8d049b9ffe719e8d8f2768123e4886c265a697",
+    "checkpointEvery": 10,
+    "clipRatio": 0.2,
+    "collectionMode": "eight-independent-prefix-restorations",
+    "criticGradClip": 0.5,
+    "criticSchedule": "coupled",
+    "decisionHz": 10,
+    "developmentSeeds": [
+      200000,
+      200039
+    ],
+    "entropyCoefficient": 0,
+    "epochs": 4,
+    "format": "snowgym.short-recovery-config.v0",
+    "gaeLambda": 0.9885140204,
+    "gamma": 0.9976921765,
+    "latentStd": 0.02,
+    "learningRate": 0.0003,
+    "minibatchSize": 120,
+    "movementKlStop": 0.01,
+    "recoveryInput": "snowgym.recovery-time.v0",
+    "recoveryWindow": 30,
+    "replicationDevelopmentSeeds": [
+      210000,
+      210039
+    ],
+    "returnHalfLifeSeconds": 30,
+    "rolloutDecisions": 200,
+    "selection": "final-update-only",
+    "traceHalfLifeSeconds": 5,
+    "trainingEpisodeSeeds": [
+      100000,
+      100063
+    ],
+    "trainingRngs": [
+      94101,
+      94102,
+      94103
+    ],
+    "updates": 30
+  },
+  "datasetDigest": "sha256:bea1349e36d1a71697ceb8812947dd24084468e2031babae2c1a12a1ed9c25fc",
+  "format": "snowgym.recovery-checkpoint.v0",
+  "history": [
+    {
+      "klStopped": true,
+      "learnedDecisions": 240,
+      "likelihoodMaxError": 5.7697296142578125e-05,
+      "meanReward": -0.014444568194448948,
+      "minibatches": [
+        {
+          "actorGradientNorm": 2.5437264442443848,
+          "clipFraction": 0.0,
+          "criticGradientNorm": 0.8138850331306458,
+          "epoch": 0,
+          "maxMovementKl": 0.0,
+          "meanMovementKl": 0.0,
+          "policy": 0.05216865614056587,
+          "ratioMean": 0.9999995231628418,
+          "total": 0.3757566809654236,
+          "value": 0.6471760272979736
+        }
+      ],
+      "movementFraction": 0.39250001311302185,
+      "optimizerSteps": 1,
+      "seeds": [
+        100034,
+        100012,
+        100028,
+        100044,
+        100005,
+        100038,
+        100022,
+        100058
+      ],
+      "stopMeanMovementKl": 0.031138863414525986,
+      "successes": 2,
+      "tailDecisions": 414,
+      "update": 1
+    },
+    {
+      "klStopped": true,
+      "learnedDecisions": 240,
+      "likelihoodMaxError": 3.9577484130859375e-05,
+      "meanReward": -0.007486559450626373,
+      "minibatches": [
+        {
+          "actorGradientNorm": 5.246542930603027,
+          "clipFraction": 0.0,
+          "criticGradientNorm": 0.44828346371650696,
+          "epoch": 0,
+          "maxMovementKl": 0.0,
+          "meanMovementKl": 0.0,
+          "policy": 0.0654262974858284,
+          "ratioMean": 0.9999998807907104,
+          "total": 0.3618166744709015,
+          "value": 0.5927807688713074
+        }
+      ],
+      "movementFraction": 0.37541666626930237,
+      "optimizerSteps": 1,
+      "seeds": [
+        100005,
+        100013,
+        100041,
+        100037,
+        100008,
+        100015,
+        100057,
+        100059
+      ],
+      "stopMeanMovementKl": 0.025548918172717094,
+      "successes": 3,
+      "tailDecisions": 349,
+      "update": 2
+    },
+    {
+      "klStopped": true,
+      "learnedDecisions": 218,
+      "likelihoodMaxError": 5.7220458984375e-05,
+      "meanReward": -0.017069166526198387,
+      "minibatches": [
+        {
+          "actorGradientNorm": 4.928513526916504,
+          "clipFraction": 0.0,
+          "criticGradientNorm": 0.7090855240821838,
+          "epoch": 0,
+          "maxMovementKl": 0.0,
+          "meanMovementKl": 0.0,
+          "policy": 0.07611673325300217,
+          "ratioMean": 0.9999993443489075,
+          "total": 0.3983195424079895,
+          "value": 0.6444056034088135
+        }
+      ],
+      "movementFraction": 0.3802752196788788,
+      "optimizerSteps": 1,
+      "seeds": [
+        100032,
+        100008,
+        100011,
+        100046,
+        100005,
+        100047,
+        100003,
+        100024
+      ],
+      "stopMeanMovementKl": 0.031091462820768356,
+      "successes": 2,
+      "tailDecisions": 345,
+      "update": 3
+    },
+    {
+      "klStopped": true,
+      "learnedDecisions": 240,
+      "likelihoodMaxError": 0.00010013580322265625,
+      "meanReward": 0.00033364942646585405,
+      "minibatches": [
+        {
+          "actorGradientNorm": 3.632017135620117,
+          "clipFraction": 0.0,
+          "criticGradientNorm": 0.1594044268131256,
+          "epoch": 0,
+          "maxMovementKl": 0.0,
+          "meanMovementKl": 0.0,
+          "policy": 0.07923482358455658,
+          "ratioMean": 0.9999996423721313,
+          "total": 0.33269405364990234,
+          "value": 0.5069184303283691
+        }
+      ],
+      "movementFraction": 0.40166667103767395,
+      "optimizerSteps": 1,
+      "seeds": [
+        100036,
+        100055,
+        100034,
+        100019,
+        100044,
+        100010,
+        100005,
+        100063
+      ],
+      "stopMeanMovementKl": 0.01039036363363266,
+      "successes": 4,
+      "tailDecisions": 300,
+      "update": 4
+    },
+    {
+      "klStopped": true,
+      "learnedDecisions": 240,
+      "likelihoodMaxError": 3.4809112548828125e-05,
+      "meanReward": -9.037132258526981e-05,
+      "minibatches": [
+        {
+          "actorGradientNorm": 2.8981430530548096,
+          "clipFraction": 0.0,
+          "criticGradientNorm": 0.28664910793304443,
+          "epoch": 0,
+          "maxMovementKl": 0.0,
+          "meanMovementKl": 0.0,
+          "policy": 0.026240499690175056,
+          "ratioMean": 1.0,
+          "total": 0.3009921610355377,
+          "value": 0.5495033264160156
+        },
+        {
+          "actorGradientNorm": 3.8935859203338623,
+          "clipFraction": 0.015184381976723671,
+          "criticGradientNorm": 0.11832362413406372,
+          "epoch": 0,
+          "maxMovementKl": 0.03534412384033203,
+          "meanMovementKl": 0.003557068295776844,
+          "policy": 0.08990833163261414,
+          "ratioMean": 0.9994286298751831,
+          "total": 0.35470226407051086,
+          "value": 0.5295878648757935
+        },
+        {
+          "actorGradientNorm": 5.471035957336426,
+          "clipFraction": 0.08744394779205322,
+          "criticGradientNorm": 0.1281954050064087,
+          "epoch": 1,
+          "maxMovementKl": 0.06890952587127686,
+          "meanMovementKl": 0.007077657617628574,
+          "policy": 0.057258423417806625,
+          "ratioMean": 1.0017163753509521,
+          "total": 0.32232561707496643,
+          "value": 0.530134379863739
+        },
+        {
+          "actorGradientNorm": 6.2447333335876465,
+          "clipFraction": 0.06651885062456131,
+          "criticGradientNorm": 0.18944087624549866,
+          "epoch": 1,
+          "maxMovementKl": 0.06965529918670654,
+          "meanMovementKl": 0.006248018238693476,
+          "policy": 0.054139893501996994,
+          "ratioMean": 0.9995517134666443,
+          "total": 0.3209551274776459,
+          "value": 0.5336304903030396
+        },
+        {
+          "actorGradientNorm": 5.479659080505371,
+          "clipFraction": 0.020134227350354195,
+          "criticGradientNorm": 0.08304964751005173,
+          "epoch": 2,
+          "maxMovementKl": 0.038759589195251465,
+          "meanMovementKl": 0.0036358702927827835,
+          "policy": 0.06139576807618141,
+          "ratioMean": 1.0044004917144775,
+          "total": 0.3215581476688385,
+          "value": 0.5203247666358948
+        },
+        {
+          "actorGradientNorm": 9.37391185760498,
+          "clipFraction": 0.1111111119389534,
+          "criticGradientNorm": 0.17926590144634247,
+          "epoch": 2,
+          "maxMovementKl": 0.0646510124206543,
+          "meanMovementKl": 0.00779058039188385,
+          "policy": 0.04860495403409004,
+          "ratioMean": 1.0114216804504395,
+          "total": 0.315031498670578,
+          "value": 0.5328530669212341
+        }
+      ],
+      "movementFraction": 0.3737500011920929,
+      "optimizerSteps": 6,
+      "seeds": [
+        100032,
+        100025,
+        100008,
+        100005,
+        100010,
+        100043,
+        100052,
+        100047
+      ],
+      "stopMeanMovementKl": 0.011364887468516827,
+      "successes": 4,
+      "tailDecisions": 333,
+      "update": 5
+    },
+    {
+      "klStopped": true,
+      "learnedDecisions": 240,
+      "likelihoodMaxError": 5.245208740234375e-05,
+      "meanReward": -0.023204118013381958,
+      "minibatches": [
+        {
+          "actorGradientNorm": 7.334004878997803,
+          "clipFraction": 0.0,
+          "criticGradientNorm": 0.8835029602050781,
+          "epoch": 0,
+          "maxMovementKl": 0.0,
+          "meanMovementKl": 0.0,
+          "policy": 0.012093714438378811,
+          "ratioMean": 0.999999463558197,
+          "total": 0.3087952136993408,
+          "value": 0.5934029817581177
+        },
+        {
+          "actorGradientNorm": 2.7563540935516357,
+          "clipFraction": 0.0,
+          "criticGradientNorm": 0.9830858707427979,
+          "epoch": 0,
+          "maxMovementKl": 0.02103447914123535,
+          "meanMovementKl": 0.0018855854868888855,
+          "policy": 0.0029056489001959562,
+          "ratioMean": 1.0029305219650269,
+          "total": 0.27694177627563477,
+          "value": 0.5480722784996033
+        },
+        {
+          "actorGradientNorm": 7.06598424911499,
+          "clipFraction": 0.15010571479797363,
+          "criticGradientNorm": 0.8681018352508545,
+          "epoch": 1,
+          "maxMovementKl": 0.09061312675476074,
+          "meanMovementKl": 0.009773866273462772,
+          "policy": 0.0026805002707988024,
+          "ratioMean": 1.0060797929763794,
+          "total": 0.2707250416278839,
+          "value": 0.5360890626907349
+        }
+      ],
+      "movementFraction": 0.3987500071525574,
+      "optimizerSteps": 3,
+      "seeds": [
+        100062,
+        100017,
+        100054,
+        100015,
+        100047,
+        100016,
+        100021,
+        100034
+      ],
+      "stopMeanMovementKl": 0.015046400018036366,
+      "successes": 1,
+      "tailDecisions": 437,
+      "update": 6
+    },
+    {
+      "klStopped": false,
+      "learnedDecisions": 240,
+      "likelihoodMaxError": 8.821487426757812e-05,
+      "meanReward": -0.014431819319725037,
+      "minibatches": [
+        {
+          "actorGradientNorm": 4.336406230926514,
+          "clipFraction": 0.0,
+          "criticGradientNorm": 0.6302967667579651,
+          "epoch": 0,
+          "maxMovementKl": 0.0,
+          "meanMovementKl": 0.0,
+          "policy": 0.01019277609884739,
+          "ratioMean": 0.9999995827674866,
+          "total": 0.2863612174987793,
+          "value": 0.5523368716239929
+        },
+        {
+          "actorGradientNorm": 6.4911675453186035,
+          "clipFraction": 0.0,
+          "criticGradientNorm": 0.4948805272579193,
+          "epoch": 0,
+          "maxMovementKl": 0.0003509521484375,
+          "meanMovementKl": 2.2029769752407447e-05,
+          "policy": -0.00903167761862278,
+          "ratioMean": 0.9994114637374878,
+          "total": 0.25733324885368347,
+          "value": 0.5327298641204834
+        },
+        {
+          "actorGradientNorm": 9.351334571838379,
+          "clipFraction": 0.0,
+          "criticGradientNorm": 0.47325947880744934,
+          "epoch": 1,
+          "maxMovementKl": 0.0056542158126831055,
+          "meanMovementKl": 0.0005798183847218752,
+          "policy": -0.006417012307792902,
+          "ratioMean": 0.9966312050819397,
+          "total": 0.2670990824699402,
+          "value": 0.5470321774482727
+        },
+        {
+          "actorGradientNorm": 5.976077556610107,
+          "clipFraction": 0.024122806265950203,
+          "criticGradientNorm": 0.5463091135025024,
+          "epoch": 1,
+          "maxMovementKl": 0.06885743141174316,
+          "meanMovementKl": 0.0041766418144106865,
+          "policy": 0.010426386259496212,
+          "ratioMean": 1.0044113397598267,
+          "total": 0.2573559880256653,
+          "value": 0.4938592314720154
+        },
+        {
+          "actorGradientNorm": 6.329770088195801,
+          "clipFraction": 0.07095343619585037,
+          "criticGradientNorm": 0.5780870914459229,
+          "epoch": 2,
+          "maxMovementKl": 0.10177004337310791,
+          "meanMovementKl": 0.006625055801123381,
+          "policy": 0.01959863118827343,
+          "ratioMean": 1.0019910335540771,
+          "total": 0.27254077792167664,
+          "value": 0.5058842897415161
+        },
+        {
+          "actorGradientNorm": 6.2385945320129395,
+          "clipFraction": 0.07543103396892548,
+          "criticGradientNorm": 0.3279828131198883,
+          "epoch": 2,
+          "maxMovementKl": 0.0617138147354126,
+          "meanMovementKl": 0.006339913234114647,
+          "policy": -0.016947908326983452,
+          "ratioMean": 0.9962583780288696,
+          "total": 0.23244617879390717,
+          "value": 0.49878817796707153
+        },
+        {
+          "actorGradientNorm": 7.931699275970459,
+          "clipFraction": 0.03811659291386604,
+          "criticGradientNorm": 0.2404487580060959,
+          "epoch": 3,
+          "maxMovementKl": 0.07185471057891846,
+          "meanMovementKl": 0.004629130475223064,
+          "policy": -0.001963118789717555,
+          "ratioMean": 1.0010849237442017,
+          "total": 0.24399812519550323,
+          "value": 0.4919224977493286
+        },
+        {
+          "actorGradientNorm": 9.845255851745605,
+          "clipFraction": 0.0021321962121874094,
+          "criticGradientNorm": 0.5512192845344543,
+          "epoch": 3,
+          "maxMovementKl": 0.02184659242630005,
+          "meanMovementKl": 0.0018608816899359226,
+          "policy": -0.002811185549944639,
+          "ratioMean": 0.9975903630256653,
+          "total": 0.23327729105949402,
+          "value": 0.4721769392490387
+        }
+      ],
+      "movementFraction": 0.3812499940395355,
+      "optimizerSteps": 8,
+      "seeds": [
+        100052,
+        100042,
+        100004,
+        100055,
+        100046,
+        100028,
+        100041,
+        100059
+      ],
+      "stopMeanMovementKl": null,
+      "successes": 2,
+      "tailDecisions": 437,
+      "update": 7
+    },
+    {
+      "klStopped": true,
+      "learnedDecisions": 218,
+      "likelihoodMaxError": 4.38690185546875e-05,
+      "meanReward": -0.010203580372035503,
+      "minibatches": [
+        {
+          "actorGradientNorm": 4.190803527832031,
+          "clipFraction": 0.0,
+          "criticGradientNorm": 0.10164317488670349,
+          "epoch": 0,
+          "maxMovementKl": 0.0,
+          "meanMovementKl": 0.0,
+          "policy": 0.03773220255970955,
+          "ratioMean": 1.0000003576278687,
+          "total": 0.32522648572921753,
+          "value": 0.5749885439872742
+        },
+        {
+          "actorGradientNorm": 5.493210792541504,
+          "clipFraction": 0.0,
+          "criticGradientNorm": 0.10421054065227509,
+          "epoch": 0,
+          "maxMovementKl": 0.003966629505157471,
+          "meanMovementKl": 0.0004461701901163906,
+          "policy": 0.03584149479866028,
+          "ratioMean": 1.0016870498657227,
+          "total": 0.33180996775627136,
+          "value": 0.5919369459152222
+        },
+        {
+          "actorGradientNorm": 2.9975016117095947,
+          "clipFraction": 0.010162601247429848,
+          "criticGradientNorm": 0.1825568526983261,
+          "epoch": 1,
+          "maxMovementKl": 0.04055023193359375,
+          "meanMovementKl": 0.0026824739761650562,
+          "policy": 0.02347598783671856,
+          "ratioMean": 1.0023281574249268,
+          "total": 0.32394087314605713,
+          "value": 0.6009297966957092
+        },
+        {
+          "actorGradientNorm": 5.817507266998291,
+          "clipFraction": 0.13636364042758942,
+          "criticGradientNorm": 0.10228483378887177,
+          "epoch": 1,
+          "maxMovementKl": 0.08290469646453857,
+          "meanMovementKl": 0.008573237806558609,
+          "policy": 0.04516918957233429,
+          "ratioMean": 1.0014688968658447,
+          "total": 0.3263514041900635,
+          "value": 0.562364399433136
+        }
+      ],
+      "movementFraction": 0.41743120551109314,
+      "optimizerSteps": 4,
+      "seeds": [
+        100000,
+        100016,
+        100002,
+        100042,
+        100011,
+        100041,
+        100000,
+        100050
+      ],
+      "stopMeanMovementKl": 0.013088095001876354,
+      "successes": 3,
+      "tailDecisions": 199,
+      "update": 8
+    },
+    {
+      "klStopped": true,
+      "learnedDecisions": 240,
+      "likelihoodMaxError": 3.4809112548828125e-05,
+      "meanReward": -0.014450502581894398,
+      "minibatches": [
+        {
+          "actorGradientNorm": 5.150851249694824,
+          "clipFraction": 0.0,
+          "criticGradientNorm": 0.23997007310390472,
+          "epoch": 0,
+          "maxMovementKl": 0.0,
+          "meanMovementKl": 0.0,
+          "policy": 0.08084004372358322,
+          "ratioMean": 0.9999994039535522,
+          "total": 0.28418776392936707,
+          "value": 0.4066954553127289
+        },
+        {
+          "actorGradientNorm": 2.3100979328155518,
+          "clipFraction": 0.0,
+          "criticGradientNorm": 0.33455416560173035,
+          "epoch": 0,
+          "maxMovementKl": 0.015433728694915771,
+          "meanMovementKl": 0.001642135321162641,
+          "policy": 0.04783894121646881,
+          "ratioMean": 1.003198504447937,
+          "total": 0.23753014206886292,
+          "value": 0.3793824017047882
+        },
+        {
+          "actorGradientNorm": 3.4518308639526367,
+          "clipFraction": 0.10020449757575989,
+          "criticGradientNorm": 0.18494005501270294,
+          "epoch": 1,
+          "maxMovementKl": 0.06650328636169434,
+          "meanMovementKl": 0.0071992287412285805,
+          "policy": 0.052582748234272,
+          "ratioMean": 1.0132349729537964,
+          "total": 0.25220009684562683,
+          "value": 0.39923468232154846
+        }
+      ],
+      "movementFraction": 0.40416666865348816,
+      "optimizerSteps": 3,
+      "seeds": [
+        100061,
+        100018,
+        100007,
+        100054,
+        100063,
+        100020,
+        100020,
+        100055
+      ],
+      "stopMeanMovementKl": 0.012991990894079208,
+      "successes": 2,
+      "tailDecisions": 444,
+      "update": 9
+    },
+    {
+      "klStopped": false,
+      "learnedDecisions": 240,
+      "likelihoodMaxError": 4.57763671875e-05,
+      "meanReward": 0.007888289168477058,
+      "minibatches": [
+        {
+          "actorGradientNorm": 1.8479132652282715,
+          "clipFraction": 0.0,
+          "criticGradientNorm": 0.9155482649803162,
+          "epoch": 0,
+          "maxMovementKl": 0.0,
+          "meanMovementKl": 0.0,
+          "policy": 0.025653090327978134,
+          "ratioMean": 1.0000007152557373,
+          "total": 0.3735407292842865,
+          "value": 0.6957752704620361
+        },
+        {
+          "actorGradientNorm": 1.7136015892028809,
+          "clipFraction": 0.0,
+          "criticGradientNorm": 0.8272770643234253,
+          "epoch": 0,
+          "maxMovementKl": 0.011571049690246582,
+          "meanMovementKl": 0.0012575779110193253,
+          "policy": 0.0601346492767334,
+          "ratioMean": 0.999721884727478,
+          "total": 0.4174315929412842,
+          "value": 0.7145938873291016
+        },
+        {
+          "actorGradientNorm": 1.9360508918762207,
+          "clipFraction": 0.0025641026441007853,
+          "criticGradientNorm": 0.9098421335220337,
+          "epoch": 1,
+          "maxMovementKl": 0.018337607383728027,
+          "meanMovementKl": 0.002310175448656082,
+          "policy": 0.07292863726615906,
+          "ratioMean": 1.0032457113265991,
+          "total": 0.42578864097595215,
+          "value": 0.7057200074195862
+        },
+        {
+          "actorGradientNorm": 5.627285003662109,
+          "clipFraction": 0.03800475224852562,
+          "criticGradientNorm": 0.8788987994194031,
+          "epoch": 1,
+          "maxMovementKl": 0.04134941101074219,
+          "meanMovementKl": 0.0043992237187922,
+          "policy": 0.01134289801120758,
+          "ratioMean": 1.0055851936340332,
+          "total": 0.3702664375305176,
+          "value": 0.7178470492362976
+        },
+        {
+          "actorGradientNorm": 6.0944600105285645,
+          "clipFraction": 0.03703703731298447,
+          "criticGradientNorm": 0.8274195790290833,
+          "epoch": 2,
+          "maxMovementKl": 0.03638863563537598,
+          "meanMovementKl": 0.004022428300231695,
+          "policy": 0.02241007424890995,
+          "ratioMean": 1.0082443952560425,
+          "total": 0.3762388229370117,
+          "value": 0.707657516002655
+        },
+        {
+          "actorGradientNorm": 5.140810489654541,
+          "clipFraction": 0.017241379246115685,
+          "criticGradientNorm": 0.9236672520637512,
+          "epoch": 2,
+          "maxMovementKl": 0.03709077835083008,
+          "meanMovementKl": 0.0030806008726358414,
+          "policy": 0.05997670441865921,
+          "ratioMean": 1.0003430843353271,
+          "total": 0.41232869029045105,
+          "value": 0.7047039866447449
+        },
+        {
+          "actorGradientNorm": 1.9493345022201538,
+          "clipFraction": 0.002415458904579282,
+          "criticGradientNorm": 0.9562137126922607,
+          "epoch": 3,
+          "maxMovementKl": 0.02161550521850586,
+          "meanMovementKl": 0.0015554914716631174,
+          "policy": 0.04505124315619469,
+          "ratioMean": 1.002233624458313,
+          "total": 0.42087027430534363,
+          "value": 0.7516380548477173
+        },
+        {
+          "actorGradientNorm": 1.3237392902374268,
+          "clipFraction": 0.0,
+          "criticGradientNorm": 0.7029732465744019,
+          "epoch": 3,
+          "maxMovementKl": 0.0173642635345459,
+          "meanMovementKl": 0.0009792137425392866,
+          "policy": 0.03566782549023628,
+          "ratioMean": 0.9999028444290161,
+          "total": 0.35308992862701416,
+          "value": 0.634844183921814
+        }
+      ],
+      "movementFraction": 0.33791667222976685,
+      "optimizerSteps": 8,
+      "seeds": [
+        100006,
+        100044,
+        100015,
+        100013,
+        100010,
+        100045,
+        100037,
+        100044
+      ],
+      "stopMeanMovementKl": null,
+      "successes": 5,
+      "tailDecisions": 289,
+      "update": 10
+    }
+  ],
+  "recoveryInput": "snowgym.recovery-time.v0",
+  "sampler": {
+    "bit_generator": "PCG64",
+    "has_uint32": 0,
+    "state": {
+      "inc": 78764218821274545868925042578650790029,
+      "state": 243204005214042161018952253234058260513
+    },
+    "uinteger": 2920554554
+  },
+  "source": {
+    "architecture": {
+      "action_conditioned_targets": true,
+      "actor_hidden": 64,
+      "entity_embedding": 24,
+      "entity_hidden": 32,
+      "observation_version": 3,
+      "plan_conditioned": true,
+      "plan_ppo_residuals": true,
+      "plan_target_only": true,
+      "separate_target_actor": true,
+      "v3_extension_adapters": true
+    },
+    "checkpointDigest": "sha256:10d924ecdfbc554a8e0324387d8d049b9ffe719e8d8f2768123e4886c265a697",
+    "collectorConfig": {
+      "gateId": "m7b-engage-supervised-probe",
+      "option": "engage",
+      "rewardMode": "executor",
+      "rolloutSteps": 200,
+      "stage": 1,
+      "worlds": 1
+    },
+    "curriculumDigest": "sha256:54c1fa4217c5bd663c3b60e967a10c9b058da3c2decb2329407860340de7748c",
+    "environmentSteps": 0,
+    "format": "snowgym.ppo-checkpoint.v0",
+    "gitCommit": "8f7d4f9bc91600bd52d35e25de866492cdd353ac",
+    "initialization": {
+      "checkpointDigest": "sha256:5e4feb4e1f97d2ba3a5521bcb6b4a5df8f9194ed02d4badf4a1b96304196c80c",
+      "curriculumDigest": "sha256:54c1fa4217c5bd663c3b60e967a10c9b058da3c2decb2329407860340de7748c",
+      "sourceGate": "m7b-engage-stage1",
+      "stateDigest": "sha256:5c4a23426a3dc41ccd790a4213f6b41253578b0bdb6647bc8064572b388bce59",
+      "type": "ppo-transfer",
+      "updateIndex": 200
+    },
+    "initializerDigest": "sha256:74603580e19e66fd70f1cd650dc834fa54887933b6f2706fa2b8928951c5bfac",
+    "initializerSourceDigest": "sha256:4119b9a3f8c0d3df69b704a8f3f813a1b38ab11ca56faffb4c4cebc2cb235133",
+    "ppoConfig": {
+      "clip_ratio": 0.2,
+      "entropy_weight": 0.01,
+      "gae_lambda": 0.9885140204,
+      "gamma": 0.9976921765,
+      "initial_power_log_std": -1.0,
+      "initial_target_log_std": -1.0,
+      "learning_rate": 0.0003,
+      "max_grad_norm": 0.5,
+      "minibatch_size": 1600,
+      "ratio_mode": "per-unit",
+      "target_kl": null,
+      "update_epochs": 4,
+      "value_weight": 0.5
+    },
+    "seedSchedule": {
+      "maximum": 100039,
+      "minimum": 100000,
+      "nextSeed": 100000
+    },
+    "stateDigest": "sha256:de40c3d3ace72c3562718513e853d23f29a6e30f823db7d0b266c796d73e693c",
+    "trainingSeed": 91001,
+    "updateIndex": 20
+  },
+  "stateDigest": "sha256:d2b324aa8b266c0a82fb8d2a1142653859ef58fd2175689b973f01f72cf7b5bc",
+  "stateFileDigest": "sha256:3802a2d466eefa5533bea5246648ffaaa9609dd9b163c4ef6a715f30a8595b44",
+  "trainingSeed": 94103,
+  "update": 10
+}

@@ -13,6 +13,8 @@ From `snowgym/training`, using a new output directory:
 Use `options/recovery_checkpoint.py` for its versioned checkpoints. Legacy
 movement checkpoints do not encode this timed-handoff contract. Teacher-corrected
 shots remain enabled; no autonomous qualification is earned by this experiment.
+The [completed S3 review](../../../reviews/m7b_r1m_s3_results.md) records a failed
+learning gate for all three final checkpoints. Do not extend this frozen budget.
 
 R1m-S2 is a frozen post-hit continuation diagnostic, described in its
 [declaration](../../../reviews/m7b_r1m_s2_declaration.md). From `snowgym/training`:
