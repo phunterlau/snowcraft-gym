@@ -39,15 +39,18 @@ export class ReactiveUnitPolicy implements UnitPolicy {
       const distance = Math.hypot(target.x - self.x, target.y - self.y);
       const maximumRange = throwRange(context.group.command.order.engagement.preferredRange);
       if (distance <= maximumRange) {
-        const leadTime = 0.18;
-        return {
-          type: 'throw',
-          unitId: self.id,
-          x: target.x + target.vx * leadTime,
-          y: target.y + target.vy * leadTime,
-          power: clamp(((distance - 1.5) / (maximumRange - 1.5)) * 0.9 + 0.1, 0.18, 1),
-        };
+        return directedThrow(self, target, maximumRange);
       }
+    }
+
+    if (canThrow(self)) {
+      const alternate = this.alternateThrowTarget(context);
+      if (alternate)
+        return directedThrow(
+          self,
+          alternate,
+          throwRange(context.group.command.order.engagement.preferredRange),
+        );
     }
 
     if (!canMove(self)) return { type: 'noop', unitId: self.id };
@@ -57,6 +60,28 @@ export class ReactiveUnitPolicy implements UnitPolicy {
     }
     return { type: 'move', unitId: self.id, ...clampToArena(destination, observation.arena) };
   }
+
+  /** Diagnostic subclasses may allow a shot; default execution remains unchanged. */
+  protected alternateThrowTarget(context: UnitPolicyContext): UnitObservation | null {
+    void context;
+    return null;
+  }
+}
+
+function directedThrow(
+  self: UnitObservation,
+  target: UnitObservation,
+  maximumRange: number,
+): UnitAction {
+  const distance = Math.hypot(target.x - self.x, target.y - self.y);
+  const leadTime = 0.18;
+  return {
+    type: 'throw',
+    unitId: self.id,
+    x: target.x + target.vx * leadTime,
+    y: target.y + target.vy * leadTime,
+    power: clamp(((distance - 1.5) / (maximumRange - 1.5)) * 0.9 + 0.1, 0.18, 1),
+  };
 }
 
 function selectTarget(context: UnitPolicyContext): UnitObservation | null {

@@ -1,8 +1,64 @@
 # Progress-aware commander recovery
 
-The next approved experiment is the
+The implemented, opt-in experiment is the
 [selective-repair mechanism audit](../../../refs/snowgym_selective_repair_review_and_plan.md),
 which separates binding refresh, local firing and full reactivation.
+
+## Selective-repair audit
+
+```bash
+node --import tsx snowgym/orchestration/examples/selective-repair-audit.ts \
+  --preflight --output /tmp/snowgym-repair-preflight
+
+node --import tsx snowgym/orchestration/examples/selective-repair-audit.ts \
+  --output /tmp/snowgym-repair-full
+
+node --import tsx snowgym/orchestration/examples/selective-repair-audit.ts \
+  --verify /tmp/snowgym-repair-full
+```
+
+Use a new output directory each time. `--historical-only` runs the three archived
+cases without fresh collection. Full mode scans the declared 120 diagnostic
+seeds and retains the first casualty opportunity per seed, without resampling.
+Every four-arm, five-delay continuation is executed twice and compared exactly.
+Historical keep/reactivation branches must also match the original archive.
+
+`refresh_binding` uses an executor-local binding revision: symbolic commands,
+assignments, activation anchors/time and plan version stay unchanged. Surviving
+replacement members are tracked with the existing elimination fallback.
+`local_fire` preserves dodge priority and normal assigned-target firing. Only
+when no living assigned candidate is in range may a ready fighter fire at the
+nearest living non-assigned enemy in range (ties by ID). It reuses production
+lead/power and leaves movement objectives unchanged. Both are opt-in audit arms;
+the production policy and commander request format remain unchanged.
+
+Seed preflight audits recorded JSON seed fields, ranges and schedules, including
+ignored local runs. Bare non-finite values in historical Python metrics are
+normalized only in memory; non-finite seed declarations fail. Unrelated seed
+collisions stop collection. Sealed runs of this exact declaration under
+`recovery/examples/` are listed explicitly as registered same-experiment reuse,
+with verified manifests and exact cases/arms/delays/budgets; they are not fresh
+allocations. Standalone compressed metadata and unrecorded runs are outside this
+audit. All inspected source/data files are hashed and checked again at run end.
+
+Output contains `configuration.json`, `seed-audit.json`, `scan.json`, compressed
+`fixtures.json.gz` and `branch-*.json.gz`, `report.json` and `manifest.json`.
+Use `gzip -dc PATH.json.gz` to inspect a trace. Each branch records actions,
+hashes, plan snapshots, tactical bindings, original frozen target scoring,
+opportunistic shots and acceptance, range occupancy, damage and outcomes.
+Range occupancy averages decisions with living assigned fighters; it measures
+distance, not hit probability. `firstChangedAction` is one-based within the
+continuation. Binding changes count roles with changed membership at intervention.
+
+Report comparisons are paired by environment seed, separated by roster and
+delay, with 10,000 exploratory bootstrap resamples. Historical cases are excluded.
+Horizon-censored outcomes and terminal-before-intervention cases are retained;
+blue win rate counts completed blue wins only. No repair is automatically
+promoted, and this scripted-executor result cannot qualify a learned fighter.
+`--verify` checks inventory/digests and exact fixture reconstruction; the full
+runner additionally performs the independent continuation reruns.
+
+## Earlier commander-recovery preflight
 
 Headless, provider-independent preflight for comparing Luna-low, Astra-low,
 and Astra-medium with the existing scripted fighter. The final command remains

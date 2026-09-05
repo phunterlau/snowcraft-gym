@@ -32,6 +32,13 @@ bootstrap intervals (10,000 resamples, RNG 730001), coverage and negative result
 No provider calls, production-default changes, learned repair policy, automatic
 promotion or changes to R1n/M7c qualification are included.
 
+Harness implemented: `orchestration/examples/selective-repair-audit.ts` has
+read-only seed preflight, immutable compressed traces, isolated interventions,
+exact historical/delayed-prefix parity and paired-bootstrap analysis. The harness
+gate passed 367 TypeScript, 51 client and 257 training tests plus build. Fresh
+collection is pending. See the recovery
+README for commands and registered same-experiment seed reuse semantics.
+
 ### Side diagnostic — progress-aware commander recovery (2026-09-05)
 
 Preserve the scripted executor and `CommandPlan` output contract. This work
