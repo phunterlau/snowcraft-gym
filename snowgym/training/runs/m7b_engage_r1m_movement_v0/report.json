@@ -1,0 +1,265 @@
+{
+  "assistType": "teacher-shot-direction-and-power",
+  "assistVersion": "snowgym.r1h-corrected-shots.v0",
+  "autonomousQualificationEligible": false,
+  "baselineSuccesses": {
+    "historical": 13,
+    "replication": 16
+  },
+  "format": "snowgym.assisted-movement-report.v0",
+  "historicalBaselineExact": true,
+  "pairedIntervalsUnit": "environment-seed; optimizer runs kept separate",
+  "replicated": true,
+  "runs": {
+    "94001": {
+      "actorParameterL2Change": 1.2029913524002747,
+      "gates": {
+        "historical": {
+          "assistType": "teacher-shot-direction-and-power",
+          "assistVersion": "snowgym.r1h-corrected-shots.v0",
+          "autonomousQualificationEligible": false,
+          "criteria": {
+            "parameterChange": true,
+            "positivePairedInterval": true,
+            "rejections": true,
+            "successGain": true
+          },
+          "effect": {
+            "physicalWin": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0
+            },
+            "progress": {
+              "ci95": [
+                0.12600000000000003,
+                0.25
+              ],
+              "mean": 0.187
+            },
+            "progressWinFraction": 0.675,
+            "success": {
+              "ci95": [
+                0.25,
+                0.55
+              ],
+              "mean": 0.4
+            }
+          },
+          "passed": true,
+          "rejectedActionRate": 0.0
+        },
+        "replication": {
+          "assistType": "teacher-shot-direction-and-power",
+          "assistVersion": "snowgym.r1h-corrected-shots.v0",
+          "autonomousQualificationEligible": false,
+          "criteria": {
+            "parameterChange": true,
+            "positivePairedInterval": false,
+            "rejections": true,
+            "successGain": true
+          },
+          "effect": {
+            "physicalWin": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0
+            },
+            "progress": {
+              "ci95": [
+                0.091,
+                0.255
+              ],
+              "mean": 0.16899999999999998
+            },
+            "progressWinFraction": 0.55,
+            "success": {
+              "ci95": [
+                0.0,
+                0.375
+              ],
+              "mean": 0.2
+            }
+          },
+          "passed": false,
+          "rejectedActionRate": 0.0
+        }
+      },
+      "successes": {
+        "historical": 29,
+        "replication": 24
+      }
+    },
+    "94002": {
+      "actorParameterL2Change": 1.2550357437028241,
+      "gates": {
+        "historical": {
+          "assistType": "teacher-shot-direction-and-power",
+          "assistVersion": "snowgym.r1h-corrected-shots.v0",
+          "autonomousQualificationEligible": false,
+          "criteria": {
+            "parameterChange": true,
+            "positivePairedInterval": false,
+            "rejections": true,
+            "successGain": false
+          },
+          "effect": {
+            "physicalWin": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0
+            },
+            "progress": {
+              "ci95": [
+                -0.039024999999999976,
+                0.094
+              ],
+              "mean": 0.026000000000000006
+            },
+            "progressWinFraction": 0.325,
+            "success": {
+              "ci95": [
+                0.0,
+                0.25
+              ],
+              "mean": 0.125
+            }
+          },
+          "passed": false,
+          "rejectedActionRate": 0.0
+        },
+        "replication": {
+          "assistType": "teacher-shot-direction-and-power",
+          "assistVersion": "snowgym.r1h-corrected-shots.v0",
+          "autonomousQualificationEligible": false,
+          "criteria": {
+            "parameterChange": true,
+            "positivePairedInterval": false,
+            "rejections": true,
+            "successGain": false
+          },
+          "effect": {
+            "physicalWin": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0
+            },
+            "progress": {
+              "ci95": [
+                -0.031000000000000007,
+                0.12002499999999966
+              ],
+              "mean": 0.04
+            },
+            "progressWinFraction": 0.25,
+            "success": {
+              "ci95": [
+                -0.075,
+                0.175
+              ],
+              "mean": 0.05
+            }
+          },
+          "passed": false,
+          "rejectedActionRate": 0.0
+        }
+      },
+      "successes": {
+        "historical": 18,
+        "replication": 18
+      }
+    },
+    "94003": {
+      "actorParameterL2Change": 1.234121584377112,
+      "gates": {
+        "historical": {
+          "assistType": "teacher-shot-direction-and-power",
+          "assistVersion": "snowgym.r1h-corrected-shots.v0",
+          "autonomousQualificationEligible": false,
+          "criteria": {
+            "parameterChange": true,
+            "positivePairedInterval": false,
+            "rejections": true,
+            "successGain": false
+          },
+          "effect": {
+            "physicalWin": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0
+            },
+            "progress": {
+              "ci95": [
+                -0.063,
+                0.09100000000000001
+              ],
+              "mean": 0.015
+            },
+            "progressWinFraction": 0.4,
+            "success": {
+              "ci95": [
+                -0.075,
+                0.225
+              ],
+              "mean": 0.075
+            }
+          },
+          "passed": false,
+          "rejectedActionRate": 0.0
+        },
+        "replication": {
+          "assistType": "teacher-shot-direction-and-power",
+          "assistVersion": "snowgym.r1h-corrected-shots.v0",
+          "autonomousQualificationEligible": false,
+          "criteria": {
+            "parameterChange": true,
+            "positivePairedInterval": false,
+            "rejections": true,
+            "successGain": false
+          },
+          "effect": {
+            "physicalWin": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "mean": 0.0
+            },
+            "progress": {
+              "ci95": [
+                -0.05500000000000001,
+                0.08400000000000002
+              ],
+              "mean": 0.012000000000000016
+            },
+            "progressWinFraction": 0.275,
+            "success": {
+              "ci95": [
+                -0.1,
+                0.2
+              ],
+              "mean": 0.05
+            }
+          },
+          "passed": false,
+          "rejectedActionRate": 0.0
+        }
+      },
+      "successes": {
+        "historical": 16,
+        "replication": 18
+      }
+    }
+  },
+  "selection": "final-update-only"
+}

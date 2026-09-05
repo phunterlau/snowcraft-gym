@@ -23,6 +23,14 @@ Paired arms shared episode-balanced sampling streams. Mixed arms drew 128
 reservoir and 128 learner states per batch. Fresh training-pool episodes were
 used only for regression evaluation. Only final-step models were evaluated.
 
+Oracle accounting (state-batched calls, reconstructed from the archived rows
+and `label_state`): the reused R1k corpus contains 5,367 teacher and 8,000 learner
+states. Fresh R1l regression collection contains 5,473 teacher and 8,000 learner
+states: 13,473 production-teacher action queries and 13,473 calls to each of the
+movement and shot recommendation helpers. These helpers are local, read-only
+labels. Fitting and autonomous evaluation make zero additional oracle queries.
+All arms consume cached labels; oracle work is shared rather than repeated per arm.
+
 ## Results
 
 Each entry below is mean Engage progress on 40 paired environment seeds.
@@ -48,6 +56,13 @@ The four-arm interaction interval included zero on both sets. These are
 episode-paired bootstrap intervals, not optimizer-seed variability estimates.
 Only training RNG 93001 ran: D's success gain over A was zero, so the declared
 93002/93003 replication was skipped. Qualification seeds remain untouched.
+
+D consumed 479,356 movement and 359,399 shot labels across 53,760 sampled states
+per source. A consumed 469,426 movement and 23,459 shot labels across 107,520
+reservoir samples. Repeated sampled labels are exposures, not unique examples.
+Fresh learner-state conditional loss fell from the reference's 0.2762 to D's
+0.1752; A reached 0.2749. The broader head supervision improved this regression
+metric without improving mission success.
 
 ## Interpretation and stopping decision
 

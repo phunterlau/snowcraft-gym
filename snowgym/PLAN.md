@@ -1158,7 +1158,7 @@ only in explicitly labeled diagnostic experiments.
       augmented arms use equal source counts. Run A–D with RNG seed 93001, then
       replicate predeclared D and A with 93002/93003 only if D improves autonomous
       success without rejection regression. Never select the best arm post hoc.
-- [ ] **R1m — assisted movement PPO:** first repair frozen option target scoring
+- [x] **R1m — assisted movement PPO (experiment complete; replication gate failed):** first repair frozen option target scoring
       and expose option budget/state. Reproduce exact R1h corrected-shot baseline;
       freeze action choice and shot geometry, train movement and a separate critic.
       Log exact Normal latent movement samples (fixed std 0.02); 8 worlds × 200
@@ -1191,8 +1191,8 @@ one-decision aim and movement substitutions had positive paired net-damage
 intervals; power did not. Disposable hard fitting reduced loss 97.88%, improved
 episode-held-out loss, and passed encoder/Jacobian checks without changing the
 reference. R1k passes and permits R1l; autonomous R1 remains open. See the
-[R1k report](training/reviews/m7b_r1k_results.md). Fresh-holdout ancestry must
-still pass before R1l collects those episodes.
+[R1k report](training/reviews/m7b_r1k_results.md). Fresh-holdout ancestry was
+pending at R1k completion and passed in the subsequent R1l preflight.
 
 R1l result (2026-09-05): ancestry passed after recovering the original BC
 training dataset with its exact archived digest. All four final-step arms
@@ -1213,8 +1213,23 @@ option-aware critic, movement-only latent density, exact prefix restoration,
 selective reset, and immutable partial-collection checkpoints are implemented.
 Legacy option scoring is retained explicitly for historical R1h reproduction.
 All four test suites and live Gym v0–v3 compatibility passed. This is a contract
-gate only; the 100-update assisted experiment and result gate remain pending.
+gate only; the subsequent 100-update experiment is reported below.
 See [scoped movement](training/src/snowgym_training/executor/SCOPED_MOVEMENT.md).
+
+R1m result (2026-09-05): the exact historical R1h source reproduced all 40
+trajectories and 10 successes. Repaired option scoring produces a matched
+initialization of 13/40 historical and 16/40 fresh-development successes; common
+physical prefixes are identical. The exact 20%-health boundary explains the
+three newly successful historical episodes. Three predeclared training RNGs
+each completed 100 updates with frozen shot assistance. Historical/fresh final
+successes were 29/24, 18/18, and 16/18 out of 40. Only the first historical gate
+passed; no run passed the fresh-development gate. All had zero rejected actions
+and measurable actor change. Stop at the declared budget: the movement effect
+is not consistently replicated, and every checkpoint remains ineligible for
+autonomous qualification. See the [R1m review](training/reviews/m7b_r1m_results.md).
+R1n, aiming/composition budgets, and later missions require a new evidence-based
+predeclaration; no extra optimizer seeds, aiming fit, or runtime provider calls
+were started.
 
 #### M7c — full-fight fixed-plan composition
 

@@ -869,6 +869,10 @@ The [R1m movement-only contract](src/snowgym_training/executor/SCOPED_MOVEMENT.m
 adds frozen-target option scoring, explicit budget state, and exact-resumable
 latent movement collection. Its corrected shots are runtime teacher assistance;
 these checkpoints are excluded from autonomous qualification.
+The [completed R1m experiment](reviews/m7b_r1m_results.md) found a strong first
+historical result but failed consistent replication across three training RNGs.
+Its final historical/fresh success counts were 29/24, 18/18, and 16/18 out of 40,
+against matched assisted initialization of 13/16. Autonomous R1 remains open.
 
 R1k adds a frozen-reference learner-opportunity audit: exact teacher-reservoir
 reconstruction, separate conditional geometry labels, episode-capped paired

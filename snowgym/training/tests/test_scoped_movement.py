@@ -74,6 +74,25 @@ def test_engage_v1_missing_membership_and_timeout_are_explicit():
     assert tracker.option_state(raw)[0] == 0 and tracker.previous_progress == 0
 
 
+def test_activated_cluster_denominator_survives_partial_casualty_and_retargeting():
+    raw = raw_observation()
+    raw["enemies"][0]["health"] = 80
+    raw["enemies"][1]["health"] = 40
+    extra = {**copy.deepcopy(raw["enemies"][0]), "id": 12, "health": 100}
+    raw["enemies"].append(extra)
+    body = {**plan_observation(), "activationObjectives": [{"role": "main", "kind": "enemy_cluster", "enemyIds": [10, 11]}]}
+    tracker = FrozenEngageTracker(FROZEN_OPTION_SPECS["engage"], plan("engage"), raw, body)
+    assert tracker.activated_target_health == 120
+    changed = copy.deepcopy(raw)
+    changed["enemies"][0].update(alive=False, health=0)
+    assert tracker.target_health_fraction(changed) == pytest.approx(1/3)
+    changed["enemies"][1].update(alive=False, health=0)
+    replacement = {**body, "activationObjectives": [{"role": "main", "kind": "enemy_cluster", "enemyIds": [12]}]}
+    result = tracker.update(changed, replacement, canonical_reward=0, gamma=.9976921765)
+    assert result.success and changed["enemies"][2]["alive"]
+    assert tracker.target_health_fraction(changed) == 0
+
+
 def test_zero_noise_exact_source_parity_and_latent_likelihood(inputs):
     model, obs = inputs
     with torch.no_grad():

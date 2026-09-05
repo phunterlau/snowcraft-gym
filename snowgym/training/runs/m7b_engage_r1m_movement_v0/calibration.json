@@ -1,0 +1,11 @@
+{
+  "assistType": "teacher-shot-direction-and-power",
+  "assistVersion": "snowgym.r1h-corrected-shots.v0",
+  "autonomousQualificationEligible": false,
+  "moveOpportunities": 950,
+  "saturatedCoordinateFraction": 0.0,
+  "seed": 100000,
+  "worldDisplacementMean": 0.9794494627220066,
+  "worldDisplacementP90": 1.737190043926239,
+  "zeroNoiseSourceParity": true
+}

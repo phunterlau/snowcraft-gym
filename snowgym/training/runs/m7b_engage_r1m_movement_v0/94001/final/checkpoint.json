@@ -1,0 +1,122 @@
+{
+  "assistType": "teacher-shot-direction-and-power",
+  "assistVersion": "snowgym.r1h-corrected-shots.v0",
+  "autonomousQualificationEligible": false,
+  "checkpointDigest": "sha256:15927fa81b1852ea607aa7710ea9c6887b48028dddad2145142f778e660942cb",
+  "config": {
+    "actorGradClip": 0.5,
+    "batchSize": 8,
+    "bcCoefficient": 0,
+    "bootstrapSamples": 10000,
+    "bootstrapSeed": 950001,
+    "calibrationDecisions": 200,
+    "calibrationSeed": 100000,
+    "checkpointDigest": "sha256:10d924ecdfbc554a8e0324387d8d049b9ffe719e8d8f2768123e4886c265a697",
+    "clipRatio": 0.2,
+    "criticGradClip": 0.5,
+    "decisionHz": 10,
+    "developmentSeeds": [
+      200000,
+      200039
+    ],
+    "entropyCoefficient": 0,
+    "epochs": 4,
+    "format": "snowgym.assisted-movement-config.v0",
+    "gaeLambda": 0.9885140204,
+    "gamma": 0.9976921765,
+    "latentStd": 0.02,
+    "learningRate": 0.0003,
+    "minibatchSize": 400,
+    "movementKlStop": 0.01,
+    "replicationDevelopmentSeeds": [
+      210000,
+      210039
+    ],
+    "returnHalfLifeSeconds": 30,
+    "rolloutDecisions": 200,
+    "selection": "final-update-only",
+    "traceHalfLifeSeconds": 5,
+    "trainingEpisodeSeeds": [
+      100000,
+      107999
+    ],
+    "trainingRngs": [
+      94001,
+      94002,
+      94003
+    ],
+    "updates": 100
+  },
+  "configDigest": "sha256:432832a460687770ca0302c0cfedcd315574f151774e66913bd4539e372ad1e5",
+  "format": "snowgym.assisted-movement-checkpoint.v0",
+  "optionStateVersion": "snowgym.engage-option-state.v1",
+  "seedSchedule": {
+    "maximum": 107999,
+    "minimum": 100000,
+    "nextSeed": 101600
+  },
+  "source": {
+    "architecture": {
+      "action_conditioned_targets": true,
+      "actor_hidden": 64,
+      "entity_embedding": 24,
+      "entity_hidden": 32,
+      "observation_version": 3,
+      "plan_conditioned": true,
+      "plan_ppo_residuals": true,
+      "plan_target_only": true,
+      "separate_target_actor": true,
+      "v3_extension_adapters": true
+    },
+    "checkpointDigest": "sha256:10d924ecdfbc554a8e0324387d8d049b9ffe719e8d8f2768123e4886c265a697",
+    "collectorConfig": {
+      "gateId": "m7b-engage-supervised-probe",
+      "option": "engage",
+      "rewardMode": "executor",
+      "rolloutSteps": 200,
+      "stage": 1,
+      "worlds": 1
+    },
+    "curriculumDigest": "sha256:54c1fa4217c5bd663c3b60e967a10c9b058da3c2decb2329407860340de7748c",
+    "environmentSteps": 0,
+    "format": "snowgym.ppo-checkpoint.v0",
+    "gitCommit": "8f7d4f9bc91600bd52d35e25de866492cdd353ac",
+    "initialization": {
+      "checkpointDigest": "sha256:5e4feb4e1f97d2ba3a5521bcb6b4a5df8f9194ed02d4badf4a1b96304196c80c",
+      "curriculumDigest": "sha256:54c1fa4217c5bd663c3b60e967a10c9b058da3c2decb2329407860340de7748c",
+      "sourceGate": "m7b-engage-stage1",
+      "stateDigest": "sha256:5c4a23426a3dc41ccd790a4213f6b41253578b0bdb6647bc8064572b388bce59",
+      "type": "ppo-transfer",
+      "updateIndex": 200
+    },
+    "initializerDigest": "sha256:74603580e19e66fd70f1cd650dc834fa54887933b6f2706fa2b8928951c5bfac",
+    "initializerSourceDigest": "sha256:4119b9a3f8c0d3df69b704a8f3f813a1b38ab11ca56faffb4c4cebc2cb235133",
+    "ppoConfig": {
+      "clip_ratio": 0.2,
+      "entropy_weight": 0.01,
+      "gae_lambda": 0.9885140204,
+      "gamma": 0.9976921765,
+      "initial_power_log_std": -1.0,
+      "initial_target_log_std": -1.0,
+      "learning_rate": 0.0003,
+      "max_grad_norm": 0.5,
+      "minibatch_size": 1600,
+      "ratio_mode": "per-unit",
+      "target_kl": null,
+      "update_epochs": 4,
+      "value_weight": 0.5
+    },
+    "seedSchedule": {
+      "maximum": 100039,
+      "minimum": 100000,
+      "nextSeed": 100000
+    },
+    "stateDigest": "sha256:de40c3d3ace72c3562718513e853d23f29a6e30f823db7d0b266c796d73e693c",
+    "trainingSeed": 91001,
+    "updateIndex": 20
+  },
+  "stateDigest": "sha256:6df0974bfe70d163b876a7ea42c73fc580474aea2933da88731be8e1dd0f0df0",
+  "stateFileDigest": "sha256:e22a103f988ee689f55f64cc8f1d89354aeb0df604c0858977eba72d8c90325f",
+  "trainingSeed": 94001,
+  "updateIndex": 100
+}
