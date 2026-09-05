@@ -19,6 +19,19 @@ configuration on 2026-09-01.
 
 ## Milestones
 
+### Selective tactical repair — approved mechanism audit (2026-09-05)
+
+Declaration: `refs/snowgym_selective_repair_review_and_plan.md`. Compare keep,
+binding-only refresh, bounded opportunistic fire and full reactivation on the
+three archived casualty cases and 40 fresh diagnostic seeds per 5v5/10v10/6v10
+cohort (630000–630119). Use the first unchanged casualty predicate within 300
+decisions, no resampling, 0/1/2/4/8-second delays and a shared 300-decision
+continuation budget. Audit seed allocations first; preserve fixed scoring
+targets and independently rerun every continuation. Report paired exploratory
+bootstrap intervals (10,000 resamples, RNG 730001), coverage and negative results.
+No provider calls, production-default changes, learned repair policy, automatic
+promotion or changes to R1n/M7c qualification are included.
+
 ### Side diagnostic — progress-aware commander recovery (2026-09-05)
 
 Preserve the scripted executor and `CommandPlan` output contract. This work

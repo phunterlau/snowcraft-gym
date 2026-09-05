@@ -1,5 +1,9 @@
 # Progress-aware commander recovery
 
+The next approved experiment is the
+[selective-repair mechanism audit](../../../refs/snowgym_selective_repair_review_and_plan.md),
+which separates binding refresh, local firing and full reactivation.
+
 Headless, provider-independent preflight for comparing Luna-low, Astra-low,
 and Astra-medium with the existing scripted fighter. The final command remains
 `snowgym.command-plan.v0`. This diagnostic does not qualify a learned fighter.

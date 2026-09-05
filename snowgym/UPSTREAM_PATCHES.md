@@ -1,5 +1,16 @@
 # Upstream patch ledger
 
+## `refs/snowgym_selective_repair_review_and_plan.md`
+
+Reason: preserve the requested loss-recovery interpretation and predeclare the
+selective tactical repair mechanism audit before collecting new results.
+
+Change: added a source-linked review, isolated intervention definitions, fixed
+seed/delay budgets and verification gates. Upstream behavior is unchanged.
+
+SnowGym dependency: documents a headless scripted-executor diagnostic without
+changing command semantics or fighter qualification thresholds.
+
 ## `src/systems/AISystem.ts`
 
 Reason: the red squad had to run behind SnowGym's `TeamController` boundary
