@@ -19,6 +19,15 @@ configuration on 2026-09-01.
 
 ## Milestones
 
+### R1m-S2 — post-hit continuation diagnostic (declared 2026-09-05)
+
+Use `training/reviews/m7b_r1m_s2_declaration.md` to isolate brief versus sustained
+movement correction after the first hit, with action-choice and combined controls.
+Freeze the R1h source and corrected shots; use 40 already exposed development
+seeds, five same-state branches, and exact duplicate replay. No PPO, provider
+calls, seed resampling, horizon extension or promotion. Reproduce the repaired
+R1m baseline before accepting branch evidence. R1n remains open.
+
 ### R1m-S1 — critic-schedule isolation (complete; gate failed 2026-09-05)
 
 Resume the fighter recovery track with the bounded matched experiment in

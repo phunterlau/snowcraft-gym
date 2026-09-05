@@ -1,5 +1,16 @@
 # R1m scoped movement contract
 
+R1m-S2 is a frozen post-hit continuation diagnostic, described in its
+[declaration](../../../reviews/m7b_r1m_s2_declaration.md). From `snowgym/training`:
+
+```bash
+.venv/bin/python -m snowgym_training.options.post_hit \
+  --output runs/m7b_engage_r1m_s2_v0
+```
+
+It makes no parameter updates. Corrected shots remain enabled in every branch;
+brief choice/movement interventions are explicitly diagnostic assistance.
+
 The bounded R1m-S1 critic-schedule diagnostic is declared in
 [`m7b_r1m_s1_declaration.md`](../../../reviews/m7b_r1m_s1_declaration.md).
 From `snowgym/training`, run it once into a new output directory:
