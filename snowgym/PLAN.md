@@ -19,7 +19,7 @@ configuration on 2026-09-01.
 
 ## Milestones
 
-### R1m-S2 — post-hit continuation diagnostic (declared 2026-09-05)
+### R1m-S2 — post-hit continuation diagnostic (completed 2026-09-05)
 
 Use `training/reviews/m7b_r1m_s2_declaration.md` to isolate brief versus sustained
 movement correction after the first hit, with action-choice and combined controls.
@@ -27,6 +27,15 @@ Freeze the R1h source and corrected shots; use 40 already exposed development
 seeds, five same-state branches, and exact duplicate replay. No PPO, provider
 calls, seed resampling, horizon extension or promotion. Reproduce the repaired
 R1m baseline before accepting branch evidence. R1n remains open.
+
+All 40 baselines reproduced exactly; 38 nonterminal first-hit states supplied
+190 exact duplicate branch pairs. Keep succeeded on 13/38, choice-30 on 16/38,
+move-30 on 23/38, both-30 on 17/38 and move-rest on 35/38. The two movement arms
+passed the declared further-study criterion; the choice and combined arms did
+not. Every branch remains teacher-assisted. See
+`training/reviews/m7b_r1m_s2_results.md`. A short learned movement-recovery option
+on training-partition snapshots is proposed next, with a new budget/seed/gate
+declaration required before training. No automatic PPO or promotion follows S2.
 
 ### R1m-S1 — critic-schedule isolation (complete; gate failed 2026-09-05)
 

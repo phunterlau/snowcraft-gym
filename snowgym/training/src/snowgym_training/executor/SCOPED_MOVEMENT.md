@@ -10,6 +10,9 @@ R1m-S2 is a frozen post-hit continuation diagnostic, described in its
 
 It makes no parameter updates. Corrected shots remain enabled in every branch;
 brief choice/movement interventions are explicitly diagnostic assistance.
+The [completed S2 review](../../../reviews/m7b_r1m_s2_results.md) reports 23/38
+successes with brief movement correction and 35/38 with sustained correction,
+versus 13/38 for Keep. These are assisted diagnostic results.
 
 The bounded R1m-S1 critic-schedule diagnostic is declared in
 [`m7b_r1m_s1_declaration.md`](../../../reviews/m7b_r1m_s1_declaration.md).
