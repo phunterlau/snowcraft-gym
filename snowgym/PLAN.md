@@ -19,6 +19,15 @@ configuration on 2026-09-01.
 
 ## Milestones
 
+### R1m-S3 — learned short movement recovery (declared 2026-09-05)
+
+Follow `training/reviews/m7b_r1m_s3_declaration.md`: training-only first-hit
+snapshots, 30 learned movement decisions followed by frozen continuation, three
+RNGs × 30 PPO updates. Preserve tail rewards and expose recovery time through a
+new trainable input/checkpoint contract. Evaluate final checkpoints on both
+already exposed development sets. No shot-assistance removal or autonomous
+promotion; R1n remains open. Freeze the protocol before collection.
+
 ### R1m-S2 — post-hit continuation diagnostic (completed 2026-09-05)
 
 Use `training/reviews/m7b_r1m_s2_declaration.md` to isolate brief versus sustained

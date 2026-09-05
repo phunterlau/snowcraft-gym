@@ -1,5 +1,19 @@
 # R1m scoped movement contract
 
+R1m-S3 trains a short movement-recovery policy with an explicit recovery-time
+input and an actual frozen-policy tail return. Its
+[declaration](../../../reviews/m7b_r1m_s3_declaration.md) fixes snapshots and budget.
+From `snowgym/training`, using a new output directory:
+
+```bash
+.venv/bin/python -m snowgym_training.options.recovery_train \
+  --output runs/m7b_engage_r1m_s3_v0
+```
+
+Use `options/recovery_checkpoint.py` for its versioned checkpoints. Legacy
+movement checkpoints do not encode this timed-handoff contract. Teacher-corrected
+shots remain enabled; no autonomous qualification is earned by this experiment.
+
 R1m-S2 is a frozen post-hit continuation diagnostic, described in its
 [declaration](../../../reviews/m7b_r1m_s2_declaration.md). From `snowgym/training`:
 

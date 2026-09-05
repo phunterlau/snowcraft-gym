@@ -484,3 +484,28 @@ critic-only updates after the actor stops. Actor parameters, optimizer state and
 subsequent collection RNG are preserved during those extra updates. See the
 [frozen declaration](../reviews/m7b_r1m_s1_declaration.md). Both arms remain
 teacher-assisted and ineligible for autonomous qualification.
+
+### Short recovery with a frozen continuation
+
+R1m-S3 learns movement for $K\leq30$ decisions, then follows the fixed source
+policy through the original option terminal $T$. Only the first $K$ actions
+enter the learner likelihood. After observing the complete continuation, define
+
+$$
+r'_{K-1}=r_{K-1}+\gamma\sum_{j=K}^{T-1}\gamma^{j-K}r_j,
+\qquad r'_t=r_t\quad(t<K-1).
+$$
+
+GAE over the learned segment uses these rewards and zero bootstrap at its end.
+This closes the training segment after the actual tail return is known; it does
+not terminate the simulator at handoff. The discounted return is preserved:
+
+$$
+\sum_{t=0}^{K-1}\gamma^t r'_t=\sum_{t=0}^{T-1}\gamma^t r_t.
+$$
+
+The actor and independent critic additionally receive remaining recovery time.
+Existing option-time and frozen-target state remain present. Source parameters
+and corrected shot geometry stay fixed, and no actor gradient is assigned to
+the frozen continuation. Tail sampling increases return variance; exact reward
+accounting alone does not establish that PPO will learn effective recovery.
