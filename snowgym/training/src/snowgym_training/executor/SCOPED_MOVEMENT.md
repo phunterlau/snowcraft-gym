@@ -12,6 +12,9 @@ From `snowgym/training`, use an unused output directory:
 Only one fighter's first movement target changes per branch. Signed radial/lateral
 probes, a teacher-target reference and unchanged continuation retain corrected
 shots; no autonomous qualification is earned.
+The [completed S5 review](../../../reviews/m7b_r1m_s5_results.md) finds directional
+physical sensitivity and larger physical effects at the larger scale, with no
+reliable return improvement. Preserve the current PPO/decoder defaults.
 
 R1m-S4 is the frozen exploration/advantage audit described in its
 [declaration](../../../reviews/m7b_r1m_s4_declaration.md). From `snowgym/training`:

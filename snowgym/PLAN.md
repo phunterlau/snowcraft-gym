@@ -19,7 +19,7 @@ configuration on 2026-09-01.
 
 ## Milestones
 
-### R1m-S5 — destination-to-motion boundary probe (declared)
+### R1m-S5 — destination-to-motion boundary probe (complete 2026-09-05)
 
 Follow `training/reviews/m7b_r1m_s5_declaration.md`: 24 training-only snapshots,
 one fighter/one decision per branch, signed radial/lateral shifts of 1/5 world
@@ -27,6 +27,14 @@ units, unchanged and teacher-target references, duplicate exact reconstruction.
 Measure simulated motion and full frozen-continuation consequences separately.
 No training, action-interface changes or qualification; stop and review evidence
 before declaring any intervention.
+
+All 240 duplicate branch pairs and 24 archived controls matched; zero rejected
+actions. Mean first-decision position difference rose from 0.02694 to 0.12232
+world units at the larger scale, but neither scale nor any arm established a
+positive return effect. Radial and lateral sensitivity differed substantially.
+See `training/reviews/m7b_r1m_s5_results.md`. Do not widen PPO noise or change the
+decoder by default. A matched teacher-duration/coordination diagnostic is proposed
+to distinguish sustained/team control from isolated perturbations; not yet declared.
 
 ### R1m-S4 — frozen exploration/advantage audit (complete 2026-09-05)
 
