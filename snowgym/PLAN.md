@@ -19,13 +19,20 @@ configuration on 2026-09-01.
 
 ## Milestones
 
-### R1m-S6 — teacher duration/scope factorial (declared)
+### R1m-S6 — teacher duration/scope factorial (complete; primary gate failed 2026-09-05)
 
 Follow `training/reviews/m7b_r1m_s6_declaration.md`: same 24 training states,
 single versus squad MOVE correction, one versus 30 decisions, unchanged control,
 two exact executions per arm. Keep and single-1 must reproduce S5 artifacts.
 Test whether sustained teacher benefit transfers; separate duration, scope and
 their interaction while reporting actual intervention dose. No PPO or promotion.
+
+All 120 duplicate pairs and 48 S5 reference traces matched. Squad-30 reached
+12/24 successes versus Keep's 9/24, but paired success/return intervals included
+zero. Local damage and final progress improved; the primary transfer gate failed.
+All 12 squad-30 failures were timeouts with the assigned Blue force alive. See
+`training/reviews/m7b_r1m_s6_results.md`. Next proposed work is a read-only
+failure/handoff audit of the saved trajectories before another learning experiment.
 
 ### R1m-S5 — destination-to-motion boundary probe (complete 2026-09-05)
 

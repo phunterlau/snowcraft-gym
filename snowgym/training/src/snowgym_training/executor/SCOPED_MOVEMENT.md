@@ -12,6 +12,9 @@ From `snowgym/training`, choose a new output directory:
 The five arms are Keep, single-1, squad-1, single-30 and squad-30. Destinations
 are recomputed during each window; categorical weights and shot assistance remain
 fixed. No optimizer runs, action contract changes or autonomous promotion occur.
+The [completed S6 review](../../../reviews/m7b_r1m_s6_results.md) records improved
+damage/progress under sustained squad correction, but a failed primary
+success/return gate. Do not extend this budget or change PPO defaults.
 
 R1m-S5 tests the destination-to-motion boundary without optimization or a new
 action decoder. See its [declaration](../../../reviews/m7b_r1m_s5_declaration.md).
