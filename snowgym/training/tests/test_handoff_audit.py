@@ -1,4 +1,6 @@
 import copy
+import gzip
+import json
 
 import numpy as np
 import pytest
@@ -116,3 +118,22 @@ def test_live_archived_replay_without_policy_calls_and_tamper(tmp_path, monkeypa
         with pytest.raises(ValueError, match='trace length'):
             h.inspect(wrapper, frame, pick, bad)
     assert h.inputs()[-1] == manifest
+
+
+def test_archived_s7_inventory_windows_and_report_recompute():
+    root = h.b.TRAINING / 'runs/m7b_engage_r1m_s7_v0'
+    manifest = h.b.verified_manifest(root)
+    assert len(manifest['artifacts']) == 50
+    groups = []
+    for path in sorted(root.glob('inspection-*-keep.jsonl.gz')):
+        seed = int(path.name.split('-')[1]); group = {}
+        for arm in h.ARMS:
+            with gzip.open(root/f'inspection-{seed}-{arm}.jsonl.gz', 'rt') as stream:
+                row = json.loads(stream.readline())
+            assert row['windows'] == {w: h.window_metrics(row['records'], *bounds) for w, bounds in h.WINDOWS.items()}
+            group[arm] = row
+        groups.append(group)
+    report = json.loads((root/'report.json').read_text())
+    assert len(groups) == 24 and report['simulatorDecisions'] == 8405
+    assert sum(g[a]['simulatorDecisions'] for g in groups for a in h.ARMS) == report['simulatorDecisions']
+    assert all(report[k] == v for k, v in h.summarize(groups).items())

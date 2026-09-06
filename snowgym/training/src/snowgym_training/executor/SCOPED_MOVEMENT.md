@@ -151,6 +151,11 @@ The [inspection protocol](../../../reviews/m7b_r1m_s7_declaration.md) fixes all
 each reproduced transition must match its archive. This does not train or
 qualify an autonomous fighter.
 
+The [completed S7 inspection](../../../reviews/m7b_r1m_s7_results.md) reproduced
+all 48 trajectories exactly. Outward movement increased after handoff; immediate
+progress collapse was not established. The note explains the restricted PPO
+continuation objective and proposes a separately declared same-state fork.
+
 From the repository root, choose a new output directory:
 
 ```bash

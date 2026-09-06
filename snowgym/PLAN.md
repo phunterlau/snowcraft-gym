@@ -19,12 +19,22 @@ configuration on 2026-09-01.
 
 ## Milestones
 
-### R1m-S7 — frozen handoff/completion inspection (declared)
+### R1m-S7 — frozen handoff/completion inspection (complete 2026-09-05)
 
 Follow `training/reviews/m7b_r1m_s7_declaration.md`: exact replay of S6 Keep and
 squad-30 trajectories to inspect range, readiness, action choice, remaining target
 health and original budget around the handoff. No new actions, seeds or training.
 Separate descriptive temporal associations from causal handoff claims.
+
+All 48 trajectories reproduced exactly in 8,405 decisions. On 17 complete
+paired seeds, squad-30 outward MOVE frequency beyond range rose from 4.6% to
+45.4% after handoff, while the immediate progress contrast relative to Keep
+remained inconclusive. All 12 squad-30 failures timed out with assigned Blue
+alive; 11 post-handoff failure tails averaged 11.8% occupancy within range 9.
+See `training/reviews/m7b_r1m_s7_results.md` and the digest-bound S7 archive.
+Next proposal: predeclare a same-state post-correction source-versus-sustained
+teacher-MOVE continuation fork. No new experiment, reward change, or PPO default
+change has been run; S6's primary gate and autonomous qualification remain failed.
 
 ### R1m-S6 — teacher duration/scope factorial (complete; primary gate failed 2026-09-05)
 

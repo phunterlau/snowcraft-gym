@@ -1,0 +1,33 @@
+{
+  "assistType": "corrected-shots-with-teacher-duration-scope-probe",
+  "assistVersion": "snowgym.duration-scope.v0",
+  "autonomousQualificationEligible": false,
+  "declarationDigest": "sha256:198ad9a3c6a50d76f3c586d2498c964196b967e2a48fed8795870781741459ea",
+  "format": "snowgym.handoff-audit-config.v0",
+  "gitCommit": "c8069c4f85e4ff4683af9edaee62d4854e1d56b7",
+  "implementationDigest": "sha256:6abc53901481c267f058eb3c44b64820d8d158b909839b74f0cfcacbe790c083",
+  "simulatorBudget": 9600,
+  "sourceManifest": "sha256:2086be0504f19252e32a3b4c320bf6cf7460615227005e9b2228a27cf90d94bd",
+  "windows": {
+    "allTail": [
+      30,
+      null
+    ],
+    "correction": [
+      0,
+      30
+    ],
+    "firstTail": [
+      30,
+      60
+    ],
+    "immediateTail": [
+      30,
+      40
+    ],
+    "lateCorrection": [
+      20,
+      30
+    ]
+  }
+}
