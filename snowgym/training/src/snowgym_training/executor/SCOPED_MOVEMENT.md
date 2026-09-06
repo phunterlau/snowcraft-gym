@@ -138,6 +138,20 @@ separately in [R1m results](../../../reviews/m7b_r1m_results.md).
 
 ## Bounded experiment entry point
 
+R1m-S9 compares short and sustained learned control on matched first-hit frames:
+
+```bash
+cd snowgym/training
+.venv/bin/python -m snowgym_training.options.horizon_train \
+  --output runs/m7b_engage_r1m_s9_v0
+```
+
+The [S9 declaration](../../../reviews/m7b_r1m_s9_declaration.md) freezes sample
+budgets, settings, final-only gates and conditional replication. No teacher MOVE
+overrides enter learning; corrected shots remain assistance. The Python `train`
+entry point supports immutable-output pause/resume at update boundaries, verified
+by exact checkpoint tests. Existing source runners and checkpoints are unchanged.
+
 R1m-S8 tests continued teacher movement from the exact post-correction states.
 From `snowgym/training`, choose a new directory:
 

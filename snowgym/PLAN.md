@@ -19,6 +19,15 @@ configuration on 2026-09-01.
 
 ## Milestones
 
+### R1m-S9 — learnable control horizon (declared)
+
+Follow `training/reviews/m7b_r1m_s9_declaration.md`: matched short/full movement
+PPO on S3 first-hit frames, same initialization/control/reward and 240 presented
+optimization rows per update. Thirty updates x eight episodes per arm; final-only
+paired development gates, conditional optimizer-seed replication. Preserve
+actual sample/KL-stop accounting and the 430,000-decision cap. Corrected shots
+remain assistance; no teacher MOVE overrides or autonomous promotion.
+
 ### R1m-S8 — same-state sustained continuation (complete; diagnostic gate passed 2026-09-05)
 
 Follow `training/reviews/m7b_r1m_s8_declaration.md`: reconstruct every S6 squad-30
