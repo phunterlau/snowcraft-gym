@@ -138,6 +138,19 @@ separately in [R1m results](../../../reviews/m7b_r1m_results.md).
 
 ## Bounded experiment entry point
 
+For the R1m-S7 read-only handoff inspection, replay the archived S6 Keep and
+squad-30 actions from `snowgym/training` into a new directory:
+
+```bash
+.venv/bin/python -m snowgym_training.options.handoff_audit \
+  --output runs/m7b_engage_r1m_s7_v0
+```
+
+The [inspection protocol](../../../reviews/m7b_r1m_s7_declaration.md) fixes all
+48 trajectories, windows, and measurements. No policy actions are generated;
+each reproduced transition must match its archive. This does not train or
+qualify an autonomous fighter.
+
 From the repository root, choose a new output directory:
 
 ```bash

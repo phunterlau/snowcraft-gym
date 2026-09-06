@@ -19,6 +19,13 @@ configuration on 2026-09-01.
 
 ## Milestones
 
+### R1m-S7 — frozen handoff/completion inspection (declared)
+
+Follow `training/reviews/m7b_r1m_s7_declaration.md`: exact replay of S6 Keep and
+squad-30 trajectories to inspect range, readiness, action choice, remaining target
+health and original budget around the handoff. No new actions, seeds or training.
+Separate descriptive temporal associations from causal handoff claims.
+
 ### R1m-S6 — teacher duration/scope factorial (complete; primary gate failed 2026-09-05)
 
 Follow `training/reviews/m7b_r1m_s6_declaration.md`: same 24 training states,
