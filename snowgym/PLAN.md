@@ -19,6 +19,15 @@ configuration on 2026-09-01.
 
 ## Milestones
 
+### R1m-S5 — destination-to-motion boundary probe (declared)
+
+Follow `training/reviews/m7b_r1m_s5_declaration.md`: 24 training-only snapshots,
+one fighter/one decision per branch, signed radial/lateral shifts of 1/5 world
+units, unchanged and teacher-target references, duplicate exact reconstruction.
+Measure simulated motion and full frozen-continuation consequences separately.
+No training, action-interface changes or qualification; stop and review evidence
+before declaring any intervention.
+
 ### R1m-S4 — frozen exploration/advantage audit (complete 2026-09-05)
 
 Follow `training/reviews/m7b_r1m_s4_declaration.md`: reconstruct 72 archived S3

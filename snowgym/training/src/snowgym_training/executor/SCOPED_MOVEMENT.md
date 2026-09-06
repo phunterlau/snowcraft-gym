@@ -1,5 +1,18 @@
 # R1m scoped movement contract
 
+R1m-S5 tests the destination-to-motion boundary without optimization or a new
+action decoder. See its [declaration](../../../reviews/m7b_r1m_s5_declaration.md).
+From `snowgym/training`, use an unused output directory:
+
+```bash
+.venv/bin/python -m snowgym_training.options.boundary_probe \
+  --output runs/m7b_engage_r1m_s5_v0
+```
+
+Only one fighter's first movement target changes per branch. Signed radial/lateral
+probes, a teacher-target reference and unchanged continuation retain corrected
+shots; no autonomous qualification is earned.
+
 R1m-S4 is the frozen exploration/advantage audit described in its
 [declaration](../../../reviews/m7b_r1m_s4_declaration.md). From `snowgym/training`:
 
