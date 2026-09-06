@@ -138,6 +138,18 @@ separately in [R1m results](../../../reviews/m7b_r1m_results.md).
 
 ## Bounded experiment entry point
 
+R1m-S8 tests continued teacher movement from the exact post-correction states.
+From `snowgym/training`, choose a new directory:
+
+```bash
+.venv/bin/python -m snowgym_training.options.continuation_probe \
+  --output runs/m7b_engage_r1m_s8_v0
+```
+
+The [S8 declaration](../../../reviews/m7b_r1m_s8_declaration.md) fixes eligibility,
+two repeated arms, budget and diagnostic gate. The source arm must regenerate
+the S6 suffix exactly. Neither arm trains or qualifies an autonomous fighter.
+
 For the R1m-S7 read-only handoff inspection, replay the archived S6 Keep and
 squad-30 actions from `snowgym/training` into a new directory:
 

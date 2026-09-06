@@ -19,6 +19,14 @@ configuration on 2026-09-01.
 
 ## Milestones
 
+### R1m-S8 — same-state sustained continuation (declared)
+
+Follow `training/reviews/m7b_r1m_s8_declaration.md`: reconstruct every S6 squad-30
+nonterminal handoff, compare exact source continuation with sustained teacher
+MOVE destinations, and repeat both arms. Keep original scoring, horizon,
+classifier and corrected shots. Predeclare paired success/return gates and the
+19,200-decision cap. No PPO or autonomous promotion follows automatically.
+
 ### R1m-S7 — frozen handoff/completion inspection (complete 2026-09-05)
 
 Follow `training/reviews/m7b_r1m_s7_declaration.md`: exact replay of S6 Keep and
