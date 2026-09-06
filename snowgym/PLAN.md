@@ -19,13 +19,23 @@ configuration on 2026-09-01.
 
 ## Milestones
 
-### R1m-S8 — same-state sustained continuation (declared)
+### R1m-S8 — same-state sustained continuation (complete; diagnostic gate passed 2026-09-05)
 
 Follow `training/reviews/m7b_r1m_s8_declaration.md`: reconstruct every S6 squad-30
 nonterminal handoff, compare exact source continuation with sustained teacher
 MOVE destinations, and repeat both arms. Keep original scoring, horizon,
 classifier and corrected shots. Predeclare paired success/return gates and the
 19,200-decision cap. No PPO or autonomous promotion follows automatically.
+
+All 46 repeat pairs matched; all 23 source suffixes reproduced S6 exactly.
+Sustained movement achieved 21/23 mission successes versus 12/23: +39.1 points
+[21.7, 60.9], return +0.7051 [0.3847, 1.0936], no rejected actions. Nine failures
+recovered and no source successes were lost. Used 14,624 simulator decisions;
+one pre-handoff timeout was excluded by the declared rule. See
+`training/reviews/m7b_r1m_s8_results.md`. This is assisted Engage completion on
+exposed training states, not battle wins or autonomous qualification. Next:
+predeclare sustained learned-movement control with matched initialization and
+explicit sample/optimizer budgets; no new PPO defaults or training yet.
 
 ### R1m-S7 — frozen handoff/completion inspection (complete 2026-09-05)
 

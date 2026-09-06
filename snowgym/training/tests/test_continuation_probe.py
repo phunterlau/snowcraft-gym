@@ -1,4 +1,6 @@
 import copy
+import gzip
+import json
 
 import numpy as np
 import pytest
@@ -86,3 +88,39 @@ def test_live_handoff_source_suffix_repeats_tamper_and_source_preservation(tmp_p
             c.restore(wrapper,frame,pick,bad)
     assert semantic_state_digest(source.state_dict())==before
     assert c.inputs()[-1]==manifests
+
+
+def test_archived_s8_digests_repeats_channels_and_report_recompute():
+    root=c.b.TRAINING/'runs/m7b_engage_r1m_s8_v0'
+    manifest=c.b.verified_manifest(root)
+    assert len(manifest['artifacts'])==50
+    duplicates=json.loads((root/'duplicates.json').read_text())
+    assert len(duplicates)==46
+    indexed={(r['seed'],r['arm']):r for r in duplicates}
+    groups=[]
+    for path in sorted(root.glob('branch-*-source.jsonl.gz')):
+        seed=int(path.name.split('-')[1]); group={}
+        for arm in c.ARMS:
+            with gzip.open(root/f'branch-{seed}-{arm}.jsonl.gz','rt') as stream:
+                row=json.loads(stream.readline())
+            duplicate=indexed[(seed,arm)]
+            assert duplicate['first']==duplicate['second']==json_digest(row)
+            assert row['prefixDigest']==json_digest(row['prefix'])
+            assert row['actionsDigest']==json_digest([e['action'] for e in row['trace']])
+            assert row['exposure']==c.h.window_metrics(row['trace'],0,None)
+            assert row['simulatorDecisions']==len(row['prefix'])+len(row['trace'])<=200
+            for e in row['trace']:
+                for key in ('action_type','power'):
+                    assert e['action'][key]==e['sourceAction'][key]
+                for i,kind in enumerate(e['sourceAction']['action_type'][0]):
+                    if kind!=1 or arm=='source':
+                        assert e['sourceAction']['target'][0][i]==e['action']['target'][0][i]
+            group[arm]=row
+        assert group['source']['startIdentity']==group['move-rest']['startIdentity']
+        assert group['source']['prefix']==group['move-rest']['prefix']
+        assert group['source']['discounted']['shaping']==pytest.approx(group['move-rest']['discounted']['shaping'],abs=1e-12)
+        groups.append(group)
+    report=json.loads((root/'report.json').read_text())
+    assert len(groups)==23 and report['simulatorDecisions']==14624
+    assert sum(g[a]['simulatorDecisions']*2 for g in groups for a in c.ARMS)==report['simulatorDecisions']
+    assert all(report[k]==v for k,v in c.summarize(groups).items())

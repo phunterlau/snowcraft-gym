@@ -150,6 +150,11 @@ The [S8 declaration](../../../reviews/m7b_r1m_s8_declaration.md) fixes eligibili
 two repeated arms, budget and diagnostic gate. The source arm must regenerate
 the S6 suffix exactly. Neither arm trains or qualifies an autonomous fighter.
 
+The [S8 results](../../../reviews/m7b_r1m_s8_results.md) pass the diagnostic gate:
+21/23 Engage successes versus 12/23, nine recoveries and no lost successes. This
+supports testing sustained learned movement; it is not autonomous qualification
+or a full-battle win-rate result.
+
 For the R1m-S7 read-only handoff inspection, replay the archived S6 Keep and
 squad-30 actions from `snowgym/training` into a new directory:
 
