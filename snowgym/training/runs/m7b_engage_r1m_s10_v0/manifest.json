@@ -1,0 +1,24 @@
+{
+  "artifacts": {
+    "declaration.json": "sha256:c89fd7436cd3a5c6d1095b387182f969279b48dfb10c580f984c8af16eba0ab3",
+    "opportunities-full-001.jsonl.gz": "sha256:66317f4dcb71bc5b118990252ef0ed38508e7171de073776bb9f5acc17a8e61a",
+    "opportunities-full-011.jsonl.gz": "sha256:a3583861c16383fbe53a2529ab724782c334221ca6fb24b997d8c548d598da56",
+    "opportunities-full-021.jsonl.gz": "sha256:531d1a37d782dc226b83ef7ea7da8458d956b926fd88df7b2d9b4851e8d504d0",
+    "opportunities-short-001.jsonl.gz": "sha256:5e924a35436a63992d366f65ea2e15bd181e9707bc904b8060a2980a9faa8953",
+    "opportunities-short-011.jsonl.gz": "sha256:76e771553088e24b10703768266dd0c4224b5b8bb5e1dec11c8ba49e378d5cf9",
+    "opportunities-short-021.jsonl.gz": "sha256:9c474be5dfd58c245ef57d14234fa3177fbf793c78cb4f9e4426f196a27dcf4c",
+    "reconstruction-full-001.json": "sha256:636b93538134fd3fc56c8066a1dace8b0ef599da59bb5f007732f1fa31fcb576",
+    "reconstruction-full-011.json": "sha256:959918ee87eda418259fcb5126626fdaf60ebeb77ce6dbc181106cbf21d10194",
+    "reconstruction-full-021.json": "sha256:7f680a18c9ac926e3ef048a241b22a57e48d41ad279377e40ea45be74772b116",
+    "reconstruction-short-001.json": "sha256:13205dd6bed6ff7808d7e85fca8001fc367dc5352077fcb873dd5323e834ac13",
+    "reconstruction-short-011.json": "sha256:c3225bca31e56e859d0e97fcfd4a056f460b173311a2652227881392ffbb2655",
+    "reconstruction-short-021.json": "sha256:7b4999351bac6ec29b1751c0b36cca0351d3511814c3b4befb1f54979c21d55c",
+    "report.json": "sha256:d76962c0533cb773fb8bf1c46d98f4da8f4cab509c1d340c4a197f2dd1bd24b6",
+    "selection.json": "sha256:b374454c83e7292d321b7896b142afb9f1f39999915a669a30b4787a2d4e50c2"
+  },
+  "assistType": "teacher-shot-direction-and-power",
+  "assistVersion": "snowgym.r1h-corrected-shots.v0",
+  "autonomousQualificationEligible": false,
+  "format": "snowgym.horizon-audit-manifest.v0",
+  "manifestDigest": "sha256:328d6766b349c3368ba6a2a12a365e200aaa975db2a7e95fea495135f0afe7b3"
+}

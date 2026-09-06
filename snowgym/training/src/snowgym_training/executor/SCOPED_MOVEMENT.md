@@ -148,6 +148,11 @@ cd snowgym/training
   --output runs/m7b_engage_r1m_s10_v0
 ```
 
+The [S10 results](../../../reviews/m7b_r1m_s10_results.md) reproduce all 48
+archived episodes. Late states reach the optimizer, but credit is episode-dominated
+and cumulative target changes show little consistent recommendation-gap reduction.
+This is a frozen diagnostic, not a new policy evaluation or promotion.
+
 R1m-S9 compares short and sustained learned control on matched first-hit frames:
 
 ```bash

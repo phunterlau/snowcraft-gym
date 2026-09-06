@@ -1,0 +1,3814 @@
+{
+  "assistType": "teacher-shot-direction-and-power",
+  "assistVersion": "snowgym.r1h-corrected-shots.v0",
+  "autonomousQualificationEligible": false,
+  "completeTrajectoryMatches": 48,
+  "format": "snowgym.horizon-audit-report.v0",
+  "simulatorDecisions": 8399,
+  "updates": [
+    {
+      "arm": "short",
+      "completeTrajectoryMatches": 8,
+      "coverage": {
+        "early": {
+          "collected": 240,
+          "selectedOccurrences": 240,
+          "selectionFraction": 1.0,
+          "uniqueSelected": 240
+        },
+        "late": {
+          "collected": 0,
+          "selectedOccurrences": 0,
+          "selectionFraction": null,
+          "uniqueSelected": 0
+        }
+      },
+      "firstEpochOrder": [
+        53,
+        146,
+        47,
+        113,
+        130,
+        88,
+        150,
+        52,
+        103,
+        73,
+        112,
+        215,
+        87,
+        85,
+        165,
+        62,
+        213,
+        201,
+        179,
+        18,
+        42,
+        176,
+        128,
+        137,
+        115,
+        96,
+        4,
+        143,
+        233,
+        206,
+        57,
+        194,
+        38,
+        157,
+        1,
+        219,
+        155,
+        126,
+        66,
+        190,
+        197,
+        56,
+        72,
+        239,
+        55,
+        218,
+        17,
+        162,
+        223,
+        78,
+        202,
+        65,
+        9,
+        204,
+        177,
+        140,
+        216,
+        90,
+        139,
+        210,
+        6,
+        70,
+        16,
+        196,
+        134,
+        82,
+        217,
+        44,
+        187,
+        209,
+        120,
+        35,
+        169,
+        135,
+        164,
+        235,
+        230,
+        170,
+        49,
+        46,
+        121,
+        84,
+        181,
+        180,
+        145,
+        141,
+        167,
+        67,
+        27,
+        221,
+        193,
+        59,
+        118,
+        160,
+        92,
+        60,
+        36,
+        48,
+        224,
+        161,
+        111,
+        237,
+        8,
+        122,
+        114,
+        238,
+        37,
+        124,
+        192,
+        99,
+        171,
+        29,
+        189,
+        174,
+        232,
+        79,
+        43,
+        40,
+        186,
+        24,
+        101,
+        168,
+        136,
+        54,
+        26,
+        156,
+        41,
+        33,
+        106,
+        89,
+        231,
+        173,
+        127,
+        69,
+        129,
+        208,
+        198,
+        138,
+        98,
+        64,
+        158,
+        229,
+        222,
+        109,
+        93,
+        80,
+        154,
+        20,
+        185,
+        100,
+        110,
+        32,
+        148,
+        119,
+        132,
+        227,
+        107,
+        149,
+        207,
+        63,
+        95,
+        3,
+        163,
+        226,
+        199,
+        142,
+        39,
+        144,
+        147,
+        13,
+        102,
+        74,
+        28,
+        108,
+        91,
+        11,
+        172,
+        178,
+        45,
+        0,
+        133,
+        68,
+        188,
+        5,
+        71,
+        76,
+        131,
+        212,
+        153,
+        203,
+        81,
+        151,
+        58,
+        25,
+        21,
+        19,
+        184,
+        61,
+        50,
+        51,
+        86,
+        200,
+        195,
+        214,
+        123,
+        104,
+        30,
+        166,
+        83,
+        2,
+        105,
+        228,
+        12,
+        225,
+        191,
+        15,
+        23,
+        97,
+        175,
+        205,
+        182,
+        117,
+        31,
+        75,
+        125,
+        22,
+        211,
+        7,
+        159,
+        152,
+        234,
+        14,
+        236,
+        183,
+        220,
+        10,
+        77,
+        116,
+        94,
+        34
+      ],
+      "firstMinibatchLoss": {
+        "clipFraction": 0.0,
+        "maxMovementKl": 0.0,
+        "meanMovementKl": 0.0,
+        "policy": 0.0010686398018151522,
+        "ratioMean": 1.0000001192092896,
+        "total": 0.29121407866477966,
+        "value": 0.5802908539772034
+      },
+      "firstMinibatchLossMaxError": 0.0,
+      "simulatorDecisions": 1460,
+      "strata": {
+        "early": {
+          "collectedCredit": {
+            "advantage": {
+              "count": 240,
+              "mean": -0.20559374367197356,
+              "median": -0.5987322628498077,
+              "p90": 0.7669407427310944
+            },
+            "betweenEpisodeAdvantageFraction": 0.9624802880697012,
+            "criticExplainedVariance": -0.004602199754613512,
+            "decisions": 240
+          },
+          "firstMinibatchGeometry": {
+            "distance": {
+              "count": 431,
+              "mean": 12.90758399618961,
+              "median": 12.095830404627376,
+              "p90": 20.681536541006576
+            },
+            "finalGapReduction": {
+              "count": 431,
+              "mean": 0.1605372573838102,
+              "median": 0.13736217027890785,
+              "p90": 1.4389175755268901
+            },
+            "finalWorldShift": {
+              "count": 431,
+              "mean": 1.437800855965266,
+              "median": 1.4962787462283522,
+              "p90": 1.6082074639823392
+            },
+            "firstMinibatchScoreProjection": {
+              "count": 431,
+              "mean": 0.0003501346152003029,
+              "median": 0.03583810511329233,
+              "p90": 3.728862350941623
+            },
+            "legalMove": 431,
+            "livingMoveOpportunities": 431,
+            "ready": 180,
+            "recommendationWorldGap": {
+              "count": 431,
+              "mean": 8.21960917676507,
+              "median": 7.653671954662897,
+              "p90": 15.015639747022433
+            },
+            "sampleAdvantageCorrelation": 0.000984856202804374,
+            "sampleWorldDisplacement": {
+              "count": 431,
+              "mean": 0.9774107497380486,
+              "median": 0.8918736696616543,
+              "p90": 1.6890588430833255
+            },
+            "saturatedCoordinateFraction": 0.0,
+            "selectedOccurrences": 431,
+            "selectedOpportunities": 431,
+            "selectedScoreProjection": {
+              "count": 431,
+              "mean": 0.0003501346152003029,
+              "median": 0.03583810511329233,
+              "p90": 3.728862350941623
+            },
+            "validRecommendations": 431,
+            "withinThreeSigmaFraction": 0.07424593967517401
+          },
+          "geometry": {
+            "distance": {
+              "count": 831,
+              "mean": 12.526983800360767,
+              "median": 11.893857399694406,
+              "p90": 20.196712746303312
+            },
+            "finalGapReduction": {
+              "count": 831,
+              "mean": 0.22101916346674666,
+              "median": 0.2700005996625663,
+              "p90": 1.457522923384719
+            },
+            "finalWorldShift": {
+              "count": 831,
+              "mean": 1.4519036925312745,
+              "median": 1.496761837426091,
+              "p90": 1.61272226138139
+            },
+            "firstMinibatchScoreProjection": {
+              "count": 431,
+              "mean": 0.0003501346152003029,
+              "median": 0.03583810511329233,
+              "p90": 3.728862350941623
+            },
+            "legalMove": 831,
+            "livingMoveOpportunities": 831,
+            "ready": 326,
+            "recommendationWorldGap": {
+              "count": 831,
+              "mean": 8.216480793194915,
+              "median": 7.709042331512496,
+              "p90": 14.757210165364727
+            },
+            "sampleAdvantageCorrelation": 0.04105989895052197,
+            "sampleWorldDisplacement": {
+              "count": 831,
+              "mean": 0.9681591939667683,
+              "median": 0.8925892211825971,
+              "p90": 1.6655697870672315
+            },
+            "saturatedCoordinateFraction": 0.0,
+            "selectedOccurrences": 831,
+            "selectedOpportunities": 831,
+            "selectedScoreProjection": {
+              "count": 831,
+              "mean": 0.13113963503891718,
+              "median": 0.19276510574161249,
+              "p90": 4.07298896665998
+            },
+            "validRecommendations": 831,
+            "withinThreeSigmaFraction": 0.07821901323706378
+          },
+          "outsideRangeGeometry": {
+            "distance": {
+              "count": 602,
+              "mean": 14.589068973795833,
+              "median": 13.717184329817766,
+              "p90": 20.92023076384479
+            },
+            "finalGapReduction": {
+              "count": 602,
+              "mean": 0.17038781828368618,
+              "median": 0.08674988942411987,
+              "p90": 1.4330458062349605
+            },
+            "finalWorldShift": {
+              "count": 602,
+              "mean": 1.432337213754668,
+              "median": 1.4877507646142552,
+              "p90": 1.6109986946643782
+            },
+            "firstMinibatchScoreProjection": {
+              "count": 330,
+              "mean": -0.06055857718457817,
+              "median": 0.052706987814814754,
+              "p90": 3.4947507290911113
+            },
+            "legalMove": 602,
+            "livingMoveOpportunities": 602,
+            "ready": 239,
+            "recommendationWorldGap": {
+              "count": 602,
+              "mean": 8.879745638604815,
+              "median": 8.298551034833178,
+              "p90": 15.749624522524703
+            },
+            "sampleAdvantageCorrelation": 0.05412584793032433,
+            "sampleWorldDisplacement": {
+              "count": 602,
+              "mean": 0.9786400779753344,
+              "median": 0.9023694175647123,
+              "p90": 1.6867099374817156
+            },
+            "saturatedCoordinateFraction": 0.0,
+            "selectedOccurrences": 602,
+            "selectedOpportunities": 602,
+            "selectedScoreProjection": {
+              "count": 602,
+              "mean": 0.16596315915957982,
+              "median": 0.20628137708997188,
+              "p90": 3.987333365364839
+            },
+            "validRecommendations": 602,
+            "withinThreeSigmaFraction": 0.059800664451827246
+          },
+          "selectedCredit": {
+            "advantage": {
+              "count": 240,
+              "mean": -0.20559374367197356,
+              "median": -0.5987322628498077,
+              "p90": 0.7669407427310944
+            },
+            "betweenEpisodeAdvantageFraction": 0.9624803396763242,
+            "criticExplainedVariance": -0.004602314528411755,
+            "decisions": 240
+          }
+        },
+        "late": {
+          "collectedCredit": {
+            "betweenEpisodeAdvantageFraction": null,
+            "criticExplainedVariance": null,
+            "decisions": 0
+          },
+          "firstMinibatchGeometry": {
+            "distance": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "finalGapReduction": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "finalWorldShift": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "firstMinibatchScoreProjection": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "legalMove": 0,
+            "livingMoveOpportunities": 0,
+            "ready": 0,
+            "recommendationWorldGap": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "sampleAdvantageCorrelation": null,
+            "sampleWorldDisplacement": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "saturatedCoordinateFraction": null,
+            "selectedOccurrences": 0,
+            "selectedOpportunities": 0,
+            "selectedScoreProjection": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "validRecommendations": 0,
+            "withinThreeSigmaFraction": null
+          },
+          "geometry": {
+            "distance": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "finalGapReduction": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "finalWorldShift": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "firstMinibatchScoreProjection": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "legalMove": 0,
+            "livingMoveOpportunities": 0,
+            "ready": 0,
+            "recommendationWorldGap": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "sampleAdvantageCorrelation": null,
+            "sampleWorldDisplacement": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "saturatedCoordinateFraction": null,
+            "selectedOccurrences": 0,
+            "selectedOpportunities": 0,
+            "selectedScoreProjection": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "validRecommendations": 0,
+            "withinThreeSigmaFraction": null
+          },
+          "outsideRangeGeometry": {
+            "distance": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "finalGapReduction": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "finalWorldShift": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "firstMinibatchScoreProjection": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "legalMove": 0,
+            "livingMoveOpportunities": 0,
+            "ready": 0,
+            "recommendationWorldGap": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "sampleAdvantageCorrelation": null,
+            "sampleWorldDisplacement": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "saturatedCoordinateFraction": null,
+            "selectedOccurrences": 0,
+            "selectedOpportunities": 0,
+            "selectedScoreProjection": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "validRecommendations": 0,
+            "withinThreeSigmaFraction": null
+          },
+          "selectedCredit": {
+            "betweenEpisodeAdvantageFraction": null,
+            "criticExplainedVariance": null,
+            "decisions": 0
+          }
+        }
+      },
+      "update": 1
+    },
+    {
+      "arm": "short",
+      "completeTrajectoryMatches": 8,
+      "coverage": {
+        "early": {
+          "collected": 196,
+          "selectedOccurrences": 240,
+          "selectionFraction": 1.0,
+          "uniqueSelected": 196
+        },
+        "late": {
+          "collected": 0,
+          "selectedOccurrences": 0,
+          "selectionFraction": null,
+          "uniqueSelected": 0
+        }
+      },
+      "firstEpochOrder": [
+        27,
+        24,
+        52,
+        152,
+        178,
+        9,
+        60,
+        145,
+        176,
+        0,
+        134,
+        62,
+        154,
+        99,
+        147,
+        192,
+        202,
+        139,
+        49,
+        221,
+        157,
+        224,
+        96,
+        238,
+        40,
+        133,
+        205,
+        51,
+        6,
+        163,
+        211,
+        86,
+        107,
+        183,
+        199,
+        69,
+        2,
+        214,
+        198,
+        186,
+        215,
+        37,
+        117,
+        132,
+        227,
+        15,
+        226,
+        203,
+        129,
+        116,
+        239,
+        29,
+        225,
+        125,
+        120,
+        189,
+        17,
+        41,
+        39,
+        48,
+        126,
+        87,
+        21,
+        138,
+        94,
+        194,
+        232,
+        119,
+        78,
+        12,
+        14,
+        164,
+        158,
+        195,
+        28,
+        236,
+        74,
+        77,
+        127,
+        61,
+        210,
+        167,
+        72,
+        42,
+        230,
+        45,
+        5,
+        191,
+        84,
+        142,
+        88,
+        43,
+        173,
+        101,
+        180,
+        209,
+        55,
+        121,
+        175,
+        222,
+        177,
+        7,
+        213,
+        112,
+        237,
+        82,
+        67,
+        151,
+        159,
+        174,
+        123,
+        161,
+        85,
+        208,
+        83,
+        66,
+        98,
+        128,
+        182,
+        4,
+        25,
+        76,
+        166,
+        197,
+        102,
+        54,
+        206,
+        130,
+        10,
+        57,
+        113,
+        31,
+        165,
+        56,
+        100,
+        141,
+        58,
+        68,
+        179,
+        50,
+        170,
+        162,
+        233,
+        155,
+        106,
+        131,
+        228,
+        114,
+        108,
+        122,
+        184,
+        207,
+        59,
+        200,
+        137,
+        190,
+        104,
+        44,
+        220,
+        92,
+        148,
+        149,
+        171,
+        97,
+        11,
+        146,
+        212,
+        53,
+        81,
+        115,
+        65,
+        160,
+        229,
+        30,
+        26,
+        36,
+        111,
+        46,
+        234,
+        38,
+        34,
+        181,
+        64,
+        47,
+        16,
+        73,
+        71,
+        90,
+        22,
+        201,
+        19,
+        216,
+        32,
+        136,
+        110,
+        140,
+        89,
+        188,
+        18,
+        150,
+        193,
+        103,
+        217,
+        95,
+        91,
+        13,
+        118,
+        20,
+        93,
+        169,
+        204,
+        23,
+        168,
+        105,
+        70,
+        35,
+        1,
+        153,
+        219,
+        185,
+        172,
+        196,
+        124,
+        235,
+        156,
+        231,
+        8,
+        144,
+        75,
+        187,
+        33,
+        218,
+        79,
+        143,
+        3,
+        109,
+        223,
+        63,
+        135,
+        80
+      ],
+      "firstMinibatchLoss": {
+        "clipFraction": 0.0,
+        "maxMovementKl": 0.0,
+        "meanMovementKl": 0.0,
+        "policy": 0.041835591197013855,
+        "ratioMean": 1.0,
+        "total": 0.3070526719093323,
+        "value": 0.5304341912269592
+      },
+      "firstMinibatchLossMaxError": 0.0,
+      "simulatorDecisions": 1414,
+      "strata": {
+        "early": {
+          "collectedCredit": {
+            "advantage": {
+              "count": 196,
+              "mean": 0.18205974022952878,
+              "median": -0.2917338013648987,
+              "p90": 1.0247079133987427
+            },
+            "betweenEpisodeAdvantageFraction": 0.9854946269608741,
+            "criticExplainedVariance": 0.006155473413639978,
+            "decisions": 196
+          },
+          "firstMinibatchGeometry": {
+            "distance": {
+              "count": 404,
+              "mean": 13.24560132780581,
+              "median": 12.284815330986142,
+              "p90": 20.609004237193542
+            },
+            "finalGapReduction": {
+              "count": 404,
+              "mean": -0.32307305956315324,
+              "median": -0.4930277589524579,
+              "p90": 0.6796226120934318
+            },
+            "finalWorldShift": {
+              "count": 404,
+              "mean": 0.9724658037564526,
+              "median": 0.9931686177041281,
+              "p90": 1.0748957198894993
+            },
+            "firstMinibatchScoreProjection": {
+              "count": 404,
+              "mean": 0.06266429886865134,
+              "median": -0.008055787834321232,
+              "p90": 4.30828562190766
+            },
+            "legalMove": 404,
+            "livingMoveOpportunities": 404,
+            "ready": 168,
+            "recommendationWorldGap": {
+              "count": 404,
+              "mean": 8.88787161626026,
+              "median": 8.135845288640258,
+              "p90": 15.153380432322196
+            },
+            "sampleAdvantageCorrelation": 0.010885832927445417,
+            "sampleWorldDisplacement": {
+              "count": 404,
+              "mean": 0.9566940072906714,
+              "median": 0.8908097565579755,
+              "p90": 1.6521222965743914
+            },
+            "saturatedCoordinateFraction": 0.0,
+            "selectedOccurrences": 511,
+            "selectedOpportunities": 404,
+            "selectedScoreProjection": {
+              "count": 404,
+              "mean": 0.056571630680051915,
+              "median": -0.008055787834321232,
+              "p90": 4.8138915503215
+            },
+            "validRecommendations": 404,
+            "withinThreeSigmaFraction": 0.06683168316831684
+          },
+          "geometry": {
+            "distance": {
+              "count": 736,
+              "mean": 13.477841395266749,
+              "median": 12.410276761016206,
+              "p90": 20.83130402738616
+            },
+            "finalGapReduction": {
+              "count": 736,
+              "mean": -0.27603131485355303,
+              "median": -0.47100730508794264,
+              "p90": 0.7958350853726843
+            },
+            "finalWorldShift": {
+              "count": 736,
+              "mean": 0.9758685379904585,
+              "median": 0.9946636454329413,
+              "p90": 1.0765117582730679
+            },
+            "firstMinibatchScoreProjection": {
+              "count": 404,
+              "mean": 0.06266429886865134,
+              "median": -0.008055787834321232,
+              "p90": 4.30828562190766
+            },
+            "legalMove": 736,
+            "livingMoveOpportunities": 736,
+            "ready": 320,
+            "recommendationWorldGap": {
+              "count": 736,
+              "mean": 8.476412686353992,
+              "median": 7.939087892177646,
+              "p90": 14.882669476450802
+            },
+            "sampleAdvantageCorrelation": -0.028549712267925326,
+            "sampleWorldDisplacement": {
+              "count": 736,
+              "mean": 0.9474573963216159,
+              "median": 0.8748515947548335,
+              "p90": 1.6229255934745463
+            },
+            "saturatedCoordinateFraction": 0.0,
+            "selectedOccurrences": 901,
+            "selectedOpportunities": 736,
+            "selectedScoreProjection": {
+              "count": 736,
+              "mean": -0.09785274570075055,
+              "median": -0.08737006127566142,
+              "p90": 4.410664002748732
+            },
+            "validRecommendations": 736,
+            "withinThreeSigmaFraction": 0.06793478260869565
+          },
+          "outsideRangeGeometry": {
+            "distance": {
+              "count": 635,
+              "mean": 14.437784755562037,
+              "median": 12.976429843828267,
+              "p90": 21.0883306170446
+            },
+            "finalGapReduction": {
+              "count": 635,
+              "mean": -0.24824839454303518,
+              "median": -0.4551124818426828,
+              "p90": 0.812310344185151
+            },
+            "finalWorldShift": {
+              "count": 635,
+              "mean": 0.9698681880701555,
+              "median": 0.9902988107749247,
+              "p90": 1.0683368924851018
+            },
+            "firstMinibatchScoreProjection": {
+              "count": 338,
+              "mean": 0.07600000254261711,
+              "median": 0.05380665712175803,
+              "p90": 4.175139170389225
+            },
+            "legalMove": 635,
+            "livingMoveOpportunities": 635,
+            "ready": 293,
+            "recommendationWorldGap": {
+              "count": 635,
+              "mean": 8.591459628615626,
+              "median": 8.017532283559627,
+              "p90": 15.106845637221747
+            },
+            "sampleAdvantageCorrelation": -0.04156270623042067,
+            "sampleWorldDisplacement": {
+              "count": 635,
+              "mean": 0.9496726988605482,
+              "median": 0.877830006505123,
+              "p90": 1.6321813980285698
+            },
+            "saturatedCoordinateFraction": 0.0,
+            "selectedOccurrences": 784,
+            "selectedOpportunities": 635,
+            "selectedScoreProjection": {
+              "count": 635,
+              "mean": -0.11014684371606902,
+              "median": -0.007074834738618474,
+              "p90": 4.3127818568255725
+            },
+            "validRecommendations": 635,
+            "withinThreeSigmaFraction": 0.06614173228346457
+          },
+          "selectedCredit": {
+            "advantage": {
+              "count": 240,
+              "mean": 0.17729958407580854,
+              "median": -0.30702178180217743,
+              "p90": 1.017194437980652
+            },
+            "betweenEpisodeAdvantageFraction": 0.986466057157613,
+            "criticExplainedVariance": 0.005032588660734416,
+            "decisions": 240
+          }
+        },
+        "late": {
+          "collectedCredit": {
+            "betweenEpisodeAdvantageFraction": null,
+            "criticExplainedVariance": null,
+            "decisions": 0
+          },
+          "firstMinibatchGeometry": {
+            "distance": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "finalGapReduction": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "finalWorldShift": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "firstMinibatchScoreProjection": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "legalMove": 0,
+            "livingMoveOpportunities": 0,
+            "ready": 0,
+            "recommendationWorldGap": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "sampleAdvantageCorrelation": null,
+            "sampleWorldDisplacement": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "saturatedCoordinateFraction": null,
+            "selectedOccurrences": 0,
+            "selectedOpportunities": 0,
+            "selectedScoreProjection": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "validRecommendations": 0,
+            "withinThreeSigmaFraction": null
+          },
+          "geometry": {
+            "distance": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "finalGapReduction": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "finalWorldShift": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "firstMinibatchScoreProjection": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "legalMove": 0,
+            "livingMoveOpportunities": 0,
+            "ready": 0,
+            "recommendationWorldGap": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "sampleAdvantageCorrelation": null,
+            "sampleWorldDisplacement": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "saturatedCoordinateFraction": null,
+            "selectedOccurrences": 0,
+            "selectedOpportunities": 0,
+            "selectedScoreProjection": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "validRecommendations": 0,
+            "withinThreeSigmaFraction": null
+          },
+          "outsideRangeGeometry": {
+            "distance": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "finalGapReduction": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "finalWorldShift": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "firstMinibatchScoreProjection": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "legalMove": 0,
+            "livingMoveOpportunities": 0,
+            "ready": 0,
+            "recommendationWorldGap": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "sampleAdvantageCorrelation": null,
+            "sampleWorldDisplacement": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "saturatedCoordinateFraction": null,
+            "selectedOccurrences": 0,
+            "selectedOpportunities": 0,
+            "selectedScoreProjection": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "validRecommendations": 0,
+            "withinThreeSigmaFraction": null
+          },
+          "selectedCredit": {
+            "betweenEpisodeAdvantageFraction": null,
+            "criticExplainedVariance": null,
+            "decisions": 0
+          }
+        }
+      },
+      "update": 11
+    },
+    {
+      "arm": "short",
+      "completeTrajectoryMatches": 8,
+      "coverage": {
+        "early": {
+          "collected": 240,
+          "selectedOccurrences": 240,
+          "selectionFraction": 1.0,
+          "uniqueSelected": 240
+        },
+        "late": {
+          "collected": 0,
+          "selectedOccurrences": 0,
+          "selectionFraction": null,
+          "uniqueSelected": 0
+        }
+      },
+      "firstEpochOrder": [
+        16,
+        116,
+        123,
+        182,
+        23,
+        34,
+        135,
+        5,
+        99,
+        118,
+        227,
+        158,
+        103,
+        212,
+        67,
+        114,
+        97,
+        167,
+        104,
+        172,
+        110,
+        9,
+        82,
+        58,
+        142,
+        38,
+        84,
+        112,
+        71,
+        195,
+        155,
+        86,
+        235,
+        134,
+        166,
+        146,
+        19,
+        133,
+        201,
+        225,
+        228,
+        178,
+        218,
+        79,
+        48,
+        60,
+        207,
+        144,
+        200,
+        93,
+        234,
+        98,
+        46,
+        7,
+        179,
+        62,
+        68,
+        120,
+        64,
+        137,
+        4,
+        183,
+        106,
+        143,
+        206,
+        101,
+        220,
+        27,
+        15,
+        108,
+        208,
+        204,
+        149,
+        176,
+        53,
+        33,
+        41,
+        90,
+        77,
+        156,
+        238,
+        24,
+        231,
+        36,
+        209,
+        139,
+        230,
+        184,
+        213,
+        197,
+        3,
+        59,
+        107,
+        91,
+        18,
+        40,
+        47,
+        170,
+        174,
+        141,
+        95,
+        125,
+        20,
+        63,
+        117,
+        128,
+        145,
+        14,
+        6,
+        124,
+        51,
+        216,
+        88,
+        130,
+        152,
+        73,
+        76,
+        239,
+        102,
+        236,
+        80,
+        205,
+        164,
+        43,
+        160,
+        28,
+        52,
+        12,
+        148,
+        122,
+        94,
+        11,
+        96,
+        151,
+        211,
+        54,
+        121,
+        187,
+        2,
+        210,
+        45,
+        215,
+        30,
+        185,
+        219,
+        29,
+        186,
+        136,
+        165,
+        223,
+        153,
+        161,
+        132,
+        74,
+        65,
+        180,
+        193,
+        214,
+        162,
+        8,
+        0,
+        39,
+        57,
+        81,
+        131,
+        115,
+        21,
+        126,
+        190,
+        109,
+        129,
+        188,
+        154,
+        138,
+        237,
+        70,
+        44,
+        111,
+        157,
+        1,
+        85,
+        22,
+        189,
+        26,
+        55,
+        56,
+        32,
+        159,
+        66,
+        191,
+        177,
+        92,
+        113,
+        25,
+        233,
+        72,
+        222,
+        196,
+        226,
+        169,
+        13,
+        127,
+        75,
+        100,
+        173,
+        150,
+        163,
+        10,
+        105,
+        181,
+        192,
+        168,
+        198,
+        202,
+        229,
+        31,
+        61,
+        49,
+        175,
+        89,
+        221,
+        37,
+        35,
+        194,
+        203,
+        140,
+        119,
+        217,
+        171,
+        147,
+        87,
+        78,
+        42,
+        199,
+        232,
+        17,
+        69,
+        224,
+        83,
+        50
+      ],
+      "firstMinibatchLoss": {
+        "clipFraction": 0.0,
+        "maxMovementKl": 0.0,
+        "meanMovementKl": 0.0,
+        "policy": -0.022500455379486084,
+        "ratioMean": 1.0,
+        "total": 0.27362120151519775,
+        "value": 0.5922433137893677
+      },
+      "firstMinibatchLossMaxError": 0.0,
+      "simulatorDecisions": 1351,
+      "strata": {
+        "early": {
+          "collectedCredit": {
+            "advantage": {
+              "count": 240,
+              "mean": 0.3196437006195386,
+              "median": 0.7558049857616425,
+              "p90": 0.9395134568214416
+            },
+            "betweenEpisodeAdvantageFraction": 0.9710636645127327,
+            "criticExplainedVariance": 0.02103417118196349,
+            "decisions": 240
+          },
+          "firstMinibatchGeometry": {
+            "distance": {
+              "count": 409,
+              "mean": 11.17208321088635,
+              "median": 11.276718268574013,
+              "p90": 15.765304861113902
+            },
+            "finalGapReduction": {
+              "count": 409,
+              "mean": -0.03319924310188893,
+              "median": -0.126623403504162,
+              "p90": 0.6402904418890929
+            },
+            "finalWorldShift": {
+              "count": 409,
+              "mean": 0.7093325879166965,
+              "median": 0.7079013341736842,
+              "p90": 0.7920045888718706
+            },
+            "firstMinibatchScoreProjection": {
+              "count": 409,
+              "mean": 0.1347593466719753,
+              "median": 0.1972401244536457,
+              "p90": 3.602541394872703
+            },
+            "legalMove": 409,
+            "livingMoveOpportunities": 409,
+            "ready": 113,
+            "recommendationWorldGap": {
+              "count": 409,
+              "mean": 7.399140757356359,
+              "median": 6.811654898751651,
+              "p90": 12.921105212424825
+            },
+            "sampleAdvantageCorrelation": 0.041303654663376745,
+            "sampleWorldDisplacement": {
+              "count": 409,
+              "mean": 1.0032269763617132,
+              "median": 0.9732098023986674,
+              "p90": 1.7342476459042595
+            },
+            "saturatedCoordinateFraction": 0.0,
+            "selectedOccurrences": 409,
+            "selectedOpportunities": 409,
+            "selectedScoreProjection": {
+              "count": 409,
+              "mean": 0.1347593466719753,
+              "median": 0.1972401244536457,
+              "p90": 3.602541394872703
+            },
+            "validRecommendations": 409,
+            "withinThreeSigmaFraction": 0.05867970660146699
+          },
+          "geometry": {
+            "distance": {
+              "count": 826,
+              "mean": 10.914515965178841,
+              "median": 11.16632139126446,
+              "p90": 15.493983596403535
+            },
+            "finalGapReduction": {
+              "count": 826,
+              "mean": -0.021090682215773728,
+              "median": -0.09953069094718203,
+              "p90": 0.648813749346929
+            },
+            "finalWorldShift": {
+              "count": 826,
+              "mean": 0.7105105536153661,
+              "median": 0.7075066986879003,
+              "p90": 0.792657294699289
+            },
+            "firstMinibatchScoreProjection": {
+              "count": 409,
+              "mean": 0.1347593466719753,
+              "median": 0.1972401244536457,
+              "p90": 3.602541394872703
+            },
+            "legalMove": 826,
+            "livingMoveOpportunities": 826,
+            "ready": 219,
+            "recommendationWorldGap": {
+              "count": 826,
+              "mean": 7.192222049730515,
+              "median": 6.475446762068959,
+              "p90": 12.766792478615077
+            },
+            "sampleAdvantageCorrelation": 0.022261093458426192,
+            "sampleWorldDisplacement": {
+              "count": 826,
+              "mean": 1.0008737627404898,
+              "median": 0.9530737035783174,
+              "p90": 1.7727258621714086
+            },
+            "saturatedCoordinateFraction": 0.0,
+            "selectedOccurrences": 826,
+            "selectedOpportunities": 826,
+            "selectedScoreProjection": {
+              "count": 826,
+              "mean": 0.06773330814906578,
+              "median": 0.17824672839220568,
+              "p90": 4.002802326541537
+            },
+            "validRecommendations": 826,
+            "withinThreeSigmaFraction": 0.07506053268765134
+          },
+          "outsideRangeGeometry": {
+            "distance": {
+              "count": 544,
+              "mean": 13.017243343412648,
+              "median": 12.981254372530321,
+              "p90": 16.17002668357345
+            },
+            "finalGapReduction": {
+              "count": 544,
+              "mean": -0.02027209063886289,
+              "median": -0.114595698847058,
+              "p90": 0.6531717564998315
+            },
+            "finalWorldShift": {
+              "count": 544,
+              "mean": 0.7097801228454079,
+              "median": 0.7025532185222823,
+              "p90": 0.7919326511694693
+            },
+            "firstMinibatchScoreProjection": {
+              "count": 284,
+              "mean": 0.037823386339181274,
+              "median": 0.07630695310069677,
+              "p90": 3.726031533938387
+            },
+            "legalMove": 544,
+            "livingMoveOpportunities": 544,
+            "ready": 139,
+            "recommendationWorldGap": {
+              "count": 544,
+              "mean": 7.763029158867489,
+              "median": 7.498686909927866,
+              "p90": 13.158683060093225
+            },
+            "sampleAdvantageCorrelation": -0.0010101385362984174,
+            "sampleWorldDisplacement": {
+              "count": 544,
+              "mean": 1.0001618555462917,
+              "median": 0.9608962073467366,
+              "p90": 1.7789164062929963
+            },
+            "saturatedCoordinateFraction": 0.0,
+            "selectedOccurrences": 544,
+            "selectedOpportunities": 544,
+            "selectedScoreProjection": {
+              "count": 544,
+              "mean": -0.022522031966609558,
+              "median": 0.07838457259854534,
+              "p90": 4.213996952864765
+            },
+            "validRecommendations": 544,
+            "withinThreeSigmaFraction": 0.05514705882352941
+          },
+          "selectedCredit": {
+            "advantage": {
+              "count": 240,
+              "mean": 0.3196437006195386,
+              "median": 0.7558049857616425,
+              "p90": 0.9395134568214416
+            },
+            "betweenEpisodeAdvantageFraction": 0.9710636210521185,
+            "criticExplainedVariance": 0.021034051757744865,
+            "decisions": 240
+          }
+        },
+        "late": {
+          "collectedCredit": {
+            "betweenEpisodeAdvantageFraction": null,
+            "criticExplainedVariance": null,
+            "decisions": 0
+          },
+          "firstMinibatchGeometry": {
+            "distance": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "finalGapReduction": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "finalWorldShift": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "firstMinibatchScoreProjection": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "legalMove": 0,
+            "livingMoveOpportunities": 0,
+            "ready": 0,
+            "recommendationWorldGap": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "sampleAdvantageCorrelation": null,
+            "sampleWorldDisplacement": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "saturatedCoordinateFraction": null,
+            "selectedOccurrences": 0,
+            "selectedOpportunities": 0,
+            "selectedScoreProjection": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "validRecommendations": 0,
+            "withinThreeSigmaFraction": null
+          },
+          "geometry": {
+            "distance": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "finalGapReduction": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "finalWorldShift": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "firstMinibatchScoreProjection": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "legalMove": 0,
+            "livingMoveOpportunities": 0,
+            "ready": 0,
+            "recommendationWorldGap": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "sampleAdvantageCorrelation": null,
+            "sampleWorldDisplacement": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "saturatedCoordinateFraction": null,
+            "selectedOccurrences": 0,
+            "selectedOpportunities": 0,
+            "selectedScoreProjection": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "validRecommendations": 0,
+            "withinThreeSigmaFraction": null
+          },
+          "outsideRangeGeometry": {
+            "distance": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "finalGapReduction": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "finalWorldShift": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "firstMinibatchScoreProjection": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "legalMove": 0,
+            "livingMoveOpportunities": 0,
+            "ready": 0,
+            "recommendationWorldGap": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "sampleAdvantageCorrelation": null,
+            "sampleWorldDisplacement": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "saturatedCoordinateFraction": null,
+            "selectedOccurrences": 0,
+            "selectedOpportunities": 0,
+            "selectedScoreProjection": {
+              "count": 0,
+              "mean": null,
+              "median": null,
+              "p90": null
+            },
+            "validRecommendations": 0,
+            "withinThreeSigmaFraction": null
+          },
+          "selectedCredit": {
+            "betweenEpisodeAdvantageFraction": null,
+            "criticExplainedVariance": null,
+            "decisions": 0
+          }
+        }
+      },
+      "update": 21
+    },
+    {
+      "arm": "full",
+      "completeTrajectoryMatches": 8,
+      "coverage": {
+        "early": {
+          "collected": 240,
+          "selectedOccurrences": 86,
+          "selectionFraction": 0.35833333333333334,
+          "uniqueSelected": 86
+        },
+        "late": {
+          "collected": 379,
+          "selectedOccurrences": 154,
+          "selectionFraction": 0.40633245382585753,
+          "uniqueSelected": 154
+        }
+      },
+      "firstEpochOrder": [
+        53,
+        146,
+        47,
+        113,
+        130,
+        88,
+        150,
+        52,
+        103,
+        73,
+        112,
+        215,
+        87,
+        85,
+        165,
+        62,
+        213,
+        201,
+        179,
+        18,
+        42,
+        176,
+        128,
+        137,
+        115,
+        96,
+        4,
+        143,
+        233,
+        206,
+        57,
+        194,
+        38,
+        157,
+        1,
+        219,
+        155,
+        126,
+        66,
+        190,
+        197,
+        56,
+        72,
+        239,
+        55,
+        218,
+        17,
+        162,
+        223,
+        78,
+        202,
+        65,
+        9,
+        204,
+        177,
+        140,
+        216,
+        90,
+        139,
+        210,
+        6,
+        70,
+        16,
+        196,
+        134,
+        82,
+        217,
+        44,
+        187,
+        209,
+        120,
+        35,
+        169,
+        135,
+        164,
+        235,
+        230,
+        170,
+        49,
+        46,
+        121,
+        84,
+        181,
+        180,
+        145,
+        141,
+        167,
+        67,
+        27,
+        221,
+        193,
+        59,
+        118,
+        160,
+        92,
+        60,
+        36,
+        48,
+        224,
+        161,
+        111,
+        237,
+        8,
+        122,
+        114,
+        238,
+        37,
+        124,
+        192,
+        99,
+        171,
+        29,
+        189,
+        174,
+        232,
+        79,
+        43,
+        40,
+        186,
+        24,
+        101,
+        168,
+        136,
+        54,
+        26,
+        156,
+        41,
+        33,
+        106,
+        89,
+        231,
+        173,
+        127,
+        69,
+        129,
+        208,
+        198,
+        138,
+        98,
+        64,
+        158,
+        229,
+        222,
+        109,
+        93,
+        80,
+        154,
+        20,
+        185,
+        100,
+        110,
+        32,
+        148,
+        119,
+        132,
+        227,
+        107,
+        149,
+        207,
+        63,
+        95,
+        3,
+        163,
+        226,
+        199,
+        142,
+        39,
+        144,
+        147,
+        13,
+        102,
+        74,
+        28,
+        108,
+        91,
+        11,
+        172,
+        178,
+        45,
+        0,
+        133,
+        68,
+        188,
+        5,
+        71,
+        76,
+        131,
+        212,
+        153,
+        203,
+        81,
+        151,
+        58,
+        25,
+        21,
+        19,
+        184,
+        61,
+        50,
+        51,
+        86,
+        200,
+        195,
+        214,
+        123,
+        104,
+        30,
+        166,
+        83,
+        2,
+        105,
+        228,
+        12,
+        225,
+        191,
+        15,
+        23,
+        97,
+        175,
+        205,
+        182,
+        117,
+        31,
+        75,
+        125,
+        22,
+        211,
+        7,
+        159,
+        152,
+        234,
+        14,
+        236,
+        183,
+        220,
+        10,
+        77,
+        116,
+        94,
+        34
+      ],
+      "firstMinibatchLoss": {
+        "clipFraction": 0.0,
+        "maxMovementKl": 0.0,
+        "meanMovementKl": 0.0,
+        "policy": 0.038627080619335175,
+        "ratioMean": 1.000000238418579,
+        "total": 0.28584206104278564,
+        "value": 0.49442997574806213
+      },
+      "firstMinibatchLossMaxError": 0.0,
+      "simulatorDecisions": 1475,
+      "strata": {
+        "early": {
+          "collectedCredit": {
+            "advantage": {
+              "count": 240,
+              "mean": 0.10641680554059955,
+              "median": 0.22051352262496948,
+              "p90": 0.5932827293872833
+            },
+            "betweenEpisodeAdvantageFraction": 0.9619911234656516,
+            "criticExplainedVariance": -0.013863119295070003,
+            "decisions": 240
+          },
+          "firstMinibatchGeometry": {
+            "distance": {
+              "count": 136,
+              "mean": 13.052105658873865,
+              "median": 12.354440491964755,
+              "p90": 20.452654443068162
+            },
+            "finalGapReduction": {
+              "count": 136,
+              "mean": -0.14505085145977473,
+              "median": -0.26606462265689657,
+              "p90": 0.5814104417136008
+            },
+            "finalWorldShift": {
+              "count": 136,
+              "mean": 0.6572912012503593,
+              "median": 0.6665666873727826,
+              "p90": 0.7347561368034874
+            },
+            "firstMinibatchScoreProjection": {
+              "count": 136,
+              "mean": -0.08095236823934654,
+              "median": -0.07440883171051088,
+              "p90": 2.3984767434112593
+            },
+            "legalMove": 136,
+            "livingMoveOpportunities": 136,
+            "ready": 64,
+            "recommendationWorldGap": {
+              "count": 136,
+              "mean": 9.308578022703303,
+              "median": 9.591241842027664,
+              "p90": 15.522244289606613
+            },
+            "sampleAdvantageCorrelation": -0.02565501909599309,
+            "sampleWorldDisplacement": {
+              "count": 136,
+              "mean": 0.9780900577569879,
+              "median": 0.936412479872438,
+              "p90": 1.656836165745562
+            },
+            "saturatedCoordinateFraction": 0.0,
+            "selectedOccurrences": 136,
+            "selectedOpportunities": 136,
+            "selectedScoreProjection": {
+              "count": 136,
+              "mean": -0.08095236823934654,
+              "median": -0.07440883171051088,
+              "p90": 2.3984767434112593
+            },
+            "validRecommendations": 136,
+            "withinThreeSigmaFraction": 0.058823529411764705
+          },
+          "geometry": {
+            "distance": {
+              "count": 831,
+              "mean": 12.526983800360767,
+              "median": 11.893857399694406,
+              "p90": 20.196712746303312
+            },
+            "finalGapReduction": {
+              "count": 831,
+              "mean": -0.11361466075557124,
+              "median": -0.22145811267482518,
+              "p90": 0.570882412221021
+            },
+            "finalWorldShift": {
+              "count": 831,
+              "mean": 0.6517226016775622,
+              "median": 0.6501542175198244,
+              "p90": 0.7509059719862604
+            },
+            "firstMinibatchScoreProjection": {
+              "count": 136,
+              "mean": -0.08095236823934654,
+              "median": -0.07440883171051088,
+              "p90": 2.3984767434112593
+            },
+            "legalMove": 831,
+            "livingMoveOpportunities": 831,
+            "ready": 326,
+            "recommendationWorldGap": {
+              "count": 831,
+              "mean": 8.216480793194915,
+              "median": 7.709042331512496,
+              "p90": 14.757210165364727
+            },
+            "sampleAdvantageCorrelation": -0.07782808166714761,
+            "sampleWorldDisplacement": {
+              "count": 831,
+              "mean": 0.9681591939667683,
+              "median": 0.8925892211825971,
+              "p90": 1.6655697870672315
+            },
+            "saturatedCoordinateFraction": 0.0,
+            "selectedOccurrences": 301,
+            "selectedOpportunities": 301,
+            "selectedScoreProjection": {
+              "count": 301,
+              "mean": -0.2063165823358171,
+              "median": -0.09167695442109133,
+              "p90": 2.7225574549121134
+            },
+            "validRecommendations": 831,
+            "withinThreeSigmaFraction": 0.07821901323706378
+          },
+          "outsideRangeGeometry": {
+            "distance": {
+              "count": 602,
+              "mean": 14.589068973795833,
+              "median": 13.717184329817766,
+              "p90": 20.92023076384479
+            },
+            "finalGapReduction": {
+              "count": 602,
+              "mean": -0.048468117531388494,
+              "median": -0.11262346039753357,
+              "p90": 0.5904568658171317
+            },
+            "finalWorldShift": {
+              "count": 602,
+              "mean": 0.6498479224687496,
+              "median": 0.649656735665826,
+              "p90": 0.7519913556114892
+            },
+            "firstMinibatchScoreProjection": {
+              "count": 109,
+              "mean": -0.16203491441982104,
+              "median": -0.13372675785667157,
+              "p90": 2.4758327442058734
+            },
+            "legalMove": 602,
+            "livingMoveOpportunities": 602,
+            "ready": 239,
+            "recommendationWorldGap": {
+              "count": 602,
+              "mean": 8.879745638604815,
+              "median": 8.298551034833178,
+              "p90": 15.749624522524703
+            },
+            "sampleAdvantageCorrelation": -0.13748123945945478,
+            "sampleWorldDisplacement": {
+              "count": 602,
+              "mean": 0.9786400779753344,
+              "median": 0.9023694175647123,
+              "p90": 1.6867099374817156
+            },
+            "saturatedCoordinateFraction": 0.0,
+            "selectedOccurrences": 234,
+            "selectedOpportunities": 234,
+            "selectedScoreProjection": {
+              "count": 234,
+              "mean": -0.36244369128127263,
+              "median": -0.21701033896547522,
+              "p90": 2.68646014908683
+            },
+            "validRecommendations": 602,
+            "withinThreeSigmaFraction": 0.059800664451827246
+          },
+          "selectedCredit": {
+            "advantage": {
+              "count": 86,
+              "mean": 0.11574058823807296,
+              "median": 0.22359152138233185,
+              "p90": 0.5846979916095734
+            },
+            "betweenEpisodeAdvantageFraction": 0.9610387282851506,
+            "criticExplainedVariance": -0.017064635482905155,
+            "decisions": 86
+          }
+        },
+        "late": {
+          "collectedCredit": {
+            "advantage": {
+              "count": 379,
+              "mean": -0.3464455074952586,
+              "median": -0.5047665238380432,
+              "p90": 0.49172096252441405
+            },
+            "betweenEpisodeAdvantageFraction": 0.8696094122143185,
+            "criticExplainedVariance": -0.004505744896081021,
+            "decisions": 379
+          },
+          "firstMinibatchGeometry": {
+            "distance": {
+              "count": 236,
+              "mean": 14.490069362199373,
+              "median": 14.4432242222037,
+              "p90": 21.926312332054167
+            },
+            "finalGapReduction": {
+              "count": 236,
+              "mean": -0.015168866235002848,
+              "median": 0.06381005728670086,
+              "p90": 0.6169879146960007
+            },
+            "finalWorldShift": {
+              "count": 236,
+              "mean": 0.7804786292353054,
+              "median": 0.758329301573091,
+              "p90": 0.9484762632578843
+            },
+            "firstMinibatchScoreProjection": {
+              "count": 236,
+              "mean": -0.13681718364347148,
+              "median": -0.2993330787589471,
+              "p90": 3.6416300082500177
+            },
+            "legalMove": 236,
+            "livingMoveOpportunities": 236,
+            "ready": 125,
+            "recommendationWorldGap": {
+              "count": 236,
+              "mean": 12.604058866220576,
+              "median": 12.317575806603475,
+              "p90": 18.69737954578366
+            },
+            "sampleAdvantageCorrelation": -0.02029395325802589,
+            "sampleWorldDisplacement": {
+              "count": 236,
+              "mean": 0.7936604105565402,
+              "median": 0.7206428992020502,
+              "p90": 1.4492919301815952
+            },
+            "saturatedCoordinateFraction": 0.0,
+            "selectedOccurrences": 236,
+            "selectedOpportunities": 236,
+            "selectedScoreProjection": {
+              "count": 236,
+              "mean": -0.13681718364347148,
+              "median": -0.2993330787589471,
+              "p90": 3.6416300082500177
+            },
+            "validRecommendations": 236,
+            "withinThreeSigmaFraction": 0.012711864406779662
+          },
+          "geometry": {
+            "distance": {
+              "count": 1101,
+              "mean": 14.121677631289337,
+              "median": 13.845773871301358,
+              "p90": 21.29061138482724
+            },
+            "finalGapReduction": {
+              "count": 1101,
+              "mean": -0.046220342577796496,
+              "median": -0.034886765036548084,
+              "p90": 0.5976726907876557
+            },
+            "finalWorldShift": {
+              "count": 1101,
+              "mean": 0.7775846193718955,
+              "median": 0.7668743430424507,
+              "p90": 0.9264617455336689
+            },
+            "firstMinibatchScoreProjection": {
+              "count": 236,
+              "mean": -0.13681718364347148,
+              "median": -0.2993330787589471,
+              "p90": 3.6416300082500177
+            },
+            "legalMove": 1101,
+            "livingMoveOpportunities": 1101,
+            "ready": 512,
+            "recommendationWorldGap": {
+              "count": 1101,
+              "mean": 11.689762179813206,
+              "median": 11.91089895073788,
+              "p90": 17.79721996717748
+            },
+            "sampleAdvantageCorrelation": -0.0150241696821868,
+            "sampleWorldDisplacement": {
+              "count": 1101,
+              "mean": 0.7933348193796989,
+              "median": 0.7086913925918528,
+              "p90": 1.4778933632480047
+            },
+            "saturatedCoordinateFraction": 0.0,
+            "selectedOccurrences": 459,
+            "selectedOpportunities": 459,
+            "selectedScoreProjection": {
+              "count": 459,
+              "mean": -0.11481798608591956,
+              "median": -0.16667239048475901,
+              "p90": 3.195666690534391
+            },
+            "validRecommendations": 1101,
+            "withinThreeSigmaFraction": 0.013623978201634877
+          },
+          "outsideRangeGeometry": {
+            "distance": {
+              "count": 879,
+              "mean": 16.29579801410218,
+              "median": 16.29848628718742,
+              "p90": 21.772284181940517
+            },
+            "finalGapReduction": {
+              "count": 879,
+              "mean": 0.08552282944967227,
+              "median": 0.18482021834086382,
+              "p90": 0.6182586161119581
+            },
+            "finalWorldShift": {
+              "count": 879,
+              "mean": 0.7931819566060495,
+              "median": 0.7906562095404768,
+              "p90": 0.9367891372285059
+            },
+            "firstMinibatchScoreProjection": {
+              "count": 188,
+              "mean": -0.18165955973289635,
+              "median": -0.3723504246306719,
+              "p90": 4.0807843038253155
+            },
+            "legalMove": 879,
+            "livingMoveOpportunities": 879,
+            "ready": 381,
+            "recommendationWorldGap": {
+              "count": 879,
+              "mean": 11.796535900419432,
+              "median": 12.216112396864975,
+              "p90": 18.07179436966751
+            },
+            "sampleAdvantageCorrelation": -0.007829246948416458,
+            "sampleWorldDisplacement": {
+              "count": 879,
+              "mean": 0.7998590940938974,
+              "median": 0.7044016026559998,
+              "p90": 1.528319760450431
+            },
+            "saturatedCoordinateFraction": 0.0,
+            "selectedOccurrences": 365,
+            "selectedOpportunities": 365,
+            "selectedScoreProjection": {
+              "count": 365,
+              "mean": -0.13046972891610656,
+              "median": -0.1489407277567902,
+              "p90": 3.482952862779662
+            },
+            "validRecommendations": 879,
+            "withinThreeSigmaFraction": 0.01478953356086462
+          },
+          "selectedCredit": {
+            "advantage": {
+              "count": 154,
+              "mean": -0.3502108196352983,
+              "median": -0.4522978514432907,
+              "p90": 0.48745454549789435
+            },
+            "betweenEpisodeAdvantageFraction": 0.8763208182664989,
+            "criticExplainedVariance": -0.004128239164566505,
+            "decisions": 154
+          }
+        }
+      },
+      "update": 1
+    },
+    {
+      "arm": "full",
+      "completeTrajectoryMatches": 8,
+      "coverage": {
+        "early": {
+          "collected": 196,
+          "selectedOccurrences": 110,
+          "selectionFraction": 0.5612244897959183,
+          "uniqueSelected": 110
+        },
+        "late": {
+          "collected": 264,
+          "selectedOccurrences": 130,
+          "selectionFraction": 0.49242424242424243,
+          "uniqueSelected": 130
+        }
+      },
+      "firstEpochOrder": [
+        73,
+        179,
+        202,
+        227,
+        158,
+        58,
+        79,
+        84,
+        25,
+        75,
+        76,
+        210,
+        142,
+        211,
+        114,
+        43,
+        78,
+        61,
+        237,
+        93,
+        111,
+        235,
+        157,
+        238,
+        169,
+        217,
+        145,
+        65,
+        126,
+        44,
+        146,
+        17,
+        51,
+        188,
+        112,
+        45,
+        117,
+        80,
+        215,
+        70,
+        128,
+        87,
+        214,
+        219,
+        107,
+        203,
+        132,
+        28,
+        104,
+        40,
+        66,
+        3,
+        98,
+        209,
+        155,
+        198,
+        208,
+        85,
+        192,
+        4,
+        90,
+        172,
+        129,
+        29,
+        15,
+        221,
+        118,
+        207,
+        166,
+        37,
+        189,
+        168,
+        5,
+        197,
+        46,
+        35,
+        11,
+        47,
+        103,
+        224,
+        36,
+        110,
+        205,
+        220,
+        41,
+        137,
+        222,
+        131,
+        147,
+        174,
+        23,
+        64,
+        106,
+        173,
+        190,
+        86,
+        12,
+        225,
+        31,
+        181,
+        14,
+        163,
+        16,
+        108,
+        187,
+        229,
+        223,
+        81,
+        77,
+        151,
+        92,
+        38,
+        159,
+        127,
+        175,
+        88,
+        50,
+        26,
+        138,
+        113,
+        89,
+        230,
+        184,
+        130,
+        204,
+        195,
+        34,
+        101,
+        18,
+        123,
+        136,
+        134,
+        1,
+        97,
+        74,
+        53,
+        94,
+        27,
+        120,
+        216,
+        109,
+        49,
+        156,
+        212,
+        21,
+        105,
+        191,
+        199,
+        152,
+        133,
+        30,
+        239,
+        71,
+        7,
+        164,
+        193,
+        144,
+        116,
+        67,
+        218,
+        55,
+        0,
+        119,
+        167,
+        236,
+        180,
+        171,
+        154,
+        24,
+        200,
+        56,
+        10,
+        42,
+        196,
+        135,
+        22,
+        183,
+        83,
+        99,
+        231,
+        68,
+        102,
+        54,
+        62,
+        57,
+        72,
+        48,
+        13,
+        32,
+        122,
+        60,
+        91,
+        124,
+        2,
+        153,
+        182,
+        176,
+        160,
+        201,
+        141,
+        165,
+        59,
+        125,
+        8,
+        162,
+        234,
+        69,
+        150,
+        115,
+        226,
+        185,
+        121,
+        186,
+        139,
+        178,
+        6,
+        39,
+        52,
+        9,
+        177,
+        213,
+        100,
+        233,
+        170,
+        143,
+        95,
+        206,
+        19,
+        33,
+        140,
+        20,
+        148,
+        232,
+        194,
+        96,
+        82,
+        149,
+        161,
+        228,
+        63
+      ],
+      "firstMinibatchLoss": {
+        "clipFraction": 0.0,
+        "maxMovementKl": 0.0,
+        "meanMovementKl": 0.0,
+        "policy": -0.021630773320794106,
+        "ratioMean": 0.9999998807907104,
+        "total": 0.17111188173294067,
+        "value": 0.38548532128334045
+      },
+      "firstMinibatchLossMaxError": 0.0,
+      "simulatorDecisions": 1444,
+      "strata": {
+        "early": {
+          "collectedCredit": {
+            "advantage": {
+              "count": 196,
+              "mean": 0.2454566267623129,
+              "median": -0.008297215681523085,
+              "p90": 0.8404886424541473
+            },
+            "betweenEpisodeAdvantageFraction": 0.9845716884274069,
+            "criticExplainedVariance": 0.0035568970692240187,
+            "decisions": 196
+          },
+          "firstMinibatchGeometry": {
+            "distance": {
+              "count": 200,
+              "mean": 13.477925700186558,
+              "median": 12.053784446750605,
+              "p90": 21.616645396585497
+            },
+            "finalGapReduction": {
+              "count": 200,
+              "mean": 0.09486953133312877,
+              "median": 0.18954730787299479,
+              "p90": 0.6425905641600576
+            },
+            "finalWorldShift": {
+              "count": 200,
+              "mean": 0.7364464256580641,
+              "median": 0.726819101552895,
+              "p90": 0.8321693411865595
+            },
+            "firstMinibatchScoreProjection": {
+              "count": 200,
+              "mean": -0.27684526649840213,
+              "median": -0.09624719545943104,
+              "p90": 2.7513157061876914
+            },
+            "legalMove": 200,
+            "livingMoveOpportunities": 200,
+            "ready": 94,
+            "recommendationWorldGap": {
+              "count": 200,
+              "mean": 7.757443564287192,
+              "median": 6.025652915921302,
+              "p90": 16.75985875999775
+            },
+            "sampleAdvantageCorrelation": -0.08584212664276224,
+            "sampleWorldDisplacement": {
+              "count": 200,
+              "mean": 0.9408513615057913,
+              "median": 0.8688489960029955,
+              "p90": 1.531381805961255
+            },
+            "saturatedCoordinateFraction": 0.0,
+            "selectedOccurrences": 200,
+            "selectedOpportunities": 200,
+            "selectedScoreProjection": {
+              "count": 200,
+              "mean": -0.27684526649840213,
+              "median": -0.09624719545943104,
+              "p90": 2.7513157061876914
+            },
+            "validRecommendations": 200,
+            "withinThreeSigmaFraction": 0.145
+          },
+          "geometry": {
+            "distance": {
+              "count": 757,
+              "mean": 13.48571310684777,
+              "median": 12.239818063876157,
+              "p90": 20.93484944289738
+            },
+            "finalGapReduction": {
+              "count": 757,
+              "mean": 0.08429973510851078,
+              "median": 0.19010316074092515,
+              "p90": 0.6257203840997988
+            },
+            "finalWorldShift": {
+              "count": 757,
+              "mean": 0.7216907062147431,
+              "median": 0.7177827147822656,
+              "p90": 0.8169811406741501
+            },
+            "firstMinibatchScoreProjection": {
+              "count": 200,
+              "mean": -0.27684526649840213,
+              "median": -0.09624719545943104,
+              "p90": 2.7513157061876914
+            },
+            "legalMove": 757,
+            "livingMoveOpportunities": 757,
+            "ready": 350,
+            "recommendationWorldGap": {
+              "count": 757,
+              "mean": 8.268395543214274,
+              "median": 7.128783758149453,
+              "p90": 16.34377935598554
+            },
+            "sampleAdvantageCorrelation": -0.02905525327180066,
+            "sampleWorldDisplacement": {
+              "count": 757,
+              "mean": 0.9502293638870388,
+              "median": 0.8719156218519398,
+              "p90": 1.6243726362832867
+            },
+            "saturatedCoordinateFraction": 0.0,
+            "selectedOccurrences": 429,
+            "selectedOpportunities": 429,
+            "selectedScoreProjection": {
+              "count": 429,
+              "mean": -0.13656282329618616,
+              "median": -0.017166365803037858,
+              "p90": 2.837165115043022
+            },
+            "validRecommendations": 757,
+            "withinThreeSigmaFraction": 0.11756935270805813
+          },
+          "outsideRangeGeometry": {
+            "distance": {
+              "count": 636,
+              "mean": 14.643445451279389,
+              "median": 13.00495050839894,
+              "p90": 21.73026470965812
+            },
+            "finalGapReduction": {
+              "count": 636,
+              "mean": 0.07283331648683691,
+              "median": 0.18021074192161146,
+              "p90": 0.5992142923162769
+            },
+            "finalWorldShift": {
+              "count": 636,
+              "mean": 0.7249193795815909,
+              "median": 0.7246406880827002,
+              "p90": 0.8189891492247177
+            },
+            "firstMinibatchScoreProjection": {
+              "count": 165,
+              "mean": -0.28963325844655774,
+              "median": -0.11687817599790609,
+              "p90": 1.846728197353401
+            },
+            "legalMove": 636,
+            "livingMoveOpportunities": 636,
+            "ready": 310,
+            "recommendationWorldGap": {
+              "count": 636,
+              "mean": 8.658799133067411,
+              "median": 7.444701917469874,
+              "p90": 17.001248716713263
+            },
+            "sampleAdvantageCorrelation": -0.06007414127023075,
+            "sampleWorldDisplacement": {
+              "count": 636,
+              "mean": 0.9486338216458011,
+              "median": 0.8710157283853059,
+              "p90": 1.6507459342651338
+            },
+            "saturatedCoordinateFraction": 0.0,
+            "selectedOccurrences": 373,
+            "selectedOpportunities": 373,
+            "selectedScoreProjection": {
+              "count": 373,
+              "mean": -0.1857870587019299,
+              "median": -0.027431791370876805,
+              "p90": 2.340277375031762
+            },
+            "validRecommendations": 636,
+            "withinThreeSigmaFraction": 0.11477987421383648
+          },
+          "selectedCredit": {
+            "advantage": {
+              "count": 110,
+              "mean": 0.194884734981778,
+              "median": -0.08353152498602867,
+              "p90": 0.8152838647365571
+            },
+            "betweenEpisodeAdvantageFraction": 0.9858418617874941,
+            "criticExplainedVariance": 0.005361718619407041,
+            "decisions": 110
+          }
+        },
+        "late": {
+          "collectedCredit": {
+            "advantage": {
+              "count": 264,
+              "mean": -0.18756349051766324,
+              "median": -0.39836397767066956,
+              "p90": 0.7577800989151001
+            },
+            "betweenEpisodeAdvantageFraction": 0.8984594199740721,
+            "criticExplainedVariance": 0.011792131932241157,
+            "decisions": 264
+          },
+          "firstMinibatchGeometry": {
+            "distance": {
+              "count": 239,
+              "mean": 17.731691375077727,
+              "median": 16.35207172213532,
+              "p90": 28.700205388237283
+            },
+            "finalGapReduction": {
+              "count": 239,
+              "mean": 0.0528263816016891,
+              "median": 0.15663720969998618,
+              "p90": 0.6800428815896445
+            },
+            "finalWorldShift": {
+              "count": 239,
+              "mean": 0.8065422163715319,
+              "median": 0.7971215747052132,
+              "p90": 0.9000804556585147
+            },
+            "firstMinibatchScoreProjection": {
+              "count": 239,
+              "mean": -0.5839072368532884,
+              "median": -0.438969131156032,
+              "p90": 3.753192204272548
+            },
+            "legalMove": 239,
+            "livingMoveOpportunities": 239,
+            "ready": 40,
+            "recommendationWorldGap": {
+              "count": 239,
+              "mean": 12.012122687112031,
+              "median": 10.855333037286446,
+              "p90": 23.798430088990482
+            },
+            "sampleAdvantageCorrelation": -0.14329936731423276,
+            "sampleWorldDisplacement": {
+              "count": 239,
+              "mean": 1.0007849186896358,
+              "median": 0.9237162356354892,
+              "p90": 1.724933607488453
+            },
+            "saturatedCoordinateFraction": 0.0,
+            "selectedOccurrences": 239,
+            "selectedOpportunities": 239,
+            "selectedScoreProjection": {
+              "count": 239,
+              "mean": -0.5839072368532884,
+              "median": -0.438969131156032,
+              "p90": 3.753192204272548
+            },
+            "validRecommendations": 239,
+            "withinThreeSigmaFraction": 0.016736401673640166
+          },
+          "geometry": {
+            "distance": {
+              "count": 910,
+              "mean": 17.92502941966906,
+              "median": 16.46056997969852,
+              "p90": 28.963680808048903
+            },
+            "finalGapReduction": {
+              "count": 910,
+              "mean": -0.003919482322091856,
+              "median": 0.042657294707272975,
+              "p90": 0.6442872553849851
+            },
+            "finalWorldShift": {
+              "count": 910,
+              "mean": 0.8041982329015229,
+              "median": 0.7955966976614061,
+              "p90": 0.899746769430867
+            },
+            "firstMinibatchScoreProjection": {
+              "count": 239,
+              "mean": -0.5839072368532884,
+              "median": -0.438969131156032,
+              "p90": 3.753192204272548
+            },
+            "legalMove": 910,
+            "livingMoveOpportunities": 910,
+            "ready": 172,
+            "recommendationWorldGap": {
+              "count": 910,
+              "mean": 12.216190231675345,
+              "median": 10.693858501222437,
+              "p90": 23.67550411239169
+            },
+            "sampleAdvantageCorrelation": -0.10468842140693041,
+            "sampleWorldDisplacement": {
+              "count": 910,
+              "mean": 0.9858128015360318,
+              "median": 0.8880826240172153,
+              "p90": 1.7161350199108345
+            },
+            "saturatedCoordinateFraction": 0.0,
+            "selectedOccurrences": 457,
+            "selectedOpportunities": 457,
+            "selectedScoreProjection": {
+              "count": 457,
+              "mean": -0.41218961160267825,
+              "median": -0.26609667753461763,
+              "p90": 3.9384422937422596
+            },
+            "validRecommendations": 910,
+            "withinThreeSigmaFraction": 0.017582417582417582
+          },
+          "outsideRangeGeometry": {
+            "distance": {
+              "count": 909,
+              "mean": 17.93502697631231,
+              "median": 16.461025135315097,
+              "p90": 28.966782458819612
+            },
+            "finalGapReduction": {
+              "count": 909,
+              "mean": -0.004105422807787372,
+              "median": 0.036086971142864854,
+              "p90": 0.6444705843018952
+            },
+            "finalWorldShift": {
+              "count": 909,
+              "mean": 0.8043063077772294,
+              "median": 0.7958253299819951,
+              "p90": 0.8997664305265597
+            },
+            "firstMinibatchScoreProjection": {
+              "count": 239,
+              "mean": -0.5839072368532884,
+              "median": -0.438969131156032,
+              "p90": 3.753192204272548
+            },
+            "legalMove": 909,
+            "livingMoveOpportunities": 909,
+            "ready": 172,
+            "recommendationWorldGap": {
+              "count": 909,
+              "mean": 12.22618073099407,
+              "median": 10.70091583307044,
+              "p90": 23.681053353825977
+            },
+            "sampleAdvantageCorrelation": -0.10468842140693041,
+            "sampleWorldDisplacement": {
+              "count": 909,
+              "mean": 0.9862514806365874,
+              "median": 0.8883024622171399,
+              "p90": 1.7165963346692894
+            },
+            "saturatedCoordinateFraction": 0.0,
+            "selectedOccurrences": 457,
+            "selectedOpportunities": 457,
+            "selectedScoreProjection": {
+              "count": 457,
+              "mean": -0.41218961160267825,
+              "median": -0.26609667753461763,
+              "p90": 3.9384422937422596
+            },
+            "validRecommendations": 909,
+            "withinThreeSigmaFraction": 0.0176017601760176
+          },
+          "selectedCredit": {
+            "advantage": {
+              "count": 130,
+              "mean": -0.1822811314692864,
+              "median": -0.4068572521209717,
+              "p90": 0.7668181419372558
+            },
+            "betweenEpisodeAdvantageFraction": 0.9030652145542533,
+            "criticExplainedVariance": 0.012078937655310207,
+            "decisions": 130
+          }
+        }
+      },
+      "update": 11
+    },
+    {
+      "arm": "full",
+      "completeTrajectoryMatches": 8,
+      "coverage": {
+        "early": {
+          "collected": 240,
+          "selectedOccurrences": 124,
+          "selectionFraction": 0.5166666666666667,
+          "uniqueSelected": 124
+        },
+        "late": {
+          "collected": 218,
+          "selectedOccurrences": 116,
+          "selectionFraction": 0.5321100917431193,
+          "uniqueSelected": 116
+        }
+      },
+      "firstEpochOrder": [
+        113,
+        168,
+        214,
+        46,
+        63,
+        16,
+        236,
+        189,
+        55,
+        64,
+        19,
+        10,
+        128,
+        130,
+        163,
+        185,
+        8,
+        140,
+        193,
+        134,
+        35,
+        160,
+        124,
+        11,
+        234,
+        70,
+        44,
+        14,
+        9,
+        178,
+        159,
+        112,
+        149,
+        71,
+        230,
+        3,
+        203,
+        51,
+        41,
+        217,
+        180,
+        196,
+        40,
+        24,
+        127,
+        32,
+        18,
+        99,
+        54,
+        77,
+        153,
+        191,
+        131,
+        204,
+        45,
+        104,
+        221,
+        194,
+        86,
+        117,
+        116,
+        83,
+        162,
+        106,
+        170,
+        50,
+        97,
+        156,
+        5,
+        235,
+        231,
+        232,
+        138,
+        110,
+        120,
+        37,
+        135,
+        137,
+        176,
+        22,
+        6,
+        227,
+        88,
+        119,
+        173,
+        239,
+        93,
+        43,
+        103,
+        73,
+        42,
+        30,
+        145,
+        165,
+        146,
+        31,
+        201,
+        182,
+        144,
+        12,
+        0,
+        105,
+        139,
+        101,
+        172,
+        210,
+        212,
+        4,
+        171,
+        15,
+        164,
+        213,
+        91,
+        222,
+        209,
+        26,
+        198,
+        238,
+        102,
+        205,
+        195,
+        207,
+        211,
+        65,
+        199,
+        122,
+        23,
+        27,
+        218,
+        98,
+        155,
+        33,
+        79,
+        87,
+        142,
+        133,
+        36,
+        2,
+        66,
+        219,
+        1,
+        28,
+        75,
+        215,
+        57,
+        150,
+        141,
+        115,
+        89,
+        169,
+        233,
+        132,
+        109,
+        225,
+        108,
+        228,
+        21,
+        136,
+        96,
+        223,
+        118,
+        34,
+        143,
+        175,
+        200,
+        179,
+        94,
+        81,
+        192,
+        58,
+        25,
+        147,
+        197,
+        148,
+        53,
+        100,
+        69,
+        68,
+        95,
+        174,
+        188,
+        84,
+        177,
+        226,
+        52,
+        17,
+        60,
+        29,
+        123,
+        82,
+        183,
+        206,
+        157,
+        181,
+        38,
+        39,
+        186,
+        166,
+        152,
+        74,
+        13,
+        208,
+        61,
+        107,
+        121,
+        76,
+        62,
+        237,
+        49,
+        59,
+        184,
+        56,
+        67,
+        161,
+        220,
+        154,
+        72,
+        126,
+        85,
+        114,
+        125,
+        47,
+        151,
+        190,
+        129,
+        224,
+        78,
+        48,
+        111,
+        187,
+        80,
+        202,
+        158,
+        7,
+        92,
+        20,
+        167,
+        229,
+        90,
+        216
+      ],
+      "firstMinibatchLoss": {
+        "clipFraction": 0.0,
+        "maxMovementKl": 0.0,
+        "meanMovementKl": 0.0,
+        "policy": -0.03118576668202877,
+        "ratioMean": 0.9999998211860657,
+        "total": 0.29634422063827515,
+        "value": 0.6550599932670593
+      },
+      "firstMinibatchLossMaxError": 0.0,
+      "simulatorDecisions": 1255,
+      "strata": {
+        "early": {
+          "collectedCredit": {
+            "advantage": {
+              "count": 240,
+              "mean": 0.7777629480386774,
+              "median": 0.8675136864185333,
+              "p90": 0.9923569798469544
+            },
+            "betweenEpisodeAdvantageFraction": 0.9543258618953028,
+            "criticExplainedVariance": 0.028217069132240646,
+            "decisions": 240
+          },
+          "firstMinibatchGeometry": {
+            "distance": {
+              "count": 197,
+              "mean": 10.622533032410738,
+              "median": 10.21268779780509,
+              "p90": 15.470721619290584
+            },
+            "finalGapReduction": {
+              "count": 197,
+              "mean": -0.025077414068658998,
+              "median": 0.016189718482214843,
+              "p90": 0.4031428905910818
+            },
+            "finalWorldShift": {
+              "count": 197,
+              "mean": 0.48420675138260766,
+              "median": 0.4906543126947041,
+              "p90": 0.536920426200154
+            },
+            "firstMinibatchScoreProjection": {
+              "count": 197,
+              "mean": 0.009631843381523796,
+              "median": 0.04282654057478674,
+              "p90": 2.7007885211584948
+            },
+            "legalMove": 197,
+            "livingMoveOpportunities": 197,
+            "ready": 50,
+            "recommendationWorldGap": {
+              "count": 197,
+              "mean": 6.777676059071541,
+              "median": 6.208963540645778,
+              "p90": 11.01568139868159
+            },
+            "sampleAdvantageCorrelation": -0.08084977728241367,
+            "sampleWorldDisplacement": {
+              "count": 197,
+              "mean": 0.9976527550379851,
+              "median": 0.9277030253566949,
+              "p90": 1.7974968222077752
+            },
+            "saturatedCoordinateFraction": 0.0,
+            "selectedOccurrences": 197,
+            "selectedOpportunities": 197,
+            "selectedScoreProjection": {
+              "count": 197,
+              "mean": 0.009631843381523796,
+              "median": 0.04282654057478674,
+              "p90": 2.7007885211584948
+            },
+            "validRecommendations": 197,
+            "withinThreeSigmaFraction": 0.08121827411167512
+          },
+          "geometry": {
+            "distance": {
+              "count": 832,
+              "mean": 10.738260149257773,
+              "median": 10.497362042623642,
+              "p90": 15.542700600956232
+            },
+            "finalGapReduction": {
+              "count": 832,
+              "mean": -0.07958805677699925,
+              "median": -0.10012994441077905,
+              "p90": 0.41267710740807223
+            },
+            "finalWorldShift": {
+              "count": 832,
+              "mean": 0.4951159271471096,
+              "median": 0.4987125210017853,
+              "p90": 0.5476906086690203
+            },
+            "firstMinibatchScoreProjection": {
+              "count": 197,
+              "mean": 0.009631843381523796,
+              "median": 0.04282654057478674,
+              "p90": 2.7007885211584948
+            },
+            "legalMove": 832,
+            "livingMoveOpportunities": 832,
+            "ready": 245,
+            "recommendationWorldGap": {
+              "count": 832,
+              "mean": 6.596071638932903,
+              "median": 6.146318990156628,
+              "p90": 11.376843554939054
+            },
+            "sampleAdvantageCorrelation": -0.05028881200766997,
+            "sampleWorldDisplacement": {
+              "count": 832,
+              "mean": 0.9753991713660353,
+              "median": 0.9169004587259528,
+              "p90": 1.6945641881295739
+            },
+            "saturatedCoordinateFraction": 0.0,
+            "selectedOccurrences": 429,
+            "selectedOpportunities": 429,
+            "selectedScoreProjection": {
+              "count": 429,
+              "mean": -0.03113034205582438,
+              "median": 0.04264481111485585,
+              "p90": 2.5851653738959484
+            },
+            "validRecommendations": 832,
+            "withinThreeSigmaFraction": 0.09375
+          },
+          "outsideRangeGeometry": {
+            "distance": {
+              "count": 536,
+              "mean": 12.789908257551316,
+              "median": 12.56333581958048,
+              "p90": 16.230157919127556
+            },
+            "finalGapReduction": {
+              "count": 536,
+              "mean": -0.07515510399524931,
+              "median": -0.0701460734883188,
+              "p90": 0.3989745218791445
+            },
+            "finalWorldShift": {
+              "count": 536,
+              "mean": 0.4969295718116495,
+              "median": 0.5007532155131099,
+              "p90": 0.548262178017225
+            },
+            "firstMinibatchScoreProjection": {
+              "count": 126,
+              "mean": -0.08939772872110656,
+              "median": -0.10708268521012716,
+              "p90": 2.308929205201103
+            },
+            "legalMove": 536,
+            "livingMoveOpportunities": 536,
+            "ready": 160,
+            "recommendationWorldGap": {
+              "count": 536,
+              "mean": 6.787321520589889,
+              "median": 6.49764719700107,
+              "p90": 11.638164251816612
+            },
+            "sampleAdvantageCorrelation": -0.07893747476272063,
+            "sampleWorldDisplacement": {
+              "count": 536,
+              "mean": 0.9548418123025492,
+              "median": 0.9102470644073286,
+              "p90": 1.6339903090470407
+            },
+            "saturatedCoordinateFraction": 0.0,
+            "selectedOccurrences": 270,
+            "selectedOpportunities": 270,
+            "selectedScoreProjection": {
+              "count": 270,
+              "mean": -0.12164997423189822,
+              "median": -0.1625542270265274,
+              "p90": 2.187365241124915
+            },
+            "validRecommendations": 536,
+            "withinThreeSigmaFraction": 0.08395522388059702
+          },
+          "selectedCredit": {
+            "advantage": {
+              "count": 124,
+              "mean": 0.7769304043463161,
+              "median": 0.8703237771987915,
+              "p90": 0.990897935628891
+            },
+            "betweenEpisodeAdvantageFraction": 0.9567678407879106,
+            "criticExplainedVariance": 0.03520856096335945,
+            "decisions": 124
+          }
+        },
+        "late": {
+          "collectedCredit": {
+            "advantage": {
+              "count": 218,
+              "mean": 0.36855247623603277,
+              "median": 0.7571457922458649,
+              "p90": 0.9012811124324799
+            },
+            "betweenEpisodeAdvantageFraction": 0.9108592333735469,
+            "criticExplainedVariance": 0.01422862265787006,
+            "decisions": 218
+          },
+          "firstMinibatchGeometry": {
+            "distance": {
+              "count": 189,
+              "mean": 12.793271749365365,
+              "median": 12.618254326036977,
+              "p90": 17.830054231636765
+            },
+            "finalGapReduction": {
+              "count": 189,
+              "mean": 0.06983126589730188,
+              "median": 0.14462211486676857,
+              "p90": 0.43629284450173944
+            },
+            "finalWorldShift": {
+              "count": 189,
+              "mean": 0.4974460114587298,
+              "median": 0.5018574234474487,
+              "p90": 0.5421730676239397
+            },
+            "firstMinibatchScoreProjection": {
+              "count": 189,
+              "mean": 0.09003508044799141,
+              "median": -0.045255929036527975,
+              "p90": 3.2335160350042194
+            },
+            "legalMove": 189,
+            "livingMoveOpportunities": 189,
+            "ready": 18,
+            "recommendationWorldGap": {
+              "count": 189,
+              "mean": 8.178943200411867,
+              "median": 7.513776233231278,
+              "p90": 14.435836131449754
+            },
+            "sampleAdvantageCorrelation": 0.0323064540092227,
+            "sampleWorldDisplacement": {
+              "count": 189,
+              "mean": 0.9254599796009269,
+              "median": 0.8922081810294237,
+              "p90": 1.6367246550711443
+            },
+            "saturatedCoordinateFraction": 0.0,
+            "selectedOccurrences": 189,
+            "selectedOpportunities": 189,
+            "selectedScoreProjection": {
+              "count": 189,
+              "mean": 0.09003508044799141,
+              "median": -0.045255929036527975,
+              "p90": 3.2335160350042194
+            },
+            "validRecommendations": 189,
+            "withinThreeSigmaFraction": 0.06349206349206349
+          },
+          "geometry": {
+            "distance": {
+              "count": 650,
+              "mean": 13.039216375256572,
+              "median": 13.161123246663106,
+              "p90": 18.253001070589644
+            },
+            "finalGapReduction": {
+              "count": 650,
+              "mean": 0.07698923729209858,
+              "median": 0.18845375389836994,
+              "p90": 0.45479332008164625
+            },
+            "finalWorldShift": {
+              "count": 650,
+              "mean": 0.503265120881738,
+              "median": 0.5053059328665199,
+              "p90": 0.5489627712396102
+            },
+            "firstMinibatchScoreProjection": {
+              "count": 189,
+              "mean": 0.09003508044799141,
+              "median": -0.045255929036527975,
+              "p90": 3.2335160350042194
+            },
+            "legalMove": 650,
+            "livingMoveOpportunities": 650,
+            "ready": 65,
+            "recommendationWorldGap": {
+              "count": 650,
+              "mean": 7.956974548066154,
+              "median": 7.480109860864373,
+              "p90": 14.194103212730878
+            },
+            "sampleAdvantageCorrelation": -0.0067668015868842645,
+            "sampleWorldDisplacement": {
+              "count": 650,
+              "mean": 0.9667685627615583,
+              "median": 0.9198992685013807,
+              "p90": 1.6940265315815697
+            },
+            "saturatedCoordinateFraction": 0.0,
+            "selectedOccurrences": 342,
+            "selectedOpportunities": 342,
+            "selectedScoreProjection": {
+              "count": 342,
+              "mean": -0.011788890754121678,
+              "median": -0.042442270584003954,
+              "p90": 3.4632372943675254
+            },
+            "validRecommendations": 650,
+            "withinThreeSigmaFraction": 0.07692307692307693
+          },
+          "outsideRangeGeometry": {
+            "distance": {
+              "count": 542,
+              "mean": 14.151652081747292,
+              "median": 14.007245200297248,
+              "p90": 18.79446068619758
+            },
+            "finalGapReduction": {
+              "count": 542,
+              "mean": 0.10863058662128598,
+              "median": 0.23876396139873401,
+              "p90": 0.454636067338452
+            },
+            "finalWorldShift": {
+              "count": 542,
+              "mean": 0.5022228585131188,
+              "median": 0.5041731665091046,
+              "p90": 0.5476525654640662
+            },
+            "firstMinibatchScoreProjection": {
+              "count": 155,
+              "mean": 0.029170596607297202,
+              "median": -0.1620240398668509,
+              "p90": 3.2565390088737
+            },
+            "legalMove": 542,
+            "livingMoveOpportunities": 542,
+            "ready": 46,
+            "recommendationWorldGap": {
+              "count": 542,
+              "mean": 8.291554978230558,
+              "median": 8.060572071237626,
+              "p90": 14.417459606114159
+            },
+            "sampleAdvantageCorrelation": 0.013961846262817037,
+            "sampleWorldDisplacement": {
+              "count": 542,
+              "mean": 0.9552684033815728,
+              "median": 0.9052015166825087,
+              "p90": 1.665779753676946
+            },
+            "saturatedCoordinateFraction": 0.0,
+            "selectedOccurrences": 287,
+            "selectedOpportunities": 287,
+            "selectedScoreProjection": {
+              "count": 287,
+              "mean": 0.09405624354094921,
+              "median": -0.03968205633042471,
+              "p90": 3.5815411374143187
+            },
+            "validRecommendations": 542,
+            "withinThreeSigmaFraction": 0.07195571955719557
+          },
+          "selectedCredit": {
+            "advantage": {
+              "count": 116,
+              "mean": 0.2847599883017869,
+              "median": 0.7263704240322113,
+              "p90": 0.8848150670528412
+            },
+            "betweenEpisodeAdvantageFraction": 0.9068407647069793,
+            "criticExplainedVariance": 0.008133962785853988,
+            "decisions": 116
+          }
+        }
+      },
+      "update": 21
+    }
+  ]
+}

@@ -19,12 +19,21 @@ configuration on 2026-09-01.
 
 ## Milestones
 
-### R1m-S10 — frozen late-state learning audit (declared)
+### R1m-S10 — frozen late-state learning audit (complete 2026-09-05)
 
 Follow `training/reviews/m7b_r1m_s10_declaration.md`. Audit all S9 selection
 records and reconstruct updates 1/11/21 of both RNG 99301 arms. Separate late
 state coverage, critic/advantage quality, frozen mean-output scores and cumulative
 final-policy geometry. No fitting, new continuations, provider calls or promotion.
+
+All 48 trajectories and six first-minibatch losses reproduced exactly, using
+8,399 simulator decisions. Late rows are 59.5% of full's optimizer selections;
+late critic explained variance is near zero and 87–91% of advantage variance
+is between episodes. Only 3.04% of audited late MOVE recommendations are within
+three latent sigma; cumulative final-policy gap reduction is mixed and nearly
+zero pooled. See `training/reviews/m7b_r1m_s10_results.md`. Next proposal is a
+separately declared critic-only learnability diagnostic; no actor run authorized
+by this negative diagnostic and no qualification gate changed.
 
 ### R1m-S9 — learnable control horizon (complete; gate failed 2026-09-05)
 

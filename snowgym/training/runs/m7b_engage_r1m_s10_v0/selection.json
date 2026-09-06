@@ -1,0 +1,906 @@
+{
+  "full": [
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 86,
+        "selectionFraction": 0.35833333333333334,
+        "uniqueSelected": 86
+      },
+      "late": {
+        "collected": 379,
+        "selectedOccurrences": 154,
+        "selectionFraction": 0.40633245382585753,
+        "uniqueSelected": 154
+      },
+      "update": 1
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 97,
+        "selectionFraction": 0.4041666666666667,
+        "uniqueSelected": 97
+      },
+      "late": {
+        "collected": 326,
+        "selectedOccurrences": 143,
+        "selectionFraction": 0.4386503067484663,
+        "uniqueSelected": 143
+      },
+      "update": 2
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 83,
+        "selectionFraction": 0.3458333333333333,
+        "uniqueSelected": 83
+      },
+      "late": {
+        "collected": 404,
+        "selectedOccurrences": 157,
+        "selectionFraction": 0.3886138613861386,
+        "uniqueSelected": 157
+      },
+      "update": 3
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 83,
+        "selectionFraction": 0.3458333333333333,
+        "uniqueSelected": 83
+      },
+      "late": {
+        "collected": 453,
+        "selectedOccurrences": 157,
+        "selectionFraction": 0.3465783664459161,
+        "uniqueSelected": 157
+      },
+      "update": 4
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 65,
+        "selectionFraction": 0.2708333333333333,
+        "uniqueSelected": 65
+      },
+      "late": {
+        "collected": 528,
+        "selectedOccurrences": 175,
+        "selectionFraction": 0.3314393939393939,
+        "uniqueSelected": 175
+      },
+      "update": 5
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 87,
+        "selectionFraction": 0.3625,
+        "uniqueSelected": 87
+      },
+      "late": {
+        "collected": 457,
+        "selectedOccurrences": 153,
+        "selectionFraction": 0.3347921225382932,
+        "uniqueSelected": 153
+      },
+      "update": 6
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 86,
+        "selectionFraction": 0.35833333333333334,
+        "uniqueSelected": 86
+      },
+      "late": {
+        "collected": 465,
+        "selectedOccurrences": 154,
+        "selectionFraction": 0.3311827956989247,
+        "uniqueSelected": 154
+      },
+      "update": 7
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 103,
+        "selectionFraction": 0.42916666666666664,
+        "uniqueSelected": 103
+      },
+      "late": {
+        "collected": 298,
+        "selectedOccurrences": 137,
+        "selectionFraction": 0.4597315436241611,
+        "uniqueSelected": 137
+      },
+      "update": 8
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 95,
+        "selectionFraction": 0.3958333333333333,
+        "uniqueSelected": 95
+      },
+      "late": {
+        "collected": 393,
+        "selectedOccurrences": 145,
+        "selectionFraction": 0.36895674300254455,
+        "uniqueSelected": 145
+      },
+      "update": 9
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 101,
+        "selectionFraction": 0.42083333333333334,
+        "uniqueSelected": 101
+      },
+      "late": {
+        "collected": 375,
+        "selectedOccurrences": 139,
+        "selectionFraction": 0.37066666666666664,
+        "uniqueSelected": 139
+      },
+      "update": 10
+    },
+    {
+      "early": {
+        "collected": 196,
+        "selectedOccurrences": 110,
+        "selectionFraction": 0.5612244897959183,
+        "uniqueSelected": 110
+      },
+      "late": {
+        "collected": 264,
+        "selectedOccurrences": 130,
+        "selectionFraction": 0.49242424242424243,
+        "uniqueSelected": 130
+      },
+      "update": 11
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 99,
+        "selectionFraction": 0.4125,
+        "uniqueSelected": 99
+      },
+      "late": {
+        "collected": 339,
+        "selectedOccurrences": 141,
+        "selectionFraction": 0.415929203539823,
+        "uniqueSelected": 141
+      },
+      "update": 12
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 101,
+        "selectionFraction": 0.42083333333333334,
+        "uniqueSelected": 101
+      },
+      "late": {
+        "collected": 331,
+        "selectedOccurrences": 139,
+        "selectionFraction": 0.4199395770392749,
+        "uniqueSelected": 139
+      },
+      "update": 13
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 99,
+        "selectionFraction": 0.4125,
+        "uniqueSelected": 99
+      },
+      "late": {
+        "collected": 303,
+        "selectedOccurrences": 141,
+        "selectionFraction": 0.46534653465346537,
+        "uniqueSelected": 141
+      },
+      "update": 14
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 82,
+        "selectionFraction": 0.3416666666666667,
+        "uniqueSelected": 82
+      },
+      "late": {
+        "collected": 508,
+        "selectedOccurrences": 158,
+        "selectionFraction": 0.3110236220472441,
+        "uniqueSelected": 158
+      },
+      "update": 15
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 107,
+        "selectionFraction": 0.44583333333333336,
+        "uniqueSelected": 107
+      },
+      "late": {
+        "collected": 304,
+        "selectedOccurrences": 133,
+        "selectionFraction": 0.4375,
+        "uniqueSelected": 133
+      },
+      "update": 16
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 111,
+        "selectionFraction": 0.4625,
+        "uniqueSelected": 111
+      },
+      "late": {
+        "collected": 281,
+        "selectedOccurrences": 129,
+        "selectionFraction": 0.45907473309608543,
+        "uniqueSelected": 129
+      },
+      "update": 17
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 99,
+        "selectionFraction": 0.4125,
+        "uniqueSelected": 99
+      },
+      "late": {
+        "collected": 337,
+        "selectedOccurrences": 141,
+        "selectionFraction": 0.41839762611275966,
+        "uniqueSelected": 141
+      },
+      "update": 18
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 114,
+        "selectionFraction": 0.475,
+        "uniqueSelected": 114
+      },
+      "late": {
+        "collected": 269,
+        "selectedOccurrences": 126,
+        "selectionFraction": 0.4684014869888476,
+        "uniqueSelected": 126
+      },
+      "update": 19
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 87,
+        "selectionFraction": 0.3625,
+        "uniqueSelected": 87
+      },
+      "late": {
+        "collected": 437,
+        "selectedOccurrences": 153,
+        "selectionFraction": 0.3501144164759725,
+        "uniqueSelected": 153
+      },
+      "update": 20
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 124,
+        "selectionFraction": 0.5166666666666667,
+        "uniqueSelected": 124
+      },
+      "late": {
+        "collected": 218,
+        "selectedOccurrences": 116,
+        "selectionFraction": 0.5321100917431193,
+        "uniqueSelected": 116
+      },
+      "update": 21
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 118,
+        "selectionFraction": 0.49166666666666664,
+        "uniqueSelected": 118
+      },
+      "late": {
+        "collected": 289,
+        "selectedOccurrences": 122,
+        "selectionFraction": 0.42214532871972316,
+        "uniqueSelected": 122
+      },
+      "update": 22
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 103,
+        "selectionFraction": 0.42916666666666664,
+        "uniqueSelected": 103
+      },
+      "late": {
+        "collected": 290,
+        "selectedOccurrences": 137,
+        "selectionFraction": 0.4724137931034483,
+        "uniqueSelected": 137
+      },
+      "update": 23
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 99,
+        "selectionFraction": 0.4125,
+        "uniqueSelected": 99
+      },
+      "late": {
+        "collected": 417,
+        "selectedOccurrences": 141,
+        "selectionFraction": 0.3381294964028777,
+        "uniqueSelected": 141
+      },
+      "update": 24
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 97,
+        "selectionFraction": 0.4041666666666667,
+        "uniqueSelected": 97
+      },
+      "late": {
+        "collected": 337,
+        "selectedOccurrences": 143,
+        "selectionFraction": 0.42433234421364985,
+        "uniqueSelected": 143
+      },
+      "update": 25
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 88,
+        "selectionFraction": 0.36666666666666664,
+        "uniqueSelected": 88
+      },
+      "late": {
+        "collected": 424,
+        "selectedOccurrences": 152,
+        "selectionFraction": 0.3584905660377358,
+        "uniqueSelected": 152
+      },
+      "update": 26
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 91,
+        "selectionFraction": 0.37916666666666665,
+        "uniqueSelected": 91
+      },
+      "late": {
+        "collected": 414,
+        "selectedOccurrences": 149,
+        "selectionFraction": 0.35990338164251207,
+        "uniqueSelected": 149
+      },
+      "update": 27
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 94,
+        "selectionFraction": 0.39166666666666666,
+        "uniqueSelected": 94
+      },
+      "late": {
+        "collected": 422,
+        "selectedOccurrences": 146,
+        "selectionFraction": 0.3459715639810427,
+        "uniqueSelected": 146
+      },
+      "update": 28
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 93,
+        "selectionFraction": 0.3875,
+        "uniqueSelected": 93
+      },
+      "late": {
+        "collected": 421,
+        "selectedOccurrences": 147,
+        "selectionFraction": 0.3491686460807601,
+        "uniqueSelected": 147
+      },
+      "update": 29
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 114,
+        "selectionFraction": 0.475,
+        "uniqueSelected": 114
+      },
+      "late": {
+        "collected": 280,
+        "selectedOccurrences": 126,
+        "selectionFraction": 0.45,
+        "uniqueSelected": 126
+      },
+      "update": 30
+    }
+  ],
+  "short": [
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 240,
+        "selectionFraction": 1.0,
+        "uniqueSelected": 240
+      },
+      "late": {
+        "collected": 0,
+        "selectedOccurrences": 0,
+        "selectionFraction": null,
+        "uniqueSelected": 0
+      },
+      "update": 1
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 240,
+        "selectionFraction": 1.0,
+        "uniqueSelected": 240
+      },
+      "late": {
+        "collected": 0,
+        "selectedOccurrences": 0,
+        "selectionFraction": null,
+        "uniqueSelected": 0
+      },
+      "update": 2
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 240,
+        "selectionFraction": 1.0,
+        "uniqueSelected": 240
+      },
+      "late": {
+        "collected": 0,
+        "selectedOccurrences": 0,
+        "selectionFraction": null,
+        "uniqueSelected": 0
+      },
+      "update": 3
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 240,
+        "selectionFraction": 1.0,
+        "uniqueSelected": 240
+      },
+      "late": {
+        "collected": 0,
+        "selectedOccurrences": 0,
+        "selectionFraction": null,
+        "uniqueSelected": 0
+      },
+      "update": 4
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 240,
+        "selectionFraction": 1.0,
+        "uniqueSelected": 240
+      },
+      "late": {
+        "collected": 0,
+        "selectedOccurrences": 0,
+        "selectionFraction": null,
+        "uniqueSelected": 0
+      },
+      "update": 5
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 240,
+        "selectionFraction": 1.0,
+        "uniqueSelected": 240
+      },
+      "late": {
+        "collected": 0,
+        "selectedOccurrences": 0,
+        "selectionFraction": null,
+        "uniqueSelected": 0
+      },
+      "update": 6
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 240,
+        "selectionFraction": 1.0,
+        "uniqueSelected": 240
+      },
+      "late": {
+        "collected": 0,
+        "selectedOccurrences": 0,
+        "selectionFraction": null,
+        "uniqueSelected": 0
+      },
+      "update": 7
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 240,
+        "selectionFraction": 1.0,
+        "uniqueSelected": 240
+      },
+      "late": {
+        "collected": 0,
+        "selectedOccurrences": 0,
+        "selectionFraction": null,
+        "uniqueSelected": 0
+      },
+      "update": 8
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 240,
+        "selectionFraction": 1.0,
+        "uniqueSelected": 240
+      },
+      "late": {
+        "collected": 0,
+        "selectedOccurrences": 0,
+        "selectionFraction": null,
+        "uniqueSelected": 0
+      },
+      "update": 9
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 240,
+        "selectionFraction": 1.0,
+        "uniqueSelected": 240
+      },
+      "late": {
+        "collected": 0,
+        "selectedOccurrences": 0,
+        "selectionFraction": null,
+        "uniqueSelected": 0
+      },
+      "update": 10
+    },
+    {
+      "early": {
+        "collected": 196,
+        "selectedOccurrences": 240,
+        "selectionFraction": 1.0,
+        "uniqueSelected": 196
+      },
+      "late": {
+        "collected": 0,
+        "selectedOccurrences": 0,
+        "selectionFraction": null,
+        "uniqueSelected": 0
+      },
+      "update": 11
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 240,
+        "selectionFraction": 1.0,
+        "uniqueSelected": 240
+      },
+      "late": {
+        "collected": 0,
+        "selectedOccurrences": 0,
+        "selectionFraction": null,
+        "uniqueSelected": 0
+      },
+      "update": 12
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 240,
+        "selectionFraction": 1.0,
+        "uniqueSelected": 240
+      },
+      "late": {
+        "collected": 0,
+        "selectedOccurrences": 0,
+        "selectionFraction": null,
+        "uniqueSelected": 0
+      },
+      "update": 13
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 240,
+        "selectionFraction": 1.0,
+        "uniqueSelected": 240
+      },
+      "late": {
+        "collected": 0,
+        "selectedOccurrences": 0,
+        "selectionFraction": null,
+        "uniqueSelected": 0
+      },
+      "update": 14
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 240,
+        "selectionFraction": 1.0,
+        "uniqueSelected": 240
+      },
+      "late": {
+        "collected": 0,
+        "selectedOccurrences": 0,
+        "selectionFraction": null,
+        "uniqueSelected": 0
+      },
+      "update": 15
+    },
+    {
+      "early": {
+        "collected": 238,
+        "selectedOccurrences": 240,
+        "selectionFraction": 1.0,
+        "uniqueSelected": 238
+      },
+      "late": {
+        "collected": 0,
+        "selectedOccurrences": 0,
+        "selectionFraction": null,
+        "uniqueSelected": 0
+      },
+      "update": 16
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 240,
+        "selectionFraction": 1.0,
+        "uniqueSelected": 240
+      },
+      "late": {
+        "collected": 0,
+        "selectedOccurrences": 0,
+        "selectionFraction": null,
+        "uniqueSelected": 0
+      },
+      "update": 17
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 240,
+        "selectionFraction": 1.0,
+        "uniqueSelected": 240
+      },
+      "late": {
+        "collected": 0,
+        "selectedOccurrences": 0,
+        "selectionFraction": null,
+        "uniqueSelected": 0
+      },
+      "update": 18
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 240,
+        "selectionFraction": 1.0,
+        "uniqueSelected": 240
+      },
+      "late": {
+        "collected": 0,
+        "selectedOccurrences": 0,
+        "selectionFraction": null,
+        "uniqueSelected": 0
+      },
+      "update": 19
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 240,
+        "selectionFraction": 1.0,
+        "uniqueSelected": 240
+      },
+      "late": {
+        "collected": 0,
+        "selectedOccurrences": 0,
+        "selectionFraction": null,
+        "uniqueSelected": 0
+      },
+      "update": 20
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 240,
+        "selectionFraction": 1.0,
+        "uniqueSelected": 240
+      },
+      "late": {
+        "collected": 0,
+        "selectedOccurrences": 0,
+        "selectionFraction": null,
+        "uniqueSelected": 0
+      },
+      "update": 21
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 240,
+        "selectionFraction": 1.0,
+        "uniqueSelected": 240
+      },
+      "late": {
+        "collected": 0,
+        "selectedOccurrences": 0,
+        "selectionFraction": null,
+        "uniqueSelected": 0
+      },
+      "update": 22
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 240,
+        "selectionFraction": 1.0,
+        "uniqueSelected": 240
+      },
+      "late": {
+        "collected": 0,
+        "selectedOccurrences": 0,
+        "selectionFraction": null,
+        "uniqueSelected": 0
+      },
+      "update": 23
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 240,
+        "selectionFraction": 1.0,
+        "uniqueSelected": 240
+      },
+      "late": {
+        "collected": 0,
+        "selectedOccurrences": 0,
+        "selectionFraction": null,
+        "uniqueSelected": 0
+      },
+      "update": 24
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 240,
+        "selectionFraction": 1.0,
+        "uniqueSelected": 240
+      },
+      "late": {
+        "collected": 0,
+        "selectedOccurrences": 0,
+        "selectionFraction": null,
+        "uniqueSelected": 0
+      },
+      "update": 25
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 240,
+        "selectionFraction": 1.0,
+        "uniqueSelected": 240
+      },
+      "late": {
+        "collected": 0,
+        "selectedOccurrences": 0,
+        "selectionFraction": null,
+        "uniqueSelected": 0
+      },
+      "update": 26
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 240,
+        "selectionFraction": 1.0,
+        "uniqueSelected": 240
+      },
+      "late": {
+        "collected": 0,
+        "selectedOccurrences": 0,
+        "selectionFraction": null,
+        "uniqueSelected": 0
+      },
+      "update": 27
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 240,
+        "selectionFraction": 1.0,
+        "uniqueSelected": 240
+      },
+      "late": {
+        "collected": 0,
+        "selectedOccurrences": 0,
+        "selectionFraction": null,
+        "uniqueSelected": 0
+      },
+      "update": 28
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 240,
+        "selectionFraction": 1.0,
+        "uniqueSelected": 240
+      },
+      "late": {
+        "collected": 0,
+        "selectedOccurrences": 0,
+        "selectionFraction": null,
+        "uniqueSelected": 0
+      },
+      "update": 29
+    },
+    {
+      "early": {
+        "collected": 240,
+        "selectedOccurrences": 240,
+        "selectionFraction": 1.0,
+        "uniqueSelected": 240
+      },
+      "late": {
+        "collected": 0,
+        "selectedOccurrences": 0,
+        "selectionFraction": null,
+        "uniqueSelected": 0
+      },
+      "update": 30
+    }
+  ]
+}

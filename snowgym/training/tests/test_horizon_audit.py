@@ -99,3 +99,30 @@ def test_live_first_minibatch_full_reconstruction():
     assert result['simulatorDecisions'] <= 1600
     assert sum(x['firstMinibatchMultiplicity'] for x in rows) > 0
     assert result['strata']['late']['collectedCredit']['decisions'] > 0
+
+
+def test_archived_audit_lineage_selection_and_summary():
+    root = a.h.b.TRAINING/'runs/m7b_engage_r1m_s10_v0'
+    a.h.b.verified_manifest(root)
+    declaration = json.loads((root/'declaration.json').read_text())
+    assert declaration['sourceManifest'] == a.h.b.file_digest(a.ARCHIVE/'manifest.json')
+    assert declaration['implementationDigest'] == a.h.b.file_digest(a.Path(a.__file__))
+    assert declaration['declarationDigest'] == a.h.b.file_digest(a.h.b.TRAINING/'reviews/m7b_r1m_s10_declaration.md')
+    report = json.loads((root/'report.json').read_text())
+    selection = json.loads((root/'selection.json').read_text())
+    assert report['completeTrajectoryMatches'] == 48
+    assert report['simulatorDecisions'] == 8399 <= 9600
+    assert not report['autonomousQualificationEligible']
+    for arm in a.h.ARMS:
+        history = json.loads((a.ARCHIVE/str(a.SEED)/arm/'training.json').read_text())['history']
+        assert len(selection[arm]) == 30
+        for update, entry in enumerate(history, 1):
+            rows = a.read_rows(a.ARCHIVE/str(a.SEED)/arm/f'events-{update:03d}.jsonl.gz')
+            assert selection[arm][update-1] == {'update': update, **a.coverage(rows, entry['selectedRows'])}
+    for result in report['updates']:
+        assert result['firstMinibatchLossMaxError'] == 0
+        rows = a.read_rows(root/f"opportunities-{result['arm']}-{result['update']:03d}.jsonl.gz")
+        for phase in ('early', 'late'):
+            subset = [x for x in rows if (x['offset'] < 30) == (phase == 'early')]
+            assert a.summarize(subset) == result['strata'][phase]['geometry']
+            assert all(x['worldScoreProjection'] == 0 for x in subset if x['recommendationAvailable'] and not x['selectionMultiplicity'])
