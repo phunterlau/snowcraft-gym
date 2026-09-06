@@ -19,6 +19,13 @@ configuration on 2026-09-01.
 
 ## Milestones
 
+### R1m-S10 — frozen late-state learning audit (declared)
+
+Follow `training/reviews/m7b_r1m_s10_declaration.md`. Audit all S9 selection
+records and reconstruct updates 1/11/21 of both RNG 99301 arms. Separate late
+state coverage, critic/advantage quality, frozen mean-output scores and cumulative
+final-policy geometry. No fitting, new continuations, provider calls or promotion.
+
 ### R1m-S9 — learnable control horizon (complete; gate failed 2026-09-05)
 
 Follow `training/reviews/m7b_r1m_s9_declaration.md`: matched short/full movement

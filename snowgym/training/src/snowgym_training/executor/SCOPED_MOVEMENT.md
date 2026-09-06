@@ -138,6 +138,16 @@ separately in [R1m results](../../../reviews/m7b_r1m_results.md).
 
 ## Bounded experiment entry point
 
+R1m-S10 inspects frozen S9 selection, credit and cumulative output changes,
+without training. Follow the [declaration](../../../reviews/m7b_r1m_s10_declaration.md)
+and use a new output directory:
+
+```bash
+cd snowgym/training
+.venv/bin/python -m snowgym_training.options.horizon_audit \
+  --output runs/m7b_engage_r1m_s10_v0
+```
+
 R1m-S9 compares short and sustained learned control on matched first-hit frames:
 
 ```bash
