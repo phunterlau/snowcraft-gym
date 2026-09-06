@@ -152,6 +152,11 @@ overrides enter learning; corrected shots remain assistance. The Python `train`
 entry point supports immutable-output pause/resume at update boundaries, verified
 by exact checkpoint tests. Existing source runners and checkpoints are unchanged.
 
+The [S9 results](../../../reviews/m7b_r1m_s9_results.md) failed the first paired
+gate: full control achieved 13/38 versus short's 16/38 on historical development,
+and both achieved 17/36 on replication-development. Conditional optimizer-seed
+replications were not run. No default or qualification gate was changed.
+
 R1m-S8 tests continued teacher movement from the exact post-correction states.
 From `snowgym/training`, choose a new directory:
 

@@ -1,0 +1,275 @@
+{
+  "assistType": "teacher-shot-direction-and-power",
+  "assistVersion": "snowgym.r1h-corrected-shots.v0",
+  "autonomousQualificationEligible": false,
+  "format": "snowgym.horizon-report.v0",
+  "replicated": false,
+  "replicationsExecuted": 0,
+  "runs": {
+    "99301": {
+      "gates": {
+        "historical": {
+          "criteria": {
+            "initializerGain": false,
+            "initializerPositiveInterval": false,
+            "parameterChange": true,
+            "rejectedActions": true,
+            "shortGain": false,
+            "shortPositiveReturnInterval": false,
+            "shortPositiveSuccessInterval": false,
+            "success": false
+          },
+          "initializerSuccesses": 13,
+          "passed": false,
+          "successes": {
+            "full": 13,
+            "short": 16
+          },
+          "versusInitializer": {
+            "damageDealt": {
+              "ci95": [
+                -27.894736842105264,
+                21.592105263157702
+              ],
+              "count": 38,
+              "mean": -3.1578947368421053
+            },
+            "damageReceived": {
+              "ci95": [
+                -15.263157894736842,
+                9.473684210526315
+              ],
+              "count": 38,
+              "mean": -3.1578947368421053
+            },
+            "livingFraction": {
+              "ci95": [
+                -0.03157894548616911,
+                0.0368421030671973
+              ],
+              "count": 38,
+              "mean": 0.005263157581028186
+            },
+            "progress": {
+              "ci95": [
+                -0.05578947368421053,
+                0.043184210526315416
+              ],
+              "count": 38,
+              "mean": -0.006315789473684213
+            },
+            "return": {
+              "ci95": [
+                -0.167981232682543,
+                0.17974497778750811
+              ],
+              "count": 38,
+              "mean": 0.004873768060916164
+            },
+            "success": {
+              "ci95": [
+                -0.10526315789473684,
+                0.10526315789473684
+              ],
+              "count": 38,
+              "mean": 0.0
+            }
+          },
+          "versusShort": {
+            "damageDealt": {
+              "ci95": [
+                -52.10526315789474,
+                0.0
+              ],
+              "count": 38,
+              "mean": -24.210526315789473
+            },
+            "damageReceived": {
+              "ci95": [
+                -20.0,
+                8.421052631578947
+              ],
+              "count": 38,
+              "mean": -5.7894736842105265
+            },
+            "livingFraction": {
+              "ci95": [
+                -0.010526315162056371,
+                0.052631575810281855
+              ],
+              "count": 38,
+              "mean": 0.021052630324112743
+            },
+            "progress": {
+              "ci95": [
+                -0.10421052631578946,
+                2.921639538487254e-18
+              ],
+              "count": 38,
+              "mean": -0.04842105263157894
+            },
+            "return": {
+              "ci95": [
+                -0.3764039040964444,
+                0.13471754387115453
+              ],
+              "count": 38,
+              "mean": -0.12099731576996736
+            },
+            "success": {
+              "ci95": [
+                -0.23684210526315788,
+                0.07894736842105263
+              ],
+              "count": 38,
+              "mean": -0.07894736842105263
+            }
+          }
+        },
+        "replication": {
+          "criteria": {
+            "initializerGain": false,
+            "initializerPositiveInterval": false,
+            "parameterChange": true,
+            "rejectedActions": true,
+            "shortGain": false,
+            "shortPositiveReturnInterval": false,
+            "shortPositiveSuccessInterval": false,
+            "success": false
+          },
+          "initializerSuccesses": 16,
+          "passed": false,
+          "successes": {
+            "full": 17,
+            "short": 17
+          },
+          "versusInitializer": {
+            "damageDealt": {
+              "ci95": [
+                -13.333333333333334,
+                17.22222222222222
+              ],
+              "count": 36,
+              "mean": 2.2222222222222223
+            },
+            "damageReceived": {
+              "ci95": [
+                -15.0,
+                10.555555555555555
+              ],
+              "count": 36,
+              "mean": -2.2222222222222223
+            },
+            "livingFraction": {
+              "ci95": [
+                -0.03333333134651184,
+                0.03333333134651184
+              ],
+              "count": 36,
+              "mean": 0.0
+            },
+            "progress": {
+              "ci95": [
+                -0.02666666666666667,
+                0.03444444444444445
+              ],
+              "count": 36,
+              "mean": 0.004444444444444445
+            },
+            "return": {
+              "ci95": [
+                -0.0053222323292126126,
+                0.13408150793645973
+              ],
+              "count": 36,
+              "mean": 0.043638951602208084
+            },
+            "success": {
+              "ci95": [
+                0.0,
+                0.08333333333333333
+              ],
+              "count": 36,
+              "mean": 0.027777777777777776
+            }
+          },
+          "versusShort": {
+            "damageDealt": {
+              "ci95": [
+                -16.666666666666668,
+                31.666666666666668
+              ],
+              "count": 36,
+              "mean": 7.222222222222222
+            },
+            "damageReceived": {
+              "ci95": [
+                -41.111111111111114,
+                2.7777777777777777
+              ],
+              "count": 36,
+              "mean": -18.333333333333332
+            },
+            "livingFraction": {
+              "ci95": [
+                -0.0277777761220932,
+                0.06666666517655055
+              ],
+              "count": 36,
+              "mean": 0.016666666501098208
+            },
+            "progress": {
+              "ci95": [
+                -0.033333333333333354,
+                0.06333333333333334
+              ],
+              "count": 36,
+              "mean": 0.014444444444444442
+            },
+            "return": {
+              "ci95": [
+                -0.1730668151618604,
+                0.19170383729010443
+              ],
+              "count": 36,
+              "mean": 0.009665374645663404
+            },
+            "success": {
+              "ci95": [
+                -0.1111111111111111,
+                0.1111111111111111
+              ],
+              "count": 36,
+              "mean": 0.0
+            }
+          }
+        }
+      },
+      "training": {
+        "full": {
+          "actorParameterL2Change": 0.4546659924343472,
+          "arm": "full",
+          "assistType": "teacher-shot-direction-and-power",
+          "assistVersion": "snowgym.r1h-corrected-shots.v0",
+          "autonomousQualificationEligible": false,
+          "checkpointDigest": "sha256:78052a704f0fa0ffe63b6bdabbbe98bb5ea624487680a4ed8667dcf864e83c26",
+          "datasetDigest": "sha256:bea1349e36d1a71697ceb8812947dd24084468e2031babae2c1a12a1ed9c25fc",
+          "initialStateDigest": "sha256:248ecb55a308c720525366846b5d6d734c9ce613d5b45f4f0896dc1cbf43e881",
+          "sourceUnchanged": true
+        },
+        "short": {
+          "actorParameterL2Change": 0.40662763036545946,
+          "arm": "short",
+          "assistType": "teacher-shot-direction-and-power",
+          "assistVersion": "snowgym.r1h-corrected-shots.v0",
+          "autonomousQualificationEligible": false,
+          "checkpointDigest": "sha256:0c311a6803b4be074894c39a857e1c2118762ac18c94b15494151e7a655a6d91",
+          "datasetDigest": "sha256:bea1349e36d1a71697ceb8812947dd24084468e2031babae2c1a12a1ed9c25fc",
+          "initialStateDigest": "sha256:248ecb55a308c720525366846b5d6d734c9ce613d5b45f4f0896dc1cbf43e881",
+          "sourceUnchanged": true
+        }
+      }
+    }
+  },
+  "simulatorDecisions": 160301
+}

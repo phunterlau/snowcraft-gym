@@ -1,4 +1,6 @@
 import copy
+import gzip
+import json
 
 import numpy as np
 import pytest
@@ -95,3 +97,62 @@ def test_exact_update_resume_and_lineage_rejection(reference,tmp_path,arm):
         with pytest.raises(ValueError,match='lineage mismatch'):
             h.train(source,metadata,client,[frame],{**cfg,'rowsPerUpdate':10},tmp_path/'bad',99301,arm,resume=tmp_path/'paused/paused')
     assert h.inputs()[-1]==lineage
+
+
+def test_archived_horizon_budgets_actions_rewards_and_gates():
+    root=h.b.TRAINING/'runs/m7b_engage_r1m_s9_v0'
+    h.b.verified_manifest(root)
+    cfg=json.loads((root/'declaration.json').read_text())['config']
+    baselines=json.loads((root/'initialization.json').read_text())
+    report=json.loads((root/'report.json').read_text())
+    steps=0
+    for split in ('training','historical','replication'):
+        for a,z in zip(baselines['short'][split],baselines['full'][split],strict=True):
+            for key in ('stateHashes','actionsDigest','success','progress','discounted'):
+                assert a[key]==z[key]
+            steps+=a['simulatorDecisions']+z['simulatorDecisions']
+    for seed,comparison in report['runs'].items():
+        histories={};evaluations={};training={}
+        for arm in h.ARMS:
+            path=root/seed/arm
+            training[arm]=json.loads((path/'training.json').read_text())
+            history=training[arm]['history'];histories[arm]=history
+            assert len(history)==cfg['updates']
+            for update,entry in enumerate(history,1):
+                assert entry['presentedRows']==cfg['rowsPerUpdate']
+                assert entry['uniqueSelectedRows']==min(entry['collectedRows'],cfg['rowsPerUpdate'])
+                assert entry['optimizerSteps']<=8
+                assert entry['likelihoodMaxError']<=1e-3
+                with gzip.open(path/f'events-{update:03d}.jsonl.gz','rt') as stream:
+                    episodes=[json.loads(line) for line in stream]
+                assert len(episodes)==cfg['batchSize']
+                assert [t['summary']['seed'] for t in episodes]==entry['seeds']
+                for t in episodes:
+                    row=t['summary']; events=t['events'];steps+=row['simulatorDecisions']
+                    assert row['simulatorDecisions']<=200
+                    assert row['actionsDigest']==h.json_digest([e['action'] for e in events])
+                    assert row['stateHashes'][1:]==[e['stateHash'] for e in events]
+                    count=row['learnedDecisions']
+                    assert len(t['learnerLatents'])==len(t['behaviorLogProbabilities'])==count
+                    assert all(e['learnerControlled']==(i<count) for i,e in enumerate(events))
+                    assert count==len(events) if arm=='full' else count==min(30,len(events))
+                    for i,e in enumerate(events[:count]):
+                        for j,kind in enumerate(e['action']['action_type'][0]):
+                            if kind!=1:
+                                assert t['behaviorLogProbabilities'][i][j]==0
+                                assert t['learnerLatents'][i][j]==[0,0]
+                    for key,value in row['discounted'].items():
+                        assert value==pytest.approx(sum(cfg['gamma']**i*e['info']['option']['rewards'][key] for i,e in enumerate(events)))
+                assert sum(t['summary']['learnedDecisions'] for t in episodes)==entry['collectedRows']
+                assert sum(t['summary']['simulatorDecisions'] for t in episodes)==entry['simulatorDecisions']
+                assert entry['simulatorDecisions']==entry['prefixDecisions']+entry['learnedDecisions']+entry['tailDecisions']
+            evaluations[arm]=json.loads((path/'evaluation.json').read_text())
+            steps+=sum(x['simulatorDecisions'] for rows in evaluations[arm].values() for x in rows)
+        assert training['short']['initialStateDigest']==training['full']['initialStateDigest']
+        assert [x['seeds'] for x in histories['short']]==[x['seeds'] for x in histories['full']]
+        for split in ('historical','replication'):
+            actual=h.gate({a:evaluations[a][split] for a in h.ARMS},baselines['short'][split],training['full']['actorParameterL2Change'])
+            assert actual==comparison['gates'][split]
+    assert steps==report['simulatorDecisions']<=cfg['simulatorBudget']
+    first=report['runs'][str(cfg['trainingRngs'][0])]
+    assert len(report['runs'])==(3 if all(g['passed'] for g in first['gates'].values()) else 1)

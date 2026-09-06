@@ -19,7 +19,7 @@ configuration on 2026-09-01.
 
 ## Milestones
 
-### R1m-S9 — learnable control horizon (declared)
+### R1m-S9 — learnable control horizon (complete; gate failed 2026-09-05)
 
 Follow `training/reviews/m7b_r1m_s9_declaration.md`: matched short/full movement
 PPO on S3 first-hit frames, same initialization/control/reward and 240 presented
@@ -27,6 +27,15 @@ optimization rows per update. Thirty updates x eight episodes per arm; final-onl
 paired development gates, conditional optimizer-seed replication. Preserve
 actual sample/KL-stop accounting and the 430,000-decision cap. Corrected shots
 remain assistance; no teacher MOVE overrides or autonomous promotion.
+
+RNG 99301 completed both 30-update arms. Final historical successes: short 16/38,
+full 13/38, initializer 13/38. Replication-development: short/full 17/36,
+initializer 16/36. Both gates failed; conditional optimizer replications were
+not run. All 262 zero-residual parity episodes matched; source unchanged, zero
+final-evaluation rejects. Equal 7,200 optimizer rows yielded 103/125 actual steps
+after KL stopping. Used 160,301 simulator decisions. See
+`training/reviews/m7b_r1m_s9_results.md`. Next proposal: frozen late-state
+coverage/credit/update-direction inspection, not another automatic PPO sweep.
 
 ### R1m-S8 — same-state sustained continuation (complete; diagnostic gate passed 2026-09-05)
 
