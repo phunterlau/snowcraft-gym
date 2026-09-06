@@ -1,5 +1,18 @@
 # R1m scoped movement contract
 
+R1m-S6 isolates teacher movement correction duration and scope on S5's fixed
+training states. See its [declaration](../../../reviews/m7b_r1m_s6_declaration.md).
+From `snowgym/training`, choose a new output directory:
+
+```bash
+.venv/bin/python -m snowgym_training.options.duration_probe \
+  --output runs/m7b_engage_r1m_s6_v0
+```
+
+The five arms are Keep, single-1, squad-1, single-30 and squad-30. Destinations
+are recomputed during each window; categorical weights and shot assistance remain
+fixed. No optimizer runs, action contract changes or autonomous promotion occur.
+
 R1m-S5 tests the destination-to-motion boundary without optimization or a new
 action decoder. See its [declaration](../../../reviews/m7b_r1m_s5_declaration.md).
 From `snowgym/training`, use an unused output directory:

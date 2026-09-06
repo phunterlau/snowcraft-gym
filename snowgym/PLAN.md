@@ -19,6 +19,14 @@ configuration on 2026-09-01.
 
 ## Milestones
 
+### R1m-S6 — teacher duration/scope factorial (declared)
+
+Follow `training/reviews/m7b_r1m_s6_declaration.md`: same 24 training states,
+single versus squad MOVE correction, one versus 30 decisions, unchanged control,
+two exact executions per arm. Keep and single-1 must reproduce S5 artifacts.
+Test whether sustained teacher benefit transfers; separate duration, scope and
+their interaction while reporting actual intervention dose. No PPO or promotion.
+
 ### R1m-S5 — destination-to-motion boundary probe (complete 2026-09-05)
 
 Follow `training/reviews/m7b_r1m_s5_declaration.md`: 24 training-only snapshots,
