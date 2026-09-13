@@ -1,0 +1,21 @@
+{
+  "artifacts": {
+    "declaration.json": "sha256:0ec88f40e778d4baed8fd899d16f80de105b2eb3de8f9e78cb65657fceb1f100",
+    "floor.json": "sha256:e2ddab5e3b612a04070c4e7f720a7b602b37a1130f61072675efd4b61353aad4",
+    "global/96001/critic-warm-start.json": "sha256:3bce15fe2f672cec71beb930e233c50774a2bdf8774100ad91352fc50c84e1d4",
+    "global/96001/training.json": "sha256:aaa001cf40dd251f3a41d6c9f0aede5e63a448a9c334fe26a041c5701bfb8195",
+    "global/96002/critic-warm-start.json": "sha256:75d8dcd101f516ea0981c6068a23ad3d72c5eb41823e057f3c70c4de27bea97e",
+    "global/96002/training.json": "sha256:f0ee46fd89dc2b51a28caf8f3280df1ceaf0df6be4e156207834cb86a246b2e2",
+    "global/96003/critic-warm-start.json": "sha256:411af3ce164385996f10a73ea443fe64941f55f285e73b765493ad455b3af513",
+    "global/96003/training.json": "sha256:69c952b91f8532c9bc885dfd8684cf5c409b2ba77b9d6e6bd66224a1bf4fbb2f",
+    "local/96001/critic-warm-start.json": "sha256:84207e515e588e44d4dadb01363d0064846985c296e38c0efef5d5d12342196b",
+    "local/96001/training.json": "sha256:60d0a1b4649d647831cf70e38c54f969d894e3fd29907dcd7f2fb900ad51ce69",
+    "local/96002/critic-warm-start.json": "sha256:468c5f6cb48ad467cd2f8ec10e48eee4d1c036be00a68f9c23fd1f3624d5a4f7",
+    "local/96002/training.json": "sha256:2ac847045980e328f4943e8e9fa16a8e3a5d4f95c3703deac813085fe98f2c25",
+    "local/96003/critic-warm-start.json": "sha256:ecbd8c0896b7528424740c9018d66979f8318b05ed6b79563910e3261c200d60",
+    "local/96003/training.json": "sha256:210e35253a5315e3cac99562d0dadae5a5e1728b6c4a5c9562397e343da3e934",
+    "report.json": "sha256:c35a0cf5ff83403bfce0f20423de6246f3fb4877391bdecf97615254862bef39"
+  },
+  "format": "snowgym.full-authority-manifest.v0",
+  "manifestDigest": "sha256:f88df4dc1e3afcc1af01fb40ecefa65cde855ee7c03b9f29b97e4facc9dabb0e"
+}

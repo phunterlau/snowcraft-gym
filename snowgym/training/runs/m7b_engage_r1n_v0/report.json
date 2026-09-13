@@ -1,0 +1,92 @@
+{
+  "assistType": "none",
+  "assistVersion": "snowgym.full-authority.v0",
+  "autonomousQualificationEligible": false,
+  "floorSuccesses": 0,
+  "format": "snowgym.full-authority-report.v0",
+  "runs": {
+    "global": {
+      "96001": {
+        "training": {
+          "arm": "global",
+          "criticWarmStart": {
+            "heldOutRSquared": -61.141687522551166,
+            "heldOutRows": 4096,
+            "simulatorDecisions": 20480,
+            "trainRows": 16384
+          },
+          "simulatorDecisions": 20480,
+          "stoppedAtCriticGate": true
+        }
+      },
+      "96002": {
+        "training": {
+          "arm": "global",
+          "criticWarmStart": {
+            "heldOutRSquared": -168.98953166512683,
+            "heldOutRows": 4096,
+            "simulatorDecisions": 20480,
+            "trainRows": 16384
+          },
+          "simulatorDecisions": 20480,
+          "stoppedAtCriticGate": true
+        }
+      },
+      "96003": {
+        "training": {
+          "arm": "global",
+          "criticWarmStart": {
+            "heldOutRSquared": -106.02671701175974,
+            "heldOutRows": 4096,
+            "simulatorDecisions": 20480,
+            "trainRows": 16384
+          },
+          "simulatorDecisions": 20480,
+          "stoppedAtCriticGate": true
+        }
+      }
+    },
+    "local": {
+      "96001": {
+        "training": {
+          "arm": "local",
+          "criticWarmStart": {
+            "heldOutRSquared": -179.95497119376142,
+            "heldOutRows": 4096,
+            "simulatorDecisions": 20480,
+            "trainRows": 16384
+          },
+          "simulatorDecisions": 20480,
+          "stoppedAtCriticGate": true
+        }
+      },
+      "96002": {
+        "training": {
+          "arm": "local",
+          "criticWarmStart": {
+            "heldOutRSquared": -510.6736756054445,
+            "heldOutRows": 4096,
+            "simulatorDecisions": 20480,
+            "trainRows": 16384
+          },
+          "simulatorDecisions": 20480,
+          "stoppedAtCriticGate": true
+        }
+      },
+      "96003": {
+        "training": {
+          "arm": "local",
+          "criticWarmStart": {
+            "heldOutRSquared": -68.3228535317311,
+            "heldOutRows": 4096,
+            "simulatorDecisions": 20480,
+            "trainRows": 16384
+          },
+          "simulatorDecisions": 20480,
+          "stoppedAtCriticGate": true
+        }
+      }
+    }
+  },
+  "simulatorDecisions": 142880
+}

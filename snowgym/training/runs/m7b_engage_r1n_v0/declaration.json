@@ -1,0 +1,56 @@
+{
+  "assistType": "none",
+  "assistVersion": "snowgym.full-authority.v0",
+  "autonomousQualificationEligible": false,
+  "config": {
+    "actorGradClip": 0.5,
+    "arms": [
+      "local",
+      "global"
+    ],
+    "assistType": "none",
+    "assistVersion": "snowgym.full-authority.v0",
+    "autonomousQualificationEligible": false,
+    "bootstrapSamples": 10000,
+    "bootstrapSeed": 960001,
+    "clipRatio": 0.2,
+    "criticGradClip": 0.5,
+    "developmentSeeds": [
+      600000,
+      600099
+    ],
+    "entropyWeight": 0.01,
+    "epochs": 4,
+    "floorSeeds": [
+      610000,
+      610099
+    ],
+    "format": "snowgym.full-authority-config.v0",
+    "gaeLambda": 0.9885140204,
+    "gamma": 0.9976921765,
+    "initialPowerLogStd": -1.0,
+    "learningRate": 0.0003,
+    "localRadius": 8.0,
+    "minibatchSize": 512,
+    "movementKlStop": 0.01,
+    "rolloutDecisions": 128,
+    "roster": 1,
+    "simulatorBudget": 12500000,
+    "targetWorldSigma": 2.0,
+    "trainingRngs": [
+      96001,
+      96002,
+      96003
+    ],
+    "updates": 244,
+    "warmStartEpochs": 10,
+    "warmStartHeldOutDecisions": 4096,
+    "warmStartMinRSquared": 0.25,
+    "warmStartTrainDecisions": 16384,
+    "worlds": 64
+  },
+  "declarationDigest": "sha256:46b2e013b02e31da6a76057f754a96ea62edcb2b6f269f0829d7bfd59973a04d",
+  "gitCommit": "4b827e6130386edd0fcdb0a0c7061e2989e21255",
+  "implementationDigest": "sha256:f1b06b98ecd8bfb9565ef6ee7dc7e2080d0284fb202b3abf81b9cc5a739dff1a",
+  "policyImplementationDigest": "sha256:90204be55b8ad93b31b481bed387266c6e0c48c410dd458279f8c19b0c4a028f"
+}

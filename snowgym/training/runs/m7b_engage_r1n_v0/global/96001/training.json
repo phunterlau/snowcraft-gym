@@ -1,0 +1,11 @@
+{
+  "arm": "global",
+  "criticWarmStart": {
+    "heldOutRSquared": -61.141687522551166,
+    "heldOutRows": 4096,
+    "simulatorDecisions": 20480,
+    "trainRows": 16384
+  },
+  "simulatorDecisions": 20480,
+  "stoppedAtCriticGate": true
+}

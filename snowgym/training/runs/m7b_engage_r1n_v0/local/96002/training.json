@@ -1,0 +1,11 @@
+{
+  "arm": "local",
+  "criticWarmStart": {
+    "heldOutRSquared": -510.6736756054445,
+    "heldOutRows": 4096,
+    "simulatorDecisions": 20480,
+    "trainRows": 16384
+  },
+  "simulatorDecisions": 20480,
+  "stoppedAtCriticGate": true
+}

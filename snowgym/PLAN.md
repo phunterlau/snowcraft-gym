@@ -19,7 +19,7 @@ configuration on 2026-09-01.
 
 ## Milestones
 
-### R1n — E3 small complete autonomous skill: 1v1 full-authority PPO (declared 2026-09-13)
+### R1n — E3 small complete autonomous skill: 1v1 full-authority PPO (complete; stopped at critic gate 2026-09-13)
 
 Follow `training/reviews/m7b_r1n_declaration.md`: the reviewer handoff's
 Experiment E3, and the first real attempt at the long-open R1n autonomous-
@@ -39,11 +39,35 @@ assistance is entirely absent in the primary arms;
 `autonomousQualificationEligible: false` (a diagnostic, not a
 qualification attempt).
 
+**The experiment did not reach its research question.** All six arm/seed
+combinations (local/global x seeds 96001/96002/96003) failed the
+predeclared critic warm-start gate (held-out R^2 >= 0.25) on their first
+and only attempt (R^2 from -510.67 to -61.14, not a marginal miss); per the
+stopping rule none was retried, and no actor training or checkpoint ever
+ran. Used 142,880 of the 12,500,000-decision budget. A standalone
+diagnostic traced the failure to the warm-start gate's own measurement
+design, not to the critic being unable to learn: the 64-decision held-out
+window is too short relative to the 200-decision episode horizon, so its
+GAE-return target is dominated by bootstrapping off the untrained critic's
+own near-constant value (target SD 0.0038) rather than real outcomes, and
+R^2's denominator collapses toward zero. The clean fix — matching this
+review's own R1m-S11/S9 reanalysis, which found Monte Carlo returns on
+completed episodes gave a meaningful held-out R^2 (0.18-0.38) where a
+bootstrapped return target did not — is to re-measure warm-start fit
+against completed-episode Monte Carlo returns, not a fraction-length
+bootstrapped window; this is proposed as a separately declared follow-up,
+not executed here. The reward-sparsity property recorded in the
+declaration (no dense signal before first contact) also held throughout.
+Decision: **inconclusive on L vs. G; the critic warm-start gate itself
+needs re-derivation before the actor budget can be spent.** See
+`training/reviews/m7b_r1n_results.md` for the full results table and
+diagnosis.
+
 Implementation gate passed 367 TypeScript, 51 Python client and 372 Python
 training tests (including 12 new targeted tests, several exercising the
-live batch client and one live end-to-end training run) plus build.
-Collection has not yet run; see `training/reviews/m7b_r1n_results.md` once
-archived.
+live batch client and one live end-to-end training run) plus build. No
+provider calls, browser input, or protocol changes; no checkpoint
+promotion; R1n remains open pending a corrected warm-start gate.
 
 ### R1m-S12 — E2 movement representability under dense supervision (complete; egocentric frame wins 2026-09-13)
 
