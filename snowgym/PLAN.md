@@ -19,6 +19,24 @@ configuration on 2026-09-01.
 
 ## Milestones
 
+### R1m-S12 — E2 movement representability under dense supervision (declared 2026-09-13)
+
+Follow `training/reviews/m7b_r1m_s12_declaration.md`: the reviewer handoff's
+Experiment E2. Three arms share one frozen R1f source, one residual decoder,
+and one controller-aware heading loss over a four-round DAgger loop: A
+(current absolute `GeometryProbe`), A-rel (`GeometryProbe(relative=True)`,
+a free control added to isolate frame from attention), and B (new
+`AttentionGeometryProbe`, egocentric pair features pooled by fighter-query
+attention). Evaluation is from-reset only (a stated deviation from the
+review's first-hit-anchored floor/ceiling; see the declaration). Supervised
+throughout; `autonomousQualificationEligible: false`. Budget 250,000
+simulator decisions. No provider calls, protocol changes, or checkpoint
+promotion.
+
+Implementation gate passed 367 TypeScript, 51 Python client and 350 Python
+training tests plus build. Collection has not yet run; see
+`training/reviews/m7b_r1m_s12_results.md` once archived.
+
 ### R1m-S11 — E1 null-control and replication of S9-full (declared 2026-09-13)
 
 Follow `training/reviews/m7b_r1m_s11_declaration.md`: the reviewer handoff's
