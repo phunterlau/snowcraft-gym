@@ -19,6 +19,32 @@ configuration on 2026-09-01.
 
 ## Milestones
 
+### R1n — E3 small complete autonomous skill: 1v1 full-authority PPO (declared 2026-09-13)
+
+Follow `training/reviews/m7b_r1n_declaration.md`: the reviewer handoff's
+Experiment E3, and the first real attempt at the long-open R1n autonomous-
+Engage milestone. From-scratch `FullAuthorityPolicy` (new module,
+egocentric features carrying forward R1m-S12's winning representation; no
+frozen source, no corrected shots, no teacher MOVE), full `{NOOP, HOLD,
+MOVE, THROW}` authority, a warm-started decoupled critic gated at held-out
+R2 >= 0.25, two arms differing only in movement-destination decoding
+(local: isotropic R=8 world-unit radius; global: the existing
+arena-centered tanh decode), both calibrated to a genuine 2-world-unit
+median immediate perturbation via `calibrated_target_log_std`. 1v1 only;
+2v2 deferred (throughput was measured only for 1v1: 2,911 decisions/second
+at 64 worlds with real inference, supporting the full 12M-decision budget
+in about 69 minutes). No teacher ceiling exists for this roster size, so
+the only control is a uniform-random legal-action floor. Supervised/BC
+assistance is entirely absent in the primary arms;
+`autonomousQualificationEligible: false` (a diagnostic, not a
+qualification attempt).
+
+Implementation gate passed 367 TypeScript, 51 Python client and 372 Python
+training tests (including 12 new targeted tests, several exercising the
+live batch client and one live end-to-end training run) plus build.
+Collection has not yet run; see `training/reviews/m7b_r1n_results.md` once
+archived.
+
 ### R1m-S12 — E2 movement representability under dense supervision (complete; egocentric frame wins 2026-09-13)
 
 Follow `training/reviews/m7b_r1m_s12_declaration.md`: the reviewer handoff's
