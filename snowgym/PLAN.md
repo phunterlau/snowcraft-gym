@@ -37,19 +37,31 @@ Implementation gate passed 367 TypeScript, 51 Python client and 350 Python
 training tests plus build. Collection has not yet run; see
 `training/reviews/m7b_r1m_s12_results.md` once archived.
 
-### R1m-S11 — E1 null-control and replication of S9-full (declared 2026-09-13)
+### R1m-S11 — E1 null-control and replication of S9-full (complete; null indistinguishable from real 2026-09-13)
 
 Follow `training/reviews/m7b_r1m_s11_declaration.md`: the reviewer handoff's
 Experiment E1. Reuses `horizon_train` (S9) without editing it; a new module
 `horizon_null_train.py` adds a permuted-advantage null arm and live update-1
 opportunity capture. Full arm only. Real training RNGs 99302/99303 (new) plus
 archived 99301 (reused); null training RNGs 99301/99302/99303 (all new).
-Predeclared measurements 1-6 per the declaration. Budget 450,000 simulator
-decisions. No provider calls, protocol changes, or checkpoint promotion.
 
-Implementation gate passed 367 TypeScript, 51 Python client and 315 Python
-training tests plus build. Collection has not yet run; see
-`training/reviews/m7b_r1m_s11_results.md` once archived.
+All six predeclared measurements land real and null in the same range: dev
+success/return gates, update-1 constant-vector destination fit (R2 0.55-0.97
+for both), parameter RMS versus lr*sqrt(steps) (ratio 0.92-1.14 for both),
+adjusted training-success gain, deterministic training-frame success, and
+stochastic historical success. Where one group's extreme exceeds the
+other's it goes in both directions (e.g. a null run has both the largest
+constant-vector magnitude and a significant *negative* dev-return interval).
+No falsifier triggered. Used 468,762 of a corrected 550,000-decision budget
+(the first attempt at 450,000, extrapolated from S9's own figures,
+undercounted and was discarded before archiving). See
+`training/reviews/m7b_r1m_s11_results.md`. Decision: S3/S9 carry no
+information about learnability under this configuration; do not run a
+further automatic PPO sweep on this movement-residual line. Proceed to E2
+and E3 as planned; neither depends on this configuration.
+
+Implementation gate passed 367 TypeScript, 51 Python client and 350 Python
+training tests plus build.
 
 ### R1m-S10 — frozen late-state learning audit (complete 2026-09-05)
 

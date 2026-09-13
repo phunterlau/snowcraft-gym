@@ -1,0 +1,1023 @@
+{
+  "assistType": "teacher-shot-direction-and-power",
+  "assistVersion": "snowgym.r1h-corrected-shots.v0",
+  "autonomousQualificationEligible": false,
+  "format": "snowgym.horizon-null-report.v0",
+  "nullRuns": [
+    "99301-null",
+    "99302-null",
+    "99303-null"
+  ],
+  "points": {
+    "99301-null": {
+      "developmentGates": {
+        "historical": {
+          "damageDealt": {
+            "ci95": [
+              -9.473684210526315,
+              31.57894736842105
+            ],
+            "count": 38,
+            "mean": 10.0
+          },
+          "damageReceived": {
+            "ci95": [
+              0.0,
+              26.842105263157894
+            ],
+            "count": 38,
+            "mean": 13.157894736842104
+          },
+          "livingFraction": {
+            "ci95": [
+              -0.015789472743084555,
+              0.042105260648225486
+            ],
+            "count": 38,
+            "mean": 0.010526315162056371
+          },
+          "progress": {
+            "ci95": [
+              -0.018947368421052647,
+              0.06315789473684212
+            ],
+            "count": 38,
+            "mean": 0.02
+          },
+          "return": {
+            "ci95": [
+              -0.04014690255864635,
+              0.3127705635829771
+            ],
+            "count": 38,
+            "mean": 0.13375245450809672
+          },
+          "success": {
+            "ci95": [
+              -0.02631578947368421,
+              0.18421052631578946
+            ],
+            "count": 38,
+            "mean": 0.07894736842105263
+          }
+        },
+        "replication": {
+          "damageDealt": {
+            "ci95": [
+              -0.5555555555555556,
+              55.55555555555556
+            ],
+            "count": 36,
+            "mean": 25.555555555555557
+          },
+          "damageReceived": {
+            "ci95": [
+              2.2222222222222223,
+              30.0
+            ],
+            "count": 36,
+            "mean": 15.555555555555555
+          },
+          "livingFraction": {
+            "ci95": [
+              -0.03888888657093048,
+              0.01666666567325592
+            ],
+            "count": 36,
+            "mean": -0.01111111044883728
+          },
+          "progress": {
+            "ci95": [
+              -0.0011111111111111183,
+              0.1111111111111111
+            ],
+            "count": 36,
+            "mean": 0.05111111111111112
+          },
+          "return": {
+            "ci95": [
+              -0.04221270383073112,
+              0.5047282966666095
+            ],
+            "count": 36,
+            "mean": 0.22994176696361388
+          },
+          "success": {
+            "ci95": [
+              -0.027777777777777776,
+              0.3055555555555556
+            ],
+            "count": 36,
+            "mean": 0.1388888888888889
+          }
+        }
+      },
+      "name": "99301-null",
+      "parameterBreakdown": {
+        "groups": {
+          "budget_move": {
+            "l2": 0.006896032104669619,
+            "params": 2,
+            "rmsPerParam": 0.004876231064492027,
+            "share": 0.00015216647107416353
+          },
+          "geometry.encoders": {
+            "l2": 0.30445932114735585,
+            "params": 4160,
+            "rmsPerParam": 0.004720441386465358,
+            "share": 0.2966053422191902
+          },
+          "geometry.move.0": {
+            "l2": 0.46747179561723134,
+            "params": 14592,
+            "rmsPerParam": 0.003869884495689499,
+            "share": 0.6992480214573589
+          },
+          "geometry.move.2": {
+            "l2": 0.03474925802085372,
+            "params": 130,
+            "rmsPerParam": 0.0030477115412158866,
+            "share": 0.003863772002056179
+          },
+          "option_move": {
+            "l2": 0.006391076448141916,
+            "params": 6,
+            "rmsPerParam": 0.002609146034177795,
+            "share": 0.00013069785032061808
+          }
+        },
+        "l2": 0.5590360185006524,
+        "lrSqrtSteps": 0.003911521443121589,
+        "lrSteps": 0.051,
+        "optimizerSteps": 170,
+        "rmsPerParameter": 0.00406746487538573
+      },
+      "stochasticHistoricalDraws": 76,
+      "stochasticHistoricalSuccesses": 27,
+      "trainingDeterministicSuccesses": 27,
+      "trainingSuccessGain": {
+        "adjustedGain": 16,
+        "early": {
+          "deterministicSuccesses": 35,
+          "episodes": 80,
+          "stochasticSuccesses": 25
+        },
+        "late": {
+          "deterministicSuccesses": 33,
+          "episodes": 80,
+          "stochasticSuccesses": 39
+        },
+        "stochasticGain": 14
+      },
+      "update1ConstantVectorFit": {
+        "count": 1712,
+        "magnitude": 0.3103654384850374,
+        "r2": 0.5479270496715347,
+        "shiftMean": 0.4067954541064678,
+        "shiftStd": 0.15225510323942124,
+        "vector": [
+          0.30905705806770994,
+          0.02846823255036578
+        ]
+      }
+    },
+    "99301-real-archived": {
+      "developmentGates": {
+        "historical": {
+          "damageDealt": {
+            "ci95": [
+              -27.894736842105264,
+              21.592105263157702
+            ],
+            "count": 38,
+            "mean": -3.1578947368421053
+          },
+          "damageReceived": {
+            "ci95": [
+              -15.263157894736842,
+              9.473684210526315
+            ],
+            "count": 38,
+            "mean": -3.1578947368421053
+          },
+          "livingFraction": {
+            "ci95": [
+              -0.03157894548616911,
+              0.0368421030671973
+            ],
+            "count": 38,
+            "mean": 0.005263157581028186
+          },
+          "progress": {
+            "ci95": [
+              -0.05578947368421053,
+              0.043184210526315416
+            ],
+            "count": 38,
+            "mean": -0.006315789473684213
+          },
+          "return": {
+            "ci95": [
+              -0.167981232682543,
+              0.17974497778750811
+            ],
+            "count": 38,
+            "mean": 0.004873768060916164
+          },
+          "success": {
+            "ci95": [
+              -0.10526315789473684,
+              0.10526315789473684
+            ],
+            "count": 38,
+            "mean": 0.0
+          }
+        },
+        "replication": {
+          "damageDealt": {
+            "ci95": [
+              -13.333333333333334,
+              17.22222222222222
+            ],
+            "count": 36,
+            "mean": 2.2222222222222223
+          },
+          "damageReceived": {
+            "ci95": [
+              -15.0,
+              10.555555555555555
+            ],
+            "count": 36,
+            "mean": -2.2222222222222223
+          },
+          "livingFraction": {
+            "ci95": [
+              -0.03333333134651184,
+              0.03333333134651184
+            ],
+            "count": 36,
+            "mean": 0.0
+          },
+          "progress": {
+            "ci95": [
+              -0.02666666666666667,
+              0.03444444444444445
+            ],
+            "count": 36,
+            "mean": 0.004444444444444445
+          },
+          "return": {
+            "ci95": [
+              -0.0053222323292126126,
+              0.13408150793645973
+            ],
+            "count": 36,
+            "mean": 0.043638951602208084
+          },
+          "success": {
+            "ci95": [
+              0.0,
+              0.08333333333333333
+            ],
+            "count": 36,
+            "mean": 0.027777777777777776
+          }
+        }
+      },
+      "name": "99301-real-archived",
+      "parameterBreakdown": {
+        "l2": 0.4546659924343472,
+        "lrSqrtSteps": 0.0033541019662496844,
+        "optimizerSteps": 125
+      },
+      "stochasticHistoricalDraws": 76,
+      "stochasticHistoricalSuccesses": 24,
+      "trainingDeterministicSuccesses": 22,
+      "trainingSuccessGain": {
+        "adjustedGain": 18,
+        "early": {
+          "deterministicSuccesses": 35,
+          "episodes": 80,
+          "stochasticSuccesses": 26
+        },
+        "late": {
+          "deterministicSuccesses": 33,
+          "episodes": 80,
+          "stochasticSuccesses": 42
+        },
+        "stochasticGain": 16
+      },
+      "update1ConstantVectorFit": {
+        "count": 1712,
+        "magnitude": 0.7150515180882192,
+        "r2": 0.9721089459379813,
+        "shiftMean": 0.7287605763532649,
+        "shiftStd": 0.11971385277519897,
+        "vector": [
+          0.0727821880865139,
+          0.7113377725227349
+        ]
+      }
+    },
+    "99302-null": {
+      "developmentGates": {
+        "historical": {
+          "damageDealt": {
+            "ci95": [
+              -45.26315789473684,
+              9.473684210526315
+            ],
+            "count": 38,
+            "mean": -16.842105263157894
+          },
+          "damageReceived": {
+            "ci95": [
+              -25.263157894736842,
+              2.6315789473684212
+            ],
+            "count": 38,
+            "mean": -10.526315789473685
+          },
+          "livingFraction": {
+            "ci95": [
+              -0.021052630324112743,
+              0.03157894548616911
+            ],
+            "count": 38,
+            "mean": 0.005263157581028186
+          },
+          "progress": {
+            "ci95": [
+              -0.09052631578947369,
+              0.018947368421052626
+            ],
+            "count": 38,
+            "mean": -0.03368421052631579
+          },
+          "return": {
+            "ci95": [
+              -0.23442021204285096,
+              0.13663174415845003
+            ],
+            "count": 38,
+            "mean": -0.04762647390598098
+          },
+          "success": {
+            "ci95": [
+              -0.13157894736842105,
+              0.07894736842105263
+            ],
+            "count": 38,
+            "mean": -0.02631578947368421
+          }
+        },
+        "replication": {
+          "damageDealt": {
+            "ci95": [
+              -45.55555555555556,
+              7.777777777777778
+            ],
+            "count": 36,
+            "mean": -18.333333333333332
+          },
+          "damageReceived": {
+            "ci95": [
+              -25.555555555555557,
+              0.0
+            ],
+            "count": 36,
+            "mean": -12.222222222222221
+          },
+          "livingFraction": {
+            "ci95": [
+              -0.01666666567325592,
+              0.0277777761220932
+            ],
+            "count": 36,
+            "mean": 0.00555555522441864
+          },
+          "progress": {
+            "ci95": [
+              -0.09111111111111111,
+              0.015555555555555564
+            ],
+            "count": 36,
+            "mean": -0.03666666666666666
+          },
+          "return": {
+            "ci95": [
+              -0.284579370243408,
+              0.1805741389287862
+            ],
+            "count": 36,
+            "mean": -0.051829444869404426
+          },
+          "success": {
+            "ci95": [
+              -0.16666666666666666,
+              0.1111111111111111
+            ],
+            "count": 36,
+            "mean": -0.027777777777777776
+          }
+        }
+      },
+      "name": "99302-null",
+      "parameterBreakdown": {
+        "groups": {
+          "budget_move": {
+            "l2": 0.001249661378942749,
+            "params": 2,
+            "rmsPerParam": 0.0008836440352373495,
+            "share": 4.2109301870054465e-06
+          },
+          "geometry.encoders": {
+            "l2": 0.3157915983489762,
+            "params": 4160,
+            "rmsPerParam": 0.004896140885839647,
+            "share": 0.2689022821043589
+          },
+          "geometry.move.0": {
+            "l2": 0.5192085636244907,
+            "params": 14592,
+            "rmsPerParam": 0.00429817839116189,
+            "share": 0.7269039671297062
+          },
+          "geometry.move.2": {
+            "l2": 0.03922645742872455,
+            "params": 130,
+            "rmsPerParam": 0.0034403879056868654,
+            "share": 0.004149077261421021
+          },
+          "option_move": {
+            "l2": 0.0038737365603606425,
+            "params": 6,
+            "rmsPerParam": 0.0015814463284745974,
+            "share": 4.046257432691544e-05
+          }
+        },
+        "l2": 0.6089804172382857,
+        "lrSqrtSteps": 0.003888444419044716,
+        "lrSteps": 0.05039999999999999,
+        "optimizerSteps": 168,
+        "rmsPerParameter": 0.0044308530666017955
+      },
+      "stochasticHistoricalDraws": 76,
+      "stochasticHistoricalSuccesses": 17,
+      "trainingDeterministicSuccesses": 24,
+      "trainingSuccessGain": {
+        "adjustedGain": 0,
+        "early": {
+          "deterministicSuccesses": 31,
+          "episodes": 80,
+          "stochasticSuccesses": 31
+        },
+        "late": {
+          "deterministicSuccesses": 26,
+          "episodes": 80,
+          "stochasticSuccesses": 26
+        },
+        "stochasticGain": -5
+      },
+      "update1ConstantVectorFit": {
+        "count": 2054,
+        "magnitude": 0.656078340383102,
+        "r2": 0.8790841181880048,
+        "shiftMean": 0.6917884807447553,
+        "shiftStd": 0.14045409949466606,
+        "vector": [
+          -0.5558779411510606,
+          -0.34848027671807114
+        ]
+      }
+    },
+    "99302-real": {
+      "developmentGates": {
+        "historical": {
+          "damageDealt": {
+            "ci95": [
+              -19.473684210526315,
+              32.10526315789474
+            ],
+            "count": 38,
+            "mean": 5.7894736842105265
+          },
+          "damageReceived": {
+            "ci95": [
+              -12.105263157894736,
+              15.263157894736842
+            ],
+            "count": 38,
+            "mean": 2.1052631578947367
+          },
+          "livingFraction": {
+            "ci95": [
+              -0.015789472743084555,
+              0.0368421030671973
+            ],
+            "count": 38,
+            "mean": 0.010526315162056371
+          },
+          "progress": {
+            "ci95": [
+              -0.03894736842105264,
+              0.06421052631578948
+            ],
+            "count": 38,
+            "mean": 0.011578947368421055
+          },
+          "return": {
+            "ci95": [
+              -0.07746603753023121,
+              0.26501939967774973
+            ],
+            "count": 38,
+            "mean": 0.09060037846734086
+          },
+          "success": {
+            "ci95": [
+              -0.05263157894736842,
+              0.15789473684210525
+            ],
+            "count": 38,
+            "mean": 0.05263157894736842
+          }
+        },
+        "replication": {
+          "damageDealt": {
+            "ci95": [
+              0.5555555555555556,
+              26.11111111111111
+            ],
+            "count": 36,
+            "mean": 13.333333333333334
+          },
+          "damageReceived": {
+            "ci95": [
+              -11.666666666666666,
+              26.11111111111111
+            ],
+            "count": 36,
+            "mean": 5.555555555555555
+          },
+          "livingFraction": {
+            "ci95": [
+              -0.0555555522441864,
+              0.01666666567325592
+            ],
+            "count": 36,
+            "mean": -0.01666666567325592
+          },
+          "progress": {
+            "ci95": [
+              0.0011111111111111122,
+              0.05222222222222223
+            ],
+            "count": 36,
+            "mean": 0.026666666666666672
+          },
+          "return": {
+            "ci95": [
+              0.03938867342552052,
+              0.35817692091211967
+            ],
+            "count": 36,
+            "mean": 0.17744444013735783
+          },
+          "success": {
+            "ci95": [
+              0.027777777777777776,
+              0.2222222222222222
+            ],
+            "count": 36,
+            "mean": 0.1111111111111111
+          }
+        }
+      },
+      "name": "99302-real",
+      "parameterBreakdown": {
+        "groups": {
+          "budget_move": {
+            "l2": 0.0013799182521499144,
+            "params": 2,
+            "rmsPerParam": 0.0009757495535782926,
+            "share": 8.117046815252108e-06
+          },
+          "geometry.encoders": {
+            "l2": 0.24234609139484142,
+            "params": 4160,
+            "rmsPerParam": 0.0037574166406114016,
+            "share": 0.25035909446142657
+          },
+          "geometry.move.0": {
+            "l2": 0.41859420725192126,
+            "params": 14592,
+            "rmsPerParam": 0.003465259824907255,
+            "share": 0.7469263155065694
+          },
+          "geometry.move.2": {
+            "l2": 0.02479015925771319,
+            "params": 130,
+            "rmsPerParam": 0.0021742407976875744,
+            "share": 0.0026196903853255306
+          },
+          "option_move": {
+            "l2": 0.004512016322503958,
+            "params": 6,
+            "rmsPerParam": 0.001842022950207287,
+            "share": 8.678259986318771e-05
+          }
+        },
+        "l2": 0.48434445678764737,
+        "lrSqrtSteps": 0.003637306695894642,
+        "lrSteps": 0.04409999999999999,
+        "optimizerSteps": 147,
+        "rmsPerParameter": 0.003524019920675716
+      },
+      "stochasticHistoricalDraws": 76,
+      "stochasticHistoricalSuccesses": 32,
+      "trainingDeterministicSuccesses": 24,
+      "trainingSuccessGain": {
+        "adjustedGain": 1,
+        "early": {
+          "deterministicSuccesses": 31,
+          "episodes": 80,
+          "stochasticSuccesses": 32
+        },
+        "late": {
+          "deterministicSuccesses": 26,
+          "episodes": 80,
+          "stochasticSuccesses": 28
+        },
+        "stochasticGain": -4
+      },
+      "update1ConstantVectorFit": {
+        "count": 2054,
+        "magnitude": 0.5704725935059337,
+        "r2": 0.946996996790576,
+        "shiftMean": 0.5827748746788727,
+        "shiftStd": 0.07116243640570999,
+        "vector": [
+          0.2999317857112238,
+          0.4852627163315381
+        ]
+      }
+    },
+    "99303-null": {
+      "developmentGates": {
+        "historical": {
+          "damageDealt": {
+            "ci95": [
+              -75.26315789473684,
+              -11.578947368421053
+            ],
+            "count": 38,
+            "mean": -43.1578947368421
+          },
+          "damageReceived": {
+            "ci95": [
+              -37.89473684210526,
+              3.1578947368421053
+            ],
+            "count": 38,
+            "mean": -17.36842105263158
+          },
+          "livingFraction": {
+            "ci95": [
+              -0.05789473809693989,
+              0.04736841822925367
+            ],
+            "count": 38,
+            "mean": -1.1764074626721833e-09
+          },
+          "progress": {
+            "ci95": [
+              -0.15052631578947373,
+              -0.023157894736842113
+            ],
+            "count": 38,
+            "mean": -0.08631578947368423
+          },
+          "return": {
+            "ci95": [
+              -0.5720054353625738,
+              -0.0918138485363643
+            ],
+            "count": 38,
+            "mean": -0.3143348534225473
+          },
+          "success": {
+            "ci95": [
+              -0.34210526315789475,
+              -0.05263157894736842
+            ],
+            "count": 38,
+            "mean": -0.18421052631578946
+          }
+        },
+        "replication": {
+          "damageDealt": {
+            "ci95": [
+              -91.66666666666667,
+              -27.22222222222222
+            ],
+            "count": 36,
+            "mean": -58.888888888888886
+          },
+          "damageReceived": {
+            "ci95": [
+              -42.77777777777778,
+              -11.666666666666666
+            ],
+            "count": 36,
+            "mean": -26.666666666666668
+          },
+          "livingFraction": {
+            "ci95": [
+              -0.01111111044883728,
+              0.04444444179534912
+            ],
+            "count": 36,
+            "mean": 0.01666666567325592
+          },
+          "progress": {
+            "ci95": [
+              -0.18333333333333338,
+              -0.054444444444444455
+            ],
+            "count": 36,
+            "mean": -0.11777777777777779
+          },
+          "return": {
+            "ci95": [
+              -0.6578306522089675,
+              -0.11430456970736462
+            ],
+            "count": 36,
+            "mean": -0.3815306494881366
+          },
+          "success": {
+            "ci95": [
+              -0.3888888888888889,
+              -0.05555555555555555
+            ],
+            "count": 36,
+            "mean": -0.2222222222222222
+          }
+        }
+      },
+      "name": "99303-null",
+      "parameterBreakdown": {
+        "groups": {
+          "budget_move": {
+            "l2": 0.0026962317648593494,
+            "params": 2,
+            "rmsPerParam": 0.0019065237645826186,
+            "share": 4.1313306622194576e-05
+          },
+          "geometry.encoders": {
+            "l2": 0.2228167654530849,
+            "params": 4160,
+            "rmsPerParam": 0.0034546272956249126,
+            "share": 0.28214427694080474
+          },
+          "geometry.move.0": {
+            "l2": 0.3536740561856843,
+            "params": 14592,
+            "rmsPerParam": 0.0029278295704523697,
+            "share": 0.7108564706494624
+          },
+          "geometry.move.2": {
+            "l2": 0.03457056403300103,
+            "params": 130,
+            "rmsPerParam": 0.0030320390417110706,
+            "share": 0.0067918556184441425
+          },
+          "option_move": {
+            "l2": 0.0054059928497243535,
+            "params": 6,
+            "rmsPerParam": 0.0022069873391598344,
+            "share": 0.00016608348466653122
+          }
+        },
+        "l2": 0.4194809498747119,
+        "lrSqrtSteps": 0.003313608305156178,
+        "lrSteps": 0.036599999999999994,
+        "optimizerSteps": 122,
+        "rmsPerParameter": 0.003052082465249673
+      },
+      "stochasticHistoricalDraws": 76,
+      "stochasticHistoricalSuccesses": 14,
+      "trainingDeterministicSuccesses": 14,
+      "trainingSuccessGain": {
+        "adjustedGain": 1,
+        "early": {
+          "deterministicSuccesses": 34,
+          "episodes": 80,
+          "stochasticSuccesses": 25
+        },
+        "late": {
+          "deterministicSuccesses": 32,
+          "episodes": 80,
+          "stochasticSuccesses": 24
+        },
+        "stochasticGain": -1
+      },
+      "update1ConstantVectorFit": {
+        "count": 2313,
+        "magnitude": 1.5098530763341647,
+        "r2": 0.931754942614888,
+        "shiftMean": 1.47935740115894,
+        "shiftStd": 0.2008968099313052,
+        "vector": [
+          -1.45385871779286,
+          -0.4073710112580941
+        ]
+      }
+    },
+    "99303-real": {
+      "developmentGates": {
+        "historical": {
+          "damageDealt": {
+            "ci95": [
+              -19.473684210526315,
+              24.736842105263158
+            ],
+            "count": 38,
+            "mean": 1.5789473684210527
+          },
+          "damageReceived": {
+            "ci95": [
+              -6.315789473684211,
+              18.42105263157895
+            ],
+            "count": 38,
+            "mean": 5.7894736842105265
+          },
+          "livingFraction": {
+            "ci95": [
+              -0.026315787905140928,
+              0.026315787905140928
+            ],
+            "count": 38,
+            "mean": 0.0
+          },
+          "progress": {
+            "ci95": [
+              -0.03894736842105265,
+              0.049473684210526316
+            ],
+            "count": 38,
+            "mean": 0.003157894736842102
+          },
+          "return": {
+            "ci95": [
+              -0.17580064121171898,
+              0.25777803218016637
+            ],
+            "count": 38,
+            "mean": 0.040483898941007644
+          },
+          "success": {
+            "ci95": [
+              -0.10526315789473684,
+              0.15789473684210525
+            ],
+            "count": 38,
+            "mean": 0.02631578947368421
+          }
+        },
+        "replication": {
+          "damageDealt": {
+            "ci95": [
+              4.430555555555569,
+              58.333333333333336
+            ],
+            "count": 36,
+            "mean": 30.555555555555557
+          },
+          "damageReceived": {
+            "ci95": [
+              1.1111111111111112,
+              36.111111111111114
+            ],
+            "count": 36,
+            "mean": 17.77777777777778
+          },
+          "livingFraction": {
+            "ci95": [
+              -0.0277777761220932,
+              0.03888888657093048
+            ],
+            "count": 36,
+            "mean": 0.00555555522441864
+          },
+          "progress": {
+            "ci95": [
+              0.008861111111111123,
+              0.11666666666666667
+            ],
+            "count": 36,
+            "mean": 0.061111111111111116
+          },
+          "return": {
+            "ci95": [
+              -0.09247732190108827,
+              0.3696367680247397
+            ],
+            "count": 36,
+            "mean": 0.13800300007377855
+          },
+          "success": {
+            "ci95": [
+              -0.05555555555555555,
+              0.2222222222222222
+            ],
+            "count": 36,
+            "mean": 0.08333333333333333
+          }
+        }
+      },
+      "name": "99303-real",
+      "parameterBreakdown": {
+        "groups": {
+          "budget_move": {
+            "l2": 0.005471635061725785,
+            "params": 2,
+            "rmsPerParam": 0.003869030256324376,
+            "share": 0.00014015025964744313
+          },
+          "geometry.encoders": {
+            "l2": 0.23244665221295208,
+            "params": 4160,
+            "rmsPerParam": 0.0036039323516729445,
+            "share": 0.2529334398831936
+          },
+          "geometry.move.0": {
+            "l2": 0.3981053729791296,
+            "params": 14592,
+            "rmsPerParam": 0.003295646550201906,
+            "share": 0.7419177083954729
+          },
+          "geometry.move.2": {
+            "l2": 0.03192290483994882,
+            "params": 130,
+            "rmsPerParam": 0.002799823968945229,
+            "share": 0.00477050621183475
+          },
+          "option_move": {
+            "l2": 0.0071332380691034,
+            "params": 6,
+            "rmsPerParam": 0.0029121322471832105,
+            "share": 0.00023819524985130045
+          }
+        },
+        "l2": 0.46218960162349026,
+        "lrSqrtSteps": 0.003313608305156178,
+        "lrSteps": 0.036599999999999994,
+        "optimizerSteps": 122,
+        "rmsPerParameter": 0.003362824412305513
+      },
+      "stochasticHistoricalDraws": 76,
+      "stochasticHistoricalSuccesses": 25,
+      "trainingDeterministicSuccesses": 25,
+      "trainingSuccessGain": {
+        "adjustedGain": -4,
+        "early": {
+          "deterministicSuccesses": 34,
+          "episodes": 80,
+          "stochasticSuccesses": 33
+        },
+        "late": {
+          "deterministicSuccesses": 32,
+          "episodes": 80,
+          "stochasticSuccesses": 27
+        },
+        "stochasticGain": -6
+      },
+      "update1ConstantVectorFit": {
+        "count": 2313,
+        "magnitude": 0.6753496903766905,
+        "r2": 0.8350124666491471,
+        "shiftMean": 0.6991681185677219,
+        "shiftStd": 0.19125378462644638,
+        "vector": [
+          0.4838927983294468,
+          -0.4711103522708761
+        ]
+      }
+    },
+    "initializer": {
+      "name": "initializer",
+      "stochasticHistoricalDraws": 76,
+      "stochasticHistoricalSuccesses": 23,
+      "trainingDeterministicSuccesses": 24
+    }
+  },
+  "realNewRuns": [
+    "99302-real",
+    "99303-real"
+  ],
+  "reusedArchivedPoint": "99301-real-archived",
+  "simulatorDecisions": 468762
+}
