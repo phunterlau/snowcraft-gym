@@ -19,6 +19,20 @@ configuration on 2026-09-01.
 
 ## Milestones
 
+### R1m-S11 — E1 null-control and replication of S9-full (declared 2026-09-13)
+
+Follow `training/reviews/m7b_r1m_s11_declaration.md`: the reviewer handoff's
+Experiment E1. Reuses `horizon_train` (S9) without editing it; a new module
+`horizon_null_train.py` adds a permuted-advantage null arm and live update-1
+opportunity capture. Full arm only. Real training RNGs 99302/99303 (new) plus
+archived 99301 (reused); null training RNGs 99301/99302/99303 (all new).
+Predeclared measurements 1-6 per the declaration. Budget 450,000 simulator
+decisions. No provider calls, protocol changes, or checkpoint promotion.
+
+Implementation gate passed 367 TypeScript, 51 Python client and 315 Python
+training tests plus build. Collection has not yet run; see
+`training/reviews/m7b_r1m_s11_results.md` once archived.
+
 ### R1m-S10 — frozen late-state learning audit (complete 2026-09-05)
 
 Follow `training/reviews/m7b_r1m_s10_declaration.md`. Audit all S9 selection
