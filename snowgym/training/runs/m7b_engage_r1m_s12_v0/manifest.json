@@ -1,0 +1,17 @@
+{
+  "artifacts": {
+    "ceiling.json": "sha256:583da5da5e51caf6deaf9c5d6855e6ceaad1a10df5255f277887ab4ea746413b",
+    "declaration.json": "sha256:b81d747cf9ba1471c471653bf7466a9eae91530d8b96f7b1fcc31942b0b4cacc",
+    "evaluation-A-rel.json": "sha256:41662c702ad608814d694b40e6193baffc75f02e15558a7def798f951e05a139",
+    "evaluation-A.json": "sha256:2f2e9cc3dd8710b8d6dd5d21b55ca2940637d6ed7872be94f92aecb548082078",
+    "evaluation-B.json": "sha256:7d2b8b8fbec33b4f8fbe0f2ebfcb8c27e4ef0a9e5ca637185c021137ed21d3a4",
+    "floor.json": "sha256:247aae7eda67b2f830ecbe731a54a345778a4e62e35f794ce7ba990ed5305a2a",
+    "report.json": "sha256:146e882c950a4b07d1c066b2d9c77c4d4e05ec3b5834aefc9f818f29e6409d0b",
+    "round-000-shared-summary.json": "sha256:79d60fa4991239e914ba66ef10446a4fcead2d13907f38ad4ea90200f6f4bddd"
+  },
+  "assistType": "teacher-shot-direction-and-power",
+  "assistVersion": "snowgym.r1h-corrected-shots.v0",
+  "autonomousQualificationEligible": false,
+  "format": "snowgym.geometry-representation-manifest.v0",
+  "manifestDigest": "sha256:9401258441c702a6d6d0249c9c7ce92e2f846e6b1de55171dc76d7b9a0a4dfc7"
+}

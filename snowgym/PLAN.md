@@ -19,7 +19,7 @@ configuration on 2026-09-01.
 
 ## Milestones
 
-### R1m-S12 — E2 movement representability under dense supervision (declared 2026-09-13)
+### R1m-S12 — E2 movement representability under dense supervision (complete; egocentric frame wins 2026-09-13)
 
 Follow `training/reviews/m7b_r1m_s12_declaration.md`: the reviewer handoff's
 Experiment E2. Three arms share one frozen R1f source, one residual decoder,
@@ -28,14 +28,26 @@ and one controller-aware heading loss over a four-round DAgger loop: A
 a free control added to isolate frame from attention), and B (new
 `AttentionGeometryProbe`, egocentric pair features pooled by fighter-query
 attention). Evaluation is from-reset only (a stated deviation from the
-review's first-hit-anchored floor/ceiling; see the declaration). Supervised
-throughout; `autonomousQualificationEligible: false`. Budget 250,000
-simulator decisions. No provider calls, protocol changes, or checkpoint
-promotion.
+review's first-hit-anchored floor/ceiling; see the declaration).
+
+A-rel and B are statistically indistinguishable from each other (largest
+gap +5 points, every interval includes or touches zero) and both clearly
+beat A (replication-dev: A 31/40, A-rel 38/40, B 40/40; training: A 52/64,
+A-rel 58/64, B 61/64). Ceiling (teacher-forced, from reset) is 40/40; floor
+(zero-init) is 13/40 for all three arms identically. Zero rejected actions
+across 338,590 evaluated/collected actions. Decision, per the predeclared
+rule: **A-rel ~= B > A, the egocentric frame was the whole story.** E3 uses
+`relative=True`-style egocentric geometry; `AttentionGeometryProbe` is not
+carried forward. Used 194,958 of 250,000 budgeted decisions. See
+`training/reviews/m7b_r1m_s12_results.md` for the paired-bootstrap
+comparisons and two stated implementation gaps (ceiling/floor evaluated on
+one development split, not both; held-out heading error not measured --
+neither affects the decision).
 
 Implementation gate passed 367 TypeScript, 51 Python client and 350 Python
-training tests plus build. Collection has not yet run; see
-`training/reviews/m7b_r1m_s12_results.md` once archived.
+training tests plus build. Supervised throughout;
+`autonomousQualificationEligible: false`. No provider calls, protocol
+changes, or checkpoint promotion.
 
 ### R1m-S11 — E1 null-control and replication of S9-full (complete; null indistinguishable from real 2026-09-13)
 

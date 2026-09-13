@@ -1,0 +1,28 @@
+{
+  "assistType": "teacher-shot-direction-and-power",
+  "assistVersion": "snowgym.r1h-corrected-shots.v0",
+  "autonomousQualificationEligible": false,
+  "ceilingSuccesses": 40,
+  "developmentSuccesses": {
+    "A": 34,
+    "A-rel": 36,
+    "B": 36
+  },
+  "floorSuccesses": {
+    "A": 13,
+    "A-rel": 13,
+    "B": 13
+  },
+  "format": "snowgym.geometry-representation-report.v0",
+  "replicationSuccesses": {
+    "A": 31,
+    "A-rel": 38,
+    "B": 40
+  },
+  "simulatorDecisions": 194958,
+  "trainingSuccesses": {
+    "A": 52,
+    "A-rel": 58,
+    "B": 61
+  }
+}

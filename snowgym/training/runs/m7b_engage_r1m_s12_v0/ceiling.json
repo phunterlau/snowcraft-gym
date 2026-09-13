@@ -1,0 +1,362 @@
+[
+  {
+    "decisions": 118,
+    "progress": 0.8,
+    "rejectedActions": 0,
+    "seed": 200000,
+    "simulatorDecisions": 118,
+    "success": true,
+    "totalActions": 590
+  },
+  {
+    "decisions": 148,
+    "progress": 0.84,
+    "rejectedActions": 0,
+    "seed": 200001,
+    "simulatorDecisions": 148,
+    "success": true,
+    "totalActions": 740
+  },
+  {
+    "decisions": 116,
+    "progress": 0.84,
+    "rejectedActions": 0,
+    "seed": 200002,
+    "simulatorDecisions": 116,
+    "success": true,
+    "totalActions": 580
+  },
+  {
+    "decisions": 125,
+    "progress": 0.84,
+    "rejectedActions": 0,
+    "seed": 200003,
+    "simulatorDecisions": 125,
+    "success": true,
+    "totalActions": 625
+  },
+  {
+    "decisions": 150,
+    "progress": 0.8,
+    "rejectedActions": 0,
+    "seed": 200004,
+    "simulatorDecisions": 150,
+    "success": true,
+    "totalActions": 750
+  },
+  {
+    "decisions": 143,
+    "progress": 0.8,
+    "rejectedActions": 0,
+    "seed": 200005,
+    "simulatorDecisions": 143,
+    "success": true,
+    "totalActions": 715
+  },
+  {
+    "decisions": 115,
+    "progress": 0.8,
+    "rejectedActions": 0,
+    "seed": 200006,
+    "simulatorDecisions": 115,
+    "success": true,
+    "totalActions": 575
+  },
+  {
+    "decisions": 119,
+    "progress": 0.84,
+    "rejectedActions": 0,
+    "seed": 200007,
+    "simulatorDecisions": 119,
+    "success": true,
+    "totalActions": 595
+  },
+  {
+    "decisions": 116,
+    "progress": 0.8,
+    "rejectedActions": 0,
+    "seed": 200008,
+    "simulatorDecisions": 116,
+    "success": true,
+    "totalActions": 580
+  },
+  {
+    "decisions": 116,
+    "progress": 0.8,
+    "rejectedActions": 0,
+    "seed": 200009,
+    "simulatorDecisions": 116,
+    "success": true,
+    "totalActions": 580
+  },
+  {
+    "decisions": 139,
+    "progress": 0.8,
+    "rejectedActions": 0,
+    "seed": 200010,
+    "simulatorDecisions": 139,
+    "success": true,
+    "totalActions": 695
+  },
+  {
+    "decisions": 115,
+    "progress": 0.8,
+    "rejectedActions": 0,
+    "seed": 200011,
+    "simulatorDecisions": 115,
+    "success": true,
+    "totalActions": 575
+  },
+  {
+    "decisions": 127,
+    "progress": 0.8,
+    "rejectedActions": 0,
+    "seed": 200012,
+    "simulatorDecisions": 127,
+    "success": true,
+    "totalActions": 635
+  },
+  {
+    "decisions": 123,
+    "progress": 0.84,
+    "rejectedActions": 0,
+    "seed": 200013,
+    "simulatorDecisions": 123,
+    "success": true,
+    "totalActions": 615
+  },
+  {
+    "decisions": 136,
+    "progress": 0.8,
+    "rejectedActions": 0,
+    "seed": 200014,
+    "simulatorDecisions": 136,
+    "success": true,
+    "totalActions": 680
+  },
+  {
+    "decisions": 125,
+    "progress": 0.8,
+    "rejectedActions": 0,
+    "seed": 200015,
+    "simulatorDecisions": 125,
+    "success": true,
+    "totalActions": 625
+  },
+  {
+    "decisions": 115,
+    "progress": 0.8,
+    "rejectedActions": 0,
+    "seed": 200016,
+    "simulatorDecisions": 115,
+    "success": true,
+    "totalActions": 575
+  },
+  {
+    "decisions": 133,
+    "progress": 0.8,
+    "rejectedActions": 0,
+    "seed": 200017,
+    "simulatorDecisions": 133,
+    "success": true,
+    "totalActions": 665
+  },
+  {
+    "decisions": 123,
+    "progress": 0.8,
+    "rejectedActions": 0,
+    "seed": 200018,
+    "simulatorDecisions": 123,
+    "success": true,
+    "totalActions": 615
+  },
+  {
+    "decisions": 130,
+    "progress": 0.8,
+    "rejectedActions": 0,
+    "seed": 200019,
+    "simulatorDecisions": 130,
+    "success": true,
+    "totalActions": 650
+  },
+  {
+    "decisions": 119,
+    "progress": 0.84,
+    "rejectedActions": 0,
+    "seed": 200020,
+    "simulatorDecisions": 119,
+    "success": true,
+    "totalActions": 595
+  },
+  {
+    "decisions": 133,
+    "progress": 0.8,
+    "rejectedActions": 0,
+    "seed": 200021,
+    "simulatorDecisions": 133,
+    "success": true,
+    "totalActions": 665
+  },
+  {
+    "decisions": 115,
+    "progress": 0.8,
+    "rejectedActions": 0,
+    "seed": 200022,
+    "simulatorDecisions": 115,
+    "success": true,
+    "totalActions": 575
+  },
+  {
+    "decisions": 126,
+    "progress": 0.84,
+    "rejectedActions": 0,
+    "seed": 200023,
+    "simulatorDecisions": 126,
+    "success": true,
+    "totalActions": 630
+  },
+  {
+    "decisions": 119,
+    "progress": 0.84,
+    "rejectedActions": 0,
+    "seed": 200024,
+    "simulatorDecisions": 119,
+    "success": true,
+    "totalActions": 595
+  },
+  {
+    "decisions": 127,
+    "progress": 0.8,
+    "rejectedActions": 0,
+    "seed": 200025,
+    "simulatorDecisions": 127,
+    "success": true,
+    "totalActions": 635
+  },
+  {
+    "decisions": 120,
+    "progress": 0.8,
+    "rejectedActions": 0,
+    "seed": 200026,
+    "simulatorDecisions": 120,
+    "success": true,
+    "totalActions": 600
+  },
+  {
+    "decisions": 164,
+    "progress": 0.8,
+    "rejectedActions": 0,
+    "seed": 200027,
+    "simulatorDecisions": 164,
+    "success": true,
+    "totalActions": 820
+  },
+  {
+    "decisions": 119,
+    "progress": 0.8,
+    "rejectedActions": 0,
+    "seed": 200028,
+    "simulatorDecisions": 119,
+    "success": true,
+    "totalActions": 595
+  },
+  {
+    "decisions": 125,
+    "progress": 0.84,
+    "rejectedActions": 0,
+    "seed": 200029,
+    "simulatorDecisions": 125,
+    "success": true,
+    "totalActions": 625
+  },
+  {
+    "decisions": 153,
+    "progress": 0.8,
+    "rejectedActions": 0,
+    "seed": 200030,
+    "simulatorDecisions": 153,
+    "success": true,
+    "totalActions": 765
+  },
+  {
+    "decisions": 109,
+    "progress": 0.8,
+    "rejectedActions": 0,
+    "seed": 200031,
+    "simulatorDecisions": 109,
+    "success": true,
+    "totalActions": 545
+  },
+  {
+    "decisions": 127,
+    "progress": 0.8,
+    "rejectedActions": 0,
+    "seed": 200032,
+    "simulatorDecisions": 127,
+    "success": true,
+    "totalActions": 635
+  },
+  {
+    "decisions": 128,
+    "progress": 0.8,
+    "rejectedActions": 0,
+    "seed": 200033,
+    "simulatorDecisions": 128,
+    "success": true,
+    "totalActions": 640
+  },
+  {
+    "decisions": 127,
+    "progress": 0.84,
+    "rejectedActions": 0,
+    "seed": 200034,
+    "simulatorDecisions": 127,
+    "success": true,
+    "totalActions": 635
+  },
+  {
+    "decisions": 118,
+    "progress": 0.8,
+    "rejectedActions": 0,
+    "seed": 200035,
+    "simulatorDecisions": 118,
+    "success": true,
+    "totalActions": 590
+  },
+  {
+    "decisions": 127,
+    "progress": 0.8,
+    "rejectedActions": 0,
+    "seed": 200036,
+    "simulatorDecisions": 127,
+    "success": true,
+    "totalActions": 635
+  },
+  {
+    "decisions": 118,
+    "progress": 0.8,
+    "rejectedActions": 0,
+    "seed": 200037,
+    "simulatorDecisions": 118,
+    "success": true,
+    "totalActions": 590
+  },
+  {
+    "decisions": 129,
+    "progress": 0.8,
+    "rejectedActions": 0,
+    "seed": 200038,
+    "simulatorDecisions": 129,
+    "success": true,
+    "totalActions": 645
+  },
+  {
+    "decisions": 124,
+    "progress": 0.8,
+    "rejectedActions": 0,
+    "seed": 200039,
+    "simulatorDecisions": 124,
+    "success": true,
+    "totalActions": 620
+  }
+]
