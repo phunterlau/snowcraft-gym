@@ -115,15 +115,21 @@ noise-tolerant execution without genuine placement improvement.
 ## Budget and gates
 
 Preflight zero-residual parity on all 131 frames, once. Five training runs at
-S9-full's per-run cost (~43,000 decisions each ≈ 215,000), five paired dev
-evaluations (~44,000), one shared initializer dev/training baseline (~9,000),
-five-plus-one training-frame deterministic evaluations for measurement 5
-(~34,000), six stochastic historical evaluations for measurement 6 (~54,000
-across initializer + 5 new + 1 archived-reused). Declared cap: 450,000
-simulator decisions, enforced by an `account()` guard that raises before it is
-exceeded. No qualification seeds, provider calls, browser input, or protocol
-changes. Stopping rule: one pass, six new runs' worth of collection (five
-training runs plus the shared initializer baseline); no extra seeds,
+S9-full's per-run cost, five paired dev evaluations, one shared initializer
+dev/training baseline, five-plus-one training-frame deterministic evaluations
+for measurement 5, six stochastic historical evaluations for measurement 6
+(across initializer + 5 new + 1 archived-reused). The first attempt at this
+budget (450,000, extrapolated from S9's own per-run figures) undercounted:
+"full" episodes here run closer to the option's full remaining horizon than
+that estimate assumed, and the five training runs plus their evaluations
+alone used 444,484 decisions before measurements 5-6 for the archived point
+had even run. Revised declared cap: 550,000 simulator decisions, enforced by
+an `account()` guard that raises before it is exceeded; this is a corrected
+resource estimate caught by running the implementation, not a change to the
+protocol, measurements, arms, or seeds above. No qualification seeds,
+provider calls, browser input, or other protocol changes. Stopping rule: one
+pass, six new runs' worth of collection (five training runs plus the shared
+initializer baseline); no extra seeds,
 configurations, or additional measurements beyond 1–6.
 
 Before implementation and results commits: targeted `horizon_null_train`

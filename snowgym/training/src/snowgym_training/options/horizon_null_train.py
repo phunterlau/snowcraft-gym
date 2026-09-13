@@ -38,7 +38,7 @@ def configuration():
         "realTrainingRngs": [99302, 99303], "nullTrainingRngs": [99301, 99302, 99303],
         "reusedRealTrainingRng": 99301, "permutationTag": hex(PERMUTATION_TAG),
         "stochasticDraws": 2, "stochasticSeedBase": STOCHASTIC_TAG, "gapThreshold": 4.,
-        "simulatorBudget": 450000}
+        "simulatorBudget": 550000}
 
 
 def inputs():
