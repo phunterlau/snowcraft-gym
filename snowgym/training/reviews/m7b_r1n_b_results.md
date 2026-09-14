@@ -15,6 +15,10 @@ and collection ran afterwards from `45a66c9`.
 No actor was trained, no checkpoint was promoted, and nothing below
 authorizes a Phase D branch.
 
+An [erratum](#erratum-2026-09-13-the-seed-bands-were-not-fresh-repository-wide)
+at the end corrects the claim that the seed bands were fresh. No result
+changes, but the archive fails the selective-repair seed preflight.
+
 ## Headline
 
 1. **The repaired critic gate passes in all six arm/RNG configurations**, with
@@ -278,3 +282,49 @@ Background for this design (not evidence from this run):
 - All per-seed comparisons and distance statistics in §§1–3 were recomputed
   from the archived `episodes.jsonl`, `trajectory-distances.npz`, and
   `critic-warm-start-arrays.npz`.
+- `npm test` was not re-run after the archive was written. See the erratum.
+
+## Erratum (2026-09-13): the seed bands were not fresh repository-wide
+
+The declaration and `PLAN.md` called 620000–620099, 630000+, and 640000+
+fresh. They were checked only against training constants and run
+declarations, not against the orchestration diagnostics. Two bands overlap
+seeds those diagnostics used on 2026-09-05, before R1n-b:
+
+| R1n-b band (1v1, 100×80, `RandomAgent` red) | Earlier use of overlapping seeds |
+| --- | --- |
+| C1/C2 calibration 620000–620099 | 620001–620004: commander recovery scan cases in `orchestration/recovery/RecoveryBenchmark.ts` (5v5 open; 5v5, 10v10, and 6v10 on arena6; scripted red) |
+| C3 train fold for RNG 98001, both arms: 630000–630255 | 630000–630119: the selective-repair mechanism audit's reserved fresh cohort (5v5, 10v10, and 6v10 on arena6), sealed in `orchestration/recovery/examples/selective-repair-20260905-v0` |
+
+The other C3 folds (631000–632255 and 640000–642127) are clear. This was
+confirmed from each fold's archived `trainSeed`/`heldOutSeed` arrays and a
+numeric scan of every JSON, TypeScript, Python, and Markdown file under
+`snowgym/` and `refs/`.
+
+**Effect on results: none.**
+- The overlapping seeds drive different scenario configurations (roster,
+  map, red policy), so no episode is shared.
+- No data, labels, or models pass between the experiments.
+- Neither set is a qualification set.
+- The audit was sealed eight days earlier and is not re-run.
+
+**Effect on tooling:**
+- `selective-repair-audit.ts --preflight` scans every JSON seed field under
+  `snowgym/` and `refs/`. It now stops on this archive's
+  `declaration.json` (`.config.trainSeedBase` 630000).
+- As a result, `SelectiveRepair.test.ts` ("runs the CLI preflight without
+  credentials or new episodes and verifies it") has failed since `b6b288d`.
+  `npm test` reports 366 of 367.
+- The pre-collection gate at `45a66c9` passed because the archive did not
+  exist yet.
+- The preflight CLI, `MechanismArtifacts.ts`, and the test file are all
+  digest-pinned by R1m-S1/S2/S3/S5/S6, which pin every `.ts` and `.py` file
+  under `snowgym/` and `src/`. Editing any of them fails
+  `test_boundary_probe.py` with "archived S3 source changed", and this archive
+  is sealed. **The repair is therefore a pending decision, not part of this
+  erratum.**
+
+**Process change** (applied from R1n-c on):
+- New seed bands are checked with `auditSeedDocuments` and a repository-wide
+  numeric scan that includes orchestration constants.
+- `npm test` is re-run after any archive is written.

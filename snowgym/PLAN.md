@@ -113,7 +113,11 @@ before first contact.
   - contact rates for the floor and random-init policies;
   - the corrected warm start for 2 arms × RNGs 98001–98003.
 
-  The seeds are fresh bands: 620000–620099, 630000+, and 640000+.
+  The seeds were declared as fresh bands: 620000–620099, 630000+, and
+  640000+. **Erratum:** 620001–620004 and 630000–630119 had already been
+  used by orchestration diagnostics in other scenarios. No result is
+  affected, but the selective-repair preflight test fails; see the results
+  note.
 - **D research**, reported only: contact signal for a repaired E3b, offline
   potential statistics for approach shaping, and teacher availability and
   label representability for BC/DAgger-first.
