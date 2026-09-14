@@ -1,0 +1,16 @@
+{
+  "blueDeathFraction": 0.11,
+  "completionDecisionP50": 118.0,
+  "completionDecisionP95": 145.0,
+  "contactFraction": 0.94,
+  "episodes": 100,
+  "firstHitDecisionP50": 100.0,
+  "firstHitDecisionP95": 121.35,
+  "rejectedActionRate": 0.0,
+  "rejectedActions": 0,
+  "role": "plan-blind reference, not a ceiling",
+  "successFraction": 0.89,
+  "successes": 89,
+  "suggestedHorizon": 218,
+  "totalActions": 12017
+}

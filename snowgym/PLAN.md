@@ -19,7 +19,37 @@ configuration on 2026-09-01.
 
 ## Milestones
 
-### R1n-b — E3 contract repair and pre-actor diagnostics (declared and implemented 2026-09-13; collection pending)
+### R1n-b — E3 contract repair and pre-actor diagnostics (complete 2026-09-13; recommends D3 with the global decoder)
+
+**Results** (`training/reviews/m7b_r1n_b_results.md`; archive
+`runs/m7b_engage_r1n_b_v0`, 504,771 of 600,000 decisions, 46/46 manifest
+digests verified):
+
+- **Critic gate repaired.** The corrected critic passed in all 6 arm/RNG
+  configurations, with predictive R² 0.989–0.999 where E3 reported −61 to
+  −511. But the passing target is almost entirely a function of time, so the
+  gate certifies clock reading only. A future branch must re-verify its critic
+  on its own policy's episodes.
+- **Untrained fighters never make contact:** 0 hits in 2,304 random-init
+  episodes, and the floor was 0/100. Frozen-reward PPO from scratch (D1) has no
+  damage-dealing signal. In the global arm the only non-clock signal is being
+  hit, which penalizes approach.
+- **Local vs global explore differently despite matched commanded noise**
+  (about 2.2 world units each): local never came closer than 14.6 world units;
+  global came within throw range 6 times and died 9 times.
+- **1v1 teacher ceiling:** the plan teacher wins 89/100 with 0 rejections;
+  every failure is a blue death. 77% of its MOVE labels are beyond local reach,
+  with none saturated. At roster 1 it behaves identically to `SimpleBlueAgent`,
+  so the plan input is uninformative there.
+- **Horizon:** 1.5× teacher p95 would be 216, versus the frozen 200.
+
+The predeclared rules give D3 for both arms. Read with the label audit, the
+recommendation is D3 with the global decoder: an artifact-retaining BC/DAgger
+stage, then KL-anchored frozen-reward PPO with a re-warm-started critic, a
+second contrasting mission before any plan-following claim, and leave-one-out
+ablations. This needs its own declaration.
+
+**Status before collection:** declared and implemented.
 
 Follow `training/reviews/m7b_r1n_b_declaration.md`. The declaration (`365f67f`)
 and its tested implementation are committed; pre-collection amendments A1–A8

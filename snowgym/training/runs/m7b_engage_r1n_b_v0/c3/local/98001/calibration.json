@@ -1,0 +1,15 @@
+{
+  "draws": 64,
+  "moveClampedFraction": 0.0,
+  "moveDisplacementWorld": {
+    "median": 2.1857831478118896,
+    "p90": 3.794149875640869
+  },
+  "moveSaturatedFraction": 0.0,
+  "states": 1024,
+  "throwAngleDefinedSamples": 65536,
+  "throwAngularDeviationDegrees": {
+    "median": 2.1548590660095215,
+    "p90": 5.253241062164307
+  }
+}

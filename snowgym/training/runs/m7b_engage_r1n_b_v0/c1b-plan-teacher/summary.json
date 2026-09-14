@@ -1,0 +1,18 @@
+{
+  "assistance": "none (coded production teacher)",
+  "blueDeathFraction": 0.11,
+  "completionDecisionP50": 120.0,
+  "completionDecisionP95": 143.79999999999998,
+  "contactFraction": 0.94,
+  "episodes": 100,
+  "firstHitDecisionP50": 100.0,
+  "firstHitDecisionP95": 121.35,
+  "observationVersion": 3,
+  "rejectedActionRate": 0.0,
+  "rejectedActions": 0,
+  "successFraction": 0.89,
+  "successes": 89,
+  "suggestedHorizon": 216,
+  "task": "Engage option success (target <= 20% health)",
+  "totalActions": 12130
+}

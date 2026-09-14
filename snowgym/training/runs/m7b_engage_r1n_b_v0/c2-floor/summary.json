@@ -1,0 +1,15 @@
+{
+  "blueDeathFraction": 0.0,
+  "completionDecisionP50": null,
+  "completionDecisionP95": null,
+  "contactFraction": 0.0,
+  "episodes": 100,
+  "firstHitDecisionP50": null,
+  "firstHitDecisionP95": null,
+  "rejectedActionRate": 0.0,
+  "rejectedActions": 0,
+  "successFraction": 0.0,
+  "successes": 0,
+  "suggestedHorizon": null,
+  "totalActions": 20000
+}

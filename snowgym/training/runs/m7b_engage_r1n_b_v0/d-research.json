@@ -1,0 +1,138 @@
+{
+  "D1": {
+    "global": {
+      "contactFraction": 0.0,
+      "episodes": 1152,
+      "firstHitDecisionP50": null,
+      "firstHitDecisionP95": null,
+      "successFraction": 0.0
+    },
+    "local": {
+      "contactFraction": 0.0,
+      "episodes": 1152,
+      "firstHitDecisionP50": null,
+      "firstHitDecisionP95": null,
+      "successFraction": 0.0
+    }
+  },
+  "D2": {
+    "floor": {
+      "computed": true,
+      "dStarWorld": 7.325155378281358,
+      "earlyPotentialContactPointBiserial": null,
+      "episodes": 100,
+      "meanAbsolutePotentialChange": 0.002284279190302981,
+      "nonzeroShapingFraction": 1.0,
+      "potentialChangeFraction": 0.984321608040201,
+      "preContactTransitions": 19900
+    },
+    "randomInit-global": {
+      "computed": true,
+      "dStarWorld": 7.325155378281358,
+      "earlyPotentialContactPointBiserial": null,
+      "episodes": 1152,
+      "meanAbsolutePotentialChange": 0.0024891691758851505,
+      "nonzeroShapingFraction": 0.999611467387271,
+      "potentialChangeFraction": 0.9846202202848948,
+      "preContactTransitions": 229067
+    },
+    "randomInit-local": {
+      "computed": true,
+      "dStarWorld": 7.325155378281358,
+      "earlyPotentialContactPointBiserial": null,
+      "episodes": 1152,
+      "meanAbsolutePotentialChange": 0.002006894064387526,
+      "nonzeroShapingFraction": 1.0,
+      "potentialChangeFraction": 0.9855571259073144,
+      "preContactTransitions": 229248
+    },
+    "teacher": {
+      "computed": true,
+      "dStarWorld": 7.325155378281358,
+      "earlyPotentialContactPointBiserial": -0.0895663635609964,
+      "episodes": 100,
+      "meanAbsolutePotentialChange": 0.004194892512971393,
+      "nonzeroShapingFraction": 0.9906256167357411,
+      "potentialChangeFraction": 0.9906256167357411,
+      "preContactTransitions": 10134
+    }
+  },
+  "D3": {
+    "labelAudit": {
+      "actionTypeCounts": {
+        "hold": 494,
+        "move": 10092,
+        "noop": 1141,
+        "throw": 403
+      },
+      "labelsPerSecondHardwareSpecific": 34428.024973304695,
+      "moveBeyondLocalReachFraction": 0.7710067380103052,
+      "moveDistanceWorld": {
+        "median": 24.14440995979136,
+        "p90": 48.368403968956024
+      },
+      "moveLabels": 10092,
+      "moveSaturatedFraction": 0.0,
+      "throwAimDistanceWorld": {
+        "median": 7.317161167398613,
+        "p90": 8.738448397050917
+      },
+      "throwLabels": 403,
+      "throwPower": {
+        "median": 0.799018645393763,
+        "p10": 0.7366930666558905,
+        "p90": 0.9686217481303774
+      },
+      "throwSaturatedFraction": 0.0,
+      "throwTargetDistanceMedianWorld": 7.325155378281358
+    },
+    "preconditionPassed": true,
+    "teacher": {
+      "blueDeathFraction": 0.11,
+      "completionDecisionP50": 120.0,
+      "completionDecisionP95": 143.79999999999998,
+      "contactFraction": 0.94,
+      "episodes": 100,
+      "firstHitDecisionP50": 100.0,
+      "firstHitDecisionP95": 121.35,
+      "rejectedActionRate": 0.0,
+      "rejectedActions": 0,
+      "successFraction": 0.89,
+      "successes": 89,
+      "suggestedHorizon": 216,
+      "totalActions": 12130
+    }
+  },
+  "calibration": {
+    "global": {
+      "draws": 64,
+      "moveClampedFraction": 0.0,
+      "moveDisplacementWorld": {
+        "median": 2.283172607421875,
+        "p90": 4.155908584594727
+      },
+      "moveSaturatedFraction": 0.0,
+      "states": 1024,
+      "throwAngleDefinedSamples": 65536,
+      "throwAngularDeviationDegrees": {
+        "median": 2.2173497676849365,
+        "p90": 5.427008628845215
+      }
+    },
+    "local": {
+      "draws": 64,
+      "moveClampedFraction": 0.0,
+      "moveDisplacementWorld": {
+        "median": 2.1857831478118896,
+        "p90": 3.794149875640869
+      },
+      "moveSaturatedFraction": 0.0,
+      "states": 1024,
+      "throwAngleDefinedSamples": 65536,
+      "throwAngularDeviationDegrees": {
+        "median": 2.1548590660095215,
+        "p90": 5.253241062164307
+      }
+    }
+  }
+}

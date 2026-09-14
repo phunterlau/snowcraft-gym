@@ -1,0 +1,82 @@
+{
+  "assistType": "none",
+  "assistVersion": "snowgym.full-authority.v1",
+  "autonomousQualificationEligible": false,
+  "config": {
+    "actorGradClip": 0.5,
+    "arms": [
+      "local",
+      "global"
+    ],
+    "assistType": "none",
+    "assistVersion": "snowgym.full-authority.v1",
+    "autonomousQualificationEligible": false,
+    "blockWorlds": 64,
+    "bootstrapSamples": 10000,
+    "bootstrapSeed": 981001,
+    "calibrationDraws": 64,
+    "calibrationRows": 1024,
+    "calibrationSeed": 982001,
+    "calibrationSeeds": [
+      620000,
+      620099
+    ],
+    "clipRatio": 0.2,
+    "contactAdequateFraction": 0.25,
+    "criticEpochs": 4,
+    "criticGradClip": 0.5,
+    "diagnosticBlockWorlds": 50,
+    "entropyWeight": 0.01,
+    "epochs": 4,
+    "floorRng": 981002,
+    "format": "snowgym.full-authority-diagnostics.v0",
+    "gaeLambda": 0.9885140204,
+    "gamma": 0.9976921765,
+    "gateMinPredictiveR2": 0.25,
+    "gateTimeOnlyMargin": 0.05,
+    "heldOutSeedBase": 640000,
+    "initialPowerLogStd": -1.0,
+    "labelBeyondRadiusFlagFraction": 0.2,
+    "learningRate": 0.0003,
+    "localRadius": 8.0,
+    "localReachWorld": 8.0,
+    "minibatchSize": 512,
+    "movementKlStop": 0.01,
+    "optionHorizon": 200,
+    "potentialFirstDecisions": 50,
+    "preconditionDecisions": 5,
+    "roster": 1,
+    "seedBandStride": 1000,
+    "simulatorBudget": 600000,
+    "targetWorldSigma": 2.0,
+    "teacherMaxRejectedRate": 0.001,
+    "teacherMinSuccessFraction": 0.8,
+    "timeBins": 20,
+    "trainSeedBase": 630000,
+    "trainingRngs": [
+      98001,
+      98002,
+      98003
+    ],
+    "warmStartEpochs": 10,
+    "warmStartHeldOutEpisodes": 128,
+    "warmStartTrainEpisodes": 256
+  },
+  "declarationDigest": "sha256:fe551fe37415a245c31474022d961cf5275fb7046c95556324c55cd215d3eaf5",
+  "diagnosticsImplementationDigest": "sha256:cbcbfea37a19c8bf4b71d9ba4c4b7c8752f10b63156641d7dfa2cac604106f71",
+  "gitCommit": "45a66c962662e9006e6c4355768e9ee1ea0c95e5",
+  "pinnedE3Digests": {
+    "implementationDigest": {
+      "archived": "sha256:f1b06b98ecd8bfb9565ef6ee7dc7e2080d0284fb202b3abf81b9cc5a739dff1a",
+      "current": "sha256:f1b06b98ecd8bfb9565ef6ee7dc7e2080d0284fb202b3abf81b9cc5a739dff1a",
+      "match": true
+    },
+    "policyImplementationDigest": {
+      "archived": "sha256:90204be55b8ad93b31b481bed387266c6e0c48c410dd458279f8c19b0c4a028f",
+      "current": "sha256:90204be55b8ad93b31b481bed387266c6e0c48c410dd458279f8c19b0c4a028f",
+      "match": true
+    }
+  },
+  "policyImplementationDigest": "sha256:311081e7eaec52bed81676c66db3a7ce6133795486aeb13b00dce2d7ef788522",
+  "trainImplementationDigest": "sha256:e6ac48c30aac8c6eb119e196ccc2a415f81ae731adbdb36b69f7fa69e8f7d7c4"
+}

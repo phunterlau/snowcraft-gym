@@ -1,0 +1,28 @@
+{
+  "actionTypeCounts": {
+    "hold": 494,
+    "move": 10092,
+    "noop": 1141,
+    "throw": 403
+  },
+  "labelsPerSecondHardwareSpecific": 34428.024973304695,
+  "moveBeyondLocalReachFraction": 0.7710067380103052,
+  "moveDistanceWorld": {
+    "median": 24.14440995979136,
+    "p90": 48.368403968956024
+  },
+  "moveLabels": 10092,
+  "moveSaturatedFraction": 0.0,
+  "throwAimDistanceWorld": {
+    "median": 7.317161167398613,
+    "p90": 8.738448397050917
+  },
+  "throwLabels": 403,
+  "throwPower": {
+    "median": 0.799018645393763,
+    "p10": 0.7366930666558905,
+    "p90": 0.9686217481303774
+  },
+  "throwSaturatedFraction": 0.0,
+  "throwTargetDistanceMedianWorld": 7.325155378281358
+}

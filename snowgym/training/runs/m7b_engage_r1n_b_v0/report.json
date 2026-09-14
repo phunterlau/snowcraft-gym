@@ -1,0 +1,685 @@
+{
+  "assistType": "none",
+  "autonomousQualificationEligible": false,
+  "c1aPrecondition": {
+    "decisions": 5,
+    "error": null,
+    "passed": true,
+    "rejectedActions": 0
+  },
+  "c1bPlanTeacher": {
+    "blueDeathFraction": 0.11,
+    "completionDecisionP50": 120.0,
+    "completionDecisionP95": 143.79999999999998,
+    "contactFraction": 0.94,
+    "episodes": 100,
+    "firstHitDecisionP50": 100.0,
+    "firstHitDecisionP95": 121.35,
+    "rejectedActionRate": 0.0,
+    "rejectedActions": 0,
+    "successFraction": 0.89,
+    "successes": 89,
+    "suggestedHorizon": 216,
+    "totalActions": 12130
+  },
+  "c1cScripted": {
+    "blueDeathFraction": 0.11,
+    "completionDecisionP50": 118.0,
+    "completionDecisionP95": 145.0,
+    "contactFraction": 0.94,
+    "episodes": 100,
+    "firstHitDecisionP50": 100.0,
+    "firstHitDecisionP95": 121.35,
+    "rejectedActionRate": 0.0,
+    "rejectedActions": 0,
+    "successFraction": 0.89,
+    "successes": 89,
+    "suggestedHorizon": 218,
+    "totalActions": 12017
+  },
+  "c2Floor": {
+    "blueDeathFraction": 0.0,
+    "completionDecisionP50": null,
+    "completionDecisionP95": null,
+    "contactFraction": 0.0,
+    "episodes": 100,
+    "firstHitDecisionP50": null,
+    "firstHitDecisionP95": null,
+    "rejectedActionRate": 0.0,
+    "rejectedActions": 0,
+    "successFraction": 0.0,
+    "successes": 0,
+    "suggestedHorizon": null,
+    "totalActions": 20000
+  },
+  "c3WarmStart": {
+    "global": {
+      "98001": {
+        "clockSkillScore": -1.9161268040518613,
+        "explainedVariance": 0.9926650677669013,
+        "gateConditions": {
+          "absolutePassed": true,
+          "bindingThreshold": 0.9474692478526182,
+          "clockRelativePassed": true
+        },
+        "gatePassed": true,
+        "heldOutEpisodes": 128,
+        "heldOutRows": 25600,
+        "heldOutTargetVariance": 0.01139636880604368,
+        "meanResidual": -0.000716618774458766,
+        "predictiveR2": 0.9926200058286081,
+        "predictiveR2Interval95": [
+          0.9921870641879603,
+          0.9930330754158107
+        ],
+        "randomInitOutcomes": {
+          "blueDeathFraction": 0.0,
+          "completionDecisionP50": null,
+          "completionDecisionP95": null,
+          "contactFraction": 0.0,
+          "episodes": 384,
+          "firstHitDecisionP50": null,
+          "firstHitDecisionP95": null,
+          "rejectedActionRate": 0.0,
+          "rejectedActions": 0,
+          "successFraction": 0.0,
+          "successes": 0,
+          "suggestedHorizon": null,
+          "totalActions": 76800
+        },
+        "simulatorDecisions": 76800,
+        "timeOnlyR2": 0.9974692478526183,
+        "trainEpisodes": 256,
+        "trainRows": 51200,
+        "untrainedPredictiveR2": -37.845786699095726
+      },
+      "98002": {
+        "clockSkillScore": 0.16572246226657905,
+        "explainedVariance": 0.9914635485638411,
+        "gateConditions": {
+          "absolutePassed": true,
+          "bindingThreshold": 0.9396552829819771,
+          "clockRelativePassed": true
+        },
+        "gatePassed": true,
+        "heldOutEpisodes": 128,
+        "heldOutRows": 25586,
+        "heldOutTargetVariance": 0.011400472537875829,
+        "meanResidual": 0.0010347267698572584,
+        "predictiveR2": 0.9913696349576548,
+        "predictiveR2Interval95": [
+          0.9786079946282603,
+          0.9982792436089211
+        ],
+        "randomInitOutcomes": {
+          "blueDeathFraction": 0.005208333333333333,
+          "completionDecisionP50": null,
+          "completionDecisionP95": null,
+          "contactFraction": 0.0,
+          "episodes": 384,
+          "firstHitDecisionP50": null,
+          "firstHitDecisionP95": null,
+          "rejectedActionRate": 0.0,
+          "rejectedActions": 0,
+          "successFraction": 0.0,
+          "successes": 0,
+          "suggestedHorizon": null,
+          "totalActions": 76775
+        },
+        "simulatorDecisions": 76775,
+        "timeOnlyR2": 0.9896552829819771,
+        "trainEpisodes": 256,
+        "trainRows": 51189,
+        "untrainedPredictiveR2": -50.03541367384631
+      },
+      "98003": {
+        "clockSkillScore": 0.18400737877856876,
+        "explainedVariance": 0.9893315793031526,
+        "gateConditions": {
+          "absolutePassed": true,
+          "bindingThreshold": 0.9368893703801405,
+          "clockRelativePassed": true
+        },
+        "gatePassed": true,
+        "heldOutEpisodes": 128,
+        "heldOutRows": 25572,
+        "heldOutTargetVariance": 0.011420638345519814,
+        "meanResidual": 0.0005829548115053778,
+        "predictiveR2": 0.9893018229706275,
+        "predictiveR2Interval95": [
+          0.9770022392486718,
+          0.9959114632607559
+        ],
+        "randomInitOutcomes": {
+          "blueDeathFraction": 0.018229166666666668,
+          "completionDecisionP50": null,
+          "completionDecisionP95": null,
+          "contactFraction": 0.0,
+          "episodes": 384,
+          "firstHitDecisionP50": null,
+          "firstHitDecisionP95": null,
+          "rejectedActionRate": 0.0,
+          "rejectedActions": 0,
+          "successFraction": 0.0,
+          "successes": 0,
+          "suggestedHorizon": null,
+          "totalActions": 76644
+        },
+        "simulatorDecisions": 76644,
+        "timeOnlyR2": 0.9868893703801406,
+        "trainEpisodes": 256,
+        "trainRows": 51072,
+        "untrainedPredictiveR2": -55.79583962017753
+      }
+    },
+    "local": {
+      "98001": {
+        "clockSkillScore": -1.511638122000654,
+        "explainedVariance": 0.993815311863843,
+        "gateConditions": {
+          "absolutePassed": true,
+          "bindingThreshold": 0.9474722354871329,
+          "clockRelativePassed": true
+        },
+        "gatePassed": true,
+        "heldOutEpisodes": 128,
+        "heldOutRows": 25600,
+        "heldOutTargetVariance": 0.01139636880604368,
+        "meanResidual": 0.001367705361917615,
+        "predictiveR2": 0.9936511702860428,
+        "predictiveR2Interval95": [
+          0.9930843454111773,
+          0.994184349502651
+        ],
+        "randomInitOutcomes": {
+          "blueDeathFraction": 0.0,
+          "completionDecisionP50": null,
+          "completionDecisionP95": null,
+          "contactFraction": 0.0,
+          "episodes": 384,
+          "firstHitDecisionP50": null,
+          "firstHitDecisionP95": null,
+          "rejectedActionRate": 0.0,
+          "rejectedActions": 0,
+          "successFraction": 0.0,
+          "successes": 0,
+          "suggestedHorizon": null,
+          "totalActions": 76800
+        },
+        "simulatorDecisions": 76800,
+        "timeOnlyR2": 0.9974722354871329,
+        "trainEpisodes": 256,
+        "trainRows": 51200,
+        "untrainedPredictiveR2": -37.50538748917833
+      },
+      "98002": {
+        "clockSkillScore": 0.629102854525333,
+        "explainedVariance": 0.999148737059995,
+        "gateConditions": {
+          "absolutePassed": true,
+          "bindingThreshold": 0.9474722354871329,
+          "clockRelativePassed": true
+        },
+        "gatePassed": true,
+        "heldOutEpisodes": 128,
+        "heldOutRows": 25600,
+        "heldOutTargetVariance": 0.01139636880604368,
+        "meanResidual": 0.0009915909008122981,
+        "predictiveR2": 0.9990624593577454,
+        "predictiveR2Interval95": [
+          0.998979757279318,
+          0.9991306630140206
+        ],
+        "randomInitOutcomes": {
+          "blueDeathFraction": 0.0,
+          "completionDecisionP50": null,
+          "completionDecisionP95": null,
+          "contactFraction": 0.0,
+          "episodes": 384,
+          "firstHitDecisionP50": null,
+          "firstHitDecisionP95": null,
+          "rejectedActionRate": 0.0,
+          "rejectedActions": 0,
+          "successFraction": 0.0,
+          "successes": 0,
+          "suggestedHorizon": null,
+          "totalActions": 76800
+        },
+        "simulatorDecisions": 76800,
+        "timeOnlyR2": 0.9974722354871329,
+        "trainEpisodes": 256,
+        "trainRows": 51200,
+        "untrainedPredictiveR2": -50.32073068312764
+      },
+      "98003": {
+        "clockSkillScore": 0.08753241138846712,
+        "explainedVariance": 0.9977238693228077,
+        "gateConditions": {
+          "absolutePassed": true,
+          "bindingThreshold": 0.9474722354871329,
+          "clockRelativePassed": true
+        },
+        "gatePassed": true,
+        "heldOutEpisodes": 128,
+        "heldOutRows": 25600,
+        "heldOutTargetVariance": 0.01139636880604368,
+        "meanResidual": -0.0005883335391990841,
+        "predictiveR2": 0.9976934968103665,
+        "predictiveR2Interval95": [
+          0.9974867813512777,
+          0.9978771547407896
+        ],
+        "randomInitOutcomes": {
+          "blueDeathFraction": 0.0,
+          "completionDecisionP50": null,
+          "completionDecisionP95": null,
+          "contactFraction": 0.0,
+          "episodes": 384,
+          "firstHitDecisionP50": null,
+          "firstHitDecisionP95": null,
+          "rejectedActionRate": 0.0,
+          "rejectedActions": 0,
+          "successFraction": 0.0,
+          "successes": 0,
+          "suggestedHorizon": null,
+          "totalActions": 76800
+        },
+        "simulatorDecisions": 76800,
+        "timeOnlyR2": 0.9974722354871329,
+        "trainEpisodes": 256,
+        "trainRows": 51200,
+        "untrainedPredictiveR2": -55.9557303286653
+      }
+    }
+  },
+  "capabilities": {
+    "actions": {
+      "semantics": {
+        "coordinates": "world-space",
+        "hold": "cancels-current-movement-order",
+        "noop": "does-not-cancel-current-movement-order",
+        "omittedUnits": "retain-current-movement-order",
+        "powerRange": [
+          0,
+          1
+        ]
+      },
+      "teamField": "actions",
+      "types": {
+        "hold": {
+          "required": [
+            "type",
+            "unitId"
+          ]
+        },
+        "move": {
+          "required": [
+            "type",
+            "unitId",
+            "x",
+            "y"
+          ]
+        },
+        "noop": {
+          "required": [
+            "type",
+            "unitId"
+          ]
+        },
+        "throw": {
+          "required": [
+            "type",
+            "unitId",
+            "x",
+            "y",
+            "power"
+          ]
+        }
+      }
+    },
+    "apiVersion": "snowgym.v0",
+    "endpoints": {
+      "activatePlan": {
+        "guarded": true,
+        "method": "POST",
+        "mutates": true,
+        "path": "/activate-plan",
+        "requires": [
+          "planId",
+          "plan"
+        ]
+      },
+      "autoplay": {
+        "method": "POST",
+        "mutates": true,
+        "path": "/autoplay"
+      },
+      "capabilities": {
+        "method": "GET",
+        "mutates": false,
+        "path": "/capabilities"
+      },
+      "health": {
+        "method": "GET",
+        "mutates": false,
+        "path": "/health"
+      },
+      "planObservation": {
+        "method": "GET",
+        "mutates": false,
+        "path": "/plan-observation"
+      },
+      "planTeacherAction": {
+        "method": "GET",
+        "mutates": false,
+        "path": "/plan-teacher-action"
+      },
+      "previewPlan": {
+        "guarded": true,
+        "method": "POST",
+        "mutates": false,
+        "path": "/preview-plan",
+        "requires": [
+          "planId",
+          "plan"
+        ]
+      },
+      "reset": {
+        "guarded": true,
+        "method": "POST",
+        "mutates": true,
+        "path": "/reset"
+      },
+      "status": {
+        "method": "GET",
+        "mutates": false,
+        "path": "/status"
+      },
+      "step": {
+        "method": "POST",
+        "mutates": true,
+        "path": "/step",
+        "requires": [
+          "action"
+        ]
+      },
+      "stepJoint": {
+        "method": "POST",
+        "mutates": true,
+        "path": "/step-joint",
+        "requires": [
+          "actions.blue",
+          "actions.red"
+        ]
+      },
+      "stepScripted": {
+        "method": "POST",
+        "mutates": true,
+        "path": "/step-scripted"
+      },
+      "teacherAction": {
+        "method": "GET",
+        "mutates": false,
+        "path": "/teacher-action"
+      }
+    },
+    "format": "snowgym.capabilities.v0",
+    "gymnasium": {
+      "environments": [
+        {
+          "configurable": false,
+          "id": "SnowGym/Squad-v0",
+          "maxTeamUnits": 3
+        },
+        {
+          "configurable": true,
+          "id": "SnowGym/Squad-v1",
+          "maxTeamUnits": 8
+        },
+        {
+          "configurable": true,
+          "id": "SnowGym/Squad-v2",
+          "maxTeamUnits": 10
+        },
+        {
+          "actuatorComplete": true,
+          "configurable": true,
+          "id": "SnowGym/Squad-v3",
+          "maxTeamUnits": 10,
+          "observationVersion": "snowgym.observation.v1"
+        }
+      ]
+    },
+    "pettingZoo": {
+      "environment": {
+        "agents": [
+          "blue",
+          "red"
+        ],
+        "api": "parallel",
+        "id": "SnowGym/ParallelSquad-v0",
+        "maxTeamUnits": 10
+      },
+      "researchEnvironment": {
+        "id": "SnowGym/ResearchParallelSquad-v0",
+        "latencyUnits": "team-decisions",
+        "transforms": [
+          "local-visibility",
+          "action-delay",
+          "observation-delay",
+          "semantic-raster"
+        ],
+        "visibilityRadiusUnits": "world"
+      }
+    },
+    "replayFormat": "snowgym.replay.v0",
+    "scenarios": {
+      "decisionHz": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        10,
+        12,
+        15,
+        20,
+        30,
+        60
+      ],
+      "maps": [
+        {
+          "blueCapacity": 3,
+          "height": 30,
+          "id": "arena1.json",
+          "name": "Snowy Clearing",
+          "redCapacity": 3,
+          "width": 40
+        },
+        {
+          "blueCapacity": 3,
+          "height": 30,
+          "id": "arena2.json",
+          "name": "Frozen Pond",
+          "redCapacity": 3,
+          "width": 44
+        },
+        {
+          "blueCapacity": 3,
+          "height": 32,
+          "id": "arena3.json",
+          "name": "Village Skirmish",
+          "redCapacity": 3,
+          "width": 46
+        },
+        {
+          "blueCapacity": 3,
+          "height": 34,
+          "id": "arena4.json",
+          "name": "Pine Forest",
+          "redCapacity": 3,
+          "width": 48
+        },
+        {
+          "blueCapacity": 3,
+          "height": 32,
+          "id": "arena5.json",
+          "name": "Schoolyard Scramble",
+          "redCapacity": 3,
+          "width": 46
+        },
+        {
+          "blueCapacity": 10,
+          "height": 48,
+          "id": "arena6.json",
+          "name": "Winter Front",
+          "redCapacity": 10,
+          "width": 64
+        }
+      ],
+      "maxTeamSize": 10,
+      "redControllers": [
+        "scripted",
+        "random"
+      ],
+      "redDifficulties": [
+        "easy",
+        "normal",
+        "hard"
+      ],
+      "simulationHz": 60
+    },
+    "simulationVersion": "snowgym.sim.v2",
+    "stateHashVersion": "snowgym.state.v2",
+    "transport": {
+      "binding": "loopback",
+      "episodeModel": "single-shared",
+      "expectedStateHash": true,
+      "idempotencyKey": true,
+      "maxBodyBytes": 1000000
+    },
+    "upstreamBaseCommit": "7d9fca5"
+  },
+  "decisionRules": {
+    "arms": {
+      "global": {
+        "contactAdequate": false,
+        "criticHealthy": true,
+        "perRng": {
+          "98001": {
+            "clockSkillScore": -1.9161268040518613,
+            "gateConditions": {
+              "absolutePassed": true,
+              "bindingThreshold": 0.9474692478526182,
+              "clockRelativePassed": true
+            },
+            "gatePassed": true,
+            "predictiveR2": 0.9926200058286081,
+            "timeOnlyR2": 0.9974692478526183
+          },
+          "98002": {
+            "clockSkillScore": 0.16572246226657905,
+            "gateConditions": {
+              "absolutePassed": true,
+              "bindingThreshold": 0.9396552829819771,
+              "clockRelativePassed": true
+            },
+            "gatePassed": true,
+            "predictiveR2": 0.9913696349576548,
+            "timeOnlyR2": 0.9896552829819771
+          },
+          "98003": {
+            "clockSkillScore": 0.18400737877856876,
+            "gateConditions": {
+              "absolutePassed": true,
+              "bindingThreshold": 0.9368893703801405,
+              "clockRelativePassed": true
+            },
+            "gatePassed": true,
+            "predictiveR2": 0.9893018229706275,
+            "timeOnlyR2": 0.9868893703801406
+          }
+        },
+        "recommendation": "D3"
+      },
+      "local": {
+        "contactAdequate": false,
+        "criticHealthy": true,
+        "perRng": {
+          "98001": {
+            "clockSkillScore": -1.511638122000654,
+            "gateConditions": {
+              "absolutePassed": true,
+              "bindingThreshold": 0.9474722354871329,
+              "clockRelativePassed": true
+            },
+            "gatePassed": true,
+            "predictiveR2": 0.9936511702860428,
+            "timeOnlyR2": 0.9974722354871329
+          },
+          "98002": {
+            "clockSkillScore": 0.629102854525333,
+            "gateConditions": {
+              "absolutePassed": true,
+              "bindingThreshold": 0.9474722354871329,
+              "clockRelativePassed": true
+            },
+            "gatePassed": true,
+            "predictiveR2": 0.9990624593577454,
+            "timeOnlyR2": 0.9974722354871329
+          },
+          "98003": {
+            "clockSkillScore": 0.08753241138846712,
+            "gateConditions": {
+              "absolutePassed": true,
+              "bindingThreshold": 0.9474722354871329,
+              "clockRelativePassed": true
+            },
+            "gatePassed": true,
+            "predictiveR2": 0.9976934968103665,
+            "timeOnlyR2": 0.9974722354871329
+          }
+        },
+        "recommendation": "D3"
+      }
+    },
+    "authorizes": "nothing; a Phase D branch needs its own declaration",
+    "labelAuditRequiresDecoderStatement": true,
+    "teacherUsable": true
+  },
+  "format": "snowgym.full-authority-diagnostics-report.v0",
+  "randomInitPooled": {
+    "global": {
+      "blueDeathFraction": 0.0078125,
+      "completionDecisionP50": null,
+      "completionDecisionP95": null,
+      "contactFraction": 0.0,
+      "episodes": 1152,
+      "firstHitDecisionP50": null,
+      "firstHitDecisionP95": null,
+      "rejectedActionRate": 0.0,
+      "rejectedActions": 0,
+      "successFraction": 0.0,
+      "successes": 0,
+      "suggestedHorizon": null,
+      "totalActions": 230219
+    },
+    "local": {
+      "blueDeathFraction": 0.0,
+      "completionDecisionP50": null,
+      "completionDecisionP95": null,
+      "contactFraction": 0.0,
+      "episodes": 1152,
+      "firstHitDecisionP50": null,
+      "firstHitDecisionP95": null,
+      "rejectedActionRate": 0.0,
+      "rejectedActions": 0,
+      "successFraction": 0.0,
+      "successes": 0,
+      "suggestedHorizon": null,
+      "totalActions": 230400
+    }
+  },
+  "simulatorDecisions": 504771
+}
