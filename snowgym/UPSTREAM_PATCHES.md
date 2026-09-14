@@ -1,5 +1,15 @@
 # Upstream patch ledger
 
+## `refs/snowgym_rl_llm_cotraining_plan.md`
+
+Reason: save the requested RL/LLM co-training discussion as a standalone local note.
+
+Change: documented the proposed hierarchy, mathematical objectives, alternating
+training sequence, evidence boundaries and evaluation requirements. The note
+does not approve new experiments or change roadmap qualification gates.
+
+Upstream behavior: unchanged; documentation only.
+
 ## `refs/snowgym_selective_repair_review_and_plan.md`
 
 Reason: preserve the requested loss-recovery interpretation and predeclare the
@@ -134,6 +144,21 @@ local command wrapper only.
 SnowGym dependency: directs agents to the renderer-free interfaces, capability
 endpoint, safe artifact workflow, and required verification gates.
 
+## `refs/run_snowgym_demo.sh`
+
+Reason: provide the requested one-command blue-team demo bootstrap without
+requiring users to coordinate separate server and Gym client terminals.
+
+Change: added a short script that resolves the repository root, prepares local
+dependencies when absent, reuses or starts loopback SnowGym and Vite servers,
+runs and records the Python demo, opens the recording in the existing replay UI,
+forwards optional demo arguments, and cleans up only its temporary resources.
+
+Upstream behavior: unchanged; the script is an opt-in development helper.
+
+SnowGym dependency: combines the existing JSON server, `snowgym-demo` CLI, and
+Three.js replay UI; it does not add another simulation or rendering path.
+
 ## `package.json`, `src/main.ts`, and `src/physics/Pathfinding.ts` (map generator)
 
 Reason: the constrained map-generation side tool needs a root entry point,
@@ -151,3 +176,106 @@ now remain blockers instead of disappearing from the coarse grid.
 SnowGym dependency: generated maps remain isolated artifacts until an explicit
 promotion, and their deterministic playability validator uses the same path
 geometry as simulation movement.
+
+## `refs/snowgym_rl_ppo_review_2026-09-04.md`
+
+Reason: document the requested review of the current fighter RL/PPO approach,
+results, and remaining issues against source and archived evidence.
+
+Change: added a standalone review covering R1e results, reproducible contract
+and measurement findings, teacher-state diagnostics, and recommended next checks.
+
+Upstream behavior: unchanged; this is review documentation only.
+
+SnowGym dependency: records evidence for future recovery work without changing
+training code, historical artifacts, or milestone acceptance thresholds.
+
+## `refs/snowgym_r1m_s4_ppo_action_space_review.md`
+
+Reason: preserve the requested S3/S4 PPO mathematical review and discussion of
+destination-space versus physical-control-space design.
+
+Change: added an evidence-backed review with equations, archive-only diagnostic
+commands, action-interface tradeoffs and a proposed gated physical probe.
+
+Upstream behavior: unchanged; documentation only. Existing review and run
+artifacts, training contracts and milestone gates remain untouched.
+
+## `refs/tiny-doom-defender/` and `refs/tiny_doom_defender_ppo_review_2026-09-08.md`
+
+Reason: user-requested read-only reference checkout and review of its Doom PPO
+training pipeline in relation to SnowGym fighter control.
+
+Change: cloned the public Apache-2.0 repository at
+`b2e8daa3b9259f2c7f2975354b185b11f2961044`, without changing its working tree,
+and added a standalone source-pinned review. No dependencies, weights, training
+or gameplay were executed; the clone is not registered as a submodule.
+
+Upstream behavior: unchanged. These are reference materials only; SnowGym source,
+training contracts, historical evidence and qualification gates remain unchanged.
+
+## `refs/snowgym_fighter_rl_ppo_handoff_for_claude_opus_2026-09-12.md`
+
+Reason: user-requested standalone design, findings and source-code handoff for
+an external Claude Opus review of fighter RL/PPO.
+
+Change: added a source-linked review packet covering the environment/action
+contract, assisted movement policy, reward and PPO mathematics, historical
+interventions, S9/S10 evidence, unresolved hypotheses and qualification gates.
+It records the local/remote snapshot difference so local-only evidence is not
+mistaken for published code.
+
+Upstream behavior: unchanged; documentation only. No training, provider request,
+source modification, checkpoint promotion or protocol change was performed.
+
+## `refs/snowgym_fighter_rl_ppo_review_claude_opus_2026-09-12_reanalysis.py`
+
+Reason: the committed R1m-S11 declaration/results and R1n results cite this
+read-only reanalysis script (for example, its section C Monte Carlo critic-fit
+check), so it is committed as code. Its companion review note stays local.
+
+Change: added the reviewer's archive-only reanalysis of R1m S5/S9/S10
+artifacts. It reads archived runs only: no simulator, provider call, or policy
+update.
+
+Upstream behavior: unchanged; analysis script only.
+
+## `refs/snowgym_whole_repo_handoff_2026-09-13.md`
+
+Reason: user-requested whole-repository handoff from the research objective
+through the latest implementation and remaining milestones.
+
+Change: added an architecture, workflow, source and evidence guide covering
+headless control, replay, commander orchestration, map generation, historical
+BC/PPO gates and the new S11/S12/E3 experiments. It distinguishes reusable
+checkpoints from assisted measurements and stopped runs, records the published
+snapshot with direct key-file GitHub links, and flags source/declaration and
+artifact-availability gaps. Historical performance is context rather than the
+criterion for selecting the implementation described.
+
+Upstream behavior: unchanged; documentation only. Existing notes, source,
+protocols and research artifacts were preserved. No new experiment, browser,
+provider request, commit or push was performed for this handoff.
+
+## `refs/snowgym_continuation_plan_2026-09-13.md`
+
+Reason: user-requested development plan continuing from the whole-repository
+handoff and the stopped R1n/E3 experiment.
+
+Change: added a proposed plan. It records source-verified E3 findings with
+line references:
+- critic steps gated by the actor's KL stop;
+- throw exploration sharing the movement log-std;
+- explained variance reported as R²;
+- bootstrapped warm-start targets;
+- the critic not reading `option_state`;
+- recoverable 1v1 teacher candidates.
+
+It sequences contract repair in new versioned modules, small gated
+diagnostics, a branch decision on reward sparsity, an artifact-retaining
+supervised pipeline, and the route back to the R1 gates. It also added a
+matching proposed, undeclared R1n-b entry to `snowgym/PLAN.md`.
+
+Upstream behavior: unchanged; documentation only. No source, training,
+collection, provider request, commit or push was performed; the plan
+authorizes no experiment.
