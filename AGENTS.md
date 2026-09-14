@@ -34,6 +34,17 @@ npm run build
 cd snowgym/python && .venv/bin/python -m pytest -q
 ```
 
+Known failure, accepted on 2026-09-13: `npm test` has exactly one failing
+test. In `snowgym/tests/SelectiveRepair.test.ts`, "runs the CLI preflight
+without credentials or new episodes and verifies it" fails with
+`seed preflight collision`, naming only
+`snowgym/training/runs/m7b_engage_r1n_b_v0/declaration.json`.
+
+The gate passes when that is the only failure and it names only that file.
+Any other failure, or any other colliding file, blocks. Fixing it would mean
+editing digest-pinned sources or a sealed archive; see the erratum in
+`snowgym/training/reviews/m7b_r1n_b_results.md`.
+
 For the live Gym contract, start `npm run snowgym:server` in one terminal and run:
 
 ```bash

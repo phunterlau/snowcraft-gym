@@ -144,6 +144,18 @@ local command wrapper only.
 SnowGym dependency: directs agents to the renderer-free interfaces, capability
 endpoint, safe artifact workflow, and required verification gates.
 
+## `AGENTS.md` (accepted `npm test` known failure)
+
+Reason: the user accepted the selective-repair preflight collision caused by
+the R1n-b archive as a documented known failure. Agents running the milestone
+gate need the exact pass condition.
+
+Change: added a paragraph under Verification naming the single allowed
+failing test and colliding file. Any other failure still blocks.
+
+Upstream behavior: unchanged; documentation only. No test, source, or
+archive was modified.
+
 ## `refs/run_snowgym_demo.sh`
 
 Reason: provide the requested one-command blue-team demo bootstrap without

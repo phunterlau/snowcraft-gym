@@ -324,6 +324,18 @@ numeric scan of every JSON, TypeScript, Python, and Markdown file under
   is sealed. **The repair is therefore a pending decision, not part of this
   erratum.**
 
+**Resolution (2026-09-13, user decision).** The failure is accepted as a
+documented known failure, with no code change.
+- **Gate condition:** `npm test` passes when its only failure is this
+  preflight test and the collision names only this archive's
+  `declaration.json`. Any other failure or colliding file blocks.
+- **Recorded in:** `AGENTS.md` and the `PLAN.md` gate section.
+- **Options not taken:**
+  - a digest-pinned exception list in the preflight, because it would need a
+    reviewed exception to the R1m source pins;
+  - re-running C3 on new seeds, because it would violate this experiment's
+    stopping rule and the archive would still collide.
+
 **Process change** (applied from R1n-c on):
 - New seed bands are checked with `auditSeedDocuments` and a repository-wide
   numeric scan that includes orchestration constants.
