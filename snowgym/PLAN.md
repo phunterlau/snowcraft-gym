@@ -19,7 +19,32 @@ configuration on 2026-09-01.
 
 ## Milestones
 
-### R1n-e — KL-anchored frozen-reward PPO with death rate as primary test (declared and implemented 2026-09-14; collection pending)
+### R1n-e — KL-anchored frozen-reward PPO with death rate as primary test (complete 2026-09-14; survival improved, replication pending)
+
+**Results** (`training/reviews/m7b_r1n_e_results.md`; archive
+`runs/m7b_engage_r1n_e_v0`; 5,540,370 of 9,000,000 decisions; all manifests
+verified; zero rejected actions):
+
+- **Primary test passes.** The seed-averaged deterministic death-rate
+  difference on split E is **−24.8 points [−27.9, −21.8]**.
+  - Per policy: −36.0, −15.0, and −23.5, all with CIs below 0.
+  - Success rose **+24.0 [+21.1, +27.0]**, timeouts +0.5 [+0.1, +1.0], and
+    contact rose for every policy. The gain is not bought by avoiding the
+    fight.
+- **Deterministic finals.** Success is 94.3%, 92.3%, and 92.0%; deaths are
+  5.0%, 7.8%, and 7.5%. That is teacher-level, against the teacher's 93/91
+  and 7–9% on R1n-c's splits; the teacher was not run on split E.
+- **Stochastic σ×0.5.** Death rate −25.3 [−28.5, −22.1].
+- **Critic:** warm-start R² was 0.070–0.127 (the 0.25 gate fails), yet
+  Monte Carlo PPO learned.
+- **Predictions.** `D` overshot the predicted −10 to −3, and the KL stop
+  fired before the last epoch in only 37–58 of 200 updates. Success ≥ 0 and
+  anchor KL < 1 (maximum 0.615) held. The ingredients were bundled, so no
+  single cause is attributed.
+- **No R1 claim.** The per-policy success gains are +34.8, +14.3, and +23.0.
+- **Next (declared recommendation):** R1n-f, a fresh replication (new
+  training RNGs, new untouched split), then a second contrasting mission,
+  under its own declaration.
 
 Follow `training/reviews/m7b_r1n_e_declaration.md`. At the user's decision,
 the primary test is blue death rate. It replaces R1's +20 success gain, which

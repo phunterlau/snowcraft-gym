@@ -1,0 +1,356 @@
+{
+  "capabilities": {
+    "actions": {
+      "semantics": {
+        "coordinates": "world-space",
+        "hold": "cancels-current-movement-order",
+        "noop": "does-not-cancel-current-movement-order",
+        "omittedUnits": "retain-current-movement-order",
+        "powerRange": [
+          0,
+          1
+        ]
+      },
+      "teamField": "actions",
+      "types": {
+        "hold": {
+          "required": [
+            "type",
+            "unitId"
+          ]
+        },
+        "move": {
+          "required": [
+            "type",
+            "unitId",
+            "x",
+            "y"
+          ]
+        },
+        "noop": {
+          "required": [
+            "type",
+            "unitId"
+          ]
+        },
+        "throw": {
+          "required": [
+            "type",
+            "unitId",
+            "x",
+            "y",
+            "power"
+          ]
+        }
+      }
+    },
+    "apiVersion": "snowgym.v0",
+    "endpoints": {
+      "activatePlan": {
+        "guarded": true,
+        "method": "POST",
+        "mutates": true,
+        "path": "/activate-plan",
+        "requires": [
+          "planId",
+          "plan"
+        ]
+      },
+      "autoplay": {
+        "method": "POST",
+        "mutates": true,
+        "path": "/autoplay"
+      },
+      "capabilities": {
+        "method": "GET",
+        "mutates": false,
+        "path": "/capabilities"
+      },
+      "health": {
+        "method": "GET",
+        "mutates": false,
+        "path": "/health"
+      },
+      "planObservation": {
+        "method": "GET",
+        "mutates": false,
+        "path": "/plan-observation"
+      },
+      "planTeacherAction": {
+        "method": "GET",
+        "mutates": false,
+        "path": "/plan-teacher-action"
+      },
+      "previewPlan": {
+        "guarded": true,
+        "method": "POST",
+        "mutates": false,
+        "path": "/preview-plan",
+        "requires": [
+          "planId",
+          "plan"
+        ]
+      },
+      "reset": {
+        "guarded": true,
+        "method": "POST",
+        "mutates": true,
+        "path": "/reset"
+      },
+      "status": {
+        "method": "GET",
+        "mutates": false,
+        "path": "/status"
+      },
+      "step": {
+        "method": "POST",
+        "mutates": true,
+        "path": "/step",
+        "requires": [
+          "action"
+        ]
+      },
+      "stepJoint": {
+        "method": "POST",
+        "mutates": true,
+        "path": "/step-joint",
+        "requires": [
+          "actions.blue",
+          "actions.red"
+        ]
+      },
+      "stepScripted": {
+        "method": "POST",
+        "mutates": true,
+        "path": "/step-scripted"
+      },
+      "teacherAction": {
+        "method": "GET",
+        "mutates": false,
+        "path": "/teacher-action"
+      }
+    },
+    "format": "snowgym.capabilities.v0",
+    "gymnasium": {
+      "environments": [
+        {
+          "configurable": false,
+          "id": "SnowGym/Squad-v0",
+          "maxTeamUnits": 3
+        },
+        {
+          "configurable": true,
+          "id": "SnowGym/Squad-v1",
+          "maxTeamUnits": 8
+        },
+        {
+          "configurable": true,
+          "id": "SnowGym/Squad-v2",
+          "maxTeamUnits": 10
+        },
+        {
+          "actuatorComplete": true,
+          "configurable": true,
+          "id": "SnowGym/Squad-v3",
+          "maxTeamUnits": 10,
+          "observationVersion": "snowgym.observation.v1"
+        }
+      ]
+    },
+    "pettingZoo": {
+      "environment": {
+        "agents": [
+          "blue",
+          "red"
+        ],
+        "api": "parallel",
+        "id": "SnowGym/ParallelSquad-v0",
+        "maxTeamUnits": 10
+      },
+      "researchEnvironment": {
+        "id": "SnowGym/ResearchParallelSquad-v0",
+        "latencyUnits": "team-decisions",
+        "transforms": [
+          "local-visibility",
+          "action-delay",
+          "observation-delay",
+          "semantic-raster"
+        ],
+        "visibilityRadiusUnits": "world"
+      }
+    },
+    "replayFormat": "snowgym.replay.v0",
+    "scenarios": {
+      "decisionHz": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        10,
+        12,
+        15,
+        20,
+        30,
+        60
+      ],
+      "maps": [
+        {
+          "blueCapacity": 3,
+          "height": 30,
+          "id": "arena1.json",
+          "name": "Snowy Clearing",
+          "redCapacity": 3,
+          "width": 40
+        },
+        {
+          "blueCapacity": 3,
+          "height": 30,
+          "id": "arena2.json",
+          "name": "Frozen Pond",
+          "redCapacity": 3,
+          "width": 44
+        },
+        {
+          "blueCapacity": 3,
+          "height": 32,
+          "id": "arena3.json",
+          "name": "Village Skirmish",
+          "redCapacity": 3,
+          "width": 46
+        },
+        {
+          "blueCapacity": 3,
+          "height": 34,
+          "id": "arena4.json",
+          "name": "Pine Forest",
+          "redCapacity": 3,
+          "width": 48
+        },
+        {
+          "blueCapacity": 3,
+          "height": 32,
+          "id": "arena5.json",
+          "name": "Schoolyard Scramble",
+          "redCapacity": 3,
+          "width": 46
+        },
+        {
+          "blueCapacity": 10,
+          "height": 48,
+          "id": "arena6.json",
+          "name": "Winter Front",
+          "redCapacity": 10,
+          "width": 64
+        }
+      ],
+      "maxTeamSize": 10,
+      "redControllers": [
+        "scripted",
+        "random"
+      ],
+      "redDifficulties": [
+        "easy",
+        "normal",
+        "hard"
+      ],
+      "simulationHz": 60
+    },
+    "simulationVersion": "snowgym.sim.v2",
+    "stateHashVersion": "snowgym.state.v2",
+    "transport": {
+      "binding": "loopback",
+      "episodeModel": "single-shared",
+      "expectedStateHash": true,
+      "idempotencyKey": true,
+      "maxBodyBytes": 1000000
+    },
+    "upstreamBaseCommit": "7d9fca5"
+  },
+  "criticSanityStop": false,
+  "criticWarmStart": {
+    "clockSkillScore": 0.07678963902771652,
+    "gatePassed": false,
+    "predictiveR2": 0.1265365541648079,
+    "predictiveR2Interval95": [
+      0.05433445383176777,
+      0.18167603142474048
+    ],
+    "timeOnlyR2": 0.053884701948860525
+  },
+  "evaluation": {
+    "final-deterministic": {
+      "blueDeathFraction": 0.075,
+      "completionDecisionP50": 116.0,
+      "completionDecisionP95": 145.0,
+      "contactFraction": 0.9925,
+      "episodes": 400,
+      "firstHitDecisionP50": 97.0,
+      "firstHitDecisionP95": 117.0,
+      "rejectedActionRate": 0.0,
+      "rejectedActions": 0,
+      "successFraction": 0.92,
+      "successes": 368,
+      "suggestedHorizon": 218,
+      "timeoutFraction": 0.0075,
+      "totalActions": 48558
+    },
+    "final-stochastic": {
+      "blueDeathFraction": 0.115,
+      "completionDecisionP50": 118.0,
+      "completionDecisionP95": 147.0,
+      "contactFraction": 0.9925,
+      "episodes": 400,
+      "firstHitDecisionP50": 97.0,
+      "firstHitDecisionP95": 118.0,
+      "rejectedActionRate": 0.0,
+      "rejectedActions": 0,
+      "successFraction": 0.8825,
+      "successes": 353,
+      "suggestedHorizon": 221,
+      "timeoutFraction": 0.005,
+      "totalActions": 49803
+    },
+    "initializer-deterministic": {
+      "blueDeathFraction": 0.31,
+      "completionDecisionP50": 120.0,
+      "completionDecisionP95": 138.0,
+      "contactFraction": 0.93,
+      "episodes": 400,
+      "firstHitDecisionP50": 99.0,
+      "firstHitDecisionP95": 120.44999999999999,
+      "rejectedActionRate": 0.0,
+      "rejectedActions": 0,
+      "successFraction": 0.69,
+      "successes": 276,
+      "suggestedHorizon": 207,
+      "timeoutFraction": 0.0,
+      "totalActions": 49376
+    },
+    "initializer-stochastic": {
+      "blueDeathFraction": 0.3425,
+      "completionDecisionP50": 121.0,
+      "completionDecisionP95": 142.0,
+      "contactFraction": 0.955,
+      "episodes": 400,
+      "firstHitDecisionP50": 98.0,
+      "firstHitDecisionP95": 119.0,
+      "rejectedActionRate": 0.0,
+      "rejectedActions": 0,
+      "successFraction": 0.655,
+      "successes": 262,
+      "suggestedHorizon": 213,
+      "timeoutFraction": 0.0025,
+      "totalActions": 49762
+    }
+  },
+  "finalAnchorKl": 0.17946713456698435,
+  "initializerSeed": 97103,
+  "parameterDistance": 0.23726364970207214,
+  "rejectedActions": 0,
+  "rejectionRate": 0.0,
+  "runSeed": 97303,
+  "simulatorDecisions": 1865400,
+  "totalActions": 1817283
+}

@@ -1,0 +1,25 @@
+{
+  "artifacts": {
+    "critic-episodes/episodes.jsonl": "sha256:883f8551545b9e5a41167134cf59e887c9fe802782f1c85f06c379d2b6d16d47",
+    "critic-episodes/trajectory-distances.npz": "sha256:f8fb72ce31b7a5c597b91dcbb9b9a00b27a554eb7bc13d73009de27004b2aa78",
+    "critic-warm-start-arrays.npz": "sha256:6c3c0c1f9610eba427ba6e90a8e5ab906532c85f1db8629feff1c2c221ec3237",
+    "critic-warm-start.json": "sha256:05fe872bcbf8b81200ce815666a2bd1686f3fbe3e75f21942b5354332b3bd459",
+    "evaluation/final-deterministic/episodes.jsonl": "sha256:4f6ca5f4968b27abf2a4b667c07842207a92035da3eec30c6fb61b5bcbcec9c6",
+    "evaluation/final-deterministic/trajectory-distances.npz": "sha256:3e0a83bbee6d562d3310d5decb807ccf0f954a1e86b47738e9d699e4d681ed14",
+    "evaluation/final-stochastic/episodes.jsonl": "sha256:4d131ebdd4bf4b594aed6290eabf12fe16e8ca64551779017e9ee1f1a56d2ea7",
+    "evaluation/final-stochastic/trajectory-distances.npz": "sha256:2c94c43fc2dd783c916948686cec51513d7e5db18b912c2f4d743babc00a0916",
+    "evaluation/initializer-deterministic/episodes.jsonl": "sha256:d0186cb7f8ef161fe0e7a8bed8426e03ab2144b0bdd05680e67cf1c73439174a",
+    "evaluation/initializer-deterministic/trajectory-distances.npz": "sha256:83e9e65902095937d21cb44845cc6eef71ebad08e22fd8591abc3aaca6f32d3c",
+    "evaluation/initializer-stochastic/episodes.jsonl": "sha256:6ee26fe05a7fe12df80bb2bdaca5b5148e9f1313ca879aaad07a61b9ffb3dec1",
+    "evaluation/initializer-stochastic/trajectory-distances.npz": "sha256:4125111344200b70eca65f2ff77ee02b30b7ab5dbc6a40f48d7e10666b60f1c9",
+    "policy-report.json": "sha256:115dcdff5c7699a9a3a53adb65495c78bb089d91d1edd2487835ea2b56e4adf5",
+    "training-episodes.jsonl": "sha256:7f1c4cd671e3a51f60662bd3a62a7e37fcd25d46221ed14f9571bacbb19d47a4",
+    "training-history.json": "sha256:d5542ecd493963c67c6b968d11456edbd0d23a7f4490a857f8fe0081b38f709f",
+    "update-050.pt": "sha256:48631a17466776d0f10b2b84ff67c3bd0a6dc1cd8f965916f8f6e090c302da08",
+    "update-100.pt": "sha256:7568732dcb4d4bab4f8fd8a8b8a2b5d28d873f80b12ab1d195b2490c495ee361",
+    "update-150.pt": "sha256:2d4348c6770f2ed90aeea3f1f73df111bdbafb98222b569dbc7dc18fd1117889",
+    "update-200.pt": "sha256:e989551e1efb550e0bea307a2d532f29919922420cef96d737f79abe9589fb3f"
+  },
+  "format": "snowgym.death-rate-ppo-policy-manifest.v0",
+  "manifestDigest": "sha256:8219d15b4cc73f3a1fff465ecb2e05ac49b9c88cfd8b9d75701f18a2e83bc503"
+}
