@@ -160,16 +160,27 @@ def analysis_with(death, success, timeout):
 
 def test_decision_rules_follow_the_declared_precedence():
     cfg = pp.configuration()
-    reports = {"policy-1": {"criticSanityStop": False, "parameterDistance": 1., "rejectionRate": 0.}}
+    reports = {"policy-1": {"criticSanityStop": False, "parameterDistance": 1., "rejectionRate": 0.,
+                            "finalAnchorKl": .05}}
     rule = lambda *args: pp.decision_rules(analysis_with(*args), reports, cfg)["outcome"]
     assert rule((-.08, -.12, -.04), -.02, .01) == "survival-improved"
     assert rule((-.03, -.05, -.01), -.02, .01) == "improved-below-threshold"
     assert rule((-.02, -.05, .01), -.02, .01) == "no-detectable-change"
+    still = {"policy-1": {**reports["policy-1"], "finalAnchorKl": .001}}
+    assert pp.decision_rules(analysis_with((-.02, -.05, .01), -.02, .01), still, cfg)["outcome"] == "no-effective-training"
+    assert pp.decision_rules(analysis_with((-.03, -.05, -.01), -.02, .01), still, cfg)["outcome"] == "improved-below-threshold"
     assert rule((-.08, -.12, -.04), -.07, .01) == "harm-or-avoidance"  # fewer deaths bought with fewer wins
     assert rule((-.08, -.12, -.04), -.02, .06) == "harm-or-avoidance"  # or with more timeouts
     assert rule((.04, .01, .07), -.02, .01) == "harm-or-avoidance"
     stopped = {"policy-1": {**reports["policy-1"], "criticSanityStop": True}}
     assert pp.decision_rules(None, stopped, cfg)["outcome"] == "incomplete"
+
+
+def test_critic_sanity_stop_needs_the_whole_interval_below_zero():
+    cfg = pp.configuration()
+    assert not pp.critic_sanity_stop({"predictiveR2": .059, "predictiveR2Interval95": [-.043, .113]}, cfg)  # R1n-c 97103
+    assert pp.critic_sanity_stop({"predictiveR2": -.08, "predictiveR2Interval95": [-.15, -.01]}, cfg)
+    assert pp.critic_sanity_stop({"predictiveR2": None, "predictiveR2Interval95": None}, cfg)
 
 
 def test_configuration_budget_and_seed_bands_match_the_declaration():
@@ -191,14 +202,14 @@ def test_tiny_end_to_end_declare_policy_aggregate_and_tamper(tmp_path):
     pp.declare(root, cfg)
     report = pp.run_policy(root, cfg, 0)
     directory = root / "policy-97101"
-    assert not report["criticSanityStop"] and report["parameterDistance"] > 0
+    assert not report["criticSanityStop"] and report["parameterDistance"] > 0 and report["finalAnchorKl"] >= 0
     assert (directory / "update-002.pt").exists() and len(json.loads((directory / "training-history.json").read_text())) == 2
     assert set(report["evaluation"]) == {f"{n}-{m}" for n in ("initializer", "final") for m in ("deterministic", "stochastic")}
     with pytest.raises(FileExistsError):
         pp.run_policy(root, cfg, 0)
     final = pp.aggregate(root, cfg)
     assert final["decisionRules"]["outcome"] in {"survival-improved", "improved-below-threshold",
-                                                 "no-detectable-change", "harm-or-avoidance"}
+                                                 "no-effective-training", "no-detectable-change", "harm-or-avoidance"}
     manifest = json.loads((root / "manifest.json").read_text())
     assert "policy-97101/manifest.json" in manifest["artifacts"] and "report.json" in manifest["artifacts"]
     rows = directory / "training-episodes.jsonl"

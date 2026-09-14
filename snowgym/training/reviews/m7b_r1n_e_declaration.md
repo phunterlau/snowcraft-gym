@@ -377,3 +377,49 @@ Full gate:
 - **A6 — seed audit.** `auditSeedDocuments` on the serialized configuration
   found 15 declarations and 0 collisions. Test seeds 932000–932402 and probe
   seeds 933000–936063 are unused elsewhere in the repository.
+- **A7 — the critic sanity stop uses the interval, not the point estimate.**
+  - **Rule.** Policy i's PPO does not run if the **upper** bound of its
+    held-out predictive-R² 95% interval is below 0, or if the interval is
+    missing. This replaces §2's point rule (R² < 0).
+  - **Why.** Archived fits at declaration time were all positive but
+    imprecise: R1n-c warm starts gave 0.062, 0.108, and 0.059, with 97103's
+    interval at [−0.043, 0.113], and R1n-d's D3 variants were similar. So a
+    critic that is fine can yield a point estimate below 0 by chance. With MC
+    advantages, a weak baseline adds variance and no bias (§2). The stop
+    should fire only on a critic confidently worse than a constant.
+  - **Outcome-blind check.** An off-band warm-start probe at σ×0.5 measured
+    critic fit only, never the death rate. It used train seeds
+    937000 + 1000·i + [0, 255] and held-out seeds 938500 + 1000·i + [0, 127]:
+
+    | Policy | R² | 95% interval |
+    | --- | ---: | --- |
+    | 97101 | 0.101 | [0.026, 0.150] |
+    | 97102 | 0.087 | [−0.019, 0.150] |
+    | 97103 | 0.055 | [−0.029, 0.113] |
+
+    About 47–48k decisions and 24 s per policy. The declared warm-start seeds
+    (§3) were not touched.
+- **A8 — a `no-effective-training` outcome splits the null.**
+  - **Rule.** A new order 4 in §5, before "no detectable change": if neither
+    harm nor improvement holds (orders 1–3 fail) and the **median across
+    policies of the final anchor KL** is below **0.01**, the outcome is
+    **no effective training**. The final anchor KL is the exact hybrid KL to
+    the initializer on the last update's rollout states.
+  - **Why.** After A1's lr reduction, a null death-rate result could mean
+    PPO does not reduce deaths, or that the policies barely moved. The
+    floor equals the per-update KL stop: below it, 200 updates compounded
+    to less than one nominal PPO step.
+  - **Scope.** It does not override harm, survival improved, or improved
+    below threshold. Per-policy final anchor KLs are always reported.
+  - **Recommendation.** This result says nothing about PPO and death rate.
+    A larger step budget needs its own declaration.
+- **A9 — restart procedure.**
+  - **Normal path.** A policy stage refuses to overwrite. If `--stage all`
+    fails partway, the remaining work is `--stage policy --policy k` for each
+    unfinished k, then `--stage aggregate`, against the same
+    `declaration.json`.
+  - **A crashed, unsealed policy directory** is renamed
+    `aborted-policy-{seed}-{n}` under the run root, not deleted. The top-level
+    manifest covers it. The stage then reruns with the same seeds, and the
+    results report the restart and its cause.
+  - **Sealed policy directories** are never rerun.

@@ -50,7 +50,7 @@ def configuration():
         "checkpointUpdates": [50, 100, 150, 200],
         "trainSeedBase": 880000, "heldOutSeedBase": 885000, "seedBandStride": 1000,
         "warmStartTrainEpisodes": 256, "warmStartHeldOutEpisodes": 128, "warmStartEpochs": 10,
-        "blockWorlds": 64, "criticSanityMinR2": 0.,
+        "blockWorlds": 64, "criticSanityMinR2": 0., "movementFloorAnchorKl": .01,
         "evaluationSeeds": [870000, 870399], "evaluationBlockWorlds": 50, "evaluationSeedBase": 977000,
         "bootstrapSeed": 978001, "bootstrapSamples": 10000,
         "deathThreshold": -.05, "successMargin": -.05, "timeoutMargin": .05, "rejectionRateMax": .001,
@@ -230,6 +230,12 @@ def update_summary(update, episodes, step, model, reference, rollout, rollout_ga
             "meanReward": step["meanReward"]}
 
 
+def critic_sanity_stop(warm, cfg):
+    """Amendment A7: stop only when the held-out R^2 interval lies wholly below the minimum."""
+    interval = warm["predictiveR2Interval95"]
+    return interval is None or interval[1] < cfg["criticSanityMinR2"]
+
+
 def run_policy(root, cfg, index):
     """Train and evaluate policy `index` into `root/policy-{initializer}`; requires `root/declaration.json`."""
     root = Path(root)
@@ -265,8 +271,7 @@ def run_policy(root, cfg, index):
         write_episodes(directory / "critic-episodes", warm_episodes)
         report["criticWarmStart"] = {k: warm[k] for k in ("predictiveR2", "predictiveR2Interval95", "timeOnlyR2",
                                                          "clockSkillScore", "gatePassed")}
-        predictive = warm["predictiveR2"]
-        report["criticSanityStop"] = predictive is None or predictive < cfg["criticSanityMinR2"]
+        report["criticSanityStop"] = critic_sanity_stop(warm, cfg)
         if not report["criticSanityStop"]:
             actor_optimizer = torch.optim.Adam(model.actor_parameters(), lr=cfg["actorLearningRate"])
             history, rows = [], []
@@ -296,6 +301,7 @@ def run_policy(root, cfg, index):
             (directory / "training-episodes.jsonl").write_text(
                 "".join(json.dumps(r, sort_keys=True, allow_nan=False) + "\n" for r in rows), encoding="utf-8")
             report["parameterDistance"] = parameter_distance(model, reference)
+            report["finalAnchorKl"] = history[-1]["anchorKlAfterUpdate"]
             report["evaluation"] = {}
             worlds = list(range(cfg["evaluationSeeds"][0], cfg["evaluationSeeds"][1] + 1))
             for m, (name, policy) in enumerate((("initializer", reference), ("final", model))):
@@ -382,11 +388,15 @@ def decision_rules(analysis, reports, cfg):
         outcome = "survival-improved"
     elif death_high < 0:
         outcome = "improved-below-threshold"
+    elif np.median([r["finalAnchorKl"] for r in reports.values()]) < cfg["movementFloorAnchorKl"]:
+        outcome = "no-effective-training"  # amendment A8
     else:
         outcome = "no-detectable-change"
     recommendation = {
         "survival-improved": "R1n-f: fresh replication (new training RNGs, new untouched split), then a second mission",
         "improved-below-threshold": "diagnose learning curves (KL stop, anchor KL, return trend) before longer runs",
+        "no-effective-training": "the policies barely moved; this says nothing about PPO and death rate; "
+                                 "a larger step budget needs its own declaration",
         "no-detectable-change": "diagnose learning curves (KL stop, anchor KL, return trend) before longer runs",
         "harm-or-avoidance": "stop this PPO configuration; revisit sigma, the anchor or the objective"}[outcome]
     per_policy_death = {name: rows["death"]["mean"] for name, rows in analysis["perPolicy"].items()}
@@ -397,6 +407,7 @@ def decision_rules(analysis, reports, cfg):
             "checks": {"parameterChange": all(r.get("parameterDistance", 0) > 0 for r in reports.values()),
                        "rejectionRateBelowMax": all(x is not None and x < cfg["rejectionRateMax"] for x in rejection),
                        "policiesWithLowerDeath": sum(v < 0 for v in per_policy_death.values()),
+                       "finalAnchorKl": {name: r["finalAnchorKl"] for name, r in reports.items()},
                        "perPolicyDeathDifference": per_policy_death},
             "authorizes": "nothing; R1n-f needs its own declaration"}
 
