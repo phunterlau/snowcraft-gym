@@ -19,6 +19,29 @@ configuration on 2026-09-01.
 
 ## Milestones
 
+### R1n-d — diagnostics before PPO: exploration σ, attainable critic R², critic capacity (declared 2026-09-14; implementation pending)
+
+Follow `training/reviews/m7b_r1n_d_declaration.md`. The user chose to split
+off a diagnostic before any PPO; the PPO stage R1n-c called "R1n-d" is now
+R1n-e.
+
+- **D1:** decomposes R1n-c's execution-mode gap on 680000–680099 over six
+  modes for each of R1n-c's three final policies. The modes vary type
+  sampling, continuous sampling, and σ×{1, 0.5, 0.25}.
+- **D2:** an upper bound on attainable critic R² from branched rollouts.
+  Each branch replays a recorded stochastic prefix, with replay identity
+  checked by digest. The grid is 24 source episodes × k ∈ {0, 25, …, 125} ×
+  8 rollouts, and the estimator applies an ANOVA correction. Red's future
+  draws stay fixed within a branch, so this is an upper bound, not a noise
+  measurement.
+- **D3:** a lower bound from critic variants on new folds. C0 replicates
+  R1n-c; C1 trains longer with early stopping; C2 is an egocentric critic;
+  C3 is C2 without a gradient clip. The selected variant is chosen on
+  validation MSE.
+- **Rules:** critic repairable, gate unreachable, or bracketed; a
+  recommended σ scale; a type-sampling flag. They authorize nothing.
+- **Budget:** capped at 1,350,000 decisions; no actor or PPO update.
+
 ### R1n-c — imitation of the plan teacher that keeps its artifacts (complete 2026-09-13; PPO has headroom, critic precondition failed)
 
 **Results** (`training/reviews/m7b_r1n_c_results.md`; archive
