@@ -19,7 +19,7 @@ configuration on 2026-09-01.
 
 ## Milestones
 
-### R1n-e — KL-anchored frozen-reward PPO with death rate as primary test (declared 2026-09-14; implementation pending)
+### R1n-e — KL-anchored frozen-reward PPO with death rate as primary test (declared and implemented 2026-09-14; collection pending)
 
 Follow `training/reviews/m7b_r1n_e_declaration.md`. At the user's decision,
 the primary test is blue death rate. It replaces R1's +20 success gain, which
@@ -43,6 +43,12 @@ R1n-c showed infeasible, so R1n-e makes no R1 qualification claim.
   4–5 points.
 - **Budget:** 8,870,400 bound (cap 9,000,000). Policy runs are independent
   and may run in parallel.
+- **Implementation:** `options/death_rate_ppo.py`, run with
+  `python -m snowgym_training.options.death_rate_ppo --output runs/m7b_engage_r1n_e_v0`.
+  Pre-collection amendments A1–A6 are in declaration §12. The key one is the
+  actor lr, changed from 3e-4 to 1e-5 by an outcome-blind first-step-KL rule:
+  at 3e-4, one Adam step moved the policy 0.7–4.0 nats against the 0.01 KL
+  stop. The critic keeps 3e-4.
 
 ### R1n-d — diagnostics before PPO: exploration σ, attainable critic R², critic capacity (complete 2026-09-14; halve σ, critic outcome bracketed)
 

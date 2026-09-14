@@ -302,3 +302,78 @@ Full gate:
 - Python training tests;
 - a check that no pinned archive source changed;
 - `auditSeedDocuments` on the serialized configuration.
+
+## 12. Amendments made in the implementation commit, before any collection
+
+- **A1 — actor learning rate 1e-5 (was 3e-4), chosen by an outcome-blind
+  rule.**
+  - **What the probe found.** A throughput probe of one full-size update
+    showed that lr 3e-4 with σ×0.5 moves the policy about 1.4–1.7 nats of
+    approximate KL in one Adam step. The KL stop (0.01) therefore allows
+    exactly one optimizer step per update, and each step overshoots it about
+    150-fold. The anchor KL reached 3.4 nats after two updates.
+  - **Why it happens.** Adam's step is about lr per weight regardless of
+    gradient scale. Summed across a head, that shifts output means by about
+    one σ when σ is 0.02–0.025.
+  - **The rule.** Take the largest lr in {3e-4, 1e-4, 3e-5, 1e-5, 3e-6}
+    whose first Adam step, from each initializer on one 64-episode
+    calibration rollout, gives approximate KL on that rollout at most equal
+    to the KL stop (0.01) for all three policies. The calibration used
+    off-band seeds 934000 + 1000·i + [0, 63]. It measures KL only and no
+    outcome.
+  - **Measured first-step approximate KL:**
+
+    | lr | 97101 | 97102 | 97103 |
+    | --- | ---: | ---: | ---: |
+    | 3e-4 | 0.715 | 2.777 | 4.003 |
+    | 1e-4 | 0.079 | 0.313 | 0.454 |
+    | 3e-5 | 0.0071 | 0.0283 | 0.0413 |
+    | **1e-5** | **0.0008** | **0.0032** | **0.0046** |
+    | 3e-6 | 0.00007 | 0.00028 | 0.00041 |
+
+    KL scales as lr², so the rule selects **1e-5**.
+  - **The critic is unchanged.** It keeps lr 3e-4: R1n-b's warm-start recipe
+    and the continued critic optimizer.
+  - **Expected effect.**
+    - Within an update, approximate KL grows roughly as n² × the first-step
+      KL over n consistent steps. The stop is checked on each minibatch
+      before its step and fires when the KL is above 0.01. It should
+      therefore allow about 4 actor steps per update for 97101 (first-step
+      KL 0.0008) and about 2 for 97102 and 97103 (0.0032 and 0.0046). The
+      maximum is 4 epochs × ⌈rollout rows / 512⌉ minibatches.
+    - §3's "4 epochs" is an upper limit, not what will run. The effective
+      amount of learning differs by policy: an experimental asymmetry
+      created by the rule, not a defect.
+    - The quantity to read is `actorOptimizerSteps` per update in the
+      training history.
+    - The lr is not re-chosen after this analysis.
+  - **Cross-check.** In the same probe, the exact hybrid KL to the initializer
+    matched the approximate KL within 3%.
+- **A2 — categorical-only entropy, as §3 states.** `evaluate_latents`'
+  entropy includes type-probability-weighted Gaussian entropies. At σ×0.5
+  these are about −2.5 nats per dimension, so an entropy bonus on them would
+  push type probabilities away from MOVE and THROW toward NOOP and HOLD. The
+  loss therefore uses `Categorical(logits).entropy()` over living units. A
+  test shows the update equals `v1.ppo_update` exactly when the entropy
+  weight and β are 0, with the declared KL stop and without it.
+- **A3 — rollout contents.**
+  - Latents, log-probabilities, and critic values are logged from `act` at
+    collection time. The advantage is `G − V` with those logged values.
+  - The per-row reward is kept for `v1.ppo_update` compatibility.
+  - History reports `meanUndiscountedReturn` (the sum of rewards) and
+    `meanDiscountedReturn` (with γ, comparable to the critic targets).
+  - After each update the history also records the exact anchor KL on that
+    rollout's states, mean approximate KL, and clip fraction.
+- **A4 — run layout.**
+  - `--stage declare` writes `declaration.json`. `--stage policy --policy i`
+    requires it, checks the configuration digest, and refuses to overwrite.
+    `--stage aggregate` verifies every policy manifest.
+  - The top-level manifest covers the policy manifests.
+  - `--stage all` runs the three in order.
+- **A5 — sequential execution.** The probe measured about 3 s of collection
+  and 0.8 s of update per update: about 15 minutes of training per policy,
+  and under 25 minutes with warm start and evaluation. The run uses
+  `--stage all`. Independence (§7) still holds.
+- **A6 — seed audit.** `auditSeedDocuments` on the serialized configuration
+  found 15 declarations and 0 collisions. Test seeds 932000–932402 and probe
+  seeds 933000–936063 are unused elsewhere in the repository.
