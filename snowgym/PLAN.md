@@ -19,11 +19,15 @@ configuration on 2026-09-01.
 
 ## Milestones
 
-### R1n-d — diagnostics before PPO: exploration σ, attainable critic R², critic capacity (declared 2026-09-14; implementation pending)
+### R1n-d — diagnostics before PPO: exploration σ, attainable critic R², critic capacity (declared and implemented 2026-09-14; collection pending)
 
 Follow `training/reviews/m7b_r1n_d_declaration.md`. The user chose to split
 off a diagnostic before any PPO; the PPO stage R1n-c called "R1n-d" is now
-R1n-e.
+R1n-e. Pre-collection amendments A1–A8 are in declaration §11.
+
+The implementation is `options/pre_ppo_diagnostics.py` plus
+`executor/full_authority_critics.py`, run with
+`python -m snowgym_training.options.pre_ppo_diagnostics --output runs/m7b_engage_r1n_d_v0`.
 
 - **D1:** decomposes R1n-c's execution-mode gap on 680000–680099 over six
   modes for each of R1n-c's three final policies. The modes vary type

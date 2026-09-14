@@ -304,3 +304,52 @@ Full gate:
 - Python training tests;
 - a check that no pinned archive source changed;
 - `auditSeedDocuments` on the serialized configuration.
+
+## 11. Amendments made in the implementation commit, before any collection
+
+- **A1 — train MSE per epoch is a running minibatch mean.** Each epoch
+  records the size-weighted mean of the minibatch losses computed before
+  each optimizer step. A full pass over the training rows would double
+  `EgocentricCritic`'s epoch cost (measured: about 8.7 s per epoch with the
+  full pass, about 4.3 s without). Validation MSE is still a full pass, and
+  early stopping uses only validation MSE.
+- **A2 — time-only baseline.** Every variant's held-out metrics use the full
+  256-episode train fold for the 20-bin time-only baseline, including C1–C3,
+  which fit on its first 204 episodes. The baseline is then identical across
+  variants. It is a reference value, not a fit, and it never touches the
+  held-out fold.
+- **A3 — gradient norms are logged for every variant.** Each epoch records
+  the median pre-clip gradient norm and the fraction of steps with norm
+  above 0.5. For C3, clipping is a no-op (`max_norm = inf`).
+- **A4 — D2 sampling detail.**
+  - Rollout worlds draw a sampled action for every active row at every
+    decision. During the replayed prefix those draws are discarded and the
+    recorded action is sent instead. Each block's draws are therefore fixed
+    by its seed (`976000 + 100·i + j`) and block layout.
+  - Worlds are laid out in (k ascending, r ascending) order.
+  - The source episode's own return at each branch state is retained
+    (`sourceReturn`) but excluded from the estimator.
+- **A5 — same-seed worlds in one block.** Before implementation, a probe
+  confirmed that the batch host accepts several worlds reset to the same seed
+  in one block. A replayed recorded stochastic prefix matched the source row
+  digest at k = 0, 7, 30, and 60. A live test repeats this and checks that a
+  tampered prefix fails.
+- **A6 — row precedence in the critic rules.** "Repairable" (`L_i ≥ 0.25`)
+  is checked before "gate unreachable" (`U_i⁺ < 0.25`). Both can hold only
+  if the estimates contradict each other (`L_i > U_i⁺`). In that case the row
+  is *repairable*, and the contradiction is visible in the per-policy values.
+- **A7 — seed audit.** `auditSeedDocuments` on the serialized configuration
+  found 13 declarations and 0 collisions. The test seeds 931000–931999 are
+  unused elsewhere in the repository.
+- **A8 — decision windows.** "≥ 100" is implemented as the window [100, end
+  of episode].
+- **A9 — an in-distribution comparison for `capture`.**
+  - **What is added:** each variant's held-out report adds `branchWindowR2`,
+    the predictive R² on held-out fold rows within ±2 decisions of each D2
+    branch decision (pooled and per k).
+  - **Why:** D2's branch states are genuine on-policy stochastic states,
+    replayed from real source episodes, but they come from a different world
+    band (690000) than the held-out fold (687000). `branchWindowR2` measures
+    the critic at the same decisions on the held-out fold, so a low `capture`
+    can be read against it.
+  - **Status:** it is reported only and enters no rule.
