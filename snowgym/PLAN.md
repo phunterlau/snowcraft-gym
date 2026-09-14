@@ -46,7 +46,7 @@ R1n-c showed infeasible, so R1n-e makes no R1 qualification claim.
   and may run in parallel.
 - **Implementation:** `options/death_rate_ppo.py`, run with
   `python -m snowgym_training.options.death_rate_ppo --output runs/m7b_engage_r1n_e_v0`.
-  Pre-collection amendments A1–A9 are in declaration §12.
+  Pre-collection amendments A1–A10 are in declaration §12.
   - **A1:** the actor lr changed from 3e-4 to 1e-5 by an outcome-blind
     first-step-KL rule. At 3e-4, one Adam step moved the policy 0.7–4.0 nats
     against the 0.01 KL stop. The critic keeps 3e-4.
@@ -54,6 +54,10 @@ R1n-c showed infeasible, so R1n-e makes no R1 qualification claim.
   - **A8:** a `no-effective-training` outcome applies when the median final
     anchor KL is below 0.01 and there is no death-rate effect.
   - **A9:** the restart procedure.
+  - **A10:** the first attempt was killed at low memory during update 8 of
+    policy 97101. The cause was a full-rollout anchor-KL diagnostic peaking
+    at 3.6 GB. It is now chunked, peaking at 0.8 GB, and the run was
+    re-declared. The aborted attempt is kept.
 
 ### R1n-d — diagnostics before PPO: exploration σ, attainable critic R², critic capacity (complete 2026-09-14; halve σ, critic outcome bracketed)
 

@@ -423,3 +423,38 @@ Full gate:
     manifest covers it. The stage then reruns with the same seeds, and the
     results report the restart and its cause.
   - **Sealed policy directories** are never rerun.
+- **A10 — memory fix after an aborted first attempt; fresh declaration.**
+  - **What happened.** The first collection (declared at `1070890`) was killed
+    by the host at low system memory during update 8 of policy 97101. Its
+    directory holds `declaration.json` and an unsealed `policy-97101` with
+    only the warm-start artifacts.
+  - **What was seen before the kill.** Seven lines of training-rollout
+    progress at σ×0.5 (successes, deaths, actor steps, anchor KL) and the
+    97101 warm-start R² 0.070 [−0.011, 0.110]. No evaluation episode was
+    collected.
+  - **Cause, measured on off-band seeds 2000000+.**
+    - Python's peak RSS was about 3.6 GB per update. It came from the
+      post-update anchor-KL diagnostic evaluating `hybrid_kl` on all ~8k
+      rollout rows in one forward pass.
+    - Collection peaks at about 0.4 GB and the PPO update at about 0.9 GB.
+    - The simulator process holds steady at about 250 MB, so there is no
+      leak.
+  - **Fix.**
+    - `rollout_anchor_kl` evaluates the same KL in 512-row chunks and takes
+      the row-weighted mean, which equals the full-batch value; a test
+      asserts equality.
+    - Peak RSS measured after the fix: about 0.8 GB.
+    - It changes only a logged diagnostic and A8's `finalAnchorKl`: no RNG
+      draw, loss, or update changes. The configuration is unchanged.
+  - **Handling.**
+    - The attempt is kept at `runs/m7b_engage_r1n_e_v0_aborted_attempt_1`.
+      It is moved under the new run root as `aborted-attempt-1` right after
+      the new declaration, so the top-level manifest covers it. It is not
+      used in any analysis.
+    - The run is re-declared at the A10 commit with identical seeds and
+      configuration.
+    - Stages run as separate processes: declare, policies 0–2, aggregate.
+  - **A5's time estimate is revised.** The earlier 0.8 s update came from
+    the lr 3e-4 probe, where the KL stop allowed one actor step. At 1e-5 an
+    update takes about 12 s (up to 64 actor and 64 critic steps). That is
+    about 40 minutes of training per policy and about 2.3 hours in total.

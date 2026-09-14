@@ -82,6 +82,17 @@ def test_hybrid_kl_weights_continuous_terms_by_type_probability(live_rollout):
         assert float(pp.hybrid_kl(no_moves, reference_no_moves, rows)) == pytest.approx(0, abs=1e-5)
 
 
+def test_chunked_rollout_anchor_kl_equals_the_full_batch_value(live_rollout):
+    _, _, reference, _, rollout = live_rollout
+    with torch.no_grad():
+        shifted = copy.deepcopy(reference)
+        shifted.action_head.bias.add_(torch.tensor([.3, -.2, .5, 0.]))
+        shifted.move_head[-1].bias.add_(torch.tensor([.02, -.01]))
+        full = float(pp.hybrid_kl(shifted, reference, rollout["observation"]))
+    assert len(rollout["advantage"]) > 7 and full > 0
+    assert pp.rollout_anchor_kl(shifted, reference, rollout["observation"], chunk=7) == pytest.approx(full, rel=1e-5)
+
+
 def test_rollout_logs_match_evaluate_latents_and_advantages_are_monte_carlo(live_rollout):
     cfg, model, _, episodes, rollout = live_rollout
     with torch.no_grad():

@@ -210,10 +210,23 @@ def death(row):
     return not row["blueAliveAtEnd"]
 
 
+KL_CHUNK_ROWS = 512  # amendment A10: bounds peak memory; the row-weighted mean equals the full-batch KL
+
+
+def rollout_anchor_kl(model, reference, observation, chunk=KL_CHUNK_ROWS):
+    """Exact hybrid KL to the initializer averaged over all rollout rows, evaluated in chunks."""
+    rows = len(next(iter(observation.values())))
+    total = 0.
+    with torch.no_grad():
+        for start in range(0, rows, chunk):
+            part = {key: value[start:start + chunk] for key, value in observation.items()}
+            total += float(hybrid_kl(model, reference, part)) * len(next(iter(part.values())))
+    return total / rows
+
+
 def update_summary(update, episodes, step, model, reference, rollout, rollout_gamma):
     rows = [v1.episode_row(e) for e in episodes]
-    with torch.no_grad():
-        anchor = float(hybrid_kl(model, reference, rollout["observation"]))
+    anchor = rollout_anchor_kl(model, reference, rollout["observation"])
     actor = step["actorMinibatches"]
     return {"update": update, "episodes": len(rows), "decisions": int(len(rollout["advantage"])),
             "successes": sum(r["success"] for r in rows), "deaths": sum(death(r) for r in rows),
