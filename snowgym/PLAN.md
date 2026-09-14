@@ -19,10 +19,13 @@ configuration on 2026-09-01.
 
 ## Milestones
 
-### R1n-c — imitation of the plan teacher that keeps its artifacts (declared 2026-09-13; implementation pending)
+### R1n-c — imitation of the plan teacher that keeps its artifacts (declared and implemented 2026-09-13; collection pending)
 
 Follow `training/reviews/m7b_r1n_c_declaration.md`. This is step 1 of the D3
-branch R1n-b recommended.
+branch R1n-b recommended. The pre-collection amendments A1–A6 are in
+declaration §11. The implementation is
+`options/full_authority_imitation.py`, run with
+`python -m snowgym_training.options.full_authority_imitation --output runs/m7b_engage_r1n_c_v0`.
 
 - **Training:** BC then DAgger from the plan teacher into a
   `FullAuthorityPolicyV1` with global decoding, on 1v1 Engage at the frozen

@@ -258,3 +258,53 @@ Targeted tests:
 
 Full gate: `npm test`, `npm run build`, Python client tests, Python training
 tests, and a check that no pinned archive source changed.
+
+## 11. Amendments made in the implementation commit, before any collection
+
+- **A1 — floor generator.** The uniform floor (R1n-b's `uniform_floor`:
+  uniform legal type, target uniform on [−1, 1]², power uniform on [0, 1])
+  draws from `numpy.random.default_rng(981002 + block offset)`. Each
+  50-world block gets a fresh generator (981002, then 981052) on each split,
+  so any block can be regenerated on its own. R1n-b used a single generator
+  across its blocks.
+- **A2 — sampling RNG and block sizes.**
+  - Stochastic actions come from torch's global generator, seeded by
+    `torch.manual_seed(optimizerSeed)` immediately before the policy is
+    constructed.
+  - Deterministic actions, round collections, and fits draw nothing from it.
+    Minibatch order uses its own `torch.Generator`, as in §4.
+  - Draws happen in order: the stochastic evaluation on A, the critic
+    training fold, then the held-out fold.
+  - The critic warm start is R1n-b's `warm_start_critic_mc` unchanged: 10
+    epochs, and a minibatch-order generator seeded with the optimizer seed.
+  - Block sizes: 64 worlds for rounds and critic folds, 50 for evaluations
+    and controls. Stochastic results depend on this order, so the runner is
+    the reference.
+- **A3 — row precedence within a split.** Imitation failure is checked
+  first, then near ceiling, then PPO headroom. The §6 rows overlap only if
+  `C < 45`. This applies the "more conservative row" principle within a
+  split, not only between splits.
+- **A4 — flags are per optimizer seed.**
+  - *Execution-mode gap* is raised if any seed's stochastic success on A falls
+    more than 20 points below its deterministic success on A.
+  - *Throw collapse* is raised if any seed's held-out THROW recall is below
+    50%, or undefined because B has no THROW labels.
+  - *Seed instability* uses the max − min of deterministic success across
+    seeds.
+  - Per-seed values are reported.
+- **A5 — seed audit, widened after the R1n-b erratum.** Every band in this
+  declaration was checked two ways:
+  - `auditSeedDocuments` on the serialized configuration: 10 declarations,
+    0 collisions with 630000–630119;
+  - a numeric scan of every JSON, TypeScript, Python, and Markdown file under
+    `snowgym/` and `refs/`: the only matches are fragments of state hashes
+    and digests.
+
+  Split A (600000–600099) is the band E3 reserved in `full_authority_train.py`
+  and the R1n declaration. It has never been collected.
+- **A6 — gate status.** At this commit `npm test` passes 366 of 367. The one
+  failure is the selective-repair preflight collision caused by R1n-b's
+  archive (see the erratum in `m7b_r1n_b_results.md`). This commit does not
+  change it. After collection, `npm test` is run again: the preflight must
+  still name only `runs/m7b_engage_r1n_b_v0/declaration.json`, so R1n-c's
+  archive adds no collision.
