@@ -19,6 +19,39 @@ configuration on 2026-09-01.
 
 ## Milestones
 
+### R1n-b — E3 contract repair and pre-actor diagnostics (declared 2026-09-13; implementation pending)
+
+Follow `training/reviews/m7b_r1n_b_declaration.md`. The declaration is
+committed ahead of its implementation, and collection waits for both commits.
+Two blockers stand in series: the E3 critic gate measured a near-constant
+bootstrapped target, and the frozen Engage reward gives no dense signal
+before first contact.
+
+- **B — repair.** New modules only; a test pins E3's archived file digests.
+  - A separate `throw_log_std`, globally calibrated in both arms.
+  - A decoupled critic with its own loss, backward pass, and optimizer, not
+    gated by the actor KL stop.
+  - `predictiveR2` as the gating metric; explained variance and a 20-bin
+    time-only baseline reported alongside.
+  - Monte Carlo warm-start targets on complete episodes.
+  - `OptionCentralCritic`, which reads `option_state`.
+  - Retained arrays, per-episode rows, and an offline exploration calibration.
+- **C — diagnostics** under a 600,000-decision cap:
+  - a 1v1 plan-teacher precondition and ceiling, with a label audit;
+  - a plan-blind `SimpleBlueAgent` reference;
+  - contact rates for the floor and random-init policies;
+  - the corrected warm start for 2 arms × RNGs 98001–98003.
+
+  The seeds are fresh bands: 620000–620099, 630000+, and 640000+.
+- **D research**, reported only: contact signal for a repaired E3b, offline
+  potential statistics for approach shaping, and teacher availability and
+  label representability for BC/DAgger-first.
+
+Predeclared rules turn the results into a Phase D recommendation. They
+authorize nothing. No actor training, checkpoint promotion, or gate change.
+Longer-range sequencing is in the local plan note
+`refs/snowgym_continuation_plan_2026-09-13.md`.
+
 ### R1n — E3 small complete autonomous skill: 1v1 full-authority PPO (complete; stopped at critic gate 2026-09-13)
 
 Follow `training/reviews/m7b_r1n_declaration.md`: the reviewer handoff's
