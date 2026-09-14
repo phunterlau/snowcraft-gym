@@ -1,0 +1,170 @@
+{
+  "assistType": "none at runtime; policies from teacher-imitation training",
+  "autonomousQualificationEligible": false,
+  "budgetBound": {
+    "d1": 360000,
+    "d2": 705600,
+    "d3": 230400,
+    "total": 1296000
+  },
+  "config": {
+    "actorGradClip": 0.5,
+    "arms": [
+      "local",
+      "global"
+    ],
+    "assistType": "none at runtime; policies from teacher-imitation training",
+    "assistVersion": "snowgym.pre-ppo-diagnostics.v0",
+    "autonomousQualificationEligible": false,
+    "blockWorlds": 64,
+    "bootstrapSamples": 10000,
+    "bootstrapSeed": 974001,
+    "branchDecisions": [
+      0,
+      25,
+      50,
+      75,
+      100,
+      125
+    ],
+    "branchWindowRadius": 2,
+    "calibrationDraws": 64,
+    "calibrationRows": 1024,
+    "calibrationSeed": 982001,
+    "clipRatio": 0.2,
+    "criticBaselineEpochs": 10,
+    "criticEpochs": 4,
+    "criticGradClip": 0.5,
+    "criticSeedBase": 97201,
+    "d1Seeds": [
+      680000,
+      680099
+    ],
+    "d2SourceEpisodes": 24,
+    "d2SourceSeedBase": 690000,
+    "decisionWindows": [
+      [
+        0,
+        49
+      ],
+      [
+        50,
+        99
+      ],
+      [
+        100,
+        null
+      ]
+    ],
+    "destination": "global",
+    "earlyStoppingPatience": 10,
+    "egocentricHidden": 256,
+    "entropyWeight": 0.01,
+    "epochs": 4,
+    "evaluationBlockWorlds": 50,
+    "format": "snowgym.pre-ppo-diagnostics-config.v0",
+    "gaeLambda": 0.9885140204,
+    "gamma": 0.9976921765,
+    "gateMinPredictiveR2": 0.25,
+    "gateTimeOnlyMargin": 0.05,
+    "heldOutSeedBase": 687000,
+    "initialPowerLogStd": -1.0,
+    "learningRate": 0.0003,
+    "localRadius": 8.0,
+    "maxCriticEpochs": 200,
+    "minibatchSize": 512,
+    "modes": {
+      "cont1": {
+        "sampleContinuous": true,
+        "sampleType": false,
+        "sigmaScale": 1.0
+      },
+      "det": {
+        "sampleContinuous": false,
+        "sampleType": false,
+        "sigmaScale": 1.0
+      },
+      "full025": {
+        "sampleContinuous": true,
+        "sampleType": true,
+        "sigmaScale": 0.25
+      },
+      "full05": {
+        "sampleContinuous": true,
+        "sampleType": true,
+        "sigmaScale": 0.5
+      },
+      "full1": {
+        "sampleContinuous": true,
+        "sampleType": true,
+        "sigmaScale": 1.0
+      },
+      "type": {
+        "sampleContinuous": false,
+        "sampleType": true,
+        "sigmaScale": 1.0
+      }
+    },
+    "movementKlStop": 0.01,
+    "optionHorizon": 200,
+    "policyCheckpoint": "fit-4.pt",
+    "policySeeds": [
+      97101,
+      97102,
+      97103
+    ],
+    "rolloutSeedBase": 976000,
+    "rolloutsPerState": 8,
+    "roster": 1,
+    "samplingSeedBase": 975000,
+    "seedBandStride": 1000,
+    "sigmaGapLimit": 0.1,
+    "sigmaScales": [
+      1.0,
+      0.5,
+      0.25
+    ],
+    "simulatorBudget": 1350000,
+    "sourceRun": "runs/m7b_engage_r1n_c_v0",
+    "targetWorldSigma": 2.0,
+    "timeBins": 20,
+    "trainSeedBase": 684000,
+    "trainingRngs": [
+      97101,
+      97102,
+      97103
+    ],
+    "typeSamplingLimit": 0.1,
+    "validationFromIndex": 204,
+    "warmStartEpochs": 10,
+    "warmStartHeldOutEpisodes": 128,
+    "warmStartTrainEpisodes": 256
+  },
+  "criticImplementationDigest": "sha256:c077a56f7561093dc29a8818ef5bedb3e6b0d2891da2dedc5b55934d1d7712c2",
+  "declarationDigest": "sha256:73b496417bed07030071ba318de0dc0029f032976e7321260c6b628f1c322b7c",
+  "gitCommit": "9b894628fa3cefe333b8643d8d0a053643230c66",
+  "implementationDigest": "sha256:84800ebe2114bdb69156a25db9ac36c4f7e907733f827034c6c8716442a73044",
+  "pinnedE3Digests": {
+    "implementationDigest": {
+      "archived": "sha256:f1b06b98ecd8bfb9565ef6ee7dc7e2080d0284fb202b3abf81b9cc5a739dff1a",
+      "current": "sha256:f1b06b98ecd8bfb9565ef6ee7dc7e2080d0284fb202b3abf81b9cc5a739dff1a",
+      "match": true
+    },
+    "policyImplementationDigest": {
+      "archived": "sha256:90204be55b8ad93b31b481bed387266c6e0c48c410dd458279f8c19b0c4a028f",
+      "current": "sha256:90204be55b8ad93b31b481bed387266c6e0c48c410dd458279f8c19b0c4a028f",
+      "match": true
+    }
+  },
+  "policyImplementationDigest": "sha256:311081e7eaec52bed81676c66db3a7ce6133795486aeb13b00dce2d7ef788522",
+  "sourceRun": {
+    "artifacts": 95,
+    "checkpoints": {
+      "97101": "sha256:e67acf815def63bcabc4877645afb28ec58daebaa6982066f2c6eda4b4ea3e2b",
+      "97102": "sha256:da36fe649bba56763cb5e381ec54867d1f656172f2e57875d94781e3aecf9e84",
+      "97103": "sha256:6da3fa5645ec1373319d20e5dd9fd5a7a351bbd6dff8e434920daa68eb243fbf"
+    },
+    "manifestDigest": "sha256:ddace6c48e95f0c9919e04fad161f2e1e48c32736ce05529c6e9a54164bc82bd"
+  },
+  "trainImplementationDigest": "sha256:e6ac48c30aac8c6eb119e196ccc2a415f81ae731adbdb36b69f7fa69e8f7d7c4"
+}

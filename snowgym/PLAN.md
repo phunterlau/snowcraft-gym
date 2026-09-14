@@ -19,7 +19,30 @@ configuration on 2026-09-01.
 
 ## Milestones
 
-### R1n-d — diagnostics before PPO: exploration σ, attainable critic R², critic capacity (declared and implemented 2026-09-14; collection pending)
+### R1n-d — diagnostics before PPO: exploration σ, attainable critic R², critic capacity (complete 2026-09-14; halve σ, critic outcome bracketed)
+
+**Results** (`training/reviews/m7b_r1n_d_results.md`; archive
+`runs/m7b_engage_r1n_d_v0`; 807,532 of 1,350,000 decisions; 96/96 manifest
+digests verified; all 3,184 rollouts replay-identical):
+
+- **Exploration.** The stochastic gap is continuous-action noise: 16.3 points
+  at σ×1. Type sampling costs 0.3 points. The gap is 8.7 at σ×0.5 and 2.0 at
+  σ×0.25, so the recommended scale is 0.5. Policy 97103 is still 20 points
+  below deterministic at σ×0.5.
+- **Critic ceiling.** The branched-rollout upper bound on attainable R² is
+  0.16, 0.22, and 0.24 (CI upper bounds 0.23, 0.34, 0.33). 76–84% of return
+  variance is within-state from blue's own sampling. The ceiling rises from
+  0.05–0.18 at k = 0 to 0.23–0.33 at k = 100.
+- **Critic capacity.** C0–C3 are indistinguishable: held-out R² within 0.011
+  for each policy (0.04, 0.11, 0.05). Longer training, egocentric features,
+  and removing the clip give no gain. Capture of the upper-bound value
+  variance is about 0.2–0.35, with wide intervals.
+- **Rules.** 97101 is gate unreachable; 97102 and 97103 are bracketed, so the
+  outcome is bracketed. The absolute 0.25 gate is not a meaningful
+  precondition.
+- **For R1n-e:** use σ×0.5, a critic gate relative to a ceiling measured at
+  its own σ, power sized for near-Monte-Carlo advantage variance, and a
+  primary test still to be set.
 
 Follow `training/reviews/m7b_r1n_d_declaration.md`. The user chose to split
 off a diagnostic before any PPO; the PPO stage R1n-c called "R1n-d" is now

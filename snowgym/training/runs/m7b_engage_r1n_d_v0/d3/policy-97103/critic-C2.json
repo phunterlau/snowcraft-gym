@@ -1,0 +1,190 @@
+{
+  "heldOut": {
+    "branchWindowR2": {
+      "byDecision": {
+        "0": -0.021854785215188688,
+        "100": 0.03618086632932016,
+        "125": 0.09316956269747423,
+        "25": -0.0400974096658111,
+        "50": -0.00481040853707837,
+        "75": -0.02793362268574162
+      },
+      "pooled": 0.030112724193710028
+    },
+    "clockSkillScore": 0.05029545473063968,
+    "decisionWindowR2": {
+      "0-49": -0.04671466005030256,
+      "100-": 0.14262946180275793,
+      "50-99": -0.011588381739091158
+    },
+    "explainedVariance": 0.10601043335866134,
+    "gateConditions": {
+      "absolutePassed": false,
+      "bindingThreshold": 0.25,
+      "clockRelativePassed": true
+    },
+    "gatePassed": false,
+    "heldOutTargetVariance": 0.7852985806091698,
+    "meanResidual": 0.19928444706287404,
+    "predictiveR2": 0.05543821557832629,
+    "predictiveR2Interval95": [
+      -0.07119339074807611,
+      0.1341529019143937
+    ],
+    "timeOnlyR2": 0.005415116599476688
+  },
+  "training": {
+    "bestEpoch": 10,
+    "bestValidationMse": 0.710381269454956,
+    "epochsRun": 21,
+    "history": [
+      {
+        "clippedFraction": 0.037037037037037035,
+        "epoch": 0,
+        "gradientNormMedian": 0.18814963102340698,
+        "trainMseRunning": 0.7730634409169816,
+        "validationMse": 0.7421016693115234
+      },
+      {
+        "clippedFraction": 0.2037037037037037,
+        "epoch": 1,
+        "gradientNormMedian": 0.22242659330368042,
+        "trainMseRunning": 0.740033904486795,
+        "validationMse": 0.7344918847084045
+      },
+      {
+        "clippedFraction": 0.5925925925925926,
+        "epoch": 2,
+        "gradientNormMedian": 0.5891409516334534,
+        "trainMseRunning": 0.7269870252146599,
+        "validationMse": 0.712864100933075
+      },
+      {
+        "clippedFraction": 0.3888888888888889,
+        "epoch": 3,
+        "gradientNormMedian": 0.3897719234228134,
+        "trainMseRunning": 0.7159776789503642,
+        "validationMse": 0.7114725112915039
+      },
+      {
+        "clippedFraction": 0.5740740740740741,
+        "epoch": 4,
+        "gradientNormMedian": 0.6043969094753265,
+        "trainMseRunning": 0.711362803577221,
+        "validationMse": 0.7258018255233765
+      },
+      {
+        "clippedFraction": 0.6296296296296297,
+        "epoch": 5,
+        "gradientNormMedian": 0.5807458162307739,
+        "trainMseRunning": 0.7071125397033916,
+        "validationMse": 0.7223398089408875
+      },
+      {
+        "clippedFraction": 0.6296296296296297,
+        "epoch": 6,
+        "gradientNormMedian": 0.6947942078113556,
+        "trainMseRunning": 0.7044198751641485,
+        "validationMse": 0.7235944867134094
+      },
+      {
+        "clippedFraction": 0.7592592592592593,
+        "epoch": 7,
+        "gradientNormMedian": 0.7459810078144073,
+        "trainMseRunning": 0.7026498421213784,
+        "validationMse": 0.716950535774231
+      },
+      {
+        "clippedFraction": 0.7592592592592593,
+        "epoch": 8,
+        "gradientNormMedian": 0.6876706182956696,
+        "trainMseRunning": 0.6987375258282904,
+        "validationMse": 0.7148095965385437
+      },
+      {
+        "clippedFraction": 0.7222222222222222,
+        "epoch": 9,
+        "gradientNormMedian": 0.6941114366054535,
+        "trainMseRunning": 0.6930149465344659,
+        "validationMse": 0.7196065783500671
+      },
+      {
+        "clippedFraction": 0.7777777777777778,
+        "epoch": 10,
+        "gradientNormMedian": 0.8299810290336609,
+        "trainMseRunning": 0.691711259351422,
+        "validationMse": 0.710381269454956
+      },
+      {
+        "clippedFraction": 0.8703703703703703,
+        "epoch": 11,
+        "gradientNormMedian": 0.7915683686733246,
+        "trainMseRunning": 0.6903700154938857,
+        "validationMse": 0.7180413603782654
+      },
+      {
+        "clippedFraction": 0.8888888888888888,
+        "epoch": 12,
+        "gradientNormMedian": 0.7809289395809174,
+        "trainMseRunning": 0.6848486428665015,
+        "validationMse": 0.7264497876167297
+      },
+      {
+        "clippedFraction": 0.9259259259259259,
+        "epoch": 13,
+        "gradientNormMedian": 0.7421179115772247,
+        "trainMseRunning": 0.6825380441438823,
+        "validationMse": 0.7201088666915894
+      },
+      {
+        "clippedFraction": 0.9074074074074074,
+        "epoch": 14,
+        "gradientNormMedian": 0.9023076295852661,
+        "trainMseRunning": 0.6807195574227268,
+        "validationMse": 0.7166988253593445
+      },
+      {
+        "clippedFraction": 0.9814814814814815,
+        "epoch": 15,
+        "gradientNormMedian": 0.952919602394104,
+        "trainMseRunning": 0.6777153808709553,
+        "validationMse": 0.7201231718063354
+      },
+      {
+        "clippedFraction": 1.0,
+        "epoch": 16,
+        "gradientNormMedian": 1.0021130740642548,
+        "trainMseRunning": 0.6747325599352763,
+        "validationMse": 0.7432368993759155
+      },
+      {
+        "clippedFraction": 0.9814814814814815,
+        "epoch": 17,
+        "gradientNormMedian": 1.1735868453979492,
+        "trainMseRunning": 0.6759401755829619,
+        "validationMse": 0.7238113284111023
+      },
+      {
+        "clippedFraction": 1.0,
+        "epoch": 18,
+        "gradientNormMedian": 0.9926768839359283,
+        "trainMseRunning": 0.671484508110716,
+        "validationMse": 0.7244668006896973
+      },
+      {
+        "clippedFraction": 0.9814814814814815,
+        "epoch": 19,
+        "gradientNormMedian": 1.2152210474014282,
+        "trainMseRunning": 0.6703539529428721,
+        "validationMse": 0.7274463772773743
+      },
+      {
+        "clippedFraction": 1.0,
+        "epoch": 20,
+        "gradientNormMedian": 1.2612225413322449,
+        "trainMseRunning": 0.6706298217201924,
+        "validationMse": 0.7327476143836975
+      }
+    ]
+  }
+}

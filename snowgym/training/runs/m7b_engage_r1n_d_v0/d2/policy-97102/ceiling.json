@@ -1,0 +1,145 @@
+{
+  "byDecision": {
+    "0": {
+      "betweenVariance": 0.16978754689147962,
+      "ceilingR2": 0.1804508210388095,
+      "ceilingR2Interval95": [
+        0.035980379911205326,
+        0.3167136508192043
+      ],
+      "rollouts": 8,
+      "stateValueVariance": 0.10830293858712528,
+      "states": 24,
+      "totalVariance": 0.60017980502196,
+      "withinVariance": 0.4918768664348347
+    },
+    "100": {
+      "betweenVariance": 0.2797414460992723,
+      "ceilingR2": 0.3247830650938307,
+      "ceilingR2Interval95": [
+        0.12997068606349238,
+        0.5024295744495755
+      ],
+      "rollouts": 8,
+      "stateValueVariance": 0.22203952709955996,
+      "states": 24,
+      "totalVariance": 0.6836548790972587,
+      "withinVariance": 0.4616153519976988
+    },
+    "125": {
+      "betweenVariance": 0.3602380441770965,
+      "ceilingR2": 0.45193363236660006,
+      "ceilingR2Interval95": [
+        0.14226574932709926,
+        0.7303655868310442
+      ],
+      "rollouts": 8,
+      "stateValueVariance": 0.3128181627235281,
+      "states": 11,
+      "totalVariance": 0.6921772143520752,
+      "withinVariance": 0.3793590516285471
+    },
+    "25": {
+      "betweenVariance": 0.16767109120799434,
+      "ceilingR2": 0.14974810839214872,
+      "ceilingR2Interval95": [
+        -0.018937321672703792,
+        0.313574223505571
+      ],
+      "rollouts": 8,
+      "stateValueVariance": 0.09806846257686959,
+      "states": 24,
+      "totalVariance": 0.6548894916258676,
+      "withinVariance": 0.556821029048998
+    },
+    "50": {
+      "betweenVariance": 0.17241349972000744,
+      "ceilingR2": 0.12922752605284693,
+      "ceilingR2Interval95": [
+        -0.031353562868289095,
+        0.28566790450094764
+      ],
+      "rollouts": 8,
+      "stateValueVariance": 0.09358670852060842,
+      "states": 24,
+      "totalVariance": 0.7242010381158006,
+      "withinVariance": 0.6306143295951921
+    },
+    "75": {
+      "betweenVariance": 0.2289775866323029,
+      "ceilingR2": 0.1727545549734793,
+      "ceilingR2Interval95": [
+        0.028130136693269036,
+        0.30975244261375035
+      ],
+      "rollouts": 8,
+      "stateValueVariance": 0.14323901843205034,
+      "states": 24,
+      "totalVariance": 0.8291475640340707,
+      "withinVariance": 0.6859085456020204
+    }
+  },
+  "critics": {
+    "C0": {
+      "capture": 0.354365100094993,
+      "captureInterval95": [
+        -0.16939138348408375,
+        0.48721648110652543
+      ],
+      "rolloutR2": 0.07552656590071793,
+      "rolloutR2Interval95": [
+        -0.019297992481335367,
+        0.13192014001923125
+      ]
+    },
+    "C1": {
+      "capture": 0.3243344834254558,
+      "captureInterval95": [
+        -0.32565465079552425,
+        0.46115233310848164
+      ],
+      "rolloutR2": 0.06892050197909694,
+      "rolloutR2Interval95": [
+        -0.03384847200155401,
+        0.13164573933012752
+      ]
+    },
+    "C2": {
+      "capture": 0.3135008131786351,
+      "captureInterval95": [
+        -0.269457902202359,
+        0.4367224224213245
+      ],
+      "rolloutR2": 0.06653733685985197,
+      "rolloutR2Interval95": [
+        -0.02796271798305582,
+        0.12144005290337584
+      ]
+    },
+    "C3": {
+      "capture": 0.29469497127714994,
+      "captureInterval95": [
+        -0.4325343597185312,
+        0.4464775962214824
+      ],
+      "rolloutR2": 0.062400472303649424,
+      "rolloutR2Interval95": [
+        -0.04410367438436844,
+        0.13002240361453407
+      ]
+    }
+  },
+  "pooled": {
+    "betweenVariance": 0.22327484291186628,
+    "ceilingR2": 0.21944529445112573,
+    "ceilingR2Interval95": [
+      0.08329703810820539,
+      0.341795897175708
+    ],
+    "rollouts": 8,
+    "stateValueVariance": 0.15455631570556488,
+    "states": 131,
+    "totalVariance": 0.7043045333559761,
+    "withinVariance": 0.5497482176504112
+  }
+}

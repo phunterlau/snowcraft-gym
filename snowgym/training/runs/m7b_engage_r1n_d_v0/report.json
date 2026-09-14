@@ -1,0 +1,1453 @@
+{
+  "assistType": "none at runtime; policies from teacher-imitation training",
+  "autonomousQualificationEligible": false,
+  "budgetBound": {
+    "d1": 360000,
+    "d2": 705600,
+    "d3": 230400,
+    "total": 1296000
+  },
+  "capabilities": {
+    "actions": {
+      "semantics": {
+        "coordinates": "world-space",
+        "hold": "cancels-current-movement-order",
+        "noop": "does-not-cancel-current-movement-order",
+        "omittedUnits": "retain-current-movement-order",
+        "powerRange": [
+          0,
+          1
+        ]
+      },
+      "teamField": "actions",
+      "types": {
+        "hold": {
+          "required": [
+            "type",
+            "unitId"
+          ]
+        },
+        "move": {
+          "required": [
+            "type",
+            "unitId",
+            "x",
+            "y"
+          ]
+        },
+        "noop": {
+          "required": [
+            "type",
+            "unitId"
+          ]
+        },
+        "throw": {
+          "required": [
+            "type",
+            "unitId",
+            "x",
+            "y",
+            "power"
+          ]
+        }
+      }
+    },
+    "apiVersion": "snowgym.v0",
+    "endpoints": {
+      "activatePlan": {
+        "guarded": true,
+        "method": "POST",
+        "mutates": true,
+        "path": "/activate-plan",
+        "requires": [
+          "planId",
+          "plan"
+        ]
+      },
+      "autoplay": {
+        "method": "POST",
+        "mutates": true,
+        "path": "/autoplay"
+      },
+      "capabilities": {
+        "method": "GET",
+        "mutates": false,
+        "path": "/capabilities"
+      },
+      "health": {
+        "method": "GET",
+        "mutates": false,
+        "path": "/health"
+      },
+      "planObservation": {
+        "method": "GET",
+        "mutates": false,
+        "path": "/plan-observation"
+      },
+      "planTeacherAction": {
+        "method": "GET",
+        "mutates": false,
+        "path": "/plan-teacher-action"
+      },
+      "previewPlan": {
+        "guarded": true,
+        "method": "POST",
+        "mutates": false,
+        "path": "/preview-plan",
+        "requires": [
+          "planId",
+          "plan"
+        ]
+      },
+      "reset": {
+        "guarded": true,
+        "method": "POST",
+        "mutates": true,
+        "path": "/reset"
+      },
+      "status": {
+        "method": "GET",
+        "mutates": false,
+        "path": "/status"
+      },
+      "step": {
+        "method": "POST",
+        "mutates": true,
+        "path": "/step",
+        "requires": [
+          "action"
+        ]
+      },
+      "stepJoint": {
+        "method": "POST",
+        "mutates": true,
+        "path": "/step-joint",
+        "requires": [
+          "actions.blue",
+          "actions.red"
+        ]
+      },
+      "stepScripted": {
+        "method": "POST",
+        "mutates": true,
+        "path": "/step-scripted"
+      },
+      "teacherAction": {
+        "method": "GET",
+        "mutates": false,
+        "path": "/teacher-action"
+      }
+    },
+    "format": "snowgym.capabilities.v0",
+    "gymnasium": {
+      "environments": [
+        {
+          "configurable": false,
+          "id": "SnowGym/Squad-v0",
+          "maxTeamUnits": 3
+        },
+        {
+          "configurable": true,
+          "id": "SnowGym/Squad-v1",
+          "maxTeamUnits": 8
+        },
+        {
+          "configurable": true,
+          "id": "SnowGym/Squad-v2",
+          "maxTeamUnits": 10
+        },
+        {
+          "actuatorComplete": true,
+          "configurable": true,
+          "id": "SnowGym/Squad-v3",
+          "maxTeamUnits": 10,
+          "observationVersion": "snowgym.observation.v1"
+        }
+      ]
+    },
+    "pettingZoo": {
+      "environment": {
+        "agents": [
+          "blue",
+          "red"
+        ],
+        "api": "parallel",
+        "id": "SnowGym/ParallelSquad-v0",
+        "maxTeamUnits": 10
+      },
+      "researchEnvironment": {
+        "id": "SnowGym/ResearchParallelSquad-v0",
+        "latencyUnits": "team-decisions",
+        "transforms": [
+          "local-visibility",
+          "action-delay",
+          "observation-delay",
+          "semantic-raster"
+        ],
+        "visibilityRadiusUnits": "world"
+      }
+    },
+    "replayFormat": "snowgym.replay.v0",
+    "scenarios": {
+      "decisionHz": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        10,
+        12,
+        15,
+        20,
+        30,
+        60
+      ],
+      "maps": [
+        {
+          "blueCapacity": 3,
+          "height": 30,
+          "id": "arena1.json",
+          "name": "Snowy Clearing",
+          "redCapacity": 3,
+          "width": 40
+        },
+        {
+          "blueCapacity": 3,
+          "height": 30,
+          "id": "arena2.json",
+          "name": "Frozen Pond",
+          "redCapacity": 3,
+          "width": 44
+        },
+        {
+          "blueCapacity": 3,
+          "height": 32,
+          "id": "arena3.json",
+          "name": "Village Skirmish",
+          "redCapacity": 3,
+          "width": 46
+        },
+        {
+          "blueCapacity": 3,
+          "height": 34,
+          "id": "arena4.json",
+          "name": "Pine Forest",
+          "redCapacity": 3,
+          "width": 48
+        },
+        {
+          "blueCapacity": 3,
+          "height": 32,
+          "id": "arena5.json",
+          "name": "Schoolyard Scramble",
+          "redCapacity": 3,
+          "width": 46
+        },
+        {
+          "blueCapacity": 10,
+          "height": 48,
+          "id": "arena6.json",
+          "name": "Winter Front",
+          "redCapacity": 10,
+          "width": 64
+        }
+      ],
+      "maxTeamSize": 10,
+      "redControllers": [
+        "scripted",
+        "random"
+      ],
+      "redDifficulties": [
+        "easy",
+        "normal",
+        "hard"
+      ],
+      "simulationHz": 60
+    },
+    "simulationVersion": "snowgym.sim.v2",
+    "stateHashVersion": "snowgym.state.v2",
+    "transport": {
+      "binding": "loopback",
+      "episodeModel": "single-shared",
+      "expectedStateHash": true,
+      "idempotencyKey": true,
+      "maxBodyBytes": 1000000
+    },
+    "upstreamBaseCommit": "7d9fca5"
+  },
+  "criticRules": {
+    "authorizes": "nothing; R1n-e needs its own declaration",
+    "outcome": "bracketed",
+    "perPolicy": {
+      "97101": {
+        "ceilingR2": 0.1592510740801663,
+        "lowerBound": 0.038002323464153664,
+        "row": "gate-unreachable",
+        "selected": "C1",
+        "upperBound95": 0.22517237978362936
+      },
+      "97102": {
+        "ceilingR2": 0.21944529445112573,
+        "lowerBound": 0.10852879606686205,
+        "row": "bracketed",
+        "selected": "C3",
+        "upperBound95": 0.341795897175708
+      },
+      "97103": {
+        "ceilingR2": 0.2402083653767291,
+        "lowerBound": 0.05543821557832629,
+        "row": "bracketed",
+        "selected": "C2",
+        "upperBound95": 0.3348164489217902
+      }
+    },
+    "recommendation": "R1n-e: use the selected variant, state the critic gate as capture of the measured ceiling, and state D2's red-draw boundary"
+  },
+  "d1": {
+    "97101": {
+      "cont1": {
+        "blueDeathFraction": 0.52,
+        "completionDecisionP50": 128.5,
+        "completionDecisionP95": 156.65,
+        "contactFraction": 0.83,
+        "episodes": 100,
+        "firstHitDecisionP50": 107.0,
+        "firstHitDecisionP95": 126.89999999999999,
+        "rejectedActionRate": 0.0,
+        "rejectedActions": 0,
+        "successFraction": 0.48,
+        "successes": 48,
+        "suggestedHorizon": 235,
+        "timeoutFraction": 0.01,
+        "totalActions": 13403
+      },
+      "det": {
+        "blueDeathFraction": 0.46,
+        "completionDecisionP50": 119.0,
+        "completionDecisionP95": 147.09999999999997,
+        "contactFraction": 0.87,
+        "episodes": 100,
+        "firstHitDecisionP50": 101.0,
+        "firstHitDecisionP95": 127.7,
+        "rejectedActionRate": 0.0,
+        "rejectedActions": 0,
+        "successFraction": 0.55,
+        "successes": 55,
+        "suggestedHorizon": 221,
+        "timeoutFraction": 0.0,
+        "totalActions": 12349
+      },
+      "full025": {
+        "blueDeathFraction": 0.43,
+        "completionDecisionP50": 118.0,
+        "completionDecisionP95": 140.6999999999999,
+        "contactFraction": 0.87,
+        "episodes": 100,
+        "firstHitDecisionP50": 99.0,
+        "firstHitDecisionP95": 122.50000000000001,
+        "rejectedActionRate": 0.0,
+        "rejectedActions": 0,
+        "successFraction": 0.59,
+        "successes": 59,
+        "suggestedHorizon": 212,
+        "timeoutFraction": 0.0,
+        "totalActions": 12201
+      },
+      "full05": {
+        "blueDeathFraction": 0.47,
+        "completionDecisionP50": 120.0,
+        "completionDecisionP95": 145.8,
+        "contactFraction": 0.9,
+        "episodes": 100,
+        "firstHitDecisionP50": 97.5,
+        "firstHitDecisionP95": 117.55,
+        "rejectedActionRate": 0.0,
+        "rejectedActions": 0,
+        "successFraction": 0.53,
+        "successes": 53,
+        "suggestedHorizon": 219,
+        "timeoutFraction": 0.0,
+        "totalActions": 12362
+      },
+      "full1": {
+        "blueDeathFraction": 0.59,
+        "completionDecisionP50": 133.0,
+        "completionDecisionP95": 150.0,
+        "contactFraction": 0.86,
+        "episodes": 100,
+        "firstHitDecisionP50": 102.0,
+        "firstHitDecisionP95": 127.0,
+        "rejectedActionRate": 0.0,
+        "rejectedActions": 0,
+        "successFraction": 0.41,
+        "successes": 41,
+        "suggestedHorizon": 225,
+        "timeoutFraction": 0.0,
+        "totalActions": 13504
+      },
+      "type": {
+        "blueDeathFraction": 0.41,
+        "completionDecisionP50": 116.0,
+        "completionDecisionP95": 141.05,
+        "contactFraction": 0.92,
+        "episodes": 100,
+        "firstHitDecisionP50": 98.5,
+        "firstHitDecisionP95": 122.25000000000001,
+        "rejectedActionRate": 0.0,
+        "rejectedActions": 0,
+        "successFraction": 0.6,
+        "successes": 60,
+        "suggestedHorizon": 212,
+        "timeoutFraction": 0.0,
+        "totalActions": 12183
+      }
+    },
+    "97102": {
+      "cont1": {
+        "blueDeathFraction": 0.44,
+        "completionDecisionP50": 129.0,
+        "completionDecisionP95": 163.0,
+        "contactFraction": 0.92,
+        "episodes": 100,
+        "firstHitDecisionP50": 104.0,
+        "firstHitDecisionP95": 128.60000000000002,
+        "rejectedActionRate": 0.0,
+        "rejectedActions": 0,
+        "successFraction": 0.54,
+        "successes": 54,
+        "suggestedHorizon": 245,
+        "timeoutFraction": 0.02,
+        "totalActions": 13801
+      },
+      "det": {
+        "blueDeathFraction": 0.28,
+        "completionDecisionP50": 117.0,
+        "completionDecisionP95": 143.0,
+        "contactFraction": 0.97,
+        "episodes": 100,
+        "firstHitDecisionP50": 99.0,
+        "firstHitDecisionP95": 124.79999999999995,
+        "rejectedActionRate": 0.0,
+        "rejectedActions": 0,
+        "successFraction": 0.72,
+        "successes": 72,
+        "suggestedHorizon": 215,
+        "timeoutFraction": 0.0,
+        "totalActions": 12460
+      },
+      "full025": {
+        "blueDeathFraction": 0.32,
+        "completionDecisionP50": 117.0,
+        "completionDecisionP95": 141.95,
+        "contactFraction": 0.93,
+        "episodes": 100,
+        "firstHitDecisionP50": 98.0,
+        "firstHitDecisionP95": 126.79999999999998,
+        "rejectedActionRate": 0.0,
+        "rejectedActions": 0,
+        "successFraction": 0.68,
+        "successes": 68,
+        "suggestedHorizon": 213,
+        "timeoutFraction": 0.0,
+        "totalActions": 12457
+      },
+      "full05": {
+        "blueDeathFraction": 0.33,
+        "completionDecisionP50": 117.0,
+        "completionDecisionP95": 143.65,
+        "contactFraction": 0.95,
+        "episodes": 100,
+        "firstHitDecisionP50": 98.0,
+        "firstHitDecisionP95": 122.3,
+        "rejectedActionRate": 0.0,
+        "rejectedActions": 0,
+        "successFraction": 0.68,
+        "successes": 68,
+        "suggestedHorizon": 216,
+        "timeoutFraction": 0.0,
+        "totalActions": 12687
+      },
+      "full1": {
+        "blueDeathFraction": 0.41,
+        "completionDecisionP50": 129.0,
+        "completionDecisionP95": 161.45,
+        "contactFraction": 0.95,
+        "episodes": 100,
+        "firstHitDecisionP50": 100.0,
+        "firstHitDecisionP95": 134.3,
+        "rejectedActionRate": 0.0,
+        "rejectedActions": 0,
+        "successFraction": 0.58,
+        "successes": 58,
+        "suggestedHorizon": 243,
+        "timeoutFraction": 0.01,
+        "totalActions": 13557
+      },
+      "type": {
+        "blueDeathFraction": 0.31,
+        "completionDecisionP50": 115.0,
+        "completionDecisionP95": 138.0,
+        "contactFraction": 0.97,
+        "episodes": 100,
+        "firstHitDecisionP50": 98.0,
+        "firstHitDecisionP95": 124.0,
+        "rejectedActionRate": 0.0,
+        "rejectedActions": 0,
+        "successFraction": 0.71,
+        "successes": 71,
+        "suggestedHorizon": 207,
+        "timeoutFraction": 0.0,
+        "totalActions": 12355
+      }
+    },
+    "97103": {
+      "cont1": {
+        "blueDeathFraction": 0.52,
+        "completionDecisionP50": 130.0,
+        "completionDecisionP95": 156.0,
+        "contactFraction": 0.85,
+        "episodes": 100,
+        "firstHitDecisionP50": 105.0,
+        "firstHitDecisionP95": 131.39999999999998,
+        "rejectedActionRate": 0.0,
+        "rejectedActions": 0,
+        "successFraction": 0.47,
+        "successes": 47,
+        "suggestedHorizon": 234,
+        "timeoutFraction": 0.01,
+        "totalActions": 13489
+      },
+      "det": {
+        "blueDeathFraction": 0.29,
+        "completionDecisionP50": 120.0,
+        "completionDecisionP95": 142.5,
+        "contactFraction": 0.94,
+        "episodes": 100,
+        "firstHitDecisionP50": 99.0,
+        "firstHitDecisionP95": 124.74999999999997,
+        "rejectedActionRate": 0.0,
+        "rejectedActions": 0,
+        "successFraction": 0.71,
+        "successes": 71,
+        "suggestedHorizon": 214,
+        "timeoutFraction": 0.0,
+        "totalActions": 12643
+      },
+      "full025": {
+        "blueDeathFraction": 0.35,
+        "completionDecisionP50": 122.0,
+        "completionDecisionP95": 141.8,
+        "contactFraction": 0.9,
+        "episodes": 100,
+        "firstHitDecisionP50": 99.0,
+        "firstHitDecisionP95": 118.55,
+        "rejectedActionRate": 0.0,
+        "rejectedActions": 0,
+        "successFraction": 0.65,
+        "successes": 65,
+        "suggestedHorizon": 213,
+        "timeoutFraction": 0.0,
+        "totalActions": 12463
+      },
+      "full05": {
+        "blueDeathFraction": 0.49,
+        "completionDecisionP50": 120.0,
+        "completionDecisionP95": 143.5,
+        "contactFraction": 0.9,
+        "episodes": 100,
+        "firstHitDecisionP50": 100.0,
+        "firstHitDecisionP95": 126.0,
+        "rejectedActionRate": 0.0,
+        "rejectedActions": 0,
+        "successFraction": 0.51,
+        "successes": 51,
+        "suggestedHorizon": 216,
+        "timeoutFraction": 0.0,
+        "totalActions": 12930
+      },
+      "full1": {
+        "blueDeathFraction": 0.52,
+        "completionDecisionP50": 129.0,
+        "completionDecisionP95": 155.79999999999998,
+        "contactFraction": 0.89,
+        "episodes": 100,
+        "firstHitDecisionP50": 105.0,
+        "firstHitDecisionP95": 136.6,
+        "rejectedActionRate": 0.0,
+        "rejectedActions": 0,
+        "successFraction": 0.49,
+        "successes": 49,
+        "suggestedHorizon": 234,
+        "timeoutFraction": 0.01,
+        "totalActions": 13474
+      },
+      "type": {
+        "blueDeathFraction": 0.35,
+        "completionDecisionP50": 119.0,
+        "completionDecisionP95": 138.0,
+        "contactFraction": 0.92,
+        "episodes": 100,
+        "firstHitDecisionP50": 98.5,
+        "firstHitDecisionP95": 125.45,
+        "rejectedActionRate": 0.0,
+        "rejectedActions": 0,
+        "successFraction": 0.66,
+        "successes": 66,
+        "suggestedHorizon": 207,
+        "timeoutFraction": 0.0,
+        "totalActions": 12480
+      }
+    }
+  },
+  "d2": {
+    "97101": {
+      "byDecision": {
+        "0": {
+          "betweenVariance": 0.10327690930398878,
+          "ceilingR2": 0.04954880921675271,
+          "ceilingR2Interval95": [
+            -0.04115001964915783,
+            0.1384764951308481
+          ],
+          "rollouts": 8,
+          "stateValueVariance": 0.03039554246301593,
+          "states": 24,
+          "totalVariance": 0.6134464771907987,
+          "withinVariance": 0.5830509347277828
+        },
+        "100": {
+          "betweenVariance": 0.2748924157444185,
+          "ceilingR2": 0.23027804947869654,
+          "ceilingR2Interval95": [
+            0.07590517050278466,
+            0.3861070451549187
+          ],
+          "rollouts": 8,
+          "stateValueVariance": 0.19388358234096126,
+          "states": 24,
+          "totalVariance": 0.841954249568619,
+          "withinVariance": 0.6480706672276577
+        },
+        "125": {
+          "betweenVariance": 0.3772656593647384,
+          "ceilingR2": 0.3155647047373099,
+          "ceilingR2Interval95": [
+            0.05952267247600725,
+            0.5293944115978296
+          ],
+          "rollouts": 8,
+          "stateValueVariance": 0.2967989344429087,
+          "states": 15,
+          "totalVariance": 0.9405327338175458,
+          "withinVariance": 0.643733799374637
+        },
+        "25": {
+          "betweenVariance": 0.13266204653325503,
+          "ceilingR2": 0.08448572738792308,
+          "ceilingR2Interval95": [
+            -0.015049317864483915,
+            0.18676698927575058
+          ],
+          "rollouts": 8,
+          "stateValueVariance": 0.05634308836089484,
+          "states": 24,
+          "totalVariance": 0.6668947537397764,
+          "withinVariance": 0.6105516653788815
+        },
+        "50": {
+          "betweenVariance": 0.15498725345117717,
+          "ceilingR2": 0.08728389425420403,
+          "ceilingR2Interval95": [
+            -0.02427719666006788,
+            0.19871612847968273
+          ],
+          "rollouts": 8,
+          "stateValueVariance": 0.0671781404048311,
+          "states": 24,
+          "totalVariance": 0.7696510447755996,
+          "withinVariance": 0.7024729043707686
+        },
+        "75": {
+          "betweenVariance": 0.21337187195155918,
+          "ceilingR2": 0.15105687568891157,
+          "ceilingR2Interval95": [
+            0.01926081619393512,
+            0.2773755913358642
+          ],
+          "rollouts": 8,
+          "stateValueVariance": 0.12532834698233003,
+          "states": 24,
+          "totalVariance": 0.8296765467361631,
+          "withinVariance": 0.7043481997538331
+        }
+      },
+      "critics": {
+        "C0": {
+          "capture": 0.21095972731545842,
+          "captureInterval95": [
+            -0.2953440279951074,
+            0.5028222122039135
+          ],
+          "rolloutR2": 0.03169952546936794,
+          "rolloutR2Interval95": [
+            -0.03479698621719038,
+            0.09382109275709147
+          ]
+        },
+        "C1": {
+          "capture": 0.2344124706584253,
+          "captureInterval95": [
+            -0.34636700419019617,
+            0.5654504021540019
+          ],
+          "rolloutR2": 0.0354417276759843,
+          "rolloutR2Interval95": [
+            -0.041438352692178076,
+            0.10652176154883895
+          ]
+        },
+        "C2": {
+          "capture": 0.0647138725983718,
+          "captureInterval95": [
+            -0.6594134755518503,
+            0.4708941931291419
+          ],
+          "rolloutR2": 0.008364022572009633,
+          "rolloutR2Interval95": [
+            -0.0774167466684494,
+            0.08520629116583471
+          ]
+        },
+        "C3": {
+          "capture": 0.015587786336372145,
+          "captureInterval95": [
+            -0.7800864813883269,
+            0.4514348220959707
+          ],
+          "rolloutR2": 0.000525291480995338,
+          "rolloutR2Interval95": [
+            -0.09066837351695574,
+            0.0827381804744356
+          ]
+        }
+      },
+      "pooled": {
+        "betweenVariance": 0.20406715741792525,
+        "ceilingR2": 0.1592510740801663,
+        "ceilingR2Interval95": [
+          0.08812745196107624,
+          0.22517237978362936
+        ],
+        "rollouts": 8,
+        "stateValueVariance": 0.12293764639419033,
+        "states": 135,
+        "totalVariance": 0.7719737345840697,
+        "withinVariance": 0.6490360881898793
+      }
+    },
+    "97102": {
+      "byDecision": {
+        "0": {
+          "betweenVariance": 0.16978754689147962,
+          "ceilingR2": 0.1804508210388095,
+          "ceilingR2Interval95": [
+            0.035980379911205326,
+            0.3167136508192043
+          ],
+          "rollouts": 8,
+          "stateValueVariance": 0.10830293858712528,
+          "states": 24,
+          "totalVariance": 0.60017980502196,
+          "withinVariance": 0.4918768664348347
+        },
+        "100": {
+          "betweenVariance": 0.2797414460992723,
+          "ceilingR2": 0.3247830650938307,
+          "ceilingR2Interval95": [
+            0.12997068606349238,
+            0.5024295744495755
+          ],
+          "rollouts": 8,
+          "stateValueVariance": 0.22203952709955996,
+          "states": 24,
+          "totalVariance": 0.6836548790972587,
+          "withinVariance": 0.4616153519976988
+        },
+        "125": {
+          "betweenVariance": 0.3602380441770965,
+          "ceilingR2": 0.45193363236660006,
+          "ceilingR2Interval95": [
+            0.14226574932709926,
+            0.7303655868310442
+          ],
+          "rollouts": 8,
+          "stateValueVariance": 0.3128181627235281,
+          "states": 11,
+          "totalVariance": 0.6921772143520752,
+          "withinVariance": 0.3793590516285471
+        },
+        "25": {
+          "betweenVariance": 0.16767109120799434,
+          "ceilingR2": 0.14974810839214872,
+          "ceilingR2Interval95": [
+            -0.018937321672703792,
+            0.313574223505571
+          ],
+          "rollouts": 8,
+          "stateValueVariance": 0.09806846257686959,
+          "states": 24,
+          "totalVariance": 0.6548894916258676,
+          "withinVariance": 0.556821029048998
+        },
+        "50": {
+          "betweenVariance": 0.17241349972000744,
+          "ceilingR2": 0.12922752605284693,
+          "ceilingR2Interval95": [
+            -0.031353562868289095,
+            0.28566790450094764
+          ],
+          "rollouts": 8,
+          "stateValueVariance": 0.09358670852060842,
+          "states": 24,
+          "totalVariance": 0.7242010381158006,
+          "withinVariance": 0.6306143295951921
+        },
+        "75": {
+          "betweenVariance": 0.2289775866323029,
+          "ceilingR2": 0.1727545549734793,
+          "ceilingR2Interval95": [
+            0.028130136693269036,
+            0.30975244261375035
+          ],
+          "rollouts": 8,
+          "stateValueVariance": 0.14323901843205034,
+          "states": 24,
+          "totalVariance": 0.8291475640340707,
+          "withinVariance": 0.6859085456020204
+        }
+      },
+      "critics": {
+        "C0": {
+          "capture": 0.354365100094993,
+          "captureInterval95": [
+            -0.16939138348408375,
+            0.48721648110652543
+          ],
+          "rolloutR2": 0.07552656590071793,
+          "rolloutR2Interval95": [
+            -0.019297992481335367,
+            0.13192014001923125
+          ]
+        },
+        "C1": {
+          "capture": 0.3243344834254558,
+          "captureInterval95": [
+            -0.32565465079552425,
+            0.46115233310848164
+          ],
+          "rolloutR2": 0.06892050197909694,
+          "rolloutR2Interval95": [
+            -0.03384847200155401,
+            0.13164573933012752
+          ]
+        },
+        "C2": {
+          "capture": 0.3135008131786351,
+          "captureInterval95": [
+            -0.269457902202359,
+            0.4367224224213245
+          ],
+          "rolloutR2": 0.06653733685985197,
+          "rolloutR2Interval95": [
+            -0.02796271798305582,
+            0.12144005290337584
+          ]
+        },
+        "C3": {
+          "capture": 0.29469497127714994,
+          "captureInterval95": [
+            -0.4325343597185312,
+            0.4464775962214824
+          ],
+          "rolloutR2": 0.062400472303649424,
+          "rolloutR2Interval95": [
+            -0.04410367438436844,
+            0.13002240361453407
+          ]
+        }
+      },
+      "pooled": {
+        "betweenVariance": 0.22327484291186628,
+        "ceilingR2": 0.21944529445112573,
+        "ceilingR2Interval95": [
+          0.08329703810820539,
+          0.341795897175708
+        ],
+        "rollouts": 8,
+        "stateValueVariance": 0.15455631570556488,
+        "states": 131,
+        "totalVariance": 0.7043045333559761,
+        "withinVariance": 0.5497482176504112
+      }
+    },
+    "97103": {
+      "byDecision": {
+        "0": {
+          "betweenVariance": 0.13341807284994692,
+          "ceilingR2": 0.10663900515187841,
+          "ceilingR2Interval95": [
+            0.0059222826276716925,
+            0.20743584238284862
+          ],
+          "rollouts": 8,
+          "stateValueVariance": 0.06517167005370125,
+          "states": 24,
+          "totalVariance": 0.6111428924236666,
+          "withinVariance": 0.5459712223699653
+        },
+        "100": {
+          "betweenVariance": 0.31925519005004754,
+          "ceilingR2": 0.2997660337614426,
+          "ceilingR2Interval95": [
+            0.13981889025253716,
+            0.4630764163322462
+          ],
+          "rollouts": 8,
+          "stateValueVariance": 0.2471030945494968,
+          "states": 24,
+          "totalVariance": 0.8243198585539027,
+          "withinVariance": 0.5772167640044059
+        },
+        "125": {
+          "betweenVariance": 0.38392895983771264,
+          "ceilingR2": 0.4163085628554251,
+          "ceilingR2Interval95": [
+            0.12085143871647848,
+            0.6791118719251501
+          ],
+          "rollouts": 8,
+          "stateValueVariance": 0.32667630543295045,
+          "states": 12,
+          "totalVariance": 0.7846975406710479,
+          "withinVariance": 0.45802123523809746
+        },
+        "25": {
+          "betweenVariance": 0.20087641582813862,
+          "ceilingR2": 0.1863673244533393,
+          "ceilingR2Interval95": [
+            0.04195154092527385,
+            0.3119874448209758
+          ],
+          "rollouts": 8,
+          "stateValueVariance": 0.12995666701895706,
+          "states": 24,
+          "totalVariance": 0.6973146574924095,
+          "withinVariance": 0.5673579904734525
+        },
+        "50": {
+          "betweenVariance": 0.22774339551081527,
+          "ceilingR2": 0.19096444940312635,
+          "ceilingR2Interval95": [
+            0.044378040270884184,
+            0.3276949779277264
+          ],
+          "rollouts": 8,
+          "stateValueVariance": 0.1488935343643522,
+          "states": 24,
+          "totalVariance": 0.7796924235360565,
+          "withinVariance": 0.6307988891717043
+        },
+        "75": {
+          "betweenVariance": 0.28262400114835273,
+          "ceilingR2": 0.2215642387276783,
+          "ceilingR2Interval95": [
+            0.06411167292347186,
+            0.35768361429095524
+          ],
+          "rollouts": 8,
+          "stateValueVariance": 0.1963797949294907,
+          "states": 24,
+          "totalVariance": 0.886333444680387,
+          "withinVariance": 0.6899536497508962
+        }
+      },
+      "critics": {
+        "C0": {
+          "capture": 0.23531593087692027,
+          "captureInterval95": [
+            -0.15492257050157118,
+            0.4506746659780107
+          ],
+          "rolloutR2": 0.05412302754408671,
+          "rolloutR2Interval95": [
+            -0.030373604608493716,
+            0.11846905206772723
+          ]
+        },
+        "C1": {
+          "capture": 0.1986927505463596,
+          "captureInterval95": [
+            -0.22943193878346663,
+            0.42609161327941314
+          ],
+          "rolloutR2": 0.045303438031138676,
+          "rolloutR2Interval95": [
+            -0.043870060806544105,
+            0.1152261397226507
+          ]
+        },
+        "C2": {
+          "capture": 0.21364788498271703,
+          "captureInterval95": [
+            -0.1792224562552893,
+            0.4267111013232907
+          ],
+          "rolloutR2": 0.04890493155652642,
+          "rolloutR2Interval95": [
+            -0.03537243238788731,
+            0.11498683438949654
+          ]
+        },
+        "C3": {
+          "capture": 0.18293975128670337,
+          "captureInterval95": [
+            -0.2239796257837361,
+            0.41812363409476055
+          ],
+          "rolloutR2": 0.04150980280301497,
+          "rolloutR2Interval95": [
+            -0.046235330728110424,
+            0.10666530450607647
+          ]
+        }
+      },
+      "pooled": {
+        "betweenVariance": 0.2599024360213105,
+        "ceilingR2": 0.2402083653767291,
+        "ceilingR2Interval95": [
+          0.1418601752561224,
+          0.3348164489217902
+        ],
+        "rollouts": 8,
+        "stateValueVariance": 0.18625904662609521,
+        "states": 132,
+        "totalVariance": 0.7754061617878176,
+        "withinVariance": 0.5891471151617224
+      }
+    }
+  },
+  "d3": {
+    "97101": {
+      "C0": {
+        "bestEpoch": null,
+        "bestValidationMse": null,
+        "branchWindowR2": {
+          "byDecision": {
+            "0": -0.008026465360337909,
+            "100": 0.14460616746118182,
+            "125": 0.17870212724943535,
+            "25": -0.05011578074116585,
+            "50": -0.051076171349911714,
+            "75": -0.009352796068844205
+          },
+          "pooled": 0.04938157910856977
+        },
+        "clockSkillScore": 0.0302730052376613,
+        "decisionWindowR2": {
+          "0-49": -0.03940953339169462,
+          "100-": 0.16448623821054686,
+          "50-99": 0.010096438974641297
+        },
+        "epochsRun": 10,
+        "heldOutPredictiveR2": 0.04806497433502954,
+        "predictiveR2Interval95": [
+          -0.01480092939919161,
+          0.08902153318504952
+        ],
+        "timeOnlyR2": 0.018347400034716577
+      },
+      "C1": {
+        "bestEpoch": 29,
+        "bestValidationMse": 0.748232364654541,
+        "branchWindowR2": {
+          "byDecision": {
+            "0": -0.00949248196100716,
+            "100": 0.125233761293854,
+            "125": 0.1673347669602283,
+            "25": -0.05682784657747919,
+            "50": -0.06954085492152173,
+            "75": -0.021645661725114174
+          },
+          "pooled": 0.03678393603333119
+        },
+        "clockSkillScore": 0.020022280214132993,
+        "decisionWindowR2": {
+          "0-49": -0.04859596467934768,
+          "100-": 0.1500919903161967,
+          "50-99": 0.0012755844941834127
+        },
+        "epochsRun": 40,
+        "heldOutPredictiveR2": 0.038002323464153664,
+        "predictiveR2Interval95": [
+          -0.030877705145454713,
+          0.08438368888595676
+        ],
+        "timeOnlyR2": 0.018347400034716577
+      },
+      "C2": {
+        "bestEpoch": 11,
+        "bestValidationMse": 0.7543102502822876,
+        "branchWindowR2": {
+          "byDecision": {
+            "0": -0.00431465636803452,
+            "100": 0.11039212686810163,
+            "125": 0.19902877385121942,
+            "25": -0.06662999081590515,
+            "50": -0.05941562393507227,
+            "75": -0.009849120412311008
+          },
+          "pooled": 0.040506035864654066
+        },
+        "clockSkillScore": 0.01991798744719142,
+        "decisionWindowR2": {
+          "0-49": -0.05124565772188139,
+          "100-": 0.15142090053459345,
+          "50-99": 0.002448665603695055
+        },
+        "epochsRun": 22,
+        "heldOutPredictiveR2": 0.03789994419832787,
+        "predictiveR2Interval95": [
+          -0.027798586783495317,
+          0.08213511298996766
+        ],
+        "timeOnlyR2": 0.018347400034716577
+      },
+      "C3": {
+        "bestEpoch": 10,
+        "bestValidationMse": 0.7573138475418091,
+        "branchWindowR2": {
+          "byDecision": {
+            "0": -0.007633790781846672,
+            "100": 0.10813018013532116,
+            "125": 0.18520279736141354,
+            "25": -0.06272880258099,
+            "50": -0.053631174293940154,
+            "75": -0.004851105658254751
+          },
+          "pooled": 0.04107064493070012
+        },
+        "clockSkillScore": 0.019291688920818895,
+        "decisionWindowR2": {
+          "0-49": -0.04954918295458688,
+          "100-": 0.14313838453042071,
+          "50-99": 0.004210382153101655
+        },
+        "epochsRun": 21,
+        "heldOutPredictiveR2": 0.03728513662155997,
+        "predictiveR2Interval95": [
+          -0.02896494739595406,
+          0.08164877375103327
+        ],
+        "timeOnlyR2": 0.018347400034716577
+      }
+    },
+    "97102": {
+      "C0": {
+        "bestEpoch": null,
+        "bestValidationMse": null,
+        "branchWindowR2": {
+          "byDecision": {
+            "0": -0.005397360302723309,
+            "100": 0.19631459699787912,
+            "125": 0.16305437275098722,
+            "25": 0.001053780670922544,
+            "50": 0.009726186480245813,
+            "75": 0.02688941317844329
+          },
+          "pooled": 0.09520360387083016
+        },
+        "clockSkillScore": 0.0655469842153511,
+        "decisionWindowR2": {
+          "0-49": 0.0005451233388884535,
+          "100-": 0.2346929152140892,
+          "50-99": 0.044610626483892135
+        },
+        "epochsRun": 10,
+        "heldOutPredictiveR2": 0.10881351897613922,
+        "predictiveR2Interval95": [
+          0.047478399316944295,
+          0.14908452496071392
+        ],
+        "timeOnlyR2": 0.046301455535950886
+      },
+      "C1": {
+        "bestEpoch": 7,
+        "bestValidationMse": 0.7511133551597595,
+        "branchWindowR2": {
+          "byDecision": {
+            "0": -0.02295232823901583,
+            "100": 0.1860116329514775,
+            "125": 0.15500924409832384,
+            "25": 0.006378197695291132,
+            "50": 0.008005978458356156,
+            "75": 0.0288362613225579
+          },
+          "pooled": 0.0915740785321022
+        },
+        "clockSkillScore": 0.0630158000033526,
+        "decisionWindowR2": {
+          "0-49": 0.00017534153754261705,
+          "100-": 0.22537820766607353,
+          "50-99": 0.044501097957334035
+        },
+        "epochsRun": 18,
+        "heldOutPredictiveR2": 0.10639953227738597,
+        "predictiveR2Interval95": [
+          0.0445629458331238,
+          0.1478678787690326
+        ],
+        "timeOnlyR2": 0.046301455535950886
+      },
+      "C2": {
+        "bestEpoch": 4,
+        "bestValidationMse": 0.7522724866867065,
+        "branchWindowR2": {
+          "byDecision": {
+            "0": -0.017691822073014007,
+            "100": 0.18845555326689645,
+            "125": 0.18022738907876557,
+            "25": 0.00368497934313905,
+            "50": 0.006437636108868605,
+            "75": 0.014770628090272298
+          },
+          "pooled": 0.09161416206775452
+        },
+        "clockSkillScore": 0.06342477180873729,
+        "decisionWindowR2": {
+          "0-49": 0.0010846492778527894,
+          "100-": 0.2305656810732487,
+          "50-99": 0.04161508584420137
+        },
+        "epochsRun": 15,
+        "heldOutPredictiveR2": 0.10678956809290818,
+        "predictiveR2Interval95": [
+          0.049414972867928446,
+          0.14408436395058286
+        ],
+        "timeOnlyR2": 0.046301455535950886
+      },
+      "C3": {
+        "bestEpoch": 5,
+        "bestValidationMse": 0.7480708360671997,
+        "branchWindowR2": {
+          "byDecision": {
+            "0": -0.01963071853086329,
+            "100": 0.1940099366233934,
+            "125": 0.18695634714664622,
+            "25": 0.0016774335103036941,
+            "50": 0.008306562397369599,
+            "75": 0.016710650585064046
+          },
+          "pooled": 0.09375442549330415
+        },
+        "clockSkillScore": 0.06524843819058257,
+        "decisionWindowR2": {
+          "0-49": 0.0009858594256411113,
+          "100-": 0.2371437326299637,
+          "50-99": 0.042068611527092514
+        },
+        "epochsRun": 16,
+        "heldOutPredictiveR2": 0.10852879606686205,
+        "predictiveR2Interval95": [
+          0.04839935185090637,
+          0.14803661552274588
+        ],
+        "timeOnlyR2": 0.046301455535950886
+      }
+    },
+    "97103": {
+      "C0": {
+        "bestEpoch": null,
+        "bestValidationMse": null,
+        "branchWindowR2": {
+          "byDecision": {
+            "0": -0.041761250834076113,
+            "100": 0.057513976446678106,
+            "125": 0.1342895641929297,
+            "25": -0.05990781460549144,
+            "50": -0.024650503322806605,
+            "75": -0.04298001749390612
+          },
+          "pooled": 0.02840181922209495
+        },
+        "clockSkillScore": 0.04913241821686898,
+        "decisionWindowR2": {
+          "0-49": -0.06680295137137415,
+          "100-": 0.1749770658158124,
+          "50-99": -0.020340650215845635
+        },
+        "epochsRun": 10,
+        "heldOutPredictiveR2": 0.054281477042887105,
+        "predictiveR2Interval95": [
+          -0.06803864980823635,
+          0.13004226076109945
+        ],
+        "timeOnlyR2": 0.005415116599476688
+      },
+      "C1": {
+        "bestEpoch": 19,
+        "bestValidationMse": 0.7106473445892334,
+        "branchWindowR2": {
+          "byDecision": {
+            "0": -0.03731085202422402,
+            "100": 0.03824472317546401,
+            "125": 0.08863033157138667,
+            "25": -0.05311052203483957,
+            "50": -0.011625926799506914,
+            "75": -0.030404836678916025
+          },
+          "pooled": 0.024767563791035174
+        },
+        "clockSkillScore": 0.04798498972195275,
+        "decisionWindowR2": {
+          "0-49": -0.0607111349511702,
+          "100-": 0.1479997266407458,
+          "50-99": -0.009871038933469967
+        },
+        "epochsRun": 30,
+        "heldOutPredictiveR2": 0.053140262007060346,
+        "predictiveR2Interval95": [
+          -0.07826405286918404,
+          0.13515872977526935
+        ],
+        "timeOnlyR2": 0.005415116599476688
+      },
+      "C2": {
+        "bestEpoch": 10,
+        "bestValidationMse": 0.710381269454956,
+        "branchWindowR2": {
+          "byDecision": {
+            "0": -0.021854785215188688,
+            "100": 0.03618086632932016,
+            "125": 0.09316956269747423,
+            "25": -0.0400974096658111,
+            "50": -0.00481040853707837,
+            "75": -0.02793362268574162
+          },
+          "pooled": 0.030112724193710028
+        },
+        "clockSkillScore": 0.05029545473063968,
+        "decisionWindowR2": {
+          "0-49": -0.04671466005030256,
+          "100-": 0.14262946180275793,
+          "50-99": -0.011588381739091158
+        },
+        "epochsRun": 21,
+        "heldOutPredictiveR2": 0.05543821557832629,
+        "predictiveR2Interval95": [
+          -0.07119339074807611,
+          0.1341529019143937
+        ],
+        "timeOnlyR2": 0.005415116599476688
+      },
+      "C3": {
+        "bestEpoch": 6,
+        "bestValidationMse": 0.7135187387466431,
+        "branchWindowR2": {
+          "byDecision": {
+            "0": -0.0711903525314963,
+            "100": 0.04745902708594141,
+            "125": 0.11442556456494546,
+            "25": -0.05282953517100597,
+            "50": -0.01976181598435045,
+            "75": -0.0395797572939105
+          },
+          "pooled": 0.02384926896390427
+        },
+        "clockSkillScore": 0.0444834332510291,
+        "decisionWindowR2": {
+          "0-49": -0.061723774796043074,
+          "100-": 0.1489232018446459,
+          "50-99": -0.018675776742827832
+        },
+        "epochsRun": 17,
+        "heldOutPredictiveR2": 0.04965766687270645,
+        "predictiveR2Interval95": [
+          -0.07951466639396954,
+          0.12834297187933205
+        ],
+        "timeOnlyR2": 0.005415116599476688
+      }
+    }
+  },
+  "exploration": {
+    "perPolicyGaps": {
+      "97101": {
+        "cont1": 0.07000000000000006,
+        "det": 0.0,
+        "full025": -0.039999999999999925,
+        "full05": 0.020000000000000018,
+        "full1": 0.14000000000000007,
+        "type": -0.04999999999999993
+      },
+      "97102": {
+        "cont1": 0.17999999999999994,
+        "det": 0.0,
+        "full025": 0.039999999999999925,
+        "full05": 0.039999999999999925,
+        "full1": 0.14,
+        "type": 0.010000000000000009
+      },
+      "97103": {
+        "cont1": 0.24,
+        "det": 0.0,
+        "full025": 0.05999999999999994,
+        "full05": 0.19999999999999996,
+        "full1": 0.21999999999999997,
+        "type": 0.04999999999999993
+      }
+    },
+    "recommendedSigmaScale": 0.5,
+    "seedAveragedGaps": {
+      "cont1": 0.16333333333333333,
+      "det": 0.0,
+      "full025": 0.01999999999999998,
+      "full05": 0.08666666666666663,
+      "full1": 0.16666666666666666,
+      "type": 0.003333333333333336
+    },
+    "typeSamplingDominates": false
+  },
+  "format": "snowgym.pre-ppo-diagnostics-report.v0",
+  "selections": {
+    "97101": {
+      "heldOutPredictiveR2": 0.038002323464153664,
+      "validationMse": {
+        "C1": 0.748232364654541,
+        "C2": 0.7543102502822876,
+        "C3": 0.7573138475418091
+      },
+      "variant": "C1"
+    },
+    "97102": {
+      "heldOutPredictiveR2": 0.10852879606686205,
+      "validationMse": {
+        "C1": 0.7511133551597595,
+        "C2": 0.7522724866867065,
+        "C3": 0.7480708360671997
+      },
+      "variant": "C3"
+    },
+    "97103": {
+      "heldOutPredictiveR2": 0.05543821557832629,
+      "validationMse": {
+        "C1": 0.7106473445892334,
+        "C2": 0.710381269454956,
+        "C3": 0.7135187387466431
+      },
+      "variant": "C2"
+    }
+  },
+  "simulatorDecisions": 807532
+}
