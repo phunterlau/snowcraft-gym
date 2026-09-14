@@ -19,6 +19,31 @@ configuration on 2026-09-01.
 
 ## Milestones
 
+### R1n-e — KL-anchored frozen-reward PPO with death rate as primary test (declared 2026-09-14; implementation pending)
+
+Follow `training/reviews/m7b_r1n_e_declaration.md`. At the user's decision,
+the primary test is blue death rate. It replaces R1's +20 success gain, which
+R1n-c showed infeasible, so R1n-e makes no R1 qualification claim.
+
+- **Training:** PPO from each of R1n-c's three imitation policies, 200
+  updates of 64 complete episodes each.
+  - σ is frozen at ×0.5 (from R1n-d).
+  - Advantages are pure Monte Carlo (λ = 1, no truncation), with the
+    warm-started `OptionCentralCritic` used as a baseline. A sanity stop
+    applies only if held-out R² < 0.
+  - A KL anchor to the initializer uses β = 0.01, plus E3's clip and a KL
+    stop of 0.01.
+  - Reward is the frozen Engage reward, and death rate is not the training
+    objective.
+- **Primary test:** the deterministic death-rate difference (final −
+  initializer) on a fresh 400-world split. A world-bootstrap seed-average must
+  be ≤ −5 points with its CI below 0. Non-inferiority guards: the success CI
+  lower bound must be > −5 and the timeout CI upper bound < +5.
+- **Power:** at an assumed 30–40% discordance, the detectable effect is about
+  4–5 points.
+- **Budget:** 8,870,400 bound (cap 9,000,000). Policy runs are independent
+  and may run in parallel.
+
 ### R1n-d — diagnostics before PPO: exploration σ, attainable critic R², critic capacity (complete 2026-09-14; halve σ, critic outcome bracketed)
 
 **Results** (`training/reviews/m7b_r1n_d_results.md`; archive
