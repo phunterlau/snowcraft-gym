@@ -235,6 +235,65 @@ marginal.
   not tested.
 - **The R1 gate:** R1n-e was not designed to satisfy it.
 
+## 7. Exploratory behaviour analysis (post hoc, not pre-registered)
+
+This section was produced after the outcome was known, at the user's
+request. It declares nothing and gates nothing.
+
+**Method.** The split-E deterministic evaluations were replayed for all three
+policies, initializer and final (2,400 episodes), logging per-decision health,
+positions, velocities, actions, and projectile ids. Every replayed episode
+reproduced the archived outcome (success, survival, final decision). Hits were
+attributed to individual snowballs; 100% of blue health drops matched a red
+projectile. Scripts live outside the archive and nothing here was written into
+the run directory.
+
+**The opponent.** Red is `RandomAgent` at the Engage scenario's
+`redController: "random"`. Every decision (10 Hz) it picks noop (25%), a
+wander of up to 4 units (30%), or a throw at blue's *current* position with
+power U(0.2, 1) (45%), subject to the 0.6 s cooldown. It does not lead its
+target. Blue dies at 5 hits (100 health, 20 damage per hit); the Engage
+mission completes at 80 damage, i.e. 4 hits.
+
+**What changed, pooled over the three policies:**
+
+| Within 12 units | Initializer | Final |
+| --- | ---: | ---: |
+| Red shots per episode | 4.02 | 3.40 |
+| Red hit rate on those shots | 69.6% | 24.3% |
+| Blue displacement during a snowball's flight, median | 0.50 | 1.37 |
+| Share of red shots with blue displacement < 0.5 units | 50% | 22% |
+| Share with displacement > 1 unit | 31% | 63% |
+| Flight time, median decisions | 3 | 5 |
+| Blue stationary (speed ≤ 1) | 35% | 17% |
+| Hits taken per episode (all ranges) | 3.13 | 0.96 |
+| Chance of another hit within 1.5 s of a hit | 70% | 45% |
+
+- **Hit rate falls with displacement.** Red shots where blue moved less than
+  0.5 units hit 94% (initializer) and 81% (final); shots where blue moved
+  more than 1 unit hit 2% and 1%. The policies did not become harder to hit
+  by standing elsewhere; they became harder to hit by not being where they
+  were when the snowball was released.
+- **Decomposition.** Splitting red's shots into cells of distance bucket ×
+  target moving/still, about 27% of the reduction in hits taken comes from
+  the change in exposure mix and about 73% from lower hit rates within cells.
+  The within-cell change is accounted for by displacement during flight.
+- **Damage cascades shrank.** Each hit stuns blue, which makes the next hit
+  easier. Blue spent 8.6 → 2.4 decisions per episode stunned.
+- **Offense.** Blue throws per episode 4.46 → 5.60, projectile hit rate
+  72.9% → 68.7%, median throw distance 7.3 → 8.0 units, and throws from 8–12
+  units 0.84 → 2.62 per episode. Red is stunned 14.5 → 16.7 decisions per
+  episode.
+- **Outcome accounting.** Across the 1,200 world–policy pairs: 319 death →
+  win, 28 win → death, 51 deaths unchanged. Of the 94 initializer deaths
+  that never landed a hit, the finals win 71.
+
+**What this implies for replication.** The learned behaviour is evasion
+against a thrower that aims where the target currently is. Against a
+leading-aim opponent (`ScriptedAiAgent` uses a 0.18 s aim lead) the same
+behaviour need not help. A stronger or different opponent is a separate
+declared experiment, not a change to this one.
+
 ## Verification
 
 - **Gate at `8f7544f` / `1070890` / `a41af1a`, before collection:**
