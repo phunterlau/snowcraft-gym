@@ -19,7 +19,31 @@ configuration on 2026-09-01.
 
 ## Milestones
 
-### R1n-c — imitation of the plan teacher that keeps its artifacts (declared and implemented 2026-09-13; collection pending)
+### R1n-c — imitation of the plan teacher that keeps its artifacts (complete 2026-09-13; PPO has headroom, critic precondition failed)
+
+**Results** (`training/reviews/m7b_r1n_c_results.md`; archive
+`runs/m7b_engage_r1n_c_v0`; 535,358 of 900,000 decisions; 95/95 manifest
+digests verified):
+
+- **Imitation success:** 65/100 on split A and 74/100 on split B
+  (deterministic, three seeds; per seed 54–79 on A, 61–83 on B). Teacher
+  ceilings are 93 and 91. Paired gaps: −28 (−35 to −21) on A and −17 (−24 to
+  −10) on B.
+- **Contact is solved** (92–93%, from 0 at random init). Nearly all failures
+  are deaths in worlds the teacher wins.
+- **Label error:** type accuracy 94–95%. Recall: MOVE 0.97–0.98, THROW
+  0.68–0.73, HOLD 0.51–0.62. Aim error about 3°.
+- **The critic precondition fails 0/3:** predictive R² 0.06–0.11, against the
+  0.25 gate. It is no longer clock-only. Train R² is only about 0.12, and R²
+  is ≈ 0 in the first 100 decisions. The archive cannot tell a critic that
+  fits too little from returns that are mostly unpredictable from the state.
+- **Flags:** execution-mode gap set (stochastic success 43–54; worst gap 31
+  points); no seed instability; no throw collapse.
+- **Rules:** A gives headroom and B near ceiling, so the conservative outcome
+  is PPO has headroom. R1's +20 gate is infeasible on B (it would need 94
+  against the 91 ceiling). R1n-d must settle three things before any PPO
+  fit: the primary test, critic repair or an estimator choice, and
+  exploration σ.
 
 Follow `training/reviews/m7b_r1n_c_declaration.md`. This is step 1 of the D3
 branch R1n-b recommended. The pre-collection amendments A1–A6 are in

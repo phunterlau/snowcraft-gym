@@ -1,0 +1,17 @@
+{
+  "illegalLabels": 0,
+  "labelCounts": {
+    "hold": 673,
+    "move": 13039,
+    "noop": 1476,
+    "throw": 541
+  },
+  "labelDigest": "sha256:6f9114b9d28daf715690fd2c508054b9dd0bba85b2222a9546fed33e250e4f35",
+  "observationDigest": "sha256:fbdfbff443ab74634503a6a77624828ee2a76baeff5b94dfef76d96ec9cbda3e",
+  "round": 0,
+  "rows": 15729,
+  "seeds": [
+    650000,
+    650127
+  ]
+}
