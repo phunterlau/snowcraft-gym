@@ -19,6 +19,37 @@ configuration on 2026-09-01.
 
 ## Milestones
 
+### R1n-c — imitation of the plan teacher that keeps its artifacts (declared 2026-09-13; implementation pending)
+
+Follow `training/reviews/m7b_r1n_c_declaration.md`. This is step 1 of the D3
+branch R1n-b recommended.
+
+- **Training:** BC then DAgger from the plan teacher into a
+  `FullAuthorityPolicyV1` with global decoding, on 1v1 Engage at the frozen
+  200-decision horizon (216 recorded and declined, since teacher failures are
+  deaths, not timeouts).
+- **Rounds:** round 0 from the teacher, then 4 on-policy rounds and 5 fits,
+  for optimizer seeds 97101–97103.
+- **Losses:**
+  - type: cross-entropy;
+  - move: S12-style heading;
+  - throw aim: heading;
+  - power: MSE on the 0–1 scale.
+  - Exploration log-stds and the critic stay frozen.
+- **Retained:** every fit's weights and optimizer state, fit history, and
+  dataset digests.
+- **Evaluation:** final fit only, deterministic on development splits
+  600000–600099 and 601000–601099, stochastic on the first, against the
+  teacher ceiling and uniform floor, with per-head and per-type held-out label
+  error.
+- **Critic precondition:** a Monte Carlo warm-start gate on each imitation
+  policy's own stochastic episodes.
+- **Scope:** local decoding is excluded (labels not representable), the plan
+  input is uninformative at 1v1, and no PPO runs. The PPO stage is R1n-d,
+  declared after these results, because R1's +20-over-initializer gate may not
+  be reachable if imitation is already near the 89/100 ceiling.
+- **Budget:** capped at 900,000 decisions.
+
 ### R1n-b — E3 contract repair and pre-actor diagnostics (complete 2026-09-13; recommends D3 with the global decoder)
 
 **Results** (`training/reviews/m7b_r1n_b_results.md`; archive
