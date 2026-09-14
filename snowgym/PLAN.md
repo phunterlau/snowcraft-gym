@@ -19,10 +19,20 @@ configuration on 2026-09-01.
 
 ## Milestones
 
-### R1n-b — E3 contract repair and pre-actor diagnostics (declared 2026-09-13; implementation pending)
+### R1n-b — E3 contract repair and pre-actor diagnostics (declared and implemented 2026-09-13; collection pending)
 
-Follow `training/reviews/m7b_r1n_b_declaration.md`. The declaration is
-committed ahead of its implementation, and collection waits for both commits.
+Follow `training/reviews/m7b_r1n_b_declaration.md`. The declaration (`365f67f`)
+and its tested implementation are committed; pre-collection amendments A1–A8
+are listed in declaration §8.
+
+Implementation:
+- `executor/full_authority_ppo_v1.py`;
+- `options/full_authority_train_v1.py`;
+- `options/full_authority_diagnostics.py`, run with
+  `python -m snowgym_training.options.full_authority_diagnostics --output runs/m7b_engage_r1n_b_v0`.
+
+Index-selective scripted steps and teacher reads are in a training-side
+`SelectiveBatchEnv` subclass. The digest-pinned Python client is unchanged.
 Two blockers stand in series: the E3 critic gate measured a near-constant
 bootstrapped target, and the frozen Engage reward gives no dense signal
 before first contact.

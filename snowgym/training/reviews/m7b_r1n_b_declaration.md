@@ -186,7 +186,8 @@ seeds 600000–600099 stay reserved for a later declared evaluation.
 
 **Critic gate** (per arm/RNG): `predictiveR2 ≥ 0.25` **and**
 `predictiveR2 ≥ timeOnlyR2 − 0.05`. The absolute threshold keeps E3's number,
-now applied to a well-posed target. While contact is rare, the Monte Carlo
+now applied to a well-posed target. While contact is rare, the clock-relative
+condition is the one that binds, at about 0.95 rather than 0.25 (see A8). While contact is rare, the Monte Carlo
 return is largely a function of time remaining. A critic more than 0.05 worse
 than a 20-bin clock lookup is not a usable baseline. The 0.05 is a predeclared
 tolerance for finite-sample noise at 128 held-out episodes.
@@ -273,7 +274,74 @@ with, or declare a radius change. The label audit alone never changes a decoder.
   refuses to overwrite.
 - No provider calls, browser input, or TypeScript/protocol changes.
 
-## 8. Verification before the implementation commit
+## 8. Amendments made in the implementation commit, before any collection
+
+The implementation commit made these changes, as the opening paragraph allows.
+No threshold, budget, seed band, arm, or gate changed.
+
+- **A1 (B3).** The runner also reports `meanResidual = mean(V − G)`. The
+  identity `predictiveR2 = explainedVariance − meanResidual² / Var(G)` holds,
+  so the two R² numbers are one number plus a bias term, not independent
+  checks. When they are nearly equal, the critic has little bias; that alone
+  does not validate it.
+- **A2 (B2) invariants.**
+  - The actor loss is computed without evaluating the critic
+    (`evaluate_latents(..., with_value=False)`, with gradient-free value
+    placeholders).
+  - Advantage normalization stays minibatch-level inside the unchanged
+    `ppo_loss`.
+  - Tests assert that every critic parameter's gradient stays `None` after the
+    actor backward, and that the policy term equals the one E3 optimized.
+- **A3 (C1b/C1c stepping).**
+  - Stepping a world whose episode is complete returns HTTP 409
+    (`episode_complete`), so every block steps only unfinished worlds. C1c
+    therefore no longer steps finished worlds; its 20,000 upper bound is
+    unchanged.
+  - Index-selective scripted steps and teacher reads live in
+    `SelectiveBatchEnv`, a subclass of `SnowGymBatchEnv` inside
+    `full_authority_train_v1.py`.
+  - The Python client is unchanged: the archived R1m-S1/S2/S3/S5/S6
+    declarations pin every `snowgym_client` source digest. A first attempt that
+    edited the client failed those archives' source-preservation tests and was
+    reverted.
+  - There is no host or protocol change.
+  - C1c uses `ScriptedEngageOptionBatch.step_scripted_indices`, which refuses a
+    finished tracker.
+- **A4 (unnamed RNGs).**
+  - The floor controller uses RNG 981002. E3 reused its bootstrap seed for
+    this.
+  - The B7 calibration draws use RNG 982001. 980001 is already used by
+    `boundary_probe.py`.
+- **A5 (D2).** Because `γ < 1`, `γΦ_d(s′) − Φ_d(s)` is nonzero whenever
+  `Φ_d ≠ 0`, even when the distance does not change. The declared
+  `nonzeroShapingFraction` is kept, but two distance-dependent statistics are
+  added: `potentialChangeFraction` (fraction with `Φ_d(s′) ≠ Φ_d(s)`) and
+  `meanAbsolutePotentialChange`.
+- **A6 (retained artifacts).** Each source also writes
+  `trajectory-distances.npz` (per-decision blue–target distance and cumulative
+  target damage, for offline D2 reanalysis). RNG index 0 writes
+  `calibration.json`. The run also writes `d-research.json` and `report.json`,
+  and C3 episode rows carry their `fold`.
+- **A7 (smoke runs).** Implementation tests and one manual smoke run used
+  non-production horizons (≤ 40) and seeds within 921000–927099, outside every
+  declared band. No threshold, budget, seed band, arm, or gate changed after
+  them. A8 adds reporting only.
+- **A8 (which gate condition binds; reporting only).**
+  - Without contact, the Monte Carlo return is about `−γ^(time remaining)`. A
+    smoke run with no contact gave `timeOnlyR2 = 0.998`, so
+    `predictiveR2 ≥ timeOnlyR2 − 0.05` requires about 0.95, and the 0.25
+    threshold never binds.
+  - This is intended: the critic reads `remainingFraction` directly, so failing
+    to match a 20-bin clock lookup means it underfit.
+  - The gate is unchanged. Each report adds `gateConditions`
+    (`absolutePassed`, `clockRelativePassed`, `bindingThreshold`) and
+    `clockSkillScore = 1 − MSE(critic)/MSE(clock)`.
+  - How to read it: a passing critic with `clockSkillScore ≈ 0` has matched the
+    clock but found no state signal beyond time yet, which is consistent with
+    the reward being sparse before contact. A failure on `clockRelativePassed`
+    alone is a critic-fit failure. The decision table is unchanged.
+
+## 9. Verification before the implementation commit
 
 Targeted tests:
 - the E3 digests are unchanged;
