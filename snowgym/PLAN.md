@@ -19,6 +19,33 @@ configuration on 2026-09-01.
 
 ## Milestones
 
+### R1n-h — mixture-imitation curriculum, with a single-opponent control, testing transfer to a held-out opponent (declared 2026-09-14; no collection yet)
+
+**Purpose:** R1n-f found the imitation stage's generalization loss predates
+PPO; R1n-g localized it to three compounding failures, aim most severe
+(mean throw-aim error worse than two random directions against scripted
+red). R1n-h tests the roadmap's proposed fix — training against a mixture
+of opponents — against one pre-declared causal question: does exposing the
+imitation stage to `ScriptedAiAgent` (easy) during training improve
+transfer to `ScriptedAiAgent` (normal), an opponent neither training
+condition ever sees?
+
+**Design:** two conditions trained side by side on fresh, freshly-scanned
+seed bands (400000–449999) — mixture (M, every round split 64/64 between
+random and scripted-easy) and a single-opponent control (C, 100% random) —
+isolating the effect of opponent exposure from the effect of using
+different training worlds than R1n-c. Both are evaluated on the same three
+paired splits (random, scripted-easy, scripted-normal). The primary test is
+the mixture-minus-control success gap on scripted-normal (held out from
+both); in-mixture success on scripted-easy is a precondition, and R1n-g's
+label-error metrics recomputed on scripted-normal are a secondary
+mechanism check. Reuses `full_authority_imitation.py`'s loss/fit/label-error
+and `full_authority_train_v1.py`'s critic-warm-start machinery unchanged;
+neither file is edited. Budget bound 1,686,400 decisions, cap 2,200,000.
+
+Follow `training/reviews/m7b_r1n_h_declaration.md`. `autonomousQualificationEligible`
+stays false; this decides nothing about R1 qualification.
+
 ### R1n-f — opponent-transfer evaluation of the R1n-e policies (complete 2026-09-14; generalization loss predates PPO)
 
 **Results** (`training/reviews/m7b_r1n_f_results.md`; archive
