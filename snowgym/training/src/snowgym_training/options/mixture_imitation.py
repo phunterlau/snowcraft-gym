@@ -114,6 +114,24 @@ def critic_fold_seeds_by_arm(cfg, condition, rng_index, *, held_out):
     return {"random": seeds, "easy": []}
 
 
+def validate_critic_fold_sizes(cfg):
+    """`v1.collect_fold` reuses one fixed-size wrapper across every chunk of a fold and
+    requires each chunk's seed count to exactly equal `wrapper.batch_size` (confirmed by a
+    live probe: `run_block` raises "block seeds must match the wrapper batch size"
+    otherwise). Since `collect_fold_mixture` runs one arm's whole seed list as a single
+    call, every arm's fold slice must be an exact multiple of `blockWorlds` — checked here,
+    at declare time, rather than left to surface mid-run after a full seed's training
+    already completed (declaration §10)."""
+    for condition in CONDITIONS:
+        for held_out in (False, True):
+            for rng_index in range(len(cfg["optimizerSeeds"])):
+                arms = critic_fold_seeds_by_arm(cfg, condition, rng_index, held_out=held_out)
+                for arm, seeds in arms.items():
+                    if seeds and len(seeds) % cfg["blockWorlds"] != 0:
+                        raise ValueError(f"critic fold condition={condition} arm={arm} heldOut={held_out} "
+                                         f"has {len(seeds)} seeds, not a multiple of blockWorlds={cfg['blockWorlds']}")
+
+
 # -- Mixture collection (declaration §2) ---------------------------------------------------
 
 
@@ -410,6 +428,7 @@ def declare(root, cfg):
         raise RuntimeError("full_authority_imitation.py digest no longer matches R1n-g's declaration.json")
     if train_digest != f_declaration["trainImplementationDigest"]:
         raise RuntimeError("full_authority_train_v1.py digest no longer matches R1n-f's declaration.json")
+    validate_critic_fold_sizes(cfg)
     root.mkdir(parents=True)
     write_json(root / "declaration.json", {"config": cfg, "gitCommit": resolve_git_commit(),
         "budgetBound": budget_bound(cfg),

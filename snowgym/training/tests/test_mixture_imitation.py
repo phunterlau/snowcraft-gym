@@ -80,6 +80,20 @@ def test_round_seeds_by_arm_splits_evenly_for_mixture_and_gives_control_all_rand
     assert len(c["random"]) == 128 and c["easy"] == []
 
 
+def test_validate_critic_fold_sizes_passes_for_the_real_configuration():
+    mi.validate_critic_fold_sizes(mi.configuration())  # must not raise
+
+
+def test_validate_critic_fold_sizes_passes_for_tiny():
+    mi.validate_critic_fold_sizes(tiny())  # must not raise
+
+
+def test_validate_critic_fold_sizes_rejects_a_mismatched_block_worlds():
+    cfg = {**mi.configuration(), "blockWorlds": 63}  # 256/2=128 is not a multiple of 63
+    with pytest.raises(ValueError, match="not a multiple of blockWorlds"):
+        mi.validate_critic_fold_sizes(cfg)
+
+
 # -- collect_mixture: plumbing, no live simulator ------------------------------------------
 
 

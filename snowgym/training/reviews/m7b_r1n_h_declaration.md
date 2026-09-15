@@ -19,11 +19,15 @@ directions* (90°), against a 3.1° healthy baseline.
 
 R1n-h tests the roadmap's proposed fix — training against a mixture of
 opponents — and is designed to answer one causal question, not several at
-once:
+once. Round size is fixed at 128 total episodes (§2, §8's budget), so
+condition M's scripted-easy exposure *substitutes* for half its
+random-opponent data rather than adding on top of it (amendment A1):
 
-**Does exposing the imitation stage to `ScriptedAiAgent` (easy) during
-training improve transfer to `ScriptedAiAgent` (normal), an opponent
-neither the mixture nor the control condition ever trains on?**
+**Does substituting half of the imitation stage's `RandomAgent` training
+data for `ScriptedAiAgent` (easy) data, holding total training volume
+fixed, improve transfer to `ScriptedAiAgent` (normal) — an opponent
+neither condition ever trains on — relative to a control trained on the
+same total volume, 100% `RandomAgent`?**
 
 This is the single named primary test (§6). Two things this declaration
 deliberately does *not* treat as co-equal primaries, to avoid picking the
@@ -290,6 +294,14 @@ This budget is affordable at this track's established scale.
 
 ## 9. Stopping rule
 
+- **Mandatory pre-collection check (amendment A2):** run `--stage controls`
+  alone (60,000 decisions) before either condition trains, and read the
+  plan teacher's `successFraction` on `eval-easy`. If it is near the
+  near-zero level R1n-f found for learned policies against scripted red,
+  stop — the plan teacher's own labels cannot teach a skill it doesn't
+  have, and training would answer nothing regardless of outcome. This is
+  a go/no-go gate, not part of the primary/precondition/secondary decision
+  rules in §6.
 - Fixed: five fits, three optimizer seeds, two conditions, evaluation of
   each condition's final policy only. No retries with a different budget,
   seed, loss, or mixture ratio.
@@ -333,5 +345,49 @@ This budget is affordable at this track's established scale.
 
 ## 11. Amendments made in the implementation commit, before any collection
 
-(None yet — this section is filled in as amendments happen, per this
-track's convention.)
+**A1 (pre-collection advisor review, before any live run):** §0's headline
+question originally read "does exposing the imitation stage to
+`ScriptedAiAgent` (easy) during training improve transfer..." — worded as
+if scripted-easy data were *added* on top of the existing training volume.
+It is not: §2/§8 fix round size at 128 total episodes, so condition M's
+scripted-easy exposure *substitutes* for half its random-opponent data.
+At fixed data volume, a negative primary result cannot by itself
+distinguish "the two opponents interfere during training" from "halving
+random-opponent exposure alone would have hurt this much, regardless of
+what replaced it" — the design as declared does not have a third arm
+(e.g. an "added volume" condition) to separate those. §0's question is
+rewritten to name the substitution explicitly rather than imply addition;
+no change to method, measures, seeds, or budget. This caveat carries
+forward into the results doc's "what this does and does not decide"
+section.
+
+**A2 (pre-collection advisor review):** confirmed no measurement exists
+anywhere in this track of the plan teacher's (`plan_teacher_tensor_actions_indices`,
+the `Labeler(model=None)` path every ceiling and DAgger label in R1n-h
+uses) success rate against `ScriptedAiAgent`, at either difficulty. R1n-f's
+100%-success teacher measurement used a *different* controller path
+(`scripted=True`, `ScriptedEngageOptionBatch`/`wrapper.step_scripted_indices`
+— the scripted-blue-teacher comparator, not the plan teacher). R1n-b's
+"plan teacher 89/100" was measured only against `RandomAgent`. Since the
+precondition gate (§6) is defined relative to this run's own fresh
+teacher-ceiling measurement on `eval-easy` (not against R1n-f's number),
+the gate is well-defined regardless — but if that freshly-measured
+ceiling itself turns out to be low, DAgger cannot teach a skill its own
+labels don't demonstrate, and the whole run would answer nothing. Added a
+mandatory pre-collection check (§9): run `--stage controls` alone (60,000
+decisions, ~3.6% of the total bound) and confirm the plan teacher's
+`successFraction` on `eval-easy` is not near the near-zero level R1n-f
+found for learned policies, before running either condition. If it is
+near zero, the run stops and is redesigned (the scripted-blue-teacher path
+would need to become the label source, which is a different declaration),
+not silently continued.
+
+**A3 (self-caught during implementation, before the advisor review):** none
+recorded separately — see `mixture_imitation.py`'s own commit and
+`refs/snowgym_r1n_h_dev_notes.md` for the two bugs (episode-id collision
+risk avoided by construction; a JSON-key-type mismatch caught by the live
+tiny end-to-end test) fixed before any test passed. Neither changed this
+declaration's method, measures, or budget, so neither is logged here as a
+numbered amendment — only implementation-detail fixes, per this track's
+convention of reserving declaration amendments for changes a reader of
+this file would need to know about.
