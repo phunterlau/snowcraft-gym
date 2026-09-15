@@ -269,6 +269,18 @@ Upstream behavior: unchanged; documentation only. Existing notes, source,
 protocols and research artifacts were preserved. No new experiment, browser,
 provider request, commit or push was performed for this handoff.
 
+## `refs/snowgym_r1n_g_dev_notes.md`
+
+Reason: the user asked for a note on every development step. This is the
+running local log for R1n-g, the label-error diagnostic characterizing why
+blue's offense scores zero hits against scripted red.
+
+Change: added dated entries per commit or run, covering decisions,
+deviations, verification, and open questions. The file stays local; the
+committed protocol is `snowgym/training/reviews/m7b_r1n_g_declaration.md`.
+
+Upstream behavior: unchanged; documentation only.
+
 ## `refs/snowgym_r1n_f_dev_notes.md`
 
 Reason: the user asked for a note on every development step. This is the

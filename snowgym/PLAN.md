@@ -53,8 +53,9 @@ verified; the §9 reproduction check passed with 0 mismatches):
   attempts.
 - **Next (recommended):** address the imitation stage directly — train
   against a mixture of opponents, holding one out for evaluation — rather
-  than R1n-g replication against the random opponent alone, which would
-  confirm a narrower skill than intended.
+  than a replication against the random opponent alone, which would confirm
+  a narrower skill than intended. Before designing that curriculum, R1n-g
+  diagnoses *why* blue's offense scores zero hits against scripted red.
 
 Follow `training/reviews/m7b_r1n_f_declaration.md`. R1n-e's policies were
 trained against `RandomAgent` red, which aims where blue currently stands;
@@ -83,7 +84,35 @@ which leads its aim, takes cover, and retreats.
   (`no-transfer-floor-death`/`-timeout`/`-mixed`), since arm E's timeouts
   and arm N's deaths would otherwise share one label; the teacher-gap
   bootstrap resamples the 400 worlds, not the 3 policies.
-- **The replication R1n-e recommended moves to R1n-g.**
+- **The replication R1n-e recommended is superseded** by this finding — see
+  R1n-g and the mixture-imitation curriculum (R1n-h) below.
+
+### R1n-g — why does blue's offense fail against scripted red? A label-error diagnostic (declared 2026-09-14; no training; collection pending)
+
+**Purpose:** R1n-f found blue's offense collapses completely against
+scripted red — on the easier arm, all six frozen policies (3 R1n-c
+initializers, 3 R1n-e finals) combined threw 25,008 snowballs and landed
+zero hits. Before designing R1n-h (the mixture-imitation curriculum), this
+diagnostic localizes that failure to one of three candidates: blue rarely
+attempts the throw the teacher would take (type/detection), blue throws but
+aims badly (aim), or blue throws and aims reasonably but power/range
+calibration is wrong against a moving, covering target (power/range).
+
+**Method:** reuses `full_authority_imitation.py`'s existing `Labeler`/
+`collect`/`label_error` unchanged — the frozen policy acts while the
+teacher's plan-controller labels every visited state, the same collection
+R1n-c used for its own held-out label error, applied here to states reached
+under `ScriptedAiAgent` instead of `RandomAgent`. No policy is trained,
+updated, or evaluated for success/death. The same six checkpoints R1n-f
+evaluated, run against the same three opponent arms (random reference,
+scripted easy, scripted normal) via `opponent_transfer.scenario_override`
+(reused unchanged): 6 comparators × 3 arms = 18 label-error cells on 128
+fresh episodes each.
+
+**Budget:** ~253,440 decisions bound, 400,000 cap.
+
+Follow `training/reviews/m7b_r1n_g_declaration.md`. `autonomousQualificationEligible`
+stays false; this decides nothing about R1 qualification.
 
 ### R1n-e — KL-anchored frozen-reward PPO with death rate as primary test (complete 2026-09-14; survival improved, replication pending)
 
