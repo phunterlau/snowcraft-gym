@@ -1,0 +1,28 @@
+{
+  "artifacts": {
+    "arm-report.json": "sha256:71fcde79fe875d9540a3965e433b3c161423201c7ecccd7f22fd22332f23aa38",
+    "final-97101/episodes.jsonl": "sha256:4b36724cce89a535d8460aa553c1df07543866bcf62318da3d13bcaf1cbcce4e",
+    "final-97101/shots.npz": "sha256:6df99e8b5eb54adabdaa53c2796d1b035caa471b0251b5b75e96b51e0a7e925e",
+    "final-97101/summary.json": "sha256:f03e1704ea223d01bdb6a5250c7a56fee67abb5d8ec1a883592399624a132c16",
+    "final-97102/episodes.jsonl": "sha256:04bfd996d6d246c8bfcd79cd7b0e154ebbdac7b1bef8f41170b628c624ac5e80",
+    "final-97102/shots.npz": "sha256:26270fc42da50c30c98ca368f35adc9a20b38e7bdd2cfa8dd59c79b210bfddac",
+    "final-97102/summary.json": "sha256:c5c538a526089962a42a19c85ec25d1d70f1b00806455bf99ce8d4d9e6381a55",
+    "final-97103/episodes.jsonl": "sha256:a7eb9852a8cdabb10a6c7a7a3fb591acc69f4f2d11d73483e364438158c190a4",
+    "final-97103/shots.npz": "sha256:e1324fdcb83251ce12a2e01b8bf5d3c33f6be7c09830e8582d13aca6612bcc1a",
+    "final-97103/summary.json": "sha256:b787093f47f670d22d1a8b7b852a7eb7764a2b9a785ffcf5c750de323ca0f944",
+    "init-97101/episodes.jsonl": "sha256:480c6895484c61b4a70b2710af1276654974e8d465a1a5b315098db0704a3487",
+    "init-97101/shots.npz": "sha256:187368cee478a647b37a04c6ddb36aa102db7eea811669bd8344008936b68bd8",
+    "init-97101/summary.json": "sha256:b166fe45555b494b1692b3977d995b60d1d6a78f6bbd92efcf07c57b24b58f21",
+    "init-97102/episodes.jsonl": "sha256:9dc38ea4d59582c276dd60a10052209f34330e95f7a5ec6fc1b9fdb14f3447a5",
+    "init-97102/shots.npz": "sha256:94a626560d902477a5a921cc493328a5dc3798c934c9ba136ffd5ad303669134",
+    "init-97102/summary.json": "sha256:3da8c40a32c1a65b62328e67b96ff81f2034d4e7dd908c1cef85088d006e75d1",
+    "init-97103/episodes.jsonl": "sha256:4716c100fa1c77e2a3e56502984802d012b211e54761eb940f8c0684dd7d6acc",
+    "init-97103/shots.npz": "sha256:75c8e189bd7f69b423ade94015f6f1a02214a7fc5ba4005bc86f4524035c9474",
+    "init-97103/summary.json": "sha256:d2d0ce119b1f9da41d62f87e47e23555c1822544d653071e604138071246bfe7",
+    "teacher/episodes.jsonl": "sha256:d8b8f30a9587aa8ae11cb104fb05ddc17ef18a4cae165f22b8226a8ef0514cdd",
+    "teacher/shots.npz": "sha256:bb8ff183574259a578beec62cac086d442045dbf16aef359fb9ac77e6cb4ebf2",
+    "teacher/summary.json": "sha256:b2fb0adc165a325e28045f87958018df86a63bf702c18d23be9ed5e03b334b69"
+  },
+  "format": "snowgym.opponent-transfer-arm-manifest.v0",
+  "manifestDigest": "sha256:796baf6df3868781fb0d60d66a649c9cbe3b665d60d307b417024ee354441f60"
+}

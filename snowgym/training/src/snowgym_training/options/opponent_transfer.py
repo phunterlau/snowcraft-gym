@@ -45,6 +45,9 @@ def configuration():
         "arms": {"R": {"redController": "random"},
                  "E": {"redController": "scripted", "redDifficulty": "easy"},
                  "N": {"redController": "scripted", "redDifficulty": "normal"}},
+        "trainSeedBase": 872000, "heldOutSeedBase": 872100,  # unused by this module; overridden to
+        # avoid the inherited v1.configuration() default (630000) colliding with R1n-b's seed
+        # preflight band (amendment A6)
         "evaluationSeeds": [871000, 871399], "evaluationBlockWorlds": 50,
         "reproductionSeeds": [870000, 870049], "reproductionInitializer": 97101,
         "bootstrapSeed": 983001, "bootstrapSamples": 10000,

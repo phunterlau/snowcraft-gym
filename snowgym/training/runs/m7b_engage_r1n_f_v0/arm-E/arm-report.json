@@ -1,0 +1,104 @@
+{
+  "arm": "E",
+  "comparators": {
+    "final-97101": {
+      "deathFraction": 0.7625,
+      "episodes": 400,
+      "labels": {
+        "death": 305,
+        "timeout-no-hits": 95,
+        "timeout-with-hits": 0,
+        "unresolved": 0,
+        "win": 0,
+        "win-but-dead": 0
+      },
+      "successFraction": 0.0,
+      "timeoutFraction": 0.2375
+    },
+    "final-97102": {
+      "deathFraction": 0.845,
+      "episodes": 400,
+      "labels": {
+        "death": 338,
+        "timeout-no-hits": 62,
+        "timeout-with-hits": 0,
+        "unresolved": 0,
+        "win": 0,
+        "win-but-dead": 0
+      },
+      "successFraction": 0.0,
+      "timeoutFraction": 0.155
+    },
+    "final-97103": {
+      "deathFraction": 0.4225,
+      "episodes": 400,
+      "labels": {
+        "death": 169,
+        "timeout-no-hits": 231,
+        "timeout-with-hits": 0,
+        "unresolved": 0,
+        "win": 0,
+        "win-but-dead": 0
+      },
+      "successFraction": 0.0,
+      "timeoutFraction": 0.5775
+    },
+    "init-97101": {
+      "deathFraction": 0.595,
+      "episodes": 400,
+      "labels": {
+        "death": 238,
+        "timeout-no-hits": 162,
+        "timeout-with-hits": 0,
+        "unresolved": 0,
+        "win": 0,
+        "win-but-dead": 0
+      },
+      "successFraction": 0.0,
+      "timeoutFraction": 0.405
+    },
+    "init-97102": {
+      "deathFraction": 0.75,
+      "episodes": 400,
+      "labels": {
+        "death": 300,
+        "timeout-no-hits": 100,
+        "timeout-with-hits": 0,
+        "unresolved": 0,
+        "win": 0,
+        "win-but-dead": 0
+      },
+      "successFraction": 0.0,
+      "timeoutFraction": 0.25
+    },
+    "init-97103": {
+      "deathFraction": 0.52,
+      "episodes": 400,
+      "labels": {
+        "death": 208,
+        "timeout-no-hits": 192,
+        "timeout-with-hits": 0,
+        "unresolved": 0,
+        "win": 0,
+        "win-but-dead": 0
+      },
+      "successFraction": 0.0,
+      "timeoutFraction": 0.48
+    },
+    "teacher": {
+      "deathFraction": 0.0,
+      "episodes": 400,
+      "labels": {
+        "death": 0,
+        "timeout-no-hits": 0,
+        "timeout-with-hits": 0,
+        "unresolved": 0,
+        "win": 400,
+        "win-but-dead": 0
+      },
+      "successFraction": 1.0,
+      "timeoutFraction": 0.0
+    }
+  },
+  "simulatorDecisions": 449707
+}

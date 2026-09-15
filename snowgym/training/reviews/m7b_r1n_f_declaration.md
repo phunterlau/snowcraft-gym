@@ -243,3 +243,16 @@ every file, with per-arm manifests.
   corrected the same way. Only the reported interval widths change; no
   decision-rule threshold in §5 compares against an interval, so no arm's
   qualifying outcome is affected by this correction.
+- **A6 — the inherited `trainSeedBase`/`heldOutSeedBase` defaults are
+  overridden; they are unused by this module.** `configuration()` builds on
+  `v1.configuration()`, which defaults these to 630000/640000 for the
+  critic-warm-start folds R1n-f never calls. 630000 collides with R1n-b's
+  seed-preflight band and made `npm test` fail a second, unrelated way.
+  Overridden to 872000/872100 (confirmed clear by a repo-wide scan), which
+  nothing in `opponent_transfer.py` reads. A first collection attempt ran
+  to completion under the un-overridden values (declared, reproduction
+  check passed, all three arms collected, aggregated, all manifests
+  verified) before this was caught by the post-collection seed audit; it
+  was discarded, not archived, since nothing outside this repository ever
+  saw it and its config digest no longer matches the corrected
+  declaration. The run was re-declared and fully re-collected under A6.

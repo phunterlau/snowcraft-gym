@@ -1,0 +1,131 @@
+{
+  "assistType": "none at runtime; frozen checkpoints, no training",
+  "autonomousQualificationEligible": false,
+  "budgetBound": {
+    "perArm": 560000,
+    "reproduction": 10000,
+    "total": 1690000
+  },
+  "config": {
+    "actorGradClip": 0.5,
+    "armOrder": [
+      "R",
+      "E",
+      "N"
+    ],
+    "arms": {
+      "E": {
+        "redController": "scripted",
+        "redDifficulty": "easy"
+      },
+      "N": {
+        "redController": "scripted",
+        "redDifficulty": "normal"
+      },
+      "R": {
+        "redController": "random"
+      }
+    },
+    "assistType": "none at runtime; frozen checkpoints, no training",
+    "assistVersion": "snowgym.opponent-transfer.v0",
+    "autonomousQualificationEligible": false,
+    "blockWorlds": 64,
+    "bootstrapSamples": 10000,
+    "bootstrapSeed": 983001,
+    "budgetCap": 2000000,
+    "calibrationDraws": 64,
+    "calibrationRows": 1024,
+    "calibrationSeed": 982001,
+    "clipRatio": 0.2,
+    "criticEpochs": 4,
+    "criticGradClip": 0.5,
+    "destination": "global",
+    "entropyWeight": 0.01,
+    "epochs": 4,
+    "evaluationBlockWorlds": 50,
+    "evaluationSeeds": [
+      871000,
+      871399
+    ],
+    "failThreshold": -0.5,
+    "finalCheckpoint": "update-200.pt",
+    "finalRun": "runs/m7b_engage_r1n_e_v0",
+    "floorMaxSuccess": 0.05,
+    "format": "snowgym.opponent-transfer-config.v0",
+    "gaeLambda": 0.9885140204,
+    "gamma": 0.9976921765,
+    "gateMinPredictiveR2": 0.25,
+    "gateTimeOnlyMargin": 0.05,
+    "heldOutSeedBase": 872100,
+    "initialPowerLogStd": -1.0,
+    "initializerSeeds": [
+      97101,
+      97102,
+      97103
+    ],
+    "learningRate": 0.0003,
+    "localRadius": 8.0,
+    "minibatchSize": 512,
+    "movementKlStop": 0.01,
+    "optionHorizon": 200,
+    "partialThreshold": -0.1,
+    "policyCheckpoint": "fit-4.pt",
+    "referenceDeathRange": [
+      0.03,
+      0.11
+    ],
+    "referenceSuccessRange": [
+      0.88,
+      0.96
+    ],
+    "reproductionInitializer": 97101,
+    "reproductionSeeds": [
+      870000,
+      870049
+    ],
+    "roster": 1,
+    "seedBandStride": 1000,
+    "sigmaScale": 0.5,
+    "simulatorBudget": 1700000,
+    "sourceRun": "runs/m7b_engage_r1n_c_v0",
+    "targetWorldSigma": 2.0,
+    "teacherMinSuccess": 0.8,
+    "timeBins": 20,
+    "trainSeedBase": 872000,
+    "trainingRngs": [
+      98001,
+      98002,
+      98003
+    ],
+    "warmStartEpochs": 10,
+    "warmStartHeldOutEpisodes": 128,
+    "warmStartTrainEpisodes": 256
+  },
+  "deathRatePpoImplementationDigest": "sha256:76cf00cf706740a2fc23ce22a7eb93468ad778a7996e9126965bcc85bfec4313",
+  "declarationDigest": "sha256:e59538d1a2c9cfcfd033b422ba82918eeaafcb6020d05783942a12b737e5b285",
+  "finalRunManifest": "sha256:ee284f7e885e983316af753e0669fc6766e36aa17fbaefeec8ec6fff6e30c51e",
+  "gitCommit": "491dfc02f59bc193b0044e975b38ecf3685defff",
+  "implementationDigest": "sha256:192f62f6e6ead1671928dbf4512f43f69c782088d19e2ee0f77662129be2dca8",
+  "pinnedE3Digests": {
+    "implementationDigest": {
+      "archived": "sha256:f1b06b98ecd8bfb9565ef6ee7dc7e2080d0284fb202b3abf81b9cc5a739dff1a",
+      "current": "sha256:f1b06b98ecd8bfb9565ef6ee7dc7e2080d0284fb202b3abf81b9cc5a739dff1a",
+      "match": true
+    },
+    "policyImplementationDigest": {
+      "archived": "sha256:90204be55b8ad93b31b481bed387266c6e0c48c410dd458279f8c19b0c4a028f",
+      "current": "sha256:90204be55b8ad93b31b481bed387266c6e0c48c410dd458279f8c19b0c4a028f",
+      "match": true
+    }
+  },
+  "sourceRun": {
+    "artifacts": 95,
+    "checkpoints": {
+      "97101": "sha256:e67acf815def63bcabc4877645afb28ec58daebaa6982066f2c6eda4b4ea3e2b",
+      "97102": "sha256:da36fe649bba56763cb5e381ec54867d1f656172f2e57875d94781e3aecf9e84",
+      "97103": "sha256:6da3fa5645ec1373319d20e5dd9fd5a7a351bbd6dff8e434920daa68eb243fbf"
+    },
+    "manifestDigest": "sha256:ddace6c48e95f0c9919e04fad161f2e1e48c32736ce05529c6e9a54164bc82bd"
+  },
+  "trainImplementationDigest": "sha256:e6ac48c30aac8c6eb119e196ccc2a415f81ae731adbdb36b69f7fa69e8f7d7c4"
+}

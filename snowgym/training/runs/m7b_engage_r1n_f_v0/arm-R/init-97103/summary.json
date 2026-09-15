@@ -1,0 +1,26 @@
+{
+  "deathFraction": 0.295,
+  "episodes": 400,
+  "labels": {
+    "death": 116,
+    "timeout-no-hits": 0,
+    "timeout-with-hits": 0,
+    "unresolved": 0,
+    "win": 282,
+    "win-but-dead": 2
+  },
+  "mechanism": {
+    "blueDeathAttributedFraction": 0.9977341389728097,
+    "blueDisplacementDuringRedFlightMedian": 2.3997086256706344,
+    "blueHitRate": 0.735933147632312,
+    "blueProjectilesPerEpisode": 4.4875,
+    "blueSpawnDistanceMedian": 7.20480767339296,
+    "episodes": 400,
+    "redDeathAttributedFraction": 1.0,
+    "redHitRate": 0.19722528771874506,
+    "redProjectilesPerEpisode": 15.8575,
+    "redSpawnDistanceMedian": 27.69849898182585
+  },
+  "successFraction": 0.71,
+  "timeoutFraction": 0.0
+}

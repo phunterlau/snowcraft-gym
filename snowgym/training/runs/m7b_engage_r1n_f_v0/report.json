@@ -1,0 +1,190 @@
+{
+  "analyses": {
+    "E": {
+      "finalDeathGapToTeacher": {
+        "interval95": [
+          0.6491666666666666,
+          0.7041666666666666
+        ],
+        "mean": 0.6766666666666665
+      },
+      "finalDeathMean": 0.6766666666666666,
+      "finalLabelCounts": {
+        "death": 812,
+        "timeout-no-hits": 388,
+        "timeout-with-hits": 0,
+        "unresolved": 0,
+        "win": 0,
+        "win-but-dead": 0
+      },
+      "finalMinusInitializerDeath": {
+        "interval95": [
+          0.02416666666666666,
+          0.08583333333333334
+        ],
+        "mean": 0.055
+      },
+      "finalMinusInitializerSuccess": {
+        "interval95": [
+          0.0,
+          0.0
+        ],
+        "mean": 0.0
+      },
+      "finalSuccessGapToTeacher": {
+        "interval95": [
+          -1.0,
+          -1.0
+        ],
+        "mean": -1.0
+      },
+      "finalSuccessMean": 0.0,
+      "initializerDeathGapToTeacher": {
+        "interval95": [
+          0.5908333333333333,
+          0.6525
+        ],
+        "mean": 0.6216666666666666
+      },
+      "initializerSuccessGapToTeacher": {
+        "interval95": [
+          -1.0,
+          -1.0
+        ],
+        "mean": -1.0
+      },
+      "initializerSuccessMean": 0.0,
+      "teacherSuccess": 1.0
+    },
+    "N": {
+      "finalDeathGapToTeacher": {
+        "interval95": [
+          1.0,
+          1.0
+        ],
+        "mean": 1.0
+      },
+      "finalDeathMean": 1.0,
+      "finalLabelCounts": {
+        "death": 1200,
+        "timeout-no-hits": 0,
+        "timeout-with-hits": 0,
+        "unresolved": 0,
+        "win": 0,
+        "win-but-dead": 0
+      },
+      "finalMinusInitializerDeath": {
+        "interval95": [
+          0.0,
+          0.0
+        ],
+        "mean": 0.0
+      },
+      "finalMinusInitializerSuccess": {
+        "interval95": [
+          0.0,
+          0.0
+        ],
+        "mean": 0.0
+      },
+      "finalSuccessGapToTeacher": {
+        "interval95": [
+          -1.0,
+          -1.0
+        ],
+        "mean": -1.0
+      },
+      "finalSuccessMean": 0.0,
+      "initializerDeathGapToTeacher": {
+        "interval95": [
+          1.0,
+          1.0
+        ],
+        "mean": 1.0
+      },
+      "initializerSuccessGapToTeacher": {
+        "interval95": [
+          -1.0,
+          -1.0
+        ],
+        "mean": -1.0
+      },
+      "initializerSuccessMean": 0.0,
+      "teacherSuccess": 1.0
+    },
+    "R": {
+      "finalDeathGapToTeacher": {
+        "interval95": [
+          -0.04666666666666667,
+          0.019999999999999997
+        ],
+        "mean": -0.012500000000000004
+      },
+      "finalDeathMean": 0.07,
+      "finalLabelCounts": {
+        "death": 83,
+        "timeout-no-hits": 5,
+        "timeout-with-hits": 1,
+        "unresolved": 0,
+        "win": 1110,
+        "win-but-dead": 1
+      },
+      "finalMinusInitializerDeath": {
+        "interval95": [
+          -0.28833333333333333,
+          -0.2275
+        ],
+        "mean": -0.2583333333333333
+      },
+      "finalMinusInitializerSuccess": {
+        "interval95": [
+          0.22,
+          0.28
+        ],
+        "mean": 0.25000000000000006
+      },
+      "finalSuccessGapToTeacher": {
+        "interval95": [
+          -0.02750000000000001,
+          0.039999999999999994
+        ],
+        "mean": 0.005833333333333326
+      },
+      "finalSuccessMean": 0.9258333333333333,
+      "initializerDeathGapToTeacher": {
+        "interval95": [
+          0.20666666666666664,
+          0.2841666666666666
+        ],
+        "mean": 0.24583333333333332
+      },
+      "initializerSuccessGapToTeacher": {
+        "interval95": [
+          -0.28250000000000003,
+          -0.20500000000000004
+        ],
+        "mean": -0.24416666666666673
+      },
+      "initializerSuccessMean": 0.6758333333333333,
+      "teacherSuccess": 0.92
+    }
+  },
+  "armManifests": {
+    "E": "sha256:9759dbc6cd9afd2df959a194e3b3cda6046898051117cf243030860814d6de3c",
+    "N": "sha256:796baf6df3868781fb0d60d66a649c9cbe3b665d60d307b417024ee354441f60",
+    "R": "sha256:33457d51aa930df40f45fe7cad5bf59214339806484ef81f1a127263fd99f712"
+  },
+  "assistType": "none at runtime; frozen checkpoints, no training",
+  "autonomousQualificationEligible": false,
+  "format": "snowgym.opponent-transfer-report.v0",
+  "outcomes": {
+    "E": "no-transfer-floor-death",
+    "N": "no-transfer-floor-death"
+  },
+  "recommendations": {
+    "E": "The generalization loss predates PPO, and the finals mostly die rather than time out. The next declaration should address the imitation stage: train against a mixture of opponents, holding one out for evaluation. A death-dominant floor has no learnable gradient at this difficulty; consider starting the mixture curriculum from an easier opponent.",
+    "N": "The generalization loss predates PPO, and the finals mostly die rather than time out. The next declaration should address the imitation stage: train against a mixture of opponents, holding one out for evaluation. A death-dominant floor has no learnable gradient at this difficulty; consider starting the mixture curriculum from an easier opponent."
+  },
+  "referenceArmReproducesR1nERange": true,
+  "simulatorDecisions": 1085699
+}

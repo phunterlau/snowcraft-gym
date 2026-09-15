@@ -19,7 +19,42 @@ configuration on 2026-09-01.
 
 ## Milestones
 
-### R1n-f — opponent-transfer evaluation of the R1n-e policies (declared 2026-09-14; no training; collection pending)
+### R1n-f — opponent-transfer evaluation of the R1n-e policies (complete 2026-09-14; generalization loss predates PPO)
+
+**Results** (`training/reviews/m7b_r1n_f_results.md`; archive
+`runs/m7b_engage_r1n_f_v0`; 1,085,699 of 2,000,000 decisions; all manifests
+verified; the §9 reproduction check passed with 0 mismatches):
+
+- **Every learned policy loses to `ScriptedAiAgent` red, at full scale
+  (400 worlds), at both difficulties.** All six comparators (3 R1n-c
+  initializers, 3 R1n-e finals) score 0% success against scripted easy and
+  scripted normal, while the scripted teacher wins 100% of both.
+- **This is not a PPO effect.** The R1n-c initializers fail identically to
+  the R1n-e finals: `finalMinusInitializerSuccess` is exactly 0 on both
+  scripted arms. The generalization loss is in the imitation stage.
+- **PPO does shift *how* the policies fail on the easier arm:** deaths rose
+  +5.5 points [+2.4, +8.6] as timeouts fell by the same amount, consistent
+  with R1n-e's own finding that PPO trained more aggressive engagement.
+- **Blue's offense collapses, not just its defense.** Against scripted easy,
+  all six comparators combined threw 25,008 snowballs and landed **zero**
+  hits. Against scripted normal, 5,488 throws landed 20 hits (0.4%), all
+  from a single seed (97102).
+- **Mechanism:** scripted red only throws inside `ENGAGE_RANGE = 9`
+  (median spawn distance 7–9 units, vs 27–30 under the training opponent,
+  `RandomAgent`) and throws far less often (1–12 vs 15–16 per episode) —
+  entirely outside blue's training distribution.
+- **Arm R (random red) reproduces R1n-e's archived split-E result** on an
+  independent split: finals 91.25–94.75% success, 4.5–8.75% death (archive:
+  92.0–94.3%, 5.0–7.8%).
+- **A6:** a first collection attempt completed but was discarded (not
+  archived) after the post-collection seed audit found an unused inherited
+  config field colliding with R1n-b's band; the run was re-declared and
+  fully re-collected. Every arm's contents are byte-identical between
+  attempts.
+- **Next (recommended):** address the imitation stage directly — train
+  against a mixture of opponents, holding one out for evaluation — rather
+  than R1n-g replication against the random opponent alone, which would
+  confirm a narrower skill than intended.
 
 Follow `training/reviews/m7b_r1n_f_declaration.md`. R1n-e's policies were
 trained against `RandomAgent` red, which aims where blue currently stands;
