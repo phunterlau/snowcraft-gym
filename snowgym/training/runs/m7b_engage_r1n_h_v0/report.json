@@ -1,0 +1,45 @@
+{
+  "assistType": "teacher-imitation training; none at runtime",
+  "autonomousQualificationEligible": false,
+  "flags": {
+    "C": {
+      "criticHealthy": false,
+      "executionModeGap": false,
+      "seedInstability": false,
+      "throwCollapse": true
+    },
+    "M": {
+      "criticHealthy": true,
+      "executionModeGap": true,
+      "seedInstability": true,
+      "throwCollapse": false
+    }
+  },
+  "format": "snowgym.r1n-h-mixture-imitation-report.v0",
+  "outcome": "transfers",
+  "precondition": {
+    "interval95": [
+      -0.02666666666666667,
+      -0.0033333333333333335
+    ],
+    "mean": -0.013333333333333334
+  },
+  "primary": {
+    "interval95": [
+      0.3566666666666668,
+      0.4033333333333334
+    ],
+    "mean": 0.38000000000000006
+  },
+  "recommendation": "Scripted-easy exposure improves transfer to scripted-normal, an opponent neither condition trained on. The mixture curriculum is worth extending (more opponents, or M8's MARL scaffolding) rather than abandoned.",
+  "secondaryLabelError": {
+    "C": {
+      "meanThrowAimHeadingErrorDegrees": 127.55665079752605,
+      "meanThrowRecall": 0.021715680136817544
+    },
+    "M": {
+      "meanThrowAimHeadingErrorDegrees": 8.608844002087912,
+      "meanThrowRecall": 0.9144241347211644
+    }
+  }
+}

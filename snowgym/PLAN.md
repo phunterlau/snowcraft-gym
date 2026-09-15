@@ -19,32 +19,45 @@ configuration on 2026-09-01.
 
 ## Milestones
 
-### R1n-h — mixture-imitation curriculum, with a single-opponent control, testing transfer to a held-out opponent (declared 2026-09-14; no collection yet)
+### R1n-h — mixture-imitation curriculum, with a single-opponent control, testing transfer to a held-out opponent (complete 2026-09-15; transfers, +38 points)
 
-**Purpose:** R1n-f found the imitation stage's generalization loss predates
-PPO; R1n-g localized it to three compounding failures, aim most severe
-(mean throw-aim error worse than two random directions against scripted
-red). R1n-h tests the roadmap's proposed fix — training against a mixture
-of opponents — against one pre-declared causal question: does exposing the
-imitation stage to `ScriptedAiAgent` (easy) during training improve
-transfer to `ScriptedAiAgent` (normal), an opponent neither training
-condition ever sees?
+**Results** (`training/reviews/m7b_r1n_h_results.md`; archive
+`runs/m7b_engage_r1n_h_v0`; 1,017,713 of 2,200,000 decisions; manifest
+verified):
 
-**Design:** two conditions trained side by side on fresh, freshly-scanned
-seed bands (400000–449999) — mixture (M, every round split 64/64 between
-random and scripted-easy) and a single-opponent control (C, 100% random) —
-isolating the effect of opponent exposure from the effect of using
-different training worlds than R1n-c. Both are evaluated on the same three
-paired splits (random, scripted-easy, scripted-normal). The primary test is
-the mixture-minus-control success gap on scripted-normal (held out from
-both); in-mixture success on scripted-easy is a precondition, and R1n-g's
-label-error metrics recomputed on scripted-normal are a secondary
-mechanism check. Reuses `full_authority_imitation.py`'s loss/fit/label-error
-and `full_authority_train_v1.py`'s critic-warm-start machinery unchanged;
-neither file is edited. Budget bound 1,686,400 decisions, cap 2,200,000.
+- **Primary result: mixture training transfers to the fully held-out
+  opponent.** M (trained on 64 random + 64 scripted-easy per round) minus
+  C (trained on 128 random, a same-volume control) on `eval-normal`
+  (scripted normal — an opponent *neither* condition ever trains on) is
+  **+38.0 points [+35.7, +40.3]**, a 100-world bootstrap interval that
+  excludes zero by a wide margin.
+- **The precondition and the mechanism both check out.** M's gap to the
+  teacher on `eval-easy` (what it actually trains on) is −1.3 points,
+  essentially at ceiling. Mean `throwAimHeadingErrorDegrees` on
+  `eval-normal` — R1n-g's most severe finding, worse-than-random aim —
+  drops from 127.6° (C, reproducing R1n-g's archive) to 8.6° (M, near the
+  healthy ~3° baseline), on an opponent M never trained on.
+- **Success and label error diverge at the per-seed level.** M's label
+  error is uniformly good across all three seeds, but `eval-normal`
+  success is 0.00 / 1.00 / 0.14 — the run's biggest open question, not yet
+  explained (results §7).
+- **Unplanned side-finding:** M's critic gate passes (R² 0.26–0.47) where
+  C's fails (R² 0.07–0.10, reproducing R1n-c's own known
+  critic-infeasibility finding) — mixing in scripted-easy episodes, which
+  end in contact more often, appears to give the critic a more learnable
+  return signal.
+- **Caveat (declaration amendment A1):** round size is fixed at 128 total
+  episodes, so M's scripted-easy exposure *substitutes* for half its
+  random-opponent data rather than adding to it. This design cannot
+  separate "the mixture works" from "the mixture works at this training
+  volume" — a volume-controlled arm would need its own declaration.
+- **Next:** the divergence between label-error and win/loss success
+  (above) is the natural next diagnostic if the mixture curriculum is
+  investigated further, ahead of either M8 or a PPO stage from these
+  checkpoints.
 
 Follow `training/reviews/m7b_r1n_h_declaration.md`. `autonomousQualificationEligible`
-stays false; this decides nothing about R1 qualification.
+stayed false throughout; this decided nothing about R1 qualification.
 
 ### R1n-f — opponent-transfer evaluation of the R1n-e policies (complete 2026-09-14; generalization loss predates PPO)
 
