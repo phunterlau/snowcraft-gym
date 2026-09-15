@@ -11,10 +11,10 @@ from snowgym_training.options.pre_ppo_diagnostics import MODES, mode_chooser
 
 
 def tiny(**overrides):
-    return {**ot.configuration(), "optionHorizon": 8, "initializerSeeds": [97101],
+    return {**ot.configuration(), "optionHorizon": 8, "initializerSeeds": [97101, 97102, 97103],
             "evaluationSeeds": [871900, 871903], "evaluationBlockWorlds": 4,
             "reproductionSeeds": [870000, 870001], "reproductionInitializer": 97101,
-            "bootstrapSamples": 50, "budgetCap": 20000, **overrides}
+            "bootstrapSamples": 50, "budgetCap": 60000, **overrides}
 
 
 # -- scenario_override --------------------------------------------------------------------
@@ -159,20 +159,60 @@ def test_failure_label_covers_the_six_declared_categories():
 # -- arm_outcome: the declared §5 precedence ---------------------------------------------
 
 
-def analysis(*, teacher=1.0, init_success=.5, final_success=.5, gap=0.0):
+NO_LABELS = {"win": 0, "win-but-dead": 0, "death": 0, "timeout-with-hits": 0, "timeout-no-hits": 0, "unresolved": 0}
+
+
+def analysis(*, teacher=1.0, init_success=.5, final_success=.5, gap=0.0, labels=None):
     return {"teacherSuccess": teacher, "initializerSuccessMean": init_success,
-            "finalSuccessMean": final_success, "finalSuccessGapToTeacher": {"mean": gap}}
+            "finalSuccessMean": final_success, "finalSuccessGapToTeacher": {"mean": gap},
+            "finalLabelCounts": labels or dict(NO_LABELS)}
 
 
 def test_arm_outcome_precedence():
     cfg = ot.configuration()
     assert ot.arm_outcome(analysis(teacher=.5), cfg) == "invalid"  # order 1: teacher too weak
-    assert ot.arm_outcome(analysis(init_success=.02, final_success=.02, gap=-.9), cfg) == "no-transfer-floor"
-    assert ot.arm_outcome(analysis(init_success=.3, final_success=.02, gap=-.9), cfg) == "fails"  # only final at floor
+    floor = analysis(init_success=.02, final_success=.02, gap=-.9, labels={**NO_LABELS, "death": 40})
+    assert ot.arm_outcome(floor, cfg) == "no-transfer-floor-death"
+    only_final_floors = analysis(init_success=.3, final_success=.02, gap=-.9)
+    assert ot.arm_outcome(only_final_floors, cfg) == "fails"  # only final at floor: order 2 does not apply
     assert ot.arm_outcome(analysis(gap=-.6), cfg) == "fails"
     assert ot.arm_outcome(analysis(gap=-.2), cfg) == "partial"
     assert ot.arm_outcome(analysis(gap=-.05), cfg) == "transfers"
     assert ot.arm_outcome(analysis(gap=.1), cfg) == "transfers"
+
+
+def test_floor_failure_mode_distinguishes_death_from_timeout_arms():
+    cfg = ot.configuration()
+    death_floor = analysis(init_success=.02, final_success=.02, labels={**NO_LABELS, "death": 40})
+    timeout_floor = analysis(init_success=.02, final_success=.02,
+                             labels={**NO_LABELS, "timeout-with-hits": 20, "timeout-no-hits": 20})
+    mixed_floor = analysis(init_success=.02, final_success=.02, labels={**NO_LABELS, "death": 20, "timeout-with-hits": 20})
+    assert ot.arm_outcome(death_floor, cfg) == "no-transfer-floor-death"
+    assert ot.arm_outcome(timeout_floor, cfg) == "no-transfer-floor-timeout"
+    assert ot.arm_outcome(mixed_floor, cfg) == "no-transfer-floor-mixed"
+    assert set(ot.RECOMMENDATION) >= {"no-transfer-floor-death", "no-transfer-floor-timeout", "no-transfer-floor-mixed"}
+
+
+# -- arm_analysis: bootstrap over the shared worlds, not over the 3 policies --------------
+
+
+def test_world_paired_difference_bootstraps_over_worlds_not_seeds():
+    cfg = ot.configuration()
+    # A single seed with genuine world-to-world variation: a seed-axis bootstrap (n=1)
+    # would collapse every resample to the same point and give a zero-width interval; a
+    # world-axis bootstrap over the 20 worlds should not.
+    first_by_seed = {97101: {w: {"success": 1.0 if w % 2 == 0 else 0.0} for w in range(20)}}
+    teacher = {w: {"success": 0.5} for w in range(20)}
+    result = ot.world_paired_difference(first_by_seed, teacher, cfg, "success")
+    assert result["interval95"][0] < result["interval95"][1]
+
+
+def test_world_paired_difference_requires_matching_worlds():
+    cfg = ot.configuration()
+    first_by_seed = {97101: {0: {"success": 1.0}}, 97102: {1: {"success": 1.0}}}
+    teacher = {0: {"success": 0.0}}
+    with pytest.raises(RuntimeError, match="worlds differ"):
+        ot.world_paired_difference(first_by_seed, teacher, cfg, "success")
 
 
 # -- budget -------------------------------------------------------------------------------
@@ -218,7 +258,8 @@ def test_tiny_end_to_end_declare_arm_and_aggregate(tmp_path):
     ot.run_arm(root, cfg, "N")
     report = ot.aggregate(root, cfg)
     assert set(report["outcomes"]) == {"E", "N"}
-    assert report["outcomes"]["E"] in {"invalid", "no-transfer-floor", "fails", "partial", "transfers"}
+    assert report["outcomes"]["E"] in {"invalid", "no-transfer-floor-death", "no-transfer-floor-timeout",
+                                       "no-transfer-floor-mixed", "fails", "partial", "transfers"}
     manifest = json.loads((root / "manifest.json").read_text())
     assert "arm-R/manifest.json" in manifest["artifacts"] and "report.json" in manifest["artifacts"]
     # tamper detection reuses death_rate_ppo's seal/verify_sealed

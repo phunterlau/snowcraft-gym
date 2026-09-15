@@ -221,3 +221,25 @@ every file, with per-arm manifests.
   `optionHorizon` changes simulated behavior and would make the check
   meaningless; tests exercise the tiny pipeline (declare/run_arm/aggregate)
   and the real reproduction check separately.
+- **A4 — the floor outcome (§5 order 2) is split by dominant failure
+  mode.** `no-transfer-floor` alone would give arm E (timeouts) and arm N
+  (deaths) the identical label, defeating the reason §4 declared a
+  failure-mode decomposition in the first place. The outcome is now
+  `no-transfer-floor-death`, `no-transfer-floor-timeout`, or
+  `no-transfer-floor-mixed`, chosen from which failure type is more common
+  across the three finals' pooled episode labels (death + win-but-dead
+  versus the two timeout labels; a tie is `-mixed`). This changes only the
+  outcome string and its printed recommendation, never which arms qualify
+  for the floor rule or the underlying measures.
+- **A5 — the teacher-gap bootstrap resamples the 400 worlds, matching §4,
+  not the 3 policies.** The first implementation built each gap from three
+  scalar success/death fractions (one per policy) and bootstrapped that
+  3-point sample, which is a materially different (and far noisier at
+  n=3) quantity than "a 400-world bootstrap 95% interval." It is corrected
+  to: for each world, average the three policies' outcome at that world,
+  subtract the teacher's outcome at that same world, and bootstrap the
+  resulting 400 differences — exactly `death_rate_ppo.paired_analysis`'s
+  pattern, reusing its `outcomes()` reader. `finalMinusInitializer` is
+  corrected the same way. Only the reported interval widths change; no
+  decision-rule threshold in §5 compares against an interval, so no arm's
+  qualifying outcome is affected by this correction.

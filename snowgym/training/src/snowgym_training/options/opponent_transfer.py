@@ -395,44 +395,71 @@ def run_arm(root, cfg, arm):
 # -- Aggregation and decision rules ------------------------------------------------------
 
 
-def gap_to_teacher(comparator_rows, teacher_rows, cfg, metric):
-    seed_names = [f"seed-{s}" for s in cfg["initializerSeeds"]]
-    return paired_difference([comparator_rows[s][metric] for s in seed_names],
-                             [teacher_rows[s][metric] for s in seed_names],
-                             samples=cfg["bootstrapSamples"], seed=cfg["bootstrapSeed"])
+def world_paired_difference(first_by_seed, second_by_world, cfg, metric):
+    """Seed-averaged `first` minus `second`, resampled over the shared 400 worlds
+    (declaration §4: "a 400-world bootstrap 95% interval"), not over the 3 policies.
+    `first_by_seed`: {seed: {world: outcomes}}. `second_by_world`: {world: outcomes}
+    (the teacher, or another seed-averaged comparator)."""
+    worlds = sorted(second_by_world)
+    for per_world in first_by_seed.values():
+        if sorted(per_world) != worlds:
+            raise RuntimeError("evaluation worlds differ across comparators")
+    first = [float(np.mean([first_by_seed[s][w][metric] for s in first_by_seed])) for w in worlds]
+    second = [second_by_world[w][metric] for w in worlds]
+    return paired_difference(first, second, samples=cfg["bootstrapSamples"], seed=cfg["bootstrapSeed"])
 
 
 def arm_analysis(root, cfg, arm):
     directory = Path(root) / f"arm-{arm}"
     report = json.loads((directory / "arm-report.json").read_text(encoding="utf-8"))
     tables = report["comparators"]
-    seed_names = [f"seed-{s}" for s in cfg["initializerSeeds"]]
+
+    def episode_outcomes(name):
+        return dr.outcomes(directory / name / "episodes.jsonl")
+
+    init_outcomes = {s: episode_outcomes(f"init-{s}") for s in cfg["initializerSeeds"]}
+    final_outcomes = {s: episode_outcomes(f"final-{s}") for s in cfg["initializerSeeds"]}
+    teacher_outcomes = episode_outcomes("teacher")
 
     def averaged(prefix, metric):
-        return float(np.mean([tables[f"{prefix}-{s.split('-')[1]}"][metric] for s in seed_names]))
+        return float(np.mean([tables[f"{prefix}-{s}"][metric] for s in cfg["initializerSeeds"]]))
 
     teacher = tables["teacher"]
     analysis = {"teacherSuccess": teacher["successFraction"],
         "initializerSuccessMean": averaged("init", "successFraction"),
         "finalSuccessMean": averaged("final", "successFraction"),
-        "finalDeathMean": averaged("final", "deathFraction")}
-    for metric, key in (("successFraction", "success"), ("deathFraction", "death")):
-        for prefix, label in (("init", "initializer"), ("final", "final")):
-            rows = {f"seed-{s}": {metric: tables[f"{prefix}-{s}"][metric]} for s in cfg["initializerSeeds"]}
-            teacher_rows = {f"seed-{s}": {metric: teacher[metric]} for s in cfg["initializerSeeds"]}
-            analysis[f"{label}{key.capitalize()}GapToTeacher"] = gap_to_teacher(rows, teacher_rows, cfg, metric)
-    analysis["finalMinusInitializerSuccess"] = paired_difference(
-        [tables[f"final-{s}"]["successFraction"] for s in cfg["initializerSeeds"]],
-        [tables[f"init-{s}"]["successFraction"] for s in cfg["initializerSeeds"]],
-        samples=cfg["bootstrapSamples"], seed=cfg["bootstrapSeed"])
+        "finalDeathMean": averaged("final", "deathFraction"),
+        "finalLabelCounts": {label: sum(tables[f"final-{s}"]["labels"][label] for s in cfg["initializerSeeds"])
+                             for label in tables["teacher"]["labels"]}}
+    for outcomes, prefix, label in ((init_outcomes, "init", "initializer"), (final_outcomes, "final", "final")):
+        for metric, key in (("success", "Success"), ("death", "Death")):
+            analysis[f"{label}{key}GapToTeacher"] = world_paired_difference(
+                outcomes, teacher_outcomes, cfg, metric)
+    for metric, key in (("success", "Success"), ("death", "Death")):
+        analysis[f"finalMinusInitializer{key}"] = world_paired_difference(
+            final_outcomes, {w: {metric: float(np.mean([init_outcomes[s][w][metric] for s in init_outcomes]))}
+                             for w in next(iter(init_outcomes.values()))}, cfg, metric)
     return analysis
+
+
+def floor_failure_mode(counts):
+    """Amendment A4: which failure dominates the finals' floor, since arm E (timeouts) and
+    arm N (deaths) both otherwise collapse to the same "no-transfer-floor" label and the
+    whole point of the failure-mode decomposition (declaration §4) was to keep them apart."""
+    death = counts["death"] + counts["win-but-dead"]
+    timeout = counts["timeout-with-hits"] + counts["timeout-no-hits"]
+    if death > timeout:
+        return "death"
+    if timeout > death:
+        return "timeout"
+    return "mixed"
 
 
 def arm_outcome(analysis, cfg):
     if analysis["teacherSuccess"] < cfg["teacherMinSuccess"]:
         return "invalid"
     if analysis["finalSuccessMean"] < cfg["floorMaxSuccess"] and analysis["initializerSuccessMean"] < cfg["floorMaxSuccess"]:
-        return "no-transfer-floor"
+        return f"no-transfer-floor-{floor_failure_mode(analysis['finalLabelCounts'])}"
     gap = analysis["finalSuccessGapToTeacher"]["mean"]
     if gap <= cfg["failThreshold"]:
         return "fails"
@@ -444,8 +471,17 @@ def arm_outcome(analysis, cfg):
 RECOMMENDATION = {
     "transfers": "R1n-g replication as R1n-e recommended; opponent variety is a later concern.",
     "partial": "R1n-g replication as R1n-e recommended; opponent variety is a later concern.",
-    "no-transfer-floor": "The generalization loss predates PPO. The next declaration should address the "
-        "imitation stage: train against a mixture of opponents, holding one out for evaluation.",
+    "no-transfer-floor-death": "The generalization loss predates PPO, and the finals mostly die rather than "
+        "time out. The next declaration should address the imitation stage: train against a mixture of "
+        "opponents, holding one out for evaluation. A death-dominant floor has no learnable gradient at this "
+        "difficulty; consider starting the mixture curriculum from an easier opponent.",
+    "no-transfer-floor-timeout": "The generalization loss predates PPO, and the finals mostly time out rather "
+        "than die: they survive but cannot finish a purposeful opponent. The next declaration should address "
+        "the imitation stage with an opponent mixture; this arm's difficulty is a plausible starting point "
+        "since a timeout-dominant floor still carries a learnable gradient.",
+    "no-transfer-floor-mixed": "The generalization loss predates PPO, with no single dominant failure mode. "
+        "The next declaration should address the imitation stage: train against a mixture of opponents, "
+        "holding one out for evaluation.",
     "fails": "Same as no-transfer-floor, plus: the R1n-e policy is worse than its initializer against this "
         "opponent, which would make the anchor and sigma choices suspect.",
     "invalid": "Fix the arm before drawing conclusions.",

@@ -39,7 +39,15 @@ which leads its aim, takes cover, and retreats.
 - **Declared measures also include** a failure-mode decomposition (death,
   timeout with or without hits, no contact) and projectile-level mechanism
   counters.
-- **Budget:** 1,700,000 decisions bound, 2,000,000 cap. No training.
+- **Budget:** 1,690,000 decisions bound, 2,000,000 cap. No training.
+- **Implementation amendments A1-A5** (declaration §11): the budget
+  correction above; the scenario override is a restoring context manager
+  around `full_authority_train_v1.scenario` (the file itself is unedited);
+  the reproduction check passed (50 worlds, 0 mismatches) before any arm
+  collected; the floor outcome is split by dominant failure mode
+  (`no-transfer-floor-death`/`-timeout`/`-mixed`), since arm E's timeouts
+  and arm N's deaths would otherwise share one label; the teacher-gap
+  bootstrap resamples the 400 worlds, not the 3 policies.
 - **The replication R1n-e recommended moves to R1n-g.**
 
 ### R1n-e — KL-anchored frozen-reward PPO with death rate as primary test (complete 2026-09-14; survival improved, replication pending)
