@@ -136,10 +136,22 @@ def test_archive_cross_check_matches_the_real_r1n_c_archive():
     rows = led.archive_cross_check(cfg, arm_r_cells)
     for seed in cfg["initializerSeeds"]:
         row = rows[str(seed)]
-        # Comparing the archive against itself: every delta must be exactly zero.
+        # Comparing the archive against itself: every delta must be exactly zero. This alone
+        # would pass even if every seed read the same file (x - x == 0 regardless of x), so
+        # it is not sufficient by itself — see the distinctness check below.
         assert row["typeAccuracyDelta"] == pytest.approx(0.0)
         assert row["throwRecallDelta"] == pytest.approx(0.0)
         assert row["throwAimHeadingErrorDegreesDelta"] == pytest.approx(0.0)
+    # The three archived files are not identical, so a path/seed-mapping bug that reads the
+    # same file three times (or the wrong seed's file) would leave every "archived" entry
+    # equal; catch that by requiring at least one metric to differ pairwise.
+    archived = {seed: rows[str(seed)]["archived"] for seed in cfg["initializerSeeds"]}
+    seeds = cfg["initializerSeeds"]
+    for i in range(len(seeds)):
+        for j in range(i + 1, len(seeds)):
+            a, b = archived[seeds[i]], archived[seeds[j]]
+            assert (a["typeAccuracy"], a["perType"]["throw"]["support"]) != \
+                   (b["typeAccuracy"], b["perType"]["throw"]["support"])
 
 
 # -- live: tiny end-to-end declare/arm/aggregate and tamper detection -----------------------

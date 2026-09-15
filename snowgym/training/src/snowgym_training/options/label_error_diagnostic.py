@@ -116,9 +116,12 @@ def _delta(current, archived):
 
 def archive_cross_check(cfg, arm_r_cells):
     """Arm R's initializer cells against R1n-c's own archived split-B label error for the
-    same checkpoints — different worlds, same opponent, same checkpoint. A large divergence
-    flags a measurement problem in this diagnostic, not a new finding (declaration §2, §8).
-    Finals have no R1n-c archive (they postdate R1n-c), so only initializers are checked."""
+    same checkpoints and the same opponent (random red), but not the same worlds or episode
+    count (R1n-c: split B, 601000-601099, 100 episodes; here: 994000-994127, 128 episodes) —
+    a "same ballpark" check, not an equality test. A nonzero delta is expected; only a large
+    one flags a measurement problem in this diagnostic rather than a new finding (declaration
+    §2, §8). Finals have no R1n-c archive (they postdate R1n-c), so only initializers are
+    checked."""
     rows = {}
     for seed in cfg["initializerSeeds"]:
         archived = json.loads((TRAINING / cfg["sourceRun"] / f"seed-{seed}" / "label-error.json")
