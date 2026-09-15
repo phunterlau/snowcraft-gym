@@ -1,0 +1,163 @@
+{
+  "assistType": "none at runtime; frozen checkpoints, no training",
+  "autonomousQualificationEligible": false,
+  "budgetBound": {
+    "assumedDecisionsPerEpisode": 110,
+    "cells": 18,
+    "episodesPerArm": 128,
+    "total": 253440
+  },
+  "config": {
+    "actorGradClip": 0.5,
+    "armOrder": [
+      "R",
+      "E",
+      "N"
+    ],
+    "armSeeds": {
+      "E": [
+        995000,
+        995127
+      ],
+      "N": [
+        996000,
+        996127
+      ],
+      "R": [
+        994000,
+        994127
+      ]
+    },
+    "arms": {
+      "E": {
+        "redController": "scripted",
+        "redDifficulty": "easy"
+      },
+      "N": {
+        "redController": "scripted",
+        "redDifficulty": "normal"
+      },
+      "R": {
+        "redController": "random"
+      }
+    },
+    "assistType": "none at runtime; frozen checkpoints, no training",
+    "assistVersion": "snowgym.r1n-g-label-error.v0",
+    "autonomousQualificationEligible": false,
+    "blockWorlds": 64,
+    "bootstrapSamples": 10000,
+    "bootstrapSeed": 973001,
+    "budgetCap": 400000,
+    "calibrationDraws": 64,
+    "calibrationRows": 1024,
+    "calibrationSeed": 982001,
+    "clipRatio": 0.2,
+    "collectionBlockWorlds": 64,
+    "contactMinFraction": 0.25,
+    "criticEpochs": 4,
+    "criticGradClip": 0.5,
+    "destination": "global",
+    "developmentSplits": {
+      "A": [
+        600000,
+        600099
+      ],
+      "B": [
+        601000,
+        601099
+      ]
+    },
+    "endpointClip": 3.0,
+    "entropyWeight": 0.01,
+    "episodesPerArm": 128,
+    "epochs": 4,
+    "evaluationBlockWorlds": 50,
+    "executionGapFlag": 0.2,
+    "finalCheckpoint": "update-200.pt",
+    "finalRun": "runs/m7b_engage_r1n_e_v0",
+    "fits": 5,
+    "floorRng": 981002,
+    "format": "snowgym.r1n-g-label-error-config.v0",
+    "gaeLambda": 0.9885140204,
+    "gamma": 0.9976921765,
+    "gateMinPredictiveR2": 0.25,
+    "gateTimeOnlyMargin": 0.05,
+    "heldOutSeedBase": 670000,
+    "historyEvery": 25,
+    "imitationGradClip": 0.5,
+    "imitationLearningRate": 0.0003,
+    "imitationMinibatch": 256,
+    "initialPowerLogStd": -1.0,
+    "initializerSeeds": [
+      97101,
+      97102,
+      97103
+    ],
+    "labelErrorSplit": "B",
+    "learningRate": 0.0003,
+    "localRadius": 8.0,
+    "minibatchSize": 512,
+    "movementKlStop": 0.01,
+    "nearCeilingMargin": 0.2,
+    "optimizerSeeds": [
+      97101,
+      97102,
+      97103
+    ],
+    "optionHorizon": 200,
+    "policyCheckpoint": "fit-4.pt",
+    "roster": 1,
+    "roundBlockWorlds": 64,
+    "roundEpisodes": 128,
+    "roundSeedBase": 650000,
+    "roundSeedStride": 1000,
+    "seedBandStride": 1000,
+    "seedSpreadFlag": 0.3,
+    "sigmaScale": 0.5,
+    "simulatorBudget": 260000,
+    "slowRadius": 2.1,
+    "sourceRun": "runs/m7b_engage_r1n_c_v0",
+    "stepsPerFit": 3000,
+    "stochasticSplit": "A",
+    "successMinFraction": 0.25,
+    "targetWorldSigma": 2.0,
+    "throwRecallFlag": 0.5,
+    "timeBins": 20,
+    "trainSeedBase": 660000,
+    "trainingRngs": [
+      97101,
+      97102,
+      97103
+    ],
+    "warmStartEpochs": 10,
+    "warmStartHeldOutEpisodes": 128,
+    "warmStartTrainEpisodes": 256
+  },
+  "declarationDigest": "sha256:d7f16f52810dd6a36a7fe7e2cf56566efedbede1050230e07181f44395fb678a",
+  "finalRunManifest": "sha256:ee284f7e885e983316af753e0669fc6766e36aa17fbaefeec8ec6fff6e30c51e",
+  "gitCommit": "c276e8065e288c3e80a98d15b4864dfe25f9ac8f",
+  "imitationImplementationDigest": "sha256:53d883afc826efcdfadf66854a655ad3c5472d8e98fae56869978c14fecc78ba",
+  "implementationDigest": "sha256:992cad217241852d58fb6a68310a7f5db7f387854580a3ac58b1ea759f2d44d0",
+  "opponentTransferImplementationDigest": "sha256:192f62f6e6ead1671928dbf4512f43f69c782088d19e2ee0f77662129be2dca8",
+  "pinnedE3Digests": {
+    "implementationDigest": {
+      "archived": "sha256:f1b06b98ecd8bfb9565ef6ee7dc7e2080d0284fb202b3abf81b9cc5a739dff1a",
+      "current": "sha256:f1b06b98ecd8bfb9565ef6ee7dc7e2080d0284fb202b3abf81b9cc5a739dff1a",
+      "match": true
+    },
+    "policyImplementationDigest": {
+      "archived": "sha256:90204be55b8ad93b31b481bed387266c6e0c48c410dd458279f8c19b0c4a028f",
+      "current": "sha256:90204be55b8ad93b31b481bed387266c6e0c48c410dd458279f8c19b0c4a028f",
+      "match": true
+    }
+  },
+  "sourceRun": {
+    "artifacts": 95,
+    "checkpoints": {
+      "97101": "sha256:e67acf815def63bcabc4877645afb28ec58daebaa6982066f2c6eda4b4ea3e2b",
+      "97102": "sha256:da36fe649bba56763cb5e381ec54867d1f656172f2e57875d94781e3aecf9e84",
+      "97103": "sha256:6da3fa5645ec1373319d20e5dd9fd5a7a351bbd6dff8e434920daa68eb243fbf"
+    },
+    "manifestDigest": "sha256:ddace6c48e95f0c9919e04fad161f2e1e48c32736ce05529c6e9a54164bc82bd"
+  }
+}

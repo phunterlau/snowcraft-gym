@@ -1,0 +1,186 @@
+{
+  "arm": "N",
+  "cells": {
+    "final-97101": {
+      "moveEndpointErrorWorld": 2.9989285469055176,
+      "moveHeadingErrorDegrees": 44.43600082397461,
+      "perType": {
+        "hold": {
+          "precision": null,
+          "recall": null,
+          "support": 0
+        },
+        "move": {
+          "precision": 0.9548028523489933,
+          "recall": 0.9850697825381369,
+          "support": 9243
+        },
+        "noop": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "support": 2018
+        },
+        "throw": {
+          "precision": 0.6986899563318777,
+          "recall": 0.42609853528628494,
+          "support": 751
+        }
+      },
+      "powerMeanAbsoluteError": 0.13574837148189545,
+      "throwAimHeadingErrorDegrees": 109.50064849853516,
+      "typeAccuracy": 0.9526306986808777,
+      "units": 12012
+    },
+    "final-97102": {
+      "moveEndpointErrorWorld": 2.3264384269714355,
+      "moveHeadingErrorDegrees": 27.927724838256836,
+      "perType": {
+        "hold": {
+          "precision": null,
+          "recall": 0.0,
+          "support": 1
+        },
+        "move": {
+          "precision": 0.9252543122512162,
+          "recall": 0.9859785554377283,
+          "support": 8487
+        },
+        "noop": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "support": 1891
+        },
+        "throw": {
+          "precision": 0.6560693641618497,
+          "recall": 0.2516629711751663,
+          "support": 902
+        }
+      },
+      "powerMeanAbsoluteError": 0.04271981492638588,
+      "throwAimHeadingErrorDegrees": 87.57620239257812,
+      "typeAccuracy": 0.9295275211334229,
+      "units": 11281
+    },
+    "final-97103": {
+      "moveEndpointErrorWorld": 2.4210610389709473,
+      "moveHeadingErrorDegrees": 76.39547729492188,
+      "perType": {
+        "hold": {
+          "precision": null,
+          "recall": null,
+          "support": 0
+        },
+        "move": {
+          "precision": 0.8702313188809495,
+          "recall": 0.9830357753608318,
+          "support": 14619
+        },
+        "noop": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "support": 1895
+        },
+        "throw": {
+          "precision": 0.1267605633802817,
+          "recall": 0.016521340064249657,
+          "support": 2179
+        }
+      },
+      "powerMeanAbsoluteError": 0.025806264951825142,
+      "throwAimHeadingErrorDegrees": 141.36720275878906,
+      "typeAccuracy": 0.8720911741256714,
+      "units": 18693
+    },
+    "init-97101": {
+      "moveEndpointErrorWorld": 2.759434223175049,
+      "moveHeadingErrorDegrees": 36.02284622192383,
+      "perType": {
+        "hold": {
+          "precision": null,
+          "recall": null,
+          "support": 0
+        },
+        "move": {
+          "precision": 0.9198361000210128,
+          "recall": 0.9844821769931407,
+          "support": 8893
+        },
+        "noop": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "support": 2011
+        },
+        "throw": {
+          "precision": 0.29949238578680204,
+          "recall": 0.07177615571776155,
+          "support": 822
+        }
+      },
+      "powerMeanAbsoluteError": 0.07366149872541428,
+      "throwAimHeadingErrorDegrees": 109.53925323486328,
+      "typeAccuracy": 0.9231622219085693,
+      "units": 11726
+    },
+    "init-97102": {
+      "moveEndpointErrorWorld": 2.570462226867676,
+      "moveHeadingErrorDegrees": 32.984622955322266,
+      "perType": {
+        "hold": {
+          "precision": 0.0,
+          "recall": null,
+          "support": 0
+        },
+        "move": {
+          "precision": 0.8382539218552081,
+          "recall": 0.9853395945481617,
+          "support": 8731
+        },
+        "noop": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "support": 1968
+        },
+        "throw": {
+          "precision": 0.5866666666666667,
+          "recall": 0.09586056644880174,
+          "support": 1836
+        }
+      },
+      "powerMeanAbsoluteError": 0.04129646718502045,
+      "throwAimHeadingErrorDegrees": 74.90095520019531,
+      "typeAccuracy": 0.8573594093322754,
+      "units": 12535
+    },
+    "init-97103": {
+      "moveEndpointErrorWorld": 2.954677104949951,
+      "moveHeadingErrorDegrees": 83.85905456542969,
+      "perType": {
+        "hold": {
+          "precision": null,
+          "recall": null,
+          "support": 0
+        },
+        "move": {
+          "precision": 0.8998386496214472,
+          "recall": 0.9940357852882704,
+          "support": 14587
+        },
+        "noop": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "support": 1970
+        },
+        "throw": {
+          "precision": 0.3829787234042553,
+          "recall": 0.03237410071942446,
+          "support": 1668
+        }
+      },
+      "powerMeanAbsoluteError": 0.02979395166039467,
+      "throwAimHeadingErrorDegrees": 148.3884735107422,
+      "typeAccuracy": 0.9066666960716248,
+      "units": 18225
+    }
+  },
+  "simulatorDecisions": 84472
+}

@@ -1,0 +1,25 @@
+{
+  "artifacts": {
+    "arm-report.json": "sha256:5b50af485d144d4559cb006192ce1b0833e0218cb32ad694634c57790b62a99e",
+    "final-97101/episodes.jsonl": "sha256:b5d2dd2146540976eb40118386386cfc6f634b1805549fa9892b23744917f4fa",
+    "final-97101/label-error.json": "sha256:d11887c1a94c55d8ce1dbd98ad3047538d279c2ae857c6d57acbadb25b96d775",
+    "final-97101/trajectory-distances.npz": "sha256:c68e31358a41f2c26e84d7dcba5a46de9fc976b4c951b6c9b5d8433f69add0e2",
+    "final-97102/episodes.jsonl": "sha256:c3f0973439616c887e181a33ddf61e60a9f19e99a3586835c8ed0b034a45621e",
+    "final-97102/label-error.json": "sha256:74e34646f41ef45f158f01ba586f0fe7a0a739e7d909ace724bd0c9a9a02668f",
+    "final-97102/trajectory-distances.npz": "sha256:40bc2fd351d917f6eb3767eda77a0872c2cdec47f23b115f4df1707991aa5c3e",
+    "final-97103/episodes.jsonl": "sha256:c9cadab39c904f3b929d17dcb5b95cae3a9c45fefb9cdaca38cd1ca38562bdff",
+    "final-97103/label-error.json": "sha256:3063b47321192bff00619c7381a4cb9d641ae50fddf04dff7d409e2ffa2b5050",
+    "final-97103/trajectory-distances.npz": "sha256:f0ff47fbd3a149312691d8df57e9eff827c42d732102422f96ffe4c7a8c885df",
+    "init-97101/episodes.jsonl": "sha256:0fa674b32717e4aecbef44b019805d57de03c4e99d12dd9178d6aeec8f2d6cd0",
+    "init-97101/label-error.json": "sha256:c0c1a7fac18c8a1502697141c7bbe1cfd7fff9f83b81597a925889e84cc6b6bf",
+    "init-97101/trajectory-distances.npz": "sha256:6046ad29ce8cf321b610e8f97e24454ec893f99a15eba4dd00a00231a5b7eddb",
+    "init-97102/episodes.jsonl": "sha256:f8e64a942f80bf2971f772af8fafa203186a7564cead112e4d08ff6bc7099a6e",
+    "init-97102/label-error.json": "sha256:189f5bb97a2db74d0dd994bd0abbb2bfa144cfd1b73ae2ae6a0f1f0062f0d7a1",
+    "init-97102/trajectory-distances.npz": "sha256:97d0c714b606d54cdb69f678fad453a50d4bd1eb3fd56b56f0288bed267c9574",
+    "init-97103/episodes.jsonl": "sha256:a11f0c01d8a2bcac0b4bfe9622298e3ee2577910554fbbe6ffa4197c20dcd40a",
+    "init-97103/label-error.json": "sha256:510e77dccb70289318d345be812d02cf186950c791288ac3d733f40f2f62013c",
+    "init-97103/trajectory-distances.npz": "sha256:1365707fd6ff14dc33e6b1313f999071cac9b89fb79715dda2d57506ff7f2ab3"
+  },
+  "format": "snowgym.r1n-g-arm-manifest.v0",
+  "manifestDigest": "sha256:e756c93bbe7e4d2ca34c7f1ec056c3e0f820346df7ea4725acbb5213323ab92a"
+}

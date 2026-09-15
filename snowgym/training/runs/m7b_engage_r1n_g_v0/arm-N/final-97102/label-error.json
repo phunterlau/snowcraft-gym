@@ -1,0 +1,30 @@
+{
+  "moveEndpointErrorWorld": 2.3264384269714355,
+  "moveHeadingErrorDegrees": 27.927724838256836,
+  "perType": {
+    "hold": {
+      "precision": null,
+      "recall": 0.0,
+      "support": 1
+    },
+    "move": {
+      "precision": 0.9252543122512162,
+      "recall": 0.9859785554377283,
+      "support": 8487
+    },
+    "noop": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "support": 1891
+    },
+    "throw": {
+      "precision": 0.6560693641618497,
+      "recall": 0.2516629711751663,
+      "support": 902
+    }
+  },
+  "powerMeanAbsoluteError": 0.04271981492638588,
+  "throwAimHeadingErrorDegrees": 87.57620239257812,
+  "typeAccuracy": 0.9295275211334229,
+  "units": 11281
+}
