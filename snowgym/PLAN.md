@@ -19,6 +19,29 @@ configuration on 2026-09-01.
 
 ## Milestones
 
+### R1n-f — opponent-transfer evaluation of the R1n-e policies (declared 2026-09-14; no training; collection pending)
+
+Follow `training/reviews/m7b_r1n_f_declaration.md`. R1n-e's policies were
+trained against `RandomAgent` red, which aims where blue currently stands;
+the archived behaviour analysis showed the learned gain is evasion. R1n-f
+evaluates the frozen initializers and finals against `ScriptedAiAgent` red,
+which leads its aim, takes cover, and retreats.
+
+- **Arms:** random (reference), scripted easy, scripted normal. Each arm runs
+  3 initializers, 3 finals, and the scripted blue teacher on the same fresh
+  400-world split F (871000–871399), deterministic execution only.
+- **Primary measure:** the seed-averaged success and death gap to the teacher
+  on the same worlds, with a 400-world bootstrap interval. An exploratory
+  probe found every learned policy at 0 wins of 40 against scripted red while
+  the teacher won 40 of 40, so a final-minus-initializer comparison would be
+  floor-to-floor; it is kept as a secondary measure with a declared floor
+  clause.
+- **Declared measures also include** a failure-mode decomposition (death,
+  timeout with or without hits, no contact) and projectile-level mechanism
+  counters.
+- **Budget:** 1,700,000 decisions bound, 2,000,000 cap. No training.
+- **The replication R1n-e recommended moves to R1n-g.**
+
 ### R1n-e — KL-anchored frozen-reward PPO with death rate as primary test (complete 2026-09-14; survival improved, replication pending)
 
 **Results** (`training/reviews/m7b_r1n_e_results.md`; archive
