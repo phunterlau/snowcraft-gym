@@ -199,3 +199,25 @@ every file, with per-arm manifests.
   - These worlds are **not** reused as split F, apart from the declared
     50-world reproduction check, which compares only against already-archived
     outcomes.
+
+## 11. Amendments made in the implementation commit, before any collection
+
+- **A1 — budget bound corrected to 1,690,000 (was 1,700,000).** §8's "plus
+  20,000 for the reproduction check" over-counted: the check is 50 worlds at
+  one comparator (the archived initializer only), i.e. 50 × 200 = 10,000
+  decisions, not 20,000. `opponent_transfer.budget_bound` computes
+  8,400 × 200 + 10,000 = 1,690,000. The cap (2,000,000) is unchanged and
+  still comfortably covers it.
+- **A2 — the opponent override is a restoring context manager, exactly as
+  §2 described, implemented as `scenario_override`.** It is proven to
+  restore `full_authority_train_v1.scenario` even when collection raises,
+  and to leave `full_authority_train_v1.py` byte-identical (its digest is
+  recorded in `declaration.json` and checked against E3's separately pinned
+  files, which do not include it).
+- **A3 — the reproduction check (§9) passed before any arm was declared for
+  collection:** 50 worlds (870000–870049), 0 mismatches, run against the
+  live archive with the real (non-tiny) configuration. A tiny-scale variant
+  of the same configuration is not used for this check, because shrinking
+  `optionHorizon` changes simulated behavior and would make the check
+  meaningless; tests exercise the tiny pipeline (declare/run_arm/aggregate)
+  and the real reproduction check separately.
