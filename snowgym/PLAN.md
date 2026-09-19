@@ -37,24 +37,31 @@ verified):
   `eval-normal` — R1n-g's most severe finding, worse-than-random aim —
   drops from 127.6° (C, reproducing R1n-g's archive) to 8.6° (M, near the
   healthy ~3° baseline), on an opponent M never trained on.
-- **Success and label error diverge at the per-seed level.** M's label
-  error is uniformly good across all three seeds, but `eval-normal`
-  success is 0.00 / 1.00 / 0.14 — the run's biggest open question, not yet
-  explained (results §7).
-- **Unplanned side-finding:** M's critic gate passes (R² 0.26–0.47) where
-  C's fails (R² 0.07–0.10, reproducing R1n-c's own known
-  critic-infeasibility finding) — mixing in scripted-easy episodes, which
-  end in contact more often, appears to give the critic a more learnable
-  return signal.
+- **Success diverges from label error at the per-seed level, in two
+  distinct ways (erratum, 2026-09-18 — see results doc).** M's label error
+  is *not* uniform: 97102's aim error (0.71°) is ~18× better than 97101's
+  and 97103's (12.58°, 12.53°). `eval-normal` success is 0.00 / 1.00 / 0.14,
+  and the two failing seeds fail differently — 97101 rarely makes contact
+  (12/100 episodes); 97103 makes contact every episode but dies finishing
+  86/100 of them. This is the run's biggest open question, reframed as two
+  separable diagnostics (contact failure vs. finishing/survival failure),
+  not one label-error/success mismatch.
+- **Unplanned side-finding, and ruled out as a cause of the above (erratum,
+  2026-09-18):** M's critic gate passes (R² 0.26–0.47) where C's fails (R²
+  0.07–0.10, reproducing R1n-c's own known critic-infeasibility finding).
+  `train_condition()` warm-starts the critic strictly *after* the reported
+  eval outcomes are recorded, and R1n-h runs no PPO, so the critic cannot
+  have caused those outcomes — it remains a reported downstream property,
+  not a candidate explanation for the seed spread.
 - **Caveat (declaration amendment A1):** round size is fixed at 128 total
   episodes, so M's scripted-easy exposure *substitutes* for half its
   random-opponent data rather than adding to it. This design cannot
   separate "the mixture works" from "the mixture works at this training
   volume" — a volume-controlled arm would need its own declaration.
-- **Next:** the divergence between label-error and win/loss success
-  (above) is the natural next diagnostic if the mixture curriculum is
-  investigated further, ahead of either M8 or a PPO stage from these
-  checkpoints.
+- **Next:** the reframed contact-vs-finishing question (above) is the
+  natural next diagnostic — a frozen-checkpoint, opportunity-level read of
+  the existing archive, no new training — ahead of either M8 or a PPO stage
+  from these checkpoints.
 
 Follow `training/reviews/m7b_r1n_h_declaration.md`. `autonomousQualificationEligible`
 stayed false throughout; this decided nothing about R1 qualification.

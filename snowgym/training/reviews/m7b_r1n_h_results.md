@@ -31,6 +31,11 @@ Run facts:
 R1n-h makes no R1 qualification claim and runs no PPO.
 `autonomousQualificationEligible` stays false throughout.
 
+An [erratum](#erratum-2026-09-18-label-error-framing-was-wrong-plus-two-documentation-errors)
+at the end corrects headline point 5's label-error characterization, retracts
+the critic-interaction hypothesis in headline point 6/§7, and fixes two
+smaller documentation errors. No result changes.
+
 ## Headline
 
 1. **The primary result is positive and well-powered: mixture training
@@ -217,3 +222,86 @@ checkpoints) is for the next declaration, not this one.
   reproduction of `v1.warm_start_critic_mc` at an all-random ratio) passed
   live before collection, giving confidence that condition C's critic
   numbers above are not an artifact of the mixture reimplementation.
+
+## Erratum (2026-09-18): label-error framing was wrong, plus two documentation errors
+
+An external review (`refs/snowgym_since_handoff_review_2026-09-18.md`, local
+notes, not committed) recomputed §3's per-seed numbers against episode
+outcomes and found headline point 5's characterization unsupported, plus two
+smaller documentation errors elsewhere in this file. No sealed artifact
+changes; no result changes. This section is additive, per the R1n-b erratum
+precedent (`c118a46`); this file is not listed in any `runs/*/manifest.json`
+(checked directly), so it is not sealed and edit-in-place is safe.
+
+### 1. Label error was not "comparably healthy" across seeds
+
+Recomputed directly from `condition-M/seed-*/eval-normal-deterministic/episodes.jsonl`
+and `label-error.json` for all three M seeds, independently confirming the
+review's numbers:
+
+| Seed | Success | Death | Contact episodes | Mean damage | Aim error | Far-move heading error |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| 97101 | 0/100 | 100/100 | 12/100 | 3.8 | 12.58° | 12.09° |
+| 97102 | 100/100 | 0/100 | 100/100 | 80.0 | 0.71° | 1.44° |
+| 97103 | 14/100 | 86/100 | 100/100 | 62.8 | 12.53° | 6.64° |
+
+97102's aim error (0.71°) is meaningfully better than 97101's and 97103's
+(12.58°, 12.53°) — roughly 18×, not "comparably healthy" as headline point 5
+originally stated. The two non-97102 seeds also fail *differently*, not
+identically:
+
+- **97101 is a contact failure.** It damages the target in only 12/100
+  episodes, despite 0.878 throw recall (§3) — recall counts whether the
+  learner throws when the teacher would have, not whether that throw lands
+  or is attempted at a workable range. 88 of its 100 episodes end in death
+  with the target never damaged.
+- **97103 is a finishing/survival failure, not a contact failure.** It
+  damages the target in all 100/100 episodes, averaging 62.8 damage, but
+  dies in 86/100 before finishing the engagement.
+
+This reframes the run's open question. It is not one uniform
+label-error/success mismatch — it is two separable diagnostics: why one seed
+barely engages, and why another engages but rarely survives to finish. Both
+are candidates for a frozen-checkpoint, opportunity-level follow-up that
+reads deployed learner throws (not teacher-selected opportunities, which is
+what `label_error` measures) and range/readiness/incoming-threat context at
+throw time.
+
+### 2. The critic-interaction hypothesis is ruled out, not unconnected
+
+§7 floats a "genuine critic-quality interaction" as a candidate, unconfirmed
+explanation for headline point 5's spread. It is not a candidate: verified
+directly in `train_condition()` (`mixture_imitation.py`), the per-seed order
+is imitation fits → evaluation (the success and label-error numbers reported
+throughout this file) → `warm_start_critic_mc_mixture`, strictly after. R1n-h
+runs no PPO, and the critic's parameters never feed the actor's action heads.
+The critic cannot have caused eval outcomes that were already recorded
+before it was fit. M's higher critic R² (headline point 6) remains a real,
+reported downstream property of the policies and their collected return
+distributions — it is just not a candidate explanation for the seed spread.
+
+### 3. Two smaller corrections
+
+- **Headline point 3** states M's mean throw recall as "0.79." §3's own
+  table gives **0.914** (mean of 0.878/1.000/0.865). 0.79 appears to be
+  R1n-g's healthy-baseline figure from a different run, not this run's
+  number.
+- **§5** compares M's `eval-random` success against "prior single-opponent-
+  trained policies in this track (R1n-c's initializers: 90%+)." R1n-c's
+  initializers scored 65%/74% on this metric (`m7b_r1n_c_results.md`); 90%+
+  was the *teacher ceiling* (93%/91%), not the initializers. The
+  substitution-cost point in §5 (M's ~53% mean vs. C's ~67%) still stands
+  directionally; the comparator's magnitude was wrong.
+
+### 4. Scope qualifier: "held-out opponent"
+
+The title and headline point 1 describe `eval-normal` as "a fully held-out
+opponent." This is accurate in the narrow sense the declaration used
+(`ScriptedAiAgent` at normal difficulty, excluded from both conditions'
+training mixtures) but invites a broader reading: it is the same scripted-AI
+family whose failures were already observed in R1n-f and R1n-g and directly
+informed this design, not an unseen opponent algorithm. No wording elsewhere
+in the declaration or this file overstates this, but the title's brevity
+invites the broader reading.
+
+No result changes. No re-collection.

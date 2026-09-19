@@ -1,5 +1,17 @@
 # Upstream patch ledger
 
+## `refs/snowgym_since_handoff_review_2026-09-18.md`
+
+Reason: user-requested review of changes since the last whole-repository handoff.
+
+Change: added a source-linked R1n-b through R1n-h review, current local/remote
+revision boundaries, repaired training contracts, PPO interpretation, fresh
+archive-only mixture failure analysis, statistical and causal caveats, test
+results, and proposed next decisions. Preserved sealed artifacts and existing
+local notes; no research training, provider call, commit, or push was performed.
+
+Upstream behavior: unchanged; documentation only.
+
 ## `refs/snowgym_rl_llm_cotraining_plan.md`
 
 Reason: save the requested RL/LLM co-training discussion as a standalone local note.
