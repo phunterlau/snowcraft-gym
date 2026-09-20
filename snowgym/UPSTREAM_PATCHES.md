@@ -1,5 +1,39 @@
 # Upstream patch ledger
 
+## `refs/snowgym_m8_s2_dev_notes.md`
+
+Reason: the user asked for a note on every development step. Local log for
+M8-S2, the contract repair of `SnowGymUnitParallelEnv` after an external review.
+
+Change: dated entries covering the review's verification, decisions, and
+gates. The file stays local; the committed protocol is
+`snowgym/training/reviews/m8_s2_declaration.md`.
+
+Upstream behavior: unchanged; documentation only.
+
+## `refs/snowgym_handoff_2026-09-20.md`
+
+Reason: user-requested handoff of what ran since the 2026-09-18 review, with
+pending ideas. Corrected after review to demote R1n-i's movement finding.
+
+Change: local note only; no source behavior, sealed evidence or thresholds
+changed.
+
+Upstream behavior: unchanged; documentation only.
+
+## `refs/snowgym_handoff_review_and_next_steps_2026-09-20.md`
+
+Reason: user-requested review of the September 20 handoff and pending ideas
+against the objective of LLM orchestration of local learned agents.
+
+Change: added a source-linked review of R1n-i and M8-S1, reproduced wrapper
+contract issues, qualified causal/verification claims, and proposed a staged
+training/command-conditioning path with PPO, observability and latency contracts.
+No source behavior, sealed evidence, thresholds or existing notes were changed;
+no new research collection, training, provider call, commit or push was performed.
+
+Upstream behavior: unchanged; documentation only.
+
 ## `refs/snowgym_m8_s1_dev_notes.md`
 
 Reason: the user asked for a note on every development step. This is the

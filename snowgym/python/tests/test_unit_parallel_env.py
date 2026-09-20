@@ -56,10 +56,11 @@ class FakeJointClient:
     unit's death — e.g. a mission-level condition)."""
 
     def __init__(self, blue_units: int = 3, red_units: int = 3, die_after_step: int | None = None,
-                 terminate_after_step: int | None = None):
+                 terminate_after_step: int | None = None, truncate_after_step: int | None = None):
         self.blue_units, self.red_units = blue_units, red_units
         self.die_after_step = die_after_step
         self.terminate_after_step = terminate_after_step
+        self.truncate_after_step = truncate_after_step
         self.seed = 0
         self.tick = 0
         self.step_count = 0
@@ -86,8 +87,9 @@ class FakeJointClient:
         self.step_count += 1
         snapshot = self._snapshot()
         blue_terminated = self.terminate_after_step is not None and self.step_count >= self.terminate_after_step
+        truncated = self.truncate_after_step is not None and self.step_count >= self.truncate_after_step
         return {"observations": snapshot["observations"], "rewards": {"blue": 1.0, "red": -1.0},
-                "terminations": {"blue": blue_terminated, "red": False}, "truncations": {"blue": False, "red": False},
+                "terminations": {"blue": blue_terminated, "red": False}, "truncations": {"blue": truncated, "red": truncated},
                 "info": snapshot["status"] | {"actionResults": {"blue": [], "red": []}}}
 
 
@@ -103,7 +105,7 @@ def test_split_unit_agent_round_trips():
     assert split_unit_agent("red-0") == ("red", 0)
 
 
-# -- live: PettingZoo checker -------------------------------------------------------------
+# -- fake client: PettingZoo checker -------------------------------------------------------------
 
 
 def test_unit_parallel_environment_passes_pettingzoo_checker():
@@ -111,13 +113,14 @@ def test_unit_parallel_environment_passes_pettingzoo_checker():
     parallel_api_test(env, num_cycles=25)
 
 
-# -- live: reset/step contract, determinism, death and removal ----------------------------
+# -- fake client: reset/step contract, determinism, death and removal (simulator-backed versions: test_unit_parallel_env_live.py) ----------------------------
 
 
 def make_env(*, blue_units: int = 3, red_units: int = 3, die_after_step: int | None = None,
-             terminate_after_step: int | None = None) -> SnowGymUnitParallelEnv:
+             terminate_after_step: int | None = None,
+             truncate_after_step: int | None = None) -> SnowGymUnitParallelEnv:
     client = FakeJointClient(blue_units=blue_units, red_units=red_units, die_after_step=die_after_step,
-                             terminate_after_step=terminate_after_step)
+                             terminate_after_step=terminate_after_step, truncate_after_step=truncate_after_step)
     return SnowGymUnitParallelEnv(client=client, blue_units=blue_units, red_units=red_units)
 
 
@@ -205,3 +208,82 @@ def test_action_type_and_target_are_placed_in_the_correct_slot():
     assert merged["blue"]["action_type"][0] == ACTION_MOVE
     assert merged["blue"]["action_type"][1] == ACTION_NOOP
     assert np.allclose(merged["blue"]["target"][0], [0.5, -0.5])
+
+
+# -- M8-S2: termination contract (declaration §1) -----------------------------------------
+
+
+def step_all(env: SnowGymUnitParallelEnv):
+    return env.step({agent: sample_action() for agent in env.agents})
+
+
+def test_pure_timeout_truncates_without_terminating_any_agent():
+    env = make_env(blue_units=2, red_units=2, truncate_after_step=1)
+    env.reset(seed=1)
+    _, _, terminations, truncations, infos = step_all(env)
+    assert not any(terminations.values())
+    assert all(truncations.values())
+    assert env.agents == []
+    for info in infos.values():
+        assert info["snowgym_unit"]["team_terminated"] is False
+        assert info["snowgym_unit"]["team_truncated"] is True
+
+
+def test_natural_termination_is_terminated_not_truncated_and_flags_the_value_boundary():
+    env = make_env(blue_units=2, red_units=1, terminate_after_step=1)
+    env.reset(seed=1)
+    _, _, terminations, truncations, infos = step_all(env)
+    assert all(terminations.values()) and not any(truncations.values())
+    assert all(info["snowgym_unit"]["team_terminated"] for info in infos.values())
+
+
+def test_unit_death_mid_battle_terminates_only_that_unit_and_is_not_a_team_terminal():
+    env = make_env(blue_units=2, red_units=1, die_after_step=1)
+    env.reset(seed=1)
+    _, _, terminations, truncations, infos = step_all(env)
+    assert terminations == {"blue-0": True, "blue-1": False, "red-0": False}
+    assert not any(truncations.values())
+    assert infos["blue-0"]["snowgym_unit"] == {
+        "team_terminated": False, "team_truncated": False, "unit_alive": False, "unit_died": True}
+    assert infos["blue-1"]["snowgym_unit"]["unit_died"] is False
+    assert infos["blue-1"]["snowgym_unit"]["team_terminated"] is False
+
+
+def test_coincident_death_and_timeout_marks_the_dead_unit_terminated_and_truncated():
+    env = make_env(blue_units=2, red_units=1, die_after_step=1, truncate_after_step=1)
+    env.reset(seed=1)
+    _, _, terminations, truncations, _ = step_all(env)
+    assert terminations == {"blue-0": True, "blue-1": False, "red-0": False}
+    assert all(truncations.values())
+
+
+# -- M8-S2: action validation (declaration §2) --------------------------------------------
+
+
+def bad_actions():
+    good = sample_action()
+    return {
+        "fractional action_type": {**good, "action_type": 2.7},
+        "out-of-range action_type": {**good, "action_type": 99},
+        "negative action_type": {**good, "action_type": -1},
+        "scalar target": {**good, "target": np.float32(0.25)},
+        "wrong-shaped target": {**good, "target": np.zeros(3, dtype=np.float32)},
+        "target out of range": {**good, "target": np.array([2.0, 0.0], dtype=np.float32)},
+        "NaN target": {**good, "target": np.array([np.nan, 0.0], dtype=np.float32)},
+        "power out of range": {**good, "power": np.float32(1.5)},
+        "vector power": {**good, "power": np.zeros(2, dtype=np.float32)},
+        "wrong dtype target": {**good, "target": np.zeros(2, dtype=np.float64)},
+    }
+
+
+@pytest.mark.parametrize("name", list(bad_actions()))
+def test_invalid_unit_action_is_rejected_before_it_reaches_the_client(name):
+    client = FakeJointClient(blue_units=2, red_units=1)
+    env = SnowGymUnitParallelEnv(client=client, blue_units=2, red_units=1)
+    env.reset(seed=1)
+    actions = {agent: sample_action() for agent in env.agents}
+    actions["blue-1"] = bad_actions()[name]
+    with pytest.raises(ValueError, match="blue-1 is outside SnowGym action_space|action for blue-1"):
+        env.step(actions)
+    assert client.joint_actions == [] and client.step_count == 0
+

@@ -3,7 +3,11 @@
 No local-observation or latency restriction yet (M8's own checklist puts those
 after "begin with global observations"); every living unit-agent on a team
 receives that team's full team-level observation unchanged. See
-`reviews/m8_s1_declaration.md`.
+`reviews/m8_s1_declaration.md` and `reviews/m8_s2_declaration.md`.
+
+Trainer contract: `terminated` is the PettingZoo actor-lifecycle flag (this
+unit will not act again), not a value-bootstrapping boundary. Derive that from
+`info["snowgym_unit"]["team_terminated"]`; `truncated` is a rollout cut.
 """
 
 from __future__ import annotations
@@ -128,9 +132,12 @@ class SnowGymUnitParallelEnv(ParallelEnv[UnitAgentId, dict[str, Any], dict[str, 
         if set(actions) != set(self.agents):
             raise ValueError(f"actions must contain exactly: {', '.join(self.agents)}")
         active_before = list(self.agents)
+        for agent in active_before:
+            if not self.action_spaces[agent].contains(actions[agent]):
+                raise ValueError(f"action for {agent} is outside SnowGym action_space")
         team_actions = self._merge_team_actions(actions)
         team_observations, team_rewards, team_terms, team_truncs, team_infos = self.environment.step(team_actions)
-        episode_over = any(team_terms.values()) or any(team_truncs.values())
+        team_terminated, team_truncated = any(team_terms.values()), any(team_truncs.values())
 
         observations, rewards, terminations, truncations, infos = {}, {}, {}, {}, {}
         for agent in active_before:
@@ -138,10 +145,18 @@ class SnowGymUnitParallelEnv(ParallelEnv[UnitAgentId, dict[str, Any], dict[str, 
             unit_alive = self._unit_alive(agent)
             observations[agent] = team_observations[team]
             rewards[agent] = team_rewards[team]
-            terminations[agent] = episode_over or not unit_alive
-            truncations[agent] = team_truncs[team]
-            infos[agent] = dict(team_infos[team])
+            terminations[agent] = team_terminated or not unit_alive
+            truncations[agent] = team_truncated
+            infos[agent] = dict(team_infos[team]) | {
+                "snowgym_unit": {
+                    "team_terminated": team_terminated,
+                    "team_truncated": team_truncated,
+                    "unit_alive": unit_alive,
+                    "unit_died": not unit_alive,
+                }
+            }
 
+        episode_over = team_terminated or team_truncated
         self.agents = [] if episode_over else [a for a in self.agents if self._unit_alive(a)]
         return observations, rewards, terminations, truncations, infos
 

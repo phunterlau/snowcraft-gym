@@ -2784,13 +2784,36 @@ per-unit credit invented), and per-unit termination on death (verified
 stable slot identity for a whole episode — dead units stay in their sorted
 slot with `alive: false`, never removed or reindexed,
 `observations/Observation.ts:112-136`). `pettingzoo.test.parallel_api_test`
-passes; a determinism check and a live death-and-removal check both pass.
+passes; a reset-tensor determinism check and a death-and-removal check pass,
+all against a fake client (the simulator-backed versions arrived in M8-S2).
 Local-visibility/latency restriction (the next M8 checklist item),
 parameter-shared training, and the centralized critic are explicitly out
 of scope for this stage. See `training/reviews/m8_s1_declaration.md`.
 11 new python client tests (was 51, now 62); full training suite (456),
 `npm run build`, `npm test` (366/367, the one documented R1n-b exception)
 all re-verified clean.
+
+**M8-S2 — unit-env contract repair (complete 2026-09-20; infrastructure, no
+training):** an external review of S1 found that a pure timeout returned
+`terminated=True` alongside `truncated=True` for every survivor, that
+malformed per-unit actions (`action_type=2.7`, a scalar `target`) were
+silently coerced into valid ones before the team env's space check, and that
+S1's tests used only a fake client. Repaired in
+`unit_parallel_env.py`: `terminated = team_terminated or unit_dead`,
+`truncated = team_truncated`, per-agent `info["snowgym_unit"]` carries
+`team_terminated` / `team_truncated` / `unit_alive` / `unit_died` (trainers
+derive the value boundary from `team_terminated`, not from `terminated`), and
+every unit action is checked against its action space before merging. New
+`tests/test_unit_parallel_env_live.py` runs against a real server subprocess:
+same-action state-hash and observation parity with the team env, seed
+determinism, pure timeout, a real mid-battle death with stable slot identity,
+and a rejected action that never advances the simulator. 14 of the new
+fake-client tests and 3 of the 5 live tests fail on S1's code. 81 client tests
+(was 62), 456 training, `npm run build`, `npm test` 366/367 (the one
+documented R1n-b exception). No seeds. See
+`training/reviews/m8_s2_declaration.md`. Next: S3, the versioned
+v3/plan/focal-unit bridge with explicit Red action routing, still without a
+learning claim.
 
 ### M9 — slow commander over a learned team
 
