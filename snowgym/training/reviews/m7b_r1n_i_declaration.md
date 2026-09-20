@@ -277,5 +277,58 @@ not reimplemented).
 
 ## 11. Amendments
 
-None yet. Any change made before collection will be dated and labeled
-here, per the standing convention.
+**A1 (2026-09-20, before collection):** implementation found that `fi.collect`'s
+`part` (§2 Step B) does not, in fact, retain per-decision world/episode
+attribution. `run_block`'s `stored` computes a world index and a
+within-episode decision index per step (`full_authority_train_v1.py:186`),
+but `fi.collect` discards both when concatenating `stored` into `part` —
+it keeps only `observation`/`labels`, pooled across every decision from
+every episode with no way to say which row came from which world. This
+does not affect the *aggregate* measures §3/§4 use for the contact-failure
+diagnostic (in-range throw rate, ground-truth aim error), which never
+needed per-episode grouping. It does affect the finishing-failure
+diagnostic, which needs each decision's position relative to that
+episode's `firstHitDecision`/`finalDecision` window.
+
+Rather than editing `full_authority_imitation.py` (pinned) or leaving the
+finishing-failure diagnostic unmeasurable, R1n-i adds
+`collect_with_attribution` to `checkpoint_failure_diagnostic.py`: the same
+`v1.make_wrapper`/`v1.run_block`/`fi.Labeler` primitives `fi.collect` itself
+uses, unchanged, plus `v1.flatten_block`/`v1.concatenate` (imported
+unchanged — the same pair `mixture_imitation.collect_fold_mixture` already
+reuses for an analogous purpose) to keep the world/decision attribution
+`run_block` already computes. This is additive reuse, not a reimplemented
+stepping loop, and is verified equivalent to `fi.collect`'s own
+`part["observation"]`/`part["labels"]` for the same seeds and model
+(bit-for-bit, `torch.equal`) before being trusted for anything new.
+
+A consequence: Step A and Step B no longer need two separate collection
+calls per checkpoint. `collect_with_attribution`'s own `episodes` output is
+exactly what the Step A reproduction gate checks against the archive, so
+one collection call per checkpoint serves both steps — a simplification
+from §2's original two-call description, not a scope change. §7's artifact
+list is adjusted to match: the reproduction gate and the Step B measures
+are written to one `checkpoint-report.json` per checkpoint (containing
+`reproductionGate`, `labelErrorRecheck`, `contactFailure`, and
+`finishingFailure`), alongside the regenerated `episodes.jsonl`, rather
+than two separate files.
+
+**A2 (2026-09-20, before collection, live-test finding):** the reproduction
+gate's semantics were tightened during test-writing. As originally
+written, comparing regenerated worlds against the full archived set would
+read any world not regenerated (e.g. a smaller test slice) as a mismatch.
+`reproduction_gate` now checks only the worlds actually regenerated against
+their archived counterpart; on the real 100-episode collection this is
+unchanged (all 100 are regenerated, so it reduces to a full check).
+
+**A3 (2026-09-20, before collection, live-test finding):** a first version
+of the test suite's `tiny()` configuration shrank `optionHorizon` for
+speed, alongside `block_worlds` correctly staying pinned to the archived
+value per §2. This made the reproduction gate fail for a real checkpoint —
+not because of a measurement bug, but because a shorter horizon changes
+when episodes time out, exactly the kind of confound §2's `block_worlds`
+pinning already guards against for a different knob. `optionHorizon` is
+not overridden in any test now; it stays at the archived value (200)
+throughout, confirmed by two live tests passing cleanly afterward
+(`test_collect_with_attribution_matches_fi_collect_bit_for_bit`,
+`test_tiny_end_to_end_run_checkpoint_and_aggregate`).
