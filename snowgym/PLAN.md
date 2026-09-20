@@ -2745,8 +2745,19 @@ fine-tuning from a retained BC initializer, not another unguided BC variant.
 Goal: add decentralized execution only after centralized plan-conditioned PPO
 works.
 
-- [ ] Add `SnowGymUnitParallelEnv` as a new PettingZoo environment; retain the
-      existing team-level environment and version.
+**Gate note:** this milestone's own exit criterion is unchanged, but M7c
+below states "only then may M8... advance" and M7c is not complete. M8 work
+proceeds anyway under the user's 2026-09-14 red-agent roadmap decision
+(project memory, `red-agent-roadmap`): "M8 (unit-level MAPPO) lands
+regardless" of M7c, validated first against a known-good baseline on blue.
+That is a scope decision for the fighter/red-agent research track, not a
+claim that M7c's own exit criterion has been met — M7c's checklist below is
+unchanged and remains the gate for whatever actually depends on it (M9's
+commander comparisons, the roster/composition mission gates).
+
+- [x] Add `SnowGymUnitParallelEnv` as a new PettingZoo environment; retain the
+      existing team-level environment and version. **(M8-S1, complete
+      2026-09-20 — see below.)**
 - [ ] Begin with global actor observations, then local observations, then local
       observations plus latency. Change only one observability condition per
       experiment.
@@ -2757,6 +2768,29 @@ works.
 
 M8 exit: MAPPO beats its unit-random baseline in frozen 3v3 and 5v5 suites and
 the command-conditioned shared actor remains valid under local observations.
+
+**M8-S1 — `SnowGymUnitParallelEnv` (complete 2026-09-20; infrastructure,
+no training):** `snowgym/python/src/snowgym_client/unit_parallel_env.py`
+(new file; the existing `parallel_env.py`/`encoding.py`/`research_env.py`
+are read, not edited). Wraps the existing team-level `SnowGymParallelEnv`
+by composition, exposing one PettingZoo agent per living unit
+(`f"{team}-{slot}"`, both teams symmetric). First cut, matching M8's own
+checklist order: global observations only (every living unit-agent on a
+team receives that team's full existing team-level observation unchanged;
+per-unit egocentric framing stays a model concern, matching how
+`FullAuthorityPolicyV1.features()` already does this from a team tensor),
+the shared team reward broadcast to every living unit on that team (no
+per-unit credit invented), and per-unit termination on death (verified
+stable slot identity for a whole episode — dead units stay in their sorted
+slot with `alive: false`, never removed or reindexed,
+`observations/Observation.ts:112-136`). `pettingzoo.test.parallel_api_test`
+passes; a determinism check and a live death-and-removal check both pass.
+Local-visibility/latency restriction (the next M8 checklist item),
+parameter-shared training, and the centralized critic are explicitly out
+of scope for this stage. See `training/reviews/m8_s1_declaration.md`.
+11 new python client tests (was 51, now 62); full training suite (456),
+`npm run build`, `npm test` (366/367, the one documented R1n-b exception)
+all re-verified clean.
 
 ### M9 — slow commander over a learned team
 

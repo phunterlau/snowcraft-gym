@@ -1,5 +1,18 @@
 # Upstream patch ledger
 
+## `refs/snowgym_m8_s1_dev_notes.md`
+
+Reason: the user asked for a note on every development step. This is the
+running local log for M8-S1, the new per-unit PettingZoo environment
+(`SnowGymUnitParallelEnv`) that begins the M8 unit-level CTDE/MAPPO
+milestone.
+
+Change: added dated entries per commit or run, covering decisions,
+deviations, verification, and open questions. The file stays local; the
+committed protocol is `snowgym/training/reviews/m8_s1_declaration.md`.
+
+Upstream behavior: unchanged; documentation only.
+
 ## `refs/snowgym_since_handoff_review_2026-09-18.md`
 
 Reason: user-requested review of changes since the last whole-repository handoff.
