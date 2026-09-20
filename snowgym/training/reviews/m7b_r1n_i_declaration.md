@@ -332,3 +332,36 @@ not overridden in any test now; it stays at the archived value (200)
 throughout, confirmed by two live tests passing cleanly afterward
 (`test_collect_with_attribution_matches_fi_collect_bit_for_bit`,
 `test_tiny_end_to_end_run_checkpoint_and_aggregate`).
+
+**A4 (2026-09-20, before collection, advisor review):** four corrections to
+`deployed_view`/§3's diagnostics, made before any collection ran:
+
+1. Enemy presence must be gated by `enemy_mask` (padding), not only the
+   alive-flag feature — `features()` composes both; the implementation's
+   first draft omitted the mask. `deployed_view` now raises `RuntimeError`
+   if more than one enemy is ever live in a decision, rather than silently
+   summing two positions into a meaningless `enemy_pos`.
+2. `deployed_aim_error` is now NaN-filled on decisions with no live enemy,
+   structurally, rather than relying on every downstream reader to apply
+   `model_throws`'s masking correctly.
+3. §3's contact-failure diagnostic could not, as first built, separate
+   "never reaches range" from "reaches range but doesn't throw" if one
+   checkpoint's in-range decision count is tiny — a pooled rate over a
+   handful of decisions would look like any other rate. `contact_failure_
+   summary` now reports per-episode counts (how many of the 100 episodes
+   ever have an in-range decision, and the same for a close-range throw),
+   not only the pooled rate.
+4. §3's "keeps moving while a red projectile is incoming" measure had no
+   distance check — "incoming" meant only "a live red projectile exists
+   anywhere in the arena," a weak proxy for a direct threat to the acting
+   unit. `finishing_failure_summary` now reports two honestly distinct
+   versions: "anywhere" (the original, no distance check) and "nearby"
+   (`red_nearby`, gated by `engageRange`, the same reference distance §3
+   already uses for the contact diagnostic). Neither checks a
+   projectile's trajectory or time-to-impact.
+
+`deployed_view` is also now chunked over decisions (`chunk=2048`,
+matching `label_error`'s own chunking) rather than running one forward
+pass over the whole checkpoint's collected rows — R1n-e's collection notes
+recorded ~3.6 GB peaks on full-rollout forward passes over comparably
+sized row counts, and the host kills low-memory background tasks.

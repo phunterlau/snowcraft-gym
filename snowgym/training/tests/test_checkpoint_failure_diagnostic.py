@@ -99,14 +99,16 @@ class FakeDeployedModel:
                 "power_raw": torch.zeros(1, 1)}
 
 
-def make_deployed_part():
+def make_deployed_part(*, seed=42):
     obs = {"allies": torch.zeros(1, 1, 21), "enemies": torch.zeros(1, 1, 21),
+           "enemy_mask": torch.ones(1, 1, dtype=torch.int8),
            "projectiles": torch.zeros(1, 1, 9), "projectile_mask": torch.ones(1, 1, dtype=torch.int8)}
     obs["enemies"][0, 0, 1] = 1.0  # present
     obs["enemies"][0, 0, 2] = 0.5  # raw x -> world 25
     obs["projectiles"][0, 0, 1] = 1.0  # red-owned
+    obs["projectiles"][0, 0, 2] = 0.5  # projectile also at world 25, matching the enemy
     labels = {"action_type": torch.tensor([[2]]), "target": torch.zeros(1, 1, 2), "power": torch.zeros(1, 1)}
-    return {"observation": obs, "labels": labels, "seed": torch.tensor([42]), "decision": torch.tensor([0])}
+    return {"observation": obs, "labels": labels, "seed": torch.tensor([seed]), "decision": torch.tensor([0])}
 
 
 def test_deployed_view_reproduces_a_hand_computed_case():
@@ -118,15 +120,43 @@ def test_deployed_view_reproduces_a_hand_computed_case():
     assert bool(view["model_throws"][0, 0]) is True
     assert view["deployed_aim_error"][0, 0].item() == pytest.approx(0.0, abs=1e-3)
     assert bool(view["red_present"][0]) is True
+    assert bool(view["red_nearby"][0, 0]) is False  # projectile also 25 away > engageRange 9
 
 
 def test_deployed_view_in_range_flag_when_enemy_is_close():
     cfg = {**cfd.configuration(), "engageRange": 9.0}
     part = make_deployed_part()
     part["observation"]["enemies"][0, 0, 2] = 0.1  # raw x -> world 5, inside engageRange
+    part["observation"]["projectiles"][0, 0, 2] = 0.1
     view = cfd.deployed_view(FakeDeployedModel(), part, cfg)
     assert bool(view["in_range"][0, 0]) is True
     assert bool(view["close_range_throw"][0, 0]) is True
+    assert bool(view["red_nearby"][0, 0]) is True
+
+
+def test_deployed_view_ignores_a_masked_out_enemy_slot():
+    """`enemy_mask` (padding), not just the alive-flag feature, must gate presence — a
+    nonzero padding row would otherwise sum into `enemy_pos` undetected."""
+    cfg = {**cfd.configuration(), "engageRange": 9.0}
+    part = make_deployed_part()
+    part["observation"]["enemy_mask"][0, 0] = 0  # masked out despite alive flag being set
+    view = cfd.deployed_view(FakeDeployedModel(), part, cfg)
+    assert bool(view["enemy_seen"][0]) is False
+    assert torch.isnan(view["deployed_aim_error"][0, 0])
+
+
+def test_deployed_view_raises_if_more_than_one_enemy_is_live():
+    cfg = {**cfd.configuration(), "engageRange": 9.0}
+    part = make_deployed_part()
+    obs = part["observation"]
+    obs["allies"] = torch.zeros(1, 1, 21)
+    obs["enemies"] = torch.zeros(1, 2, 21)
+    obs["enemy_mask"] = torch.ones(1, 2, dtype=torch.int8)
+    obs["enemies"][0, :, 1] = 1.0
+    obs["enemies"][0, :, 2] = 0.5
+
+    with pytest.raises(RuntimeError, match="more than one live enemy"):
+        cfd.deployed_view(FakeDeployedModel(), part, cfg)
 
 
 def test_contact_failure_summary_rates():
@@ -139,6 +169,20 @@ def test_contact_failure_summary_rates():
     assert summary["closeRangeThrowRate"] == pytest.approx(1.0)
     assert summary["deployedThrowCount"] == 1
     assert summary["deployedAimErrorDegrees"] == pytest.approx(0.0, abs=1e-3)
+    assert summary["episodes"] == 1
+    assert summary["episodesEverInRange"] == 1
+    assert summary["episodesWithCloseRangeThrow"] == 1
+    assert summary["perEpisodeInRangeDecisionCounts"] == {"min": 1, "median": 1, "max": 1}
+
+
+def test_contact_failure_summary_separates_never_in_range_from_in_range_no_throw():
+    cfg = {**cfd.configuration(), "engageRange": 9.0}
+    far_part = make_deployed_part(seed=1)  # enemy at distance 25, never in range
+    far_view = cfd.deployed_view(FakeDeployedModel(), far_part, cfg)
+    summary = cfd.contact_failure_summary(far_view)
+    assert summary["episodesEverInRange"] == 0
+    assert summary["decisionsInRange"] == 0
+    assert summary["closeRangeThrowRate"] is None  # tiny/zero denominator surfaced, not hidden
 
 
 # -- episode windows and finishing-failure summary (pure) --------------------------------------
@@ -161,23 +205,27 @@ def test_finishing_failure_summary_restricts_to_the_post_contact_window():
     view = {"seed": torch.tensor([7, 7, 7]), "decision": torch.tensor([0, 1, 2]),
             "live": torch.tensor([[True], [True], [True]]),
             "model_type": torch.tensor([2, 1, 1]),  # THROW, MOVE, MOVE (MOVE == full_authority_imitation ACTION_MOVE)
-            "red_present": torch.tensor([False, True, True])}
+            "red_present": torch.tensor([False, True, True]),
+            "red_nearby": torch.tensor([[False], [True], [False]])}
     from snowgym_client.encoding import ACTION_MOVE
     assert view["model_type"][1].item() == ACTION_MOVE
     summary = cfd.finishing_failure_summary(view, episodes)
     assert summary["episodesWithContact"] == 1
     assert summary["postContactDecisions"] == 2  # decisions 1 and 2, not decision 0
-    assert summary["underThreatDecisions"] == 2
-    assert summary["keepsMovingUnderThreatRate"] == pytest.approx(1.0)
+    assert summary["underThreatAnywhereDecisions"] == 2
+    assert summary["keepsMovingUnderThreatAnywhereRate"] == pytest.approx(1.0)
+    assert summary["underThreatNearbyDecisions"] == 1  # only decision 1, the narrower proxy
+    assert summary["keepsMovingUnderThreatNearbyRate"] == pytest.approx(1.0)
 
 
 def test_finishing_failure_summary_handles_no_episodes_with_contact():
     view = {"seed": torch.tensor([1]), "decision": torch.tensor([0]),
             "live": torch.tensor([[True]]), "model_type": torch.tensor([1]),
-            "red_present": torch.tensor([False])}
+            "red_present": torch.tensor([False]), "red_nearby": torch.tensor([[False]])}
     summary = cfd.finishing_failure_summary(view, [make_episode(1, success=False, alive=False)])
     assert summary["episodesWithContact"] == 0
-    assert summary["keepsMovingUnderThreatRate"] is None
+    assert summary["keepsMovingUnderThreatAnywhereRate"] is None
+    assert summary["keepsMovingUnderThreatNearbyRate"] is None
 
 
 # -- declare() digest cross-checks --------------------------------------------------------------

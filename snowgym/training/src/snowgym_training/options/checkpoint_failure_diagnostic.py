@@ -125,44 +125,71 @@ def reproduction_gate(regenerated_episodes, archived_path):
 # -- Deployed-action view: model-conditioned, ground-truth-relative (declaration §2 Step B) --
 
 
-def deployed_view(model, part, cfg):
+def deployed_view(model, part, cfg, chunk=2048):
     """Recomputes the model's own action and enemy-position-relative geometry from the
     exact tensors the live policy acted on. `run_block`'s per-step `rows` dict is passed
     unmodified to both `choose(...)` (the live action) and `stored.append(...)`
     (`full_authority_train_v1.py:176/183/186`), and `part["observation"]` is built from
     `stored` — so this is a recomputation on the identical input, not an approximation
-    (confirmed by the reproduction gate on the episode outcomes it produces)."""
+    (confirmed by the reproduction gate on the episode outcomes it produces). Chunked over
+    decisions the same way `label_error` chunks (`chunk=2048`) — R1n-h's notes recorded
+    ~3.6 GB peaks on full-rollout forward passes over comparably-sized row counts, and the
+    host kills low-memory background tasks."""
     obs, labels = part["observation"], part["labels"]
     scale = obs["allies"].new_tensor(ARENA_HALF_EXTENT)
+    size = len(labels["action_type"])
+    fields = ("live", "model_type", "teacher_type", "distance_to_enemy", "enemy_seen", "in_range",
+              "model_throws", "close_range_throw", "deployed_aim_error", "red_present", "red_nearby")
+    chunks = {field: [] for field in fields}
     with torch.no_grad():
-        prediction = model(obs, with_value=False)
-    live = prediction["living"]
-    model_type = prediction["action_logits"].argmax(-1)
-    teacher_type = labels["action_type"].long()
+        for start in range(0, size, chunk):
+            o = {key: value[start:start + chunk] for key, value in obs.items()}
+            lab_type = labels["action_type"][start:start + chunk].long()
+            prediction = model(o, with_value=False)
+            live = prediction["living"]
+            model_type = prediction["action_logits"].argmax(-1)
 
-    own = obs["allies"][..., 2:4].float() * scale
-    enemy_present = (obs["enemies"][..., 1] > .5).float()
-    enemy_pos = (obs["enemies"][..., 2:4].float() * enemy_present[..., None]).sum(dim=-2) * scale
-    enemy_seen = enemy_present.sum(dim=-1) > .5
-    distance_to_enemy = (enemy_pos[:, None, :] - own).norm(dim=-1)
+            own = o["allies"][..., 2:4].float() * scale
+            # `enemy_mask` (padding) AND the alive flag (feature index 1) — `features()`
+            # composes both (masked by `mask & (observation[name][...,1] > .5)` where
+            # `mask = observation[mask_name]`); omitting `enemy_mask` would let a nonzero
+            # zero-initialized padding row through undetected.
+            enemy_present = (o["enemy_mask"].bool() & (o["enemies"][..., 1] > .5)).float()
+            enemy_seen = enemy_present.sum(dim=-1) > .5
+            enemy_count = enemy_present.sum(dim=-1)
+            if bool((enemy_count[enemy_seen] > 1.5).any()):
+                raise RuntimeError("more than one live enemy in a 1v1 decision — "
+                                    "enemy_pos would silently sum positions")
+            enemy_pos = (o["enemies"][..., 2:4].float() * enemy_present[..., None]).sum(dim=-2) * scale
+            distance_to_enemy = (enemy_pos[:, None, :] - own).norm(dim=-1)
 
-    model_throws = live & (model_type == ACTION_THROW) & enemy_seen[:, None]
-    aim_point = torch.tanh(prediction["throw_raw"]) * scale
-    aim_vector, target_vector = aim_point - own, enemy_pos[:, None, :] - own
-    aim_cos = F.cosine_similarity(aim_vector, target_vector, dim=-1, eps=1e-6).clamp(-1, 1)
-    deployed_aim_error = torch.rad2deg(torch.acos(aim_cos))
+            model_throws = live & (model_type == ACTION_THROW) & enemy_seen[:, None]
+            aim_point = torch.tanh(prediction["throw_raw"]) * scale
+            aim_vector, target_vector = aim_point - own, enemy_pos[:, None, :] - own
+            aim_cos = F.cosine_similarity(aim_vector, target_vector, dim=-1, eps=1e-6).clamp(-1, 1)
+            deployed_aim_error = torch.rad2deg(torch.acos(aim_cos))
+            deployed_aim_error = deployed_aim_error.where(enemy_seen[:, None].expand_as(deployed_aim_error),
+                                                           torch.full_like(deployed_aim_error, float("nan")))
 
-    in_range = distance_to_enemy <= cfg["engageRange"]
-    close_range_throw = model_throws & in_range
+            in_range = distance_to_enemy <= cfg["engageRange"]
+            close_range_throw = model_throws & in_range
 
-    red_projectile = obs["projectile_mask"].bool() & (obs["projectiles"][..., 1] > 0)
-    red_present = red_projectile.any(dim=-1)
+            red_projectile = o["projectile_mask"].bool() & (o["projectiles"][..., 1] > 0)
+            red_present = red_projectile.any(dim=-1)
+            # A weaker, honestly-labelled proxy for "somewhere in this world" than for "a
+            # direct threat to this unit": no projectile trajectory/impact check, just
+            # live-in-world.
+            projectile_pos = o["projectiles"][..., 2:4].float() * scale
+            projectile_distance = (projectile_pos[:, :, None, :] - own[:, None, :, :]).norm(dim=-1)
+            red_nearby = (red_projectile[:, :, None] & (projectile_distance <= cfg["engageRange"])).any(dim=1)
 
-    return {"live": live, "model_type": model_type, "teacher_type": teacher_type,
-            "distance_to_enemy": distance_to_enemy, "enemy_seen": enemy_seen, "in_range": in_range,
-            "model_throws": model_throws, "close_range_throw": close_range_throw,
-            "deployed_aim_error": deployed_aim_error, "red_present": red_present,
-            "seed": part["seed"], "decision": part["decision"]}
+            for field, value in zip(fields, (live, model_type, lab_type, distance_to_enemy, enemy_seen, in_range,
+                                              model_throws, close_range_throw, deployed_aim_error, red_present,
+                                              red_nearby)):
+                chunks[field].append(value)
+    result = {field: torch.cat(values) for field, values in chunks.items()}
+    result["seed"], result["decision"] = part["seed"], part["decision"]
+    return result
 
 
 def label_error_recheck(model, part, cfg, archived):
@@ -184,15 +211,33 @@ def label_error_recheck(model, part, cfg, archived):
 
 
 def contact_failure_summary(view):
+    """Pooled rates alone cannot separate "never reaches range" from "reaches range but
+    doesn't throw" (the two halves of declaration §4's first two predictions) if the pooled
+    denominator is tiny for one checkpoint and large for another — the per-episode counts
+    below make a small denominator visible instead of silently averaging over it."""
     in_range_live = view["in_range"] & view["live"]
     close_throw = view["close_range_throw"] & view["live"]
     thrown = view["model_throws"] & view["live"]
     n_in_range, n_thrown = int(in_range_live.sum()), int(thrown.sum())
     aim = view["deployed_aim_error"][thrown]
+
+    seed = view["seed"]
+    decision_in_range = in_range_live.any(dim=-1)
+    decision_close_throw = close_throw.any(dim=-1)
+    unique_seeds = [int(s) for s in seed.unique()]
+    per_episode_in_range = {s: int((decision_in_range & (seed == s)).sum()) for s in unique_seeds}
+    episodes_ever_in_range = sum(1 for c in per_episode_in_range.values() if c > 0)
+    episodes_with_close_throw = sum(1 for s in unique_seeds if int((decision_close_throw & (seed == s)).sum()) > 0)
+    counts = sorted(per_episode_in_range.values())
     return {"decisionsInRange": n_in_range,
             "closeRangeThrowRate": (int(close_throw.sum()) / n_in_range) if n_in_range else None,
             "deployedThrowCount": n_thrown,
-            "deployedAimErrorDegrees": float(aim.mean()) if n_thrown else None}
+            "deployedAimErrorDegrees": float(aim.mean()) if n_thrown else None,
+            "episodes": len(unique_seeds), "episodesEverInRange": episodes_ever_in_range,
+            "episodesWithCloseRangeThrow": episodes_with_close_throw,
+            "perEpisodeInRangeDecisionCounts": {"min": counts[0] if counts else None,
+                "median": counts[len(counts) // 2] if counts else None,
+                "max": counts[-1] if counts else None}}
 
 
 # -- Finishing-failure diagnostic (declaration §3, targets 97103-style outcomes) -------
@@ -211,6 +256,11 @@ def episode_windows(episodes):
 
 
 def finishing_failure_summary(view, episodes):
+    """Two honestly-distinguished threat proxies, neither a trajectory/impact check:
+    "anywhere" is any live red projectile in the world; "nearby" additionally requires one
+    within `engageRange` of the acting unit (`deployed_view`'s `red_nearby`). Reporting only
+    the world-level version under an unqualified "under threat" label would overstate what
+    was measured."""
     windows = episode_windows(episodes)
     seed, decision = view["seed"], view["decision"]
     in_window = torch.zeros_like(seed, dtype=torch.bool)
@@ -219,11 +269,16 @@ def finishing_failure_summary(view, episodes):
     live_window = view["live"] & in_window[:, None]
     post_contact_live = live_window.any(dim=-1)
     moving = ((view["model_type"] == ACTION_MOVE) & live_window).any(dim=-1)
-    threatened = view["red_present"] & post_contact_live
-    n = int(threatened.sum())
+
+    threatened_anywhere = view["red_present"] & post_contact_live
+    threatened_nearby = (view["red_nearby"] & live_window).any(dim=-1) & post_contact_live
+    n_anywhere, n_nearby = int(threatened_anywhere.sum()), int(threatened_nearby.sum())
     return {"episodesWithContact": len(windows), "postContactDecisions": int(post_contact_live.sum()),
-            "underThreatDecisions": n,
-            "keepsMovingUnderThreatRate": (int((moving & threatened).sum()) / n) if n else None}
+            "underThreatAnywhereDecisions": n_anywhere, "underThreatNearbyDecisions": n_nearby,
+            "keepsMovingUnderThreatAnywhereRate": (int((moving & threatened_anywhere).sum()) / n_anywhere)
+                if n_anywhere else None,
+            "keepsMovingUnderThreatNearbyRate": (int((moving & threatened_nearby).sum()) / n_nearby)
+                if n_nearby else None}
 
 
 # -- Per-checkpoint orchestration (declaration §1, §7) ---------------------------------
