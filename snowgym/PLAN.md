@@ -33,10 +33,10 @@ opportunities.
   three C seeds reach range every episode but rarely select a close-range
   throw (rate ~0.01, roughly an order of magnitude below M's ~0.16), and
   aim worse than random (120–146°) on the throws they do select.
-- **97103's finishing failure has a clean, large, directly-predicted
-  cause:** restricted to the post-first-hit window, it keeps moving under
-  a nearby red projectile only 37.2% of the time versus 97102's 90.9% —
-  R1n-e's own survival mechanism, confirmed here rather than assumed.
+- **97103 selects MOVE less often after first contact when a red projectile
+  is nearby** (37.2% of 1,257 decisions versus 97102's 90.9% of 22). Whether
+  reduced physical evasion causes its finishing failure is untested; see the
+  2026-09-20 erratum in `training/reviews/m7b_r1n_i_results.md`.
 - **97101's contact failure remains unexplained — a real negative
   result.** It reaches range, throws close-range, and aims well (11.8°)
   in every episode, indistinguishable from its two working siblings on

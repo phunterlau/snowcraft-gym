@@ -29,6 +29,11 @@ Run facts:
 R1n-i trains nothing, selects no checkpoint, and makes no R1 qualification
 claim. `autonomousQualificationEligible` stays false throughout.
 
+An [erratum](#erratum-2026-09-20-the-97103-movement-explanation-is-overstated)
+at the end demotes headline point 3 (and the matching §5 and PLAN.md
+statements) from a demonstrated cause to a measured association, and
+qualifies the C aim claim. No result changes.
+
 ## Headline
 
 1. **Condition C's failure is a clean, deployed-action aim failure — now
@@ -166,9 +171,8 @@ conclusive, for 97101 specifically.
 on the model's own executed throws, not an artifact of `label_error`'s
 teacher-label conditioning — the same conclusion the erratum reached from
 teacher-conditioned data now holds on the model-conditioned view too.
-97103's finishing failure has a specific, large, directly-predicted
-behavioral cause: it stops moving under threat after making contact,
-where 97102 does not. Neither the critic (ruled out in the R1n-h erratum)
+97103 selects MOVE less often under a nearby projectile after contact than
+97102 does (association only; see the erratum). Neither the critic (ruled out in the R1n-h erratum)
 nor any of range-reaching, throw-attempt rate, or aim accuracy (ruled out
 here) explains 97101's contact failure.
 
@@ -216,3 +220,58 @@ still applies: no selection rule is authorized by this run.
   decisions processed.
 - Top-level manifest verified with `death_rate_ppo.verify_sealed` after
   aggregation (`sha256:7fbde087…`).
+
+## Erratum (2026-09-20): the 97103 movement explanation is overstated
+
+An external review (`refs/snowgym_handoff_review_and_next_steps_2026-09-20.md`,
+local notes, not committed) questioned headline point 3. I re-read
+`finishing_failure_summary` and re-pulled the denominators from
+`runs/m7b_engage_r1n_i_v0/report.json`; the review's points hold. No sealed
+artifact changes and no number changes. This file is not listed in
+`runs/*/manifest.json` (checked directly), so an additive edit is safe,
+following the R1n-h erratum.
+
+### 1. Unequal, thin exposure
+
+| Checkpoint | Post-contact decisions | Threatened decisions (denominator) | Keeps-moving rate |
+| --- | ---: | ---: | ---: |
+| M-97101 | 288 | 92 | 0.598 |
+| M-97102 | 1,998 | 22 | 0.909 |
+| M-97103 | 4,294 | 1,257 | 0.372 |
+
+97102's 0.909 is 20 of 22 decisions. It finishes fast, so it is rarely
+exposed at all; 97103 lingers and is exposed 1,257 times. The two rates come
+from different policy-induced trajectories, and successful early completion
+itself lowers exposure. Decisions within an episode are serially dependent,
+so 1,257 is not 1,257 independent trials. Declaration §4's
+comparable-exposure condition was not demonstrated.
+
+### 2. "Moving" is MOVE selection, not motion
+
+`moving` is `model_type == ACTION_MOVE` (`checkpoint_failure_diagnostic.py`,
+`finishing_failure_summary`). It is neither speed nor displacement: NOOP
+preserves the previous movement order, so a unit can keep moving without
+selecting MOVE, and MOVE can be unavailable while a unit is stunned or in a
+throw phase, so a lower selection rate can follow being hit rather than cause
+it. "Nearby red projectile" is a proximity proxy, not a collision-course test.
+
+### 3. Corrected statements
+
+- **Supported:** 97103 selects MOVE less often than 97102 in post-contact
+  decisions with a nearby red projectile (37.2% of 1,257 versus 90.9% of 22).
+- **Not established:** that reduced physical evasion causes 97103's deaths, or
+  that this is the R1n-e "keep moving during snowball flight" mechanism.
+  R1n-e measured actual displacement against random Red; this diagnostic did
+  not. Headline point 3's "clean, large, directly-predicted cause", §5's
+  "specific, large, directly-predicted behavioral cause", and PLAN.md's
+  matching bullet are superseded by this paragraph.
+- **C's aim finding** (headline point 1) stands as a description of
+  learner-selected throws versus the enemy's instantaneous position. It does
+  not isolate how much aim, throw selection, or movement each contribute to
+  C's floor, and an angle has no distance-independent "healthy" threshold
+  (lateral miss grows roughly as d sin(alpha)).
+- **97101** is unchanged: still an unexplained negative result.
+
+Consequence: a PPO run that rewards or targets MOVE frequency would rest on
+an untested mechanism. Measure displacement and interception first, or do not
+build on this finding.
