@@ -2845,6 +2845,20 @@ teacher is achievable at 3v3. 83 client tests (was 81), 465 training (was
 See `training/reviews/m8_s3_declaration.md`. Next: S4, teacher achievability
 and random-init floors at 3v3 with a declared seed band, budget and archive.
 
+**M8-S4 — 3v3 Engage metrics, teacher achievability and random-init floors
+(complete 2026-09-20; collected and archived, no training):** the 3v3 metrics
+were frozen before data: units-lost fraction `L` (the strict generalization of
+R1n's death indicator; primary for later comparisons, mean, world-paired),
+success, team wipe, timeout. 400 world-paired seeds (2100000-2100399), three
+native Red arms, 417,097 decisions. Teacher success 400/400, 399/400 and 400/400
+(random, easy, normal; `L` 0.010, 0.013, 0.037) passes the >= 0.90 gate. Random-init
+policies (3 init seeds, deterministic and sampled) score 0/100 in every cell, are wiped
+in every episode by scripted-normal, and never engage random Red (all time out); the
+"no free signal" gate passes. Not established: that 3v3 Engage is learnable or that any
+initializer works. Archive `runs/m8_s4_roster_baseline_v0/` sealed and verified. See
+`training/reviews/m8_s4_results.md`. Next: S5, teacher imitation as the 3v3 initializer
+(R1n recipe), after re-checking the critic warm-start gate at roster 3.
+
 ### M9 — slow commander over a learned team
 
 Side experiment authorized 2026-09-05: add OpenAI GPT-6 Astra as a secondary

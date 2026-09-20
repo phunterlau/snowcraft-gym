@@ -1,0 +1,87 @@
+{
+  "assistType": "teacher is the native plan controller; floors are unassisted random init",
+  "autonomousQualificationEligible": false,
+  "budgetBound": {
+    "floors": 360000,
+    "teacher": 240000,
+    "total": 600000
+  },
+  "config": {
+    "actorGradClip": 0.5,
+    "arms": [
+      "random",
+      "easy",
+      "normal"
+    ],
+    "assistType": "teacher is the native plan controller; floors are unassisted random init",
+    "assistVersion": "snowgym.m8-s4.v0",
+    "autonomousQualificationEligible": false,
+    "blockWorlds": 50,
+    "bootstrapSamples": 10000,
+    "bootstrapSeed": 960004,
+    "budgetCap": 700000,
+    "calibrationDraws": 64,
+    "calibrationRows": 1024,
+    "calibrationSeed": 982001,
+    "clipRatio": 0.2,
+    "criticEpochs": 4,
+    "criticGradClip": 0.5,
+    "entropyWeight": 0.01,
+    "epochs": 4,
+    "evaluationSeedBase": 2100000,
+    "floorSuccessCeiling": 0.1,
+    "floorWorlds": 100,
+    "format": "snowgym.m8-s4-roster-baseline-config.v0",
+    "gaeLambda": 0.9885140204,
+    "gamma": 0.9976921765,
+    "gateMinPredictiveR2": 0.25,
+    "gateTimeOnlyMargin": 0.05,
+    "heldOutSeedBase": 640000,
+    "initSeeds": [
+      98101,
+      98102,
+      98103
+    ],
+    "initialPowerLogStd": -1.0,
+    "learningRate": 0.0003,
+    "localRadius": 8.0,
+    "minibatchSize": 512,
+    "modes": [
+      "deterministic",
+      "stochastic"
+    ],
+    "movementKlStop": 0.01,
+    "optionHorizon": 200,
+    "roster": 3,
+    "seedBandStride": 1000,
+    "targetWorldSigma": 2.0,
+    "teacherSuccessGate": 0.9,
+    "teacherWorlds": 400,
+    "timeBins": 20,
+    "trainSeedBase": 630000,
+    "trainingRngs": [
+      98001,
+      98002,
+      98003
+    ],
+    "warmStartEpochs": 10,
+    "warmStartHeldOutEpisodes": 128,
+    "warmStartTrainEpisodes": 256
+  },
+  "declarationDigest": "sha256:7e970b0bac9939f4c59b6cda8053b26f474d7b9f836ba9d6ba76b560d93f1a7f",
+  "gitCommit": "78e29d9d0132957f1308e12e8b666cfa8773b3cf",
+  "implementationDigest": "sha256:bc9547f929ff44a04cc24ae01c8e66f9493f7534e0e9d0122ecbf5ff693d88c8",
+  "pinnedE3Digests": {
+    "implementationDigest": {
+      "archived": "sha256:f1b06b98ecd8bfb9565ef6ee7dc7e2080d0284fb202b3abf81b9cc5a739dff1a",
+      "current": "sha256:f1b06b98ecd8bfb9565ef6ee7dc7e2080d0284fb202b3abf81b9cc5a739dff1a",
+      "match": true
+    },
+    "policyImplementationDigest": {
+      "archived": "sha256:90204be55b8ad93b31b481bed387266c6e0c48c410dd458279f8c19b0c4a028f",
+      "current": "sha256:90204be55b8ad93b31b481bed387266c6e0c48c410dd458279f8c19b0c4a028f",
+      "match": true
+    }
+  },
+  "trainImplementationDigest": "sha256:e6ac48c30aac8c6eb119e196ccc2a415f81ae731adbdb36b69f7fa69e8f7d7c4"
+}

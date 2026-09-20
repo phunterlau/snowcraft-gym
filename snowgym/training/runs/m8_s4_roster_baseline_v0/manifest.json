@@ -1,0 +1,29 @@
+{
+  "artifacts": {
+    "declaration.json": "sha256:72b47140588a04479eabaf4c26a03256f67a51e85299d442596bf1242f7fc9a5",
+    "floor-98101-deterministic/easy/episodes.jsonl": "sha256:8d792627456c4ff638388b48534cba9cb4736a3735e294bcbaaf656645b98472",
+    "floor-98101-deterministic/normal/episodes.jsonl": "sha256:742e3fa64b0bedca55d4a690cbd7a4f65e5ddf9e261a5b15e702e6c41e1148ee",
+    "floor-98101-deterministic/random/episodes.jsonl": "sha256:454338fbbf867d04ef765e5adc84b6d11140fc708dd82bcc8824b4f0b1ca78ee",
+    "floor-98101-stochastic/easy/episodes.jsonl": "sha256:73286e577b0e440a47a8cde2bfcba7f33cdbfb4ebeb6c6fa72953f24131f38d6",
+    "floor-98101-stochastic/normal/episodes.jsonl": "sha256:b80a6d1e5403f266cd3c4dcf0c5aa73603a18facb1b1747e9b28f110c3cc7b6c",
+    "floor-98101-stochastic/random/episodes.jsonl": "sha256:c8fa072d424c593d20e3a42a632ca58661a70d074d47d85d2920078d799adaf5",
+    "floor-98102-deterministic/easy/episodes.jsonl": "sha256:33db77ad76578a551f92af7a2b5fd4dc84df669f6b1bbe175e131cdb3cf5bcdd",
+    "floor-98102-deterministic/normal/episodes.jsonl": "sha256:e0b8cfb6f0cb1d5680866e38b4c7eee9e98d7c06db471f33d682e6387bf6288a",
+    "floor-98102-deterministic/random/episodes.jsonl": "sha256:4369e5f23e215d918354afcc21085caed91e563b2b852d3f273ff3b3a1280cee",
+    "floor-98102-stochastic/easy/episodes.jsonl": "sha256:55f1a9f4b8c2bbc277f5c11bf43f566ea8463e445af31af5fe261083140ba413",
+    "floor-98102-stochastic/normal/episodes.jsonl": "sha256:b9a4936f41c04aeab61f6c8fa15e6b610d89b934850db44ca38fbf7d958135e0",
+    "floor-98102-stochastic/random/episodes.jsonl": "sha256:b9dbf0cd6c2eb0677926e03ea27383e59478a79d94ee172320e25608da7d4698",
+    "floor-98103-deterministic/easy/episodes.jsonl": "sha256:cd604cf1adc2501088de6feae3e9d0de43afe3ad88c1b9e012a39a4abe5355ec",
+    "floor-98103-deterministic/normal/episodes.jsonl": "sha256:b76b9a212f2f44b6a049fbc97c12568ebcc0f1cd193e89add6ec4ffcc7285a6b",
+    "floor-98103-deterministic/random/episodes.jsonl": "sha256:454338fbbf867d04ef765e5adc84b6d11140fc708dd82bcc8824b4f0b1ca78ee",
+    "floor-98103-stochastic/easy/episodes.jsonl": "sha256:11de2c8c96eaf2c05a816ce8f19d5f895892c9926eda02d5cf36b1299d7efcd6",
+    "floor-98103-stochastic/normal/episodes.jsonl": "sha256:de80a55eba976cce4bf0a08820df06c622a1ff2e84542dae6a56f57cb052bad3",
+    "floor-98103-stochastic/random/episodes.jsonl": "sha256:9252f160c87051d2192ca3d2739d97008b9e67706eea3132f927078d2b64ca17",
+    "report.json": "sha256:04561a4bf5db785b53579fd14c517ae9a6633c7f97c2159372285867f7fb95b3",
+    "teacher/easy/episodes.jsonl": "sha256:b99351bf7691457f32ba2bb396c94727c2b113b2fbe4207a80de70efe6a14a88",
+    "teacher/normal/episodes.jsonl": "sha256:7f5af6f63a2198340aba807d3f9e62540bd4506629532f2a076bff9ca15bb5d4",
+    "teacher/random/episodes.jsonl": "sha256:519a0205e8d305458b261ae6be4bb453ab1fb119822510e7b52578ee23f31605"
+  },
+  "format": "snowgym.m8-s4-manifest.v0",
+  "manifestDigest": "sha256:4e548a863aa863b572515269a9ad919f2674d85c1a32e42a17d644c696f2022e"
+}
