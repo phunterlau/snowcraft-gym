@@ -1,5 +1,15 @@
 # Upstream patch ledger
 
+## `refs/snowgym_m8_s4_dev_notes.md`
+
+Reason: the user asked for a note on every development step. Local log for
+M8-S4, 3v3 Engage metric definitions, teacher achievability and random-init floors.
+
+Change: dated entries covering decisions, the run, and gates. The file stays
+local; the committed protocol is `snowgym/training/reviews/m8_s4_declaration.md`.
+
+Upstream behavior: unchanged; documentation only.
+
 ## `refs/snowgym_m8_s3_dev_notes.md`
 
 Reason: the user asked for a note on every development step. Local log for
