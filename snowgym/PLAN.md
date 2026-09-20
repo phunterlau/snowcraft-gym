@@ -2815,6 +2815,36 @@ documented R1n-b exception). No seeds. See
 v3/plan/focal-unit bridge with explicit Red action routing, still without a
 learning claim.
 
+**M8-S3 — 3v3 plan-conditioned path on the batch transport (complete
+2026-09-20; audit, no training):** orientation found the trainer's path is
+the batch transport (`SnowGymBatchEnv` + `EngageOptionBatchV1` + plan
+observations), not `SnowGymUnitParallelEnv`, which has no plan/role/option
+tensors. Decision: the batch path is the trainer's path; the unit env stays
+the M8 API-conformance artifact. `FullAuthorityPolicyV1` is already one
+shared network applied per living unit slot with egocentric rows (global
+inputs, the roadmap's first M8 condition); unit-local sensing is not claimed.
+No existing module was edited. New `options/roster_engage.py` (roster-N
+scenario over the R1n arena, ally-slot permutation, equivariance gap) and
+`tests/test_roster_engage.py`. Established at 3v3 against scripted-normal Red:
+all 3 blue units assigned and all 3 red targets activated; option state and
+tensor shapes correct; actor and critic equivariant in slot order; `features`
+does not mutate the shared observation; `act` likelihood equals its
+re-evaluation with zero weight on unused slots; a real mid-option unit death
+leaves the living mask, keeps its slot, contributes no likelihood, does not end
+the option, and its submitted action is ignored by the simulator. Batch
+`step_joint` and the unit env give identical state hashes for the same
+two-team actions, and native scripted Red is a different opponent from a joint
+step with idle Red (Red routing declared: scripted/random Red runs natively
+behind team actions; joint steps are for conformance and self-play). Finding
+for S4: with 3 units, random-init blue loses a unit mid-option in every one of
+8 worlds (steps 72-88) while the option continues, so 1v1's "death rate"
+(the only blue unit died) needs an explicit 3v3 definition before any result
+is reported. Not established: that 3v3 Engage is learnable or that the
+teacher is achievable at 3v3. 83 client tests (was 81), 465 training (was
+456), `npm run build`, `npm test` 366/367 (the one documented exception).
+See `training/reviews/m8_s3_declaration.md`. Next: S4, teacher achievability
+and random-init floors at 3v3 with a declared seed band, budget and archive.
+
 ### M9 — slow commander over a learned team
 
 Side experiment authorized 2026-09-05: add OpenAI GPT-6 Astra as a secondary

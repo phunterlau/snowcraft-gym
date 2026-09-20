@@ -1,5 +1,16 @@
 # Upstream patch ledger
 
+## `refs/snowgym_m8_s3_dev_notes.md`
+
+Reason: the user asked for a note on every development step. Local log for
+M8-S3, the 3v3 plan-conditioned path audit on the batch transport.
+
+Change: dated entries covering the transport decision, checks, and gates. The
+file stays local; the committed protocol is
+`snowgym/training/reviews/m8_s3_declaration.md`.
+
+Upstream behavior: unchanged; documentation only.
+
 ## `refs/snowgym_m8_s2_dev_notes.md`
 
 Reason: the user asked for a note on every development step. Local log for

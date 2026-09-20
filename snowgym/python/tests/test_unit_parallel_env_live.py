@@ -14,6 +14,7 @@ from pathlib import Path
 import numpy as np
 import pytest
 
+from snowgym_client.batch import SnowGymBatchClient, SnowGymBatchEnv
 from snowgym_client.encoding import ACTION_MOVE, ACTION_NOOP, ACTION_THROW
 from snowgym_client.parallel_env import SnowGymParallelEnv
 from snowgym_client.unit_parallel_env import SnowGymUnitParallelEnv
@@ -183,3 +184,53 @@ def test_a_malformed_action_never_reaches_the_simulator(server_url):
         env.step({"blue-0": bad, "red-0": noop()})
     _, _, _, _, infos = env.step({"blue-0": noop(), "red-0": noop()})
     assert infos["blue-0"]["tick"] == 6, "the rejected step must not have advanced the simulation"
+
+
+# -- M8-S3: conformance with the training transport, and Red routing ----------------------
+
+BATCH_SCENARIO = {"blueUnits": 3, "redUnits": 3, "arenaWidth": 40, "arenaHeight": 30, "maxTicks": 1800,
+                  "decisionHz": 10, "redDifficulty": "normal", "redController": "scripted"}
+
+
+def batch_team_actions(team: str, step: int, batch: int = 1) -> dict:
+    single = team_action(team, step, 10, 3)
+    return {name: np.repeat(value[None], batch, axis=0) for name, value in single.items()}
+
+
+def test_batch_step_joint_and_the_unit_env_produce_identical_state_hashes(server_url):
+    """The unit env is the conformance artifact; the batch transport is the training path.
+    Same seed and same explicit two-team actions must give the same physics on both."""
+    unit_env = SnowGymUnitParallelEnv(server_url=server_url, blue_units=3, red_units=3, max_ticks=1800)
+    _, unit_info = unit_env.reset(seed=13)
+    with SnowGymBatchClient() as client:
+        batch = SnowGymBatchEnv(1, client=client, observation_version=3)
+        batch.reset([13], [BATCH_SCENARIO])
+        assert batch.state_hashes[0] == unit_info["blue-0"]["stateHash"]
+        for step in range(30):
+            _, _, _, _, batch_info = batch.step_joint(batch_team_actions("blue", step), batch_team_actions("red", step))
+            _, _, _, _, unit_info = unit_env.step(
+                {f"{team}-{i}": scripted_unit_action(i + (0 if team == "blue" else 3), step)
+                 for team in ("blue", "red") for i in range(3)})
+            assert batch_info[0]["stateHash"] == unit_info["blue-0"]["stateHash"], f"diverged at step {step}"
+
+
+def test_native_scripted_red_and_a_joint_step_with_noop_red_are_different_opponents():
+    """A joint step disables the built-in Red controller, so it cannot stand in for the scripted benchmark."""
+    def run(joint: bool) -> list[str]:
+        with SnowGymBatchClient() as client:
+            batch = SnowGymBatchEnv(1, client=client, observation_version=3)
+            batch.reset([13], [BATCH_SCENARIO])
+            hashes = []
+            for step in range(40):
+                blue = batch_team_actions("blue", step)
+                if joint:
+                    _, _, _, _, info = batch.step_joint(blue, batch_team_actions("red", 0) | {
+                        "action_type": np.zeros((1, 10), dtype=np.int64)})
+                else:
+                    _, _, _, _, info = batch.step(blue)
+                hashes.append(info[0]["stateHash"])
+            return hashes
+
+    native, joint = run(False), run(True)
+    assert native != joint, "scripted Red must change the trajectory relative to idle Red"
+
