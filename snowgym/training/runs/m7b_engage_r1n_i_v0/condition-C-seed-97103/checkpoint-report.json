@@ -1,0 +1,73 @@
+{
+  "condition": "C",
+  "contactFailure": {
+    "closeRangeThrowRate": 0.0062407132243685,
+    "decisionsInRange": 3365,
+    "deployedAimErrorDegrees": 145.65798950195312,
+    "deployedThrowCount": 124,
+    "episodes": 100,
+    "episodesEverInRange": 100,
+    "episodesWithCloseRangeThrow": 20,
+    "perEpisodeInRangeDecisionCounts": {
+      "max": 55,
+      "median": 33,
+      "min": 22
+    }
+  },
+  "finishingFailure": {
+    "episodesWithContact": 0,
+    "keepsMovingUnderThreatAnywhereRate": null,
+    "keepsMovingUnderThreatNearbyRate": null,
+    "postContactDecisions": 0,
+    "underThreatAnywhereDecisions": 0,
+    "underThreatNearbyDecisions": 0
+  },
+  "labelErrorRecheck": {
+    "deltas": {
+      "moveEndpointErrorWorld": 0.0,
+      "moveHeadingErrorDegrees": 0.0,
+      "powerMeanAbsoluteError": 0.0,
+      "throwAimHeadingErrorDegrees": 0.0,
+      "typeAccuracy": 0.0
+    },
+    "fresh": {
+      "moveEndpointErrorWorld": 2.4405832290649414,
+      "moveHeadingErrorDegrees": 95.65697479248047,
+      "perType": {
+        "hold": {
+          "precision": null,
+          "recall": null,
+          "support": 0
+        },
+        "move": {
+          "precision": 0.9041866746698679,
+          "recall": 0.9915254237288136,
+          "support": 12154
+        },
+        "noop": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "support": 1657
+        },
+        "throw": {
+          "precision": 0.1693548387096774,
+          "recall": 0.016178736517719568,
+          "support": 1298
+        }
+      },
+      "powerMeanAbsoluteError": 0.03505398705601692,
+      "throwAimHeadingErrorDegrees": 143.63070678710938,
+      "typeAccuracy": 0.9086636900901794,
+      "units": 15109
+    },
+    "maxDelta": 0.0
+  },
+  "reproductionGate": {
+    "matchedWorlds": 100,
+    "mismatchedSeeds": [],
+    "missingFromArchive": [],
+    "passed": true,
+    "testedWorlds": 100
+  },
+  "seed": 97103
+}

@@ -19,6 +19,43 @@ configuration on 2026-09-01.
 
 ## Milestones
 
+### R1n-i — frozen-checkpoint failure diagnosis: contact vs. finishing, deployed actions, no training (complete 2026-09-20)
+
+**Results** (`training/reviews/m7b_r1n_i_results.md`; archive
+`runs/m7b_engage_r1n_i_v0`; 65,378 of 200,000 decisions; manifest
+verified): reads R1n-h's own 6 frozen `eval-normal` checkpoints one level
+deeper than `label_error` can — the model's own executed actions and
+ground-truth (enemy-position-relative) geometry, not teacher-conditioned
+opportunities.
+
+- **Condition C's total floor is confirmed as a deployed aim/decision
+  failure**, not an artifact of `label_error`'s teacher-conditioning: all
+  three C seeds reach range every episode but rarely select a close-range
+  throw (rate ~0.01, roughly an order of magnitude below M's ~0.16), and
+  aim worse than random (120–146°) on the throws they do select.
+- **97103's finishing failure has a clean, large, directly-predicted
+  cause:** restricted to the post-first-hit window, it keeps moving under
+  a nearby red projectile only 37.2% of the time versus 97102's 90.9% —
+  R1n-e's own survival mechanism, confirmed here rather than assumed.
+- **97101's contact failure remains unexplained — a real negative
+  result.** It reaches range, throws close-range, and aims well (11.8°)
+  in every episode, indistinguishable from its two working siblings on
+  the three mechanisms this diagnostic tested. Its higher, more variable
+  in-range decision count is the one measurable difference, but reads as
+  a likely consequence of not landing hits (a lingering, unresolved
+  engagement) rather than an independent cause.
+- **Pipeline validated at full production scale:** all 6 reproduction
+  gates passed exactly (100/100 worlds each); all 6 `label_error`
+  rechecks matched the archive with `maxDelta = 0.0`.
+- **Next:** what does explain 97101 is still open — would need
+  per-decision projectile trajectory/impact data this run doesn't have,
+  not just presence. Otherwise unblocks a checkpoint-selection
+  declaration (not yet written) or moving to M8.
+
+Follow `training/reviews/m7b_r1n_i_declaration.md` (amendments A1–A4).
+`autonomousQualificationEligible` stayed false throughout; no checkpoint
+is selected or promoted by this run.
+
 ### R1n-h — mixture-imitation curriculum, with a single-opponent control, testing transfer to a held-out opponent (complete 2026-09-15; transfers, +38 points)
 
 **Results** (`training/reviews/m7b_r1n_h_results.md`; archive

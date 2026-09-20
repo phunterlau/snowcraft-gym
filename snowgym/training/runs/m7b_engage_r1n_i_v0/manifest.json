@@ -1,0 +1,26 @@
+{
+  "artifacts": {
+    "condition-C-seed-97101/checkpoint-report.json": "sha256:a6af06fb513746a4fbe52177a7450e42da2ce8c156485a21fee1bafd57cdfb39",
+    "condition-C-seed-97101/eval-normal-deterministic/episodes.jsonl": "sha256:c9c4cb074fcd5f505a56cb3735b918f206aa380eae90ed33697b6ced47bdf965",
+    "condition-C-seed-97101/eval-normal-deterministic/trajectory-distances.npz": "sha256:552c0be70956204518267be565e966ed27e027507b158dc3de858763086a6346",
+    "condition-C-seed-97102/checkpoint-report.json": "sha256:f051d17d00477d7e3af311bed7287682a7b68d8f998cb71bf357ae4014ed637e",
+    "condition-C-seed-97102/eval-normal-deterministic/episodes.jsonl": "sha256:80efbdfda8854da4197e22501a9e4941b680cadf30f5e3cabc7ffcf6532f0e79",
+    "condition-C-seed-97102/eval-normal-deterministic/trajectory-distances.npz": "sha256:0789326f85cf1fd10ddec8217bd6469e691abff3055485be028b8cf5e55ccaa4",
+    "condition-C-seed-97103/checkpoint-report.json": "sha256:3e789f95fb6900a1bf4bd7a5fdc81c73777e8e55ea5518f9fe86a5e1c1a923ba",
+    "condition-C-seed-97103/eval-normal-deterministic/episodes.jsonl": "sha256:2465dc2c0ee63270838dfad90ec663f40f77e4381288339da00b4d3293af3304",
+    "condition-C-seed-97103/eval-normal-deterministic/trajectory-distances.npz": "sha256:883939d395addf89da6a315b858bad7f4853f593baa03b61f539a186e9b9fd4f",
+    "condition-M-seed-97101/checkpoint-report.json": "sha256:5b503ffbaaf143aa0b7490733e6ca62558300b8eee7734f495dfd786525095bf",
+    "condition-M-seed-97101/eval-normal-deterministic/episodes.jsonl": "sha256:7e3897ed640976e350441767c56d3a9f91e29ebf20ecf2a3b53e8c7371db8ead",
+    "condition-M-seed-97101/eval-normal-deterministic/trajectory-distances.npz": "sha256:6d7f2af30c297f7cc35b0d6e6c49c59cd9db92b961e6b7d42817b384b8708b35",
+    "condition-M-seed-97102/checkpoint-report.json": "sha256:7adb07cac81493d9ef7e05e85081a1e4ab35bdc69b118ba974012a348a1e00eb",
+    "condition-M-seed-97102/eval-normal-deterministic/episodes.jsonl": "sha256:40a180d0b84c5a81dd014bddb5b7f15fd7f1c76899cdecd1a5828ee926798f59",
+    "condition-M-seed-97102/eval-normal-deterministic/trajectory-distances.npz": "sha256:18dbe7428ed4eb020002cb7e370ac049256c85e92fb5940a5ce25274f773ead6",
+    "condition-M-seed-97103/checkpoint-report.json": "sha256:abcf0837d62e9d86cb1e0789c2036c6b7f7d3ee92b9e2374a0c5eb54c8b524f0",
+    "condition-M-seed-97103/eval-normal-deterministic/episodes.jsonl": "sha256:18bb064abda34521b4136da9202ae0ca22b792be1588ad425f84776843d816f0",
+    "condition-M-seed-97103/eval-normal-deterministic/trajectory-distances.npz": "sha256:a6a74568af99d8b4db3eda598dc10f0fab6bedf0eb2090f6a04c7669037deb4c",
+    "declaration.json": "sha256:8915ceb18005d4b09a4649764a7c010ddabb31800757e8859ee7eb2d716db279",
+    "report.json": "sha256:55c5a671494564f7c33db466396c5281a79d6a456e054090a89647bd911ccad1"
+  },
+  "format": "snowgym.r1n-i-manifest.v0",
+  "manifestDigest": "sha256:7fbde0870ae8b8219b575556a67f2f9ec8f4d21f017e2e0c3bb1c461135eb870"
+}

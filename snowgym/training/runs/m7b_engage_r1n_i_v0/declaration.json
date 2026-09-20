@@ -1,0 +1,165 @@
+{
+  "assistType": "diagnostic read of frozen checkpoints; none at runtime",
+  "autonomousQualificationEligible": false,
+  "budgetBound": {
+    "checkpoints": 6,
+    "perCheckpoint": 20000,
+    "total": 120000
+  },
+  "config": {
+    "actorGradClip": 0.5,
+    "arms": [
+      "local",
+      "global"
+    ],
+    "assistType": "diagnostic read of frozen checkpoints; none at runtime",
+    "assistVersion": "snowgym.checkpoint-failure-diagnostic.v0",
+    "autonomousQualificationEligible": false,
+    "blockWorlds": 64,
+    "bootstrapSamples": 10000,
+    "bootstrapSeed": 973001,
+    "budgetCap": 200000,
+    "calibrationDraws": 64,
+    "calibrationRows": 1024,
+    "calibrationSeed": 982001,
+    "checkpoints": [
+      [
+        "M",
+        97101
+      ],
+      [
+        "M",
+        97102
+      ],
+      [
+        "M",
+        97103
+      ],
+      [
+        "C",
+        97101
+      ],
+      [
+        "C",
+        97102
+      ],
+      [
+        "C",
+        97103
+      ]
+    ],
+    "clipRatio": 0.2,
+    "collectionBlockWorlds": 50,
+    "contactMinFraction": 0.25,
+    "criticEpochs": 4,
+    "criticGradClip": 0.5,
+    "criticHeldSeedBaseByCondition": {
+      "C": 445000,
+      "M": 435000
+    },
+    "criticSeedBandStride": 1000,
+    "criticTrainSeedBaseByCondition": {
+      "C": 440000,
+      "M": 430000
+    },
+    "destination": "global",
+    "developmentSplits": {
+      "A": [
+        600000,
+        600099
+      ],
+      "B": [
+        601000,
+        601099
+      ]
+    },
+    "endpointClip": 3.0,
+    "engageRange": 9.0,
+    "entropyWeight": 0.01,
+    "epochs": 4,
+    "evalSeedBase": {
+      "easy": 421000,
+      "normal": 422000,
+      "random": 420000
+    },
+    "evaluationBlockWorlds": 50,
+    "evaluationEpisodes": 100,
+    "executionGapFlag": 0.2,
+    "failThreshold": -0.5,
+    "fits": 5,
+    "floorRng": 981003,
+    "floorSeedBase": 424000,
+    "format": "snowgym.r1n-i-checkpoint-failure-config.v0",
+    "gaeLambda": 0.9885140204,
+    "gamma": 0.9976921765,
+    "gateMinPredictiveR2": 0.25,
+    "gateTimeOnlyMargin": 0.05,
+    "heldOutSeedBase": 670000,
+    "historyEvery": 25,
+    "imitationGradClip": 0.5,
+    "imitationLearningRate": 0.0003,
+    "imitationMinibatch": 256,
+    "initialPowerLogStd": -1.0,
+    "labelErrorSplit": "B",
+    "learningRate": 0.0003,
+    "localRadius": 8.0,
+    "minibatchSize": 512,
+    "movementKlStop": 0.01,
+    "nearCeilingMargin": 0.2,
+    "optimizerSeeds": [
+      97101,
+      97102,
+      97103
+    ],
+    "optionHorizon": 200,
+    "roster": 1,
+    "roundBlockWorlds": 64,
+    "roundEpisodes": 128,
+    "roundSeedBase": 650000,
+    "roundSeedBaseByCondition": {
+      "C": 410000,
+      "M": 400000
+    },
+    "roundSeedStride": 1000,
+    "seedBandStride": 1000,
+    "seedSpreadFlag": 0.3,
+    "simulatorBudget": 900000,
+    "slowRadius": 2.1,
+    "sourceRun": "m7b_engage_r1n_h_v0",
+    "stepsPerFit": 3000,
+    "stochasticEvalSeedBase": 423000,
+    "stochasticSplit": "A",
+    "successMinFraction": 0.25,
+    "targetWorldSigma": 2.0,
+    "throwRecallFlag": 0.5,
+    "timeBins": 20,
+    "trainSeedBase": 660000,
+    "trainingRngs": [
+      97101,
+      97102,
+      97103
+    ],
+    "warmStartEpochs": 10,
+    "warmStartHeldOutEpisodes": 128,
+    "warmStartTrainEpisodes": 256
+  },
+  "declarationDigest": "sha256:4f32f97d0a32d1a60691c055df52dca6367266ed3d8670c56b01aefd3ad1d596",
+  "gitCommit": "fbc1b3e64dfc2e41391ecee48ca05f66892dd475",
+  "imitationImplementationDigest": "sha256:53d883afc826efcdfadf66854a655ad3c5472d8e98fae56869978c14fecc78ba",
+  "implementationDigest": "sha256:f361babc6bf2783ec1cb3048e8516b2c3879c2bd246a129db9685444678a6c66",
+  "mixtureImplementationDigest": "sha256:94c508a9298058f80da60de3b06279bdef57eb456866fe504c9cc5a9a5975aca",
+  "pinnedE3Digests": {
+    "implementationDigest": {
+      "archived": "sha256:f1b06b98ecd8bfb9565ef6ee7dc7e2080d0284fb202b3abf81b9cc5a739dff1a",
+      "current": "sha256:f1b06b98ecd8bfb9565ef6ee7dc7e2080d0284fb202b3abf81b9cc5a739dff1a",
+      "match": true
+    },
+    "policyImplementationDigest": {
+      "archived": "sha256:90204be55b8ad93b31b481bed387266c6e0c48c410dd458279f8c19b0c4a028f",
+      "current": "sha256:90204be55b8ad93b31b481bed387266c6e0c48c410dd458279f8c19b0c4a028f",
+      "match": true
+    }
+  },
+  "sourceRunManifest": "sha256:6ab9fde9a2f20a601b8988c5273630a0ab73e77f6e1aefcc2eabc1104d7a27a7",
+  "trainImplementationDigest": "sha256:e6ac48c30aac8c6eb119e196ccc2a415f81ae731adbdb36b69f7fa69e8f7d7c4"
+}

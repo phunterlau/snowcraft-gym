@@ -1,0 +1,73 @@
+{
+  "condition": "M",
+  "contactFailure": {
+    "closeRangeThrowRate": 0.15346103613408793,
+    "decisionsInRange": 4594,
+    "deployedAimErrorDegrees": 10.345441818237305,
+    "deployedThrowCount": 705,
+    "episodes": 100,
+    "episodesEverInRange": 100,
+    "episodesWithCloseRangeThrow": 100,
+    "perEpisodeInRangeDecisionCounts": {
+      "max": 64,
+      "median": 47,
+      "min": 23
+    }
+  },
+  "finishingFailure": {
+    "episodesWithContact": 100,
+    "keepsMovingUnderThreatAnywhereRate": 0.3723150357995227,
+    "keepsMovingUnderThreatNearbyRate": 0.3723150357995227,
+    "postContactDecisions": 4294,
+    "underThreatAnywhereDecisions": 1257,
+    "underThreatNearbyDecisions": 1257
+  },
+  "labelErrorRecheck": {
+    "deltas": {
+      "moveEndpointErrorWorld": 0.0,
+      "moveHeadingErrorDegrees": 0.0,
+      "powerMeanAbsoluteError": 0.0,
+      "throwAimHeadingErrorDegrees": 0.0,
+      "typeAccuracy": 0.0
+    },
+    "fresh": {
+      "moveEndpointErrorWorld": 0.5438042283058167,
+      "moveHeadingErrorDegrees": 6.643776893615723,
+      "perType": {
+        "hold": {
+          "precision": 0.9938195302843016,
+          "recall": 0.6463022508038585,
+          "support": 1244
+        },
+        "move": {
+          "precision": 0.9071233810497614,
+          "recall": 0.9934677118327734,
+          "support": 5358
+        },
+        "noop": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "support": 2012
+        },
+        "throw": {
+          "precision": 0.9574468085106383,
+          "recall": 0.8653846153846154,
+          "support": 780
+        }
+      },
+      "powerMeanAbsoluteError": 0.013943116180598736,
+      "throwAimHeadingErrorDegrees": 12.530704498291016,
+      "typeAccuracy": 0.9382584691047668,
+      "units": 9394
+    },
+    "maxDelta": 0.0
+  },
+  "reproductionGate": {
+    "matchedWorlds": 100,
+    "mismatchedSeeds": [],
+    "missingFromArchive": [],
+    "passed": true,
+    "testedWorlds": 100
+  },
+  "seed": 97103
+}
