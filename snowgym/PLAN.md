@@ -2859,6 +2859,19 @@ initializer works. Archive `runs/m8_s4_roster_baseline_v0/` sealed and verified.
 `training/reviews/m8_s4_results.md`. Next: S5, teacher imitation as the 3v3 initializer
 (R1n recipe), after re-checking the critic warm-start gate at roster 3.
 
+**M8-S5 — 3v3 teacher-imitation initializers (complete 2026-09-20; collected and
+archived, imitation only, no PPO):** R1n-h's mixture recipe (condition M) ran unchanged
+at roster 3 for three optimizer seeds and each final policy was evaluated on S4's 400
+paired worlds against the archived teacher. **Pre-declared reading: not viable**
+(seed-mean success against scripted-normal 0.0017 vs the declared 0.25). Per seed: easy
+73/89/91%, normal 0.5/0/0% (blue wiped in 99-100% of episodes), random 6.5/7.7/19% (33-77%
+wipes). Uniform failure across seeds, corroborated by the pipeline's own development
+evaluations. The 3v3 critic warm-start gate passes (R2 0.63 vs time-only 0.29-0.31).
+Not established: why it fails, that 1v1 differs, or anything about PPO. 1,124,388
+decisions, archive `runs/m8_s5_roster_imitation_v0/` sealed and verified. See
+`training/reviews/m8_s5_results.md`. Next: an R1n-i-style diagnosis of the frozen S5
+checkpoints, declared before any PPO.
+
 ### M9 — slow commander over a learned team
 
 Side experiment authorized 2026-09-05: add OpenAI GPT-6 Astra as a secondary

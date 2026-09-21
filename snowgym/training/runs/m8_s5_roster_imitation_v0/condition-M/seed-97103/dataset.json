@@ -1,0 +1,90 @@
+{
+  "aggregateRows": 100893,
+  "rounds": [
+    {
+      "illegalLabels": 0,
+      "labelCounts": {
+        "hold": 1725,
+        "move": 33064,
+        "noop": 3117,
+        "throw": 1892
+      },
+      "labelDigest": "sha256:6dea5969246896b7c3d289aaa6f673d5fb6d78769e40a56b47926afe27db45a3",
+      "observationDigest": "sha256:59589cf21ac75da0e34f83571ee7788cec620622591088c3a653be6c3eccf654",
+      "round": 0,
+      "rows": 39798,
+      "seeds": [
+        3300000,
+        3300127
+      ]
+    },
+    {
+      "illegalLabels": 0,
+      "labelCounts": {
+        "hold": 0,
+        "move": 63339,
+        "noop": 2373,
+        "throw": 4903
+      },
+      "labelDigest": "sha256:13a410d487e3f45973603ac8cbfd0815f2f50a5ec5c5770a36181ef399742b4a",
+      "observationDigest": "sha256:5e9285d3fd41c9063c52ac456df476157b3385badebe338d71fc0e941a057026",
+      "round": 1,
+      "rows": 70615,
+      "seeds": [
+        3301000,
+        3301127
+      ]
+    },
+    {
+      "illegalLabels": 0,
+      "labelCounts": {
+        "hold": 1288,
+        "move": 48827,
+        "noop": 6410,
+        "throw": 5783
+      },
+      "labelDigest": "sha256:811eea01455a5e50e7cc36eec5fffbaa9a24fbc756f1bf0860578617463edb80",
+      "observationDigest": "sha256:aa5b7f5a0e370463c596c843bd9228921bc42a8e96d2c74b2cebe9c2cfdb6ef7",
+      "round": 2,
+      "rows": 62308,
+      "seeds": [
+        3302000,
+        3302127
+      ]
+    },
+    {
+      "illegalLabels": 0,
+      "labelCounts": {
+        "hold": 1311,
+        "move": 38492,
+        "noop": 5964,
+        "throw": 9339
+      },
+      "labelDigest": "sha256:08ca30d10ad4f0fcf33817b40bae6934b186f48cacceab4d4171ba7e7f254599",
+      "observationDigest": "sha256:86df78fe5b8884cf02ebf1394d98354ca3e5280a82b5665085f1774278e6fc5d",
+      "round": 3,
+      "rows": 55106,
+      "seeds": [
+        3303000,
+        3303127
+      ]
+    },
+    {
+      "illegalLabels": 0,
+      "labelCounts": {
+        "hold": 1276,
+        "move": 36935,
+        "noop": 5672,
+        "throw": 6305
+      },
+      "labelDigest": "sha256:459757838da34b173fb6167e5dcec9b84630eec863dce545f8a3047bbe0870a7",
+      "observationDigest": "sha256:65e0ad378f26090434d5bce11ccd0dc3971b4382e7d25546cc0b91f54c979e7d",
+      "round": 4,
+      "rows": 50188,
+      "seeds": [
+        3304000,
+        3304127
+      ]
+    }
+  ]
+}

@@ -1,0 +1,361 @@
+{
+  "assistType": "teacher-imitation training; none at runtime",
+  "autonomousQualificationEligible": false,
+  "criticWarmStart": {
+    "97101": {
+      "gatePassed": true,
+      "predictiveR2": 0.6278352126715687,
+      "timeOnlyR2": 0.2867513796651274,
+      "untrainedPredictiveR2": -0.21282396776151669
+    },
+    "97102": {
+      "gatePassed": true,
+      "predictiveR2": 0.6277263881457464,
+      "timeOnlyR2": 0.30941285240663585,
+      "untrainedPredictiveR2": -0.19515843986531478
+    },
+    "97103": {
+      "gatePassed": true,
+      "predictiveR2": 0.6374899504719163,
+      "timeOnlyR2": 0.31215982869635817,
+      "untrainedPredictiveR2": -0.19762885398276442
+    }
+  },
+  "format": "snowgym.m8-s5-roster-imitation-report.v0",
+  "pairedEval": {
+    "97101": {
+      "easy": {
+        "episodes": 400,
+        "meanDecisions": 150.625,
+        "meanUnitsLostFraction": 0.5191666666666667,
+        "meanUnitsLostInterval": [
+          0.48833333333333334,
+          0.5483333333333333
+        ],
+        "rejectedActionRate": 0.0,
+        "success": 0.73,
+        "successInterval": [
+          0.684457128728908,
+          0.7711672158773156
+        ],
+        "successMinusTeacher": {
+          "interval": [
+            -0.315,
+            -0.2275
+          ],
+          "mean": -0.27
+        },
+        "teamWipe": 0.195,
+        "teamWipeInterval": [
+          0.15915064134621448,
+          0.2366518581977064
+        ],
+        "timeout": 0.0775,
+        "unitsLostMinusTeacher": {
+          "interval": [
+            0.475,
+            0.5358333333333333
+          ],
+          "mean": 0.5058333333333332
+        }
+      },
+      "normal": {
+        "episodes": 400,
+        "meanDecisions": 115.2025,
+        "meanUnitsLostFraction": 0.995,
+        "meanUnitsLostInterval": [
+          0.9891666666666665,
+          0.9991666666666668
+        ],
+        "rejectedActionRate": 0.0,
+        "success": 0.005,
+        "successInterval": [
+          0.0013722529547103846,
+          0.018044918436243156
+        ],
+        "successMinusTeacher": {
+          "interval": [
+            -1.0,
+            -0.9825
+          ],
+          "mean": -0.9925
+        },
+        "teamWipe": 0.99,
+        "teamWipeInterval": [
+          0.9745734353473804,
+          0.996104516205009
+        ],
+        "timeout": 0.0075,
+        "unitsLostMinusTeacher": {
+          "interval": [
+            0.9441666666666666,
+            0.97
+          ],
+          "mean": 0.9575
+        }
+      },
+      "random": {
+        "episodes": 400,
+        "meanDecisions": 183.865,
+        "meanUnitsLostFraction": 0.7225,
+        "meanUnitsLostInterval": [
+          0.6891666666666666,
+          0.7558333333333335
+        ],
+        "rejectedActionRate": 0.0,
+        "success": 0.065,
+        "successInterval": [
+          0.04474048189620036,
+          0.09353521417463759
+        ],
+        "successMinusTeacher": {
+          "interval": [
+            -0.9575,
+            -0.91
+          ],
+          "mean": -0.935
+        },
+        "teamWipe": 0.52,
+        "teamWipeInterval": [
+          0.47108291490392346,
+          0.5685365933227047
+        ],
+        "timeout": 0.43,
+        "unitsLostMinusTeacher": {
+          "interval": [
+            0.6783333333333335,
+            0.7466666666666666
+          ],
+          "mean": 0.7125
+        }
+      }
+    },
+    "97102": {
+      "easy": {
+        "episodes": 400,
+        "meanDecisions": 107.61,
+        "meanUnitsLostFraction": 0.2358333333333333,
+        "meanUnitsLostInterval": [
+          0.20666666666666664,
+          0.2658333333333333
+        ],
+        "rejectedActionRate": 0.0,
+        "success": 0.885,
+        "successInterval": [
+          0.850008455984224,
+          0.9126670773783676
+        ],
+        "successMinusTeacher": {
+          "interval": [
+            -0.1475,
+            -0.085
+          ],
+          "mean": -0.115
+        },
+        "teamWipe": 0.0875,
+        "teamWipeInterval": [
+          0.06358691021150324,
+          0.11926073261429136
+        ],
+        "timeout": 0.03,
+        "unitsLostMinusTeacher": {
+          "interval": [
+            0.1925,
+            0.2533333333333333
+          ],
+          "mean": 0.2225
+        }
+      },
+      "normal": {
+        "episodes": 400,
+        "meanDecisions": 91.3875,
+        "meanUnitsLostFraction": 1.0,
+        "meanUnitsLostInterval": [
+          1.0,
+          1.0
+        ],
+        "rejectedActionRate": 0.0,
+        "success": 0.0,
+        "successInterval": [
+          8.673617379884035e-19,
+          0.009512294334296508
+        ],
+        "successMinusTeacher": {
+          "interval": [
+            -1.0,
+            -0.9925
+          ],
+          "mean": -0.9975
+        },
+        "teamWipe": 1.0,
+        "teamWipeInterval": [
+          0.9904877056657034,
+          0.9999999999999999
+        ],
+        "timeout": 0.0,
+        "unitsLostMinusTeacher": {
+          "interval": [
+            0.95,
+            0.9741666666666666
+          ],
+          "mean": 0.9625
+        }
+      },
+      "random": {
+        "episodes": 400,
+        "meanDecisions": 166.0475,
+        "meanUnitsLostFraction": 0.8466666666666666,
+        "meanUnitsLostInterval": [
+          0.8158124999999998,
+          0.8766666666666666
+        ],
+        "rejectedActionRate": 0.0,
+        "success": 0.0775,
+        "successInterval": [
+          0.05513293467684451,
+          0.10790495403563602
+        ],
+        "successMinusTeacher": {
+          "interval": [
+            -0.9475,
+            -0.895
+          ],
+          "mean": -0.9225
+        },
+        "teamWipe": 0.7725,
+        "teamWipeInterval": [
+          0.7289390669951599,
+          0.8108767325926485
+        ],
+        "timeout": 0.1525,
+        "unitsLostMinusTeacher": {
+          "interval": [
+            0.805,
+            0.8666666666666667
+          ],
+          "mean": 0.8366666666666667
+        }
+      }
+    },
+    "97103": {
+      "easy": {
+        "episodes": 400,
+        "meanDecisions": 118.705,
+        "meanUnitsLostFraction": 0.2825,
+        "meanUnitsLostInterval": [
+          0.25416666666666665,
+          0.31166666666666665
+        ],
+        "rejectedActionRate": 0.0,
+        "success": 0.9075,
+        "successInterval": [
+          0.8751014146161221,
+          0.9321460655014261
+        ],
+        "successMinusTeacher": {
+          "interval": [
+            -0.1225,
+            -0.065
+          ],
+          "mean": -0.0925
+        },
+        "teamWipe": 0.07,
+        "teamWipeInterval": [
+          0.04887162669974449,
+          0.09930894642775051
+        ],
+        "timeout": 0.0225,
+        "unitsLostMinusTeacher": {
+          "interval": [
+            0.24,
+            0.29833333333333334
+          ],
+          "mean": 0.26916666666666667
+        }
+      },
+      "normal": {
+        "episodes": 400,
+        "meanDecisions": 111.7725,
+        "meanUnitsLostFraction": 1.0,
+        "meanUnitsLostInterval": [
+          1.0,
+          1.0
+        ],
+        "rejectedActionRate": 0.0,
+        "success": 0.0,
+        "successInterval": [
+          8.673617379884035e-19,
+          0.009512294334296508
+        ],
+        "successMinusTeacher": {
+          "interval": [
+            -1.0,
+            -0.9925
+          ],
+          "mean": -0.9975
+        },
+        "teamWipe": 1.0,
+        "teamWipeInterval": [
+          0.9904877056657034,
+          0.9999999999999999
+        ],
+        "timeout": 0.0,
+        "unitsLostMinusTeacher": {
+          "interval": [
+            0.95,
+            0.9741666666666666
+          ],
+          "mean": 0.9625
+        }
+      },
+      "random": {
+        "episodes": 400,
+        "meanDecisions": 185.275,
+        "meanUnitsLostFraction": 0.5233333333333333,
+        "meanUnitsLostInterval": [
+          0.4841666666666667,
+          0.5624999999999999
+        ],
+        "rejectedActionRate": 0.0,
+        "success": 0.1925,
+        "successInterval": [
+          0.156861025193276,
+          0.2339890358223164
+        ],
+        "successMinusTeacher": {
+          "interval": [
+            -0.845,
+            -0.7675
+          ],
+          "mean": -0.8075
+        },
+        "teamWipe": 0.325,
+        "teamWipeInterval": [
+          0.28095326743154514,
+          0.3723760355854586
+        ],
+        "timeout": 0.485,
+        "unitsLostMinusTeacher": {
+          "interval": [
+            0.4741666666666666,
+            0.5525
+          ],
+          "mean": 0.5133333333333333
+        }
+      }
+    }
+  },
+  "readings": {
+    "normalSuccessBySeed": {
+      "97101": 0.005,
+      "97102": 0.0,
+      "97103": 0.0
+    },
+    "outcome": "not-viable",
+    "reliableAcrossSeeds": false,
+    "seedMeanNormalSuccess": 0.0016666666666666668,
+    "viable": false
+  },
+  "simulatorDecisions": 1124388,
+  "withinBudgetBound": true
+}

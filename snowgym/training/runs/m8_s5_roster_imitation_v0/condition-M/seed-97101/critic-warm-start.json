@@ -1,0 +1,40 @@
+{
+  "behaviorOutcomes": {
+    "blueDeathFraction": 0.125,
+    "completionDecisionP50": 114.0,
+    "completionDecisionP95": 179.99999999999994,
+    "contactFraction": 0.984375,
+    "episodes": 384,
+    "firstHitDecisionP50": 60.0,
+    "firstHitDecisionP95": 138.29999999999995,
+    "rejectedActionRate": 0.0,
+    "rejectedActions": 0,
+    "successFraction": 0.4609375,
+    "successes": 177,
+    "suggestedHorizon": 270,
+    "timeoutFraction": 0.4166666666666667,
+    "totalActions": 184248
+  },
+  "clockSkillScore": 0.478211696850253,
+  "explainedVariance": 0.6311040087682551,
+  "gateConditions": {
+    "absolutePassed": true,
+    "bindingThreshold": 0.25,
+    "clockRelativePassed": true
+  },
+  "gatePassed": true,
+  "heldOutEpisodes": 128,
+  "heldOutRows": 20493,
+  "heldOutTargetVariance": 0.6394127480407481,
+  "meanResidual": 0.045717719704376644,
+  "predictiveR2": 0.6278352126715687,
+  "predictiveR2Interval95": [
+    0.4887027735001615,
+    0.7543982938997142
+  ],
+  "simulatorDecisions": 61416,
+  "timeOnlyR2": 0.2867513796651274,
+  "trainEpisodes": 256,
+  "trainRows": 40923,
+  "untrainedPredictiveR2": -0.21282396776151669
+}
