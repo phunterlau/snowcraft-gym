@@ -1,0 +1,23 @@
+{
+  "artifacts": {
+    "declaration.json": "sha256:7605c524a91113522081b4e74a7cd05b242238c55524e044f4e06e4b46b8e2b4",
+    "learner-97101/aim-heading/traces.jsonl.gz": "sha256:77bc1a64fc3140e45f1db467d01a3bf8f7b7073884d696337094f685e3a57496",
+    "learner-97101/aim/traces.jsonl.gz": "sha256:360332342b060e08215f42e965858f75489501d41bbb57045069436cbf185b06",
+    "learner-97101/enemy/traces.jsonl.gz": "sha256:dd3d04f32aef28df7a359f1508aa074d2c494e42f15c5cd83a05f6fa34fc1e45",
+    "learner-97101/none/traces.jsonl.gz": "sha256:d3e35f01cf1fc82009f6ce29d69aa26e6ee8e7d566d69be9627cd50816c3b34c",
+    "learner-97101/offset/traces.jsonl.gz": "sha256:4ca68bd94d33d7bba042ee5ab361370ae63f2215fdb75cc92d1c6d925d111ca5",
+    "learner-97102/aim-heading/traces.jsonl.gz": "sha256:7e03868e20d7d2d1427524504e00c4b6555a2a2c5e97b8ce1343a42c8a9cb45f",
+    "learner-97102/aim/traces.jsonl.gz": "sha256:88acc26418b724b9458219e11423a2a41e04dcfb7e5f8d24139c3a3279c86c74",
+    "learner-97102/enemy/traces.jsonl.gz": "sha256:c52698380d4b50f2d2887fdd965970ecc81ca1b336002d88995d8f66d12b2314",
+    "learner-97102/none/traces.jsonl.gz": "sha256:c086a8b64edd1d5bf9271b6aa463500a5ad8be3bd625982be009edf4b9a9d264",
+    "learner-97102/offset/traces.jsonl.gz": "sha256:8843faf4f00e1767bbe8cba76648fcb53ee23603202cdad5bda7bee0a7ad6313",
+    "learner-97103/aim-heading/traces.jsonl.gz": "sha256:5ddb5d6f0da6a0f754bd32cf803c43fb3c21e401e9e8b72afa010ddc6e4529ef",
+    "learner-97103/aim/traces.jsonl.gz": "sha256:5ddb5d6f0da6a0f754bd32cf803c43fb3c21e401e9e8b72afa010ddc6e4529ef",
+    "learner-97103/enemy/traces.jsonl.gz": "sha256:8c123342011bc0756fe0f37e466106f367ad393e59a8465ae9d32f96658228f3",
+    "learner-97103/none/traces.jsonl.gz": "sha256:fb001abd055bdd5724850d51069b7f5cc881205f63c75adc0c39fa61f8cc749d",
+    "learner-97103/offset/traces.jsonl.gz": "sha256:4926b0c4bb77a125999ffce6fcee64658f3439383afff336899f8ee9bcd1cb62",
+    "report.json": "sha256:9c584beebc501c3338f33f47f85d90d3fbb9e59f700a51c5d30c8fe9975a8875"
+  },
+  "format": "snowgym.m8-s9-manifest.v0",
+  "manifestDigest": "sha256:b388764c0054dbab92f5411057a7792735cc93754b0080c3a51b5bd34548c701"
+}

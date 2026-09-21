@@ -2909,6 +2909,16 @@ survives. A first launch crashed on an invalid plan id (`aim+power`) and was dis
 `runs/m8_s8_channel_intervention_v0/`. See `training/reviews/m8_s8_results.md`. Next: split target choice from aim
 geometry, and an autonomous throw-target repair declared separately.
 
+**M8-S9 — throw target split: which enemy vs angular offset (complete 2026-09-21; teacher-assisted
+diagnosis, never autonomous; 154,576 decisions):** the simulator's throw uses only the heading (target distance is
+discarded), so the split is angular. Gates passed (`none` = S5; `aim` reproduces S8's archived traces episode by episode; `aim-heading`
+= `aim`). Predictions 2 of 4 held (P3 uninformative: agreement ~ chance; P1 and P2 failed). **The deficit is seed-specific:**
+97102 is a target-selection failure (teacher's enemy + own error: 0.87 success; teacher's precision on own choice: 0.06),
+97103 is an angular-precision failure (0.75 vs 0.05), and 97101 is neither alone (0.10/0.17; its throw timing alone restores 0.95
+in S8). The learners choose the teacher's enemy at about chance (27-41%) and their angular offset is 3-5x the teacher's.
+Archive `runs/m8_s9_target_split_v0/`. See `training/reviews/m8_s9_results.md`. Next: an autonomous throw-target repair on fresh
+worlds, declared separately and never mixed with assisted numbers.
+
 ### M9 — slow commander over a learned team
 
 Side experiment authorized 2026-09-05: add OpenAI GPT-6 Astra as a secondary

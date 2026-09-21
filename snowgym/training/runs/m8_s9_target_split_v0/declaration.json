@@ -1,0 +1,99 @@
+{
+  "assistType": "throw-heading substitution by chosen enemy / angular offset (diagnostic assistance, never autonomous)",
+  "autonomousQualificationEligible": false,
+  "budgetBound": {
+    "total": 300000
+  },
+  "config": {
+    "actorGradClip": 0.5,
+    "allControlSeed": 97101,
+    "arm": "normal",
+    "arms": [
+      "random",
+      "easy",
+      "normal"
+    ],
+    "assistType": "throw-heading substitution by chosen enemy / angular offset (diagnostic assistance, never autonomous)",
+    "assistVersion": "snowgym.m8-s9.v0",
+    "autonomousQualificationEligible": false,
+    "blockWorlds": 50,
+    "bootstrapSamples": 10000,
+    "bootstrapSeed": 973001,
+    "budgetCap": 420000,
+    "calibrationDraws": 64,
+    "calibrationRows": 1024,
+    "calibrationSeed": 982001,
+    "clipRatio": 0.2,
+    "criticEpochs": 4,
+    "criticGradClip": 0.5,
+    "engageRange": 9.0,
+    "entropyWeight": 0.01,
+    "epochs": 4,
+    "evaluationSeedBase": 2100000,
+    "floorSuccessCeiling": 0.1,
+    "floorWorlds": 100,
+    "format": "snowgym.m8-s9-target-split-config.v0",
+    "gaeLambda": 0.9885140204,
+    "gamma": 0.9976921765,
+    "gateMinPredictiveR2": 0.25,
+    "gateTimeOnlyMargin": 0.05,
+    "heldOutSeedBase": 640000,
+    "initSeeds": [
+      98101,
+      98102,
+      98103
+    ],
+    "initialPowerLogStd": -1.0,
+    "interventionWorlds": 100,
+    "learnerSeeds": [
+      97101,
+      97102,
+      97103
+    ],
+    "learningRate": 0.0003,
+    "localRadius": 8.0,
+    "minibatchSize": 512,
+    "modes": [
+      "deterministic",
+      "stochastic"
+    ],
+    "movementKlStop": 0.01,
+    "optionHorizon": 200,
+    "roster": 3,
+    "rules": [
+      "none",
+      "aim",
+      "aim-heading",
+      "enemy",
+      "offset"
+    ],
+    "seedBandStride": 1000,
+    "targetWorldSigma": 2.0,
+    "teacherSuccessGate": 0.9,
+    "teacherWorlds": 400,
+    "timeBins": 20,
+    "trainSeedBase": 630000,
+    "trainingRngs": [
+      98001,
+      98002,
+      98003
+    ],
+    "warmStartEpochs": 10,
+    "warmStartHeldOutEpisodes": 128,
+    "warmStartTrainEpisodes": 256
+  },
+  "declarationDigest": "sha256:43c50627cdf935db0b1fe4cea693dd5dcedff8a69d88106fc1141b994db6b010",
+  "gitCommit": "8265e9269d90b4da94993b497f6f6c571d110331",
+  "implementationDigest": "sha256:68ade7d7429b5d196687783c314eaacbbe43215282587070497ef306bb6ad251",
+  "s4Manifest": "sha256:4e548a863aa863b572515269a9ad919f2674d85c1a32e42a17d644c696f2022e",
+  "s5Manifest": "sha256:df4cfdccb8765a4cba8b46f0364c0895a45e73a6bd702027a337cda2a97a1acd",
+  "s7Manifest": "sha256:9f8b41961043888a4778af6029772e4c65aa5f99f1e53f38a21ef56ce7880bbe",
+  "s8Manifest": "sha256:33912263d71c2ace586dba58c5adb12824b2a752213b7549d238c1f797eda211",
+  "sourceDigests": {
+    "full_authority_train_v1": "sha256:e6ac48c30aac8c6eb119e196ccc2a415f81ae731adbdb36b69f7fa69e8f7d7c4",
+    "roster_baseline": "sha256:bc9547f929ff44a04cc24ae01c8e66f9493f7534e0e9d0122ecbf5ff693d88c8",
+    "roster_imitation": "sha256:1ec27ee966ec13994f11aaab0d4a91da95566038f11043e5ca1acb3c479d9c0a",
+    "roster_intervention": "sha256:ee4694d27b0f3a83793715c3c6d1a63fb50ee5bacdaca7c817265b179f7ae38c",
+    "roster_trace": "sha256:ae901bb076f7a374ad6d7ae50117d15b3cd9cbcc790ff978f3b42f3a3fadeed8"
+  }
+}
