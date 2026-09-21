@@ -1,5 +1,14 @@
 # Upstream patch ledger
 
+## `refs/snowgym_m8_s1_to_s6_progress_note_2026-09-20.md`
+
+Reason: the user asked to save a note on the M8-S1..S6 stretch and where the 3v3 track
+stands.
+
+Change: local progress note only; no source behavior, sealed evidence or thresholds changed.
+
+Upstream behavior: unchanged; documentation only.
+
 ## `refs/snowgym_m8_s6_dev_notes.md`
 
 Reason: the user asked for a note on every development step. Local log for M8-S6,
