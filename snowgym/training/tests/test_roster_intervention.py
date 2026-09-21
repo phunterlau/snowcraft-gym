@@ -169,3 +169,12 @@ def test_tiny_end_to_end_run_has_the_controls_reference_and_seals(tmp_path):
     assert set(report["learners"]["97101"]) == {"none", "aim"} and "P1" in report["predictions"]
     assert report["learners"]["97101"]["none"]["coverage"]["changed"] == 0
     assert dr.verify_sealed(tmp_path / "run")
+
+
+def test_every_rule_can_be_collected_including_names_that_are_not_valid_plan_ids(client):
+    """The first real run crashed at `aim+power`: the rule name became part of the plan id, and '+' is invalid there."""
+    cfg = {**rv.configuration(), "interventionWorlds": 2, "blockWorlds": 2, "bootstrapSamples": 50}
+    model = ri.load_final(ri.configuration(), TRAINING / "runs" / rv.S5_RUN, 97101)
+    for rule in (*rv.RULES, rv.ALL_ARM):
+        rows, traces, totals = rv.collect_cell(client, cfg, model, rule, account=lambda n: None)
+        assert len(rows) == 2 and len(traces) == 2, rule

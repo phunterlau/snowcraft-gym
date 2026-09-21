@@ -138,7 +138,7 @@ def collect_cell(client, cfg, model, rule, *, account, arm=None):
         wrapper = v1.make_wrapper(client, len(block), cfg["gamma"])
         with scenario_override(rb.arm_scenario(arm)):
             found, found_traces, used = rt.collect_traced(wrapper, block, cfg, choose=substituter,
-                                                          source=f"s8-{rule}")
+                                                          source=f"s8-{rule.replace('+', '-and-')}")
         account(used)
         rows.extend(found)
         traces.extend(found_traces)
