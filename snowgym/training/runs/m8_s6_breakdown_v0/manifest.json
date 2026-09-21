@@ -1,0 +1,8 @@
+{
+  "artifacts": {
+    "declaration.json": "sha256:24f19ba5f8e6e6e26dcb333904f98236314a5a91bc47075de3ca9a3fa00c26f3",
+    "report.json": "sha256:ed87e98635bf23824e3e466c3347b8faffc7fcbca4cb5016220849c6da841556"
+  },
+  "format": "snowgym.m8-s6-manifest.v0",
+  "manifestDigest": "sha256:0cca587d30c035a4280f6b5c38febce137eb6096a0bba60b1ad808667ebdf0a4"
+}

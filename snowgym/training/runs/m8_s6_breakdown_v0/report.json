@@ -1,0 +1,375 @@
+{
+  "autonomousQualificationEligible": false,
+  "format": "snowgym.m8-s6-breakdown-report.v0",
+  "learners": {
+    "97101": {
+      "easy": {
+        "contact": 1.0,
+        "damagePerUnitLost": 145.74638844301765,
+        "damageQuantiles": {
+          "25": 220.0,
+          "50": 240.0,
+          "75": 240.0
+        },
+        "episodes": 400,
+        "failureDamageBands": {
+          "100-199": 0.3611111111111111,
+          "200-239": 0.6388888888888888,
+          "ge240": 0.0,
+          "lt100": 0.0,
+          "none": 0.0
+        },
+        "failures": 108,
+        "medianDistanceAtFirstHit": 7.230337345237455,
+        "medianFinalDecision": 150.0,
+        "medianFirstHitDecision": 54.0,
+        "medianMinDistance": 4.634763524343813,
+        "outcomes": {
+          "other": 0.0,
+          "success": 0.73,
+          "timeout-ge100": 0.075,
+          "timeout-lt100": 0.0,
+          "wipe": 0.195
+        },
+        "unitsLost": 623
+      },
+      "normal": {
+        "contact": 1.0,
+        "damagePerUnitLost": 44.505862646566165,
+        "damageQuantiles": {
+          "25": 120.0,
+          "50": 140.0,
+          "75": 160.0
+        },
+        "episodes": 400,
+        "failureDamageBands": {
+          "100-199": 0.8743718592964824,
+          "200-239": 0.035175879396984924,
+          "ge240": 0.0,
+          "lt100": 0.09045226130653267,
+          "none": 0.0
+        },
+        "failures": 398,
+        "medianDistanceAtFirstHit": 7.2154992555641275,
+        "medianFinalDecision": 112.0,
+        "medianFirstHitDecision": 55.0,
+        "medianMinDistance": 6.606496199831854,
+        "outcomes": {
+          "other": 0.0,
+          "success": 0.005,
+          "timeout-ge100": 0.005,
+          "timeout-lt100": 0.0,
+          "wipe": 0.99
+        },
+        "unitsLost": 1194
+      },
+      "random": {
+        "contact": 0.9475,
+        "damagePerUnitLost": 51.418685121107266,
+        "damageQuantiles": {
+          "25": 60.0,
+          "50": 100.0,
+          "75": 160.0
+        },
+        "episodes": 400,
+        "failureDamageBands": {
+          "100-199": 0.45187165775401067,
+          "200-239": 0.0962566844919786,
+          "ge240": 0.0,
+          "lt100": 0.39572192513368987,
+          "none": 0.05614973262032086
+        },
+        "failures": 374,
+        "medianDistanceAtFirstHit": 6.211237928132011,
+        "medianFinalDecision": 192.0,
+        "medianFirstHitDecision": 100.0,
+        "medianMinDistance": 4.012073908130889,
+        "outcomes": {
+          "other": 0.0,
+          "success": 0.065,
+          "timeout-ge100": 0.2775,
+          "timeout-lt100": 0.1375,
+          "wipe": 0.52
+        },
+        "unitsLost": 867
+      }
+    },
+    "97102": {
+      "easy": {
+        "contact": 1.0,
+        "damagePerUnitLost": 331.9434628975265,
+        "damageQuantiles": {
+          "25": 240.0,
+          "50": 240.0,
+          "75": 240.0
+        },
+        "episodes": 400,
+        "failureDamageBands": {
+          "100-199": 0.4782608695652174,
+          "200-239": 0.5217391304347826,
+          "ge240": 0.0,
+          "lt100": 0.0,
+          "none": 0.0
+        },
+        "failures": 46,
+        "medianDistanceAtFirstHit": 6.397279594866401,
+        "medianFinalDecision": 97.0,
+        "medianFirstHitDecision": 54.0,
+        "medianMinDistance": 5.564196526988816,
+        "outcomes": {
+          "other": 0.0,
+          "success": 0.885,
+          "timeout-ge100": 0.03,
+          "timeout-lt100": 0.0,
+          "wipe": 0.085
+        },
+        "unitsLost": 283
+      },
+      "normal": {
+        "contact": 0.9525,
+        "damagePerUnitLost": 18.033333333333335,
+        "damageQuantiles": {
+          "25": 40.0,
+          "50": 60.0,
+          "75": 60.0
+        },
+        "episodes": 400,
+        "failureDamageBands": {
+          "100-199": 0.0425,
+          "200-239": 0.0,
+          "ge240": 0.0,
+          "lt100": 0.91,
+          "none": 0.0475
+        },
+        "failures": 400,
+        "medianDistanceAtFirstHit": 6.73660711705093,
+        "medianFinalDecision": 91.0,
+        "medianFirstHitDecision": 53.0,
+        "medianMinDistance": 6.73458172947119,
+        "outcomes": {
+          "other": 0.0,
+          "success": 0.0,
+          "timeout-ge100": 0.0,
+          "timeout-lt100": 0.0,
+          "wipe": 1.0
+        },
+        "unitsLost": 1200
+      },
+      "random": {
+        "contact": 0.825,
+        "damagePerUnitLost": 36.22047244094488,
+        "damageQuantiles": {
+          "25": 20.0,
+          "50": 80.0,
+          "75": 140.0
+        },
+        "episodes": 400,
+        "failureDamageBands": {
+          "100-199": 0.3224932249322493,
+          "200-239": 0.1002710027100271,
+          "ge240": 0.0,
+          "lt100": 0.3875338753387534,
+          "none": 0.1897018970189702
+        },
+        "failures": 369,
+        "medianDistanceAtFirstHit": 4.973019079628132,
+        "medianFinalDecision": 163.0,
+        "medianFirstHitDecision": 103.0,
+        "medianMinDistance": 2.7352376438802066,
+        "outcomes": {
+          "other": 0.0,
+          "success": 0.0775,
+          "timeout-ge100": 0.1125,
+          "timeout-lt100": 0.0375,
+          "wipe": 0.7725
+        },
+        "unitsLost": 1016
+      }
+    },
+    "97103": {
+      "easy": {
+        "contact": 1.0,
+        "damagePerUnitLost": 278.8200589970501,
+        "damageQuantiles": {
+          "25": 240.0,
+          "50": 240.0,
+          "75": 240.0
+        },
+        "episodes": 400,
+        "failureDamageBands": {
+          "100-199": 0.32432432432432434,
+          "200-239": 0.6756756756756757,
+          "ge240": 0.0,
+          "lt100": 0.0,
+          "none": 0.0
+        },
+        "failures": 37,
+        "medianDistanceAtFirstHit": 7.218815846754462,
+        "medianFinalDecision": 109.0,
+        "medianFirstHitDecision": 55.0,
+        "medianMinDistance": 6.39132896990942,
+        "outcomes": {
+          "other": 0.0,
+          "success": 0.9075,
+          "timeout-ge100": 0.0225,
+          "timeout-lt100": 0.0,
+          "wipe": 0.07
+        },
+        "unitsLost": 339
+      },
+      "normal": {
+        "contact": 1.0,
+        "damagePerUnitLost": 42.95,
+        "damageQuantiles": {
+          "25": 120.0,
+          "50": 120.0,
+          "75": 140.0
+        },
+        "episodes": 400,
+        "failureDamageBands": {
+          "100-199": 0.9775,
+          "200-239": 0.0025,
+          "ge240": 0.0,
+          "lt100": 0.02,
+          "none": 0.0
+        },
+        "failures": 400,
+        "medianDistanceAtFirstHit": 7.379286108000214,
+        "medianFinalDecision": 110.0,
+        "medianFirstHitDecision": 55.0,
+        "medianMinDistance": 7.195032881889951,
+        "outcomes": {
+          "other": 0.0,
+          "success": 0.0,
+          "timeout-ge100": 0.0,
+          "timeout-lt100": 0.0,
+          "wipe": 1.0
+        },
+        "unitsLost": 1200
+      },
+      "random": {
+        "contact": 0.97,
+        "damagePerUnitLost": 92.10191082802548,
+        "damageQuantiles": {
+          "25": 80.0,
+          "50": 140.0,
+          "75": 200.0
+        },
+        "episodes": 400,
+        "failureDamageBands": {
+          "100-199": 0.5170278637770898,
+          "200-239": 0.17027863777089783,
+          "ge240": 0.0,
+          "lt100": 0.2755417956656347,
+          "none": 0.03715170278637771
+        },
+        "failures": 323,
+        "medianDistanceAtFirstHit": 6.350077155488737,
+        "medianFinalDecision": 198.0,
+        "medianFirstHitDecision": 99.0,
+        "medianMinDistance": 4.459858038884894,
+        "outcomes": {
+          "other": 0.0,
+          "success": 0.1925,
+          "timeout-ge100": 0.3725,
+          "timeout-lt100": 0.11,
+          "wipe": 0.325
+        },
+        "unitsLost": 628
+      }
+    }
+  },
+  "simulatorDecisions": 0,
+  "teacher": {
+    "easy": {
+      "contact": 1.0,
+      "damagePerUnitLost": 6082.5,
+      "damageQuantiles": {
+        "25": 240.0,
+        "50": 240.0,
+        "75": 240.0
+      },
+      "episodes": 400,
+      "failureDamageBands": {
+        "100-199": null,
+        "200-239": null,
+        "ge240": null,
+        "lt100": null,
+        "none": null
+      },
+      "failures": 0,
+      "medianDistanceAtFirstHit": 6.624132515135805,
+      "medianFinalDecision": 76.0,
+      "medianFirstHitDecision": 51.0,
+      "medianMinDistance": 6.02637830415276,
+      "outcomes": {
+        "other": 0.0,
+        "success": 1.0,
+        "timeout-ge100": 0.0,
+        "timeout-lt100": 0.0,
+        "wipe": 0.0
+      },
+      "unitsLost": 16
+    },
+    "normal": {
+      "contact": 1.0,
+      "damagePerUnitLost": 2163.1111111111113,
+      "damageQuantiles": {
+        "25": 240.0,
+        "50": 240.0,
+        "75": 240.0
+      },
+      "episodes": 400,
+      "failureDamageBands": {
+        "100-199": 0.0,
+        "200-239": 1.0,
+        "ge240": 0.0,
+        "lt100": 0.0,
+        "none": 0.0
+      },
+      "failures": 1,
+      "medianDistanceAtFirstHit": 6.5036408515594,
+      "medianFinalDecision": 76.0,
+      "medianFirstHitDecision": 52.0,
+      "medianMinDistance": 6.451677871333826,
+      "outcomes": {
+        "other": 0.0,
+        "success": 0.9975,
+        "timeout-ge100": 0.0,
+        "timeout-lt100": 0.0,
+        "wipe": 0.0025
+      },
+      "unitsLost": 45
+    },
+    "random": {
+      "contact": 1.0,
+      "damagePerUnitLost": 8083.333333333333,
+      "damageQuantiles": {
+        "25": 240.0,
+        "50": 240.0,
+        "75": 240.0
+      },
+      "episodes": 400,
+      "failureDamageBands": {
+        "100-199": null,
+        "200-239": null,
+        "ge240": null,
+        "lt100": null,
+        "none": null
+      },
+      "failures": 0,
+      "medianDistanceAtFirstHit": 7.212563191075935,
+      "medianFinalDecision": 131.0,
+      "medianFirstHitDecision": 86.0,
+      "medianMinDistance": 6.291580681180984,
+      "outcomes": {
+        "other": 0.0,
+        "success": 1.0,
+        "timeout-ge100": 0.0,
+        "timeout-lt100": 0.0,
+        "wipe": 0.0
+      },
+      "unitsLost": 12
+    }
+  }
+}

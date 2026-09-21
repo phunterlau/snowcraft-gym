@@ -2872,6 +2872,17 @@ decisions, archive `runs/m8_s5_roster_imitation_v0/` sealed and verified. See
 `training/reviews/m8_s5_results.md`. Next: an R1n-i-style diagnosis of the frozen S5
 checkpoints, declared before any PPO.
 
+**M8-S6 — archive-only failure breakdown of the S5 initializers (complete
+2026-09-20; zero simulator decisions):** predictions fixed before computing, then scored. Against
+scripted-normal the S5 learners make contact on time (first hit at decision 53-55 vs the teacher's
+52, similar range) and then collapse: median damage 60-140 vs the teacher's 240, wiped by
+decision ~91-112, damage per unit lost 18-45 vs 2,163. Against random Red contact is late and
+wipes dominate two seeds (52%, 77%); one prediction (random-Red failures cluster at 200-239 damage)
+failed. Located after contact, not explained; no per-unit or trace data exists in the rows. Archive
+`runs/m8_s6_breakdown_v0/`. See `training/reviews/m8_s6_results.md`. Next: choose a trace-level
+diagnosis of the post-contact fight (new module, since R1n-i's deployed view is 1v1) or a more
+targeted use of the frozen checkpoints.
+
 ### M9 — slow commander over a learned team
 
 Side experiment authorized 2026-09-05: add OpenAI GPT-6 Astra as a secondary

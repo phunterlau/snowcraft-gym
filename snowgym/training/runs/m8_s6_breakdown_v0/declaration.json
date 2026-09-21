@@ -1,0 +1,10 @@
+{
+  "autonomousQualificationEligible": false,
+  "declarationDigest": "sha256:b33774f31f6078d491a66051a300a1028f433bdb9a0f7c139b6a877f260acdb4",
+  "format": "snowgym.m8-s6-breakdown-declaration.v0",
+  "gitCommit": "71c824fa330ae11a78eb00c18331527278ec0690",
+  "implementationDigest": "sha256:e19ee49c8075dfbc69a31585c4bc7fb8dce961dd3e77233337e60a46875b9fbb",
+  "s4Manifest": "sha256:4e548a863aa863b572515269a9ad919f2674d85c1a32e42a17d644c696f2022e",
+  "s5Manifest": "sha256:df4cfdccb8765a4cba8b46f0364c0895a45e73a6bd702027a337cda2a97a1acd",
+  "simulatorDecisions": 0
+}
