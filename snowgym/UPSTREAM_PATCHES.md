@@ -1,5 +1,16 @@
 # Upstream patch ledger
 
+## `refs/snowgym_m8_s9_dev_notes.md`
+
+Reason: the user asked for a note on every development step. Local log for M8-S9, the
+split of the throw target into which enemy vs angular offset.
+
+Change: dated entries covering the physics reading, the probe, the run, and scored
+predictions. The file stays local; the committed protocol is
+`snowgym/training/reviews/m8_s9_declaration.md`.
+
+Upstream behavior: unchanged; documentation only.
+
 ## `refs/snowgym_m8_s8_dev_notes.md`
 
 Reason: the user asked for a note on every development step. Local log for M8-S8, the
