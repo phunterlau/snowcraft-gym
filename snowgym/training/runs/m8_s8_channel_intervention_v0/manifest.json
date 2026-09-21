@@ -1,0 +1,31 @@
+{
+  "artifacts": {
+    "all-control/normal/traces.jsonl.gz": "sha256:360b1a0f2d5aed0735f1fbb670b9c193b27d28e773f20576cdb027c0bfb0045d",
+    "all-control/random/traces.jsonl.gz": "sha256:7ac1592e72488f7323a94be693be5ec6d247bd5fd1e342bfef1317ba0886f5d7",
+    "declaration.json": "sha256:a0b5c58685b6278b0a1f9fa23031899b534a507712eae32a97737a396d54821d",
+    "learner-97101/aim+power/traces.jsonl.gz": "sha256:af34db321239fd50f80b9bcda1f9b92bcbffdc8784b16c7ed31e087848987d73",
+    "learner-97101/aim/traces.jsonl.gz": "sha256:360332342b060e08215f42e965858f75489501d41bbb57045069436cbf185b06",
+    "learner-97101/move/traces.jsonl.gz": "sha256:450e5b22826b21e4f0761e3c7b9b0e01417a840e0cc6053ed08f2b8ec8a0b8e2",
+    "learner-97101/none/traces.jsonl.gz": "sha256:d3e35f01cf1fc82009f6ce29d69aa26e6ee8e7d566d69be9627cd50816c3b34c",
+    "learner-97101/power/traces.jsonl.gz": "sha256:78ce300f69eb921f553511ec49229cb76260083b74dc1f70cd9d7331a38783ee",
+    "learner-97101/throw-all/traces.jsonl.gz": "sha256:2517f862ec4e9c3342364506086d8e141dda141a33cbb5d6da55c7ac287f9964",
+    "learner-97101/timing/traces.jsonl.gz": "sha256:4884a6d774c6166d254885eff4990732e6b12f1474a9f887efec6f0a8e9b8694",
+    "learner-97102/aim+power/traces.jsonl.gz": "sha256:4bc190e951feb5ae4c210b4f1e1ba9b4e53322d45f8d8ffba05dd9b4a20e9a7e",
+    "learner-97102/aim/traces.jsonl.gz": "sha256:88acc26418b724b9458219e11423a2a41e04dcfb7e5f8d24139c3a3279c86c74",
+    "learner-97102/move/traces.jsonl.gz": "sha256:62e858b38be7cad7b88609d683ce037178245dfccca7e7bdab9ce8956e05177d",
+    "learner-97102/none/traces.jsonl.gz": "sha256:c086a8b64edd1d5bf9271b6aa463500a5ad8be3bd625982be009edf4b9a9d264",
+    "learner-97102/power/traces.jsonl.gz": "sha256:c0be40dd7b65bf8736a4a69c0a6d02949a0dc9c00f5bc6966739934e3d9e2246",
+    "learner-97102/throw-all/traces.jsonl.gz": "sha256:d89f786a2363e3d300f5ad6fe103e1bee39f64728387571df638d02251788e12",
+    "learner-97102/timing/traces.jsonl.gz": "sha256:04ca881c4b3e39fad4e137bab0315a122a694ef48544a1c9ca56779b77374c37",
+    "learner-97103/aim+power/traces.jsonl.gz": "sha256:46de7ee07b8175a40880d2be83e293aedeb6c2d8bb5b8561095b1693217ce950",
+    "learner-97103/aim/traces.jsonl.gz": "sha256:5ddb5d6f0da6a0f754bd32cf803c43fb3c21e401e9e8b72afa010ddc6e4529ef",
+    "learner-97103/move/traces.jsonl.gz": "sha256:3649b9da3604bbe1f0b0d013723601063160dbfd4d40a4628c6350f2f7074ec1",
+    "learner-97103/none/traces.jsonl.gz": "sha256:fb001abd055bdd5724850d51069b7f5cc881205f63c75adc0c39fa61f8cc749d",
+    "learner-97103/power/traces.jsonl.gz": "sha256:00b352b64f026a27c226dfa4ae185efbd75bae8f13c276c15af3a5262e4aa6c8",
+    "learner-97103/throw-all/traces.jsonl.gz": "sha256:e6a5297383c29cfed96623536f8927a4bf5468586d5c508372794f1a092c71d0",
+    "learner-97103/timing/traces.jsonl.gz": "sha256:a5013ead588e048547e733cefd4f63f4853b10394fe2cc4d8904b5990ef4f8d1",
+    "report.json": "sha256:0cf412dc0b6032035b85806b051c1954fb06e394c0d71b8e900623b860bb0262"
+  },
+  "format": "snowgym.m8-s8-manifest.v0",
+  "manifestDigest": "sha256:33912263d71c2ace586dba58c5adb12824b2a752213b7549d238c1f797eda211"
+}

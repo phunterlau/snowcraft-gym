@@ -2895,6 +2895,20 @@ more spread. No mechanism is shown; a defect in two undeclared action-share meas
 post hoc. Archive `runs/m8_s7_trace_diagnosis_v0/`. See `training/reviews/m8_s7_results.md`. Next: a bounded
 common-state intervention on per-shot effectiveness, declared separately.
 
+**M8-S8 — per-channel teacher substitution on the S5 learners (complete 2026-09-20; teacher-assisted
+diagnosis, never autonomous; 238,230 decisions):** replacing one channel of the learner's action with the teacher's,
+against scripted-normal on 100 worlds. The hard gate passed (a teacher-queried no-op arm reproduces S5 exactly).
+**Replacing all throw decisions (timing, aim, power) gives 100% success on all three seeds** (`L` 0.00-0.15); the
+throw target alone lifts success to 0.24/0.99/1.00, power alone does nothing, throw timing alone restores seed 97101
+(0.95) but not the others, and movement-endpoint replacement alone reaches 0.05/0.42/0.00 (a 61-70% dose, so a blunt
+test). Predictions 4 of 6 held (timing and move did not). The failure is in the throw channel, mainly where the throw
+lands; target choice vs aim geometry is not separated; `aim + power` underperforms `aim` on one seed (0.73 vs 0.99),
+unexplained. **Correction to S7:** the tensor-path teacher control differs from the native teacher (spacing 5.97 vs
+4.77, yield 13.8 vs 16.9), so S7's "learners are more spread" claim is withdrawn for normal Red; the per-shot damage lead
+survives. A first launch crashed on an invalid plan id (`aim+power`) and was discarded. Archive
+`runs/m8_s8_channel_intervention_v0/`. See `training/reviews/m8_s8_results.md`. Next: split target choice from aim
+geometry, and an autonomous throw-target repair declared separately.
+
 ### M9 — slow commander over a learned team
 
 Side experiment authorized 2026-09-05: add OpenAI GPT-6 Astra as a secondary

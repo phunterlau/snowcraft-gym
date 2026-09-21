@@ -98,3 +98,22 @@ The sharpest, most testable lead is per-shot damage. A bounded common-state inte
 replacing only the learner's throw aim, timing or power with the teacher's (diagnostic assistance, never
 counted as autonomous) restores the damage, and whether restoring mobility changes survival. That is a
 separate declaration with its own module and budget, chosen and ordered there.
+
+## Erratum (2026-09-20, after M8-S8): execution path confounded several comparisons
+
+M8-S8's `all` control ran the teacher through the same tensor pipeline as every learner action (see
+[m8_s8_results.md](m8_s8_results.md)). That tensor-path teacher differs from the native scripted teacher S7 used as its
+control: it takes about 84 decisions rather than 76, has lower damage per blue projectile (13.8 vs 16.9) and wider ally
+spacing at first hit (5.97 vs 4.77). S7 compared learners (tensor path) with the native teacher, so its non-yield
+comparisons mixed policy differences with execution-path differences. Additive only; the sealed S7 archive and the
+pre-declared native-teacher scoring are unchanged.
+
+- **Withdrawn (normal Red):** "learners are more spread than the teacher." Like-for-like spacing is 5.4–5.9 for the
+  learners vs 6.0 for the tensor-path teacher. Against random Red a smaller residual remains (learners 5.7–6.8 vs 4.4).
+- **Strengthened, not weakened:** the mobility deficit (learners 0.59–0.68 of the like-for-like displacement under
+  threat), still confounded with being stunned.
+- **Survives:** the per-shot damage gap (13.8 vs 3.8–7.3), fewer red kills, and the random-Red findings (closer range,
+  much lower displacement, more red shots per unit).
+- **Exploratory re-score** against the tensor-path teacher: P1 (wasted damage share) and P5 (red yield) hold; P2, P3,
+  P4, P6, P7, P8 do not. The pre-declared result remains 0 of 8.
+
