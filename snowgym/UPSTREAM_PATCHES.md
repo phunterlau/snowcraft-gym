@@ -1,5 +1,15 @@
 # Upstream patch ledger
 
+## `refs/snowgym_m8_s7_dev_notes.md`
+
+Reason: the user asked for a note on every development step. Local log for M8-S7, the
+trace-level diagnosis of the post-contact fight at 3v3.
+
+Change: dated entries covering the declaration, checks, the run, and scored predictions.
+The file stays local; the committed protocol is `snowgym/training/reviews/m8_s7_declaration.md`.
+
+Upstream behavior: unchanged; documentation only.
+
 ## `refs/snowgym_m8_s1_to_s6_progress_note_2026-09-20.md`
 
 Reason: the user asked to save a note on the M8-S1..S6 stretch and where the 3v3 track
