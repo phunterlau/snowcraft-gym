@@ -2883,6 +2883,18 @@ failed. Located after contact, not explained; no per-unit or trace data exists i
 diagnosis of the post-contact fight (new module, since R1n-i's deployed view is 1v1) or a more
 targeted use of the frozen checkpoints.
 
+**M8-S7 — trace-level diagnosis of the post-contact fight (complete 2026-09-20; observation only,
+105,892 decisions):** raw per-unit traces of S5's three final policies and the native teacher, normal and random
+Red, 100 paired worlds; the reproduction gate passed in all 8 cells. Eight predictions, fixed and scored
+mechanically before collection: **0 of 8 hold** (five right in direction with the margin missed; P2 and P8 wrong in
+direction: learners are more spread, not clumped, and random Red throws more per unit; P4's null failed: a
+mobility deficit exists). Main finding:
+damage per blue projectile is 2.3-4.5x lower than the teacher's (6.8/3.8/7.3 vs 16.9) while throw volume is only ~11%
+lower, red kills are ~0-0.5 vs 1.3, and blue is lost 7-21 decisions after the first hit; blue is also less mobile and
+more spread. No mechanism is shown; a defect in two undeclared action-share measures is disclosed and corrected
+post hoc. Archive `runs/m8_s7_trace_diagnosis_v0/`. See `training/reviews/m8_s7_results.md`. Next: a bounded
+common-state intervention on per-shot effectiveness, declared separately.
+
 ### M9 — slow commander over a learned team
 
 Side experiment authorized 2026-09-05: add OpenAI GPT-6 Astra as a secondary

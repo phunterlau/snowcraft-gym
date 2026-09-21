@@ -1,0 +1,16 @@
+{
+  "artifacts": {
+    "declaration.json": "sha256:ed027dcb1efee101bef64244f60a1c14692abb2e6264fcae2430f1022bb8a8e4",
+    "learner-97101/normal/traces.jsonl.gz": "sha256:d3e35f01cf1fc82009f6ce29d69aa26e6ee8e7d566d69be9627cd50816c3b34c",
+    "learner-97101/random/traces.jsonl.gz": "sha256:a2ebdce1b7f363c429aacd1c32a85bd0413a9feea3058b8ec57c1fd6a81c27f5",
+    "learner-97102/normal/traces.jsonl.gz": "sha256:c086a8b64edd1d5bf9271b6aa463500a5ad8be3bd625982be009edf4b9a9d264",
+    "learner-97102/random/traces.jsonl.gz": "sha256:5a8f596ba923181f5160a3dbf9c1061d1fe4d931a0e937280e80d7ebfcea12c8",
+    "learner-97103/normal/traces.jsonl.gz": "sha256:fb001abd055bdd5724850d51069b7f5cc881205f63c75adc0c39fa61f8cc749d",
+    "learner-97103/random/traces.jsonl.gz": "sha256:d9d2eccb7dc05219a5ae809f74c0168e8dd5af2b5d94b40eaa60ad73fb941213",
+    "report.json": "sha256:70e1220703c57517708a501e6f294c5f950f0552b20e69d7b22f15d03e883205",
+    "teacher/normal/traces.jsonl.gz": "sha256:96d6eba8e800f8b2ebe638dc43149d296d96ac569f41050eccf45fbc908cdb14",
+    "teacher/random/traces.jsonl.gz": "sha256:5408a0afc8e99dd7556be40d1acd58fefaa794ab41afb231c00565373f49eea7"
+  },
+  "format": "snowgym.m8-s7-manifest.v0",
+  "manifestDigest": "sha256:9f8b41961043888a4778af6029772e4c65aa5f99f1e53f38a21ef56ce7880bbe"
+}

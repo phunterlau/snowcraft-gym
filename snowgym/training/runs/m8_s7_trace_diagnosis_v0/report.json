@@ -1,0 +1,1175 @@
+{
+  "allReproductionGatesPassed": true,
+  "autonomousQualificationEligible": false,
+  "format": "snowgym.m8-s7-trace-diagnosis-report.v0",
+  "learners": {
+    "97101": {
+      "normal": {
+        "blueShotsPerUnitDecision": {
+          "defined": 100,
+          "interval": [
+            0.136342401147044,
+            0.14186648305369945
+          ],
+          "mean": 0.13916086994177862
+        },
+        "blueYield": {
+          "defined": 100,
+          "interval": [
+            6.501977319825045,
+            7.034015447344502
+          ],
+          "mean": 6.7693897339499465
+        },
+        "displacementNoThreat": {
+          "defined": 100,
+          "interval": [
+            0.11551263047952146,
+            0.12525745260559754
+          ],
+          "mean": 0.1201586685572909
+        },
+        "displacementUnderThreat": {
+          "defined": 100,
+          "interval": [
+            0.12176404289300248,
+            0.13054545339101972
+          ],
+          "mean": 0.12606457697456894
+        },
+        "episodes": 100,
+        "firstDeathAfterHit": {
+          "defined": 100,
+          "interval": [
+            19.6,
+            22.6
+          ],
+          "mean": 21.04
+        },
+        "firstHitDecision": {
+          "defined": 100,
+          "interval": [
+            55.0,
+            55.0
+          ],
+          "mean": 55.0
+        },
+        "incapacitatedShare": {
+          "defined": 100,
+          "interval": [
+            0.4790670027631892,
+            0.4976428497419799
+          ],
+          "mean": 0.48845607152918463
+        },
+        "moveActionShare": {
+          "defined": 100,
+          "interval": [
+            0.3181665807510892,
+            0.3306654204524931
+          ],
+          "mean": 0.3244030179020447
+        },
+        "nearestRedDistance": {
+          "defined": 100,
+          "interval": [
+            7.67087010198107,
+            7.796204533085472
+          ],
+          "mean": 7.728798218805383
+        },
+        "redKills": {
+          "defined": 100,
+          "interval": [
+            0.35,
+            0.58
+          ],
+          "mean": 0.46
+        },
+        "redShotsPerUnitDecision": {
+          "defined": 100,
+          "interval": [
+            0.0812721916576264,
+            0.0845818383491633
+          ],
+          "mean": 0.08293814824110309
+        },
+        "redYield": {
+          "defined": 100,
+          "interval": [
+            17.795664344685246,
+            18.26619420794634
+          ],
+          "mean": 18.0327657378741
+        },
+        "spacingAtFirstHit": {
+          "defined": 100,
+          "interval": [
+            5.9457964201354,
+            5.947630536531959
+          ],
+          "mean": 5.946726245966887
+        },
+        "throwActionShare": {
+          "defined": 100,
+          "interval": [
+            0.08805395267727557,
+            0.09322557588680476
+          ],
+          "mean": 0.09065199763826866
+        },
+        "wastedDamageShare": {
+          "defined": 100,
+          "interval": [
+            0.6441860119047619,
+            0.7815877976190476
+          ],
+          "mean": 0.7134920634920635
+        },
+        "wipeAfterHit": {
+          "defined": 99,
+          "interval": [
+            58.7979797979798,
+            64.72727272727273
+          ],
+          "mean": 61.515151515151516
+        }
+      },
+      "random": {
+        "blueShotsPerUnitDecision": {
+          "defined": 95,
+          "interval": [
+            0.110573534761547,
+            0.1234724845681572
+          ],
+          "mean": 0.11713763568468681
+        },
+        "blueYield": {
+          "defined": 100,
+          "interval": [
+            3.915075364790582,
+            4.947318248604487
+          ],
+          "mean": 4.419992711267455
+        },
+        "displacementNoThreat": {
+          "defined": 95,
+          "interval": [
+            0.13591579534555642,
+            0.15134298285016995
+          ],
+          "mean": 0.14346981118918056
+        },
+        "displacementUnderThreat": {
+          "defined": 95,
+          "interval": [
+            0.14628630058991085,
+            0.15694829694871473
+          ],
+          "mean": 0.15155661495921996
+        },
+        "episodes": 100,
+        "firstDeathAfterHit": {
+          "defined": 91,
+          "interval": [
+            33.27472527472528,
+            42.79120879120879
+          ],
+          "mean": 38.043956043956044
+        },
+        "firstHitDecision": {
+          "defined": 95,
+          "interval": [
+            100.50526315789473,
+            106.53684210526316
+          ],
+          "mean": 103.33684210526316
+        },
+        "incapacitatedShare": {
+          "defined": 95,
+          "interval": [
+            0.3451857790335574,
+            0.3750933341784869
+          ],
+          "mean": 0.36023057431558353
+        },
+        "moveActionShare": {
+          "defined": 95,
+          "interval": [
+            0.4652126928740279,
+            0.5053968910043255
+          ],
+          "mean": 0.485366990491552
+        },
+        "nearestRedDistance": {
+          "defined": 95,
+          "interval": [
+            7.113340281984939,
+            7.49615307013266
+          ],
+          "mean": 7.298403215416945
+        },
+        "redKills": {
+          "defined": 100,
+          "interval": [
+            0.42,
+            0.66
+          ],
+          "mean": 0.54
+        },
+        "redShotsPerUnitDecision": {
+          "defined": 95,
+          "interval": [
+            0.12051249649577483,
+            0.12565369474675292
+          ],
+          "mean": 0.12313013971935936
+        },
+        "redYield": {
+          "defined": 100,
+          "interval": [
+            3.8193475840161204,
+            4.067379912264631
+          ],
+          "mean": 3.9418878887293705
+        },
+        "spacingAtFirstHit": {
+          "defined": 95,
+          "interval": [
+            6.583655869243917,
+            7.131090830735389
+          ],
+          "mean": 6.842066491038056
+        },
+        "throwActionShare": {
+          "defined": 95,
+          "interval": [
+            0.08483681438945392,
+            0.09742802389285096
+          ],
+          "mean": 0.0910777539674863
+        },
+        "wastedDamageShare": {
+          "defined": 95,
+          "interval": [
+            0.5708973665223664,
+            0.7245816245158351
+          ],
+          "mean": 0.6476551226551226
+        },
+        "wipeAfterHit": {
+          "defined": 54,
+          "interval": [
+            71.27777777777777,
+            80.42592592592592
+          ],
+          "mean": 75.85185185185185
+        }
+      }
+    },
+    "97102": {
+      "normal": {
+        "blueShotsPerUnitDecision": {
+          "defined": 98,
+          "interval": [
+            0.13254785161762675,
+            0.1393941366760014
+          ],
+          "mean": 0.13635600177457777
+        },
+        "blueYield": {
+          "defined": 100,
+          "interval": [
+            3.505111565970262,
+            3.9971552586905843
+          ],
+          "mean": 3.7563383717731553
+        },
+        "displacementNoThreat": {
+          "defined": 98,
+          "interval": [
+            0.08576040657395073,
+            0.09101413397097823
+          ],
+          "mean": 0.0884378541415862
+        },
+        "displacementUnderThreat": {
+          "defined": 98,
+          "interval": [
+            0.10843442263290393,
+            0.11161407207024866
+          ],
+          "mean": 0.11003751402186558
+        },
+        "episodes": 100,
+        "firstDeathAfterHit": {
+          "defined": 98,
+          "interval": [
+            5.560969387755103,
+            8.408418367346934
+          ],
+          "mean": 6.938775510204081
+        },
+        "firstHitDecision": {
+          "defined": 98,
+          "interval": [
+            54.12244897959184,
+            56.01020408163265
+          ],
+          "mean": 55.0
+        },
+        "incapacitatedShare": {
+          "defined": 98,
+          "interval": [
+            0.5721019383826116,
+            0.5944321682928342
+          ],
+          "mean": 0.5828735971560516
+        },
+        "moveActionShare": {
+          "defined": 98,
+          "interval": [
+            0.2594929566843431,
+            0.28260109688674007
+          ],
+          "mean": 0.27137900803349063
+        },
+        "nearestRedDistance": {
+          "defined": 98,
+          "interval": [
+            7.592543809195123,
+            7.680026906894082
+          ],
+          "mean": 7.635023838264423
+        },
+        "redKills": {
+          "defined": 100,
+          "interval": [
+            0.0,
+            0.05
+          ],
+          "mean": 0.02
+        },
+        "redShotsPerUnitDecision": {
+          "defined": 98,
+          "interval": [
+            0.10658784423419933,
+            0.11008526883437131
+          ],
+          "mean": 0.10827284983831659
+        },
+        "redYield": {
+          "defined": 100,
+          "interval": [
+            19.002599651702788,
+            19.425754966460268
+          ],
+          "mean": 19.22216202270382
+        },
+        "spacingAtFirstHit": {
+          "defined": 98,
+          "interval": [
+            5.196025730431972,
+            5.824990494005357
+          ],
+          "mean": 5.493259906807916
+        },
+        "throwActionShare": {
+          "defined": 98,
+          "interval": [
+            0.0902453813674603,
+            0.09602572206189183
+          ],
+          "mean": 0.09327565008231933
+        },
+        "wastedDamageShare": {
+          "defined": 98,
+          "interval": [
+            0.9489795918367347,
+            1.0
+          ],
+          "mean": 0.9795918367346939
+        },
+        "wipeAfterHit": {
+          "defined": 98,
+          "interval": [
+            35.45918367346939,
+            37.6530612244898
+          ],
+          "mean": 36.58163265306123
+        }
+      },
+      "random": {
+        "blueShotsPerUnitDecision": {
+          "defined": 87,
+          "interval": [
+            0.10679864783878831,
+            0.12127958808407177
+          ],
+          "mean": 0.1142983735424478
+        },
+        "blueYield": {
+          "defined": 99,
+          "interval": [
+            3.944257108254758,
+            5.269486467899516
+          ],
+          "mean": 4.603995278883741
+        },
+        "displacementNoThreat": {
+          "defined": 86,
+          "interval": [
+            0.139912555703149,
+            0.15992862820689083
+          ],
+          "mean": 0.14947315870383865
+        },
+        "displacementUnderThreat": {
+          "defined": 87,
+          "interval": [
+            0.14558313887666774,
+            0.16179051255377389
+          ],
+          "mean": 0.15342685570980416
+        },
+        "episodes": 100,
+        "firstDeathAfterHit": {
+          "defined": 78,
+          "interval": [
+            15.717948717948717,
+            27.641025641025642
+          ],
+          "mean": 21.58974358974359
+        },
+        "firstHitDecision": {
+          "defined": 87,
+          "interval": [
+            103.0919540229885,
+            110.73563218390805
+          ],
+          "mean": 106.80459770114942
+        },
+        "incapacitatedShare": {
+          "defined": 87,
+          "interval": [
+            0.382464132187276,
+            0.4188491743940557
+          ],
+          "mean": 0.4014748124618428
+        },
+        "moveActionShare": {
+          "defined": 87,
+          "interval": [
+            0.420646694352854,
+            0.4783551153113737
+          ],
+          "mean": 0.4486346606936338
+        },
+        "nearestRedDistance": {
+          "defined": 87,
+          "interval": [
+            6.14912851507879,
+            6.873576413945216
+          ],
+          "mean": 6.503896299405996
+        },
+        "redKills": {
+          "defined": 100,
+          "interval": [
+            0.35,
+            0.62
+          ],
+          "mean": 0.48
+        },
+        "redShotsPerUnitDecision": {
+          "defined": 87,
+          "interval": [
+            0.11480669442436651,
+            0.12104473456338594
+          ],
+          "mean": 0.11793782777835062
+        },
+        "redYield": {
+          "defined": 100,
+          "interval": [
+            4.425238785169915,
+            4.768357614257215
+          ],
+          "mean": 4.600504170617646
+        },
+        "spacingAtFirstHit": {
+          "defined": 86,
+          "interval": [
+            5.184910131007079,
+            6.215370541224169
+          ],
+          "mean": 5.673238165205864
+        },
+        "throwActionShare": {
+          "defined": 87,
+          "interval": [
+            0.08197524237539346,
+            0.09654283746640326
+          ],
+          "mean": 0.08933831566311205
+        },
+        "wastedDamageShare": {
+          "defined": 87,
+          "interval": [
+            0.5844469427443566,
+            0.7561124380089896
+          ],
+          "mean": 0.6720198702957323
+        },
+        "wipeAfterHit": {
+          "defined": 69,
+          "interval": [
+            42.47826086956522,
+            52.11594202898551
+          ],
+          "mean": 47.30434782608695
+        }
+      }
+    },
+    "97103": {
+      "normal": {
+        "blueShotsPerUnitDecision": {
+          "defined": 100,
+          "interval": [
+            0.1346793959680984,
+            0.13843328768151958
+          ],
+          "mean": 0.13659721537491953
+        },
+        "blueYield": {
+          "defined": 100,
+          "interval": [
+            7.104403760748455,
+            7.540958213305777
+          ],
+          "mean": 7.322232190081496
+        },
+        "displacementNoThreat": {
+          "defined": 100,
+          "interval": [
+            0.11550721783133333,
+            0.12066246048993637
+          ],
+          "mean": 0.11801519441780788
+        },
+        "displacementUnderThreat": {
+          "defined": 100,
+          "interval": [
+            0.11522860122651639,
+            0.12140556715023869
+          ],
+          "mean": 0.11825008047312884
+        },
+        "episodes": 100,
+        "firstDeathAfterHit": {
+          "defined": 100,
+          "interval": [
+            13.0,
+            13.0
+          ],
+          "mean": 13.0
+        },
+        "firstHitDecision": {
+          "defined": 100,
+          "interval": [
+            55.0,
+            55.0
+          ],
+          "mean": 55.0
+        },
+        "incapacitatedShare": {
+          "defined": 100,
+          "interval": [
+            0.4803466062466104,
+            0.48821587459806864
+          ],
+          "mean": 0.48427422148254157
+        },
+        "moveActionShare": {
+          "defined": 100,
+          "interval": [
+            0.30689168991841553,
+            0.31403599525401027
+          ],
+          "mean": 0.31043435131389047
+        },
+        "nearestRedDistance": {
+          "defined": 100,
+          "interval": [
+            7.988170952568233,
+            8.033015575955721
+          ],
+          "mean": 8.011340824780463
+        },
+        "redKills": {
+          "defined": 100,
+          "interval": [
+            0.14,
+            0.3
+          ],
+          "mean": 0.22
+        },
+        "redShotsPerUnitDecision": {
+          "defined": 100,
+          "interval": [
+            0.07905395182476681,
+            0.08190765365348289
+          ],
+          "mean": 0.0804469676759216
+        },
+        "redYield": {
+          "defined": 100,
+          "interval": [
+            18.37308662280702,
+            18.856653858911987
+          ],
+          "mean": 18.618798835323602
+        },
+        "spacingAtFirstHit": {
+          "defined": 100,
+          "interval": [
+            5.377056569868354,
+            5.378539649319106
+          ],
+          "mean": 5.377804500864828
+        },
+        "throwActionShare": {
+          "defined": 100,
+          "interval": [
+            0.08275470844537003,
+            0.08487135738577647
+          ],
+          "mean": 0.08383755238782888
+        },
+        "wastedDamageShare": {
+          "defined": 100,
+          "interval": [
+            0.8003968253968254,
+            0.9059523809523808
+          ],
+          "mean": 0.8552579365079367
+        },
+        "wipeAfterHit": {
+          "defined": 100,
+          "interval": [
+            55.23,
+            58.11
+          ],
+          "mean": 56.64
+        }
+      },
+      "random": {
+        "blueShotsPerUnitDecision": {
+          "defined": 97,
+          "interval": [
+            0.11176530416607143,
+            0.12548237330909517
+          ],
+          "mean": 0.11888309473584006
+        },
+        "blueYield": {
+          "defined": 100,
+          "interval": [
+            4.737887385747895,
+            5.96379232632757
+          ],
+          "mean": 5.347599990342261
+        },
+        "displacementNoThreat": {
+          "defined": 97,
+          "interval": [
+            0.15210798728602626,
+            0.16872831429480536
+          ],
+          "mean": 0.16032606570052113
+        },
+        "displacementUnderThreat": {
+          "defined": 97,
+          "interval": [
+            0.16323129619580248,
+            0.17784732037377146
+          ],
+          "mean": 0.17041095837070205
+        },
+        "episodes": 100,
+        "firstDeathAfterHit": {
+          "defined": 71,
+          "interval": [
+            45.563380281690144,
+            56.309859154929576
+          ],
+          "mean": 50.943661971830984
+        },
+        "firstHitDecision": {
+          "defined": 97,
+          "interval": [
+            98.26804123711341,
+            102.72190721649484
+          ],
+          "mean": 100.44329896907216
+        },
+        "incapacitatedShare": {
+          "defined": 97,
+          "interval": [
+            0.32705158351937413,
+            0.359997327300342
+          ],
+          "mean": 0.3438192249670291
+        },
+        "moveActionShare": {
+          "defined": 97,
+          "interval": [
+            0.5463378753255682,
+            0.5946978240347641
+          ],
+          "mean": 0.5703515274853714
+        },
+        "nearestRedDistance": {
+          "defined": 97,
+          "interval": [
+            7.685290615452321,
+            8.167434610321743
+          ],
+          "mean": 7.924751287507595
+        },
+        "redKills": {
+          "defined": 100,
+          "interval": [
+            0.79,
+            1.09
+          ],
+          "mean": 0.94
+        },
+        "redShotsPerUnitDecision": {
+          "defined": 97,
+          "interval": [
+            0.11766349533613725,
+            0.12377312953587988
+          ],
+          "mean": 0.12084377426343898
+        },
+        "redYield": {
+          "defined": 100,
+          "interval": [
+            3.14850260519838,
+            3.5146364462664845
+          ],
+          "mean": 3.331325816956218
+        },
+        "spacingAtFirstHit": {
+          "defined": 97,
+          "interval": [
+            5.918335890125027,
+            6.753734554879645
+          ],
+          "mean": 6.303509875964869
+        },
+        "throwActionShare": {
+          "defined": 97,
+          "interval": [
+            0.09677823204991985,
+            0.11038605500064194
+          ],
+          "mean": 0.10377701076290216
+        },
+        "wastedDamageShare": {
+          "defined": 97,
+          "interval": [
+            0.3812765913925708,
+            0.5310377802323679
+          ],
+          "mean": 0.45567791315213996
+        },
+        "wipeAfterHit": {
+          "defined": 31,
+          "interval": [
+            71.83870967741936,
+            83.35483870967742
+          ],
+          "mean": 77.80645161290323
+        }
+      }
+    }
+  },
+  "predictions": {
+    "P1": {
+      "holds": false,
+      "learners": {
+        "97101": 0.7134920634920635,
+        "97102": 0.9795918367346939,
+        "97103": 0.8552579365079367
+      },
+      "teacher": 0.4618589743589744
+    },
+    "P2": {
+      "holds": false,
+      "learners": {
+        "97101": 5.946726245966887,
+        "97102": 5.493259906807916,
+        "97103": 5.377804500864828
+      },
+      "teacher": 4.7665305112162555
+    },
+    "P3": {
+      "holds": false,
+      "learners": {
+        "97101": 0.13916086994177862,
+        "97102": 0.13635600177457777,
+        "97103": 0.13659721537491953
+      },
+      "teacher": 0.15551363239936483
+    },
+    "P4": {
+      "holds": false,
+      "learners": {
+        "97101": 0.12606457697456894,
+        "97102": 0.11003751402186558,
+        "97103": 0.11825008047312884
+      },
+      "teacher": 0.1530714855514548
+    },
+    "P5": {
+      "holds": false,
+      "learners": {
+        "97101": 18.0327657378741,
+        "97102": 19.22216202270382,
+        "97103": 18.618798835323602
+      },
+      "teacher": 16.953986276881015
+    },
+    "P6": {
+      "holds": false,
+      "learners": {
+        "97101": 0.48845607152918463,
+        "97102": 0.5828735971560516,
+        "97103": 0.48427422148254157
+      },
+      "teacher": 0.4274957757135423
+    },
+    "P7": {
+      "holds": false,
+      "learners": {
+        "97101": 7.298403215416945,
+        "97102": 6.503896299405996,
+        "97103": 7.924751287507595
+      },
+      "teacher": 9.398217675410912
+    },
+    "P8": {
+      "holds": false,
+      "learners": {
+        "97101": 0.12313013971935936,
+        "97102": 0.11793782777835062,
+        "97103": 0.12084377426343898
+      },
+      "teacher": 0.09518431993418901
+    }
+  },
+  "reproduction": {
+    "97101/normal": {
+      "mismatches": [],
+      "passed": true,
+      "worlds": 100
+    },
+    "97101/random": {
+      "mismatches": [],
+      "passed": true,
+      "worlds": 100
+    },
+    "97102/normal": {
+      "mismatches": [],
+      "passed": true,
+      "worlds": 100
+    },
+    "97102/random": {
+      "mismatches": [],
+      "passed": true,
+      "worlds": 100
+    },
+    "97103/normal": {
+      "mismatches": [],
+      "passed": true,
+      "worlds": 100
+    },
+    "97103/random": {
+      "mismatches": [],
+      "passed": true,
+      "worlds": 100
+    },
+    "teacher/normal": {
+      "mismatches": [],
+      "passed": true,
+      "worlds": 100
+    },
+    "teacher/random": {
+      "mismatches": [],
+      "passed": true,
+      "worlds": 100
+    }
+  },
+  "simulatorDecisions": 105892,
+  "teacher": {
+    "normal": {
+      "blueShotsPerUnitDecision": {
+        "defined": 100,
+        "interval": [
+          0.15400062998441508,
+          0.15693662716943746
+        ],
+        "mean": 0.15551363239936483
+      },
+      "blueYield": {
+        "defined": 100,
+        "interval": [
+          16.43964830860574,
+          17.429259817324056
+        ],
+        "mean": 16.934360946930607
+      },
+      "displacementNoThreat": {
+        "defined": 100,
+        "interval": [
+          0.11944899593337265,
+          0.12949065733235948
+        ],
+        "mean": 0.12406212386689869
+      },
+      "displacementUnderThreat": {
+        "defined": 100,
+        "interval": [
+          0.14666741930319005,
+          0.15957077415665416
+        ],
+        "mean": 0.1530714855514548
+      },
+      "episodes": 100,
+      "firstDeathAfterHit": {
+        "defined": 10,
+        "interval": [
+          22.7,
+          26.3
+        ],
+        "mean": 24.4
+      },
+      "firstHitDecision": {
+        "defined": 100,
+        "interval": [
+          52.0,
+          52.0
+        ],
+        "mean": 52.0
+      },
+      "incapacitatedShare": {
+        "defined": 100,
+        "interval": [
+          0.4223544357404837,
+          0.4328765745614807
+        ],
+        "mean": 0.4274957757135423
+      },
+      "moveActionShare": {
+        "defined": 100,
+        "interval": [
+          0.5623162680661999,
+          0.5781414868643002
+        ],
+        "mean": 0.5703235528809308
+      },
+      "nearestRedDistance": {
+        "defined": 100,
+        "interval": [
+          6.966864932130683,
+          7.004913620637688
+        ],
+        "mean": 6.984585421457673
+      },
+      "redKills": {
+        "defined": 100,
+        "interval": [
+          1.22,
+          1.4
+        ],
+        "mean": 1.31
+      },
+      "redShotsPerUnitDecision": {
+        "defined": 100,
+        "interval": [
+          0.03047610577367155,
+          0.03749651033892676
+        ],
+        "mean": 0.0338634380867815
+      },
+      "redYield": {
+        "defined": 100,
+        "interval": [
+          16.35662286324786,
+          17.544260627530363
+        ],
+        "mean": 16.953986276881015
+      },
+      "spacingAtFirstHit": {
+        "defined": 100,
+        "interval": [
+          4.766474743576129,
+          4.766583656902365
+        ],
+        "mean": 4.7665305112162555
+      },
+      "throwActionShare": {
+        "defined": 100,
+        "interval": [
+          0.15400062998441508,
+          0.15693662716943746
+        ],
+        "mean": 0.15551363239936483
+      },
+      "wastedDamageShare": {
+        "defined": 100,
+        "interval": [
+          0.42403044871794865,
+          0.5003205128205128
+        ],
+        "mean": 0.4618589743589744
+      },
+      "wipeAfterHit": {
+        "defined": 0,
+        "interval": null,
+        "mean": null
+      }
+    },
+    "random": {
+      "blueShotsPerUnitDecision": {
+        "defined": 100,
+        "interval": [
+          0.10072843080953393,
+          0.10992104894483776
+        ],
+        "mean": 0.10538775279330065
+      },
+      "blueYield": {
+        "defined": 100,
+        "interval": [
+          15.198879993157856,
+          15.904550388036455
+        ],
+        "mean": 15.547928928656482
+      },
+      "displacementNoThreat": {
+        "defined": 100,
+        "interval": [
+          0.310156852005815,
+          0.34300240857471914
+        ],
+        "mean": 0.32675906785292164
+      },
+      "displacementUnderThreat": {
+        "defined": 100,
+        "interval": [
+          0.37135403963049063,
+          0.39366281260126273
+        ],
+        "mean": 0.38247416661656075
+      },
+      "episodes": 100,
+      "firstDeathAfterHit": {
+        "defined": 7,
+        "interval": [
+          32.57142857142857,
+          63.0
+        ],
+        "mean": 46.714285714285715
+      },
+      "firstHitDecision": {
+        "defined": 100,
+        "interval": [
+          86.33,
+          89.1
+        ],
+        "mean": 87.71
+      },
+      "incapacitatedShare": {
+        "defined": 100,
+        "interval": [
+          0.29386852474760733,
+          0.31918608299967216
+        ],
+        "mean": 0.3064192567725908
+      },
+      "moveActionShare": {
+        "defined": 100,
+        "interval": [
+          0.6661434511681097,
+          0.6947890910437237
+        ],
+        "mean": 0.6806432919193871
+      },
+      "nearestRedDistance": {
+        "defined": 100,
+        "interval": [
+          9.152147105079266,
+          9.65387653520208
+        ],
+        "mean": 9.398217675410912
+      },
+      "redKills": {
+        "defined": 100,
+        "interval": [
+          1.78,
+          1.92
+        ],
+        "mean": 1.85
+      },
+      "redShotsPerUnitDecision": {
+        "defined": 100,
+        "interval": [
+          0.09166146095196716,
+          0.09859414516276332
+        ],
+        "mean": 0.09518431993418901
+      },
+      "redYield": {
+        "defined": 100,
+        "interval": [
+          2.0436070607545056,
+          2.3530821139544447
+        ],
+        "mean": 2.198590797517204
+      },
+      "spacingAtFirstHit": {
+        "defined": 100,
+        "interval": [
+          2.6468439941047475,
+          3.18128668870278
+        ],
+        "mean": 2.8973056514275366
+      },
+      "throwActionShare": {
+        "defined": 100,
+        "interval": [
+          0.10072843080953393,
+          0.10992104894483776
+        ],
+        "mean": 0.10538775279330065
+      },
+      "wastedDamageShare": {
+        "defined": 100,
+        "interval": [
+          0.21089743589743595,
+          0.26794871794871794
+        ],
+        "mean": 0.23814102564102566
+      },
+      "wipeAfterHit": {
+        "defined": 0,
+        "interval": null,
+        "mean": null
+      }
+    }
+  },
+  "withinBudgetBound": true
+}
