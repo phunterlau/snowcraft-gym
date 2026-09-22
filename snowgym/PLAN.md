@@ -2946,6 +2946,19 @@ reported in S10. (Also: corrects S10's declaration, which mis-described an algeb
 second independent data draw (this track's only 3v3 result ever to clear the viability bar, now causally tied to
 the weight change) before diagnosing the easy-arm data-draw damage or tuning the weight further.
 
+**M8-S12 — throw-decoder redesign: enemy-relative heading (complete 2026-09-22; ordinary autonomous
+training, not assisted; 1,057,889 decisions):** replaced the throw target's absolute-coordinate representation with
+(which living enemy, angular offset from that enemy's bearing), matching the simulator's actual throw physics (S9);
+no loss weight tuned (retires the S10/S11 aim-weight branch per its erratum). **Result: the new decoder beats the
+paired old decoder in all 3 independent training cohorts, on both scripted-normal and scripted-easy, every 95% CI
+excluding zero** (normal success gain +0.70/+0.57/+0.14; new-decoder normal success 0.74/0.57/0.30). **Viable AND
+reliable by S5's own rule** (cohort-mean 0.537, every cohort >= 0.25) -- the first result in this whole track to
+clear the stricter "reliable" tier. Critic R2 is consistently LOWER for the better (new) policy in all 3 cohorts,
+reversing the assumption R1n-d/S5-S11 relied on (critic R2 is not an actor-quality signal in this regime). Archive
+`runs/m8_s12_enemy_relative_throw_v0/`. See `training/reviews/m8_s12_results.md`. Next: evaluate the existing
+checkpoints against random Red (cheap, no training) before extending toward 5+ cohorts or considering a bounded PPO
+continuation.
+
 ### M9 — slow commander over a learned team
 
 Side experiment authorized 2026-09-05: add OpenAI GPT-6 Astra as a secondary

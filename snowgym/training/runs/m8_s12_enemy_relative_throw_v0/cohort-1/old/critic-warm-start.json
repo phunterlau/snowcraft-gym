@@ -1,0 +1,24 @@
+{
+  "clockSkillScore": 0.5068972491496359,
+  "explainedVariance": 0.6756205332748463,
+  "gateConditions": {
+    "absolutePassed": true,
+    "bindingThreshold": 0.26165847606871945,
+    "clockRelativePassed": true
+  },
+  "gatePassed": true,
+  "heldOutEpisodes": 128,
+  "heldOutRows": 20080,
+  "heldOutTargetVariance": 0.66744234892797,
+  "meanResidual": 0.10020357900432708,
+  "predictiveR2": 0.6605769010249538,
+  "predictiveR2Interval95": [
+    0.5236526842981422,
+    0.7733590520065132
+  ],
+  "simulatorDecisions": 60824,
+  "timeOnlyR2": 0.31165847606871944,
+  "trainEpisodes": 256,
+  "trainRows": 40744,
+  "untrainedPredictiveR2": -0.24238420548684791
+}

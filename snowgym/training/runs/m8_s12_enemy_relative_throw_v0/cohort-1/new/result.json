@@ -1,0 +1,52 @@
+{
+  "critic": {
+    "gatePassed": true,
+    "predictiveR2": 0.40086418528447276,
+    "timeOnlyR2": 0.2720966237079795,
+    "untrainedPredictiveR2": -0.15708435469518878
+  },
+  "pairedEval": {
+    "easy": {
+      "episodes": 100,
+      "meanDecisions": 77.83,
+      "meanUnitsLostFraction": 0.06,
+      "meanUnitsLostInterval": [
+        0.03666666666666667,
+        0.08666666666666666
+      ],
+      "rejectedActionRate": 0.0,
+      "success": 1.0,
+      "successInterval": [
+        0.9630065017930143,
+        1.0
+      ],
+      "teamWipe": 0.0,
+      "teamWipeInterval": [
+        3.469446951953614e-18,
+        0.03699349820698568
+      ],
+      "timeout": 0.0
+    },
+    "normal": {
+      "episodes": 100,
+      "meanDecisions": 99.64,
+      "meanUnitsLostFraction": 0.47,
+      "meanUnitsLostInterval": [
+        0.40333333333333327,
+        0.5366666666666667
+      ],
+      "rejectedActionRate": 0.0,
+      "success": 0.74,
+      "successInterval": [
+        0.6462901055081282,
+        0.8159530153525186
+      ],
+      "teamWipe": 0.26,
+      "teamWipeInterval": [
+        0.18404698464748132,
+        0.3537098944918718
+      ],
+      "timeout": 0.0
+    }
+  }
+}
