@@ -1,5 +1,16 @@
 # Upstream patch ledger
 
+## `refs/snowgym_m8_s10_dev_notes.md`
+
+Reason: the user asked for a note on every development step. Local log for M8-S10, the
+first autonomous repair attempt (throw-aim loss upweighting) since S5.
+
+Change: dated entries covering the loss reading, the design, the run, and scored
+predictions. The file stays local; the committed protocol is
+`snowgym/training/reviews/m8_s10_declaration.md`.
+
+Upstream behavior: unchanged; documentation only.
+
 ## `refs/snowgym_m8_s9_dev_notes.md`
 
 Reason: the user asked for a note on every development step. Local log for M8-S9, the
