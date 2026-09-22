@@ -1,5 +1,15 @@
 # Upstream patch ledger
 
+## `refs/snowgym_m8_s11_dev_notes.md`
+
+Reason: the user asked for a note on every development step. Local log for M8-S11, the
+pre-declared S10 contingency isolating loss weight from data draw.
+
+Change: dated entries covering the design, the run, and the classification. The file stays
+local; the committed protocol is `snowgym/training/reviews/m8_s11_declaration.md`.
+
+Upstream behavior: unchanged; documentation only.
+
 ## `refs/snowgym_m8_s10_dev_notes.md`
 
 Reason: the user asked for a note on every development step. Local log for M8-S10, the

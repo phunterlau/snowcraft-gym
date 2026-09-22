@@ -95,7 +95,7 @@ def test_seed_band_is_unused_by_every_archived_declaration_and_every_other_json(
         if any(part in {".git", "node_modules", ".venv", "dist", "m8_s4_roster_baseline_v0", "m8_s5_roster_imitation_v0",
                "m8_s6_breakdown_v0", "m8_s7_trace_diagnosis_v0",
                "m8_s8_channel_intervention_v0", "m8_s9_target_split_v0",
-               "m8_s10_throw_aim_repair_v0"}
+               "m8_s10_throw_aim_repair_v0", "m8_s11_throw_aim_isolation_v0"}
                for part in path.parts) or path.stat().st_size > 5_000_000:
             continue  # S4's own archive and S5's declared reuse of these worlds are the only intended users
         try:
