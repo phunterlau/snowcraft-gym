@@ -1,5 +1,16 @@
 # Upstream patch ledger
 
+## `refs/snowgym_m8_s12_dev_notes.md` (declaration/implementation)
+
+Reason: covered above alongside the errata entry; this note documents the throw-decoder
+redesign specifically.
+
+Change: dated entries covering the architecture, verified geometry, test bugs found, and
+the advisor's pre-launch review. The file stays local; the committed protocol is
+`snowgym/training/reviews/m8_s12_declaration.md`.
+
+Upstream behavior: unchanged; documentation only.
+
 ## `refs/snowgym_m8_s12_dev_notes.md`
 
 Reason: the user asked for an advisor review of the whole M8-S1..S11 arc from a math/RL

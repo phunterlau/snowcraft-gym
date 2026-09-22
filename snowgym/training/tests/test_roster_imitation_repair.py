@@ -92,7 +92,9 @@ def test_seed_bands_are_disjoint_and_unused_elsewhere_in_the_repository_json():
 
     collisions = []
     for path in TRAINING.parents[1].rglob("*.json"):
-        if any(part in {".git", "node_modules", ".venv", "dist", "m8_s10_throw_aim_repair_v0"} for part in path.parts) \
+        # S11 deliberately reuses S10's exact bands (its declaration section 0), so it must be excluded too.
+        if any(part in {".git", "node_modules", ".venv", "dist", "m8_s10_throw_aim_repair_v0",
+                        "m8_s11_throw_aim_isolation_v0"} for part in path.parts) \
                 or path.stat().st_size > 5_000_000:
             continue
         try:
