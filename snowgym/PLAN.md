@@ -2919,6 +2919,19 @@ in S8). The learners choose the teacher's enemy at about chance (27-41%) and the
 Archive `runs/m8_s9_target_split_v0/`. See `training/reviews/m8_s9_results.md`. Next: an autonomous throw-target repair on fresh
 worlds, declared separately and never mixed with assisted numbers.
 
+**M8-S10 — autonomous repair 1: throw-aim loss upweighting (complete 2026-09-22; ordinary
+autonomous training, not assisted; 576,883 decisions):** retrained S5's three optimizer seeds (bit-identical init)
+on fresh data with the imitation loss's throw-aim coefficient raised 1 -> 5. **Result ran opposite to the
+prediction:** seed 97101 (which S8 said was NOT primarily an aim problem) gained +0.51 normal success (0.00 -> 0.51,
+clearing S5's own 0.25 viability bar on this one seed, corroborated on an independent eval band); seeds 97102/97103
+(S9's aim-related seeds) gained nothing (0.00 -> 0.00), and 97102 regressed on easy (0.87 -> 0.68). Label-error reads
+(not predicted, read post hoc) show aim error fell for every seed as intended, but move-heading error rose
+(worst: 97101 14 -> 32 degrees) and throw recall collapsed for 97103 (0.76 -> 0.46) -- aim-error improvement neither
+predicts nor explains the success outcome. Because training data is a fresh draw, **97101's gain cannot yet be
+attributed to the loss change**; the pre-declared contingency (rerun at aimWeight=1 on the same bands) was not run.
+Critic gate passes for all three. Archive `runs/m8_s10_throw_aim_repair_v0/`. See `training/reviews/m8_s10_results.md`.
+Next: run the contingency to test causality, before any further tuning.
+
 ### M9 — slow commander over a learned team
 
 Side experiment authorized 2026-09-05: add OpenAI GPT-6 Astra as a secondary
