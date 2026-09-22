@@ -100,3 +100,17 @@ for a following declaration:
 
 If a smaller `aimWeight` is tried in either, it should be evaluated on the same data draw as its comparison point,
 not confounded by yet another fresh draw.
+
+## Erratum (2026-09-22, after an external math/RL review): "loss-weight-driven" should read "consistent with a causal effect," not "confirmed"
+
+A review of the S1–S11 arc (see the parallel erratum on `m8_s10_results.md`) found this document overclaims. The
+classification rule and its result stand as computed — 0.12 for 97101 at `aimWeight = 1` on S10's exact data,
+correctly below the declared 0.20 threshold — but the surrounding prose ("the loss change is causal and necessary,"
+"confirmed causal") states more than a comparison of two single runs can support. With no independent replication of
+either condition (S10 and S11 are each one training run), the +0.39 point estimate has no variance to be judged
+against, and the same caveat applies to the easy-arm "protective effect" (±0.41/+0.47 swings on a metric that could
+itself be run-to-run noise at this sample size). **Read every causal claim in this document as "the point estimate
+is consistent with," not "confirmed."** The consequence section's own top-ranked next step — replicate before
+building further on 0.51 — was the right call for the wrong reason (generalization, not statistical validity); both
+reasons hold. This section is additive; no number in this file changes. The aim-weight branch is not extended
+further; see [M8-S12](m8_s12_declaration.md) for the representation-level repair pursued instead.

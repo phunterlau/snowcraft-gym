@@ -91,3 +91,25 @@ result, in order:
    drawing gradient away from type/move, addressed in a following declaration.
 
 Neither is authorized here.
+
+## Erratum (2026-09-22, after M8-S11 and an external review): "cannot be attributed" was already correct; the plan built on it was not
+
+A math/RL review of the S1–S11 arc (`refs/snowgym_handoff_...` local notes; not a code change) confirmed this
+document's own stated limitation — "97101's gain cannot yet be attributed to the loss change" — but went further:
+even *after* S11 decomposed the effect, the loss-weight branch itself should be retired, for two reasons neither
+document stated clearly enough:
+
+1. **A single weight-init per condition is not replication.** S10/S11's "seeds" differ only in
+   `torch.manual_seed(seed)`; S10 and S11 additionally share their entire training-data band. One sample per
+   condition cannot separate a real effect from the run-to-run variance R1n-h already documented (0/100/14% between
+   sibling seeds sharing round-zero data). S11's own "loss effect = +0.39" is a difference between two single runs,
+   not a replicated finding, and should have been reported as *consistent with* a causal loss-weight effect, not as
+   confirming one.
+2. **Raising one coefficient in an already-isolated five-term sum moves along a Pareto front; it does not add
+   information the model didn't have.** This is the correct mechanistic reading of S10's own reported side effect
+   (move-heading error roughly doubling as aim error fell) — not an unexplained anomaly, but the predicted behavior
+   of scalarization weight changes.
+
+**Consequence:** the aim-weight branch is not extended further (no smaller weight, no sweep). See
+[M8-S12](m8_s12_declaration.md) for the representation-level repair this points to instead. This section is
+additive; no number in this file changes.

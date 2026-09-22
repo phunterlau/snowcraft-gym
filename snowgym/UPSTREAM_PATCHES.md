@@ -1,5 +1,16 @@
 # Upstream patch ledger
 
+## `refs/snowgym_m8_s12_dev_notes.md`
+
+Reason: the user asked for an advisor review of the whole M8-S1..S11 arc from a math/RL
+perspective, then to proceed on its recommendation. Local log for the resulting errata and
+M8-S12 (throw-decoder redesign).
+
+Change: dated entries covering the review's findings and the redesign. The file stays
+local; the committed protocol is `snowgym/training/reviews/m8_s12_declaration.md`.
+
+Upstream behavior: unchanged; documentation only.
+
 ## `refs/snowgym_m8_s11_dev_notes.md`
 
 Reason: the user asked for a note on every development step. Local log for M8-S11, the
