@@ -2932,6 +2932,20 @@ attributed to the loss change**; the pre-declared contingency (rerun at aimWeigh
 Critic gate passes for all three. Archive `runs/m8_s10_throw_aim_repair_v0/`. See `training/reviews/m8_s10_results.md`.
 Next: run the contingency to test causality, before any further tuning.
 
+**M8-S11 — S10's contingency: isolating loss weight from data draw (complete 2026-09-22; ordinary
+autonomous training; 582,698 decisions):** reran S10 at aimWeight=1 on the SAME fresh bands. **97101's normal
+success at aimWeight=1: 0.12** (data draw alone; below S5's 0.25 viability bar), vs S10's 0.51 (data+weight) and
+S5's 0.00 (neither) -- decomposes to a +0.12 data effect and a +0.39 loss-weight effect: **classification =
+loss-weight-driven**, the change is causal and necessary, though the data draw also contributes. 97102/97103 stay
+at exactly 0.00 on normal under all three conditions (S5/S10/S11) -- a clean, consistent null. **Unplanned finding:**
+this training-data draw badly damages 97102's/97103's scripted-easy performance on its own (-0.46 to -0.60, read at
+aimWeight=1); S10's raised aim weight was PARTIALLY PROTECTIVE against this, not the cause of the easy regression
+reported in S10. (Also: corrects S10's declaration, which mis-described an algebraic identity (S10-S11)+(S11-S5)=
+(S10-S5) as an empirical sanity check -- it holds by construction, not as evidence.) Archive
+`runs/m8_s11_throw_aim_isolation_v0/`. See `training/reviews/m8_s11_results.md`. Next: replicate 97101's 0.51 on a
+second independent data draw (this track's only 3v3 result ever to clear the viability bar, now causally tied to
+the weight change) before diagnosing the easy-arm data-draw damage or tuning the weight further.
+
 ### M9 — slow commander over a learned team
 
 Side experiment authorized 2026-09-05: add OpenAI GPT-6 Astra as a secondary

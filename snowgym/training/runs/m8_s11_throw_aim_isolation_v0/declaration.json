@@ -1,0 +1,145 @@
+{
+  "assistType": "none; ordinary autonomous imitation training",
+  "autonomousQualificationEligible": false,
+  "budgetBound": {
+    "critic": 230400,
+    "development": 60000,
+    "learnerRounds": 307200,
+    "pairedEval": 120000,
+    "roundZero": 25600,
+    "total": 743200
+  },
+  "config": {
+    "actorGradClip": 0.5,
+    "aimWeight": 1.0,
+    "arms": [
+      "local",
+      "global"
+    ],
+    "assistType": "none; ordinary autonomous imitation training",
+    "assistVersion": "snowgym.m8-s10.v0",
+    "autonomousQualificationEligible": false,
+    "blockWorlds": 64,
+    "bootstrapSamples": 10000,
+    "bootstrapSeed": 973001,
+    "budgetCap": 950000,
+    "calibrationDraws": 64,
+    "calibrationRows": 1024,
+    "calibrationSeed": 982001,
+    "clipRatio": 0.2,
+    "contactMinFraction": 0.25,
+    "criticEpochs": 4,
+    "criticGradClip": 0.5,
+    "criticHeldSeedBaseByCondition": {
+      "M": 4215000
+    },
+    "criticSeedBandStride": 1000,
+    "criticTrainSeedBaseByCondition": {
+      "M": 4210000
+    },
+    "destination": "global",
+    "developmentNormalSeedBase": 4220000,
+    "developmentSplits": {
+      "A": [
+        600000,
+        600099
+      ],
+      "B": [
+        601000,
+        601099
+      ]
+    },
+    "easyRegressionMargin": 0.15,
+    "endpointClip": 3.0,
+    "entropyWeight": 0.01,
+    "epochs": 4,
+    "evalSeedBase": {
+      "easy": 421000,
+      "normal": 422000,
+      "random": 420000
+    },
+    "evaluationBlockWorlds": 50,
+    "evaluationEpisodes": 100,
+    "executionGapFlag": 0.2,
+    "failThreshold": -0.5,
+    "fits": 5,
+    "floorRng": 981003,
+    "floorSeedBase": 424000,
+    "format": "snowgym.m8-s11-throw-aim-isolation-config.v0",
+    "gaeLambda": 0.9885140204,
+    "gainThreshold": 0.1,
+    "gamma": 0.9976921765,
+    "gateMinPredictiveR2": 0.25,
+    "gateTimeOnlyMargin": 0.05,
+    "heldOutSeedBase": 670000,
+    "historyEvery": 25,
+    "imitationGradClip": 0.5,
+    "imitationLearningRate": 0.0003,
+    "imitationMinibatch": 256,
+    "initialPowerLogStd": -1.0,
+    "labelErrorSplit": "B",
+    "learningRate": 0.0003,
+    "localRadius": 8.0,
+    "minibatchSize": 512,
+    "movementKlStop": 0.01,
+    "nearCeilingMargin": 0.2,
+    "optimizerSeeds": [
+      97101,
+      97102,
+      97103
+    ],
+    "optionHorizon": 200,
+    "pairedEvalArms": [
+      "normal",
+      "easy"
+    ],
+    "pairedEvalSeedBase": 2100000,
+    "pairedEvalWorlds": 100,
+    "roster": 3,
+    "roundBlockWorlds": 64,
+    "roundEpisodes": 128,
+    "roundSeedBase": 650000,
+    "roundSeedBaseByCondition": {
+      "M": 4200000
+    },
+    "roundSeedStride": 1000,
+    "seedBandStride": 1000,
+    "seedSpreadFlag": 0.3,
+    "simulatorBudget": 900000,
+    "slowRadius": 2.1,
+    "stepsPerFit": 3000,
+    "stochasticEvalSeedBase": 423000,
+    "stochasticSplit": "A",
+    "successMinFraction": 0.25,
+    "targetWorldSigma": 2.0,
+    "throwRecallFlag": 0.5,
+    "timeBins": 20,
+    "trainSeedBase": 660000,
+    "trainingRngs": [
+      97101,
+      97102,
+      97103
+    ],
+    "warmStartEpochs": 10,
+    "warmStartHeldOutEpisodes": 128,
+    "warmStartTrainEpisodes": 256
+  },
+  "declarationDigest": "sha256:2fa41406169ab817dec684b2f95bac0a46aec2cc5055945d759a8a98aa3a5477",
+  "gitCommit": "edfdcf4b38fd28bc87b734e889cb8a4f0f39c1f8",
+  "implementationDigest": "sha256:c77b82eca107aa94b80599249e876158d0c593f188aa47c234c4a0a671cc504d",
+  "pinnedE3Digests": {
+    "implementationDigest": {
+      "archived": "sha256:f1b06b98ecd8bfb9565ef6ee7dc7e2080d0284fb202b3abf81b9cc5a739dff1a",
+      "current": "sha256:f1b06b98ecd8bfb9565ef6ee7dc7e2080d0284fb202b3abf81b9cc5a739dff1a",
+      "match": true
+    },
+    "policyImplementationDigest": {
+      "archived": "sha256:90204be55b8ad93b31b481bed387266c6e0c48c410dd458279f8c19b0c4a028f",
+      "current": "sha256:90204be55b8ad93b31b481bed387266c6e0c48c410dd458279f8c19b0c4a028f",
+      "match": true
+    }
+  },
+  "repairModuleDigest": "sha256:50c12d3e83c7242962baafd86606e4a3109f7a27bb75780c9434561f807b7dc3",
+  "s10Manifest": "sha256:a18fee16d7145550d1823b978fe48ff3650fe0e309e97472ea72d2a9ae5a7970",
+  "s5Manifest": "sha256:df4cfdccb8765a4cba8b46f0364c0895a45e73a6bd702027a337cda2a97a1acd"
+}
