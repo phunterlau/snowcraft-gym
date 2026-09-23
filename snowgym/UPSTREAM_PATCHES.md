@@ -1,5 +1,15 @@
 # Upstream patch ledger
 
+## `refs/snowgym_m8_s13_dev_notes.md`
+
+Reason: the user said "Proceed" on S12's results doc's top-ranked next step. Local log for M8-S13, evaluating
+the 3 existing S12 new/old-decoder checkpoints against random Red (no training).
+
+Change: a dated entry covering the design (predeclared, outcome-agnostic) and the implementation notes. The file
+stays local; the committed protocol is `snowgym/training/reviews/m8_s13_declaration.md`.
+
+Upstream behavior: unchanged; documentation only.
+
 ## `refs/snowgym_m8_s12_dev_notes.md` (declaration/implementation)
 
 Reason: covered above alongside the errata entry; this note documents the throw-decoder
