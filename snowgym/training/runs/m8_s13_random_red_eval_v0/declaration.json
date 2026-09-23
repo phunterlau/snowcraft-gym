@@ -1,0 +1,145 @@
+{
+  "assistType": "none; evaluation of already-trained checkpoints, no training",
+  "autonomousQualificationEligible": false,
+  "budgetBound": {
+    "perRun": 20000,
+    "total": 120000
+  },
+  "config": {
+    "actorGradClip": 0.5,
+    "arms": [
+      "local",
+      "global"
+    ],
+    "assistType": "none; evaluation of already-trained checkpoints, no training",
+    "assistVersion": "snowgym.m8-s13.v0",
+    "autonomousQualificationEligible": false,
+    "blockWorlds": 64,
+    "bootstrapSamples": 10000,
+    "bootstrapSeed": 973001,
+    "budgetCap": 200000,
+    "calibrationDraws": 64,
+    "calibrationRows": 1024,
+    "calibrationSeed": 982001,
+    "clipRatio": 0.2,
+    "cohorts": [
+      1,
+      2,
+      3
+    ],
+    "contactMinFraction": 0.25,
+    "criticEpochs": 4,
+    "criticGradClip": 0.5,
+    "criticHeldSeedBaseByCondition": {
+      "C": 445000,
+      "M": 435000
+    },
+    "criticSeedBandStride": 1000,
+    "criticTrainSeedBaseByCondition": {
+      "C": 440000,
+      "M": 430000
+    },
+    "destination": "global",
+    "developmentSplits": {
+      "A": [
+        600000,
+        600099
+      ],
+      "B": [
+        601000,
+        601099
+      ]
+    },
+    "endpointClip": 3.0,
+    "entropyWeight": 0.01,
+    "epochs": 4,
+    "evalArm": "random",
+    "evalSeedBase": {
+      "easy": 421000,
+      "normal": 422000,
+      "random": 420000
+    },
+    "evaluationBlockWorlds": 50,
+    "evaluationEpisodes": 100,
+    "executionGapFlag": 0.2,
+    "failThreshold": -0.5,
+    "fits": 5,
+    "floorRng": 981003,
+    "floorSeedBase": 424000,
+    "format": "snowgym.m8-s13-random-red-eval-config.v0",
+    "gaeLambda": 0.9885140204,
+    "gamma": 0.9976921765,
+    "gateMinPredictiveR2": 0.25,
+    "gateTimeOnlyMargin": 0.05,
+    "heldOutSeedBase": 670000,
+    "historyEvery": 25,
+    "imitationGradClip": 0.5,
+    "imitationLearningRate": 0.0003,
+    "imitationMinibatch": 256,
+    "initialOffsetLogStd": -1.0,
+    "initialPowerLogStd": -1.0,
+    "labelErrorSplit": "B",
+    "learningRate": 0.0003,
+    "localRadius": 8.0,
+    "minibatchSize": 512,
+    "movementKlStop": 0.01,
+    "nearCeilingMargin": 0.2,
+    "optimizerSeeds": [
+      98401,
+      98402,
+      98403
+    ],
+    "optionHorizon": 200,
+    "pairedEvalArms": [
+      "normal",
+      "easy"
+    ],
+    "pairedEvalWorlds": 100,
+    "roster": 3,
+    "roundBlockWorlds": 64,
+    "roundEpisodes": 128,
+    "roundSeedBase": 650000,
+    "roundSeedBaseByCondition": {
+      "C": 410000,
+      "M": 400000
+    },
+    "roundSeedStride": 1000,
+    "seedBandStride": 1000,
+    "seedSpreadFlag": 0.3,
+    "simulatorBudget": 900000,
+    "slowRadius": 2.1,
+    "sourceRun": "m8_s12_enemy_relative_throw_v0",
+    "stepsPerFit": 3000,
+    "stochasticEvalSeedBase": 423000,
+    "stochasticSplit": "A",
+    "successMinFraction": 0.25,
+    "targetWorldSigma": 2.0,
+    "throwRecallFlag": 0.5,
+    "timeBins": 20,
+    "trainSeedBase": 660000,
+    "trainingRngs": [
+      97101,
+      97102,
+      97103
+    ],
+    "warmStartEpochs": 10,
+    "warmStartHeldOutEpisodes": 128,
+    "warmStartTrainEpisodes": 256
+  },
+  "declarationDigest": "sha256:e6b5c97d32ba435c640351c7c7f66ef2e129935d2d572f8053bdce4ba782ea06",
+  "gitCommit": "291c5e72f238d0e34750e07bb54a04fbb05285d8",
+  "implementationDigest": "sha256:ab9c3f58473cf1aeca473ac33ee9da5122fdff4cf69ca5c0f9ac81551f8c5393",
+  "pinnedE3Digests": {
+    "implementationDigest": {
+      "archived": "sha256:f1b06b98ecd8bfb9565ef6ee7dc7e2080d0284fb202b3abf81b9cc5a739dff1a",
+      "current": "sha256:f1b06b98ecd8bfb9565ef6ee7dc7e2080d0284fb202b3abf81b9cc5a739dff1a",
+      "match": true
+    },
+    "policyImplementationDigest": {
+      "archived": "sha256:90204be55b8ad93b31b481bed387266c6e0c48c410dd458279f8c19b0c4a028f",
+      "current": "sha256:90204be55b8ad93b31b481bed387266c6e0c48c410dd458279f8c19b0c4a028f",
+      "match": true
+    }
+  },
+  "s12Manifest": "sha256:ec7248ff6d7cd322b03f927e4978c3c10edad9860c30fc2136fd8b8b067a434a"
+}

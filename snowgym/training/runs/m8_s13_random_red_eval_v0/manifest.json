@@ -1,0 +1,14 @@
+{
+  "artifacts": {
+    "cohort-1/new/random/episodes.jsonl": "sha256:c4f01bb2141ffbee472015f461e344069e421c3c41afa1fb41ba0f80cd0279dc",
+    "cohort-1/old/random/episodes.jsonl": "sha256:195801f91ef688d503967b1d9bacccff9e8e2638530b2eb70a7976c43b401739",
+    "cohort-2/new/random/episodes.jsonl": "sha256:e270067bf5fb62ae2afc9611cf73b6a35c86fbae730e2d9f524f3dbd79fae90d",
+    "cohort-2/old/random/episodes.jsonl": "sha256:74b46ff9efd2741c164528a6088cfa2957389195dd93d661efd0b3176a009552",
+    "cohort-3/new/random/episodes.jsonl": "sha256:c15bbf1140f89fc70d93987d2403139dc6f61ed5a0180143dd08e1819d84684b",
+    "cohort-3/old/random/episodes.jsonl": "sha256:25d282b3b5f66e8cd202b314be2ca95dd630808d63f8c04889d9b5964024fb95",
+    "declaration.json": "sha256:90cceaed66d8d7eb9027df5035a5ec011aefd4ad5cb866826023083c9df51c38",
+    "report.json": "sha256:73c14c7ce1ebc0fb3381c219a4f1f8d9e29374031d24cfbbfd332a8df2077887"
+  },
+  "format": "snowgym.m8-s13-manifest.v0",
+  "manifestDigest": "sha256:d0ec9f76e1092a170be933a5826d97def6b4e3ad05cf91c982e832db2cac1398"
+}

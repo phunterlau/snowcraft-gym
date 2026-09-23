@@ -2959,6 +2959,20 @@ reversing the assumption R1n-d/S5-S11 relied on (critic R2 is not an actor-quali
 checkpoints against random Red (cheap, no training) before extending toward 5+ cohorts or considering a bounded PPO
 continuation.
 
+**M8-S13 — in-distribution consistency check: S12 checkpoints against random Red (complete 2026-09-23;
+evaluation only, no training; 96,474 decisions):** loaded S12's 6 archived checkpoints and ran the one paired-eval
+arm S12 did not test. **Declaration correction, caught before commit:** `random` is not held-out -- S12's own
+training recipe (`mixture_imitation.MIXTURE_ARMS`) trains on a 50/50 random/easy mixture every round, so this arm
+measures in-distribution consistency, not generalization; scripted-normal remains the only arm neither decoder ever
+trained on, and S12 already reported it. **Result: the new decoder still beats the paired old decoder in all 3
+cohorts** (success gain +0.61/+0.66/+0.68, every 95% CI excluding zero), tightly clustered unlike S12's held-out
+normal-arm spread (+0.70/+0.57/+0.14) -- the order does not track between arms and the three random-arm CIs overlap
+too much to call it reversed rather than indistinguishable. Checkpoint-loading verified exact-match against 20 of
+S12's own archived seeds before trusting the new numbers. Archive `runs/m8_s13_random_red_eval_v0/`. See
+`training/reviews/m8_s13_results.md`. Next: extend toward 5+ independent cohorts to bound the held-out (normal-arm)
+effect-size range, or declare a bounded PPO continuation (critic-R2-as-quality-signal caveat from S12 still applies)
+-- neither authorized yet.
+
 ### M9 — slow commander over a learned team
 
 Side experiment authorized 2026-09-05: add OpenAI GPT-6 Astra as a secondary

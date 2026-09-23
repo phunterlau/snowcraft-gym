@@ -1,0 +1,189 @@
+{
+  "assistType": "none; evaluation of already-trained checkpoints, no training",
+  "autonomousQualificationEligible": false,
+  "cohorts": {
+    "1": {
+      "new": {
+        "episodes": 100,
+        "meanDecisions": 154.04,
+        "meanUnitsLostFraction": 0.15666666666666665,
+        "meanUnitsLostInterval": [
+          0.10333333333333332,
+          0.21666666666666665
+        ],
+        "rejectedActionRate": 0.0,
+        "success": 0.77,
+        "successInterval": [
+          0.6784561697712622,
+          0.8415673411969654
+        ],
+        "teamWipe": 0.06,
+        "teamWipeInterval": [
+          0.027786123963188192,
+          0.1247681544589592
+        ],
+        "timeout": 0.17
+      },
+      "old": {
+        "episodes": 100,
+        "meanDecisions": 172.9,
+        "meanUnitsLostFraction": 0.7633333333333334,
+        "meanUnitsLostInterval": [
+          0.69,
+          0.8333333333333333
+        ],
+        "rejectedActionRate": 0.0,
+        "success": 0.16,
+        "successInterval": [
+          0.10095288488804782,
+          0.24420269389270244
+        ],
+        "teamWipe": 0.64,
+        "teamWipeInterval": [
+          0.5423540245160874,
+          0.7272877959859567
+        ],
+        "timeout": 0.2
+      },
+      "paired": {
+        "deltaSuccess": {
+          "interval95": [
+            0.5,
+            0.72
+          ],
+          "mean": 0.61
+        },
+        "deltaUnitsLostFraction": {
+          "interval95": [
+            -0.69,
+            -0.5233333333333333
+          ],
+          "mean": -0.6066666666666667
+        }
+      }
+    },
+    "2": {
+      "new": {
+        "episodes": 100,
+        "meanDecisions": 144.8,
+        "meanUnitsLostFraction": 0.07999999999999999,
+        "meanUnitsLostInterval": [
+          0.04666666666666666,
+          0.11666666666666665
+        ],
+        "rejectedActionRate": 0.0,
+        "success": 0.87,
+        "successInterval": [
+          0.7901964855992357,
+          0.9224283257275948
+        ],
+        "teamWipe": 0.0,
+        "teamWipeInterval": [
+          3.469446951953614e-18,
+          0.03699349820698568
+        ],
+        "timeout": 0.13
+      },
+      "old": {
+        "episodes": 100,
+        "meanDecisions": 174.6,
+        "meanUnitsLostFraction": 0.64,
+        "meanUnitsLostInterval": [
+          0.5633333333333332,
+          0.7166666666666666
+        ],
+        "rejectedActionRate": 0.0,
+        "success": 0.21,
+        "successInterval": [
+          0.141656540619153,
+          0.29979968834089865
+        ],
+        "teamWipe": 0.48,
+        "teamWipeInterval": [
+          0.384645517580519,
+          0.5768342223477603
+        ],
+        "timeout": 0.31
+      },
+      "paired": {
+        "deltaSuccess": {
+          "interval95": [
+            0.56,
+            0.75
+          ],
+          "mean": 0.66
+        },
+        "deltaUnitsLostFraction": {
+          "interval95": [
+            -0.6399999999999999,
+            -0.48
+          ],
+          "mean": -0.56
+        }
+      }
+    },
+    "3": {
+      "new": {
+        "episodes": 100,
+        "meanDecisions": 149.95,
+        "meanUnitsLostFraction": 0.13999999999999999,
+        "meanUnitsLostInterval": [
+          0.08666666666666666,
+          0.2
+        ],
+        "rejectedActionRate": 0.0,
+        "success": 0.79,
+        "successInterval": [
+          0.7002003116591013,
+          0.858343459380847
+        ],
+        "teamWipe": 0.07,
+        "teamWipeInterval": [
+          0.03431926106727268,
+          0.137495147390735
+        ],
+        "timeout": 0.14
+      },
+      "old": {
+        "episodes": 100,
+        "meanDecisions": 168.45,
+        "meanUnitsLostFraction": 0.8333333333333333,
+        "meanUnitsLostInterval": [
+          0.7700000000000001,
+          0.89
+        ],
+        "rejectedActionRate": 0.0,
+        "success": 0.11,
+        "successInterval": [
+          0.06254196357064568,
+          0.18631296503080313
+        ],
+        "teamWipe": 0.73,
+        "teamWipeInterval": [
+          0.6356788323205499,
+          0.8073041585042365
+        ],
+        "timeout": 0.17
+      },
+      "paired": {
+        "deltaSuccess": {
+          "interval95": [
+            0.58,
+            0.78
+          ],
+          "mean": 0.68
+        },
+        "deltaUnitsLostFraction": {
+          "interval95": [
+            -0.7700000000000001,
+            -0.61
+          ],
+          "mean": -0.6933333333333332
+        }
+      }
+    }
+  },
+  "format": "snowgym.m8-s13-random-red-eval-report.v0",
+  "simulatorDecisions": 96474,
+  "withinBudgetBound": true
+}
