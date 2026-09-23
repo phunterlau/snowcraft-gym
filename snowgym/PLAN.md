@@ -3108,9 +3108,11 @@ cd snowgym/python && .venv/bin/python -m pytest -q
 
 Since 2026-09-13, `npm test` has one accepted known failure: the
 `SelectiveRepair.test.ts` CLI preflight test's seed collision on
-`training/runs/m7b_engage_r1n_b_v0/declaration.json`. The gate passes only if
-that is the sole failure and names only that file (see `AGENTS.md` and the
-R1n-b results erratum).
+`trainSeedBase: 630000` (R1n-b's own reserved band, inherited as an unused
+config default by several later steps that never draw seeds from it — as of
+2026-09-23 this names five files, not one). The gate passes only if every
+named collision is on this single inert value; see `AGENTS.md` for the full,
+corrected explanation and the R1n-b results erratum.
 
 Training-package commits additionally run their own unit tests, deterministic
 CPU smoke, dataset audit, and checkpoint/evaluation replay gate. Provider-backed
