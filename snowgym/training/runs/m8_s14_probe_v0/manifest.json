@@ -1,0 +1,14 @@
+{
+  "artifacts": {
+    "declaration.json": "sha256:de908e4f30731192cfb5f2f1c9f60b05e6296fd90bb38ab45a62b642bf2109f7",
+    "probe-cohort-1/sigma-0.5-deterministic/episodes.jsonl": "sha256:65facfa50f8fc0e37bc2f76b73606d51cb87ec1ff902844af587977537415b97",
+    "probe-cohort-1/sigma-0.5-stochastic/episodes.jsonl": "sha256:43342a5886b80a0cb38f0734a9da4a56ec188b01c16b81d2482bd0225f3ef429",
+    "probe-cohort-2/sigma-0.5-deterministic/episodes.jsonl": "sha256:53b92819038d3c3890882663566b4cb70e4744d931e17e223eff163097dc940a",
+    "probe-cohort-2/sigma-0.5-stochastic/episodes.jsonl": "sha256:a7bc0e0ede6b9edc330e255cd824d1265740942526b7be9959af0a574e6d80c5",
+    "probe-cohort-3/sigma-0.5-deterministic/episodes.jsonl": "sha256:02a65dfc4b00b85820dc2f2be09cbf1045ffac03569c5285c95bc57c41679a1e",
+    "probe-cohort-3/sigma-0.5-stochastic/episodes.jsonl": "sha256:9653a7c43f426cf955d4bf82b3a2e5d03c28227895eb96706ba3d163e5a89d49",
+    "probe-report.json": "sha256:7ebb0571fee215a506e3d6feebe506fc8bdd45ee0448f1318c18bb2b0a880a2d"
+  },
+  "format": "snowgym.m8-s14-probe-manifest.v0",
+  "manifestDigest": "sha256:28f7e4d41189f90b4ad66da9165eb2d04d304767a12135f8261a6543c83b102b"
+}

@@ -2973,6 +2973,23 @@ S12's own archived seeds before trusting the new numbers. Archive `runs/m8_s13_r
 effect-size range, or declare a bounded PPO continuation (critic-R2-as-quality-signal caveat from S12 still applies)
 -- neither authorized yet.
 
+**M8-S14 — PPO continuation from the S12 initializer, declared then implemented (declared 2026-09-23; probe
+stage complete, real training not yet run):** the first PPO step at 3v3 in this track, continuing R1n-e's
+KL-anchored Monte Carlo PPO recipe (the only PPO-from-imitation precedent in this repo) to all 3 of S12's
+cohorts. Two advisor review rounds each caught blocking methodology bugs before any real-scale run: an
+lr-calibration probe that originally measured the wrong quantity (would likely have selected no usable learning
+rate at real scale), a sigma fallback grid off by 2x, a decision rule that fired on statistical noise at the
+declared sample size, an entropy check that could false-fail on ordinary single-enemy rows, and unchunked
+whole-rollout forward passes repeating the exact memory pattern that killed R1n-e mid-run. All fixed and recorded
+as dated amendments to the declaration, not silently changed. **Probe stage results** (sigma + learning-rate
+calibration, run for real across all 3 cohorts, `runs/m8_s14_probe_v0/`): all three cohorts pass sigma on the
+first declared candidate (0.5, no shrink needed) and share lr=1e-5 -- matching R1n-e's own selected value exactly,
+with KL-vs-learning-rate scaling matching the expected ~9-11x per 3x change in all three cohorts. Unexpected
+finding, not predicted: stochastic success is HIGHER than deterministic success in all 3 cohorts (confidently so
+in 2 of 3), possibly related to S12's critic-R2 reversal -- descriptive, not investigated further. A real-scale
+timing check puts the full 3-cohort training run at roughly 1.9 hours. See `training/reviews/m8_s14_declaration.md`
+§§16-17. Next: run the real training stage (~9M decisions) and archive results -- not yet authorized.
+
 ### M9 — slow commander over a learned team
 
 Side experiment authorized 2026-09-05: add OpenAI GPT-6 Astra as a secondary

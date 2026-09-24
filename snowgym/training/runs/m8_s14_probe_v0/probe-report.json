@@ -1,0 +1,171 @@
+{
+  "lr": {
+    "1": {
+      "candidates": [
+        {
+          "firstStepKl": 2.0054912234185047,
+          "lr": 0.0003
+        },
+        {
+          "firstStepKl": 0.22731947244848694,
+          "lr": 0.0001
+        },
+        {
+          "firstStepKl": 0.02044469604914325,
+          "lr": 3e-05
+        },
+        {
+          "firstStepKl": 0.0022694250136762488,
+          "lr": 1e-05
+        },
+        {
+          "firstStepKl": 0.00020419833444272566,
+          "lr": 3e-06
+        }
+      ],
+      "rolloutRows": 6416,
+      "selectedLr": 1e-05
+    },
+    "2": {
+      "candidates": [
+        {
+          "firstStepKl": 1.1433500187442456,
+          "lr": 0.0003
+        },
+        {
+          "firstStepKl": 0.12762380679310711,
+          "lr": 0.0001
+        },
+        {
+          "firstStepKl": 0.011516653902609178,
+          "lr": 3e-05
+        },
+        {
+          "firstStepKl": 0.0012805019755503953,
+          "lr": 1e-05
+        },
+        {
+          "firstStepKl": 0.00011528949971525466,
+          "lr": 3e-06
+        }
+      ],
+      "rolloutRows": 5770,
+      "selectedLr": 1e-05
+    },
+    "3": {
+      "candidates": [
+        {
+          "firstStepKl": 1.95863057917875,
+          "lr": 0.0003
+        },
+        {
+          "firstStepKl": 0.22256227087088817,
+          "lr": 0.0001
+        },
+        {
+          "firstStepKl": 0.019979340533309166,
+          "lr": 3e-05
+        },
+        {
+          "firstStepKl": 0.002217407242782691,
+          "lr": 1e-05
+        },
+        {
+          "firstStepKl": 0.00019946930614784028,
+          "lr": 3e-06
+        }
+      ],
+      "rolloutRows": 6541,
+      "selectedLr": 1e-05
+    }
+  },
+  "selectedSharedLr": 1e-05,
+  "selectedSigmaByCohort": {
+    "1": 0.5,
+    "2": 0.5,
+    "3": 0.5
+  },
+  "sigma": {
+    "1": {
+      "candidates": [
+        {
+          "entropyOk": true,
+          "meanEnemyEntropy": 0.872354907524295,
+          "meanMaxEnemyEntropy": 0.9878510563548019,
+          "passed": true,
+          "sigmaScale": 0.5,
+          "successGap": {
+            "interval95": [
+              -0.03125,
+              0.21875
+            ],
+            "mean": 0.09375
+          },
+          "successGapOk": true,
+          "unitsLostGap": {
+            "interval95": [
+              -0.34375,
+              -0.11458333333333331
+            ],
+            "mean": -0.22916666666666663
+          }
+        }
+      ],
+      "selectedSigmaScale": 0.5
+    },
+    "2": {
+      "candidates": [
+        {
+          "entropyOk": true,
+          "meanEnemyEntropy": 0.8251429841839731,
+          "meanMaxEnemyEntropy": 0.9829095572282788,
+          "passed": true,
+          "sigmaScale": 0.5,
+          "successGap": {
+            "interval95": [
+              0.140625,
+              0.3910156249999943
+            ],
+            "mean": 0.265625
+          },
+          "successGapOk": true,
+          "unitsLostGap": {
+            "interval95": [
+              -0.609375,
+              -0.42187499999999994
+            ],
+            "mean": -0.515625
+          }
+        }
+      ],
+      "selectedSigmaScale": 0.5
+    },
+    "3": {
+      "candidates": [
+        {
+          "entropyOk": true,
+          "meanEnemyEntropy": 0.767614195629198,
+          "meanMaxEnemyEntropy": 0.9884903263217726,
+          "passed": true,
+          "sigmaScale": 0.5,
+          "successGap": {
+            "interval95": [
+              0.390625,
+              0.671875
+            ],
+            "mean": 0.53125
+          },
+          "successGapOk": true,
+          "unitsLostGap": {
+            "interval95": [
+              -0.5833333333333335,
+              -0.3489583333333333
+            ],
+            "mean": -0.46875
+          }
+        }
+      ],
+      "selectedSigmaScale": 0.5
+    }
+  }
+}

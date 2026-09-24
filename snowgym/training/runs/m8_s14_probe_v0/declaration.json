@@ -1,0 +1,206 @@
+{
+  "assistType": "none at runtime; initializer from teacher-imitation training",
+  "autonomousQualificationEligible": false,
+  "config": {
+    "actorGradClip": 0.5,
+    "actorLearningRate": null,
+    "advantage": "monte-carlo",
+    "anchorWeight": 0.01,
+    "angularExplorationTargetDegrees": 2.5,
+    "arms": [
+      "local",
+      "global"
+    ],
+    "assistType": "none at runtime; initializer from teacher-imitation training",
+    "assistVersion": "snowgym.m8-s14-ppo-continuation.v0",
+    "autonomousQualificationEligible": false,
+    "blockWorlds": 64,
+    "bootstrapSamples": 10000,
+    "bootstrapSeed": 984001,
+    "budgetCap": 1800000,
+    "calibrationDraws": 64,
+    "calibrationRows": 1024,
+    "calibrationSeed": 982001,
+    "checkpointUpdates": [
+      50,
+      100,
+      150,
+      200
+    ],
+    "clipRatio": 0.2,
+    "cohorts": [
+      1,
+      2,
+      3
+    ],
+    "contactMinFraction": 0.25,
+    "criticEpochs": 4,
+    "criticGradClip": 0.5,
+    "criticHeldSeedBaseByCondition": {
+      "C": 445000,
+      "M": 435000
+    },
+    "criticLearningRate": 0.0003,
+    "criticSanityMinR2": 0.0,
+    "criticSeedBandStride": 1000,
+    "criticTrainSeedBaseByCondition": {
+      "C": 440000,
+      "M": 430000
+    },
+    "deathThreshold": -0.05,
+    "destination": "global",
+    "developmentSplits": {
+      "A": [
+        600000,
+        600099
+      ],
+      "B": [
+        601000,
+        601099
+      ]
+    },
+    "endpointClip": 3.0,
+    "entropyWeight": 0.01,
+    "episodesPerUpdate": 64,
+    "epochs": 4,
+    "evalSeedBase": {
+      "easy": 421000,
+      "normal": 422000,
+      "random": 420000
+    },
+    "evaluationBlockWorlds": 50,
+    "evaluationEpisodes": 100,
+    "evaluationSeedBase": 2600000,
+    "evaluationWorlds": 400,
+    "executionGapFlag": 0.2,
+    "failThreshold": -0.5,
+    "fits": 5,
+    "floorRng": 981003,
+    "floorSeedBase": 424000,
+    "format": "snowgym.m8-s14-ppo-continuation-config.v0",
+    "gaeLambda": 1.0,
+    "gamma": 0.9976921765,
+    "gateMinPredictiveR2": 0.25,
+    "gateTimeOnlyMargin": 0.05,
+    "heldOutSeedBase": 5095000,
+    "historyEvery": 25,
+    "imitationGradClip": 0.5,
+    "imitationLearningRate": 0.0003,
+    "imitationMinibatch": 256,
+    "initialOffsetLogStd": -1.0,
+    "initialPowerLogStd": -1.0,
+    "labelErrorSplit": "B",
+    "learningRate": 0.0003,
+    "localRadius": 8.0,
+    "lrProbeSeedBaseByCohort": {
+      "1": 5160064,
+      "2": 5260064,
+      "3": 5360064
+    },
+    "lrProbeTorchSeedBase": 98700,
+    "minibatchSize": 512,
+    "movementFloorAnchorKl": 0.01,
+    "movementKlStop": 0.01,
+    "nearCeilingMargin": 0.2,
+    "offsetLogStdTarget": -2.0,
+    "optimizerSeeds": [
+      98401,
+      98402,
+      98403
+    ],
+    "optionHorizon": 200,
+    "pairedEvalArms": [
+      "normal",
+      "easy"
+    ],
+    "pairedEvalWorlds": 100,
+    "perCohortTrainingBudgetCap": 3000000,
+    "policyCheckpoint": "fit-4.pt",
+    "probeBudgetCap": 300000,
+    "probeEpisodes": 64,
+    "roster": 3,
+    "roundBlockWorlds": 64,
+    "roundEpisodes": 128,
+    "roundSeedBase": 650000,
+    "roundSeedBaseByCondition": {
+      "C": 410000,
+      "M": 400000
+    },
+    "roundSeedStride": 1000,
+    "runSeedBase": 98500,
+    "seedBandStride": 100000,
+    "seedSpreadFlag": 0.3,
+    "sigmaProbeEntropyMargin": 0.1,
+    "sigmaProbeSeedBaseByCohort": {
+      "1": 5160000,
+      "2": 5260000,
+      "3": 5360000
+    },
+    "sigmaProbeSuccessGapMin": -0.15,
+    "sigmaProbeTorchSeedBase": 98600,
+    "sigmaScale": 0.5,
+    "sigmaScaleByCohort": {
+      "1": null,
+      "2": null,
+      "3": null
+    },
+    "simulatorBudget": 900000,
+    "slowRadius": 2.1,
+    "sourceRun": "m8_s12_enemy_relative_throw_v0",
+    "stepsPerFit": 3000,
+    "stochasticEvalSeedBase": 984500,
+    "stochasticSplit": "A",
+    "successMargin": -0.05,
+    "successMinFraction": 0.25,
+    "targetWorldSigma": 2.0,
+    "throwRecallFlag": 0.5,
+    "timeBins": 20,
+    "timeoutMargin": 0.05,
+    "trainSeedBase": 5090000,
+    "trainingBudgetCap": 9000000,
+    "trainingRngs": [
+      97101,
+      97102,
+      97103
+    ],
+    "trainingSeedBaseByCohort": {
+      "1": 5170000,
+      "2": 5270000,
+      "3": 5370000
+    },
+    "updates": 200,
+    "warmStartEpochs": 10,
+    "warmStartHeldOutEpisodes": 128,
+    "warmStartTrainEpisodes": 256
+  },
+  "declarationDigest": "sha256:fb79d26dc0ef664ff2edb28494b9095e74c5538a77438d1908ff76bda6e6c0aa",
+  "gitCommit": "6f3fc29ab30178f2afda9fb3cd176a9f6093c16a",
+  "implementationDigest": "sha256:aacc75ae2568ec1026a1963202e54acd3e05e2dc02f48e065ea0b085f84e24ed",
+  "pinnedE3Digests": {
+    "implementationDigest": {
+      "archived": "sha256:f1b06b98ecd8bfb9565ef6ee7dc7e2080d0284fb202b3abf81b9cc5a739dff1a",
+      "current": "sha256:f1b06b98ecd8bfb9565ef6ee7dc7e2080d0284fb202b3abf81b9cc5a739dff1a",
+      "match": true
+    },
+    "policyImplementationDigest": {
+      "archived": "sha256:90204be55b8ad93b31b481bed387266c6e0c48c410dd458279f8c19b0c4a028f",
+      "current": "sha256:90204be55b8ad93b31b481bed387266c6e0c48c410dd458279f8c19b0c4a028f",
+      "match": true
+    }
+  },
+  "probeBudgetBound": {
+    "lr": 12800,
+    "perCohortWorstCase": 89600,
+    "sigma1x": 25600,
+    "sigmaFallbackWorstCase": 51200,
+    "total": 268800
+  },
+  "s12Manifest": "sha256:ec7248ff6d7cd322b03f927e4978c3c10edad9860c30fc2136fd8b8b067a434a",
+  "trainingBudgetBound": {
+    "evaluation": 320000,
+    "perCohort": 2956800,
+    "total": 8870400,
+    "training": 2560000,
+    "warmStart": 76800
+  }
+}

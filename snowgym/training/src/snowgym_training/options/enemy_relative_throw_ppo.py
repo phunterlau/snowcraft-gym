@@ -63,11 +63,12 @@ def configuration():
         "stochasticEvalSeedBase": 984500, "bootstrapSeed": 984001, "bootstrapSamples": 10000,
         "sigmaProbeSuccessGapMin": -.15, "sigmaProbeEntropyMargin": .1,
         "deathThreshold": -.05, "successMargin": -.05, "timeoutMargin": .05,
-        # Pinned after the probe stage runs and its results are reviewed (declaration §12 amendment) -- None
-        # here on purpose; `--stage cohort` refuses to run while either is unset, so a real launch cannot
-        # silently skip the review step. `run()`'s in-process convenience path (tests) probes and fills these
-        # in for itself instead of reading them from cfg.
-        "sigmaScaleByCohort": {c: None for c in COHORTS}, "actorLearningRate": None,
+        # Pinned 2026-09-23 from the probe stage's results (declaration §17): all three cohorts passed sigma
+        # on the first (1x) candidate with no fallback needed, and share lr=1e-5 (matching R1n-e's own selected
+        # value), which cleared the first-step KL check with room in all three and matched the expected ~9-11x
+        # per 3x lr scaling. `run()`'s in-process convenience path (tests) probes and fills these in for itself
+        # instead of reading them from cfg, so it is unaffected by this pin.
+        "sigmaScaleByCohort": {1: 0.5, 2: 0.5, 3: 0.5}, "actorLearningRate": 1e-5,
         "probeBudgetCap": 300_000, "trainingBudgetCap": 9_000_000, "perCohortTrainingBudgetCap": 3_000_000,
         "assistType": "none at runtime; initializer from teacher-imitation training",
         "assistVersion": "snowgym.m8-s14-ppo-continuation.v0", "autonomousQualificationEligible": False}

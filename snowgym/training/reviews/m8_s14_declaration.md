@@ -553,3 +553,67 @@ the declaration, stating each change, before collection) — mirroring R1n-e's o
 None of A1–A7 changes §§1–5, §7, §9, §10, or the budget totals in §11 (the probe-budget table already anticipated
 the fallback-grid worst case; the training-budget table is unaffected by any of these amendments). §14's
 verification list is satisfied by the test suite committed alongside this amendment.
+
+## 17. Probe results and pinned values, before any real training
+
+Collected 2026-09-23 from `6f3fc29` (implementation and §16's amendments, committed before this collection) into
+a separate, sealed root, `runs/m8_s14_probe_v0/` (declaration §12/A7's two-root process — not the real training
+root). 45,864 simulator decisions (3 cohorts × one sigma candidate × 2 modes × 64 episodes, plus one
+lr-calibration rollout per cohort), well under the 300,000 probe cap. No roster-guard or non-finite-loss failure
+in any cohort.
+
+**Sigma: all three cohorts passed on the first (declared) candidate, 0.5 — no fallback needed.**
+
+| Cohort | Entropy (mean / ceiling) | Success gap (stochastic − deterministic) | `L` gap |
+| --- | --- | --- | --- |
+| 1 | 0.872 / 0.988 | +0.094 [−0.031, 0.219] | −0.229 [−0.344, −0.115] |
+| 2 | 0.825 / 0.983 | +0.266 [0.141, 0.391] | −0.516 [−0.609, −0.422] |
+| 3 | 0.768 / 0.988 | +0.531 [0.391, 0.672] | −0.469 [−0.583, −0.349] |
+
+Entropy is nowhere close to degenerate (mean well below the living-enemy ceiling in all three, restricted to
+2+-living-enemy rows per amendment A3) — the categorical is confidently informative, not the flat distribution
+the probe was designed to catch.
+
+**Unexpected, and worth stating plainly rather than passing through silently: stochastic success is HIGHER than
+deterministic success in all three cohorts**, not merely non-inferior — confidently so in cohorts 2 and 3 (CI
+excludes zero), directionally so in cohort 1. This was not predicted; §6 only predicted checking whether
+stochastic sampling *degrades* the policy. A plausible reading, not confirmed here: S12/S13's own finding that
+critic R² is *lower* for the better policy suggests these initializers' *deterministic* argmax path may already
+be somewhat suboptimal relative to the distribution BC actually trained on (BC's loss never specifically
+privileged the argmax action over the distribution's mean), so sampling from the full stochastic policy can
+recover some of that gap. This is descriptive, not investigated further, and does not change the sigma decision
+(the rule only screens for degradation) — but it is relevant context for interpreting the coming training run:
+initializer-vs-final comparisons should not assume the deterministic initializer number is the "true" starting
+point in some stronger sense than the stochastic one.
+
+**Learning rate: one shared value, 1e-5, passes for all three cohorts — matching R1n-e's own selected value
+exactly.**
+
+| Cohort | 3e-4 | 1e-4 | 3e-5 | 1e-5 | 3e-6 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 1 | 2.005 | 0.227 | 0.0204 | **0.00227** | 0.000204 |
+| 2 | 1.143 | 0.128 | 0.0115 | **0.00128** | 0.000115 |
+| 3 | 1.959 | 0.223 | 0.0200 | **0.00222** | 0.000199 |
+
+(first-step approximate KL; the movement stop is 0.01 — 3e-5 fails for cohorts 1 and 3, and is right at the
+boundary for cohort 2 at 0.0115; 1e-5 clears with room in all three, 3e-6 is unnecessarily conservative).
+
+**Pre-declared sanity check (§8's amendment plan): first-step KL should scale roughly as lr².** Measured ratios
+between consecutive candidates (each a 3× lr change): cohort 1 — 8.82, 11.12, 9.01, 11.11; cohort 2 — 8.96,
+11.08, 8.99, 11.11; cohort 3 — 8.80, 11.14, 9.01, 11.12. All fall in R1n-e's own observed 9–11× range, consistent
+across all three independent cohorts. This passes the check — the lr selection is trusted.
+
+**Real-scale timing** (one full update, cohort 1, at the selected σ=0.5 and lr=1e-5, not part of the declared
+probe budget — a separate, small diagnostic run, ~6,515 decisions): collection 4.02 s, update 4.94 s (52 actor
+optimizer steps taken — the full possible count for this rollout size, `klStopped: False`, meaning lr=1e-5 never
+overshoots even across a complete 4-epoch pass, not just the first step), anchor-KL diagnostic 0.63 s — about
+9.6 s/update all-in, in the same order of magnitude as R1n-e's own measured ~12 s/update at its analogous
+lr=1e-5. At this rate, 200 updates ≈ 32 minutes/cohort for training alone; adding critic warm-start (~1 minute)
+and evaluation (~5 minutes) gives roughly 38 minutes/cohort, **~1.9 hours for all three cohorts sequentially** —
+below the §11 collection-only lower bound estimate (2.25 h), and now inclusive of backprop time, which §11
+explicitly could not estimate before this. The one-update anchor KL (0.0015) is consistent with the median
+final-anchor-KL likely clearing the 0.01 "no effective training" floor (order 4) well before update 200 if it
+accumulates anywhere near linearly, though this is not a guarantee — the real run's own history is authoritative.
+
+**Pinned into `configuration()`, committed alongside this amendment:** `sigmaScaleByCohort = {1: 0.5, 2: 0.5, 3:
+0.5}`, `actorLearningRate = 1e-5`. `--stage cohort` will now run rather than refuse.
