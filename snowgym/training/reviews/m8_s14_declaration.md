@@ -472,3 +472,84 @@ Mirroring R1n-e's layout, adapted to S12's cohort numbering:
 - **Independent runs:** each cohort's run is independent (own client, own RNG seeding at start) and may run as a
   separate process; a final aggregation step verifies the three cohort manifests and writes the run-level report,
   matching R1n-e's `--stage` structure.
+
+## 16. Amendments made in the implementation commit, before any probe collection
+
+The implementation (`enemy_relative_throw_ppo.py`) diverges from §§6–8 above in several places, found during
+review before any real collection ran. Listed here per this repo's standing convention (implementation may amend
+the declaration, stating each change, before collection) — mirroring R1n-e's own §12.
+
+- **A1 — the sigma-probe decision rule is not §6's literal wording.** §6 said "fails if the lower bound of the
+  paired 95% CI is below −0.15." Implemented instead: fails only on **confident degradation** — the interval's
+  **upper** bound is below zero **and** the point estimate is below −0.15. At 64 worlds and R1n-d's own measured
+  20–41% per-world discordance, the paired-success standard error is roughly 0.07–0.08, so a bare lower-bound
+  rule at this sample size fires on pure noise something like 40–50% of the time. The upper-bound-and-point-
+  estimate form only fails on a gap the data can actually support. This is the R1n-e A7 pattern (a one-sided
+  "confidently below the line" rule) applied to this decision instead of §5's critic sanity stop, which already
+  used it.
+- **A2 — the sigma fallback grid is absolute, and the declared wording was ambiguous about it.** §4/§6 describe
+  the grid as "{1×, 0.5×, 0.25×} of §4's σ." Implemented as `[cfg["sigmaScale"] * m for m in (1.0, 0.5, 0.25)]`
+  = **{0.5, 0.25, 0.125}** in `prepare_policy`'s own absolute units (where `sigma_scale=1.0` would mean the full,
+  unshrunk imitation-calibrated σ). An earlier draft of the implementation read "1×" as the absolute value 1.0
+  instead of "1× of the declared 0.5" and was caught and fixed before any test or probe run trusted it.
+- **A3 — the entropy check excludes single-living-enemy rows.** §6 said "mean enemy-choice entropy is within
+  0.1 nats of `ln(number of living enemies)`," computed over every THROW-labelled, living-enemy row. A row with
+  exactly one living enemy has entropy = max-entropy = `ln(1)` = 0 by construction — there is only one legal
+  choice, so zero gap there is not evidence the categorical is indecisive. Pooling those rows with genuinely
+  ambiguous ones (2+ living enemies) can fail a perfectly confident categorical: e.g. 30% of rows with a real
+  0.3-nat gap and 70% single-enemy rows at a forced 0-nat gap average to 0.09, below the 0.1 margin, with no
+  informative failure to diagnose. The check now restricts to rows with **at least two** living enemies, which
+  is also the only reading under which "within 0.1 nats of the ceiling" is a meaningful statement about
+  indecision rather than an artifact of how many rows happened to have just one target.
+- **A4 — an entropy failure stops the probe immediately, without trying the sigma fallback grid.** Enemy-choice
+  entropy comes from the categorical `enemy_score_head`, which sigma-scaling never touches (sigma scales only
+  the Gaussian move/offset/power heads). Cycling through {0.5, 0.25, 0.125} for an entropy failure would spend
+  up to 51,200 decisions per cohort testing something that cannot change with sigma. §6's declared fallback for
+  a degenerate categorical (stop sampling it during rollout collection; exclude `enemy_logp` from the ratio) is
+  **not implemented** in this commit — an entropy failure currently ends that cohort as `"sigma-probe-failed"`
+  (folded into `"incomplete"` by `decision_rules`), not a repaired run. Whether to implement the sampling
+  fallback is deferred until the real probe shows whether entropy failure actually occurs (A3's fix may already
+  be enough).
+- **A5 — the lr probe measures the true "first Adam step" KL, chunked.** §8's stated procedure ("the largest lr
+  whose first Adam step ... gives approximate KL on that rollout at most equal to the KL stop") is implemented
+  literally: one seeded step on one 512-row minibatch (from a fresh copy of the model, same initializer state
+  each candidate), then the resulting approximate KL measured over the **whole** calibration rollout via
+  `chunked_approximate_kl` (`evaluate_latents` alone, in 512-row chunks, no reference forward pass — the anchor
+  term isn't needed for this measurement). An earlier draft instead ran the real `anchored_ppo_update_enemy_
+  relative` for up to 4 full epochs and read whether the KL stop ever fired anywhere in that run — a materially
+  different, much easier-to-trip criterion (a 64-episode rollout is on the order of 9,600 rows, roughly 19
+  minibatches × 4 epochs = up to 76 steps; cumulative KL grows roughly as steps², so nearly any candidate would
+  eventually trip a 0.01 stop somewhere, which measures whether the whole update over-moves, not whether the
+  first step already does). Caught and fixed before any live probe run.
+- **A6 — sequencing: the lr probe now runs before the critic re-warm-start, reversing §6's stated order.** §6
+  said "σ probe → critic re-warm-start at the final σ → lr probe → training." The implemented `probe_all_
+  cohorts` runs **both** the σ probe and the lr probe, for every cohort, before `run_cohort`'s critic re-warm-
+  start — because the lr probe needed to be part of the same outcome-blind, pre-collection review stage as the
+  σ probe (§12's process), not interleaved with the real per-cohort training run. This means the lr probe's
+  calibration rollout is collected with **S12's own mixture-trained critic still attached** (not yet re-warm-
+  started at the selected σ against scripted-normal), not the critic §6 described. This is assessed as
+  immaterial to the lr selection itself: the lr probe's one Adam step depends on the actor's gradient and Adam's
+  per-weight step-size behavior (`lr · sign-ish(gradient)`, not the gradient's absolute scale), and `ppo_loss`
+  normalizes advantages within the batch regardless of which critic produced them. It is stated here rather than
+  silently changed, since it is a real deviation from §6, not confirmed identical by a test.
+- **A7 — staging, budget, and safety additions beyond §11/§12/§15.** Probes run in a genuinely separate, sealed
+  root (`--stage probe`, distinct from the training root `--stage cohort` reads `sigmaScaleByCohort`/
+  `actorLearningRate` from), matching the two-root R1n-e-style process this section's preamble describes: probe
+  → review → pin into `configuration()` → commit → only then declare and run the real training root. `--stage
+  cohort` refuses to run while either value is unset in `cfg`, so a real launch cannot silently skip the pinning
+  step. Each `--stage cohort` process is capped at `perCohortTrainingBudgetCap` (3,000,000, against the
+  2,956,800 bound), not the full 9,000,000 run-wide cap, so one cohort's runaway process cannot silently consume
+  another's budget headroom. `run_cohort` records its own `simulatorDecisions` (critic warm-start + every
+  training update + evaluation) directly in `cohort-report.json`, used by `--stage aggregate` to total the real
+  run-wide spend. A roster-size assertion (`assignedUnits == cfg["roster"]`) guards the first training block, the
+  probe's own rollouts, and the first evaluation cell — added after a **test-fixture** bug (not a bug in this
+  module) silently ran an entire calibration rollout at roster 1 with no error anywhere downstream, caught only
+  by a live probe script showing every row had exactly one living unit. Per-update training history now includes
+  `meanUnitsLostFraction` (this track's primary metric, `L`), which §8's original field list omitted. Every
+  torch and world seed this section's own procedure needs (`sigmaProbeTorchSeedBase=98600`,
+  `lrProbeTorchSeedBase=98700`, both offset by cohort) is added to the §13 seed-collision scan, re-run against
+  the real configuration before this commit.
+
+None of A1–A7 changes §§1–5, §7, §9, §10, or the budget totals in §11 (the probe-budget table already anticipated
+the fallback-grid worst case; the training-budget table is unaffected by any of these amendments). §14's
+verification list is satisfied by the test suite committed alongside this amendment.

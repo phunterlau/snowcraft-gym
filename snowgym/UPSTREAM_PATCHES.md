@@ -1,5 +1,16 @@
 # Upstream patch ledger
 
+## `refs/snowgym_m8_s14_dev_notes.md`
+
+Reason: the user said "Proceed" to implement the declared PPO continuation. Local log for M8-S14's
+implementation: real bugs found and fixed (an rng_index indexing conflict in the shared critic warm-start API,
+a test fixture that silently ran at the wrong roster size, dead code left over from drafting).
+
+Change: a dated entry covering the implementation and every bug found before the test suite was clean. The file
+stays local; the committed protocol is `snowgym/training/reviews/m8_s14_declaration.md`.
+
+Upstream behavior: unchanged; documentation only.
+
 ## `refs/snowgym_m8_s13_dev_notes.md`
 
 Reason: the user said "Proceed" on S12's results doc's top-ranked next step. Local log for M8-S13, evaluating
