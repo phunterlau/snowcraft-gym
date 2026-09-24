@@ -1,0 +1,471 @@
+{
+  "assistType": "none at runtime; initializer from teacher-imitation training",
+  "autonomousQualificationEligible": false,
+  "cohortManifests": {
+    "cohort-1": "sha256:6e26e7e4afd1b43cc3f5cde7fcef98876eca042b413299aeabd1ab15b4517a78",
+    "cohort-2": "sha256:3a328d3a607599bc23816a620e97c48864e363ea5a414a5abad2b107b5fdb68f",
+    "cohort-3": "sha256:614b95e5e6859991c08e4486b8f0cb5f4ad1a6c2c581bb9255031c903d18177c"
+  },
+  "cohorts": {
+    "1": {
+      "actorLearningRate": 1e-05,
+      "cohort": 1,
+      "criticSanityStop": false,
+      "criticWarmStart": {
+        "gatePassed": true,
+        "predictiveR2": 0.42454088769346865,
+        "predictiveR2Interval95": [
+          0.35702699955811446,
+          0.4716905064733355
+        ],
+        "timeOnlyR2": 0.3189068033193724
+      },
+      "evaluation": {
+        "final-deterministic": {
+          "episodes": 400,
+          "meanDecisions": 77.95,
+          "meanUnitsLostFraction": 0.0,
+          "meanUnitsLostInterval": [
+            0.0,
+            0.0
+          ],
+          "rejectedActionRate": 0.0,
+          "success": 1.0,
+          "successInterval": [
+            0.9904877056657034,
+            0.9999999999999999
+          ],
+          "teamWipe": 0.0,
+          "teamWipeInterval": [
+            8.673617379884035e-19,
+            0.009512294334296508
+          ],
+          "timeout": 0.0
+        },
+        "final-stochastic": {
+          "episodes": 400,
+          "meanDecisions": 88.81,
+          "meanUnitsLostFraction": 0.04666666666666666,
+          "meanUnitsLostInterval": [
+            0.03083333333333333,
+            0.06499999999999999
+          ],
+          "rejectedActionRate": 0.0,
+          "success": 0.9775,
+          "successInterval": [
+            0.9577973424412419,
+            0.988118416469505
+          ],
+          "teamWipe": 0.0225,
+          "teamWipeInterval": [
+            0.011881583530495034,
+            0.04220265755875813
+          ],
+          "timeout": 0.0
+        },
+        "initializer-deterministic": {
+          "episodes": 400,
+          "meanDecisions": 98.1,
+          "meanUnitsLostFraction": 0.42666666666666664,
+          "meanUnitsLostInterval": [
+            0.3933333333333333,
+            0.46
+          ],
+          "rejectedActionRate": 0.0,
+          "success": 0.78,
+          "successInterval": [
+            0.7368470079068086,
+            0.8178261072659854
+          ],
+          "teamWipe": 0.22,
+          "teamWipeInterval": [
+            0.1821738927340146,
+            0.2631529920931915
+          ],
+          "timeout": 0.0
+        },
+        "initializer-stochastic": {
+          "episodes": 400,
+          "meanDecisions": 103.48,
+          "meanUnitsLostFraction": 0.2025,
+          "meanUnitsLostInterval": [
+            0.17,
+            0.2358333333333333
+          ],
+          "rejectedActionRate": 0.0,
+          "success": 0.8875,
+          "successInterval": [
+            0.8527764306768796,
+            0.9148515412140404
+          ],
+          "teamWipe": 0.1125,
+          "teamWipeInterval": [
+            0.08514845878595949,
+            0.14722356932312028
+          ],
+          "timeout": 0.0025
+        }
+      },
+      "finalAnchorKl": 0.09824650599363167,
+      "parameterDistance": 0.29690951108932495,
+      "sigmaScale": 0.5,
+      "simulatorDecisions": 1370913
+    },
+    "2": {
+      "actorLearningRate": 1e-05,
+      "cohort": 2,
+      "criticSanityStop": false,
+      "criticWarmStart": {
+        "gatePassed": true,
+        "predictiveR2": 0.4288706298662174,
+        "predictiveR2Interval95": [
+          0.3769844831478339,
+          0.4857158883632451
+        ],
+        "timeOnlyR2": 0.3304938183485093
+      },
+      "evaluation": {
+        "final-deterministic": {
+          "episodes": 400,
+          "meanDecisions": 75.9675,
+          "meanUnitsLostFraction": 0.0,
+          "meanUnitsLostInterval": [
+            0.0,
+            0.0
+          ],
+          "rejectedActionRate": 0.0,
+          "success": 1.0,
+          "successInterval": [
+            0.9904877056657034,
+            0.9999999999999999
+          ],
+          "teamWipe": 0.0,
+          "teamWipeInterval": [
+            8.673617379884035e-19,
+            0.009512294334296508
+          ],
+          "timeout": 0.0
+        },
+        "final-stochastic": {
+          "episodes": 400,
+          "meanDecisions": 86.56,
+          "meanUnitsLostFraction": 0.05,
+          "meanUnitsLostInterval": [
+            0.03583333333333333,
+            0.06583333333333333
+          ],
+          "rejectedActionRate": 0.0,
+          "success": 0.9925,
+          "successInterval": [
+            0.9781842792759678,
+            0.9974461108047501
+          ],
+          "teamWipe": 0.0075,
+          "teamWipeInterval": [
+            0.0025538891952499396,
+            0.021815720724032123
+          ],
+          "timeout": 0.0
+        },
+        "initializer-deterministic": {
+          "episodes": 400,
+          "meanDecisions": 117.1975,
+          "meanUnitsLostFraction": 0.6633333333333333,
+          "meanUnitsLostInterval": [
+            0.6341666666666665,
+            0.6925
+          ],
+          "rejectedActionRate": 0.0,
+          "success": 0.6075,
+          "successInterval": [
+            0.5588413833413011,
+            0.6541134733768252
+          ],
+          "teamWipe": 0.3925,
+          "teamWipeInterval": [
+            0.34588652662317476,
+            0.44115861665869904
+          ],
+          "timeout": 0.0025
+        },
+        "initializer-stochastic": {
+          "episodes": 400,
+          "meanDecisions": 93.335,
+          "meanUnitsLostFraction": 0.1375,
+          "meanUnitsLostInterval": [
+            0.11333333333333333,
+            0.1625
+          ],
+          "rejectedActionRate": 0.0,
+          "success": 0.9625,
+          "successInterval": [
+            0.9390561575554867,
+            0.9771449701852891
+          ],
+          "teamWipe": 0.0375,
+          "teamWipeInterval": [
+            0.022855029814710867,
+            0.060943842444513396
+          ],
+          "timeout": 0.0025
+        }
+      },
+      "finalAnchorKl": 0.11716466049476207,
+      "parameterDistance": 0.2268550544977188,
+      "sigmaScale": 0.5,
+      "simulatorDecisions": 1321675
+    },
+    "3": {
+      "actorLearningRate": 1e-05,
+      "cohort": 3,
+      "criticSanityStop": false,
+      "criticWarmStart": {
+        "gatePassed": true,
+        "predictiveR2": 0.33217006935311,
+        "predictiveR2Interval95": [
+          0.2607622459232645,
+          0.37726719924052077
+        ],
+        "timeOnlyR2": 0.23051817843882993
+      },
+      "evaluation": {
+        "final-deterministic": {
+          "episodes": 400,
+          "meanDecisions": 80.0425,
+          "meanUnitsLostFraction": 0.0,
+          "meanUnitsLostInterval": [
+            0.0,
+            0.0
+          ],
+          "rejectedActionRate": 0.0,
+          "success": 1.0,
+          "successInterval": [
+            0.9904877056657034,
+            0.9999999999999999
+          ],
+          "teamWipe": 0.0,
+          "teamWipeInterval": [
+            8.673617379884035e-19,
+            0.009512294334296508
+          ],
+          "timeout": 0.0
+        },
+        "final-stochastic": {
+          "episodes": 400,
+          "meanDecisions": 88.97,
+          "meanUnitsLostFraction": 0.05333333333333332,
+          "meanUnitsLostInterval": [
+            0.0375,
+            0.07083333333333332
+          ],
+          "rejectedActionRate": 0.0,
+          "success": 0.985,
+          "successInterval": [
+            0.9676653664151732,
+            0.9931077080805591
+          ],
+          "teamWipe": 0.015,
+          "teamWipeInterval": [
+            0.006892291919440893,
+            0.03233463358482672
+          ],
+          "timeout": 0.0
+        },
+        "initializer-deterministic": {
+          "episodes": 400,
+          "meanDecisions": 105.35,
+          "meanUnitsLostFraction": 0.7941666666666667,
+          "meanUnitsLostInterval": [
+            0.7625,
+            0.8258333333333334
+          ],
+          "rejectedActionRate": 0.0,
+          "success": 0.3,
+          "successInterval": [
+            0.25716767195619705,
+            0.34663724577752153
+          ],
+          "teamWipe": 0.7,
+          "teamWipeInterval": [
+            0.6533627542224784,
+            0.7428323280438028
+          ],
+          "timeout": 0.0
+        },
+        "initializer-stochastic": {
+          "episodes": 400,
+          "meanDecisions": 102.3825,
+          "meanUnitsLostFraction": 0.37416666666666665,
+          "meanUnitsLostInterval": [
+            0.33583333333333326,
+            0.4141666666666666
+          ],
+          "rejectedActionRate": 0.0,
+          "success": 0.7625,
+          "successInterval": [
+            0.7184235572819022,
+            0.8015824881925919
+          ],
+          "teamWipe": 0.2375,
+          "teamWipeInterval": [
+            0.19841751180740802,
+            0.2815764427180976
+          ],
+          "timeout": 0.0
+        }
+      },
+      "finalAnchorKl": 0.17967753024474345,
+      "parameterDistance": 0.27619481086730957,
+      "sigmaScale": 0.5,
+      "simulatorDecisions": 1373694
+    }
+  },
+  "decisionRules": {
+    "authorizes": "nothing; a follow-up needs its own declaration",
+    "checks": {
+      "cohortsWithLowerL": 3,
+      "finalAnchorKl": {
+        "1": 0.09824650599363167,
+        "2": 0.11716466049476207,
+        "3": 0.17967753024474345
+      },
+      "parameterChange": true,
+      "perCohortUnitsLostDifference": {
+        "cohort-1": -0.42666666666666664,
+        "cohort-2": -0.6633333333333333,
+        "cohort-3": -0.7941666666666667
+      }
+    },
+    "nonInferiority": {
+      "passed": true,
+      "successLower95": 0.41166666666666674,
+      "timeoutUpper95": 0.0
+    },
+    "outcome": "improved",
+    "primaryPassed": true,
+    "recommendation": "fresh replication (new training RNGs, new untouched split), then a hard-arm generalization check",
+    "unitsLostFraction": {
+      "interval95": [
+        -0.6463888888888889,
+        -0.6094444444444445
+      ],
+      "mean": -0.6280555555555556
+    }
+  },
+  "format": "snowgym.m8-s14-ppo-continuation-report.v0",
+  "pairedDifferences": {
+    "cohortAveraged": {
+      "success": {
+        "interval95": [
+          0.41166666666666674,
+          0.4641666666666667
+        ],
+        "mean": 0.4375
+      },
+      "timedOut": {
+        "interval95": [
+          -0.0025,
+          0.0
+        ],
+        "mean": -0.0008333333333333333
+      },
+      "unitsLostFraction": {
+        "interval95": [
+          -0.6463888888888889,
+          -0.6094444444444445
+        ],
+        "mean": -0.6280555555555556
+      }
+    },
+    "perCohort": {
+      "cohort-1": {
+        "success": {
+          "interval95": [
+            0.18,
+            0.26
+          ],
+          "mean": 0.22
+        },
+        "timedOut": {
+          "interval95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        },
+        "unitsLostFraction": {
+          "interval95": [
+            -0.46,
+            -0.3933333333333333
+          ],
+          "mean": -0.42666666666666664
+        }
+      },
+      "cohort-2": {
+        "success": {
+          "interval95": [
+            0.345,
+            0.44
+          ],
+          "mean": 0.3925
+        },
+        "timedOut": {
+          "interval95": [
+            -0.0075,
+            0.0
+          ],
+          "mean": -0.0025
+        },
+        "unitsLostFraction": {
+          "interval95": [
+            -0.6925,
+            -0.6341666666666665
+          ],
+          "mean": -0.6633333333333333
+        }
+      },
+      "cohort-3": {
+        "success": {
+          "interval95": [
+            0.655,
+            0.745
+          ],
+          "mean": 0.7
+        },
+        "timedOut": {
+          "interval95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        },
+        "unitsLostFraction": {
+          "interval95": [
+            -0.8258333333333334,
+            -0.7625
+          ],
+          "mean": -0.7941666666666667
+        }
+      }
+    },
+    "worlds": 400
+  },
+  "probeBudgetBound": {
+    "lr": 12800,
+    "perCohortWorstCase": 89600,
+    "sigma1x": 25600,
+    "sigmaFallbackWorstCase": 51200,
+    "total": 268800
+  },
+  "probeSimulatorDecisions": 0,
+  "trainingBudgetBound": {
+    "evaluation": 320000,
+    "perCohort": 2956800,
+    "total": 8870400,
+    "training": 2560000,
+    "warmStart": 76800
+  },
+  "trainingSimulatorDecisions": 4066282,
+  "withinProbeBudget": true,
+  "withinTrainingBudget": true
+}

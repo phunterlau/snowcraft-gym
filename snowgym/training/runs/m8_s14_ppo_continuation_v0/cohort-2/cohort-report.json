@@ -1,0 +1,104 @@
+{
+  "actorLearningRate": 1e-05,
+  "cohort": 2,
+  "criticSanityStop": false,
+  "criticWarmStart": {
+    "gatePassed": true,
+    "predictiveR2": 0.4288706298662174,
+    "predictiveR2Interval95": [
+      0.3769844831478339,
+      0.4857158883632451
+    ],
+    "timeOnlyR2": 0.3304938183485093
+  },
+  "evaluation": {
+    "final-deterministic": {
+      "episodes": 400,
+      "meanDecisions": 75.9675,
+      "meanUnitsLostFraction": 0.0,
+      "meanUnitsLostInterval": [
+        0.0,
+        0.0
+      ],
+      "rejectedActionRate": 0.0,
+      "success": 1.0,
+      "successInterval": [
+        0.9904877056657034,
+        0.9999999999999999
+      ],
+      "teamWipe": 0.0,
+      "teamWipeInterval": [
+        8.673617379884035e-19,
+        0.009512294334296508
+      ],
+      "timeout": 0.0
+    },
+    "final-stochastic": {
+      "episodes": 400,
+      "meanDecisions": 86.56,
+      "meanUnitsLostFraction": 0.05,
+      "meanUnitsLostInterval": [
+        0.03583333333333333,
+        0.06583333333333333
+      ],
+      "rejectedActionRate": 0.0,
+      "success": 0.9925,
+      "successInterval": [
+        0.9781842792759678,
+        0.9974461108047501
+      ],
+      "teamWipe": 0.0075,
+      "teamWipeInterval": [
+        0.0025538891952499396,
+        0.021815720724032123
+      ],
+      "timeout": 0.0
+    },
+    "initializer-deterministic": {
+      "episodes": 400,
+      "meanDecisions": 117.1975,
+      "meanUnitsLostFraction": 0.6633333333333333,
+      "meanUnitsLostInterval": [
+        0.6341666666666665,
+        0.6925
+      ],
+      "rejectedActionRate": 0.0,
+      "success": 0.6075,
+      "successInterval": [
+        0.5588413833413011,
+        0.6541134733768252
+      ],
+      "teamWipe": 0.3925,
+      "teamWipeInterval": [
+        0.34588652662317476,
+        0.44115861665869904
+      ],
+      "timeout": 0.0025
+    },
+    "initializer-stochastic": {
+      "episodes": 400,
+      "meanDecisions": 93.335,
+      "meanUnitsLostFraction": 0.1375,
+      "meanUnitsLostInterval": [
+        0.11333333333333333,
+        0.1625
+      ],
+      "rejectedActionRate": 0.0,
+      "success": 0.9625,
+      "successInterval": [
+        0.9390561575554867,
+        0.9771449701852891
+      ],
+      "teamWipe": 0.0375,
+      "teamWipeInterval": [
+        0.022855029814710867,
+        0.060943842444513396
+      ],
+      "timeout": 0.0025
+    }
+  },
+  "finalAnchorKl": 0.11716466049476207,
+  "parameterDistance": 0.2268550544977188,
+  "sigmaScale": 0.5,
+  "simulatorDecisions": 1321675
+}

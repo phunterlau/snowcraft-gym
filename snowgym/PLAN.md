@@ -2973,22 +2973,29 @@ S12's own archived seeds before trusting the new numbers. Archive `runs/m8_s13_r
 effect-size range, or declare a bounded PPO continuation (critic-R2-as-quality-signal caveat from S12 still applies)
 -- neither authorized yet.
 
-**M8-S14 — PPO continuation from the S12 initializer, declared then implemented (declared 2026-09-23; probe
-stage complete, real training not yet run):** the first PPO step at 3v3 in this track, continuing R1n-e's
-KL-anchored Monte Carlo PPO recipe (the only PPO-from-imitation precedent in this repo) to all 3 of S12's
-cohorts. Two advisor review rounds each caught blocking methodology bugs before any real-scale run: an
-lr-calibration probe that originally measured the wrong quantity (would likely have selected no usable learning
-rate at real scale), a sigma fallback grid off by 2x, a decision rule that fired on statistical noise at the
-declared sample size, an entropy check that could false-fail on ordinary single-enemy rows, and unchunked
-whole-rollout forward passes repeating the exact memory pattern that killed R1n-e mid-run. All fixed and recorded
-as dated amendments to the declaration, not silently changed. **Probe stage results** (sigma + learning-rate
-calibration, run for real across all 3 cohorts, `runs/m8_s14_probe_v0/`): all three cohorts pass sigma on the
-first declared candidate (0.5, no shrink needed) and share lr=1e-5 -- matching R1n-e's own selected value exactly,
-with KL-vs-learning-rate scaling matching the expected ~9-11x per 3x change in all three cohorts. Unexpected
-finding, not predicted: stochastic success is HIGHER than deterministic success in all 3 cohorts (confidently so
-in 2 of 3), possibly related to S12's critic-R2 reversal -- descriptive, not investigated further. A real-scale
-timing check puts the full 3-cohort training run at roughly 1.9 hours. See `training/reviews/m8_s14_declaration.md`
-§§16-17. Next: run the real training stage (~9M decisions) and archive results -- not yet authorized.
+**M8-S14 — PPO continuation from the S12 initializer (complete 2026-09-23; ordinary autonomous training, not
+assisted; 4,066,282 training decisions + 57,701 probe decisions):** the first PPO step at 3v3 in this track,
+continuing R1n-e's KL-anchored Monte Carlo PPO recipe (the only PPO-from-imitation precedent in this repo) to
+all 3 of S12's cohorts. Two advisor review rounds caught blocking methodology bugs before any real-scale run (a
+wrong lr-calibration quantity, a 2x sigma-grid error, a noise-triggered decision rule, an entropy check that
+could false-fail on single-enemy rows, unchunked forward passes repeating the memory pattern that killed R1n-e);
+all fixed and recorded as dated declaration amendments. **Probe stage:** all 3 cohorts pick sigma=0.5 (no shrink)
+and share lr=1e-5, matching R1n-e's own value exactly, with KL-vs-lr scaling matching the expected ~9-11x per 3x
+change in all three. **Training result: the primary test passes (`ΔL` cohort-averaged, deterministic, world-paired
+= -0.628, CI excludes zero) and every cohort's final policy saturates scripted-normal on the fresh eval split
+(400/400 success, zero losses, zero timeouts, in all 3 cohorts) -- but most of that deterministic gain reflects
+PPO repairing the initializer's own deterministic-vs-stochastic gap (already visible, unexplained, in the probe
+stage) rather than a comparably large jump in ceiling: the STOCHASTIC gain, recomputed from the same sealed
+episodes since the code only reported deterministic pairing, is `ΔL` = -0.188 (still CI-excluding-zero, but
+~1/3 the deterministic number).** 2 of 4 predeclared predictions failed on inspection: the KL stop bound in only
+2-7% of updates (not "most"), and the deterministic effect size (-0.628) exceeded the predeclared -0.30 bound
+S12's own architecture-change effect was calibrated against. Scripted-normal is now saturated and cannot measure
+further improvement; training vs. evaluation share the same fixed opponent identity (only world seeds are held
+out, per S14's own §2 scoping), so this cannot distinguish genuinely strong play from a controller-specific
+exploit. See `training/reviews/m8_s14_declaration.md` §§16-17 and `training/reviews/m8_s14_results.md`. Next:
+evaluate the existing checkpoints against random/easy Red (free, both already in the imitation training mix,
+no training needed) before considering a `hard`-arm generalization check or a fresh replication -- neither
+authorized yet.
 
 ### M9 — slow commander over a learned team
 

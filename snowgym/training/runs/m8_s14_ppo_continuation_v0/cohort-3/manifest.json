@@ -1,0 +1,21 @@
+{
+  "artifacts": {
+    "cohort-report.json": "sha256:3ba35dd00c9dc4b7588df73cb0285fcf9709532a4bb21cac6659b654538d89d7",
+    "critic-episodes/episodes.jsonl": "sha256:a337bfd7bdfd947ef6f72cb8417c26739d7083ca2493827801e49abff22dee85",
+    "critic-episodes/trajectory-distances.npz": "sha256:417a62707aa65cd1ebbe82d7dabe89eda122430f3af78cd59260ca5897b0d011",
+    "critic-warm-start-arrays.npz": "sha256:0d65d51d71f1dd781354ebc56216aa4ec0cc1bb5877985ce6ef304eb109f05cb",
+    "critic-warm-start.json": "sha256:423934d38322fca2bad15634f3e72b39e7b799a21581c7f328c1512e7c0a3e0f",
+    "evaluation/final-deterministic/episodes.jsonl": "sha256:a7b64fb6e645222c30ebd9fcc6fad696ea3cb01c63a3d06401ebf27454ff2180",
+    "evaluation/final-stochastic/episodes.jsonl": "sha256:18936be9dd6b04b00b7a42f1f9c11e39cc91bbcfd2e08029e7d7075be371ba4e",
+    "evaluation/initializer-deterministic/episodes.jsonl": "sha256:8fb8f6c073697941239d29ee045d34b6dd7f83046f639ac3617e7c5042e9d0a4",
+    "evaluation/initializer-stochastic/episodes.jsonl": "sha256:5577d3f79c83b9b0a6103aeb6d17261467ec40a06e58992a3657d146d197efcd",
+    "training-episodes.jsonl": "sha256:572872a01a4425395c88d485ac8e1dddec51a8b7f23c0e9f48352274f512afc7",
+    "training-history.json": "sha256:44ff52a4251594659ded01dbf2dac2d8202f4feb257696da17da4fbcb25cfd30",
+    "update-050.pt": "sha256:adb273ec1c31e972aa999a341f0b2b2a0000a3ae7f0fa5f72a5edd46491ab4c2",
+    "update-100.pt": "sha256:d69370ffcce53334cfbf020e92cc2252be78be8402beeddbfe917bfded0a5060",
+    "update-150.pt": "sha256:c295b40d213774d7081d82ad33a54c595444d7d851fda7622a75667be7c649bb",
+    "update-200.pt": "sha256:7f4086f6c857eb88eb9395a7ba794d05e1c20de9e4eea2beacfefb38179674ca"
+  },
+  "format": "snowgym.m8-s14-cohort-manifest.v0",
+  "manifestDigest": "sha256:614b95e5e6859991c08e4486b8f0cb5f4ad1a6c2c581bb9255031c903d18177c"
+}
