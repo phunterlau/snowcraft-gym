@@ -96,7 +96,10 @@ def test_seed_band_is_unused_by_every_archived_declaration_and_every_other_json(
                "m8_s6_breakdown_v0", "m8_s7_trace_diagnosis_v0",
                "m8_s8_channel_intervention_v0", "m8_s9_target_split_v0",
                "m8_s10_throw_aim_repair_v0", "m8_s11_throw_aim_isolation_v0",
-               "m8_s12_enemy_relative_throw_v0"}
+               "m8_s12_enemy_relative_throw_v0",
+               # S15's only in-band integer is `budgetCap: 2100000`, a decision count, not a seed (checked
+               # 2026-10-04); its worlds are 2700000-2700399 and its fidelity replay reuses S14's 2600000 band.
+               "m8_s15_ppo_retention_eval_v0"}
                for part in path.parts) or path.stat().st_size > 5_000_000:
             continue  # S4's own archive and S5's declared reuse of these worlds are the only intended users
         try:
