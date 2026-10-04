@@ -3011,6 +3011,34 @@ near-miss just inside the margin). Its timeouts are near-complete fights: median
 cause is unexplained. Predictions 3 of 4 held. See `training/reviews/m8_s15_results.md`. Next: the
 command-controllability audit (review step B), with cohort 2 reported separately. Needs its own declaration.
 
+**Erratum found during S16 design (2026-10-04):** S4's "teacher" (`/step-scripted`) is the built-in plan-agnostic
+`SimpleBlueAgent`, not the plan-aware teacher (`/plan-teacher-action`) that labels all imitation data. The
+erratum is appended to `m8_s4_results.md`, with pointers in S5-S8 and R1n-f. S8's `all` control was the correct
+comparator; S9-S15 are unaffected. Also: every seed in S4-S15 starts from the identical physical state, and the three
+Reds form one grounder cluster, so the fighters never faced a target choice before S16.
+
+**M8-S16 — command-controllability audit of the frozen S14 fighters (complete 2026-10-04; evaluation only, no
+training; 2,689,333 decisions):** review step B. Three mirrored singleton Reds at (30, -d/0/+d), d = 10/20/30. The
+command is `leftmost` or `rightmost`, scored against the requested flank with a stopping rule independent of the
+execution plan. 192-world development panel; qualification panel 2730000-2730399 reserved. A new-runner regression
+gate reproduced S14's archived block exactly (12/12 cells). The plan-aware teacher followed the command in 384/384
+episodes. **All six learned policies (S14 finals and S12 initializers) are `controllable`.**
+- Finals: deterministic ō(correct) 0.98/0.96/0.98; cohort-averaged Δo +0.951 [+0.932, +0.967].
+- Stochastic, independent sampling: Δo +0.67/+0.83/+0.88.
+- Initializers are weaker (det. Δo +0.56/+0.80/+0.50), and insensitive at d = 10 in cohorts 1 and 3.
+
+The deterministic mirror identity held exactly (0 violations), so deterministic other/canonical/shuffled are not
+independent evidence. Predictions 2 of 4 held: "no learned policy controllable" failed. Control appears to run
+through movement (centroid 3-5 units toward the requested side; throws aimed 0.63-0.69 at the requested Red); the
+mechanism is untested. Caveats:
+- **Zero-plan collapses the fighters physically** (99-100% wiped), so it is uninformative as a command ablation.
+- **A centre (`nearest`) command is not followed uniformly.** The c3 final finishes the centre first at d = 30 only;
+the initializers often reach no crossing or go to a flank. The c1/c2 finals follow it.
+
+See `training/reviews/m8_s16_results.md`. Next (unauthorized): replicate on the reserved qualification panel before
+any training (the panel can be used once, so its scope, left/right only or also centre-requested, is the user's
+call). Then extend to the centre/three-way target axis, mid-fight command switches, and mission forks.
+
 ### M9 — slow commander over a learned team
 
 Side experiment authorized 2026-09-05: add OpenAI GPT-6 Astra as a secondary

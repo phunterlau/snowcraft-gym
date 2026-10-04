@@ -1,5 +1,16 @@
 # Upstream patch ledger
 
+## `refs/snowgym_m8_s16_dev_notes.md` (results)
+
+Reason: the declared M8-S16 command-controllability audit ran.
+
+Change: a dated entry with the gates, the result (all six learned policies controllable on the left/right axis), the
+two misreadings corrected before commit (the centre-first column and the attribution of prediction 2), and the
+second JSON-scanner collision (S16 `budgetCap` vs S12's band). The file stays local; the committed record is
+`snowgym/training/reviews/m8_s16_results.md`.
+
+Upstream behavior: unchanged; documentation only.
+
 ## `refs/snowgym_m8_s16_dev_notes.md` (declaration/implementation)
 
 Reason: declaring and implementing the M8-S16 command-controllability audit.

@@ -227,7 +227,10 @@ def test_seed_bands_are_unused_elsewhere_in_the_repository_json():
 
     collisions = []
     for path in TRAINING.parents[1].rglob("*.json"):
-        if any(part in {".git", "node_modules", ".venv", "dist", "m8_s12_enemy_relative_throw_v0"} for part in path.parts) \
+        # m8_s16_command_control_audit_v0: its only in-band integer is `budgetCap: 5100000`, a decision count, not a
+        # seed (checked 2026-10-04); its worlds are 2720000-2720191 and its gate reuses S14's 2600000 band.
+        if any(part in {".git", "node_modules", ".venv", "dist", "m8_s12_enemy_relative_throw_v0",
+                        "m8_s16_command_control_audit_v0"} for part in path.parts) \
                 or path.stat().st_size > 5_000_000:
             continue
         try:
