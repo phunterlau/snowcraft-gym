@@ -1,5 +1,17 @@
 # Upstream patch ledger
 
+## `refs/snowgym_m8_s15_dev_notes.md`
+
+Reason: the user asked to review `refs/snowgym_llm_local_rl_first_principles_review_2026-10-04.md` and proceed
+to the next experiments. Local log for M8-S15, the frozen-checkpoint random/easy retention check of S14's PPO
+policies (that review's step A), plus read-only feasibility notes for its command-control audit (step B).
+
+Change: a dated entry covering the design decisions, the exact-replay finding (batch size and thread count both
+matter), and a seed-formula fix made before commit. The file stays local; the committed protocol is
+`snowgym/training/reviews/m8_s15_declaration.md`.
+
+Upstream behavior: unchanged; documentation only.
+
 ## `refs/snowgym_m8_s14_dev_notes.md`
 
 Reason: the user said "Proceed" to implement the declared PPO continuation. Local log for M8-S14's
@@ -567,6 +579,20 @@ verification, and open questions. The file stays local; the committed protocol
 is `snowgym/training/reviews/m7b_r1n_b_declaration.md`.
 
 Upstream behavior: unchanged; documentation only.
+
+## `refs/snowgym_llm_local_rl_first_principles_review_2026-10-04.md`
+
+Reason: the user requested a review of recent work against the goal of LLM
+orchestration of local RL agents and a first-principles next-step recommendation.
+
+Change: added a source-linked review of M8-S2–S14, commander/recovery
+infrastructure, current command-conditioning and observation limits, PPO
+interpretation, and a proposed frozen-executor command-controllability audit.
+Records archive verification, recomputed paired results, caveats, and the route
+back to fixed-plan, composition, locality, switching, and commander gates.
+
+Upstream behavior: unchanged; documentation only. No experiment declaration,
+checkpoint promotion, new simulator episodes, provider calls, commit, or push.
 
 ## `refs/snowgym_continuation_plan_2026-09-13.md`
 
