@@ -1,5 +1,17 @@
 # Upstream patch ledger
 
+## `refs/snowgym_m8_s16_dev_notes.md`
+
+Reason: designing the command-controllability audit (step B of the 2026-10-04 review) after M8-S15. Local log of
+the feasibility exploration on off-band dev seeds, and of the teacher-identity finding behind the S4 erratum.
+
+Change: a dated entry covering the identical-start-state finding, the singleton mirror layout, server retargeting,
+and the discovery that `/step-scripted` runs the plan-agnostic `SimpleBlueAgent` rather than the plan-aware label
+teacher. The file stays local; the committed records are the errata appended to `m8_s4_results.md` (with pointers
+in S5–S8 and R1n-f) and, later, the S16 declaration.
+
+Upstream behavior: unchanged; documentation only.
+
 ## `refs/snowgym_m8_s15_dev_notes.md` (results)
 
 Reason: the declared M8-S15 retention evaluation ran. Local log of the run and the results write-up.

@@ -249,3 +249,11 @@ R1n-f makes no R1 qualification claim and trains nothing.
   were taken from `report.json`, the per-arm `arm-report.json` files, and
   the per-comparator `summary.json`/`shots.npz` files, not from intermediate
   probe output.
+
+## Erratum (2026-10-04): the "teacher" control was the built-in `SimpleBlueAgent`
+
+The scripted "teacher" rows this doc compares against were produced by `POST /step-scripted`, which runs the
+plan-agnostic built-in `SimpleBlueAgent`. They were not produced by the plan-aware teacher (`PlanAwareTeamController`)
+that supplied the imitation labels. Learner numbers are unaffected; comparisons to "the teacher" are comparisons to
+`SimpleBlueAgent`. See the erratum at the end of [m8_s4_results.md](m8_s4_results.md) for the code path, scope and
+evidence.

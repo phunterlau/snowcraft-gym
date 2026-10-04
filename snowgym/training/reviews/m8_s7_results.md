@@ -117,3 +117,11 @@ pre-declared native-teacher scoring are unchanged.
 - **Exploratory re-score** against the tensor-path teacher: P1 (wasted damage share) and P5 (red yield) hold; P2, P3,
   P4, P6, P7, P8 do not. The pre-declared result remains 0 of 8.
 
+
+## Erratum (2026-10-04): the "teacher" control was the built-in `SimpleBlueAgent`
+
+The scripted "teacher" rows this doc compares against were produced by `POST /step-scripted`, which runs the
+plan-agnostic built-in `SimpleBlueAgent`. They were not produced by the plan-aware teacher (`PlanAwareTeamController`)
+that supplied the imitation labels. Learner numbers are unaffected; comparisons to "the teacher" are comparisons to
+`SimpleBlueAgent`. See the erratum at the end of [m8_s4_results.md](m8_s4_results.md) for the code path, scope and
+evidence.

@@ -111,3 +111,13 @@ geometry with a further substitution (for example replacing only *which enemy* i
 and (b) an autonomous repair aimed at the throw target (for instance a decoder that predicts the throw target relative to
 the chosen enemy rather than as an absolute arena coordinate, or more weight on throw labels), evaluated on fresh worlds and
 never mixed with these assisted numbers. Neither is started here.
+
+## Erratum (2026-10-04): the "teacher" control was the built-in `SimpleBlueAgent`
+
+This doc's "native teacher" (S7's control, the left-hand column of the S7 correction table) was produced by `POST
+/step-scripted`, which runs the plan-agnostic built-in `SimpleBlueAgent`. It was not produced by the plan-aware
+teacher (`PlanAwareTeamController`) that supplied the imitation labels. S8's own `all` control, the tensor-path
+teacher, *is* the plan-aware teacher, and was the correct comparator throughout. The difference attributed above to
+"execution path" is also a difference of policy; that plausibly explains it, but whether the tensor pipeline adds any
+difference of its own has not been separately tested. See the erratum at the end of [m8_s4_results.md](m8_s4_results.md) for the code path, scope and
+evidence.

@@ -51,3 +51,11 @@ late contact. That would be a new declaration and a real collection (its own mod
 R1n-i's deployed view guards against more than one live enemy, and a budget). Before deciding, the
 open choice is between that diagnosis and cheaper, more targeted uses of the existing S5
 checkpoints; that choice is left to the next declaration.
+
+## Erratum (2026-10-04): the "teacher" control was the built-in `SimpleBlueAgent`
+
+The scripted "teacher" rows this doc compares against were produced by `POST /step-scripted`, which runs the
+plan-agnostic built-in `SimpleBlueAgent`. They were not produced by the plan-aware teacher (`PlanAwareTeamController`)
+that supplied the imitation labels. Learner numbers are unaffected; comparisons to "the teacher" are comparisons to
+`SimpleBlueAgent`. See the erratum at the end of [m8_s4_results.md](m8_s4_results.md) for the code path, scope and
+evidence.

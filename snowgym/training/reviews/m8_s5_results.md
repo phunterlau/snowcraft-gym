@@ -90,3 +90,11 @@ rows, and the per-seed development label-error reads are the starting evidence. 
 candidate questions (contact versus finishing against scripted-normal, why random Red
 defeats learners the teacher beats, and whether the failure is a data-volume, coverage or
 representation limit) are for a new declaration, chosen and ordered there, not here.
+
+## Erratum (2026-10-04): the "teacher" control was the built-in `SimpleBlueAgent`
+
+The scripted "teacher" rows this doc compares against were produced by `POST /step-scripted`, which runs the
+plan-agnostic built-in `SimpleBlueAgent`. They were not produced by the plan-aware teacher (`PlanAwareTeamController`)
+that supplied the imitation labels. Learner numbers are unaffected; comparisons to "the teacher" are comparisons to
+`SimpleBlueAgent`. See the erratum at the end of [m8_s4_results.md](m8_s4_results.md) for the code path, scope and
+evidence.

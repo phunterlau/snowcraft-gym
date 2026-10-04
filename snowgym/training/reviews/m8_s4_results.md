@@ -82,3 +82,49 @@ against random Red), so S5 follows R1n's recipe: teacher imitation as the initia
 with `L` (mean, world-paired) primary and success co-primary as declared. Before reusing
 R1n's critic warm-start gate, re-check it at 3v3: `assignedLivingFraction` is now graded
 rather than binary and the R1n-d return-predictability ceiling was measured at roster 1.
+
+## Erratum (2026-10-04, found during M8-S16 design): the S4 "teacher" is the built-in `SimpleBlueAgent`, not the plan teacher
+
+This doc and S4's configuration (`assistType`) describe the teacher as "the native plan controller". The code path
+says otherwise:
+
+`roster_baseline.collect_cell(model=None)` → `full_authority_train_v1.make_wrapper(scripted=True)` →
+`ScriptedEngageOptionBatch.step_scripted_indices` → batch `stepScripted` → `POST /step-scripted` →
+`SnowGymService.defaultBlueAction()` → `SimpleBlueAgent`.
+
+`SimpleBlueAgent` (`agents/SimpleBlueAgent.ts`) is a "deliberately small baseline policy" that dodges, throws at the
+nearest opponent in range, or closes distance. **It never reads the active plan.** The imitation labels for every M8
+learner come from a different policy: `plan_teacher_tensor_actions_indices` → `/plan-teacher-action` →
+`PlanAwareTeamController` + `ReactiveUnitPolicy`.
+
+During M8-S16 design (off-band dev seeds), the two policies diverged sharply on one test:
+
+| Setup | `SimpleBlueAgent` | Plan-aware teacher |
+| --- | --- | --- |
+| Commands tested | `leftmost`, `rightmost`, `nearest` | same |
+| Which Red is finished first | the centre singleton, every time | the commanded one, in 16/16 worlds |
+| Trajectories across commands | identical decision counts | differ by command |
+
+**What this changes:**
+
+- **S4.** The 400/399/400 achievability numbers measured `SimpleBlueAgent` on the default layout, not the label
+  teacher. The task is still shown to be well-posed for *a* scripted blue policy. The label teacher's own 3v3
+  normal-arm achievability comes from S8's `all` control (100% on 100 worlds), not from S4.
+- **S5 and S6.** Every learner-minus-"teacher" difference compares against `SimpleBlueAgent`. Affected: S5's
+  "Success − teacher"/"`L` − teacher" columns, and S6's first hit 52, damage 240, finish at 76 and damage-per-unit-lost
+  2,163. The learner numbers themselves are unaffected.
+- **S7.** The "native teacher" control is `SimpleBlueAgent`, including the yield of 16.9 and spacing of 4.77.
+- **S8.** S8's correction to S7 called the difference an "execution path" confound (native vs tensor pipeline). The
+  two controls are also **different policies**. This plausibly explains the divergence S8 measured (84 vs 76
+  decisions, yield 13.8 vs 16.9, spacing 5.97 vs 4.77); it has not been separately tested whether the tensor pipeline
+  adds any difference of its own. S8's `all` control was the correct comparator throughout.
+
+**Unaffected:** S9–S15. S9 measured against S8's tensor-path teacher; S10–S15 contain learned-policy and
+plan-teacher-label cells only.
+
+**Same path elsewhere, not re-audited here:** R1n-b's C1c scripted source (`full_authority_diagnostics`,
+`scripted=True`) and R1n-f's teacher arm (`opponent_transfer.collect_logged`, `choose=None`). Those docs' "scripted
+teacher" is also `SimpleBlueAgent`. R1n-h's ceilings (`full_authority_imitation.collect(model=None)`) used the plan
+teacher and are unaffected.
+
+Additive only. The sealed archives, the pinned S4 declaration and S4's configuration string are unchanged.
