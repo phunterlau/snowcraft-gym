@@ -1,5 +1,15 @@
 # Upstream patch ledger
 
+## `refs/snowgym_m8_s17_dev_notes.md`
+
+Reason: the user said "Push and proceed" after M8-S16; this step replicates S16 on its reserved qualification panel.
+
+Change: a dated entry recording the scope choice (left/right only, not explicitly chosen by the user), the
+untouched-panel and reused-code safeguards, and the gates. The file stays local; the committed protocol is
+`snowgym/training/reviews/m8_s17_declaration.md`.
+
+Upstream behavior: unchanged; documentation only.
+
 ## `refs/snowgym_m8_s16_dev_notes.md` (results)
 
 Reason: the declared M8-S16 command-controllability audit ran.
