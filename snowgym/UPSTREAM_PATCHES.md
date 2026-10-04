@@ -1,5 +1,15 @@
 # Upstream patch ledger
 
+## `refs/snowgym_m8_s17_dev_notes.md` (results)
+
+Reason: the declared M8-S17 qualification replication ran.
+
+Change: a dated entry with the gates, the `replicated` verdict, the two failed predictions (d = 10 initializers,
+held-out c1 final) and the post-archive checks. The file stays local; the committed record is
+`snowgym/training/reviews/m8_s17_results.md`.
+
+Upstream behavior: unchanged; documentation only.
+
 ## `refs/snowgym_m8_s17_dev_notes.md`
 
 Reason: the user said "Push and proceed" after M8-S16; this step replicates S16 on its reserved qualification panel.

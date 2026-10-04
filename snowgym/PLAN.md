@@ -3039,6 +3039,23 @@ See `training/reviews/m8_s16_results.md`. Next (unauthorized): replicate on the 
 any training (the panel can be used once, so its scope, left/right only or also centre-requested, is the user's
 call). Then extend to the centre/three-way target axis, mid-fight command switches, and mission forks.
 
+**M8-S17 — qualification replication of S16 (complete 2026-10-04; evaluation only, no training; 3,246,138
+decisions):** S16's left/right audit, reused byte-identical (digest checked against S16's seal), on the untouched
+reserved panel 2730000-2730399. Conditions were correct/other, both modes. Scope was left/right only, my choice; the
+user said "proceed". Both gates passed (runner exact 12/12; teacher 1.000 on both panels).
+
+**Verdict `replicated`:** all three S14 finals are `controllable` (det. Δo +0.939/+0.916/+0.945; cohort-averaged
++0.933 vs S16's +0.951). This is robustness to Red's random draws on the same three geometries, not geometric
+generalization.
+
+On the held-out-geometry secondary (d = 15/25, band 2740000-2740199, outside the verdict; interpolation only), the
+c2/c3 finals reach Δo = 1.000 but the c1 final is only `sensitive` (+0.385). Under `leftmost` it finishes the right
+flank first in 53% of episodes, versus mean flank order 1.00 under `rightmost`. Predictions 3 of 5 held. P4 failed: the c1/c3 initializers are weak but not insensitive at d = 10 (+0.30,
++0.16). P5 failed on c1 held-out.
+
+See `training/reviews/m8_s17_results.md`. Next (each needs its own declaration and the user's call): mid-fight
+command switches, the centre/three-way target axis, or the mission forks.
+
 ### M9 — slow commander over a learned team
 
 Side experiment authorized 2026-09-05: add OpenAI GPT-6 Astra as a secondary

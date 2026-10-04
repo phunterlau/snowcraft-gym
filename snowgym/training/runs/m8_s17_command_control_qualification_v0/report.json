@@ -1,0 +1,3878 @@
+{
+  "assistType": "none at learned-policy runtime; plan-aware teacher only as a separate positive control",
+  "autonomousQualificationEligible": false,
+  "blockWorlds": 64,
+  "budgetBound": {
+    "gate": 153600,
+    "learned": 5760000,
+    "teacher": 480000,
+    "total": 6393600
+  },
+  "format": "snowgym.m8-s17-command-control-qualification-report.v0",
+  "heldoutTeacherValid": true,
+  "learned": {
+    "heldout": {
+      "cohortAveraged": {
+        "final-deterministic": {
+          "other": {
+            "all": {
+              "contrast": {
+                "interval95": [
+                  1.1379075727513226,
+                  1.211060648148148
+                ],
+                "mean": 1.1744272486772487
+              },
+              "order": {
+                "interval95": [
+                  0.775,
+                  0.815
+                ],
+                "mean": 0.795
+              }
+            },
+            "d15": {
+              "contrast": {
+                "interval95": [
+                  1.0518974206349208,
+                  1.1473958002645501
+                ],
+                "mean": 1.0992870370370371
+              },
+              "order": {
+                "interval95": [
+                  0.7316666666666669,
+                  0.7833333333333334
+                ],
+                "mean": 0.7566666666666668
+              }
+            },
+            "d25": {
+              "contrast": {
+                "interval95": [
+                  1.1964381283068786,
+                  1.3016707341269842
+                ],
+                "mean": 1.24956746031746
+              },
+              "order": {
+                "interval95": [
+                  0.8033333333333335,
+                  0.8633333333333333
+                ],
+                "mean": 0.8333333333333333
+              }
+            }
+          }
+        },
+        "final-stochastic": {
+          "other": {
+            "all": {
+              "contrast": {
+                "interval95": [
+                  1.0826776620370369,
+                  1.1631635416666666
+                ],
+                "mean": 1.1228994708994708
+              },
+              "order": {
+                "interval95": [
+                  0.8129166666666667,
+                  0.8545833333333333
+                ],
+                "mean": 0.83375
+              }
+            },
+            "d15": {
+              "contrast": {
+                "interval95": [
+                  0.8977367394179894,
+                  0.9950797288359788
+                ],
+                "mean": 0.9470357142857142
+              },
+              "order": {
+                "interval95": [
+                  0.7633333333333333,
+                  0.8299999999999998
+                ],
+                "mean": 0.7966666666666667
+              }
+            },
+            "d25": {
+              "contrast": {
+                "interval95": [
+                  1.2568953703703707,
+                  1.3398344576719579
+                ],
+                "mean": 1.2987632275132277
+              },
+              "order": {
+                "interval95": [
+                  0.8483333333333332,
+                  0.8933333333333333
+                ],
+                "mean": 0.8708333333333331
+              }
+            }
+          }
+        },
+        "initializer-deterministic": {
+          "other": {
+            "all": {
+              "contrast": {
+                "interval95": [
+                  1.4125306547619048,
+                  1.5048147156084655
+                ],
+                "mean": 1.4595429894179894
+              },
+              "order": {
+                "interval95": [
+                  0.6416666666666667,
+                  0.6983333333333335
+                ],
+                "mean": 0.67
+              }
+            },
+            "d15": {
+              "contrast": {
+                "interval95": [
+                  1.322236970899471,
+                  1.438655886243386
+                ],
+                "mean": 1.3811626984126983
+              },
+              "order": {
+                "interval95": [
+                  0.585,
+                  0.665
+                ],
+                "mean": 0.625
+              }
+            },
+            "d25": {
+              "contrast": {
+                "interval95": [
+                  1.4693756613756612,
+                  1.6055413029100527
+                ],
+                "mean": 1.5379232804232805
+              },
+              "order": {
+                "interval95": [
+                  0.6733333333333335,
+                  0.7533333333333333
+                ],
+                "mean": 0.7149999999999999
+              }
+            }
+          }
+        },
+        "initializer-stochastic": {
+          "other": {
+            "all": {
+              "contrast": {
+                "interval95": [
+                  1.1552328703703703,
+                  1.248784904100529
+                ],
+                "mean": 1.2013181216931217
+              },
+              "order": {
+                "interval95": [
+                  0.7295833333333333,
+                  0.78125
+                ],
+                "mean": 0.755
+              }
+            },
+            "d15": {
+              "contrast": {
+                "interval95": [
+                  0.9530352513227514,
+                  1.0672008928571428
+                ],
+                "mean": 1.0103359788359787
+              },
+              "order": {
+                "interval95": [
+                  0.6658333333333333,
+                  0.7383333333333334
+                ],
+                "mean": 0.7025
+              }
+            },
+            "d25": {
+              "contrast": {
+                "interval95": [
+                  1.3400175595238095,
+                  1.4432299272486773
+                ],
+                "mean": 1.3923002645502647
+              },
+              "order": {
+                "interval95": [
+                  0.7749999999999999,
+                  0.8391666666666667
+                ],
+                "mean": 0.8075
+              }
+            }
+          }
+        }
+      },
+      "policies": {
+        "c1-final-deterministic": {
+          "class": "sensitive",
+          "contrasts": {
+            "other": {
+              "all": {
+                "contrast": {
+                  "interval95": [
+                    0.2333845238095238,
+                    0.42723164682539677
+                  ],
+                  "mean": 0.3291666666666667
+                },
+                "order": {
+                  "interval95": [
+                    0.325,
+                    0.445
+                  ],
+                  "mean": 0.385
+                }
+              },
+              "d15": {
+                "contrast": {
+                  "interval95": [
+                    0.13813710317460318,
+                    0.4048698412698413
+                  ],
+                  "mean": 0.26988888888888896
+                },
+                "order": {
+                  "interval95": [
+                    0.195,
+                    0.35
+                  ],
+                  "mean": 0.27
+                }
+              },
+              "d25": {
+                "contrast": {
+                  "interval95": [
+                    0.2444102182539683,
+                    0.5321806547619046
+                  ],
+                  "mean": 0.3884444444444444
+                },
+                "order": {
+                  "interval95": [
+                    0.41,
+                    0.59
+                  ],
+                  "mean": 0.5
+                }
+              }
+            }
+          },
+          "mirrorIdentityViolation": {
+            "otherVsCorrect": 0.0
+          },
+          "mirrorIdentityWithinTolerance": true,
+          "summaries": {
+            "correct": {
+              "aimShares": {
+                "centre": 0.31000633312222925,
+                "mirror": 0.1618112729575681,
+                "other": 0.0,
+                "requested": 0.5281823939202026
+              },
+              "centreFirst": 0.5,
+              "contrast": 0.32574007936507937,
+              "informative": 0.915,
+              "meanLateralTowardRequested": 4.01250910338575,
+              "order": 0.6925,
+              "orderBySide": {
+                "leftmost": 0.385,
+                "rightmost": 1.0
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.845,
+              "stopReasons": {
+                "blue-wiped": 62,
+                "environment-done": 0,
+                "horizon": 0,
+                "requested-complete": 338
+              },
+              "teamWipe": 0.155,
+              "throwsInWindow": 6316,
+              "unitsLostFraction": 0.23916666666666664
+            },
+            "other": {
+              "aimShares": {
+                "centre": 0.30494568985440257,
+                "mirror": 0.40004622140050844,
+                "other": 0.0,
+                "requested": 0.295008088745089
+              },
+              "centreFirst": 0.5,
+              "contrast": -0.003426587301587318,
+              "informative": 0.915,
+              "meanLateralTowardRequested": -4.01250910338575,
+              "order": 0.3075,
+              "orderBySide": {
+                "leftmost": 0.0,
+                "rightmost": 0.615
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.8525,
+              "stopReasons": {
+                "blue-wiped": 52,
+                "environment-done": 0,
+                "horizon": 7,
+                "requested-complete": 341
+              },
+              "teamWipe": 0.13,
+              "throwsInWindow": 8654,
+              "unitsLostFraction": 0.33166666666666667
+            }
+          }
+        },
+        "c1-final-stochastic": {
+          "class": "controllable",
+          "contrasts": {
+            "other": {
+              "all": {
+                "contrast": {
+                  "interval95": [
+                    0.8799686011904762,
+                    1.0164561011904762
+                  ],
+                  "mean": 0.9479146825396825
+                },
+                "order": {
+                  "interval95": [
+                    0.66,
+                    0.7475
+                  ],
+                  "mean": 0.70375
+                }
+              },
+              "d15": {
+                "contrast": {
+                  "interval95": [
+                    0.6862920634920636,
+                    0.8743300595238094
+                  ],
+                  "mean": 0.7818333333333334
+                },
+                "order": {
+                  "interval95": [
+                    0.585,
+                    0.7275
+                  ],
+                  "mean": 0.6575
+                }
+              },
+              "d25": {
+                "contrast": {
+                  "interval95": [
+                    1.0267491071428572,
+                    1.200476984126984
+                  ],
+                  "mean": 1.1139960317460318
+                },
+                "order": {
+                  "interval95": [
+                    0.7025,
+                    0.7975
+                  ],
+                  "mean": 0.75
+                }
+              }
+            }
+          },
+          "mirrorIdentityViolation": {
+            "otherVsCorrect": 0.28
+          },
+          "mirrorIdentityWithinTolerance": null,
+          "summaries": {
+            "correct": {
+              "aimShares": {
+                "centre": 0.3523742026931254,
+                "mirror": 0.16924167257264353,
+                "other": 0.0,
+                "requested": 0.47838412473423103
+              },
+              "centreFirst": 0.51,
+              "contrast": 0.6427063492063492,
+              "informative": 0.955,
+              "meanLateralTowardRequested": 4.005731459677236,
+              "order": 0.87,
+              "orderBySide": {
+                "leftmost": 0.8125,
+                "rightmost": 0.9275
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.9425,
+              "stopReasons": {
+                "blue-wiped": 23,
+                "environment-done": 0,
+                "horizon": 0,
+                "requested-complete": 377
+              },
+              "teamWipe": 0.0575,
+              "throwsInWindow": 7055,
+              "unitsLostFraction": 0.11083333333333333
+            },
+            "other": {
+              "aimShares": {
+                "centre": 0.3458980044345898,
+                "mirror": 0.3706050047513462,
+                "other": 0.0,
+                "requested": 0.283496990814064
+              },
+              "centreFirst": 0.52,
+              "contrast": -0.3052083333333333,
+              "informative": 0.95,
+              "meanLateralTowardRequested": -4.0073793884483875,
+              "order": 0.16625,
+              "orderBySide": {
+                "leftmost": 0.05,
+                "rightmost": 0.2825
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.8475,
+              "stopReasons": {
+                "blue-wiped": 45,
+                "environment-done": 0,
+                "horizon": 16,
+                "requested-complete": 339
+              },
+              "teamWipe": 0.1125,
+              "throwsInWindow": 9471,
+              "unitsLostFraction": 0.23666666666666664
+            }
+          }
+        },
+        "c1-initializer-deterministic": {
+          "class": "controllable",
+          "contrasts": {
+            "other": {
+              "all": {
+                "contrast": {
+                  "interval95": [
+                    1.1645142857142858,
+                    1.3563930555555554
+                  ],
+                  "mean": 1.2625119047619047
+                },
+                "order": {
+                  "interval95": [
+                    0.5825,
+                    0.6925
+                  ],
+                  "mean": 0.6375
+                }
+              },
+              "d15": {
+                "contrast": {
+                  "interval95": [
+                    0.8169474206349205,
+                    1.1128238095238092
+                  ],
+                  "mean": 0.9650079365079364
+                },
+                "order": {
+                  "interval95": [
+                    0.38,
+                    0.55
+                  ],
+                  "mean": 0.465
+                }
+              },
+              "d25": {
+                "contrast": {
+                  "interval95": [
+                    1.458776785714286,
+                    1.657816666666667
+                  ],
+                  "mean": 1.560015873015873
+                },
+                "order": {
+                  "interval95": [
+                    0.755,
+                    0.865
+                  ],
+                  "mean": 0.81
+                }
+              }
+            }
+          },
+          "mirrorIdentityViolation": {
+            "otherVsCorrect": 0.0
+          },
+          "mirrorIdentityWithinTolerance": true,
+          "summaries": {
+            "correct": {
+              "aimShares": {
+                "centre": 0.3125577100646353,
+                "mirror": 0.10341643582640812,
+                "other": 0.0,
+                "requested": 0.5840258541089566
+              },
+              "centreFirst": 0.245,
+              "contrast": 0.6849603174603175,
+              "informative": 0.7175,
+              "meanLateralTowardRequested": 4.175454569176228,
+              "order": 0.81875,
+              "orderBySide": {
+                "leftmost": 0.7975,
+                "rightmost": 0.84
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.7,
+              "stopReasons": {
+                "blue-wiped": 120,
+                "environment-done": 0,
+                "horizon": 0,
+                "requested-complete": 280
+              },
+              "teamWipe": 0.3,
+              "throwsInWindow": 4332,
+              "unitsLostFraction": 0.40416666666666673
+            },
+            "other": {
+              "aimShares": {
+                "centre": 0.34314957802118873,
+                "mirror": 0.4889567247261627,
+                "other": 0.0,
+                "requested": 0.16789369725264858
+              },
+              "centreFirst": 0.245,
+              "contrast": -0.5775515873015873,
+              "informative": 0.7175,
+              "meanLateralTowardRequested": -4.175454569176228,
+              "order": 0.18125,
+              "orderBySide": {
+                "leftmost": 0.16,
+                "rightmost": 0.2025
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.245,
+              "stopReasons": {
+                "blue-wiped": 296,
+                "environment-done": 0,
+                "horizon": 6,
+                "requested-complete": 98
+              },
+              "teamWipe": 0.74,
+              "throwsInWindow": 5569,
+              "unitsLostFraction": 0.8166666666666665
+            }
+          }
+        },
+        "c1-initializer-stochastic": {
+          "class": "controllable",
+          "contrasts": {
+            "other": {
+              "all": {
+                "contrast": {
+                  "interval95": [
+                    0.8936435019841269,
+                    1.0591605654761904
+                  ],
+                  "mean": 0.9777103174603176
+                },
+                "order": {
+                  "interval95": [
+                    0.57875,
+                    0.67
+                  ],
+                  "mean": 0.625
+                }
+              },
+              "d15": {
+                "contrast": {
+                  "interval95": [
+                    0.6388711309523809,
+                    0.8741125992063492
+                  ],
+                  "mean": 0.7585912698412698
+                },
+                "order": {
+                  "interval95": [
+                    0.4775,
+                    0.61
+                  ],
+                  "mean": 0.545
+                }
+              },
+              "d25": {
+                "contrast": {
+                  "interval95": [
+                    1.0971046626984127,
+                    1.2926871031746032
+                  ],
+                  "mean": 1.196829365079365
+                },
+                "order": {
+                  "interval95": [
+                    0.645,
+                    0.76
+                  ],
+                  "mean": 0.705
+                }
+              }
+            }
+          },
+          "mirrorIdentityViolation": {
+            "otherVsCorrect": 0.35
+          },
+          "mirrorIdentityWithinTolerance": null,
+          "summaries": {
+            "correct": {
+              "aimShares": {
+                "centre": 0.34964584674822924,
+                "mirror": 0.16854475209272377,
+                "other": 0.0,
+                "requested": 0.481809401159047
+              },
+              "centreFirst": 0.4175,
+              "contrast": 0.571501984126984,
+              "informative": 0.8875,
+              "meanLateralTowardRequested": 4.1555819418759485,
+              "order": 0.8125,
+              "orderBySide": {
+                "leftmost": 0.71,
+                "rightmost": 0.915
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.8625,
+              "stopReasons": {
+                "blue-wiped": 55,
+                "environment-done": 0,
+                "horizon": 0,
+                "requested-complete": 345
+              },
+              "teamWipe": 0.1375,
+              "throwsInWindow": 6212,
+              "unitsLostFraction": 0.22
+            },
+            "other": {
+              "aimShares": {
+                "centre": 0.35504094165813715,
+                "mirror": 0.40289150460593653,
+                "other": 0.0,
+                "requested": 0.2420675537359263
+              },
+              "centreFirst": 0.395,
+              "contrast": -0.4062083333333334,
+              "informative": 0.885,
+              "meanLateralTowardRequested": -4.180333454180766,
+              "order": 0.1875,
+              "orderBySide": {
+                "leftmost": 0.06,
+                "rightmost": 0.315
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.715,
+              "stopReasons": {
+                "blue-wiped": 108,
+                "environment-done": 0,
+                "horizon": 6,
+                "requested-complete": 286
+              },
+              "teamWipe": 0.27,
+              "throwsInWindow": 7816,
+              "unitsLostFraction": 0.38916666666666666
+            }
+          }
+        },
+        "c2-final-deterministic": {
+          "class": "controllable",
+          "contrasts": {
+            "other": {
+              "all": {
+                "contrast": {
+                  "interval95": [
+                    1.5591078373015872,
+                    1.6283295138888887
+                  ],
+                  "mean": 1.594075396825397
+                },
+                "order": {
+                  "interval95": [
+                    1.0,
+                    1.0
+                  ],
+                  "mean": 1.0
+                }
+              },
+              "d15": {
+                "contrast": {
+                  "interval95": [
+                    1.4675539682539682,
+                    1.558787003968254
+                  ],
+                  "mean": 1.5133690476190476
+                },
+                "order": {
+                  "interval95": [
+                    1.0,
+                    1.0
+                  ],
+                  "mean": 1.0
+                }
+              },
+              "d25": {
+                "contrast": {
+                  "interval95": [
+                    1.6280347222222225,
+                    1.7199836309523813
+                  ],
+                  "mean": 1.6747817460317458
+                },
+                "order": {
+                  "interval95": [
+                    1.0,
+                    1.0
+                  ],
+                  "mean": 1.0
+                }
+              }
+            }
+          },
+          "mirrorIdentityViolation": {
+            "otherVsCorrect": 0.0
+          },
+          "mirrorIdentityWithinTolerance": true,
+          "summaries": {
+            "correct": {
+              "aimShares": {
+                "centre": 0.23943003971034804,
+                "mirror": 0.025461340808222377,
+                "other": 0.0,
+                "requested": 0.7351086194814296
+              },
+              "centreFirst": 0.0,
+              "contrast": 0.9868333333333333,
+              "informative": 1.0,
+              "meanLateralTowardRequested": 5.030496481493053,
+              "order": 1.0,
+              "orderBySide": {
+                "leftmost": 1.0,
+                "rightmost": 1.0
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 1.0,
+              "stopReasons": {
+                "blue-wiped": 0,
+                "environment-done": 0,
+                "horizon": 0,
+                "requested-complete": 400
+              },
+              "teamWipe": 0.0,
+              "throwsInWindow": 4281,
+              "unitsLostFraction": 0.0016666666666666666
+            },
+            "other": {
+              "aimShares": {
+                "centre": 0.32762341516050714,
+                "mirror": 0.45737793363906126,
+                "other": 0.0,
+                "requested": 0.21499865120043163
+              },
+              "centreFirst": 0.0,
+              "contrast": -0.6072420634920634,
+              "informative": 1.0,
+              "meanLateralTowardRequested": -5.030496481493053,
+              "order": 0.0,
+              "orderBySide": {
+                "leftmost": 0.0,
+                "rightmost": 0.0
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.8525,
+              "stopReasons": {
+                "blue-wiped": 9,
+                "environment-done": 0,
+                "horizon": 50,
+                "requested-complete": 341
+              },
+              "teamWipe": 0.0225,
+              "throwsInWindow": 7414,
+              "unitsLostFraction": 0.2766666666666666
+            }
+          }
+        },
+        "c2-final-stochastic": {
+          "class": "controllable",
+          "contrasts": {
+            "other": {
+              "all": {
+                "contrast": {
+                  "interval95": [
+                    1.0969265376984125,
+                    1.2139925595238095
+                  ],
+                  "mean": 1.156611111111111
+                },
+                "order": {
+                  "interval95": [
+                    0.83625,
+                    0.90625
+                  ],
+                  "mean": 0.8725
+                }
+              },
+              "d15": {
+                "contrast": {
+                  "interval95": [
+                    0.8594554563492063,
+                    1.0251278769841268
+                  ],
+                  "mean": 0.9477658730158732
+                },
+                "order": {
+                  "interval95": [
+                    0.7825,
+                    0.895
+                  ],
+                  "mean": 0.8425
+                }
+              },
+              "d25": {
+                "contrast": {
+                  "interval95": [
+                    1.307309126984127,
+                    1.4226933531746035
+                  ],
+                  "mean": 1.3654563492063492
+                },
+                "order": {
+                  "interval95": [
+                    0.8625,
+                    0.94
+                  ],
+                  "mean": 0.9025
+                }
+              }
+            }
+          },
+          "mirrorIdentityViolation": {
+            "otherVsCorrect": 0.125
+          },
+          "mirrorIdentityWithinTolerance": null,
+          "summaries": {
+            "correct": {
+              "aimShares": {
+                "centre": 0.3383829787234043,
+                "mirror": 0.128,
+                "other": 0.0,
+                "requested": 0.5336170212765957
+              },
+              "centreFirst": 0.505,
+              "contrast": 0.7581468253968253,
+              "informative": 0.9825,
+              "meanLateralTowardRequested": 4.948696588477122,
+              "order": 0.93875,
+              "orderBySide": {
+                "leftmost": 0.9575,
+                "rightmost": 0.92
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.975,
+              "stopReasons": {
+                "blue-wiped": 10,
+                "environment-done": 0,
+                "horizon": 0,
+                "requested-complete": 390
+              },
+              "teamWipe": 0.025,
+              "throwsInWindow": 5875,
+              "unitsLostFraction": 0.0575
+            },
+            "other": {
+              "aimShares": {
+                "centre": 0.32494456762749446,
+                "mirror": 0.385920177383592,
+                "other": 0.0,
+                "requested": 0.2891352549889135
+              },
+              "centreFirst": 0.4575,
+              "contrast": -0.39846428571428566,
+              "informative": 0.98,
+              "meanLateralTowardRequested": -4.948109500853501,
+              "order": 0.06625,
+              "orderBySide": {
+                "leftmost": 0.07,
+                "rightmost": 0.0625
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.94,
+              "stopReasons": {
+                "blue-wiped": 14,
+                "environment-done": 0,
+                "horizon": 10,
+                "requested-complete": 376
+              },
+              "teamWipe": 0.035,
+              "throwsInWindow": 9020,
+              "unitsLostFraction": 0.13166666666666665
+            }
+          }
+        },
+        "c2-initializer-deterministic": {
+          "class": "controllable",
+          "contrasts": {
+            "other": {
+              "all": {
+                "contrast": {
+                  "interval95": [
+                    1.4855378472222223,
+                    1.6271136408730158
+                  ],
+                  "mean": 1.5582916666666664
+                },
+                "order": {
+                  "interval95": [
+                    0.6425,
+                    0.7325
+                  ],
+                  "mean": 0.6875
+                }
+              },
+              "d15": {
+                "contrast": {
+                  "interval95": [
+                    1.5484200396825396,
+                    1.6951593253968253
+                  ],
+                  "mean": 1.6242500000000002
+                },
+                "order": {
+                  "interval95": [
+                    0.625,
+                    0.75
+                  ],
+                  "mean": 0.69
+                }
+              },
+              "d25": {
+                "contrast": {
+                  "interval95": [
+                    1.3686726190476193,
+                    1.6052747023809524
+                  ],
+                  "mean": 1.4923333333333335
+                },
+                "order": {
+                  "interval95": [
+                    0.615,
+                    0.75
+                  ],
+                  "mean": 0.685
+                }
+              }
+            }
+          },
+          "mirrorIdentityViolation": {
+            "otherVsCorrect": 0.0
+          },
+          "mirrorIdentityWithinTolerance": true,
+          "summaries": {
+            "correct": {
+              "aimShares": {
+                "centre": 0.27232834279814144,
+                "mirror": 0.029943211151264842,
+                "other": 0.0,
+                "requested": 0.6977284460505937
+              },
+              "centreFirst": 0.125,
+              "contrast": 0.8640595238095239,
+              "informative": 0.7625,
+              "meanLateralTowardRequested": 5.2194427772450265,
+              "order": 0.84375,
+              "orderBySide": {
+                "leftmost": 0.8675,
+                "rightmost": 0.82
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.74,
+              "stopReasons": {
+                "blue-wiped": 103,
+                "environment-done": 0,
+                "horizon": 1,
+                "requested-complete": 296
+              },
+              "teamWipe": 0.2575,
+              "throwsInWindow": 3874,
+              "unitsLostFraction": 0.32666666666666666
+            },
+            "other": {
+              "aimShares": {
+                "centre": 0.3275211216969261,
+                "mirror": 0.5367607406075858,
+                "other": 0.0,
+                "requested": 0.13571813769548804
+              },
+              "centreFirst": 0.125,
+              "contrast": -0.6942321428571429,
+              "informative": 0.7625,
+              "meanLateralTowardRequested": -5.2194427772450265,
+              "order": 0.15625,
+              "orderBySide": {
+                "leftmost": 0.18,
+                "rightmost": 0.1325
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.33,
+              "stopReasons": {
+                "blue-wiped": 263,
+                "environment-done": 0,
+                "horizon": 5,
+                "requested-complete": 132
+              },
+              "teamWipe": 0.6575,
+              "throwsInWindow": 5563,
+              "unitsLostFraction": 0.765
+            }
+          }
+        },
+        "c2-initializer-stochastic": {
+          "class": "controllable",
+          "contrasts": {
+            "other": {
+              "all": {
+                "contrast": {
+                  "interval95": [
+                    1.1776977182539683,
+                    1.3047550595238095
+                  ],
+                  "mean": 1.2405833333333334
+                },
+                "order": {
+                  "interval95": [
+                    0.79375,
+                    0.865
+                  ],
+                  "mean": 0.83
+                }
+              },
+              "d15": {
+                "contrast": {
+                  "interval95": [
+                    0.9558844246031746,
+                    1.119025496031746
+                  ],
+                  "mean": 1.0382658730158731
+                },
+                "order": {
+                  "interval95": [
+                    0.745,
+                    0.855
+                  ],
+                  "mean": 0.8025
+                }
+              },
+              "d25": {
+                "contrast": {
+                  "interval95": [
+                    1.361338392857143,
+                    1.5191255952380955
+                  ],
+                  "mean": 1.4429007936507938
+                },
+                "order": {
+                  "interval95": [
+                    0.8125,
+                    0.9
+                  ],
+                  "mean": 0.8575
+                }
+              }
+            }
+          },
+          "mirrorIdentityViolation": {
+            "otherVsCorrect": 0.195
+          },
+          "mirrorIdentityWithinTolerance": null,
+          "summaries": {
+            "correct": {
+              "aimShares": {
+                "centre": 0.3383038210624418,
+                "mirror": 0.12525629077353215,
+                "other": 0.0,
+                "requested": 0.5364398881640261
+              },
+              "centreFirst": 0.3775,
+              "contrast": 0.7462837301587301,
+              "informative": 0.94,
+              "meanLateralTowardRequested": 5.119512182176717,
+              "order": 0.91625,
+              "orderBySide": {
+                "leftmost": 0.9425,
+                "rightmost": 0.89
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.94,
+              "stopReasons": {
+                "blue-wiped": 24,
+                "environment-done": 0,
+                "horizon": 0,
+                "requested-complete": 376
+              },
+              "teamWipe": 0.06,
+              "throwsInWindow": 5365,
+              "unitsLostFraction": 0.1225
+            },
+            "other": {
+              "aimShares": {
+                "centre": 0.3465049393522571,
+                "mirror": 0.40677754157809176,
+                "other": 0.0,
+                "requested": 0.24671751906965111
+              },
+              "centreFirst": 0.3625,
+              "contrast": -0.4942996031746032,
+              "informative": 0.9375,
+              "meanLateralTowardRequested": -5.100116563767617,
+              "order": 0.08625,
+              "orderBySide": {
+                "leftmost": 0.1375,
+                "rightmost": 0.035
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.8125,
+              "stopReasons": {
+                "blue-wiped": 69,
+                "environment-done": 0,
+                "horizon": 6,
+                "requested-complete": 325
+              },
+              "teamWipe": 0.175,
+              "throwsInWindow": 7997,
+              "unitsLostFraction": 0.33666666666666667
+            }
+          }
+        },
+        "c3-final-deterministic": {
+          "class": "controllable",
+          "contrasts": {
+            "other": {
+              "all": {
+                "contrast": {
+                  "interval95": [
+                    1.5648781250000001,
+                    1.6353285218253966
+                  ],
+                  "mean": 1.6000396825396825
+                },
+                "order": {
+                  "interval95": [
+                    1.0,
+                    1.0
+                  ],
+                  "mean": 1.0
+                }
+              },
+              "d15": {
+                "contrast": {
+                  "interval95": [
+                    1.4618266865079361,
+                    1.5674505952380955
+                  ],
+                  "mean": 1.5146031746031745
+                },
+                "order": {
+                  "interval95": [
+                    1.0,
+                    1.0
+                  ],
+                  "mean": 1.0
+                }
+              },
+              "d25": {
+                "contrast": {
+                  "interval95": [
+                    1.6423209325396826,
+                    1.7274414682539683
+                  ],
+                  "mean": 1.6854761904761904
+                },
+                "order": {
+                  "interval95": [
+                    1.0,
+                    1.0
+                  ],
+                  "mean": 1.0
+                }
+              }
+            }
+          },
+          "mirrorIdentityViolation": {
+            "otherVsCorrect": 0.0
+          },
+          "mirrorIdentityWithinTolerance": true,
+          "summaries": {
+            "correct": {
+              "aimShares": {
+                "centre": 0.27651991614255766,
+                "mirror": 0.019916142557651992,
+                "other": 0.0,
+                "requested": 0.7035639412997904
+              },
+              "centreFirst": 0.0675,
+              "contrast": 0.975,
+              "informative": 1.0,
+              "meanLateralTowardRequested": 3.1396519818666797,
+              "order": 1.0,
+              "orderBySide": {
+                "leftmost": 1.0,
+                "rightmost": 1.0
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 1.0,
+              "stopReasons": {
+                "blue-wiped": 0,
+                "environment-done": 0,
+                "horizon": 0,
+                "requested-complete": 400
+              },
+              "teamWipe": 0.0,
+              "throwsInWindow": 4770,
+              "unitsLostFraction": 0.08333333333333331
+            },
+            "other": {
+              "aimShares": {
+                "centre": 0.33886888863082104,
+                "mirror": 0.42863778887469517,
+                "other": 0.0,
+                "requested": 0.2324933224944838
+              },
+              "centreFirst": 0.0675,
+              "contrast": -0.6250396825396826,
+              "informative": 1.0,
+              "meanLateralTowardRequested": -3.1396519818666797,
+              "order": 0.0,
+              "orderBySide": {
+                "leftmost": 0.0,
+                "rightmost": 0.0
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.8125,
+              "stopReasons": {
+                "blue-wiped": 63,
+                "environment-done": 0,
+                "horizon": 12,
+                "requested-complete": 325
+              },
+              "teamWipe": 0.1575,
+              "throwsInWindow": 8611,
+              "unitsLostFraction": 0.38916666666666666
+            }
+          }
+        },
+        "c3-final-stochastic": {
+          "class": "controllable",
+          "contrasts": {
+            "other": {
+              "all": {
+                "contrast": {
+                  "interval95": [
+                    1.2078499503968254,
+                    1.3187188988095238
+                  ],
+                  "mean": 1.2641726190476188
+                },
+                "order": {
+                  "interval95": [
+                    0.9,
+                    0.94875
+                  ],
+                  "mean": 0.925
+                }
+              },
+              "d15": {
+                "contrast": {
+                  "interval95": [
+                    1.030603869047619,
+                    1.1894868055555554
+                  ],
+                  "mean": 1.1115079365079366
+                },
+                "order": {
+                  "interval95": [
+                    0.8475,
+                    0.9275
+                  ],
+                  "mean": 0.89
+                }
+              },
+              "d25": {
+                "contrast": {
+                  "interval95": [
+                    1.3492775793650793,
+                    1.479033630952381
+                  ],
+                  "mean": 1.4168373015873015
+                },
+                "order": {
+                  "interval95": [
+                    0.935,
+                    0.9825
+                  ],
+                  "mean": 0.96
+                }
+              }
+            }
+          },
+          "mirrorIdentityViolation": {
+            "otherVsCorrect": 0.0825
+          },
+          "mirrorIdentityWithinTolerance": null,
+          "summaries": {
+            "correct": {
+              "aimShares": {
+                "centre": 0.34853779657899575,
+                "mirror": 0.09306602906014347,
+                "other": 0.0,
+                "requested": 0.5583961743608608
+              },
+              "centreFirst": 0.4175,
+              "contrast": 0.8039126984126983,
+              "informative": 0.9875,
+              "meanLateralTowardRequested": 3.127900586720981,
+              "order": 0.965,
+              "orderBySide": {
+                "leftmost": 0.945,
+                "rightmost": 0.985
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.9875,
+              "stopReasons": {
+                "blue-wiped": 5,
+                "environment-done": 0,
+                "horizon": 0,
+                "requested-complete": 395
+              },
+              "teamWipe": 0.0125,
+              "throwsInWindow": 5437,
+              "unitsLostFraction": 0.05416666666666666
+            },
+            "other": {
+              "aimShares": {
+                "centre": 0.3427393097460386,
+                "mirror": 0.37236813544606034,
+                "other": 0.0,
+                "requested": 0.28489255480790104
+              },
+              "centreFirst": 0.4575,
+              "contrast": -0.4602599206349206,
+              "informative": 0.98,
+              "meanLateralTowardRequested": -3.1243964553853987,
+              "order": 0.04,
+              "orderBySide": {
+                "leftmost": 0.0175,
+                "rightmost": 0.0625
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.9125,
+              "stopReasons": {
+                "blue-wiped": 26,
+                "environment-done": 0,
+                "horizon": 9,
+                "requested-complete": 365
+              },
+              "teamWipe": 0.065,
+              "throwsInWindow": 9214,
+              "unitsLostFraction": 0.20833333333333331
+            }
+          }
+        },
+        "c3-initializer-deterministic": {
+          "class": "controllable",
+          "contrasts": {
+            "other": {
+              "all": {
+                "contrast": {
+                  "interval95": [
+                    1.4874404265873016,
+                    1.624552926587302
+                  ],
+                  "mean": 1.557825396825397
+                },
+                "order": {
+                  "interval95": [
+                    0.6375,
+                    0.73
+                  ],
+                  "mean": 0.685
+                }
+              },
+              "d15": {
+                "contrast": {
+                  "interval95": [
+                    1.4815700396825398,
+                    1.6221283730158729
+                  ],
+                  "mean": 1.5542301587301592
+                },
+                "order": {
+                  "interval95": [
+                    0.65,
+                    0.785
+                  ],
+                  "mean": 0.72
+                }
+              },
+              "d25": {
+                "contrast": {
+                  "interval95": [
+                    1.4370490079365081,
+                    1.6758627976190477
+                  ],
+                  "mean": 1.5614206349206348
+                },
+                "order": {
+                  "interval95": [
+                    0.58,
+                    0.715
+                  ],
+                  "mean": 0.65
+                }
+              }
+            }
+          },
+          "mirrorIdentityViolation": {
+            "otherVsCorrect": 0.0
+          },
+          "mirrorIdentityWithinTolerance": true,
+          "summaries": {
+            "correct": {
+              "aimShares": {
+                "centre": 0.23377308707124012,
+                "mirror": 0.08153034300791556,
+                "other": 0.0,
+                "requested": 0.6846965699208444
+              },
+              "centreFirst": 0.06,
+              "contrast": 0.8496567460317459,
+              "informative": 0.74,
+              "meanLateralTowardRequested": 2.8774151633135214,
+              "order": 0.8425,
+              "orderBySide": {
+                "leftmost": 0.84,
+                "rightmost": 0.845
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.735,
+              "stopReasons": {
+                "blue-wiped": 106,
+                "environment-done": 0,
+                "horizon": 0,
+                "requested-complete": 294
+              },
+              "teamWipe": 0.265,
+              "throwsInWindow": 3790,
+              "unitsLostFraction": 0.4158333333333333
+            },
+            "other": {
+              "aimShares": {
+                "centre": 0.24849267872523687,
+                "mirror": 0.5882859603789836,
+                "other": 0.0,
+                "requested": 0.1632213608957795
+              },
+              "centreFirst": 0.06,
+              "contrast": -0.7081686507936508,
+              "informative": 0.74,
+              "meanLateralTowardRequested": -2.8774151633135214,
+              "order": 0.1575,
+              "orderBySide": {
+                "leftmost": 0.155,
+                "rightmost": 0.16
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.2525,
+              "stopReasons": {
+                "blue-wiped": 298,
+                "environment-done": 0,
+                "horizon": 1,
+                "requested-complete": 101
+              },
+              "teamWipe": 0.745,
+              "throwsInWindow": 4644,
+              "unitsLostFraction": 0.8116666666666665
+            }
+          }
+        },
+        "c3-initializer-stochastic": {
+          "class": "controllable",
+          "contrasts": {
+            "other": {
+              "all": {
+                "contrast": {
+                  "interval95": [
+                    1.3224515376984127,
+                    1.4488306547619048
+                  ],
+                  "mean": 1.3856607142857142
+                },
+                "order": {
+                  "interval95": [
+                    0.7749687500000001,
+                    0.845
+                  ],
+                  "mean": 0.81
+                }
+              },
+              "d15": {
+                "contrast": {
+                  "interval95": [
+                    1.1465453373015873,
+                    1.3229843253968256
+                  ],
+                  "mean": 1.2341507936507936
+                },
+                "order": {
+                  "interval95": [
+                    0.7075,
+                    0.8125
+                  ],
+                  "mean": 0.76
+                }
+              },
+              "d25": {
+                "contrast": {
+                  "interval95": [
+                    1.455294642857143,
+                    1.613535912698413
+                  ],
+                  "mean": 1.537170634920635
+                },
+                "order": {
+                  "interval95": [
+                    0.8125,
+                    0.9025
+                  ],
+                  "mean": 0.86
+                }
+              }
+            }
+          },
+          "mirrorIdentityViolation": {
+            "otherVsCorrect": 0.225
+          },
+          "mirrorIdentityWithinTolerance": null,
+          "summaries": {
+            "correct": {
+              "aimShares": {
+                "centre": 0.3432108788309316,
+                "mirror": 0.10026385224274406,
+                "other": 0.0,
+                "requested": 0.5565252689263244
+              },
+              "centreFirst": 0.29,
+              "contrast": 0.7761944444444444,
+              "informative": 0.93,
+              "meanLateralTowardRequested": 2.860629807433111,
+              "order": 0.9175,
+              "orderBySide": {
+                "leftmost": 0.9775,
+                "rightmost": 0.8575
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.915,
+              "stopReasons": {
+                "blue-wiped": 34,
+                "environment-done": 0,
+                "horizon": 0,
+                "requested-complete": 366
+              },
+              "teamWipe": 0.085,
+              "throwsInWindow": 4927,
+              "unitsLostFraction": 0.16166666666666665
+            },
+            "other": {
+              "aimShares": {
+                "centre": 0.36399053847224155,
+                "mirror": 0.436621678029776,
+                "other": 0.0,
+                "requested": 0.19938778349798247
+              },
+              "centreFirst": 0.3125,
+              "contrast": -0.6094662698412698,
+              "informative": 0.89,
+              "meanLateralTowardRequested": -2.8721252350463407,
+              "order": 0.1075,
+              "orderBySide": {
+                "leftmost": 0.1775,
+                "rightmost": 0.0375
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.5675,
+              "stopReasons": {
+                "blue-wiped": 171,
+                "environment-done": 0,
+                "horizon": 2,
+                "requested-complete": 227
+              },
+              "teamWipe": 0.4275,
+              "throwsInWindow": 7187,
+              "unitsLostFraction": 0.5666666666666665
+            }
+          }
+        }
+      }
+    },
+    "qualification": {
+      "cohortAveraged": {
+        "final-deterministic": {
+          "other": {
+            "all": {
+              "contrast": {
+                "interval95": [
+                  1.31846228505291,
+                  1.3657103091931215
+                ],
+                "mean": 1.3418630952380954
+              },
+              "order": {
+                "interval95": [
+                  0.9195729166666666,
+                  0.9466666666666665
+                ],
+                "mean": 0.9333333333333332
+              }
+            },
+            "d10": {
+              "contrast": {
+                "interval95": [
+                  1.1389905137013348,
+                  1.1763793631051094
+                ],
+                "mean": 1.1579049198452183
+              },
+              "order": {
+                "interval95": [
+                  0.9651741293532339,
+                  0.9925373134328358
+                ],
+                "mean": 0.9800995024875623
+              }
+            },
+            "d20": {
+              "contrast": {
+                "interval95": [
+                  1.3881556569996418,
+                  1.441609678959303
+                ],
+                "mean": 1.4154383975812546
+              },
+              "order": {
+                "interval95": [
+                  0.981203007518797,
+                  0.9987468671679196
+                ],
+                "mean": 0.9912280701754385
+              }
+            },
+            "d30": {
+              "contrast": {
+                "interval95": [
+                  1.405427731033934,
+                  1.501347366431953
+                ],
+                "mean": 1.4536291124636989
+              },
+              "order": {
+                "interval95": [
+                  0.7969924812030075,
+                  0.8571428571428571
+                ],
+                "mean": 0.8283208020050126
+              }
+            }
+          }
+        },
+        "final-stochastic": {
+          "other": {
+            "all": {
+              "contrast": {
+                "interval95": [
+                  1.0672263392857144,
+                  1.149403902116402
+                ],
+                "mean": 1.107933201058201
+              },
+              "order": {
+                "interval95": [
+                  0.7720833333333332,
+                  0.8108333333333333
+                ],
+                "mean": 0.79125
+              }
+            },
+            "d10": {
+              "contrast": {
+                "interval95": [
+                  0.6147071932006634,
+                  0.6945107054015636
+                ],
+                "mean": 0.654489457474532
+              },
+              "order": {
+                "interval95": [
+                  0.5845771144278606,
+                  0.6517412935323381
+                ],
+                "mean": 0.6175373134328356
+              }
+            },
+            "d20": {
+              "contrast": {
+                "interval95": [
+                  1.1228622896527032,
+                  1.2018620211242392
+                ],
+                "mean": 1.1628396387794884
+              },
+              "order": {
+                "interval95": [
+                  0.818295739348371,
+                  0.8634085213032581
+                ],
+                "mean": 0.8408521303258146
+              }
+            },
+            "d30": {
+              "contrast": {
+                "interval95": [
+                  1.4735903498826433,
+                  1.5456021999443053
+                ],
+                "mean": 1.5098798583760988
+              },
+              "order": {
+                "interval95": [
+                  0.899749373433584,
+                  0.9323308270676691
+                ],
+                "mean": 0.9166666666666667
+              }
+            }
+          }
+        },
+        "initializer-deterministic": {
+          "other": {
+            "all": {
+              "contrast": {
+                "interval95": [
+                  1.3166447668650794,
+                  1.4032710730820108
+                ],
+                "mean": 1.3596650132275132
+              },
+              "order": {
+                "interval95": [
+                  0.6270833333333333,
+                  0.6766666666666665
+                ],
+                "mean": 0.6520833333333335
+              }
+            },
+            "d10": {
+              "contrast": {
+                "interval95": [
+                  0.8755549632788439,
+                  0.9940771094922215
+                ],
+                "mean": 0.934112177209192
+              },
+              "order": {
+                "interval95": [
+                  0.40174129353233834,
+                  0.48134328358208955
+                ],
+                "mean": 0.44278606965174133
+              }
+            },
+            "d20": {
+              "contrast": {
+                "interval95": [
+                  1.4544970064049012,
+                  1.5647805277081595
+                ],
+                "mean": 1.5104576918486692
+              },
+              "order": {
+                "interval95": [
+                  0.7443609022556391,
+                  0.8082706766917294
+                ],
+                "mean": 0.7769423558897244
+              }
+            },
+            "d30": {
+              "contrast": {
+                "interval95": [
+                  1.5868501362533318,
+                  1.686455498866213
+                ],
+                "mean": 1.6376248160082747
+              },
+              "order": {
+                "interval95": [
+                  0.706766917293233,
+                  0.7694235588972432
+                ],
+                "mean": 0.738095238095238
+              }
+            }
+          }
+        },
+        "initializer-stochastic": {
+          "other": {
+            "all": {
+              "contrast": {
+                "interval95": [
+                  1.1320859871031748,
+                  1.2144608713624339
+                ],
+                "mean": 1.173102843915344
+              },
+              "order": {
+                "interval95": [
+                  0.716453125,
+                  0.755
+                ],
+                "mean": 0.7358333333333335
+              }
+            },
+            "d10": {
+              "contrast": {
+                "interval95": [
+                  0.6871936201926873,
+                  0.7869145591487008
+                ],
+                "mean": 0.7377517176024638
+              },
+              "order": {
+                "interval95": [
+                  0.5833333333333333,
+                  0.657960199004975
+                ],
+                "mean": 0.6218905472636815
+              }
+            },
+            "d20": {
+              "contrast": {
+                "interval95": [
+                  1.179339768070971,
+                  1.2530131380037397
+                ],
+                "mean": 1.2167561761546724
+              },
+              "order": {
+                "interval95": [
+                  0.7462406015037594,
+                  0.7982456140350878
+                ],
+                "mean": 0.7725563909774437
+              }
+            },
+            "d30": {
+              "contrast": {
+                "interval95": [
+                  1.528399396308231,
+                  1.6067565242471258
+                ],
+                "mean": 1.5680739547280902
+              },
+              "order": {
+                "interval95": [
+                  0.7894736842105264,
+                  0.8377192982456141
+                ],
+                "mean": 0.8139097744360902
+              }
+            }
+          }
+        }
+      },
+      "policies": {
+        "c1-final-deterministic": {
+          "class": "controllable",
+          "contrasts": {
+            "other": {
+              "all": {
+                "contrast": {
+                  "interval95": [
+                    1.3072399801587298,
+                    1.3828214533730157
+                  ],
+                  "mean": 1.3452013888888892
+                },
+                "order": {
+                  "interval95": [
+                    0.915,
+                    0.96
+                  ],
+                  "mean": 0.93875
+                }
+              },
+              "d10": {
+                "contrast": {
+                  "interval95": [
+                    1.1330998282397535,
+                    1.2269827943615255
+                  ],
+                  "mean": 1.180558516939114
+                },
+                "order": {
+                  "interval95": [
+                    0.8955223880597015,
+                    0.9776119402985075
+                  ],
+                  "mean": 0.9402985074626866
+                }
+              },
+              "d20": {
+                "contrast": {
+                  "interval95": [
+                    1.4875516917293232,
+                    1.590141648764769
+                  ],
+                  "mean": 1.5396765723833394
+                },
+                "order": {
+                  "interval95": [
+                    0.9624060150375939,
+                    1.0
+                  ],
+                  "mean": 0.9849624060150376
+                }
+              },
+              "d30": {
+                "contrast": {
+                  "interval95": [
+                    1.2387541771094404,
+                    1.3915415771571786
+                  ],
+                  "mean": 1.3166069936746627
+                },
+                "order": {
+                  "interval95": [
+                    0.8383458646616542,
+                    0.9398496240601504
+                  ],
+                  "mean": 0.8909774436090225
+                }
+              }
+            }
+          },
+          "mirrorIdentityViolation": {
+            "otherVsCorrect": 0.0
+          },
+          "mirrorIdentityWithinTolerance": true,
+          "summaries": {
+            "correct": {
+              "aimShares": {
+                "centre": 0.30498208496843543,
+                "mirror": 0.054427572086674626,
+                "other": 0.0,
+                "requested": 0.6405903429448899
+              },
+              "centreFirst": 0.28875,
+              "contrast": 0.8812519841269841,
+              "informative": 0.99375,
+              "meanLateralTowardRequested": 3.952230597361483,
+              "order": 0.969375,
+              "orderBySide": {
+                "leftmost": 0.9425,
+                "rightmost": 0.99625
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.99125,
+              "stopReasons": {
+                "blue-wiped": 7,
+                "environment-done": 0,
+                "horizon": 0,
+                "requested-complete": 793
+              },
+              "teamWipe": 0.00875,
+              "throwsInWindow": 11722,
+              "unitsLostFraction": 0.05458333333333333
+            },
+            "other": {
+              "aimShares": {
+                "centre": 0.2883656985736381,
+                "mirror": 0.4786045712321705,
+                "other": 0.0,
+                "requested": 0.23302973019419143
+              },
+              "centreFirst": 0.28875,
+              "contrast": -0.4639494047619047,
+              "informative": 0.99375,
+              "meanLateralTowardRequested": -3.952230597361483,
+              "order": 0.030625,
+              "orderBySide": {
+                "leftmost": 0.00375,
+                "rightmost": 0.0575
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.845,
+              "stopReasons": {
+                "blue-wiped": 111,
+                "environment-done": 0,
+                "horizon": 13,
+                "requested-complete": 676
+              },
+              "teamWipe": 0.13875,
+              "throwsInWindow": 17457,
+              "unitsLostFraction": 0.32
+            }
+          }
+        },
+        "c1-final-stochastic": {
+          "class": "controllable",
+          "contrasts": {
+            "other": {
+              "all": {
+                "contrast": {
+                  "interval95": [
+                    0.8717238839285715,
+                    0.9820000248015872
+                  ],
+                  "mean": 0.9272569444444444
+                },
+                "order": {
+                  "interval95": [
+                    0.624375,
+                    0.698125
+                  ],
+                  "mean": 0.66125
+                }
+              },
+              "d10": {
+                "contrast": {
+                  "interval95": [
+                    0.4175634476427386,
+                    0.5778412994551054
+                  ],
+                  "mean": 0.4974265576877516
+                },
+                "order": {
+                  "interval95": [
+                    0.3787313432835821,
+                    0.5242537313432836
+                  ],
+                  "mean": 0.45149253731343286
+                }
+              },
+              "d20": {
+                "contrast": {
+                  "interval95": [
+                    0.8991880743525481,
+                    1.0426494062537295
+                  ],
+                  "mean": 0.9703723594701037
+                },
+                "order": {
+                  "interval95": [
+                    0.631578947368421,
+                    0.75
+                  ],
+                  "mean": 0.6898496240601504
+                }
+              },
+              "d30": {
+                "contrast": {
+                  "interval95": [
+                    1.2405763665115168,
+                    1.3912916965031628
+                  ],
+                  "mean": 1.3172037235947007
+                },
+                "order": {
+                  "interval95": [
+                    0.8045112781954887,
+                    0.881578947368421
+                  ],
+                  "mean": 0.8439849624060151
+                }
+              }
+            }
+          },
+          "mirrorIdentityViolation": {
+            "otherVsCorrect": 0.28375
+          },
+          "mirrorIdentityWithinTolerance": null,
+          "summaries": {
+            "correct": {
+              "aimShares": {
+                "centre": 0.3520298378998709,
+                "mirror": 0.1689140725864295,
+                "other": 0.0,
+                "requested": 0.4790560895136996
+              },
+              "centreFirst": 0.5025,
+              "contrast": 0.6098541666666667,
+              "informative": 0.97125,
+              "meanLateralTowardRequested": 3.943039770198018,
+              "order": 0.833125,
+              "orderBySide": {
+                "leftmost": 0.7725,
+                "rightmost": 0.89375
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.95625,
+              "stopReasons": {
+                "blue-wiped": 35,
+                "environment-done": 0,
+                "horizon": 0,
+                "requested-complete": 765
+              },
+              "teamWipe": 0.04375,
+              "throwsInWindow": 13942,
+              "unitsLostFraction": 0.08083333333333334
+            },
+            "other": {
+              "aimShares": {
+                "centre": 0.33564927021058866,
+                "mirror": 0.38633058652447894,
+                "other": 0.0,
+                "requested": 0.2780201432649324
+              },
+              "centreFirst": 0.485,
+              "contrast": -0.3174027777777778,
+              "informative": 0.97375,
+              "meanLateralTowardRequested": -3.9364204428150824,
+              "order": 0.171875,
+              "orderBySide": {
+                "leftmost": 0.09125,
+                "rightmost": 0.2525
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.88875,
+              "stopReasons": {
+                "blue-wiped": 77,
+                "environment-done": 0,
+                "horizon": 12,
+                "requested-complete": 711
+              },
+              "teamWipe": 0.09625,
+              "throwsInWindow": 18567,
+              "unitsLostFraction": 0.18416666666666665
+            }
+          }
+        },
+        "c1-initializer-deterministic": {
+          "class": "controllable",
+          "contrasts": {
+            "other": {
+              "all": {
+                "contrast": {
+                  "interval95": [
+                    1.0794897321428572,
+                    1.2369839533730158
+                  ],
+                  "mean": 1.1580406746031746
+                },
+                "order": {
+                  "interval95": [
+                    0.54625,
+                    0.63
+                  ],
+                  "mean": 0.58875
+                }
+              },
+              "d10": {
+                "contrast": {
+                  "interval95": [
+                    0.5437628820184789,
+                    0.8178541814735844
+                  ],
+                  "mean": 0.6796108742004265
+                },
+                "order": {
+                  "interval95": [
+                    0.22014925373134328,
+                    0.376865671641791
+                  ],
+                  "mean": 0.30223880597014924
+                }
+              },
+              "d20": {
+                "contrast": {
+                  "interval95": [
+                    1.333800945816923,
+                    1.5457258473564865
+                  ],
+                  "mean": 1.4428064208139397
+                },
+                "order": {
+                  "interval95": [
+                    0.6879699248120301,
+                    0.7894736842105263
+                  ],
+                  "mean": 0.7406015037593985
+                }
+              },
+              "d30": {
+                "contrast": {
+                  "interval95": [
+                    1.239735275689223,
+                    1.4690215867048573
+                  ],
+                  "mean": 1.3553019453395392
+                },
+                "order": {
+                  "interval95": [
+                    0.6616541353383458,
+                    0.7857142857142857
+                  ],
+                  "mean": 0.7255639097744361
+                }
+              }
+            }
+          },
+          "mirrorIdentityViolation": {
+            "otherVsCorrect": 0.0
+          },
+          "mirrorIdentityWithinTolerance": true,
+          "summaries": {
+            "correct": {
+              "aimShares": {
+                "centre": 0.29649061443395125,
+                "mirror": 0.08814270724029381,
+                "other": 0.0,
+                "requested": 0.615366678325755
+              },
+              "centreFirst": 0.19625,
+              "contrast": 0.6349434523809524,
+              "informative": 0.70875,
+              "meanLateralTowardRequested": 4.111768608298219,
+              "order": 0.794375,
+              "orderBySide": {
+                "leftmost": 0.76375,
+                "rightmost": 0.825
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.685,
+              "stopReasons": {
+                "blue-wiped": 252,
+                "environment-done": 0,
+                "horizon": 0,
+                "requested-complete": 548
+              },
+              "teamWipe": 0.31625,
+              "throwsInWindow": 8577,
+              "unitsLostFraction": 0.39041666666666663
+            },
+            "other": {
+              "aimShares": {
+                "centre": 0.33112826166850423,
+                "mirror": 0.5166299154722529,
+                "other": 0.0,
+                "requested": 0.15224182285924293
+              },
+              "centreFirst": 0.19625,
+              "contrast": -0.5230972222222222,
+              "informative": 0.70875,
+              "meanLateralTowardRequested": -4.111768608298219,
+              "order": 0.205625,
+              "orderBySide": {
+                "leftmost": 0.175,
+                "rightmost": 0.23625
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.3475,
+              "stopReasons": {
+                "blue-wiped": 517,
+                "environment-done": 0,
+                "horizon": 5,
+                "requested-complete": 278
+              },
+              "teamWipe": 0.64625,
+              "throwsInWindow": 10884,
+              "unitsLostFraction": 0.7233333333333334
+            }
+          }
+        },
+        "c1-initializer-stochastic": {
+          "class": "controllable",
+          "contrasts": {
+            "other": {
+              "all": {
+                "contrast": {
+                  "interval95": [
+                    0.9177391369047619,
+                    1.0301180803571428
+                  ],
+                  "mean": 0.9743144841269842
+                },
+                "order": {
+                  "interval95": [
+                    0.5475,
+                    0.6225
+                  ],
+                  "mean": 0.585
+                }
+              },
+              "d10": {
+                "contrast": {
+                  "interval95": [
+                    0.4714196872778962,
+                    0.647344675432362
+                  ],
+                  "mean": 0.5610874200426439
+                },
+                "order": {
+                  "interval95": [
+                    0.416044776119403,
+                    0.5559701492537313
+                  ],
+                  "mean": 0.4869402985074627
+                }
+              },
+              "d20": {
+                "contrast": {
+                  "interval95": [
+                    0.9216954588853086,
+                    1.071847923379878
+                  ],
+                  "mean": 0.9975921947726459
+                },
+                "order": {
+                  "interval95": [
+                    0.5169172932330827,
+                    0.6390977443609023
+                  ],
+                  "mean": 0.5789473684210527
+                }
+              },
+              "d30": {
+                "contrast": {
+                  "interval95": [
+                    1.286267678123881,
+                    1.4453108216970998
+                  ],
+                  "mean": 1.3673708079723117
+                },
+                "order": {
+                  "interval95": [
+                    0.6334586466165414,
+                    0.7424812030075187
+                  ],
+                  "mean": 0.6898496240601504
+                }
+              }
+            }
+          },
+          "mirrorIdentityViolation": {
+            "otherVsCorrect": 0.38625
+          },
+          "mirrorIdentityWithinTolerance": null,
+          "summaries": {
+            "correct": {
+              "aimShares": {
+                "centre": 0.34797630799605134,
+                "mirror": 0.17522211253701875,
+                "other": 0.0,
+                "requested": 0.4768015794669299
+              },
+              "centreFirst": 0.37375,
+              "contrast": 0.5781468253968254,
+              "informative": 0.88625,
+              "meanLateralTowardRequested": 4.1010286167557135,
+              "order": 0.801875,
+              "orderBySide": {
+                "leftmost": 0.71375,
+                "rightmost": 0.89
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.855,
+              "stopReasons": {
+                "blue-wiped": 114,
+                "environment-done": 0,
+                "horizon": 2,
+                "requested-complete": 684
+              },
+              "teamWipe": 0.1425,
+              "throwsInWindow": 12156,
+              "unitsLostFraction": 0.20791666666666664
+            },
+            "other": {
+              "aimShares": {
+                "centre": 0.3600936829093748,
+                "mirror": 0.4012100709127578,
+                "other": 0.0,
+                "requested": 0.23869624617786742
+              },
+              "centreFirst": 0.3575,
+              "contrast": -0.3961676587301588,
+              "informative": 0.89625,
+              "meanLateralTowardRequested": -4.092842796916365,
+              "order": 0.216875,
+              "orderBySide": {
+                "leftmost": 0.11,
+                "rightmost": 0.32375
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.73375,
+              "stopReasons": {
+                "blue-wiped": 199,
+                "environment-done": 0,
+                "horizon": 14,
+                "requested-complete": 587
+              },
+              "teamWipe": 0.24875,
+              "throwsInWindow": 15371,
+              "unitsLostFraction": 0.3733333333333333
+            }
+          }
+        },
+        "c2-final-deterministic": {
+          "class": "controllable",
+          "contrasts": {
+            "other": {
+              "all": {
+                "contrast": {
+                  "interval95": [
+                    1.2072590029761907,
+                    1.2882930307539682
+                  ],
+                  "mean": 1.248609126984127
+                },
+                "order": {
+                  "interval95": [
+                    0.89375,
+                    0.9375
+                  ],
+                  "mean": 0.91625
+                }
+              },
+              "d10": {
+                "contrast": {
+                  "interval95": [
+                    1.01150201374082,
+                    1.042670575692964
+                  ],
+                  "mean": 1.0271233120113719
+                },
+                "order": {
+                  "interval95": [
+                    1.0,
+                    1.0
+                  ],
+                  "mean": 1.0
+                }
+              },
+              "d20": {
+                "contrast": {
+                  "interval95": [
+                    1.255904120420098,
+                    1.3211278195488723
+                  ],
+                  "mean": 1.2880534670008355
+                },
+                "order": {
+                  "interval95": [
+                    1.0,
+                    1.0
+                  ],
+                  "mean": 1.0
+                }
+              },
+              "d30": {
+                "contrast": {
+                  "interval95": [
+                    1.3235014619883039,
+                    1.5338062417949636
+                  ],
+                  "mean": 1.432315908819668
+                },
+                "order": {
+                  "interval95": [
+                    0.6917293233082706,
+                    0.8045112781954887
+                  ],
+                  "mean": 0.7481203007518797
+                }
+              }
+            }
+          },
+          "mirrorIdentityViolation": {
+            "otherVsCorrect": 0.0
+          },
+          "mirrorIdentityWithinTolerance": true,
+          "summaries": {
+            "correct": {
+              "aimShares": {
+                "centre": 0.2424214838416022,
+                "mirror": 0.07200728265817023,
+                "other": 0.0,
+                "requested": 0.6855712335002275
+              },
+              "centreFirst": 0.07625,
+              "contrast": 0.7909999999999999,
+              "informative": 0.94625,
+              "meanLateralTowardRequested": 4.919069092377867,
+              "order": 0.958125,
+              "orderBySide": {
+                "leftmost": 0.99875,
+                "rightmost": 0.9175
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.93875,
+              "stopReasons": {
+                "blue-wiped": 48,
+                "environment-done": 0,
+                "horizon": 1,
+                "requested-complete": 751
+              },
+              "teamWipe": 0.06,
+              "throwsInWindow": 10985,
+              "unitsLostFraction": 0.10875
+            },
+            "other": {
+              "aimShares": {
+                "centre": 0.2992200875023778,
+                "mirror": 0.5261556020544037,
+                "other": 0.0,
+                "requested": 0.17462431044321858
+              },
+              "centreFirst": 0.07625,
+              "contrast": -0.457609126984127,
+              "informative": 0.94625,
+              "meanLateralTowardRequested": -4.919069092377867,
+              "order": 0.041875,
+              "orderBySide": {
+                "leftmost": 0.0825,
+                "rightmost": 0.00125
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.77375,
+              "stopReasons": {
+                "blue-wiped": 93,
+                "environment-done": 0,
+                "horizon": 88,
+                "requested-complete": 619
+              },
+              "teamWipe": 0.11625,
+              "throwsInWindow": 15771,
+              "unitsLostFraction": 0.33625
+            }
+          }
+        },
+        "c2-final-stochastic": {
+          "class": "controllable",
+          "contrasts": {
+            "other": {
+              "all": {
+                "contrast": {
+                  "interval95": [
+                    1.1278320932539683,
+                    1.2234678075396825
+                  ],
+                  "mean": 1.1752559523809523
+                },
+                "order": {
+                  "interval95": [
+                    0.82125,
+                    0.873125
+                  ],
+                  "mean": 0.8475
+                }
+              },
+              "d10": {
+                "contrast": {
+                  "interval95": [
+                    0.6562422263681591,
+                    0.7827246949774934
+                  ],
+                  "mean": 0.7201285240464346
+                },
+                "order": {
+                  "interval95": [
+                    0.6455223880597015,
+                    0.7593283582089553
+                  ],
+                  "mean": 0.7033582089552238
+                }
+              },
+              "d20": {
+                "contrast": {
+                  "interval95": [
+                    1.1698338107172694,
+                    1.274329723117317
+                  ],
+                  "mean": 1.2224758324382385
+                },
+                "order": {
+                  "interval95": [
+                    0.8778195488721805,
+                    0.9454887218045113
+                  ],
+                  "mean": 0.9135338345864662
+                }
+              },
+              "d30": {
+                "contrast": {
+                  "interval95": [
+                    1.530234887814775,
+                    1.640530791263874
+                  ],
+                  "mean": 1.5865855113975413
+                },
+                "order": {
+                  "interval95": [
+                    0.8947368421052632,
+                    0.9548872180451128
+                  ],
+                  "mean": 0.9266917293233082
+                }
+              }
+            }
+          },
+          "mirrorIdentityViolation": {
+            "otherVsCorrect": 0.14125
+          },
+          "mirrorIdentityWithinTolerance": null,
+          "summaries": {
+            "correct": {
+              "aimShares": {
+                "centre": 0.338488271068636,
+                "mirror": 0.1252823631624674,
+                "other": 0.0,
+                "requested": 0.5362293657688966
+              },
+              "centreFirst": 0.43625,
+              "contrast": 0.7763462301587302,
+              "informative": 0.98625,
+              "meanLateralTowardRequested": 4.847680279853962,
+              "order": 0.92875,
+              "orderBySide": {
+                "leftmost": 0.9125,
+                "rightmost": 0.945
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.9825,
+              "stopReasons": {
+                "blue-wiped": 14,
+                "environment-done": 0,
+                "horizon": 0,
+                "requested-complete": 786
+              },
+              "teamWipe": 0.0175,
+              "throwsInWindow": 11510,
+              "unitsLostFraction": 0.0475
+            },
+            "other": {
+              "aimShares": {
+                "centre": 0.3274701657146089,
+                "mirror": 0.3856682314348736,
+                "other": 0.0,
+                "requested": 0.2868616028505175
+              },
+              "centreFirst": 0.46875,
+              "contrast": -0.39890972222222215,
+              "informative": 0.9875,
+              "meanLateralTowardRequested": -4.842636147604984,
+              "order": 0.08125,
+              "orderBySide": {
+                "leftmost": 0.0575,
+                "rightmost": 0.105
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.93875,
+              "stopReasons": {
+                "blue-wiped": 32,
+                "environment-done": 0,
+                "horizon": 17,
+                "requested-complete": 751
+              },
+              "teamWipe": 0.04,
+              "throwsInWindow": 17681,
+              "unitsLostFraction": 0.11333333333333333
+            }
+          }
+        },
+        "c2-initializer-deterministic": {
+          "class": "controllable",
+          "contrasts": {
+            "other": {
+              "all": {
+                "contrast": {
+                  "interval95": [
+                    1.5559919146825394,
+                    1.6425894097222222
+                  ],
+                  "mean": 1.6004484126984124
+                },
+                "order": {
+                  "interval95": [
+                    0.81125,
+                    0.865
+                  ],
+                  "mean": 0.83875
+                }
+              },
+              "d10": {
+                "contrast": {
+                  "interval95": [
+                    1.4444143864013268,
+                    1.5692537313432837
+                  ],
+                  "mean": 1.5076166785122007
+                },
+                "order": {
+                  "interval95": [
+                    0.8171641791044776,
+                    0.9029850746268657
+                  ],
+                  "mean": 0.8619402985074627
+                }
+              },
+              "d20": {
+                "contrast": {
+                  "interval95": [
+                    1.4111079782790308,
+                    1.5867701247165533
+                  ],
+                  "mean": 1.50187373194892
+                },
+                "order": {
+                  "interval95": [
+                    0.8082706766917294,
+                    0.9097744360902256
+                  ],
+                  "mean": 0.8609022556390977
+                }
+              },
+              "d30": {
+                "contrast": {
+                  "interval95": [
+                    1.7239795918367344,
+                    1.8544575725026853
+                  ],
+                  "mean": 1.7925528105979234
+                },
+                "order": {
+                  "interval95": [
+                    0.7443609022556391,
+                    0.8383458646616542
+                  ],
+                  "mean": 0.793233082706767
+                }
+              }
+            }
+          },
+          "mirrorIdentityViolation": {
+            "otherVsCorrect": 0.0
+          },
+          "mirrorIdentityWithinTolerance": true,
+          "summaries": {
+            "correct": {
+              "aimShares": {
+                "centre": 0.18917564520170382,
+                "mirror": 0.044224505136557256,
+                "other": 0.0,
+                "requested": 0.7665998496617389
+              },
+              "centreFirst": 0.0775,
+              "contrast": 0.8766874999999998,
+              "informative": 0.87875,
+              "meanLateralTowardRequested": 5.101671500927119,
+              "order": 0.919375,
+              "orderBySide": {
+                "leftmost": 0.96625,
+                "rightmost": 0.8725
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.86875,
+              "stopReasons": {
+                "blue-wiped": 105,
+                "environment-done": 0,
+                "horizon": 0,
+                "requested-complete": 695
+              },
+              "teamWipe": 0.13125,
+              "throwsInWindow": 7982,
+              "unitsLostFraction": 0.2366666666666667
+            },
+            "other": {
+              "aimShares": {
+                "centre": 0.2857142857142857,
+                "mirror": 0.5795743189979855,
+                "other": 0.0,
+                "requested": 0.13471139528772882
+              },
+              "centreFirst": 0.0775,
+              "contrast": -0.7237609126984127,
+              "informative": 0.87875,
+              "meanLateralTowardRequested": -5.101671500927119,
+              "order": 0.080625,
+              "orderBySide": {
+                "leftmost": 0.1275,
+                "rightmost": 0.03375
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.4075,
+              "stopReasons": {
+                "blue-wiped": 467,
+                "environment-done": 0,
+                "horizon": 7,
+                "requested-complete": 326
+              },
+              "teamWipe": 0.58625,
+              "throwsInWindow": 11417,
+              "unitsLostFraction": 0.7125
+            }
+          }
+        },
+        "c2-initializer-stochastic": {
+          "class": "controllable",
+          "contrasts": {
+            "other": {
+              "all": {
+                "contrast": {
+                  "interval95": [
+                    1.1756318700396826,
+                    1.2765852926587302
+                  ],
+                  "mean": 1.226031746031746
+                },
+                "order": {
+                  "interval95": [
+                    0.789375,
+                    0.845
+                  ],
+                  "mean": 0.818125
+                }
+              },
+              "d10": {
+                "contrast": {
+                  "interval95": [
+                    0.7194666548211325,
+                    0.8630987917555082
+                  ],
+                  "mean": 0.791796967543236
+                },
+                "order": {
+                  "interval95": [
+                    0.6473880597014925,
+                    0.7723880597014925
+                  ],
+                  "mean": 0.7126865671641791
+                }
+              },
+              "d20": {
+                "contrast": {
+                  "interval95": [
+                    1.1817191788996297,
+                    1.306233664518439
+                  ],
+                  "mean": 1.244331065759637
+                },
+                "order": {
+                  "interval95": [
+                    0.8214285714285714,
+                    0.8928571428571429
+                  ],
+                  "mean": 0.8571428571428571
+                }
+              },
+              "d30": {
+                "contrast": {
+                  "interval95": [
+                    1.5849992540876,
+                    1.70296686657119
+                  ],
+                  "mean": 1.6452321279388948
+                },
+                "order": {
+                  "interval95": [
+                    0.8515037593984962,
+                    0.9172932330827067
+                  ],
+                  "mean": 0.8853383458646616
+                }
+              }
+            }
+          },
+          "mirrorIdentityViolation": {
+            "otherVsCorrect": 0.2
+          },
+          "mirrorIdentityWithinTolerance": null,
+          "summaries": {
+            "correct": {
+              "aimShares": {
+                "centre": 0.3230172250615181,
+                "mirror": 0.13174332765474162,
+                "other": 0.0,
+                "requested": 0.5452394472837403
+              },
+              "centreFirst": 0.33625,
+              "contrast": 0.7401329365079365,
+              "informative": 0.955,
+              "meanLateralTowardRequested": 5.011645597025333,
+              "order": 0.9075,
+              "orderBySide": {
+                "leftmost": 0.93125,
+                "rightmost": 0.88375
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.9475,
+              "stopReasons": {
+                "blue-wiped": 42,
+                "environment-done": 0,
+                "horizon": 0,
+                "requested-complete": 758
+              },
+              "teamWipe": 0.0525,
+              "throwsInWindow": 10566,
+              "unitsLostFraction": 0.09416666666666666
+            },
+            "other": {
+              "aimShares": {
+                "centre": 0.3391243919388464,
+                "mirror": 0.4156295407164066,
+                "other": 0.0,
+                "requested": 0.245246067344747
+              },
+              "centreFirst": 0.34875,
+              "contrast": -0.48589880952380954,
+              "informative": 0.96375,
+              "meanLateralTowardRequested": -5.022645559087712,
+              "order": 0.089375,
+              "orderBySide": {
+                "leftmost": 0.1225,
+                "rightmost": 0.05625
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.85,
+              "stopReasons": {
+                "blue-wiped": 106,
+                "environment-done": 0,
+                "horizon": 14,
+                "requested-complete": 680
+              },
+              "teamWipe": 0.13375,
+              "throwsInWindow": 15829,
+              "unitsLostFraction": 0.29416666666666663
+            }
+          }
+        },
+        "c3-final-deterministic": {
+          "class": "controllable",
+          "contrasts": {
+            "other": {
+              "all": {
+                "contrast": {
+                  "interval95": [
+                    1.3965603422619048,
+                    1.4673142609126983
+                  ],
+                  "mean": 1.43177876984127
+                },
+                "order": {
+                  "interval95": [
+                    0.9225,
+                    0.965
+                  ],
+                  "mean": 0.945
+                }
+              },
+              "d10": {
+                "contrast": {
+                  "interval95": [
+                    1.2362406716417909,
+                    1.2960028725420518
+                  ],
+                  "mean": 1.2660329305851694
+                },
+                "order": {
+                  "interval95": [
+                    1.0,
+                    1.0
+                  ],
+                  "mean": 1.0
+                }
+              },
+              "d20": {
+                "contrast": {
+                  "interval95": [
+                    1.3655997135696383,
+                    1.4677087808807734
+                  ],
+                  "mean": 1.4185851533595895
+                },
+                "order": {
+                  "interval95": [
+                    0.9699248120300752,
+                    1.0
+                  ],
+                  "mean": 0.9887218045112782
+                }
+              },
+              "d30": {
+                "contrast": {
+                  "interval95": [
+                    1.533784684926602,
+                    1.6855087868480725
+                  ],
+                  "mean": 1.6119644348967657
+                },
+                "order": {
+                  "interval95": [
+                    0.7857142857142857,
+                    0.9022556390977443
+                  ],
+                  "mean": 0.8458646616541353
+                }
+              }
+            }
+          },
+          "mirrorIdentityViolation": {
+            "otherVsCorrect": 0.0
+          },
+          "mirrorIdentityWithinTolerance": true,
+          "summaries": {
+            "correct": {
+              "aimShares": {
+                "centre": 0.3211845102505695,
+                "mirror": 0.040606120629890066,
+                "other": 0.0,
+                "requested": 0.6382093691195404
+              },
+              "centreFirst": 0.32,
+              "contrast": 0.8873333333333332,
+              "informative": 0.99,
+              "meanLateralTowardRequested": 3.112185350400507,
+              "order": 0.9725,
+              "orderBySide": {
+                "leftmost": 0.99625,
+                "rightmost": 0.94875
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.98625,
+              "stopReasons": {
+                "blue-wiped": 8,
+                "environment-done": 0,
+                "horizon": 3,
+                "requested-complete": 789
+              },
+              "teamWipe": 0.01,
+              "throwsInWindow": 10097,
+              "unitsLostFraction": 0.024583333333333332
+            },
+            "other": {
+              "aimShares": {
+                "centre": 0.33420469398192876,
+                "mirror": 0.41495709495936806,
+                "other": 0.0,
+                "requested": 0.2508382110587032
+              },
+              "centreFirst": 0.32,
+              "contrast": -0.5444454365079365,
+              "informative": 0.99,
+              "meanLateralTowardRequested": -3.112185350400507,
+              "order": 0.0275,
+              "orderBySide": {
+                "leftmost": 0.05125,
+                "rightmost": 0.00375
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.91125,
+              "stopReasons": {
+                "blue-wiped": 36,
+                "environment-done": 0,
+                "horizon": 35,
+                "requested-complete": 729
+              },
+              "teamWipe": 0.045,
+              "throwsInWindow": 17597,
+              "unitsLostFraction": 0.21916666666666665
+            }
+          }
+        },
+        "c3-final-stochastic": {
+          "class": "controllable",
+          "contrasts": {
+            "other": {
+              "all": {
+                "contrast": {
+                  "interval95": [
+                    1.1703329365079365,
+                    1.2711418402777779
+                  ],
+                  "mean": 1.2212867063492063
+                },
+                "order": {
+                  "interval95": [
+                    0.839375,
+                    0.889375
+                  ],
+                  "mean": 0.865
+                }
+              },
+              "d10": {
+                "contrast": {
+                  "interval95": [
+                    0.6728795753375978,
+                    0.8162596985311538
+                  ],
+                  "mean": 0.7459132906894101
+                },
+                "order": {
+                  "interval95": [
+                    0.6380130597014926,
+                    0.7555970149253731
+                  ],
+                  "mean": 0.6977611940298507
+                }
+              },
+              "d20": {
+                "contrast": {
+                  "interval95": [
+                    1.2345055346700082,
+                    1.355034386561642
+                  ],
+                  "mean": 1.2956707244301229
+                },
+                "order": {
+                  "interval95": [
+                    0.8890977443609023,
+                    0.9473684210526315
+                  ],
+                  "mean": 0.9191729323308271
+                }
+              },
+              "d30": {
+                "contrast": {
+                  "interval95": [
+                    1.5742414070891513,
+                    1.675091150495286
+                  ],
+                  "mean": 1.6258503401360545
+                },
+                "order": {
+                  "interval95": [
+                    0.9624060150375939,
+                    0.9924812030075187
+                  ],
+                  "mean": 0.9793233082706767
+                }
+              }
+            }
+          },
+          "mirrorIdentityViolation": {
+            "otherVsCorrect": 0.1275
+          },
+          "mirrorIdentityWithinTolerance": null,
+          "summaries": {
+            "correct": {
+              "aimShares": {
+                "centre": 0.33869355864449896,
+                "mirror": 0.11283728536385937,
+                "other": 0.0,
+                "requested": 0.5484691559916417
+              },
+              "centreFirst": 0.42,
+              "contrast": 0.766718253968254,
+              "informative": 0.98875,
+              "meanLateralTowardRequested": 3.0983372493543153,
+              "order": 0.93125,
+              "orderBySide": {
+                "leftmost": 0.905,
+                "rightmost": 0.9575
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.98125,
+              "stopReasons": {
+                "blue-wiped": 13,
+                "environment-done": 0,
+                "horizon": 2,
+                "requested-complete": 785
+              },
+              "teamWipe": 0.01625,
+              "throwsInWindow": 11007,
+              "unitsLostFraction": 0.05125
+            },
+            "other": {
+              "aimShares": {
+                "centre": 0.3320197591163901,
+                "mirror": 0.36998390409058113,
+                "other": 0.0,
+                "requested": 0.2979963367930288
+              },
+              "centreFirst": 0.4225,
+              "contrast": -0.45456845238095234,
+              "informative": 0.98875,
+              "meanLateralTowardRequested": -3.0960561766084087,
+              "order": 0.06625,
+              "orderBySide": {
+                "leftmost": 0.01,
+                "rightmost": 0.1225
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.9275,
+              "stopReasons": {
+                "blue-wiped": 45,
+                "environment-done": 0,
+                "horizon": 13,
+                "requested-complete": 742
+              },
+              "teamWipe": 0.05625,
+              "throwsInWindow": 18017,
+              "unitsLostFraction": 0.15541666666666665
+            }
+          }
+        },
+        "c3-initializer-deterministic": {
+          "class": "controllable",
+          "contrasts": {
+            "other": {
+              "all": {
+                "contrast": {
+                  "interval95": [
+                    1.250611185515873,
+                    1.3897010416666669
+                  ],
+                  "mean": 1.3205059523809524
+                },
+                "order": {
+                  "interval95": [
+                    0.4825,
+                    0.57375
+                  ],
+                  "mean": 0.52875
+                }
+              },
+              "d10": {
+                "contrast": {
+                  "interval95": [
+                    0.5210586946221275,
+                    0.7089289416015161
+                  ],
+                  "mean": 0.6151089789149492
+                },
+                "order": {
+                  "interval95": [
+                    0.07835820895522388,
+                    0.2462686567164179
+                  ],
+                  "mean": 0.16417910447761194
+                }
+              },
+              "d20": {
+                "contrast": {
+                  "interval95": [
+                    1.5012420933285597,
+                    1.666019214703425
+                  ],
+                  "mean": 1.5866929227831483
+                },
+                "order": {
+                  "interval95": [
+                    0.6729323308270677,
+                    0.7857142857142857
+                  ],
+                  "mean": 0.7293233082706767
+                }
+              },
+              "d30": {
+                "contrast": {
+                  "interval95": [
+                    1.6825259577515217,
+                    1.8407089151450051
+                  ],
+                  "mean": 1.7650196920873613
+                },
+                "order": {
+                  "interval95": [
+                    0.6428571428571429,
+                    0.7481203007518797
+                  ],
+                  "mean": 0.6954887218045113
+                }
+              }
+            }
+          },
+          "mirrorIdentityViolation": {
+            "otherVsCorrect": 0.0
+          },
+          "mirrorIdentityWithinTolerance": true,
+          "summaries": {
+            "correct": {
+              "aimShares": {
+                "centre": 0.21270491803278688,
+                "mirror": 0.11912568306010929,
+                "other": 0.0,
+                "requested": 0.6681693989071038
+              },
+              "centreFirst": 0.0425,
+              "contrast": 0.691000992063492,
+              "informative": 0.66625,
+              "meanLateralTowardRequested": 2.8634253879683054,
+              "order": 0.764375,
+              "orderBySide": {
+                "leftmost": 0.81875,
+                "rightmost": 0.71
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.62625,
+              "stopReasons": {
+                "blue-wiped": 299,
+                "environment-done": 0,
+                "horizon": 0,
+                "requested-complete": 501
+              },
+              "teamWipe": 0.375,
+              "throwsInWindow": 7320,
+              "unitsLostFraction": 0.5087499999999999
+            },
+            "other": {
+              "aimShares": {
+                "centre": 0.2401517005138243,
+                "mirror": 0.6113286028872034,
+                "other": 0.0,
+                "requested": 0.14851969659897235
+              },
+              "centreFirst": 0.0425,
+              "contrast": -0.6295049603174604,
+              "informative": 0.66625,
+              "meanLateralTowardRequested": -2.8634253879683054,
+              "order": 0.235625,
+              "orderBySide": {
+                "leftmost": 0.29,
+                "rightmost": 0.18125
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.18375,
+              "stopReasons": {
+                "blue-wiped": 652,
+                "environment-done": 0,
+                "horizon": 1,
+                "requested-complete": 147
+              },
+              "teamWipe": 0.815,
+              "throwsInWindow": 8174,
+              "unitsLostFraction": 0.87625
+            }
+          }
+        },
+        "c3-initializer-stochastic": {
+          "class": "controllable",
+          "contrasts": {
+            "other": {
+              "all": {
+                "contrast": {
+                  "interval95": [
+                    1.267749925595238,
+                    1.3691957837301592
+                  ],
+                  "mean": 1.3189623015873015
+                },
+                "order": {
+                  "interval95": [
+                    0.778125,
+                    0.83
+                  ],
+                  "mean": 0.804375
+                }
+              },
+              "d10": {
+                "contrast": {
+                  "interval95": [
+                    0.7770333599857854,
+                    0.9424989635157545
+                  ],
+                  "mean": 0.8603707652215116
+                },
+                "order": {
+                  "interval95": [
+                    0.6119402985074627,
+                    0.7220149253731343
+                  ],
+                  "mean": 0.6660447761194029
+                }
+              },
+              "d20": {
+                "contrast": {
+                  "interval95": [
+                    1.349810911206588,
+                    1.4648249343597086
+                  ],
+                  "mean": 1.408345267931734
+                },
+                "order": {
+                  "interval95": [
+                    0.8477443609022557,
+                    0.9135338345864662
+                  ],
+                  "mean": 0.881578947368421
+                }
+              },
+              "d30": {
+                "contrast": {
+                  "interval95": [
+                    1.6345622986036517,
+                    1.7458676453037354
+                  ],
+                  "mean": 1.6916189282730636
+                },
+                "order": {
+                  "interval95": [
+                    0.8327067669172933,
+                    0.8984962406015038
+                  ],
+                  "mean": 0.8665413533834586
+                }
+              }
+            }
+          },
+          "mirrorIdentityViolation": {
+            "otherVsCorrect": 0.245
+          },
+          "mirrorIdentityWithinTolerance": null,
+          "summaries": {
+            "correct": {
+              "aimShares": {
+                "centre": 0.3314401622718053,
+                "mirror": 0.10760649087221096,
+                "other": 0.0,
+                "requested": 0.5609533468559837
+              },
+              "centreFirst": 0.2625,
+              "contrast": 0.7437341269841269,
+              "informative": 0.9,
+              "meanLateralTowardRequested": 2.8540990846288774,
+              "order": 0.895625,
+              "orderBySide": {
+                "leftmost": 0.93375,
+                "rightmost": 0.8575
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.89,
+              "stopReasons": {
+                "blue-wiped": 88,
+                "environment-done": 0,
+                "horizon": 0,
+                "requested-complete": 712
+              },
+              "teamWipe": 0.11,
+              "throwsInWindow": 9860,
+              "unitsLostFraction": 0.18333333333333335
+            },
+            "other": {
+              "aimShares": {
+                "centre": 0.3489193388896737,
+                "mirror": 0.4423647407825964,
+                "other": 0.0,
+                "requested": 0.2087159203277299
+              },
+              "centreFirst": 0.26375,
+              "contrast": -0.5752281746031745,
+              "informative": 0.915,
+              "meanLateralTowardRequested": -2.8490977627422116,
+              "order": 0.09125,
+              "orderBySide": {
+                "leftmost": 0.14875,
+                "rightmost": 0.03375
+              },
+              "rejectedActionRate": 0.0,
+              "requestedSuccess": 0.62625,
+              "stopReasons": {
+                "blue-wiped": 292,
+                "environment-done": 0,
+                "horizon": 7,
+                "requested-complete": 501
+              },
+              "teamWipe": 0.365,
+              "throwsInWindow": 14158,
+              "unitsLostFraction": 0.4983333333333333
+            }
+          }
+        }
+      }
+    }
+  },
+  "outcome": "complete",
+  "predictions": {
+    "1-teacherGatePasses": true,
+    "2-replicated": true,
+    "3-averagedFinalDeltaNearDevelopment": true,
+    "4-initializersInsensitiveAtD10": false,
+    "5-heldoutFinalsControllable": false,
+    "averagedFinalDelta": 0.9333333333333332,
+    "initializerD10Delta": {
+      "1": {
+        "interval95": [
+          0.22014925373134328,
+          0.376865671641791
+        ],
+        "mean": 0.30223880597014924
+      },
+      "3": {
+        "interval95": [
+          0.07835820895522388,
+          0.2462686567164179
+        ],
+        "mean": 0.16417910447761194
+      }
+    }
+  },
+  "regressionGate": {
+    "cells": {
+      "1/final-deterministic": {
+        "exact": true,
+        "mismatchedSeeds": [],
+        "worlds": 64
+      },
+      "1/final-stochastic": {
+        "exact": true,
+        "mismatchedSeeds": [],
+        "worlds": 64
+      },
+      "1/initializer-deterministic": {
+        "exact": true,
+        "mismatchedSeeds": [],
+        "worlds": 64
+      },
+      "1/initializer-stochastic": {
+        "exact": true,
+        "mismatchedSeeds": [],
+        "worlds": 64
+      },
+      "2/final-deterministic": {
+        "exact": true,
+        "mismatchedSeeds": [],
+        "worlds": 64
+      },
+      "2/final-stochastic": {
+        "exact": true,
+        "mismatchedSeeds": [],
+        "worlds": 64
+      },
+      "2/initializer-deterministic": {
+        "exact": true,
+        "mismatchedSeeds": [],
+        "worlds": 64
+      },
+      "2/initializer-stochastic": {
+        "exact": true,
+        "mismatchedSeeds": [],
+        "worlds": 64
+      },
+      "3/final-deterministic": {
+        "exact": true,
+        "mismatchedSeeds": [],
+        "worlds": 64
+      },
+      "3/final-stochastic": {
+        "exact": true,
+        "mismatchedSeeds": [],
+        "worlds": 64
+      },
+      "3/initializer-deterministic": {
+        "exact": true,
+        "mismatchedSeeds": [],
+        "worlds": 64
+      },
+      "3/initializer-stochastic": {
+        "exact": true,
+        "mismatchedSeeds": [],
+        "worlds": 64
+      }
+    },
+    "passed": true
+  },
+  "simulatorDecisions": {
+    "gate": 71349,
+    "learned": 2981722,
+    "teacher": 193067
+  },
+  "teacher": {
+    "heldout": {
+      "contrasts": {
+        "other": {
+          "all": {
+            "contrast": {
+              "interval95": [
+                1.1418546626984125,
+                1.1782938988095235
+              ],
+              "mean": 1.159811507936508
+            },
+            "order": {
+              "interval95": [
+                1.0,
+                1.0
+              ],
+              "mean": 1.0
+            }
+          },
+          "d15": {
+            "contrast": {
+              "interval95": [
+                1.1429960317460317,
+                1.1969444444444444
+              ],
+              "mean": 1.1688095238095237
+            },
+            "order": {
+              "interval95": [
+                1.0,
+                1.0
+              ],
+              "mean": 1.0
+            }
+          },
+          "d25": {
+            "contrast": {
+              "interval95": [
+                1.12734126984127,
+                1.1771433531746032
+              ],
+              "mean": 1.150813492063492
+            },
+            "order": {
+              "interval95": [
+                1.0,
+                1.0
+              ],
+              "mean": 1.0
+            }
+          }
+        }
+      },
+      "correctOrderBySpread": {
+        "d15": 1.0,
+        "d25": 1.0
+      },
+      "mirrorIdentityViolation": {
+        "otherVsCorrect": 0.0
+      },
+      "mirrorIdentityWithinTolerance": true,
+      "passed": true,
+      "summaries": {
+        "correct": {
+          "aimShares": {
+            "centre": 0.0,
+            "mirror": 0.0,
+            "other": 0.0,
+            "requested": 1.0
+          },
+          "centreFirst": 0.0,
+          "contrast": 1.0,
+          "informative": 1.0,
+          "meanLateralTowardRequested": 7.418479616433788,
+          "order": 1.0,
+          "orderBySide": {
+            "leftmost": 1.0,
+            "rightmost": 1.0
+          },
+          "rejectedActionRate": 0.0,
+          "requestedSuccess": 1.0,
+          "stopReasons": {
+            "blue-wiped": 0,
+            "environment-done": 0,
+            "horizon": 0,
+            "requested-complete": 400
+          },
+          "teamWipe": 0.0,
+          "throwsInWindow": 2593,
+          "unitsLostFraction": 0.0
+        },
+        "other": {
+          "aimShares": {
+            "centre": 0.28734671125975475,
+            "mirror": 0.39088628762541805,
+            "other": 0.0,
+            "requested": 0.3217670011148272
+          },
+          "centreFirst": 0.0,
+          "contrast": -0.15981150793650795,
+          "informative": 1.0,
+          "meanLateralTowardRequested": -7.418479616433788,
+          "order": 0.0,
+          "orderBySide": {
+            "leftmost": 0.0,
+            "rightmost": 0.0
+          },
+          "rejectedActionRate": 0.0,
+          "requestedSuccess": 0.9975,
+          "stopReasons": {
+            "blue-wiped": 1,
+            "environment-done": 0,
+            "horizon": 0,
+            "requested-complete": 399
+          },
+          "teamWipe": 0.0025,
+          "throwsInWindow": 7176,
+          "unitsLostFraction": 0.06833333333333333
+        }
+      }
+    },
+    "qualification": {
+      "contrasts": {
+        "other": {
+          "all": {
+            "contrast": {
+              "interval95": [
+                1.2100644097222222,
+                1.247646155753968
+              ],
+              "mean": 1.228626984126984
+            },
+            "order": {
+              "interval95": [
+                1.0,
+                1.0
+              ],
+              "mean": 1.0
+            }
+          },
+          "d10": {
+            "contrast": {
+              "interval95": [
+                1.1104359156597963,
+                1.1386223643686328
+              ],
+              "mean": 1.1237295664534468
+            },
+            "order": {
+              "interval95": [
+                1.0,
+                1.0
+              ],
+              "mean": 1.0
+            }
+          },
+          "d20": {
+            "contrast": {
+              "interval95": [
+                1.12765507518797,
+                1.1633104338226516
+              ],
+              "mean": 1.1446622508652584
+            },
+            "order": {
+              "interval95": [
+                1.0,
+                1.0
+              ],
+              "mean": 1.0
+            }
+          },
+          "d30": {
+            "contrast": {
+              "interval95": [
+                1.3846662787922186,
+                1.4534259756534191
+              ],
+              "mean": 1.4182778374507696
+            },
+            "order": {
+              "interval95": [
+                1.0,
+                1.0
+              ],
+              "mean": 1.0
+            }
+          }
+        }
+      },
+      "correctOrderBySpread": {
+        "d10": 1.0,
+        "d20": 1.0,
+        "d30": 1.0
+      },
+      "mirrorIdentityViolation": {
+        "otherVsCorrect": 0.0
+      },
+      "mirrorIdentityWithinTolerance": true,
+      "passed": true,
+      "summaries": {
+        "correct": {
+          "aimShares": {
+            "centre": 0.01073345259391771,
+            "mirror": 0.0,
+            "other": 0.0,
+            "requested": 0.9892665474060823
+          },
+          "centreFirst": 0.0,
+          "contrast": 0.9995,
+          "informative": 1.0,
+          "meanLateralTowardRequested": 7.309318686108614,
+          "order": 1.0,
+          "orderBySide": {
+            "leftmost": 1.0,
+            "rightmost": 1.0
+          },
+          "rejectedActionRate": 0.0,
+          "requestedSuccess": 1.0,
+          "stopReasons": {
+            "blue-wiped": 0,
+            "environment-done": 0,
+            "horizon": 0,
+            "requested-complete": 800
+          },
+          "teamWipe": 0.0,
+          "throwsInWindow": 5590,
+          "unitsLostFraction": 0.0
+        },
+        "other": {
+          "aimShares": {
+            "centre": 0.2828111194182016,
+            "mirror": 0.4251342350302454,
+            "other": 0.0,
+            "requested": 0.292054645551553
+          },
+          "centreFirst": 0.0,
+          "contrast": -0.22912698412698412,
+          "informative": 1.0,
+          "meanLateralTowardRequested": -7.309318686108614,
+          "order": 0.0,
+          "orderBySide": {
+            "leftmost": 0.0,
+            "rightmost": 0.0
+          },
+          "rejectedActionRate": 0.0,
+          "requestedSuccess": 0.99875,
+          "stopReasons": {
+            "blue-wiped": 1,
+            "environment-done": 0,
+            "horizon": 0,
+            "requested-complete": 799
+          },
+          "teamWipe": 0.00125,
+          "throwsInWindow": 14713,
+          "unitsLostFraction": 0.06708333333333333
+        }
+      }
+    }
+  },
+  "torchThreads": 4,
+  "totalSimulatorDecisions": 3246138,
+  "verdict": {
+    "authorizes": "nothing; a follow-up needs its own declaration",
+    "controllableFinals": 3,
+    "finalClasses": {
+      "1": "controllable",
+      "2": "controllable",
+      "3": "controllable"
+    },
+    "identityWithinTolerance": true,
+    "note": null,
+    "verdict": "replicated"
+  },
+  "withinBudgetCap": true
+}
