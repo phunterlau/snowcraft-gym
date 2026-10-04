@@ -1,5 +1,15 @@
 # Upstream patch ledger
 
+## `refs/snowgym_m8_s18_dev_notes.md`
+
+Reason: the user said "Push and do mid fight" after M8-S17; this step audits mid-fight command switches.
+
+Change: a dated entry covering the timing analysis, the teacher-only dev exploration, the two design reviews, the
+preview-cache gotcha, and the teacher-gate calibration. The file stays local; the committed protocol is
+`snowgym/training/reviews/m8_s18_declaration.md`.
+
+Upstream behavior: unchanged; documentation only.
+
 ## `refs/snowgym_m8_s17_dev_notes.md` (results)
 
 Reason: the declared M8-S17 qualification replication ran.
