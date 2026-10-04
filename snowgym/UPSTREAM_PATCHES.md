@@ -1,5 +1,16 @@
 # Upstream patch ledger
 
+## `refs/snowgym_m8_s15_dev_notes.md` (results)
+
+Reason: the declared M8-S15 retention evaluation ran. Local log of the run and the results write-up.
+
+Change: a dated entry with the outcome, the cross-check investigation (S12 and S14 `act()` paths give bit-identical
+deterministic actions), a post-hoc description of cohort 2's random-arm timeouts, and three corrections made to
+the results doc before commit. The file stays local; the committed record is
+`snowgym/training/reviews/m8_s15_results.md`.
+
+Upstream behavior: unchanged; documentation only.
+
 ## `refs/snowgym_m8_s15_dev_notes.md`
 
 Reason: the user asked to review `refs/snowgym_llm_local_rl_first_principles_review_2026-10-04.md` and proceed

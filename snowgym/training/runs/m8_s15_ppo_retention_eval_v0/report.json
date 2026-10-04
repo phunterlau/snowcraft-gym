@@ -1,0 +1,1179 @@
+{
+  "assistType": "none; evaluation of frozen checkpoints, no training",
+  "autonomousQualificationEligible": false,
+  "blockWorlds": 64,
+  "budgetBound": {
+    "evaluation": 1920000,
+    "fidelity": 153600,
+    "total": 2073600
+  },
+  "decisionRules": {
+    "authorizes": "nothing; a follow-up needs its own declaration",
+    "cells": {
+      "easy/deterministic": {
+        "confidentHarm": [],
+        "status": "non-inferior"
+      },
+      "easy/stochastic": {
+        "confidentHarm": [],
+        "status": "non-inferior"
+      },
+      "random/deterministic": {
+        "confidentHarm": [],
+        "status": "non-inferior"
+      },
+      "random/stochastic": {
+        "confidentHarm": [],
+        "status": "non-inferior"
+      }
+    },
+    "cohortFlags": [
+      {
+        "cell": "random/deterministic",
+        "cohort": "2",
+        "metric": "timedOut"
+      },
+      {
+        "cell": "random/stochastic",
+        "cohort": "2",
+        "metric": "success"
+      },
+      {
+        "cell": "random/stochastic",
+        "cohort": "2",
+        "metric": "timedOut"
+      }
+    ],
+    "outcome": "retained-with-cohort-regression",
+    "recommendation": "same, reporting the flagged cohort separately in every later result",
+    "rejectionGate": {
+      "finalRejectedActionRate": {
+        "1/easy/deterministic": 0.0,
+        "1/easy/stochastic": 0.0,
+        "1/random/deterministic": 0.0,
+        "1/random/stochastic": 0.0,
+        "2/easy/deterministic": 0.0,
+        "2/easy/stochastic": 0.0,
+        "2/random/deterministic": 0.0,
+        "2/random/stochastic": 0.0,
+        "3/easy/deterministic": 0.0,
+        "3/easy/stochastic": 0.0,
+        "3/random/deterministic": 0.0,
+        "3/random/stochastic": 0.0
+      },
+      "passed": true
+    }
+  },
+  "evaluationSimulatorDecisions": 1064129,
+  "fidelity": {
+    "1": {
+      "final-deterministic": {
+        "exact": true,
+        "mismatchedSeeds": [],
+        "worlds": 64
+      },
+      "final-stochastic": {
+        "exact": true,
+        "mismatchedSeeds": [],
+        "worlds": 64
+      },
+      "initializer-deterministic": {
+        "exact": true,
+        "mismatchedSeeds": [],
+        "worlds": 64
+      },
+      "initializer-stochastic": {
+        "exact": true,
+        "mismatchedSeeds": [],
+        "worlds": 64
+      }
+    },
+    "2": {
+      "final-deterministic": {
+        "exact": true,
+        "mismatchedSeeds": [],
+        "worlds": 64
+      },
+      "final-stochastic": {
+        "exact": true,
+        "mismatchedSeeds": [],
+        "worlds": 64
+      },
+      "initializer-deterministic": {
+        "exact": true,
+        "mismatchedSeeds": [],
+        "worlds": 64
+      },
+      "initializer-stochastic": {
+        "exact": true,
+        "mismatchedSeeds": [],
+        "worlds": 64
+      }
+    },
+    "3": {
+      "final-deterministic": {
+        "exact": true,
+        "mismatchedSeeds": [],
+        "worlds": 64
+      },
+      "final-stochastic": {
+        "exact": true,
+        "mismatchedSeeds": [],
+        "worlds": 64
+      },
+      "initializer-deterministic": {
+        "exact": true,
+        "mismatchedSeeds": [],
+        "worlds": 64
+      },
+      "initializer-stochastic": {
+        "exact": true,
+        "mismatchedSeeds": [],
+        "worlds": 64
+      }
+    }
+  },
+  "fidelityPassed": true,
+  "fidelitySimulatorDecisions": 71349,
+  "format": "snowgym.m8-s15-ppo-retention-eval-report.v0",
+  "pairedDifferences": {
+    "easy/deterministic": {
+      "cohortAveraged": {
+        "success": {
+          "interval95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        },
+        "teamWipe": {
+          "interval95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        },
+        "timedOut": {
+          "interval95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        },
+        "unitsLostFraction": {
+          "interval95": [
+            -0.0425,
+            -0.030555555555555555
+          ],
+          "mean": -0.036388888888888894
+        }
+      },
+      "perCohort": {
+        "1": {
+          "success": {
+            "interval95": [
+              0.0,
+              0.0
+            ],
+            "mean": 0.0
+          },
+          "teamWipe": {
+            "interval95": [
+              0.0,
+              0.0
+            ],
+            "mean": 0.0
+          },
+          "timedOut": {
+            "interval95": [
+              0.0,
+              0.0
+            ],
+            "mean": 0.0
+          },
+          "unitsLostFraction": {
+            "interval95": [
+              -0.05,
+              -0.028333333333333335
+            ],
+            "mean": -0.03916666666666666
+          }
+        },
+        "2": {
+          "success": {
+            "interval95": [
+              0.0,
+              0.0
+            ],
+            "mean": 0.0
+          },
+          "teamWipe": {
+            "interval95": [
+              0.0,
+              0.0
+            ],
+            "mean": 0.0
+          },
+          "timedOut": {
+            "interval95": [
+              0.0,
+              0.0
+            ],
+            "mean": 0.0
+          },
+          "unitsLostFraction": {
+            "interval95": [
+              -0.02583333333333333,
+              -0.009999999999999998
+            ],
+            "mean": -0.0175
+          }
+        },
+        "3": {
+          "success": {
+            "interval95": [
+              0.0,
+              0.0
+            ],
+            "mean": 0.0
+          },
+          "teamWipe": {
+            "interval95": [
+              0.0,
+              0.0
+            ],
+            "mean": 0.0
+          },
+          "timedOut": {
+            "interval95": [
+              0.0,
+              0.0
+            ],
+            "mean": 0.0
+          },
+          "unitsLostFraction": {
+            "interval95": [
+              -0.06499999999999999,
+              -0.04083333333333333
+            ],
+            "mean": -0.0525
+          }
+        }
+      },
+      "worlds": 400
+    },
+    "easy/stochastic": {
+      "cohortAveraged": {
+        "success": {
+          "interval95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        },
+        "teamWipe": {
+          "interval95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        },
+        "timedOut": {
+          "interval95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        },
+        "unitsLostFraction": {
+          "interval95": [
+            -0.027222222222222224,
+            -0.015270833333333433
+          ],
+          "mean": -0.021111111111111112
+        }
+      },
+      "perCohort": {
+        "1": {
+          "success": {
+            "interval95": [
+              0.0,
+              0.0
+            ],
+            "mean": 0.0
+          },
+          "teamWipe": {
+            "interval95": [
+              0.0,
+              0.0
+            ],
+            "mean": 0.0
+          },
+          "timedOut": {
+            "interval95": [
+              0.0,
+              0.0
+            ],
+            "mean": 0.0
+          },
+          "unitsLostFraction": {
+            "interval95": [
+              -0.03,
+              -0.01
+            ],
+            "mean": -0.019999999999999997
+          }
+        },
+        "2": {
+          "success": {
+            "interval95": [
+              0.0,
+              0.0
+            ],
+            "mean": 0.0
+          },
+          "teamWipe": {
+            "interval95": [
+              0.0,
+              0.0
+            ],
+            "mean": 0.0
+          },
+          "timedOut": {
+            "interval95": [
+              0.0,
+              0.0
+            ],
+            "mean": 0.0
+          },
+          "unitsLostFraction": {
+            "interval95": [
+              -0.021666666666666664,
+              -0.003333333333333333
+            ],
+            "mean": -0.0125
+          }
+        },
+        "3": {
+          "success": {
+            "interval95": [
+              0.0,
+              0.0
+            ],
+            "mean": 0.0
+          },
+          "teamWipe": {
+            "interval95": [
+              0.0,
+              0.0
+            ],
+            "mean": 0.0
+          },
+          "timedOut": {
+            "interval95": [
+              0.0,
+              0.0
+            ],
+            "mean": 0.0
+          },
+          "unitsLostFraction": {
+            "interval95": [
+              -0.04083333333333333,
+              -0.02083333333333333
+            ],
+            "mean": -0.03083333333333333
+          }
+        }
+      },
+      "worlds": 400
+    },
+    "random/deterministic": {
+      "cohortAveraged": {
+        "success": {
+          "interval95": [
+            0.12416666666666668,
+            0.18333333333333335
+          ],
+          "mean": 0.15416666666666667
+        },
+        "teamWipe": {
+          "interval95": [
+            -0.08583333333333332,
+            -0.055
+          ],
+          "mean": -0.06999999999999999
+        },
+        "timedOut": {
+          "interval95": [
+            -0.1125,
+            -0.06083333333333333
+          ],
+          "mean": -0.08666666666666666
+        },
+        "unitsLostFraction": {
+          "interval95": [
+            -0.18306250000000002,
+            -0.14305555555555557
+          ],
+          "mean": -0.16305555555555556
+        }
+      },
+      "perCohort": {
+        "1": {
+          "success": {
+            "interval95": [
+              0.225,
+              0.315
+            ],
+            "mean": 0.27
+          },
+          "teamWipe": {
+            "interval95": [
+              -0.09,
+              -0.0425
+            ],
+            "mean": -0.065
+          },
+          "timedOut": {
+            "interval95": [
+              -0.25,
+              -0.1675
+            ],
+            "mean": -0.2075
+          },
+          "unitsLostFraction": {
+            "interval95": [
+              -0.21416666666666664,
+              -0.15333333333333332
+            ],
+            "mean": -0.18333333333333332
+          }
+        },
+        "2": {
+          "success": {
+            "interval95": [
+              -0.1375,
+              -0.0475
+            ],
+            "mean": -0.0925
+          },
+          "teamWipe": {
+            "interval95": [
+              -0.05,
+              -0.015
+            ],
+            "mean": -0.0325
+          },
+          "timedOut": {
+            "interval95": [
+              0.08,
+              0.17
+            ],
+            "mean": 0.125
+          },
+          "unitsLostFraction": {
+            "interval95": [
+              -0.12583333333333332,
+              -0.07749999999999999
+            ],
+            "mean": -0.10083333333333332
+          }
+        },
+        "3": {
+          "success": {
+            "interval95": [
+              0.24,
+              0.33
+            ],
+            "mean": 0.285
+          },
+          "teamWipe": {
+            "interval95": [
+              -0.14256249999999993,
+              -0.0825
+            ],
+            "mean": -0.1125
+          },
+          "timedOut": {
+            "interval95": [
+              -0.22,
+              -0.1375
+            ],
+            "mean": -0.1775
+          },
+          "unitsLostFraction": {
+            "interval95": [
+              -0.2383333333333333,
+              -0.17166666666666663
+            ],
+            "mean": -0.205
+          }
+        }
+      },
+      "worlds": 400
+    },
+    "random/stochastic": {
+      "cohortAveraged": {
+        "success": {
+          "interval95": [
+            -0.026666666666666665,
+            0.005833333333333334
+          ],
+          "mean": -0.01
+        },
+        "teamWipe": {
+          "interval95": [
+            -0.0025,
+            0.0
+          ],
+          "mean": -0.0008333333333333333
+        },
+        "timedOut": {
+          "interval95": [
+            -0.005,
+            0.0275
+          ],
+          "mean": 0.010833333333333332
+        },
+        "unitsLostFraction": {
+          "interval95": [
+            -0.019444444444444445,
+            -0.0075
+          ],
+          "mean": -0.013333333333333334
+        }
+      },
+      "perCohort": {
+        "1": {
+          "success": {
+            "interval95": [
+              0.0,
+              0.045
+            ],
+            "mean": 0.0225
+          },
+          "teamWipe": {
+            "interval95": [
+              -0.0075,
+              0.0
+            ],
+            "mean": -0.0025
+          },
+          "timedOut": {
+            "interval95": [
+              -0.0425,
+              0.0025
+            ],
+            "mean": -0.02
+          },
+          "unitsLostFraction": {
+            "interval95": [
+              -0.021666666666666664,
+              -6.904199434388197e-19
+            ],
+            "mean": -0.010833333333333332
+          }
+        },
+        "2": {
+          "success": {
+            "interval95": [
+              -0.125,
+              -0.055
+            ],
+            "mean": -0.09
+          },
+          "teamWipe": {
+            "interval95": [
+              0.0,
+              0.0
+            ],
+            "mean": 0.0
+          },
+          "timedOut": {
+            "interval95": [
+              0.055,
+              0.125
+            ],
+            "mean": 0.09
+          },
+          "unitsLostFraction": {
+            "interval95": [
+              -0.02166666666666667,
+              -0.0016666666666666657
+            ],
+            "mean": -0.011666666666666667
+          }
+        },
+        "3": {
+          "success": {
+            "interval95": [
+              0.0125,
+              0.0625
+            ],
+            "mean": 0.0375
+          },
+          "teamWipe": {
+            "interval95": [
+              0.0,
+              0.0
+            ],
+            "mean": 0.0
+          },
+          "timedOut": {
+            "interval95": [
+              -0.0625,
+              -0.0125
+            ],
+            "mean": -0.0375
+          },
+          "unitsLostFraction": {
+            "interval95": [
+              -0.02583333333333333,
+              -0.009166666666666667
+            ],
+            "mean": -0.017499999999999998
+          }
+        }
+      },
+      "worlds": 400
+    }
+  },
+  "predictions": {
+    "1-retained": false,
+    "2-randomDeterministicSuccessGain": true,
+    "3-randomStochasticGainSmaller": true,
+    "4-easyDeterministicUnitsLostNotWorse": true,
+    "crossCheckS13": {
+      "1": {
+        "initializerSuccess": 0.7075,
+        "s13Success": 0.77,
+        "withinTolerance": true
+      },
+      "2": {
+        "initializerSuccess": 0.7925,
+        "s13Success": 0.87,
+        "withinTolerance": true
+      },
+      "3": {
+        "initializerSuccess": 0.685,
+        "s13Success": 0.79,
+        "withinTolerance": true
+      }
+    }
+  },
+  "simulatorDecisions": 1135478,
+  "summaries": {
+    "1": {
+      "easy/final-deterministic": {
+        "episodes": 400,
+        "meanDecisions": 71.4125,
+        "meanUnitsLostFraction": 0.0025,
+        "meanUnitsLostInterval": [
+          0.0,
+          0.005833333333333333
+        ],
+        "rejectedActionRate": 0.0,
+        "success": 1.0,
+        "successInterval": [
+          0.9904877056657034,
+          0.9999999999999999
+        ],
+        "teamWipe": 0.0,
+        "teamWipeInterval": [
+          8.673617379884035e-19,
+          0.009512294334296508
+        ],
+        "timeout": 0.0
+      },
+      "easy/final-stochastic": {
+        "episodes": 400,
+        "meanDecisions": 76.8525,
+        "meanUnitsLostFraction": 0.009166666666666665,
+        "meanUnitsLostInterval": [
+          0.004166666666666667,
+          0.015
+        ],
+        "rejectedActionRate": 0.0,
+        "success": 1.0,
+        "successInterval": [
+          0.9904877056657034,
+          0.9999999999999999
+        ],
+        "teamWipe": 0.0,
+        "teamWipeInterval": [
+          8.673617379884035e-19,
+          0.009512294334296508
+        ],
+        "timeout": 0.0
+      },
+      "easy/initializer-deterministic": {
+        "episodes": 400,
+        "meanDecisions": 77.7725,
+        "meanUnitsLostFraction": 0.04166666666666666,
+        "meanUnitsLostInterval": [
+          0.03083333333333333,
+          0.0525
+        ],
+        "rejectedActionRate": 0.0,
+        "success": 1.0,
+        "successInterval": [
+          0.9904877056657034,
+          0.9999999999999999
+        ],
+        "teamWipe": 0.0,
+        "teamWipeInterval": [
+          8.673617379884035e-19,
+          0.009512294334296508
+        ],
+        "timeout": 0.0
+      },
+      "easy/initializer-stochastic": {
+        "episodes": 400,
+        "meanDecisions": 82.925,
+        "meanUnitsLostFraction": 0.029166666666666664,
+        "meanUnitsLostInterval": [
+          0.02083333333333333,
+          0.03833333333333333
+        ],
+        "rejectedActionRate": 0.0,
+        "success": 1.0,
+        "successInterval": [
+          0.9904877056657034,
+          0.9999999999999999
+        ],
+        "teamWipe": 0.0,
+        "teamWipeInterval": [
+          8.673617379884035e-19,
+          0.009512294334296508
+        ],
+        "timeout": 0.0
+      },
+      "random/final-deterministic": {
+        "episodes": 400,
+        "meanDecisions": 131.495,
+        "meanUnitsLostFraction": 0.005,
+        "meanUnitsLostInterval": [
+          0.0016666666666666666,
+          0.009166666666666667
+        ],
+        "rejectedActionRate": 0.0,
+        "success": 0.9775,
+        "successInterval": [
+          0.9577973424412419,
+          0.988118416469505
+        ],
+        "teamWipe": 0.0,
+        "teamWipeInterval": [
+          8.673617379884035e-19,
+          0.009512294334296508
+        ],
+        "timeout": 0.0225
+      },
+      "random/final-stochastic": {
+        "episodes": 400,
+        "meanDecisions": 137.0075,
+        "meanUnitsLostFraction": 0.01,
+        "meanUnitsLostInterval": [
+          0.004166666666666667,
+          0.016666666666666666
+        ],
+        "rejectedActionRate": 0.0,
+        "success": 0.9825,
+        "successInterval": [
+          0.964322927074442,
+          0.991497708892962
+        ],
+        "teamWipe": 0.0,
+        "teamWipeInterval": [
+          8.673617379884035e-19,
+          0.009512294334296508
+        ],
+        "timeout": 0.0175
+      },
+      "random/initializer-deterministic": {
+        "episodes": 400,
+        "meanDecisions": 162.445,
+        "meanUnitsLostFraction": 0.18833333333333332,
+        "meanUnitsLostInterval": [
+          0.15916666666666665,
+          0.21833333333333335
+        ],
+        "rejectedActionRate": 0.0,
+        "success": 0.7075,
+        "successInterval": [
+          0.6611144240081159,
+          0.7499379738431511
+        ],
+        "teamWipe": 0.065,
+        "teamWipeInterval": [
+          0.04474048189620036,
+          0.09353521417463759
+        ],
+        "timeout": 0.23
+      },
+      "random/initializer-stochastic": {
+        "episodes": 400,
+        "meanDecisions": 147.08,
+        "meanUnitsLostFraction": 0.02083333333333333,
+        "meanUnitsLostInterval": [
+          0.0125,
+          0.03083333333333333
+        ],
+        "rejectedActionRate": 0.0,
+        "success": 0.96,
+        "successInterval": [
+          0.9360177522821589,
+          0.9752309369302883
+        ],
+        "teamWipe": 0.0025,
+        "teamWipeInterval": [
+          0.0004414477868016362,
+          0.01402328507582339
+        ],
+        "timeout": 0.0375
+      }
+    },
+    "2": {
+      "easy/final-deterministic": {
+        "episodes": 400,
+        "meanDecisions": 71.805,
+        "meanUnitsLostFraction": 0.003333333333333333,
+        "meanUnitsLostInterval": [
+          0.0008333333333333333,
+          0.006666666666666666
+        ],
+        "rejectedActionRate": 0.0,
+        "success": 1.0,
+        "successInterval": [
+          0.9904877056657034,
+          0.9999999999999999
+        ],
+        "teamWipe": 0.0,
+        "teamWipeInterval": [
+          8.673617379884035e-19,
+          0.009512294334296508
+        ],
+        "timeout": 0.0
+      },
+      "easy/final-stochastic": {
+        "episodes": 400,
+        "meanDecisions": 75.0575,
+        "meanUnitsLostFraction": 0.008333333333333333,
+        "meanUnitsLostInterval": [
+          0.003333333333333333,
+          0.014166666666666666
+        ],
+        "rejectedActionRate": 0.0,
+        "success": 1.0,
+        "successInterval": [
+          0.9904877056657034,
+          0.9999999999999999
+        ],
+        "teamWipe": 0.0,
+        "teamWipeInterval": [
+          8.673617379884035e-19,
+          0.009512294334296508
+        ],
+        "timeout": 0.0
+      },
+      "easy/initializer-deterministic": {
+        "episodes": 400,
+        "meanDecisions": 76.615,
+        "meanUnitsLostFraction": 0.02083333333333333,
+        "meanUnitsLostInterval": [
+          0.013333333333333332,
+          0.029166666666666664
+        ],
+        "rejectedActionRate": 0.0,
+        "success": 1.0,
+        "successInterval": [
+          0.9904877056657034,
+          0.9999999999999999
+        ],
+        "teamWipe": 0.0,
+        "teamWipeInterval": [
+          8.673617379884035e-19,
+          0.009512294334296508
+        ],
+        "timeout": 0.0
+      },
+      "easy/initializer-stochastic": {
+        "episodes": 400,
+        "meanDecisions": 77.53,
+        "meanUnitsLostFraction": 0.02083333333333333,
+        "meanUnitsLostInterval": [
+          0.013333333333333332,
+          0.029166666666666664
+        ],
+        "rejectedActionRate": 0.0,
+        "success": 1.0,
+        "successInterval": [
+          0.9904877056657034,
+          0.9999999999999999
+        ],
+        "teamWipe": 0.0,
+        "teamWipeInterval": [
+          8.673617379884035e-19,
+          0.009512294334296508
+        ],
+        "timeout": 0.0
+      },
+      "random/final-deterministic": {
+        "episodes": 400,
+        "meanDecisions": 150.3575,
+        "meanUnitsLostFraction": 0.028333333333333332,
+        "meanUnitsLostInterval": [
+          0.019166666666666665,
+          0.03916666666666666
+        ],
+        "rejectedActionRate": 0.0,
+        "success": 0.7,
+        "successInterval": [
+          0.6533627542224784,
+          0.7428323280438028
+        ],
+        "teamWipe": 0.0,
+        "teamWipeInterval": [
+          8.673617379884035e-19,
+          0.009512294334296508
+        ],
+        "timeout": 0.3
+      },
+      "random/final-stochastic": {
+        "episodes": 400,
+        "meanDecisions": 142.375,
+        "meanUnitsLostFraction": 0.013333333333333332,
+        "meanUnitsLostInterval": [
+          0.006666666666666666,
+          0.02083333333333333
+        ],
+        "rejectedActionRate": 0.0,
+        "success": 0.8675,
+        "successInterval": [
+          0.8307536803033191,
+          0.897254783360973
+        ],
+        "teamWipe": 0.0,
+        "teamWipeInterval": [
+          8.673617379884035e-19,
+          0.009512294334296508
+        ],
+        "timeout": 0.1325
+      },
+      "random/initializer-deterministic": {
+        "episodes": 400,
+        "meanDecisions": 152.0325,
+        "meanUnitsLostFraction": 0.12916666666666665,
+        "meanUnitsLostInterval": [
+          0.10583333333333332,
+          0.15333333333333335
+        ],
+        "rejectedActionRate": 0.0,
+        "success": 0.7925,
+        "successInterval": [
+          0.7500694660392275,
+          0.829365841775209
+        ],
+        "teamWipe": 0.0325,
+        "teamWipeInterval": [
+          0.01908984237880045,
+          0.0548041528237668
+        ],
+        "timeout": 0.175
+      },
+      "random/initializer-stochastic": {
+        "episodes": 400,
+        "meanDecisions": 140.2725,
+        "meanUnitsLostFraction": 0.025,
+        "meanUnitsLostInterval": [
+          0.016666666666666666,
+          0.034166666666666665
+        ],
+        "rejectedActionRate": 0.0,
+        "success": 0.9575,
+        "successInterval": [
+          0.9329979456752499,
+          0.9732983050088689
+        ],
+        "teamWipe": 0.0,
+        "teamWipeInterval": [
+          8.673617379884035e-19,
+          0.009512294334296508
+        ],
+        "timeout": 0.0425
+      }
+    },
+    "3": {
+      "easy/final-deterministic": {
+        "episodes": 400,
+        "meanDecisions": 72.5075,
+        "meanUnitsLostFraction": 0.0,
+        "meanUnitsLostInterval": [
+          0.0,
+          0.0
+        ],
+        "rejectedActionRate": 0.0,
+        "success": 1.0,
+        "successInterval": [
+          0.9904877056657034,
+          0.9999999999999999
+        ],
+        "teamWipe": 0.0,
+        "teamWipeInterval": [
+          8.673617379884035e-19,
+          0.009512294334296508
+        ],
+        "timeout": 0.0
+      },
+      "easy/final-stochastic": {
+        "episodes": 400,
+        "meanDecisions": 74.4925,
+        "meanUnitsLostFraction": 0.0016666666666666666,
+        "meanUnitsLostInterval": [
+          0.0,
+          0.004166666666666667
+        ],
+        "rejectedActionRate": 0.0,
+        "success": 1.0,
+        "successInterval": [
+          0.9904877056657034,
+          0.9999999999999999
+        ],
+        "teamWipe": 0.0,
+        "teamWipeInterval": [
+          8.673617379884035e-19,
+          0.009512294334296508
+        ],
+        "timeout": 0.0
+      },
+      "easy/initializer-deterministic": {
+        "episodes": 400,
+        "meanDecisions": 77.195,
+        "meanUnitsLostFraction": 0.0525,
+        "meanUnitsLostInterval": [
+          0.04083333333333333,
+          0.06499999999999999
+        ],
+        "rejectedActionRate": 0.0,
+        "success": 1.0,
+        "successInterval": [
+          0.9904877056657034,
+          0.9999999999999999
+        ],
+        "teamWipe": 0.0,
+        "teamWipeInterval": [
+          8.673617379884035e-19,
+          0.009512294334296508
+        ],
+        "timeout": 0.0
+      },
+      "easy/initializer-stochastic": {
+        "episodes": 400,
+        "meanDecisions": 79.13,
+        "meanUnitsLostFraction": 0.0325,
+        "meanUnitsLostInterval": [
+          0.02333333333333333,
+          0.0425
+        ],
+        "rejectedActionRate": 0.0,
+        "success": 1.0,
+        "successInterval": [
+          0.9904877056657034,
+          0.9999999999999999
+        ],
+        "teamWipe": 0.0,
+        "teamWipeInterval": [
+          8.673617379884035e-19,
+          0.009512294334296508
+        ],
+        "timeout": 0.0
+      },
+      "random/final-deterministic": {
+        "episodes": 400,
+        "meanDecisions": 132.3525,
+        "meanUnitsLostFraction": 0.005833333333333333,
+        "meanUnitsLostInterval": [
+          0.0016666666666666666,
+          0.010833333333333332
+        ],
+        "rejectedActionRate": 0.0,
+        "success": 0.97,
+        "successInterval": [
+          0.9483014642909042,
+          0.9827569790348569
+        ],
+        "teamWipe": 0.0,
+        "teamWipeInterval": [
+          8.673617379884035e-19,
+          0.009512294334296508
+        ],
+        "timeout": 0.03
+      },
+      "random/final-stochastic": {
+        "episodes": 400,
+        "meanDecisions": 144.8725,
+        "meanUnitsLostFraction": 0.0025,
+        "meanUnitsLostInterval": [
+          0.0,
+          0.005833333333333333
+        ],
+        "rejectedActionRate": 0.0,
+        "success": 0.975,
+        "successInterval": [
+          0.9545984121283544,
+          0.986364908254064
+        ],
+        "teamWipe": 0.0,
+        "teamWipeInterval": [
+          8.673617379884035e-19,
+          0.009512294334296508
+        ],
+        "timeout": 0.025
+      },
+      "random/initializer-deterministic": {
+        "episodes": 400,
+        "meanDecisions": 158.385,
+        "meanUnitsLostFraction": 0.21083333333333332,
+        "meanUnitsLostInterval": [
+          0.17666666666666667,
+          0.245
+        ],
+        "rejectedActionRate": 0.0,
+        "success": 0.685,
+        "successInterval": [
+          0.637901366761192,
+          0.7285790843351184
+        ],
+        "teamWipe": 0.1125,
+        "teamWipeInterval": [
+          0.08514845878595949,
+          0.14722356932312028
+        ],
+        "timeout": 0.2075
+      },
+      "random/initializer-stochastic": {
+        "episodes": 400,
+        "meanDecisions": 148.3525,
+        "meanUnitsLostFraction": 0.02,
+        "meanUnitsLostInterval": [
+          0.0125,
+          0.028333333333333332
+        ],
+        "rejectedActionRate": 0.0,
+        "success": 0.9375,
+        "successInterval": [
+          0.9093658838696931,
+          0.9573108585877975
+        ],
+        "teamWipe": 0.0,
+        "teamWipeInterval": [
+          8.673617379884035e-19,
+          0.009512294334296508
+        ],
+        "timeout": 0.0625
+      }
+    }
+  },
+  "torchThreads": 4,
+  "withinBudgetCap": true
+}

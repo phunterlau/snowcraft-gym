@@ -2997,6 +2997,20 @@ evaluate the existing checkpoints against random/easy Red (free, both already in
 no training needed) before considering a `hard`-arm generalization check or a fresh replication -- neither
 authorized yet.
 
+**M8-S15 — retention check: S14's PPO checkpoints against random and easy Red (complete 2026-10-04; evaluation
+only, no training; 1,135,478 decisions):** step A of the 2026-10-04 first-principles review. S14's three frozen
+`update-200.pt` policies against S14's own sigma-scaled initializer reference, random and scripted-easy Red, both
+execution modes, 400 fresh worlds (2700000-2700399). Both arms were in the imitation mixture, so this is retention,
+not unseen-opponent generalization. A fidelity gate replayed S14's first 64-world evaluation block exactly in all 12
+cells (exact replay also depends on block size and thread count). **Outcome: `retained-with-cohort-regression`.** All
+four cohort-averaged cells are non-inferior at delta 0.05, and there are zero rejected actions. Easy is saturated at
+1.00 success, and casualties fell slightly. On random, deterministic success rose +0.154, but stochastic success did
+not change (-0.010 [-0.027, +0.006]): again mostly argmax repair, as on normal in S14. **Cohort 2 regresses on random
+in both modes** (flagged: det. timeouts +0.125, sto. success -0.090 and timeouts +0.090; det. success -0.092 is a
+near-miss just inside the margin). Its timeouts are near-complete fights: median 200 of 240 damage, no wipes; the
+cause is unexplained. Predictions 3 of 4 held. See `training/reviews/m8_s15_results.md`. Next: the
+command-controllability audit (review step B), with cohort 2 reported separately. Needs its own declaration.
+
 ### M9 — slow commander over a learned team
 
 Side experiment authorized 2026-09-05: add OpenAI GPT-6 Astra as a secondary
