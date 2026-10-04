@@ -1,5 +1,16 @@
 # Upstream patch ledger
 
+## `refs/snowgym_m8_s16_dev_notes.md` (declaration/implementation)
+
+Reason: declaring and implementing the M8-S16 command-controllability audit.
+
+Change: a dated entry covering the runner design, the exact regression-gate smoke check, the second design review
+(test-run disclosure, mirror identity, stop-dependent metrics), and the training-suite gap that the S15 archive
+introduced and `04c39c2` fixed. The file stays local; the committed protocol is
+`snowgym/training/reviews/m8_s16_declaration.md`.
+
+Upstream behavior: unchanged; documentation only.
+
 ## `refs/snowgym_m8_s16_dev_notes.md`
 
 Reason: designing the command-controllability audit (step B of the 2026-10-04 review) after M8-S15. Local log of
