@@ -1,5 +1,15 @@
 # Upstream patch ledger
 
+## `refs/snowgym_m8_s18_dev_notes.md` (results)
+
+Reason: the declared M8-S18 mid-fight switch audit ran.
+
+Change: a dated entry with the gates, the deterministic results, the stochastic per-cell seeding bug and its
+block-1 post-hoc subset, the plan-tensor diff verifying which inputs re-activation changes, and the review
+corrections. The file stays local; the committed record is `snowgym/training/reviews/m8_s18_results.md`.
+
+Upstream behavior: unchanged; documentation only.
+
 ## `refs/snowgym_m8_s18_dev_notes.md`
 
 Reason: the user said "Push and do mid fight" after M8-S17; this step audits mid-fight command switches.

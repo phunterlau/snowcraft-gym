@@ -1,0 +1,4 @@
+# Per-episode rows (*.jsonl) of run archives are kept locally, not in git (user decision 2026-10-04, from M8-S18
+# on). Sealed manifests still list every row file's digest, so `death_rate_ppo.verify_sealed` needs the local rows;
+# declarations, manifests, reports and checkpoints stay tracked. Rows tracked before this rule are unaffected.
+*.jsonl

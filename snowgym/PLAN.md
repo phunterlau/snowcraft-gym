@@ -3056,6 +3056,30 @@ flank first in 53% of episodes, versus mean flank order 1.00 under `rightmost`. 
 See `training/reviews/m8_s17_results.md`. Next (each needs its own declaration and the user's call): mid-fight
 command switches, the centre/three-way target axis, or the mission forks.
 
+**M8-S18 — mid-fight command switches (complete 2026-10-04; evaluation only, no training; 6,714,507 decisions):**
+the user asked for mid-fight. Flank command A from reset, then at decision k = 30 (pre-contact), 50 (contact) or 60
+(mid-fight) one of three branches with a hash-verified shared prefix: keep, reactivate (same A) or switch (to B).
+Scoring is always against B with a branch-independent stop. Dev panel 2750000-2750191, spreads 20/30; reserved
+2760000-2760399 untouched. Replay gate exact (12/12). The teacher was valid at all k (Δc_post +1.96/+1.55/+1.64)
+and re-activation was a no-op for it.
+
+**Deterministic primary (switch - reactivate post-switch flank damage contrast):** every final is positive at every
+k, but only c3 `redirects`, and only at k = 30/50. At k = 60 all finals are `partial` (+0.22 to +0.32;
+cohort-averaged +1.05/+0.60/+0.29 at k = 30/50/60).
+
+**Re-issuing the same command changes c1's and c2's behavior substantially.** Only `planAge` and
+`activationDisplacement` change on re-activation, verified by diffing the plan tensors. So keep-the-plan baselines
+must not re-activate. A late switch costs the teacher heavily (k = 60 wipe +0.85); the finals lose fewer units.
+Predictions 2 of 5 held.
+
+**Bug (mine):** stochastic cells seeded per cell rather than per block, so blocks 2-3 lack a shared prefix. The
+sealed `report.json`'s stochastic classes and contrasts are INVALID; a block-1 post-hoc subset is in the results doc.
+`command_switch_audit.py` is sealed with this bug: do not reuse its stochastic cells unchanged.
+
+Per-episode rows of S18 and later archives are kept locally, not in git (user decision 2026-10-04;
+`training/runs/.gitignore`). See `training/reviews/m8_s18_results.md`. Next (user's call): a stochastic re-run with per-block seeding, or a
+switch-trained continuation (review §7) including re-activations and randomized activation times.
+
 ### M9 — slow commander over a learned team
 
 Side experiment authorized 2026-09-05: add OpenAI GPT-6 Astra as a secondary
